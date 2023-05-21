@@ -26,8 +26,7 @@ jobs:
     with:
       artifactname: LLMonFHIR.xcresult
       runsonlabels: '["macos-latest"]'
-      setupfirebaseemulator: true
-      customcommand: "firebase emulators:exec 'fastlane test'"
+      fastlanelane: test
   uploadcoveragereport:
     name: Upload Coverage Report
     needs: buildandtest
