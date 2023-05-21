@@ -20,7 +20,6 @@
 		2FC9759F2978E39600BA99FE /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 2FC9759E2978E39600BA99FE /* Localizable.strings */; };
 		2FC975A82978F11A00BA99FE /* Home.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FC975A72978F11A00BA99FE /* Home.swift */; };
 		2FE5DC2629EDD38A004B9AB4 /* Contacts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FE5DC2529EDD38A004B9AB4 /* Contacts.swift */; };
-		2FE5DC3529EDD7CA004B9AB4 /* Consent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FE5DC2F29EDD7CA004B9AB4 /* Consent.swift */; };
 		2FE5DC3629EDD7CA004B9AB4 /* HealthKitPermissions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FE5DC3029EDD7CA004B9AB4 /* HealthKitPermissions.swift */; };
 		2FE5DC3729EDD7CA004B9AB4 /* OnboardingFlow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FE5DC3129EDD7CA004B9AB4 /* OnboardingFlow.swift */; };
 		2FE5DC3829EDD7CA004B9AB4 /* InterestingModules.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FE5DC3229EDD7CA004B9AB4 /* InterestingModules.swift */; };
@@ -88,7 +87,6 @@
 		2FE5DC2529EDD38A004B9AB4 /* Contacts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Contacts.swift; sourceTree = "<group>"; };
 		2FE5DC2A29EDD78D004B9AB4 /* AppIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = AppIcon.png; sourceTree = "<group>"; };
 		2FE5DC2C29EDD78E004B9AB4 /* ConsentDocument.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = ConsentDocument.md; sourceTree = "<group>"; };
-		2FE5DC2F29EDD7CA004B9AB4 /* Consent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Consent.swift; sourceTree = "<group>"; };
 		2FE5DC3029EDD7CA004B9AB4 /* HealthKitPermissions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HealthKitPermissions.swift; sourceTree = "<group>"; };
 		2FE5DC3129EDD7CA004B9AB4 /* OnboardingFlow.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OnboardingFlow.swift; sourceTree = "<group>"; };
 		2FE5DC3229EDD7CA004B9AB4 /* InterestingModules.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InterestingModules.swift; sourceTree = "<group>"; };
@@ -184,7 +182,6 @@
 		2FE5DC2829EDD398004B9AB4 /* Onboarding */ = {
 			isa = PBXGroup;
 			children = (
-				2FE5DC2F29EDD7CA004B9AB4 /* Consent.swift */,
 				2FE5DC3029EDD7CA004B9AB4 /* HealthKitPermissions.swift */,
 				2FE5DC3229EDD7CA004B9AB4 /* InterestingModules.swift */,
 				2FE5DC3129EDD7CA004B9AB4 /* OnboardingFlow.swift */,
@@ -499,7 +496,6 @@
 				2FE5DC3929EDD7CA004B9AB4 /* String+ModuleLocalized.swift in Sources */,
 				2FE5DC3A29EDD7CA004B9AB4 /* Welcome.swift in Sources */,
 				2FE5DC3829EDD7CA004B9AB4 /* InterestingModules.swift in Sources */,
-				2FE5DC3529EDD7CA004B9AB4 /* Consent.swift in Sources */,
 				2FE5DC4529EDD7F2004B9AB4 /* Binding+Negate.swift in Sources */,
 				2FC975A82978F11A00BA99FE /* Home.swift in Sources */,
 				2FE5DC4E29EDD7FA004B9AB4 /* ScheduleView.swift in Sources */,
