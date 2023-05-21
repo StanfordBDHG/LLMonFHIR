@@ -1,5 +1,5 @@
 #
-# This source file is part of the Stanford Spezi Template Application project
+# This source file is part of the Stanford LLM on FHIR project
 #
 # SPDX-FileCopyrightText: 2023 Stanford University
 #
@@ -18,6 +18,6 @@ authors:
 - family-names: "Aalami"
   given-names: "Oliver"
   orcid: "https://orcid.org/0000-0002-7799-2429"
-title: "Spezi Template Application"
+title: "Stanford LLM on FHIR"
 doi: doi.org/10.5281/zenodo.7600783
-url: "https://github.com/StanfordSpezi/SpeziTemplateApplication"
+url: "https://github.com/StanfordBDHG/LLMonFHIR"
