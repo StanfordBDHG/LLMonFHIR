@@ -26,6 +26,6 @@ jobs:
     secrets: inherit
     with:
       artifactname: LLMonFHIR.xcresult
-      runsonlabels: '["macos-latest"]'
+      runsonlabels: '["macOS", "self-hosted"]'
       fastlanelane: beta
       setupsigning: true
