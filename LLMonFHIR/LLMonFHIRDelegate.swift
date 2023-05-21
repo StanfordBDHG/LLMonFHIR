@@ -8,13 +8,8 @@
 
 import HealthKit
 import Spezi
-import SpeziFHIR
-import SpeziFHIRMockDataStorageProvider
 import SpeziHealthKit
-import SpeziHealthKitToFHIRAdapter
 import SpeziOpenAI
-import SpeziQuestionnaire
-import SpeziScheduler
 import SwiftUI
 
 
@@ -25,7 +20,6 @@ class LLMonFHIRDelegate: SpeziAppDelegate {
                 healthKit
             }
             OpenAIComponent()
-            MockDataStorageProvider()
         }
     }
     

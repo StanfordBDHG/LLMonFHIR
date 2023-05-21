@@ -28,24 +28,6 @@
       }
     },
     {
-      "identity" : "researchkit",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/StanfordBDHG/ResearchKit",
-      "state" : {
-        "revision" : "3ea06dcc596bd49571ae3353c9c1555776114072",
-        "version" : "2.2.9"
-      }
-    },
-    {
-      "identity" : "researchkitonfhir",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/StanfordBDHG/ResearchKitOnFHIR",
-      "state" : {
-        "revision" : "b3576031a96abb25a2534a6a1fbf55c0b5c1a6ce",
-        "version" : "0.2.1"
-      }
-    },
-    {
       "identity" : "spezi",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/StanfordSpezi/Spezi",
@@ -55,48 +37,12 @@
       }
     },
     {
-      "identity" : "speziaccount",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/StanfordSpezi/SpeziAccount.git",
-      "state" : {
-        "revision" : "8547b117fdf1d624b628eaf382c1552b208b3a68",
-        "version" : "0.3.0"
-      }
-    },
-    {
-      "identity" : "spezicontact",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/StanfordSpezi/SpeziContact.git",
-      "state" : {
-        "revision" : "16b1d4ff1d8ad95e1aaa642d93e49daea2d6de00",
-        "version" : "0.3.0"
-      }
-    },
-    {
-      "identity" : "spezifhir",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/StanfordSpezi/SpeziFHIR.git",
-      "state" : {
-        "revision" : "6303e65ba339f89b86a6dc09aab243b50de33cd7",
-        "version" : "0.3.0"
-      }
-    },
-    {
       "identity" : "spezihealthkit",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/StanfordSpezi/SpeziHealthKit.git",
       "state" : {
         "revision" : "d03eabcaae2de1e25a626c9a3116dc50f01cdc68",
         "version" : "0.2.0"
-      }
-    },
-    {
-      "identity" : "spezihealthkittofhiradapter",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/StanfordSpezi/SpeziHealthKitToFHIRAdapter.git",
-      "state" : {
-        "revision" : "e43f2c05cebcd16a697397721e6a2d72bf418a9c",
-        "version" : "0.3.0"
       }
     },
     {
@@ -115,24 +61,6 @@
       "state" : {
         "revision" : "10109f18d7958098dbbc4c32786d237a57400f85",
         "version" : "0.3.0"
-      }
-    },
-    {
-      "identity" : "speziquestionnaire",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/StanfordSpezi/SpeziQuestionnaire.git",
-      "state" : {
-        "revision" : "7cbeb0a32e9efb055fbccb0317a381e947afd0fa",
-        "version" : "0.3.0"
-      }
-    },
-    {
-      "identity" : "spezischeduler",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/StanfordSpezi/SpeziScheduler.git",
-      "state" : {
-        "revision" : "7ece78e29ea40246ad46b33108469b5414c22495",
-        "version" : "0.4.0"
       }
     },
     {

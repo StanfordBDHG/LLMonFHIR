@@ -6,27 +6,24 @@
 // SPDX-License-Identifier: MIT
 //
 
-import SpeziFHIRMockDataStorageProvider
 import SwiftUI
 
 
 struct HomeView: View {
     enum Tabs: String {
-        case schedule
-        case contact
-        case mockUpload
+        case fhirResources
     }
     
     
-    @AppStorage(StorageKeys.homeTabSelection) var selectedTab = Tabs.schedule
+    @AppStorage(StorageKeys.homeTabSelection) var selectedTab = Tabs.fhirResources
     
     
     var body: some View {
         TabView(selection: $selectedTab) {
-            MockUpload()
-                .tag(Tabs.mockUpload)
+            Text("FHIR Resources")
+                .tag(Tabs.fhirResources)
                 .tabItem {
-                    Label("MOCK_UPLOAD_TAB_TITLE", systemImage: "server.rack")
+                    Label("FHIR_RESOURCES_TAB_TITLE", systemImage: "server.rack")
                 }
         }
     }
@@ -37,7 +34,6 @@ struct HomeView: View {
 struct MainView_Previews: PreviewProvider {
     static var previews: some View {
         HomeView()
-            .environmentObject(MockDataStorageProvider())
     }
 }
 #endif
