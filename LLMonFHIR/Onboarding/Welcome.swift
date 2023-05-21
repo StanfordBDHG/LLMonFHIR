@@ -37,7 +37,7 @@ struct Welcome: View {
             ],
             actionText: "WELCOME_BUTTON".moduleLocalized,
             action: {
-                onboardingSteps.append(.interestingModules)
+                onboardingSteps.append(.disclaimer)
             }
         )
     }

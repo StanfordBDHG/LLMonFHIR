@@ -12,6 +12,7 @@ import SpeziFHIR
 import SpeziFHIRMockDataStorageProvider
 import SpeziHealthKit
 import SpeziHealthKitToFHIRAdapter
+import SpeziOpenAI
 import SpeziQuestionnaire
 import SpeziScheduler
 import SwiftUI
@@ -23,18 +24,27 @@ class LLMonFHIRDelegate: SpeziAppDelegate {
             if HKHealthStore.isHealthDataAvailable() {
                 healthKit
             }
-            QuestionnaireDataSource()
+            OpenAIComponent()
             MockDataStorageProvider()
-            LLMonFHIRScheduler()
         }
     }
     
     
     private var healthKit: HealthKit<FHIR> {
         HealthKit {
-            CollectSample(
-                HKQuantityType(.stepCount),
-                deliverySetting: .anchorQuery(.afterAuthorizationAndApplicationWillLaunch)
+            CollectSamples(
+                [
+                    HKClinicalType(.allergyRecord),
+                    HKClinicalType(.clinicalNoteRecord),
+                    HKClinicalType(.conditionRecord),
+                    HKClinicalType(.coverageRecord),
+                    HKClinicalType(.immunizationRecord),
+                    HKClinicalType(.labResultRecord),
+                    HKClinicalType(.medicationRecord),
+                    HKClinicalType(.procedureRecord),
+                    HKClinicalType(.vitalSignRecord)
+                ],
+                deliverySetting: .manual(safeAnchor: false)
             )
         } adapter: {
             HealthKitToFHIRAdapter()

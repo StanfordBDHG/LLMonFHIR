@@ -6,13 +6,17 @@
 // SPDX-License-Identifier: MIT
 //
 
+import SpeziFHIR
+import SpeziOpenAI
 import SwiftUI
 
 
 /// Displays an multi-step onboarding flow for the Spezi LLMonFHIR.
 struct OnboardingFlow: View {
     enum Step: String, Codable {
-        case interestingModules
+        case disclaimer
+        case openAIAPIKey
+        case openAIModelSelection
         case healthKitPermissions
     }
     
@@ -25,8 +29,16 @@ struct OnboardingFlow: View {
             Welcome(onboardingSteps: $onboardingSteps)
                 .navigationDestination(for: Step.self) { onboardingStep in
                     switch onboardingStep {
-                    case .interestingModules:
-                        InterestingModules(onboardingSteps: $onboardingSteps)
+                    case .disclaimer:
+                        Disclaimer(onboardingSteps: $onboardingSteps)
+                    case .openAIAPIKey:
+                        OpenAIAPIKeyOnboardingStep<FHIR> {
+                            onboardingSteps.append(.openAIModelSelection)
+                        }
+                    case .openAIModelSelection:
+                        OpenAIModelSelectionOnboardingStep<FHIR> {
+                            onboardingSteps.append(.healthKitPermissions)
+                        }
                     case .healthKitPermissions:
                         HealthKitPermissions()
                     }
