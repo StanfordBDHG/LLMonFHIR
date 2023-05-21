@@ -50,5 +50,5 @@
 "HEALTHKIT_PERMISSIONS_BUTTON" = "Grant Access";
 
 
-// MARK: - Mock Upload Data Storage Provider
-"MOCK_UPLOAD_TAB_TITLE" = "Mock Upload";
+// MARK: - FHIR Resources Tab
+"FHIR_RESOURCES_TAB_TITLE" = "FHIR Resources";

@@ -6,7 +6,6 @@
 // SPDX-License-Identifier: MIT
 //
 
-import SpeziFHIR
 import SpeziHealthKit
 import SpeziOnboarding
 import SwiftUI
