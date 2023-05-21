@@ -10,22 +10,8 @@ import SwiftUI
 
 
 struct HomeView: View {
-    enum Tabs: String {
-        case fhirResources
-    }
-    
-    
-    @AppStorage(StorageKeys.homeTabSelection) var selectedTab = Tabs.fhirResources
-    
-    
     var body: some View {
-        TabView(selection: $selectedTab) {
-            Text("FHIR Resources")
-                .tag(Tabs.fhirResources)
-                .tabItem {
-                    Label("FHIR_RESOURCES_TAB_TITLE", systemImage: "server.rack")
-                }
-        }
+        FHIRResourcesView()
     }
 }
 

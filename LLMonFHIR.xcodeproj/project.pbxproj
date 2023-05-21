@@ -15,14 +15,15 @@
 		2FC3439129EE6349002D773C /* AppIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = 2FE5DC2A29EDD78D004B9AB4 /* AppIcon.png */; };
 		2FC9759F2978E39600BA99FE /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 2FC9759E2978E39600BA99FE /* Localizable.strings */; };
 		2FC975A82978F11A00BA99FE /* Home.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FC975A72978F11A00BA99FE /* Home.swift */; };
-		2FD8E8232A1AAD6400357F4E /* OptionalFHIRPrimitiveFHIRString+LosslessStringConvertible.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FD8E8202A1AAD6400357F4E /* OptionalFHIRPrimitiveFHIRString+LosslessStringConvertible.swift */; };
-		2FD8E8242A1AAD6400357F4E /* Configuration+FHIR.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FD8E8212A1AAD6400357F4E /* Configuration+FHIR.swift */; };
-		2FD8E8252A1AAD6400357F4E /* FHIR+Identifiable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FD8E8222A1AAD6400357F4E /* FHIR+Identifiable.swift */; };
 		2FD8E8272A1AAD9B00357F4E /* FHIR.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FD8E8262A1AAD9B00357F4E /* FHIR.swift */; };
 		2FD8E82A2A1AADDA00357F4E /* ModelsDSTU2 in Frameworks */ = {isa = PBXBuildFile; productRef = 2FD8E8292A1AADDA00357F4E /* ModelsDSTU2 */; };
 		2FD8E82C2A1AADDA00357F4E /* ModelsR4 in Frameworks */ = {isa = PBXBuildFile; productRef = 2FD8E82B2A1AADDA00357F4E /* ModelsR4 */; };
 		2FD8E82E2A1AAFC300357F4E /* HealthKitToFHIRAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FD8E82D2A1AAFC300357F4E /* HealthKitToFHIRAdapter.swift */; };
 		2FD8E8312A1AB00D00357F4E /* HealthKitOnFHIR in Frameworks */ = {isa = PBXBuildFile; productRef = 2FD8E8302A1AB00D00357F4E /* HealthKitOnFHIR */; };
+		2FD8E8332A1AB68E00357F4E /* VersionedResource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FD8E8322A1AB68E00357F4E /* VersionedResource.swift */; };
+		2FD8E83B2A1AD10300357F4E /* FHIRResourcesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FD8E83A2A1AD10300357F4E /* FHIRResourcesView.swift */; };
+		2FD8E83D2A1AE24F00357F4E /* InspectResourceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FD8E83C2A1AE24F00357F4E /* InspectResourceView.swift */; };
+		2FD8E8402A1AE3F200357F4E /* SpeziViews in Frameworks */ = {isa = PBXBuildFile; productRef = 2FD8E83F2A1AE3F200357F4E /* SpeziViews */; };
 		2FE5DC3629EDD7CA004B9AB4 /* HealthKitPermissions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FE5DC3029EDD7CA004B9AB4 /* HealthKitPermissions.swift */; };
 		2FE5DC3729EDD7CA004B9AB4 /* OnboardingFlow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FE5DC3129EDD7CA004B9AB4 /* OnboardingFlow.swift */; };
 		2FE5DC3829EDD7CA004B9AB4 /* Disclaimer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FE5DC3229EDD7CA004B9AB4 /* Disclaimer.swift */; };
@@ -67,11 +68,11 @@
 		2FC94CD4298B0A1D009C8209 /* LLMonFHIR.xctestplan */ = {isa = PBXFileReference; lastKnownFileType = text; path = LLMonFHIR.xctestplan; sourceTree = "<group>"; };
 		2FC9759E2978E39600BA99FE /* Localizable.strings */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; path = Localizable.strings; sourceTree = "<group>"; };
 		2FC975A72978F11A00BA99FE /* Home.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Home.swift; sourceTree = "<group>"; };
-		2FD8E8202A1AAD6400357F4E /* OptionalFHIRPrimitiveFHIRString+LosslessStringConvertible.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "OptionalFHIRPrimitiveFHIRString+LosslessStringConvertible.swift"; sourceTree = "<group>"; };
-		2FD8E8212A1AAD6400357F4E /* Configuration+FHIR.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Configuration+FHIR.swift"; sourceTree = "<group>"; };
-		2FD8E8222A1AAD6400357F4E /* FHIR+Identifiable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "FHIR+Identifiable.swift"; sourceTree = "<group>"; };
 		2FD8E8262A1AAD9B00357F4E /* FHIR.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FHIR.swift; sourceTree = "<group>"; };
 		2FD8E82D2A1AAFC300357F4E /* HealthKitToFHIRAdapter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HealthKitToFHIRAdapter.swift; sourceTree = "<group>"; };
+		2FD8E8322A1AB68E00357F4E /* VersionedResource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VersionedResource.swift; sourceTree = "<group>"; };
+		2FD8E83A2A1AD10300357F4E /* FHIRResourcesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FHIRResourcesView.swift; sourceTree = "<group>"; };
+		2FD8E83C2A1AE24F00357F4E /* InspectResourceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InspectResourceView.swift; sourceTree = "<group>"; };
 		2FE5DC2A29EDD78D004B9AB4 /* AppIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = AppIcon.png; sourceTree = "<group>"; };
 		2FE5DC3029EDD7CA004B9AB4 /* HealthKitPermissions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HealthKitPermissions.swift; sourceTree = "<group>"; };
 		2FE5DC3129EDD7CA004B9AB4 /* OnboardingFlow.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OnboardingFlow.swift; sourceTree = "<group>"; };
@@ -100,6 +101,7 @@
 				2FD8E82C2A1AADDA00357F4E /* ModelsR4 in Frameworks */,
 				2F901CE22A1A03360007C167 /* SpeziOpenAI in Frameworks */,
 				2FD8E82A2A1AADDA00357F4E /* ModelsDSTU2 in Frameworks */,
+				2FD8E8402A1AE3F200357F4E /* SpeziViews in Frameworks */,
 				2FE5DC7229EDD8D3004B9AB4 /* SpeziHealthKit in Frameworks */,
 				2F49B7762980407C00BCB272 /* Spezi in Frameworks */,
 				2FD8E8312A1AB00D00357F4E /* HealthKitOnFHIR in Frameworks */,
@@ -139,12 +141,19 @@
 			isa = PBXGroup;
 			children = (
 				2FD8E8262A1AAD9B00357F4E /* FHIR.swift */,
-				2FD8E8212A1AAD6400357F4E /* Configuration+FHIR.swift */,
-				2FD8E8222A1AAD6400357F4E /* FHIR+Identifiable.swift */,
-				2FD8E8202A1AAD6400357F4E /* OptionalFHIRPrimitiveFHIRString+LosslessStringConvertible.swift */,
+				2FD8E8322A1AB68E00357F4E /* VersionedResource.swift */,
 				2FD8E82D2A1AAFC300357F4E /* HealthKitToFHIRAdapter.swift */,
 			);
 			path = "FHIR Standard";
+			sourceTree = "<group>";
+		};
+		2FD8E8392A1AD0E900357F4E /* FHIR Display */ = {
+			isa = PBXGroup;
+			children = (
+				2FD8E83A2A1AD10300357F4E /* FHIRResourcesView.swift */,
+				2FD8E83C2A1AE24F00357F4E /* InspectResourceView.swift */,
+			);
+			path = "FHIR Display";
 			sourceTree = "<group>";
 		};
 		2FE5DC2829EDD398004B9AB4 /* Onboarding */ = {
@@ -217,8 +226,9 @@
 				2F5E32BC297E05EA003432F8 /* LLMonFHIRDelegate.swift */,
 				2F4E23822989D51F0013F3D9 /* LLMonFHIRTestingSetup.swift */,
 				2FC975A72978F11A00BA99FE /* Home.swift */,
-				2FD8E81D2A1AAC6900357F4E /* FHIR Standard */,
 				2FE5DC2829EDD398004B9AB4 /* Onboarding */,
+				2FD8E81D2A1AAC6900357F4E /* FHIR Standard */,
+				2FD8E8392A1AD0E900357F4E /* FHIR Display */,
 				2FE5DC3C29EDD7DA004B9AB4 /* SharedContext */,
 				2FE5DC3D29EDD7E4004B9AB4 /* Helper */,
 				2FE5DC2D29EDD792004B9AB4 /* Resources */,
@@ -275,6 +285,7 @@
 				2FD8E8292A1AADDA00357F4E /* ModelsDSTU2 */,
 				2FD8E82B2A1AADDA00357F4E /* ModelsR4 */,
 				2FD8E8302A1AB00D00357F4E /* HealthKitOnFHIR */,
+				2FD8E83F2A1AE3F200357F4E /* SpeziViews */,
 			);
 			productName = LLMonFHIR;
 			productReference = 653A254D283387FE005D4D48 /* LLMonFHIR.app */;
@@ -361,6 +372,7 @@
 				2F901CE02A1A03360007C167 /* XCRemoteSwiftPackageReference "SpeziML" */,
 				2FD8E8282A1AADDA00357F4E /* XCRemoteSwiftPackageReference "FHIRModels" */,
 				2FD8E82F2A1AB00D00357F4E /* XCRemoteSwiftPackageReference "HealthKitOnFHIR" */,
+				2FD8E83E2A1AE3F200357F4E /* XCRemoteSwiftPackageReference "SpeziViews" */,
 			);
 			productRefGroup = 653A254E283387FE005D4D48 /* Products */;
 			projectDirPath = "";
@@ -426,25 +438,25 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				2FD8E8252A1AAD6400357F4E /* FHIR+Identifiable.swift in Sources */,
 				2FE5DC4129EDD7EE004B9AB4 /* StorageKeys.swift in Sources */,
 				2FE5DC3929EDD7CA004B9AB4 /* String+ModuleLocalized.swift in Sources */,
 				2FE5DC3A29EDD7CA004B9AB4 /* Welcome.swift in Sources */,
 				2FE5DC3829EDD7CA004B9AB4 /* Disclaimer.swift in Sources */,
+				2FD8E8332A1AB68E00357F4E /* VersionedResource.swift in Sources */,
+				2FD8E83D2A1AE24F00357F4E /* InspectResourceView.swift in Sources */,
+				2FD8E83B2A1AD10300357F4E /* FHIRResourcesView.swift in Sources */,
 				2FD8E82E2A1AAFC300357F4E /* HealthKitToFHIRAdapter.swift in Sources */,
 				2FE5DC4529EDD7F2004B9AB4 /* Binding+Negate.swift in Sources */,
 				2FC975A82978F11A00BA99FE /* Home.swift in Sources */,
 				2FE5DC3729EDD7CA004B9AB4 /* OnboardingFlow.swift in Sources */,
 				2FE5DC4729EDD7F2004B9AB4 /* CodableArray+RawRepresentable.swift in Sources */,
 				2FE5DC4029EDD7EE004B9AB4 /* FeatureFlags.swift in Sources */,
-				2FD8E8232A1AAD6400357F4E /* OptionalFHIRPrimitiveFHIRString+LosslessStringConvertible.swift in Sources */,
 				2FE5DC4629EDD7F2004B9AB4 /* Bundle+Image.swift in Sources */,
 				2F4E23832989D51F0013F3D9 /* LLMonFHIRTestingSetup.swift in Sources */,
 				2FD8E8272A1AAD9B00357F4E /* FHIR.swift in Sources */,
 				2F5E32BD297E05EA003432F8 /* LLMonFHIRDelegate.swift in Sources */,
 				653A2551283387FE005D4D48 /* LLMonFHIR.swift in Sources */,
 				2FE5DC3629EDD7CA004B9AB4 /* HealthKitPermissions.swift in Sources */,
-				2FD8E8242A1AAD6400357F4E /* Configuration+FHIR.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -990,6 +1002,14 @@
 				minimumVersion = 0.2.3;
 			};
 		};
+		2FD8E83E2A1AE3F200357F4E /* XCRemoteSwiftPackageReference "SpeziViews" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/StanfordSpezi/SpeziViews.git";
+			requirement = {
+				kind = upToNextMinorVersion;
+				minimumVersion = 0.3.0;
+			};
+		};
 		2FE5DC7029EDD8D3004B9AB4 /* XCRemoteSwiftPackageReference "SpeziHealthKit" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/StanfordSpezi/SpeziHealthKit.git";
@@ -1049,6 +1069,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 2FD8E82F2A1AB00D00357F4E /* XCRemoteSwiftPackageReference "HealthKitOnFHIR" */;
 			productName = HealthKitOnFHIR;
+		};
+		2FD8E83F2A1AE3F200357F4E /* SpeziViews */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 2FD8E83E2A1AE3F200357F4E /* XCRemoteSwiftPackageReference "SpeziViews" */;
+			productName = SpeziViews;
 		};
 		2FE5DC7129EDD8D3004B9AB4 /* SpeziHealthKit */ = {
 			isa = XCSwiftPackageProductDependency;

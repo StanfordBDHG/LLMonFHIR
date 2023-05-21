@@ -38,7 +38,7 @@ class LLMonFHIRDelegate: SpeziAppDelegate {
                     HKClinicalType(.procedureRecord),
                     HKClinicalType(.vitalSignRecord)
                 ],
-                deliverySetting: .manual(safeAnchor: false)
+                deliverySetting: .anchorQuery(saveAnchor: false)
             )
         } adapter: {
             HealthKitToFHIRAdapter()
