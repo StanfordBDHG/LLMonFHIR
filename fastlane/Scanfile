@@ -1,5 +1,5 @@
 #
-# This source file is part of the Stanford Spezi Template Application project
+# This source file is part of the Stanford LLM on FHIR project
 #
 # SPDX-FileCopyrightText: 2023 Stanford University
 #
@@ -12,7 +12,7 @@
 # In general, you can use the options available
 # fastlane scan --help
 
-project("TemplateApplication.xcodeproj")
-scheme("TemplateApplication")
+project("LLMonFHIR.xcodeproj")
+scheme("LLMonFHIR")
 devices(["iPhone 14 Pro"])
 skip_build(true)

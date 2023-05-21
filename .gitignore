@@ -1,5 +1,5 @@
 #
-# This source file is part of the Stanford Spezi Template Application project
+# This source file is part of the Stanford LLM on FHIR project
 #
 # SPDX-FileCopyrightText: 2023 Stanford University
 #
@@ -11,7 +11,7 @@
 .swiftpm
 .derivedData
 .build/
-!TemplateApplication.xcodeproj
+!LLMonFHIR.xcodeproj
 
 # IDE related folders
 .idea
@@ -29,7 +29,7 @@ xcuserdata/
 # Tests
 report.junit
 report.html
-TemplateApplication.xcresult
+LLMonFHIR.xcresult
 
 # Logs
 logs

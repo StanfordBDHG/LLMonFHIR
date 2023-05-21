@@ -1,5 +1,5 @@
 #
-# This source file is part of the Stanford Spezi Template Application project
+# This source file is part of the Stanford LLM on FHIR project
 #
 # SPDX-FileCopyrightText: 2023 Stanford University
 #
@@ -46,7 +46,7 @@ platform :ios do
     signin
     increment_build_number({
       build_number: latest_testflight_build_number + 1,
-      xcodeproj: "TemplateApplication.xcodeproj"
+      xcodeproj: "LLMonFHIR.xcodeproj"
     })
     build
     commit = last_git_commit

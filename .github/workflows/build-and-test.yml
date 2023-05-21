@@ -1,5 +1,5 @@
 #
-# This source file is part of the Stanford Spezi Template Application project
+# This source file is part of the Stanford LLM on FHIR project
 #
 # SPDX-FileCopyrightText: 2023 Stanford University
 #
@@ -16,21 +16,21 @@ on:
 jobs:
   reuse_action:
     name: REUSE Compliance Check
-    uses: StanfordSpezi/.github/.github/workflows/reuse.yml@v2
+    uses: StanfordBDHG/.github/.github/workflows/reuse.yml@v2
   swiftlint:
     name: SwiftLint
-    uses: StanfordSpezi/.github/.github/workflows/swiftlint.yml@v2
+    uses: StanfordBDHG/.github/.github/workflows/swiftlint.yml@v2
   buildandtest:
     name: Build and Test
-    uses: StanfordSpezi/.github/.github/workflows/xcodebuild-or-fastlane.yml@v2
+    uses: StanfordBDHG/.github/.github/workflows/xcodebuild-or-fastlane.yml@v2
     with:
-      artifactname: TemplateApplication.xcresult
+      artifactname: LLMonFHIR.xcresult
       runsonlabels: '["macos-latest"]'
       setupfirebaseemulator: true
       customcommand: "firebase emulators:exec 'fastlane test'"
   uploadcoveragereport:
     name: Upload Coverage Report
     needs: buildandtest
-    uses: StanfordSpezi/.github/.github/workflows/create-and-upload-coverage-report.yml@v2
+    uses: StanfordBDHG/.github/.github/workflows/create-and-upload-coverage-report.yml@v2
     with:
-      coveragereports: TemplateApplication.xcresult
+      coveragereports: LLMonFHIR.xcresult
