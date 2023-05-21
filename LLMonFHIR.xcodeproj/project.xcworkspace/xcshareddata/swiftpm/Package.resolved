@@ -19,6 +19,15 @@
       }
     },
     {
+      "identity" : "openai",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/MacPaw/OpenAI",
+      "state" : {
+        "revision" : "4da423fe637a628ebee8f214217a9e96060a5222",
+        "version" : "0.2.1"
+      }
+    },
+    {
       "identity" : "researchkit",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/StanfordBDHG/ResearchKit",
@@ -88,6 +97,15 @@
       "state" : {
         "revision" : "e43f2c05cebcd16a697397721e6a2d72bf418a9c",
         "version" : "0.3.0"
+      }
+    },
+    {
+      "identity" : "speziml",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/StanfordSpezi/SpeziML.git",
+      "state" : {
+        "revision" : "041ffeedb6fddaa5bffda191e8f231fa4f7c0882",
+        "version" : "0.1.1"
       }
     },
     {

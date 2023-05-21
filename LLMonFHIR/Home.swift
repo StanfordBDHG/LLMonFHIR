@@ -23,16 +23,6 @@ struct HomeView: View {
     
     var body: some View {
         TabView(selection: $selectedTab) {
-            ScheduleView()
-                .tag(Tabs.schedule)
-                .tabItem {
-                    Label("SCHEDULE_TAB_TITLE", systemImage: "list.clipboard")
-                }
-            Contacts()
-                .tag(Tabs.contact)
-                .tabItem {
-                    Label("CONTACTS_TAB_TITLE", systemImage: "person.fill")
-                }
             MockUpload()
                 .tag(Tabs.mockUpload)
                 .tabItem {
@@ -47,7 +37,6 @@ struct HomeView: View {
 struct MainView_Previews: PreviewProvider {
     static var previews: some View {
         HomeView()
-            .environmentObject(LLMonFHIRScheduler())
             .environmentObject(MockDataStorageProvider())
     }
 }
