@@ -40,9 +40,9 @@ struct InterestingModules: View {
             action: {
                 #if targetEnvironment(simulator) && (arch(i386) || arch(x86_64))
                 print("PKCanvas view-related views are currently skipped on Intel-based iOS simulators due to a metal bug on the simulator.")
-                onboardingSteps.append(.accountSetup)
+                onboardingSteps.append(.healthKitPermissions)
                 #else
-                onboardingSteps.append(.consent)
+                onboardingSteps.append(.healthKitPermissions)
                 #endif
             }
         )

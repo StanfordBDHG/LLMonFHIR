@@ -10,7 +10,7 @@ SPDX-License-Identifier: MIT
 
 # LLM on FHIR - Explain My Clinical Data
 
-[![Beta Deployment](https://github.com/StanfordBDHG/LLMonFHIR/actions/workflows/beta-deployment.yml/badge.svg)](https://github.com/StanfordBDHG/LLMonFHIR/actions/workflows/beta-deployment.yml)
+[![Beta Deployment](https://github.com/PSchmiedmayer/LLMonFHIR/actions/workflows/beta-deployment.yml/badge.svg)](https://github.com/PSchmiedmayer/LLMonFHIR/actions/workflows/beta-deployment.yml)
 [![codecov](https://codecov.io/gh/StanfordBDHG/LLMonFHIR/branch/main/graph/badge.svg?token=9fvSAiFJUY)](https://codecov.io/gh/StanfordBDHG/LLMonFHIR)
 [![DOI](https://zenodo.org/badge/589846478.svg)](https://zenodo.org/badge/latestdoi/589846478)
 
