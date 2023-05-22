@@ -55,7 +55,7 @@ extension XCUIApplication {
     private func navigateOnboardingFlowInterestingModules() throws {
         XCTAssertTrue(staticTexts["Disclaimer"].waitForExistence(timeout: 2))
         
-        for _ in 1..<4 {
+        for _ in 1..<5 {
             XCTAssertTrue(buttons["Next"].waitForExistence(timeout: 2))
             buttons["Next"].tap()
         }

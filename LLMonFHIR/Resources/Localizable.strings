@@ -11,7 +11,7 @@
 
 // MARK: Welcome
 "WELCOME_TITLE" = "LLM on FHIR";
-"WELCOME_SUBTITLE" = "Explain My Clinical Data";
+"WELCOME_SUBTITLE" = "Demystifying Health Records";
 
 "WELCOME_AREA1_TITLE" = "Inspect Your Health Data";
 "WELCOME_AREA1_DESCRIPTION" = "Health data is provided using your provides FHIR patient data API using the Apple Health app.";
@@ -39,6 +39,9 @@
 
 "DISCLAIMER_AREA4_TITLE" = "Warning";
 "DISCLAIMER_AREA4_DESCRIPTION" = "This app is for demonstration only and should not be used to process any personal health information.";
+
+"DISCLAIMER_AREA5_TITLE" = "Warning";
+"DISCLAIMER_AREA5_DESCRIPTION" = "Remember that your health data will be sent to OpenAI for processing. Please inspect and carefully read the OpenAI API data usage policies and settings.";
 
 "DISCLAIMER_BUTTON" = "I Agree";
 
