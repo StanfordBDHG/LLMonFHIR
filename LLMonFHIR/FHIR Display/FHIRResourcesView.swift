@@ -37,7 +37,7 @@ struct FHIRResourcesView: View {
     private func resources(for resourceType: String) -> some View {
         ForEach(resources[resourceType] ?? []) { resource in
             NavigationLink(value: resource) {
-                Text(resource.compactDescription)
+                ResourceSummaryView(resource: resource)
             }
         }
     }

@@ -12,7 +12,12 @@ import SwiftUI
 
 struct InspecResourceView: View {
     @EnvironmentObject var fhirResourceInterpreter: FHIRResourceInterpreter<FHIR>
+    @EnvironmentObject var fhirResourceSummary: FHIRResourceSummary<FHIR>
+    
     @State var error: String?
+    @State var interpreting = false
+    @State var showResourceChat = false
+    
     var resource: VersionedResource
     
     var presentAlert: Binding<Bool> {
@@ -34,6 +39,21 @@ struct InspecResourceView: View {
                 if let interpretation = fhirResourceInterpreter.interpretations[resource.id], !interpretation.isEmpty {
                     Text(interpretation)
                         .multilineTextAlignment(.leading)
+                    if !interpreting {
+                        Button(
+                            action: {
+                                showResourceChat.toggle()
+                            },
+                            label: {
+                                HStack {
+                                    Image(systemName: "message.fill")
+                                    Text("Learn More ...")
+                                }
+                                    .frame(maxWidth: .infinity, minHeight: 40)
+                            }
+                        )
+                            .buttonStyle(.borderedProminent)
+                    }
                 } else {
                     VStack(alignment: .center) {
                         Text("Loading result ...")
@@ -50,7 +70,7 @@ struct InspecResourceView: View {
                     .font(.caption2)
             }
         }
-            .navigationTitle(resource.compactDescription)
+            .navigationTitle(fhirResourceSummary.summaries[resource.id]?.title ?? resource.compactDescription)
             .toolbar {
                 ToolbarItem(placement: .primaryAction) {
                     Button(
@@ -68,6 +88,12 @@ struct InspecResourceView: View {
             .alert("Error", isPresented: presentAlert, presenting: error) { error in
                 Text(error)
             }
+            .sheet(isPresented: $showResourceChat) {
+                InspectResourceChat(
+                    chat: fhirResourceInterpreter.chat(forResource: resource),
+                    resource: resource
+                )
+            }
             .task {
                 if fhirResourceInterpreter.interpretations[resource.id] == nil {
                     await interpret()
@@ -77,10 +103,14 @@ struct InspecResourceView: View {
     
     
     private func interpret() async {
+        interpreting = true
+        
         do {
             try await fhirResourceInterpreter.interpret(resource: resource)
         } catch {
             self.error = error.localizedDescription
         }
+        
+        interpreting = false
     }
 }

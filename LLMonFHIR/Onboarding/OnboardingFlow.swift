@@ -15,7 +15,6 @@ struct OnboardingFlow: View {
     enum Step: String, Codable {
         case disclaimer
         case openAIAPIKey
-        case openAIModelSelection
         case healthKitPermissions
     }
     
@@ -32,10 +31,6 @@ struct OnboardingFlow: View {
                         Disclaimer(onboardingSteps: $onboardingSteps)
                     case .openAIAPIKey:
                         OpenAIAPIKeyOnboardingStep<FHIR> {
-                            onboardingSteps.append(.openAIModelSelection)
-                        }
-                    case .openAIModelSelection:
-                        OpenAIModelSelectionOnboardingStep<FHIR> {
                             onboardingSteps.append(.healthKitPermissions)
                         }
                     case .healthKitPermissions:
