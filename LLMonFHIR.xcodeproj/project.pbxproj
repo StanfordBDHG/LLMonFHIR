@@ -12,6 +12,9 @@
 		2F4E23832989D51F0013F3D9 /* LLMonFHIRTestingSetup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F4E23822989D51F0013F3D9 /* LLMonFHIRTestingSetup.swift */; };
 		2F55FC532A1AE8750051DF48 /* FHIRResourceInterpreter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F55FC522A1AE8750051DF48 /* FHIRResourceInterpreter.swift */; };
 		2F5E32BD297E05EA003432F8 /* LLMonFHIRDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F5E32BC297E05EA003432F8 /* LLMonFHIRDelegate.swift */; };
+		2F61A32E2A1B4BFB000A7796 /* InspectResourceChat.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F61A32D2A1B4BFB000A7796 /* InspectResourceChat.swift */; };
+		2F61A3302A1B51BF000A7796 /* FHIRResourceSummary.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F61A32F2A1B51BF000A7796 /* FHIRResourceSummary.swift */; };
+		2F61A3322A1B560B000A7796 /* ResourceSummaryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F61A3312A1B560B000A7796 /* ResourceSummaryView.swift */; };
 		2F901CE22A1A03360007C167 /* SpeziOpenAI in Frameworks */ = {isa = PBXBuildFile; productRef = 2F901CE12A1A03360007C167 /* SpeziOpenAI */; };
 		2FC3439129EE6349002D773C /* AppIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = 2FE5DC2A29EDD78D004B9AB4 /* AppIcon.png */; };
 		2FC9759F2978E39600BA99FE /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 2FC9759E2978E39600BA99FE /* Localizable.strings */; };
@@ -66,6 +69,9 @@
 		2F4E23822989D51F0013F3D9 /* LLMonFHIRTestingSetup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LLMonFHIRTestingSetup.swift; sourceTree = "<group>"; };
 		2F55FC522A1AE8750051DF48 /* FHIRResourceInterpreter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FHIRResourceInterpreter.swift; sourceTree = "<group>"; };
 		2F5E32BC297E05EA003432F8 /* LLMonFHIRDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LLMonFHIRDelegate.swift; sourceTree = "<group>"; };
+		2F61A32D2A1B4BFB000A7796 /* InspectResourceChat.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InspectResourceChat.swift; sourceTree = "<group>"; };
+		2F61A32F2A1B51BF000A7796 /* FHIRResourceSummary.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FHIRResourceSummary.swift; sourceTree = "<group>"; };
+		2F61A3312A1B560B000A7796 /* ResourceSummaryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResourceSummaryView.swift; sourceTree = "<group>"; };
 		2FAEC07F297F583900C11C42 /* LLMonFHIR.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = LLMonFHIR.entitlements; sourceTree = "<group>"; };
 		2FC94CD4298B0A1D009C8209 /* LLMonFHIR.xctestplan */ = {isa = PBXFileReference; lastKnownFileType = text; path = LLMonFHIR.xctestplan; sourceTree = "<group>"; };
 		2FC9759E2978E39600BA99FE /* Localizable.strings */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; path = Localizable.strings; sourceTree = "<group>"; };
@@ -153,8 +159,11 @@
 			isa = PBXGroup;
 			children = (
 				2FD8E83A2A1AD10300357F4E /* FHIRResourcesView.swift */,
+				2F61A3312A1B560B000A7796 /* ResourceSummaryView.swift */,
 				2FD8E83C2A1AE24F00357F4E /* InspectResourceView.swift */,
 				2F55FC522A1AE8750051DF48 /* FHIRResourceInterpreter.swift */,
+				2F61A32F2A1B51BF000A7796 /* FHIRResourceSummary.swift */,
+				2F61A32D2A1B4BFB000A7796 /* InspectResourceChat.swift */,
 			);
 			path = "FHIR Display";
 			sourceTree = "<group>";
@@ -443,9 +452,12 @@
 			files = (
 				2FE5DC4129EDD7EE004B9AB4 /* StorageKeys.swift in Sources */,
 				2FE5DC3929EDD7CA004B9AB4 /* String+ModuleLocalized.swift in Sources */,
+				2F61A32E2A1B4BFB000A7796 /* InspectResourceChat.swift in Sources */,
+				2F61A3302A1B51BF000A7796 /* FHIRResourceSummary.swift in Sources */,
 				2FE5DC3A29EDD7CA004B9AB4 /* Welcome.swift in Sources */,
 				2FE5DC3829EDD7CA004B9AB4 /* Disclaimer.swift in Sources */,
 				2FD8E8332A1AB68E00357F4E /* VersionedResource.swift in Sources */,
+				2F61A3322A1B560B000A7796 /* ResourceSummaryView.swift in Sources */,
 				2FD8E83D2A1AE24F00357F4E /* InspectResourceView.swift in Sources */,
 				2FD8E83B2A1AD10300357F4E /* FHIRResourcesView.swift in Sources */,
 				2FD8E82E2A1AAFC300357F4E /* HealthKitToFHIRAdapter.swift in Sources */,
@@ -987,7 +999,7 @@
 			repositoryURL = "https://github.com/StanfordSpezi/SpeziML.git";
 			requirement = {
 				kind = upToNextMinorVersion;
-				minimumVersion = 0.1.1;
+				minimumVersion = 0.1.2;
 			};
 		};
 		2FD8E8282A1AADDA00357F4E /* XCRemoteSwiftPackageReference "FHIRModels" */ = {
