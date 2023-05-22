@@ -48,7 +48,7 @@ extension XCUIApplication {
     }
     
     private func navigateOnboardingFlowWelcome() throws {
-        XCTAssertTrue(staticTexts["LLMonFHIR"].waitForExistence(timeout: 2))
+        XCTAssertTrue(staticTexts["LLM on FHIR"].waitForExistence(timeout: 2))
         
         XCTAssertTrue(buttons["Learn More"].waitForExistence(timeout: 2))
         buttons["Learn More"].tap()
@@ -67,9 +67,6 @@ extension XCUIApplication {
     }
     
     private func navigateOnboardingFlowOpenAI() throws {
-        XCTAssertTrue(buttons["Next"].waitForExistence(timeout: 2))
-        buttons["Next"].tap()
-        
         XCTAssertTrue(buttons["Next"].waitForExistence(timeout: 2))
         buttons["Next"].tap()
     }

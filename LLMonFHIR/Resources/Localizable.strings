@@ -10,37 +10,37 @@
 // MARK: - Onboarding
 
 // MARK: Welcome
-"WELCOME_TITLE" = "LLMonFHIR";
+"WELCOME_TITLE" = "LLM on FHIR";
 "WELCOME_SUBTITLE" = "Explain My Clinical Data";
 
-"WELCOME_AREA1_TITLE" = "1. Feature";
-"WELCOME_AREA1_DESCRIPTION" = "...";
+"WELCOME_AREA1_TITLE" = "Inspect Your Health Data";
+"WELCOME_AREA1_DESCRIPTION" = "Health data is provided using your provides FHIR patient data API using the Apple Health app.";
 
-"WELCOME_AREA2_TITLE" = "2. Feature";
-"WELCOME_AREA2_DESCRIPTION" = "...";
+"WELCOME_AREA2_TITLE" = "Summarize & Interpret Your Data";
+"WELCOME_AREA2_DESCRIPTION" = "LLM on FHIR allows you to summarize and interpret your clinical data.";
 
-"WELCOME_AREA3_TITLE" = "3. Feature";
-"WELCOME_AREA3_DESCRIPTION" = "...";
+"WELCOME_AREA3_TITLE" = "Learn More About Your Data";
+"WELCOME_AREA3_DESCRIPTION" = "Use the chat functionality to ask follow up questions and get more information about your clinical records.";
 
 "WELCOME_BUTTON" = "Learn More";
 
 // MARK: Disclaimer
 "DISCLAIMER_TITLE" = "Disclaimer";
-"DISCLAIMER_SUBTITLE" = "...";
+"DISCLAIMER_SUBTITLE" = "LLM on FHIR is an experimental iOS app that allows users to interact with health data stored in Apple Health using OpenAI models.";
 
-"DISCLAIMER_AREA1_TITLE" = "1. Disclaimer";
-"DISCLAIMER_AREA1_DESCRIPTION" = "...";
+"DISCLAIMER_AREA1_TITLE" = "Warning";
+"DISCLAIMER_AREA1_DESCRIPTION" = "LLM on FHIR is provided for general informational purposes only and is not intended as a substitute for professional medical advice, diagnosis, or treatment.";
 
-"DISCLAIMER_AREA2_TITLE" = "2. Disclaimer";
-"DISCLAIMER_AREA2_DESCRIPTION" = "...";
+"DISCLAIMER_AREA2_TITLE" = "Warning";
+"DISCLAIMER_AREA2_DESCRIPTION" = "Large language models, such as those provided by OpenAI, are known to hallucinate and at times return false information.";
 
-"DISCLAIMER_AREA3_TITLE" = "3. Disclaimer";
-"DISCLAIMER_AREA3_DESCRIPTION" = "...";
+"DISCLAIMER_AREA3_TITLE" = "Warning";
+"DISCLAIMER_AREA3_DESCRIPTION" = "The use of LLM on FHIR is at your own risk. Always consult a qualified healthcare provider for personalized advice regarding your health and well-being.";
 
-"DISCLAIMER_AREA4_TITLE" = "4. Disclaimer";
-"DISCLAIMER_AREA4_DESCRIPTION" = "...";
+"DISCLAIMER_AREA4_TITLE" = "Warning";
+"DISCLAIMER_AREA4_DESCRIPTION" = "This app is for demonstration only and should not be used to process any personal health information.";
 
-"DISCLAIMER_BUTTON" = "Next";
+"DISCLAIMER_BUTTON" = "I Agree";
 
 
 // MARK: HealthKit
@@ -53,18 +53,18 @@
 // MARK: - FHIR Resources Title
 "FHIR_RESOURCES_TITLE" = "Your Health Data";
 "FHIR_RESOURCES_VIEW_NO_RESOURCES" = "
-No health records available.
+No health records are available.
 
 Please follow the instructions to connect to retrieve your health records from your provider: [Apple Support - View health records on your iPhone or iPod touch](https://support.apple.com/en-us/HT208680).
 
 You can find a list of supported institutions at [Apple Support - Institutions that support health records on iPhone and iPod touch](https://platform.openai.com/account/api-keys).
 
-If you can see your health records in the Apple Health app, please ensure that LLM on FHIR as access to your health records in the Apple Health App. You can find these settings the privacy section of your profile in Apple Health.
+If you can see your health records in the Apple Health app, please ensure that LLM on FHIR has access to your health records in the Apple Health App. You can find these settings in the privacy section of your profile in Apple Health.
 ";
 "FHIR_RESOURCES_VIEW_INSTRUCTION" = "Welcome to LLM on FHIR
 
-You can inspect the different resources in your Apple Health app by tapping on a resources. You can ask follow up questions in the chat view in each resource.
-You can load a title and summary for each resource using a long press on a resources.
+You can inspect the different resources in your Apple Health app by tapping on a resource. You can ask follow-up questions in the chat view in each resource.
+You can load a title and summary for each resource using a long press on a resource.
 ";
 
 
@@ -95,8 +95,9 @@ The following JSON representation defines the FHIR resource that you should inte
 Return a short title of the resource summarizing its purpose in less than 50 characters without including the word title.
 After the title, add a new line and provide a short one-sentence summary of the resource in less than 20 words.
 Do NOT respond with more content than the two lines containing the title and summary.
-Do NOT start the lines with, 'Title:' or 'Summary:'. Directly provide the content without any additional structure.
+Do NOT start the lines with 'Title:' or 'Summary:'. Directly provide the content without any additional structure.
 ";
+
 "FHIR_RESOURCE_INTERPRETATION_PROMPT %@" = "
 You are the LLM on FHIR applicatation.
 Your task is to interpret the following FHIR resource from the user's clinical record.
@@ -109,5 +110,5 @@ The following JSON representation defines the FHIR resource that you should inte
 %@
 
 Immediately return an interpretation to the user, starting the conversation.
-Do not introduce yourself at the beginning and start with your interpretation.
+Do not introduce yourself at the beginning, and start with your interpretation.
 ";
