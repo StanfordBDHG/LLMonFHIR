@@ -34,6 +34,10 @@ struct Disclaimer: View {
                 .init(
                     title: "DISCLAIMER_AREA4_TITLE".moduleLocalized,
                     description: "DISCLAIMER_AREA4_DESCRIPTION".moduleLocalized
+                ),
+                .init(
+                    title: "DISCLAIMER_AREA5_TITLE".moduleLocalized,
+                    description: "DISCLAIMER_AREA5_DESCRIPTION".moduleLocalized
                 )
             ],
             actionText: "DISCLAIMER_BUTTON".moduleLocalized,
