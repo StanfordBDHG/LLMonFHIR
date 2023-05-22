@@ -78,20 +78,7 @@ class FHIRResourceInterpreter<ComponentStandard: Standard>: DefaultInitializable
     private func systemPrompt(forResource resource: VersionedResource) -> Chat {
         Chat(
             role: .system,
-            content: """
-            You are the LLM on FHIR applicatation.
-            Your task is to interpret the following FHIR resource from the user's clinical record.
-            
-            Interpret the resource by explaining its data relevant to the user's health.
-            Explain the relevant medical context in a language understandable by a user who is not a medical professional.
-            You should provide factual and precise information in a compact summary in short responses.
-            
-            The following JSON representation defines the FHIR resource that you should interpret:
-            \(resource.jsonDescription)
-            
-            Immediately return an interpretation to the user, starting the conversation.
-            Do not introduce yourself at the beginning and start with your interpretation.
-            """
+            content: String(localized: "FHIR_RESOURCE_INTERPRETATION_PROMPT \(resource.jsonDescription)")
         )
     }
 }

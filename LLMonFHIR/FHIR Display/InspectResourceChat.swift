@@ -24,11 +24,10 @@ struct InspectResourceChat: View {
     var body: some View {
         NavigationStack {
             ChatView($chat, disableInput: $gettingAnswer)
-                .padding()
                 .navigationTitle(fhirResourceSummary.summaries[resource.id]?.title ?? resource.compactDescription)
                 .toolbar {
                     ToolbarItem(placement: .cancellationAction) {
-                        Button("Cancel") {
+                        Button("FHIR_RESOURCES_CHAT_CANCEL") {
                             dismiss()
                         }
                     }

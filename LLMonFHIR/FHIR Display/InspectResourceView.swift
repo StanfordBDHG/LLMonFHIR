@@ -35,7 +35,7 @@ struct InspecResourceView: View {
     
     var body: some View {
         List {
-            Section("LLM on FHIR Interpretation") {
+            Section("FHIR_RESOURCES_INTERPRETATION_SECTION") {
                 if let interpretation = fhirResourceInterpreter.interpretations[resource.id], !interpretation.isEmpty {
                     Text(interpretation)
                         .multilineTextAlignment(.leading)
@@ -47,7 +47,7 @@ struct InspecResourceView: View {
                             label: {
                                 HStack {
                                     Image(systemName: "message.fill")
-                                    Text("Learn More ...")
+                                    Text("FHIR_RESOURCES_INTERPRETATION_LEARN_MORE_BUTTON")
                                 }
                                     .frame(maxWidth: .infinity, minHeight: 40)
                             }
@@ -56,14 +56,14 @@ struct InspecResourceView: View {
                     }
                 } else {
                     VStack(alignment: .center) {
-                        Text("Loading result ...")
+                        Text("FHIR_RESOURCES_INTERPRETATION_LOADING")
                             .frame(maxWidth: .infinity)
                         ProgressView()
                             .progressViewStyle(.circular)
                     }
                 }
             }
-            Section("FHIR Resource") {
+            Section("FHIR_RESOURCES_INTERPRETATION_RESOURCE") {
                 LazyText(text: resource.jsonDescription)
                     .fontDesign(.monospaced)
                     .lineLimit(1)
@@ -85,7 +85,7 @@ struct InspecResourceView: View {
                     )
                 }
             }
-            .alert("Error", isPresented: presentAlert, presenting: error) { error in
+            .alert("FHIR_RESOURCES_INTERPRETATION_ERROR", isPresented: presentAlert, presenting: error) { error in
                 Text(error)
             }
             .sheet(isPresented: $showResourceChat) {

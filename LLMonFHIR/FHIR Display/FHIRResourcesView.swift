@@ -12,11 +12,13 @@ import SwiftUI
 struct FHIRResourcesView: View {
     @EnvironmentObject var fhirStandard: FHIR
     @State var resources: [String: [VersionedResource]] = [:]
+    @AppStorage(StorageKeys.onboardingInstructions) var onboardingInstructions = true
     
     
     var body: some View {
         NavigationStack {
             List {
+                instructionsView
                 ForEach(resources.keys.sorted()) { resourceType in
                     Section(resourceType) {
                         resources(for: resourceType)
@@ -29,7 +31,49 @@ struct FHIRResourcesView: View {
                 .onReceive(fhirStandard.objectWillChange) {
                     loadFHIRResources()
                 }
-                .navigationTitle("FHIR Resources")
+                .navigationTitle("FHIR_RESOURCES_TITLE")
+        }
+    }
+    
+    @ViewBuilder
+    private var instructionsView: some View {
+        if resources.isEmpty {
+            VStack(alignment: .center) {
+                Image(systemName: "doc.text.magnifyingglass")
+                    .font(.system(size: 90))
+                    .foregroundColor(.accentColor)
+                    .padding(.vertical, 8)
+                Text("FHIR_RESOURCES_VIEW_NO_RESOURCES")
+                    .frame(maxWidth: .infinity)
+                    .multilineTextAlignment(.leading)
+            }
+        } else if onboardingInstructions {
+            VStack(alignment: .center) {
+                HStack {
+                    Spacer()
+                    Button(
+                        action: {
+                            withAnimation {
+                                onboardingInstructions = false
+                            }
+                        },
+                        label: {
+                            Image(systemName: "xmark")
+                                .foregroundColor(.secondary)
+                        }
+                    )
+                }
+                    .padding(.horizontal, -8)
+                Image(systemName: "hand.wave.fill")
+                    .font(.system(size: 75))
+                    .foregroundColor(.accentColor)
+                    .padding(.bottom, 8)
+                Text("FHIR_RESOURCES_VIEW_INSTRUCTION")
+                    .frame(maxWidth: .infinity)
+                    .multilineTextAlignment(.leading)
+            }
+        } else {
+            EmptyView()
         }
     }
     
