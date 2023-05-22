@@ -104,17 +104,7 @@ class FHIRResourceSummary<ComponentStandard: Standard>: DefaultInitializable, Co
     private func systemPrompt(forResource resource: VersionedResource) -> Chat {
         Chat(
             role: .system,
-            content: """
-            Your task is to interpret the following FHIR resource from the user's clinical record.
-             
-            The following JSON representation defines the FHIR resource that you should interpret:
-            \(resource.jsonDescription)
-             
-            Return a short title of the resource summarizing its purpose in less than 50 characters without including the word title.
-            After the title, add a new line and provide a short one-sentence summary of the resource in less than 20 words.
-            Do NOT respond with more content than the two lines containing the title and summary.
-            Do NOT start the lines with, "Title:" or "Summary:". Directly provide the content without any additional structure.
-            """
+            content: String(localized: "FHIR_RESOURCE_SUMMARY_PROMPT \(resource.jsonDescription)")
         )
     }
 }

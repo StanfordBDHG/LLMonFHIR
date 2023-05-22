@@ -16,6 +16,6 @@ enum StorageKeys {
     
     
     // MARK: - Home
-    /// The currently selected home tab.
-    static let homeTabSelection = "home.tabselection"
+    /// Show the onboarding instructions
+    static let onboardingInstructions = "resources.onboardingInstructions"
 }
