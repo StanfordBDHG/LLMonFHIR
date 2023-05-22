@@ -45,8 +45,8 @@
 
 // MARK: HealthKit
 "HEALTHKIT_PERMISSIONS_TITLE" = "HealthKit Access";
-"HEALTHKIT_PERMISSIONS_SUBTITLE" = "...";
-"HEALTHKIT_PERMISSIONS_DESCRIPTION" = "...";
+"HEALTHKIT_PERMISSIONS_SUBTITLE" = "LLM on FHIR requires access to the FHIR health records stored in the Apple Health app.";
+"HEALTHKIT_PERMISSIONS_DESCRIPTION" = "You can select the different types of health records that you like to inspect in LLM on FHIR";
 "HEALTHKIT_PERMISSIONS_BUTTON" = "Grant Access";
 
 
