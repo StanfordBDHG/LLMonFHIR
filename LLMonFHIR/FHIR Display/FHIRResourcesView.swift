@@ -6,12 +6,14 @@
 // SPDX-License-Identifier: MIT
 //
 
+import SpeziOpenAI
 import SwiftUI
 
 
 struct FHIRResourcesView: View {
     @EnvironmentObject var fhirStandard: FHIR
     @State var resources: [String: [VersionedResource]] = [:]
+    @State var showSettings = false
     @AppStorage(StorageKeys.onboardingInstructions) var onboardingInstructions = true
     
     
@@ -30,6 +32,23 @@ struct FHIRResourcesView: View {
                 }
                 .onReceive(fhirStandard.objectWillChange) {
                     loadFHIRResources()
+                }
+                .toolbar {
+                    ToolbarItem(placement: .primaryAction) {
+                        Button(
+                            action: {
+                                showSettings.toggle()
+                            },
+                            label: {
+                                Image(systemName: "gear")
+                            }
+                        )
+                    }
+                }
+                .sheet(isPresented: $showSettings) {
+                    OpenAIAPIKeyOnboardingStep<FHIR> {
+                        showSettings.toggle()
+                    }
                 }
                 .navigationTitle("FHIR_RESOURCES_TITLE")
         }
