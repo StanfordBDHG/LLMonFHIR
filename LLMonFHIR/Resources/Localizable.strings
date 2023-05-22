@@ -58,6 +58,8 @@
 "FHIR_RESOURCES_VIEW_NO_RESOURCES" = "
 No health records are available.
 
+Pull to refresh to manually reload your health records.
+
 Please follow the instructions to connect to retrieve your health records from your provider: [Apple Support - View health records on your iPhone or iPod touch](https://support.apple.com/en-us/HT208680).
 
 You can find a list of supported institutions at [Apple Support - Institutions that support health records on iPhone and iPod touch](https://platform.openai.com/account/api-keys).
@@ -67,6 +69,7 @@ If you can see your health records in the Apple Health app, please ensure that L
 "FHIR_RESOURCES_VIEW_INSTRUCTION" = "Welcome to LLM on FHIR
 
 You can inspect the different resources in your Apple Health app by tapping on a resource. You can ask follow-up questions in the chat view in each resource.
+
 You can load a title and summary for each resource using a long press on a resource.
 ";
 

@@ -27,21 +27,21 @@ class LLMonFHIRDelegate: SpeziAppDelegate {
     
     
     private var healthKit: HealthKit<FHIR> {
-        HealthKit {
-            CollectSamples(
-                [
-                    HKClinicalType(.allergyRecord),
-                    HKClinicalType(.clinicalNoteRecord),
-                    HKClinicalType(.conditionRecord),
-                    HKClinicalType(.coverageRecord),
-                    HKClinicalType(.immunizationRecord),
-                    HKClinicalType(.labResultRecord),
-                    HKClinicalType(.medicationRecord),
-                    HKClinicalType(.procedureRecord),
-                    HKClinicalType(.vitalSignRecord)
-                ],
-                deliverySetting: .anchorQuery(saveAnchor: false)
-            )
+        let hkSampleTypes: Set<HKClinicalType> = [
+            HKClinicalType(.allergyRecord),
+            HKClinicalType(.clinicalNoteRecord),
+            HKClinicalType(.conditionRecord),
+            HKClinicalType(.coverageRecord),
+            HKClinicalType(.immunizationRecord),
+            HKClinicalType(.labResultRecord),
+            HKClinicalType(.medicationRecord),
+            HKClinicalType(.procedureRecord),
+            HKClinicalType(.vitalSignRecord)
+        ]
+        
+        return HealthKit<FHIR> {
+            CollectSamples(hkSampleTypes, deliverySetting: .anchorQuery(saveAnchor: false))
+            CollectSamples(hkSampleTypes, deliverySetting: .manual(safeAnchor: false))
         } adapter: {
             HealthKitToFHIRAdapter()
         }
