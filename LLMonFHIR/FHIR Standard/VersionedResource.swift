@@ -16,16 +16,23 @@ enum VersionedResource: Sendable, Identifiable, Hashable {
     case dstu2(ModelsDSTU2.Resource)
     
     
-    var id: ModelsR4.FHIRPrimitive<ModelsR4.FHIRString>? {
+    var id: String? {
         switch self {
         case let .r4(resource):
-            return resource.id
+            guard let id = resource.id?.value?.string else {
+                return nil
+            }
+            return id
         case let .dstu2(resource):
             guard let id = resource.id?.value?.string else {
                 return nil
             }
-            return ModelsR4.FHIRPrimitive(ModelsR4.FHIRString(id))
+            return id
         }
+    }
+    
+    var compactDescription: String {
+        id ?? "No Description Available"
     }
     
     var resourceType: String {
