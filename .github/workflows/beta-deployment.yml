@@ -19,13 +19,13 @@ jobs:
     name: Build and Test
     uses: ./.github/workflows/build-and-test.yml
     secrets: inherit
-#   iosapptestflightdeployment:
-#     name: iOS App TestFlight Deployment
-#     needs: buildandtest
-#     uses: StanfordBDHG/.github/.github/workflows/xcodebuild-or-fastlane.yml@v2
-#     secrets: inherit
-#     with:
-#       artifactname: LLMonFHIR.xcresult
-#       runsonlabels: '["macOS", "self-hosted"]'
-#       fastlanelane: beta
-#       setupsigning: true
+  iosapptestflightdeployment:
+    name: iOS App TestFlight Deployment
+    needs: buildandtest
+    uses: StanfordBDHG/.github/.github/workflows/xcodebuild-or-fastlane.yml@v2
+    secrets: inherit
+    with:
+      artifactname: LLMonFHIR.xcresult
+      runsonlabels: '["macOS", "self-hosted"]'
+      fastlanelane: beta
+      setupsigning: true
