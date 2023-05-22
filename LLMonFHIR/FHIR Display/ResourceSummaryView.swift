@@ -1,8 +1,9 @@
 //
-//  ResourceSummaryView.swift
-//  LLMonFHIR
+// This source file is part of the Stanford LLM on FHIR project
 //
-//  Created by Paul Shmiedmayer on 5/22/23.
+// SPDX-FileCopyrightText: 2023 Stanford University
+//
+// SPDX-License-Identifier: MIT
 //
 
 import SwiftUI
