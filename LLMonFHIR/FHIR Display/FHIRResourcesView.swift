@@ -24,7 +24,7 @@ struct FHIRResourcesView: View {
                 }
             }
                 .navigationDestination(for: VersionedResource.self) { resource in
-                    InspecResourceView(versionedResource: resource)
+                    InspecResourceView(resource: resource)
                 }
                 .onReceive(fhirStandard.objectWillChange) {
                     loadFHIRResources()
@@ -37,7 +37,7 @@ struct FHIRResourcesView: View {
     private func resources(for resourceType: String) -> some View {
         ForEach(resources[resourceType] ?? []) { resource in
             NavigationLink(value: resource) {
-                Text(resource.id?.value?.string ?? "No Valid Resource ID")
+                Text(resource.compactDescription)
             }
         }
     }

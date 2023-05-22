@@ -20,6 +20,7 @@ class LLMonFHIRDelegate: SpeziAppDelegate {
                 healthKit
             }
             OpenAIComponent()
+            FHIRResourceInterpreter()
         }
     }
     

@@ -63,7 +63,7 @@ actor HealthKitToFHIRAdapter: SingleValueAdapter {
     
     func transform(removalContext: InputRemovalContext) throws -> OutputRemovalContext {
         OutputRemovalContext(
-            id: removalContext.id.uuidString.asFHIRStringPrimitive(),
+            id: removalContext.id.uuidString,
             resourceType: try removalContext.sampleType.resourceTyoe
         )
     }
