@@ -995,7 +995,7 @@
 			repositoryURL = "https://github.com/StanfordSpezi/SpeziML.git";
 			requirement = {
 				kind = upToNextMinorVersion;
-				minimumVersion = 0.1.4;
+				minimumVersion = 0.1.5;
 			};
 		};
 		2FD8E8282A1AADDA00357F4E /* XCRemoteSwiftPackageReference "FHIRModels" */ = {
@@ -1027,7 +1027,7 @@
 			repositoryURL = "https://github.com/StanfordSpezi/SpeziHealthKit.git";
 			requirement = {
 				kind = upToNextMinorVersion;
-				minimumVersion = 0.2.0;
+				minimumVersion = 0.2.1;
 			};
 		};
 		2FE5DC7F29EDD91D004B9AB4 /* XCRemoteSwiftPackageReference "SpeziOnboarding" */ = {

@@ -54,11 +54,9 @@
 
 
 // MARK: - FHIR Resources Title
-"FHIR_RESOURCES_TITLE" = "Your Health Data";
+"FHIR_RESOURCES_TITLE" = "Your Health Records";
 "FHIR_RESOURCES_VIEW_NO_RESOURCES" = "
 No health records are available.
-
-Pull to refresh to manually reload your health records.
 
 Please follow the instructions to connect to retrieve your health records from your provider: [Apple Support - View health records on your iPhone or iPod touch](https://support.apple.com/en-us/HT208680).
 
@@ -72,6 +70,7 @@ You can inspect the different resources in your Apple Health app by tapping on a
 
 You can load a title and summary for each resource using a long press on a resource.
 ";
+"OPEN_AI_KEY_SAVE_ACTION" = "Save API Key";
 
 
 // MARK: FHIR Resource Summary
