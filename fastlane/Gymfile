@@ -19,7 +19,7 @@ project("LLMonFHIR.xcodeproj")
 export_options(
   {
     provisioningProfiles: { 
-      "edu.stanford.bdhg.llmonfhir" => "LLMonFHIR"
+      "edu.stanford.bdhg.llmonfhir" => "LLM on FHIR"
     }
   }
 )
