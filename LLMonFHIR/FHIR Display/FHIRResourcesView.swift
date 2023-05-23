@@ -6,13 +6,11 @@
 // SPDX-License-Identifier: MIT
 //
 
-import SpeziHealthKit
 import SpeziOpenAI
 import SwiftUI
 
 
 struct FHIRResourcesView: View {
-    @EnvironmentObject var healthKitModule: HealthKit<FHIR>
     @EnvironmentObject var fhirStandard: FHIR
     @State var resources: [String: [VersionedResource]] = [:]
     @State var showSettings = false
@@ -48,12 +46,9 @@ struct FHIRResourcesView: View {
                     }
                 }
                 .sheet(isPresented: $showSettings) {
-                    OpenAIAPIKeyOnboardingStep<FHIR> {
+                    OpenAIAPIKeyOnboardingStep<FHIR>(actionText: String(localized: "OPEN_AI_KEY_SAVE_ACTION")) {
                         showSettings.toggle()
                     }
-                }
-                .refreshable {
-                    await healthKitModule.triggerDataSourceCollection()
                 }
                 .navigationTitle("FHIR_RESOURCES_TITLE")
         }
