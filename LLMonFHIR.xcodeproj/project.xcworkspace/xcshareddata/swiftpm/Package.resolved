@@ -50,8 +50,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/StanfordSpezi/SpeziML.git",
       "state" : {
-        "revision" : "b4b770fb239f0f72f32bd175c3ec0ab071860e5d",
-        "version" : "0.1.3"
+        "revision" : "c45a5796f6b47e3f85d3c87c46e9710d61b48623",
+        "version" : "0.1.4"
       }
     },
     {
