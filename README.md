@@ -16,6 +16,13 @@ SPDX-License-Identifier: MIT
 
 *"Demystifying Health Records - A Conversational Interface to Your Health Data"*
 
+<p float="left">
+ <img width="200" alt="HealthRecords" src="Figures/HealthRecords.jpeg">
+ <img width="200" alt="LabResultSummary" src="Figures/LabResultSummary.jpeg">
+ <img width="200" alt="ConverstationQuestion" src="Figures/ConverstationQuestion.jpeg">
+ <img width="200" alt="ConverstationFollowUpQuestion" src="Figures/ConverstationFollowUpQuestion.jpeg">
+</p>
+
 This repository contains the LLM on FHIR Application to demonstrate the power of LLMs to explain and provide helpful context around patient data provided in the FHIR format.
 It demonstrates using the [Spezi](https://github.com/StanfordSpezi/Spezi) framework and builds on top of the [Stanford Spezi Template Application](https://github.com/StanfordSpezi/SpeziTemplateApplication). The application connects to the OpenAI GPT API to interpret FHIR resources using the GPT suite of large language models.
 
