@@ -29,12 +29,16 @@ actor FHIR: Standard, ObservableObject, ObservableObjectProvider {
     }
     
     
-    var resources: [FHIRResource.ID: FHIRResource] = [:] {
+    private var _resources: [FHIRResource.ID: FHIRResource] = [:] {
         didSet {
             _Concurrency.Task { @MainActor in
                 objectWillChange.send()
             }
         }
+    }
+    
+    var resources: [FHIRResource] {
+        Array(_resources.values)
     }
     
     
@@ -46,12 +50,12 @@ actor FHIR: Standard, ObservableObject, ObservableObjectProvider {
                     guard let id = resource.id else {
                         continue
                     }
-                    resources[id] = resource
+                    _resources[id] = resource
                 case let .removal(removalContext):
                     guard let id = removalContext.id else {
                         continue
                     }
-                    resources[id] = nil
+                    _resources[id] = nil
                 }
             }
         }
