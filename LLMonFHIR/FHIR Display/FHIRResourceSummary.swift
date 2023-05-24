@@ -19,33 +19,30 @@ private enum FHIRResourceSummaryConstants {
 
 
 class FHIRResourceSummary<ComponentStandard: Standard>: DefaultInitializable, Component, ObservableObject, ObservableObjectProvider {
-    typealias Summaries = [VersionedResource.ID: FHIRResourceSummary]
+    typealias Summaries = [FHIRResource.ID: FHIRResourceSummary]
     
     
     struct FHIRResourceSummary: LosslessStringConvertible, Codable {
         init?(_ description: String) {
             let lines = description.split(whereSeparator: \.isNewline)
             
-            guard lines.count == 2, let title = lines.first, let summary = lines.last else {
+            guard lines.count == 1, let summary = lines.first else {
                 return nil
             }
             
-            self.title = String(title)
             self.summary = String(summary)
         }
         
-        init(title: String, summary: String) {
-            self.title = title
+        init(summary: String) {
             self.summary = summary
         }
         
         
-        let title: String
         let summary: String
         
         
         var description: String {
-            "\(title)\n\(summary)"
+            summary
         }
     }
     
@@ -81,8 +78,7 @@ class FHIRResourceSummary<ComponentStandard: Standard>: DefaultInitializable, Co
         self.summaries = cachedSummaries
     }
     
-    
-    func summarize(resource: VersionedResource) async throws {
+    func summarize(resource: FHIRResource) async throws {
         guard summaries[resource.id] == nil else {
             return
         }
@@ -101,10 +97,10 @@ class FHIRResourceSummary<ComponentStandard: Standard>: DefaultInitializable, Co
     }
     
     
-    private func systemPrompt(forResource resource: VersionedResource) -> Chat {
+    private func systemPrompt(forResource resource: FHIRResource) -> Chat {
         Chat(
             role: .system,
-            content: String(localized: "FHIR_RESOURCE_SUMMARY_PROMPT \(resource.jsonDescription)")
+            content: Prompt.summary.prompt.replacingOccurrences(of: Prompt.promptPlaceholder, with: resource.compactJSONDescription)
         )
     }
 }

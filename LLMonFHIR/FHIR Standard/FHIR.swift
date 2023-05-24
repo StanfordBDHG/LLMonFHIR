@@ -13,7 +13,7 @@ import XCTRuntimeAssertions
 
 
 actor FHIR: Standard, ObservableObject, ObservableObjectProvider {
-    typealias BaseType = VersionedResource
+    typealias BaseType = FHIRResource
     typealias RemovalContext = FHIRRemovalContext
     
     
@@ -29,7 +29,7 @@ actor FHIR: Standard, ObservableObject, ObservableObjectProvider {
     }
     
     
-    var resources: [VersionedResource.ID: VersionedResource] = [:] {
+    var resources: [FHIRResource.ID: FHIRResource] = [:] {
         didSet {
             _Concurrency.Task { @MainActor in
                 objectWillChange.send()
