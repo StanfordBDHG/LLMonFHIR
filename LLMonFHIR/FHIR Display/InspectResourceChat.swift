@@ -18,13 +18,13 @@ struct InspectResourceChat: View {
     @State var chat: [Chat]
     @State var gettingAnswer = false
     
-    let resource: VersionedResource
+    let resource: FHIRResource
     
     
     var body: some View {
         NavigationStack {
             ChatView($chat, disableInput: $gettingAnswer)
-                .navigationTitle(fhirResourceSummary.summaries[resource.id]?.title ?? resource.compactDescription)
+                .navigationTitle(resource.displayName)
                 .toolbar {
                     ToolbarItem(placement: .cancellationAction) {
                         Button("FHIR_RESOURCES_CHAT_CANCEL") {

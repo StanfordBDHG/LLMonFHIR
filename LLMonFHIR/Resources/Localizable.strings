@@ -70,12 +70,12 @@ You can inspect the different resources in your Apple Health app by tapping on a
 
 You can load a title and summary for each resource using a long press on a resource.
 ";
-"OPEN_AI_KEY_SAVE_ACTION" = "Save API Key";
 
 
 // MARK: FHIR Resource Summary
 "FHIR_RESOURCES_SUMMARY_ID_TITLE %@" = "Resource with id %@";
 "FHIR_RESOURCES_SUMMARY_INSTRUCTION" = "Long press the resource and select \"Load Resource Summary\" to let LLM on FHIR create a title and summary of this resource.";
+"FHIR_RESOURCES_SUMMARY_SECTION" = "Summary";
 "FHIR_RESOURCES_SUMMARY_BUTTON" = "Load Resource Summary";
 
 // MARK: FHIR Resource Interpretation
@@ -97,10 +97,9 @@ Your task is to interpret the following FHIR resource from the user's clinical r
 The following JSON representation defines the FHIR resource that you should interpret:
 %@
  
-Return a short title of the resource summarizing its purpose in less than 50 characters without including the word title.
-After the title, add a new line and provide a short one-sentence summary of the resource in less than 20 words.
-Do NOT respond with more content than the two lines containing the title and summary.
-Do NOT start the lines with 'Title:' or 'Summary:'. Directly provide the content without any additional structure.
+Provide a short one-sentence summary of the resource in less than 20 words.
+Do NOT respond with more content than the single line containing the summary.
+Directly provide the content without any additional structure.
 ";
 
 "FHIR_RESOURCE_INTERPRETATION_PROMPT %@" = "
@@ -117,3 +116,21 @@ The following JSON representation defines the FHIR resource that you should inte
 Immediately return an interpretation to the user, starting the conversation.
 Do not introduce yourself at the beginning, and start with your interpretation.
 ";
+
+
+// MARK: - Settings
+"SETTINGS_TITLE" = "Settings";
+
+"SETTINGS_OPENAI" = "Open AI Settings";
+"SETTINGS_OPENAI_KEY" = "Open AI API Key";
+"SETTINGS_OPENAI_MODEL" = "Open AI Model";
+
+"OPEN_AI_KEY_SAVE_ACTION" = "Save API Key";
+"OPEN_AI_MODEL_SAVE_ACTION" = "Save Model Selection";
+
+"SETTINGS_PROMPTS" = "Prompt Settings";
+"SETTINGS_PROMPTS_SUMMARY" = "Summary Prompt";
+"SETTINGS_PROMPTS_INTERPRETATION" = "Interpretation Prompt";
+"SETTINGS_PROMPT_DESCRITPTION %@" = "Customize the %@ prompt.";
+"SETTINGS_PROMPT_CAPTION %@" = "SPlace %@ at the position in the prompt where the FHIR resource should be inserted.";
+"SETTINGS_PROMPT_SAVE_BUTTON" = "Save Prompt";

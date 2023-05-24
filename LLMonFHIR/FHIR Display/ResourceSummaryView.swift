@@ -14,29 +14,25 @@ struct ResourceSummaryView: View {
     
     @State var loading = false
     
-    let resource: VersionedResource
+    let resource: FHIRResource
     
     
     var body: some View {
         ZStack {
             if let summary = fhirResourceSummary.summaries[resource.id] {
                 VStack(alignment: .leading, spacing: 4) {
-                    Text(summary.title)
+                    Text(resource.displayName)
                     Text(summary.summary)
                         .font(.caption)
                 }
                     .multilineTextAlignment(.leading)
             } else {
                 VStack(alignment: .leading, spacing: 4) {
-                    Text("FHIR_RESOURCES_SUMMARY_ID_TITLE \(resource.id ?? "-")")
+                    Text(resource.displayName)
                     if loading {
                         ProgressView()
                             .progressViewStyle(.circular)
                             .padding(.vertical, 6)
-                    } else {
-                        Text("FHIR_RESOURCES_SUMMARY_INSTRUCTION")
-                            .font(.caption)
-                            .foregroundColor(.secondary)
                     }
                 }
                     .contextMenu {

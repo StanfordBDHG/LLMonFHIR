@@ -12,7 +12,7 @@ import SwiftUI
 
 struct FHIRResourcesView: View {
     @EnvironmentObject var fhirStandard: FHIR
-    @State var resources: [String: [VersionedResource]] = [:]
+    @State var resources: [String: [FHIRResource]] = [:]
     @State var showSettings = false
     @AppStorage(StorageKeys.onboardingInstructions) var onboardingInstructions = true
     
@@ -27,7 +27,7 @@ struct FHIRResourcesView: View {
                     }
                 }
             }
-                .navigationDestination(for: VersionedResource.self) { resource in
+                .navigationDestination(for: FHIRResource.self) { resource in
                     InspecResourceView(resource: resource)
                 }
                 .onReceive(fhirStandard.objectWillChange) {
@@ -46,9 +46,7 @@ struct FHIRResourcesView: View {
                     }
                 }
                 .sheet(isPresented: $showSettings) {
-                    OpenAIAPIKeyOnboardingStep<FHIR>(actionText: String(localized: "OPEN_AI_KEY_SAVE_ACTION")) {
-                        showSettings.toggle()
-                    }
+                    SettingsView()
                 }
                 .navigationTitle("FHIR_RESOURCES_TITLE")
         }
@@ -106,8 +104,9 @@ struct FHIRResourcesView: View {
     }
     
     private func loadFHIRResources() {
-        Task {
-            let resources = await Array(fhirStandard.resources.values)
+        Task { @MainActor in
+            let values = await fhirStandard.resources.values
+            let resources = Array(values)
             self.resources = [:]
             for resource in resources {
                 var currentResources = self.resources[resource.resourceType, default: []]

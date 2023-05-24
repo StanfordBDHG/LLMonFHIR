@@ -19,7 +19,7 @@ private enum FHIRResourceInterpreterConstants {
 
 
 class FHIRResourceInterpreter<ComponentStandard: Standard>: DefaultInitializable, Component, ObservableObject, ObservableObjectProvider {
-    typealias Interpretations = [VersionedResource.ID: String]
+    typealias Interpretations = [FHIRResource.ID: String]
     
     
     @Dependency private var localStorage: LocalStorage
@@ -54,7 +54,7 @@ class FHIRResourceInterpreter<ComponentStandard: Standard>: DefaultInitializable
     }
     
     
-    func interpret(resource: VersionedResource) async throws {
+    func interpret(resource: FHIRResource) async throws {
         let chatStreamResults = try await openAIComponent.queryAPI(withChat: [systemPrompt(forResource: resource)])
         
         self.interpretations[resource.id] = ""
@@ -67,7 +67,7 @@ class FHIRResourceInterpreter<ComponentStandard: Standard>: DefaultInitializable
         }
     }
     
-    func chat(forResource resource: VersionedResource) -> [Chat] {
+    func chat(forResource resource: FHIRResource) -> [Chat] {
         var chat = [systemPrompt(forResource: resource)]
         if let interpretation = interpretations[resource.id] {
             chat.append(Chat(role: .assistant, content: interpretation))
@@ -75,10 +75,10 @@ class FHIRResourceInterpreter<ComponentStandard: Standard>: DefaultInitializable
         return chat
     }
     
-    private func systemPrompt(forResource resource: VersionedResource) -> Chat {
+    private func systemPrompt(forResource resource: FHIRResource) -> Chat {
         Chat(
             role: .system,
-            content: String(localized: "FHIR_RESOURCE_INTERPRETATION_PROMPT \(resource.jsonDescription)")
+            content: Prompt.interpretation.prompt.replacingOccurrences(of: Prompt.promptPlaceholder, with: resource.compactJSONDescription)
         )
     }
 }

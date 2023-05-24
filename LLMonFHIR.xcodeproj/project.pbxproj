@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2F0F90BA2A1E6556006D7E03 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F0F90B92A1E6556006D7E03 /* SettingsView.swift */; };
+		2F0F90BC2A1E6B19006D7E03 /* PromptSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F0F90BB2A1E6B19006D7E03 /* PromptSettingsView.swift */; };
+		2F0F90BE2A1E702B006D7E03 /* Prompt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F0F90BD2A1E702B006D7E03 /* Prompt.swift */; };
 		2F49B7762980407C00BCB272 /* Spezi in Frameworks */ = {isa = PBXBuildFile; productRef = 2F49B7752980407B00BCB272 /* Spezi */; };
 		2F4E237E2989A2FE0013F3D9 /* OnboardingTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F4E237D2989A2FE0013F3D9 /* OnboardingTests.swift */; };
 		2F4E23832989D51F0013F3D9 /* LLMonFHIRTestingSetup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F4E23822989D51F0013F3D9 /* LLMonFHIRTestingSetup.swift */; };
@@ -23,7 +26,7 @@
 		2FD8E82C2A1AADDA00357F4E /* ModelsR4 in Frameworks */ = {isa = PBXBuildFile; productRef = 2FD8E82B2A1AADDA00357F4E /* ModelsR4 */; };
 		2FD8E82E2A1AAFC300357F4E /* HealthKitToFHIRAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FD8E82D2A1AAFC300357F4E /* HealthKitToFHIRAdapter.swift */; };
 		2FD8E8312A1AB00D00357F4E /* HealthKitOnFHIR in Frameworks */ = {isa = PBXBuildFile; productRef = 2FD8E8302A1AB00D00357F4E /* HealthKitOnFHIR */; };
-		2FD8E8332A1AB68E00357F4E /* VersionedResource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FD8E8322A1AB68E00357F4E /* VersionedResource.swift */; };
+		2FD8E8332A1AB68E00357F4E /* FHIRResource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FD8E8322A1AB68E00357F4E /* FHIRResource.swift */; };
 		2FD8E83B2A1AD10300357F4E /* FHIRResourcesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FD8E83A2A1AD10300357F4E /* FHIRResourcesView.swift */; };
 		2FD8E83D2A1AE24F00357F4E /* InspectResourceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FD8E83C2A1AE24F00357F4E /* InspectResourceView.swift */; };
 		2FD8E8402A1AE3F200357F4E /* SpeziViews in Frameworks */ = {isa = PBXBuildFile; productRef = 2FD8E83F2A1AE3F200357F4E /* SpeziViews */; };
@@ -64,6 +67,9 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		2F0F90B92A1E6556006D7E03 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
+		2F0F90BB2A1E6B19006D7E03 /* PromptSettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PromptSettingsView.swift; sourceTree = "<group>"; };
+		2F0F90BD2A1E702B006D7E03 /* Prompt.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Prompt.swift; sourceTree = "<group>"; };
 		2F4E237D2989A2FE0013F3D9 /* OnboardingTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingTests.swift; sourceTree = "<group>"; };
 		2F4E23822989D51F0013F3D9 /* LLMonFHIRTestingSetup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LLMonFHIRTestingSetup.swift; sourceTree = "<group>"; };
 		2F55FC522A1AE8750051DF48 /* FHIRResourceInterpreter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FHIRResourceInterpreter.swift; sourceTree = "<group>"; };
@@ -77,7 +83,7 @@
 		2FC975A72978F11A00BA99FE /* Home.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Home.swift; sourceTree = "<group>"; };
 		2FD8E8262A1AAD9B00357F4E /* FHIR.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FHIR.swift; sourceTree = "<group>"; };
 		2FD8E82D2A1AAFC300357F4E /* HealthKitToFHIRAdapter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HealthKitToFHIRAdapter.swift; sourceTree = "<group>"; };
-		2FD8E8322A1AB68E00357F4E /* VersionedResource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VersionedResource.swift; sourceTree = "<group>"; };
+		2FD8E8322A1AB68E00357F4E /* FHIRResource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FHIRResource.swift; sourceTree = "<group>"; };
 		2FD8E83A2A1AD10300357F4E /* FHIRResourcesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FHIRResourcesView.swift; sourceTree = "<group>"; };
 		2FD8E83C2A1AE24F00357F4E /* InspectResourceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InspectResourceView.swift; sourceTree = "<group>"; };
 		2FE5DC3029EDD7CA004B9AB4 /* HealthKitPermissions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HealthKitPermissions.swift; sourceTree = "<group>"; };
@@ -134,6 +140,16 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		2F0F90B82A1E6542006D7E03 /* Settings */ = {
+			isa = PBXGroup;
+			children = (
+				2F0F90B92A1E6556006D7E03 /* SettingsView.swift */,
+				2F0F90BB2A1E6B19006D7E03 /* PromptSettingsView.swift */,
+				2F0F90BD2A1E702B006D7E03 /* Prompt.swift */,
+			);
+			path = Settings;
+			sourceTree = "<group>";
+		};
 		2FC9759D2978E30800BA99FE /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
@@ -147,7 +163,7 @@
 			isa = PBXGroup;
 			children = (
 				2FD8E8262A1AAD9B00357F4E /* FHIR.swift */,
-				2FD8E8322A1AB68E00357F4E /* VersionedResource.swift */,
+				2FD8E8322A1AB68E00357F4E /* FHIRResource.swift */,
 				2FD8E82D2A1AAFC300357F4E /* HealthKitToFHIRAdapter.swift */,
 			);
 			path = "FHIR Standard";
@@ -238,6 +254,7 @@
 				2FE5DC2829EDD398004B9AB4 /* Onboarding */,
 				2FD8E81D2A1AAC6900357F4E /* FHIR Standard */,
 				2FD8E8392A1AD0E900357F4E /* FHIR Display */,
+				2F0F90B82A1E6542006D7E03 /* Settings */,
 				2FE5DC3C29EDD7DA004B9AB4 /* SharedContext */,
 				2FE5DC3D29EDD7E4004B9AB4 /* Helper */,
 				2FE5DC2D29EDD792004B9AB4 /* Resources */,
@@ -452,11 +469,14 @@
 				2F61A3302A1B51BF000A7796 /* FHIRResourceSummary.swift in Sources */,
 				2FE5DC3A29EDD7CA004B9AB4 /* Welcome.swift in Sources */,
 				2FE5DC3829EDD7CA004B9AB4 /* Disclaimer.swift in Sources */,
-				2FD8E8332A1AB68E00357F4E /* VersionedResource.swift in Sources */,
+				2FD8E8332A1AB68E00357F4E /* FHIRResource.swift in Sources */,
+				2F0F90BC2A1E6B19006D7E03 /* PromptSettingsView.swift in Sources */,
 				2F61A3322A1B560B000A7796 /* ResourceSummaryView.swift in Sources */,
 				2FD8E83D2A1AE24F00357F4E /* InspectResourceView.swift in Sources */,
+				2F0F90BA2A1E6556006D7E03 /* SettingsView.swift in Sources */,
 				2FD8E83B2A1AD10300357F4E /* FHIRResourcesView.swift in Sources */,
 				2FD8E82E2A1AAFC300357F4E /* HealthKitToFHIRAdapter.swift in Sources */,
+				2F0F90BE2A1E702B006D7E03 /* Prompt.swift in Sources */,
 				2FE5DC4529EDD7F2004B9AB4 /* Binding+Negate.swift in Sources */,
 				2FC975A82978F11A00BA99FE /* Home.swift in Sources */,
 				2FE5DC3729EDD7CA004B9AB4 /* OnboardingFlow.swift in Sources */,

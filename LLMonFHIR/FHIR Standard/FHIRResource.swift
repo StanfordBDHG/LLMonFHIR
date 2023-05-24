@@ -11,13 +11,18 @@ import Foundation
 @preconcurrency import ModelsR4
 
 
-enum VersionedResource: Sendable, Identifiable, Hashable {
-    case r4(ModelsR4.Resource) // swiftlint:disable:this identifier_name
-    case dstu2(ModelsDSTU2.Resource)
+struct FHIRResource: Sendable, Identifiable, Hashable {
+    enum VersionedFHIRResource: Hashable {
+        case r4(ModelsR4.Resource) // swiftlint:disable:this identifier_name
+        case dstu2(ModelsDSTU2.Resource)
+    }
+    
+    let versionedResouce: VersionedFHIRResource
+    let displayName: String
     
     
     var id: String? {
-        switch self {
+        switch versionedResouce {
         case let .r4(resource):
             guard let id = resource.id?.value?.string else {
                 return nil
@@ -29,14 +34,10 @@ enum VersionedResource: Sendable, Identifiable, Hashable {
             }
             return id
         }
-    }
-    
-    var compactDescription: String {
-        id ?? "No Description Available"
     }
     
     var resourceType: String {
-        switch self {
+        switch versionedResouce {
         case let .r4(resource):
             return ResourceProxy(with: resource).resourceType
         case let .dstu2(resource):
@@ -44,11 +45,20 @@ enum VersionedResource: Sendable, Identifiable, Hashable {
         }
     }
     
+    var compactJSONDescription: String {
+        json(withConfiguration: [.sortedKeys, .withoutEscapingSlashes])
+    }
+    
     var jsonDescription: String {
+        json(withConfiguration: [.prettyPrinted, .sortedKeys, .withoutEscapingSlashes])
+    }
+    
+    
+    private func json(withConfiguration outputFormatting: JSONEncoder.OutputFormatting) -> String {
         let encoder = JSONEncoder()
-        encoder.outputFormatting = [.prettyPrinted, .sortedKeys, .withoutEscapingSlashes]
+        encoder.outputFormatting = outputFormatting
         
-        switch self {
+        switch versionedResouce {
         case let .r4(resource):
             return (try? String(decoding: encoder.encode(resource), as: UTF8.self)) ?? "{}"
         case let .dstu2(resource):
