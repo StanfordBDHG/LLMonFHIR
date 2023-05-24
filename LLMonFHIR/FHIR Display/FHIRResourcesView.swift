@@ -105,8 +105,7 @@ struct FHIRResourcesView: View {
     
     private func loadFHIRResources() {
         Task { @MainActor in
-            let values = await fhirStandard.resources.values
-            let resources = Array(values)
+            let resources = await fhirStandard.resources
             self.resources = [:]
             for resource in resources {
                 var currentResources = self.resources[resource.resourceType, default: []]

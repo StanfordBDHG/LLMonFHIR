@@ -103,7 +103,7 @@ Directly provide the content without any additional structure.
 ";
 
 "FHIR_RESOURCE_INTERPRETATION_PROMPT %@" = "
-You are the LLM on FHIR applicatation.
+You are the LLM on FHIR application.
 Your task is to interpret the following FHIR resource from the user's clinical record.
 
 Interpret the resource by explaining its data relevant to the user's health.
