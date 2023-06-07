@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		27D2125C2A30BB5900486694 /* FHIRResource+Search.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27D2125B2A30BB5900486694 /* FHIRResource+Search.swift */; };
 		2F0F90BA2A1E6556006D7E03 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F0F90B92A1E6556006D7E03 /* SettingsView.swift */; };
 		2F0F90BC2A1E6B19006D7E03 /* PromptSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F0F90BB2A1E6B19006D7E03 /* PromptSettingsView.swift */; };
 		2F0F90BE2A1E702B006D7E03 /* Prompt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F0F90BD2A1E702B006D7E03 /* Prompt.swift */; };
@@ -67,6 +68,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		27D2125B2A30BB5900486694 /* FHIRResource+Search.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FHIRResource+Search.swift"; sourceTree = "<group>"; };
 		2F0F90B92A1E6556006D7E03 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		2F0F90BB2A1E6B19006D7E03 /* PromptSettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PromptSettingsView.swift; sourceTree = "<group>"; };
 		2F0F90BD2A1E702B006D7E03 /* Prompt.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Prompt.swift; sourceTree = "<group>"; };
@@ -165,6 +167,7 @@
 				2FD8E8262A1AAD9B00357F4E /* FHIR.swift */,
 				2FD8E8322A1AB68E00357F4E /* FHIRResource.swift */,
 				2FD8E82D2A1AAFC300357F4E /* HealthKitToFHIRAdapter.swift */,
+				27D2125B2A30BB5900486694 /* FHIRResource+Search.swift */,
 			);
 			path = "FHIR Standard";
 			sourceTree = "<group>";
@@ -488,6 +491,7 @@
 				2F5E32BD297E05EA003432F8 /* LLMonFHIRDelegate.swift in Sources */,
 				2F55FC532A1AE8750051DF48 /* FHIRResourceInterpreter.swift in Sources */,
 				653A2551283387FE005D4D48 /* LLMonFHIR.swift in Sources */,
+				27D2125C2A30BB5900486694 /* FHIRResource+Search.swift in Sources */,
 				2FE5DC3629EDD7CA004B9AB4 /* HealthKitPermissions.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

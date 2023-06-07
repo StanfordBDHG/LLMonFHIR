@@ -17,12 +17,12 @@ struct FHIRResource: Sendable, Identifiable, Hashable {
         case dstu2(ModelsDSTU2.Resource)
     }
     
-    let versionedResouce: VersionedFHIRResource
+    let versionedResource: VersionedFHIRResource
     let displayName: String
     
     
     var id: String? {
-        switch versionedResouce {
+        switch versionedResource {
         case let .r4(resource):
             guard let id = resource.id?.value?.string else {
                 return nil
@@ -37,7 +37,7 @@ struct FHIRResource: Sendable, Identifiable, Hashable {
     }
     
     var resourceType: String {
-        switch versionedResouce {
+        switch versionedResource {
         case let .r4(resource):
             return ResourceProxy(with: resource).resourceType
         case let .dstu2(resource):
@@ -58,7 +58,7 @@ struct FHIRResource: Sendable, Identifiable, Hashable {
         let encoder = JSONEncoder()
         encoder.outputFormatting = outputFormatting
         
-        switch versionedResouce {
+        switch versionedResource {
         case let .r4(resource):
             return (try? String(decoding: encoder.encode(resource), as: UTF8.self)) ?? "{}"
         case let .dstu2(resource):

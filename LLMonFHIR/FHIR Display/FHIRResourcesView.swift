@@ -14,6 +14,7 @@ struct FHIRResourcesView: View {
     @EnvironmentObject var fhirStandard: FHIR
     @State var resources: [String: [FHIRResource]] = [:]
     @State var showSettings = false
+    @State var searchText = ""
     @AppStorage(StorageKeys.onboardingInstructions) var onboardingInstructions = true
     
     
@@ -21,12 +22,17 @@ struct FHIRResourcesView: View {
         NavigationStack {
             List {
                 instructionsView
-                ForEach(resources.keys.sorted()) { resourceType in
-                    Section(resourceType) {
-                        resources(for: resourceType)
+                if filteredResourceKeys.isEmpty {
+                    Text("FHIR_RESOURCES_EMPTY_SEARCH_MESSAGE")
+                } else {
+                    ForEach(filteredResourceKeys, id: \.self) { resourceType in
+                        Section(resourceType) {
+                            resources(for: resourceType)
+                        }
                     }
                 }
             }
+                .searchable(text: $searchText)
                 .navigationDestination(for: FHIRResource.self) { resource in
                     InspecResourceView(resource: resource)
                 }
@@ -93,11 +99,21 @@ struct FHIRResourcesView: View {
             EmptyView()
         }
     }
-    
-    
+
+    private var filteredResourceKeys: [String] {
+        resources.keys.sorted().filter { resourceType in
+            guard let resourceArray = resources[resourceType] else {
+                return false
+            }
+            return !resourceArray.filterByDisplayName(with: searchText).isEmpty
+        }
+    }
+
     private func resources(for resourceType: String) -> some View {
-        ForEach(resources[resourceType] ?? []) { resource in
-            NavigationLink(value: resource) {
+        let filteredResources = (resources[resourceType] ?? []).filterByDisplayName(with: searchText)
+
+        return ForEach(filteredResources) { resource in
+            NavigationLink(destination: ResourceSummaryView(resource: resource)) {
                 ResourceSummaryView(resource: resource)
             }
         }

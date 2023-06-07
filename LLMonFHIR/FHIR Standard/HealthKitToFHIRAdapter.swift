@@ -43,7 +43,7 @@ actor HealthKitToFHIRAdapter: SingleValueAdapter {
             let decoder = JSONDecoder()
             let resourceProxy = try decoder.decode(ModelsDSTU2.ResourceProxy.self, from: fhirResource.data)
             return FHIRResource(
-                versionedResouce: .dstu2(resourceProxy.get()),
+                versionedResource: .dstu2(resourceProxy.get()),
                 displayName: clinicalResource.displayName
             )
         case let electrocardiogram as HKElectrocardiogram:
@@ -59,13 +59,13 @@ actor HealthKitToFHIRAdapter: SingleValueAdapter {
                 voltageMeasurements: voltageMeasurements
             )
             return FHIRResource(
-                versionedResouce: .r4(resource),
+                versionedResource: .r4(resource),
                 displayName: String(localized: "FHIR_RESOURCES_SUMMARY_ID_TITLE \(resource.id?.value?.string ?? "-")")
             )
         default:
             let resource = try element.resource.get()
             return FHIRResource(
-                versionedResouce: .r4(resource),
+                versionedResource: .r4(resource),
                 displayName: String(localized: "FHIR_RESOURCES_SUMMARY_ID_TITLE \(resource.id?.value?.string ?? "-")")
             )
         }
