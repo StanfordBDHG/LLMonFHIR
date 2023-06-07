@@ -86,7 +86,7 @@ struct FHIRResourcesView: View {
                         }
                     )
                 }
-                .padding(.horizontal, -8)
+                    .padding(.horizontal, -8)
                 Image(systemName: "hand.wave.fill")
                     .font(.system(size: 75))
                     .foregroundColor(.accentColor)
@@ -112,14 +112,14 @@ struct FHIRResourcesView: View {
     }
     
     private func resources(for resourceType: String) -> some View {
-           ForEach((resources[resourceType] ?? []).filter { resource in
-               searchText.isEmpty || resource.displayName.lowercased().contains(searchText.lowercased())
-           }) { resource in
-               NavigationLink(value: resource) {
-                   ResourceSummaryView(resource: resource)
-               }
-           }
-       }
+        ForEach((resources[resourceType] ?? []).filter { resource in
+            searchText.isEmpty || resource.displayName.lowercased().contains(searchText.lowercased())
+        }) { resource in
+            NavigationLink(value: resource) {
+                ResourceSummaryView(resource: resource)
+            }
+        }
+    }
     
     private func loadFHIRResources() {
         Task { @MainActor in
