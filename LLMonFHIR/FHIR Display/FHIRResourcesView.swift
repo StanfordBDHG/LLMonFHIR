@@ -102,20 +102,18 @@ struct FHIRResourcesView: View {
 
     private var filteredResourceKeys: [String] {
         resources.keys.sorted().filter { resourceType in
-            if let resourceArray = resources[resourceType] {
-                return searchText.isEmpty || resourceArray.contains { resource in
-                    resource.displayName.lowercased().contains(searchText.lowercased())
-                }
+            guard let resourceArray = resources[resourceType] else {
+                return false
             }
-            return false
+            return !resourceArray.filterByDisplayName(with: searchText).isEmpty
         }
     }
-    
+
     private func resources(for resourceType: String) -> some View {
-        ForEach((resources[resourceType] ?? []).filter { resource in
-            searchText.isEmpty || resource.displayName.lowercased().contains(searchText.lowercased())
-        }) { resource in
-            NavigationLink(value: resource) {
+        let filteredResources = (resources[resourceType] ?? []).filterByDisplayName(with: searchText)
+
+        return ForEach(filteredResources) { resource in
+            NavigationLink(destination: ResourceSummaryView(resource: resource)) {
                 ResourceSummaryView(resource: resource)
             }
         }
@@ -133,6 +131,8 @@ struct FHIRResourcesView: View {
         }
     }
 }
+
+
 
 struct FHIRDisplay_Previews: PreviewProvider {
     static var previews: some View {
