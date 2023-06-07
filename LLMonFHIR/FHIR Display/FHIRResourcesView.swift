@@ -132,8 +132,6 @@ struct FHIRResourcesView: View {
     }
 }
 
-
-
 struct FHIRDisplay_Previews: PreviewProvider {
     static var previews: some View {
         FHIRResourcesView()
