@@ -14,6 +14,7 @@ struct FHIRResourcesView: View {
     @EnvironmentObject var fhirStandard: FHIR
     @State var resources: [String: [FHIRResource]] = [:]
     @State var showSettings = false
+    @State var searchText = ""
     @AppStorage(StorageKeys.onboardingInstructions) var onboardingInstructions = true
     
     
@@ -21,12 +22,17 @@ struct FHIRResourcesView: View {
         NavigationStack {
             List {
                 instructionsView
-                ForEach(resources.keys.sorted()) { resourceType in
-                    Section(resourceType) {
-                        resources(for: resourceType)
+                if filteredResourceKeys.isEmpty {
+                    Text("FHIR_RESOURCES_EMPTY_SEARCH_MESSAGE")
+                } else {
+                    ForEach(filteredResourceKeys, id: \.self) { resourceType in
+                        Section(resourceType) {
+                            resources(for: resourceType)
+                        }
                     }
                 }
             }
+                .searchable(text: $searchText)
                 .navigationDestination(for: FHIRResource.self) { resource in
                     InspecResourceView(resource: resource)
                 }
@@ -80,7 +86,7 @@ struct FHIRResourcesView: View {
                         }
                     )
                 }
-                    .padding(.horizontal, -8)
+                .padding(.horizontal, -8)
                 Image(systemName: "hand.wave.fill")
                     .font(.system(size: 75))
                     .foregroundColor(.accentColor)
@@ -93,15 +99,27 @@ struct FHIRResourcesView: View {
             EmptyView()
         }
     }
-    
-    
-    private func resources(for resourceType: String) -> some View {
-        ForEach(resources[resourceType] ?? []) { resource in
-            NavigationLink(value: resource) {
-                ResourceSummaryView(resource: resource)
+
+    private var filteredResourceKeys: [String] {
+        resources.keys.sorted().filter { resourceType in
+            if let resourceArray = resources[resourceType] {
+                return searchText.isEmpty || resourceArray.contains { resource in
+                    resource.displayName.lowercased().contains(searchText.lowercased())
+                }
             }
+            return false
         }
     }
+    
+    private func resources(for resourceType: String) -> some View {
+           ForEach((resources[resourceType] ?? []).filter { resource in
+               searchText.isEmpty || resource.displayName.lowercased().contains(searchText.lowercased())
+           }) { resource in
+               NavigationLink(value: resource) {
+                   ResourceSummaryView(resource: resource)
+               }
+           }
+       }
     
     private func loadFHIRResources() {
         Task { @MainActor in

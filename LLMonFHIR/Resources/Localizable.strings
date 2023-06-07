@@ -70,6 +70,7 @@ You can inspect the different resources in your Apple Health app by tapping on a
 
 You can load a title and summary for each resource using a long press on a resource.
 ";
+"FHIR_RESOURCES_EMPTY_SEARCH_MESSAGE" = "No matches found";
 
 
 // MARK: FHIR Resource Summary
