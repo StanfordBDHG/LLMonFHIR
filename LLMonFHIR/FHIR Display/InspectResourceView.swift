@@ -10,7 +10,7 @@ import SpeziViews
 import SwiftUI
 
 
-struct InspecResourceView: View {
+struct InspectResourceView: View {
     @EnvironmentObject var fhirResourceInterpreter: FHIRResourceInterpreter<FHIR>
     @EnvironmentObject var fhirResourceSummary: FHIRResourceSummary<FHIR>
     

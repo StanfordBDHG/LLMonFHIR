@@ -34,7 +34,7 @@ struct FHIRResourcesView: View {
             }
                 .searchable(text: $searchText)
                 .navigationDestination(for: FHIRResource.self) { resource in
-                    InspecResourceView(resource: resource)
+                    InspectResourceView(resource: resource)
                 }
                 .onReceive(fhirStandard.objectWillChange) {
                     loadFHIRResources()
@@ -113,7 +113,7 @@ struct FHIRResourcesView: View {
         let filteredResources = (resources[resourceType] ?? []).filterByDisplayName(with: searchText)
 
         return ForEach(filteredResources) { resource in
-            NavigationLink(destination: ResourceSummaryView(resource: resource)) {
+            NavigationLink(value: resource) {
                 ResourceSummaryView(resource: resource)
             }
         }
