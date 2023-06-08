@@ -46,16 +46,7 @@ struct FHIRResourcesView: View {
                     }
                 }
                 .toolbar {
-                    ToolbarItem(placement: .primaryAction) {
-                        Button(
-                            action: {
-                                showSettings.toggle()
-                            },
-                            label: {
-                                Image(systemName: "gear")
-                            }
-                        )
-                    }
+                    settingsToolbarItem()
                 }
                 .sheet(isPresented: $showSettings) {
                     SettingsView()
@@ -63,7 +54,7 @@ struct FHIRResourcesView: View {
                 .navigationTitle("FHIR_RESOURCES_TITLE")
         }
     }
-    
+
     @ViewBuilder
     private var instructionsView: some View {
         if resources.isEmpty {
@@ -112,6 +103,19 @@ struct FHIRResourcesView: View {
                 return false
             }
             return !resourceArray.filterByDisplayName(with: searchText).isEmpty
+        }
+    }
+
+    func settingsToolbarItem() -> some ToolbarContent {
+        ToolbarItem(placement: .primaryAction) {
+            Button(
+                action: {
+                    showSettings.toggle()
+                },
+                label: {
+                    Image(systemName: "gear")
+                }
+            )
         }
     }
 
