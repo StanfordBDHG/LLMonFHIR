@@ -6,6 +6,7 @@
 // SPDX-License-Identifier: MIT
 //
 
+import ModelsR4
 import SpeziOpenAI
 import SwiftUI
 
@@ -38,6 +39,11 @@ struct FHIRResourcesView: View {
                 }
                 .onReceive(fhirStandard.objectWillChange) {
                     loadFHIRResources()
+                }
+                .onAppear {
+                    if FeatureFlags.testMode {
+                        loadMockResources()
+                    }
                 }
                 .toolbar {
                     ToolbarItem(placement: .primaryAction) {
@@ -118,9 +124,25 @@ struct FHIRResourcesView: View {
             }
         }
     }
+
+    private func loadMockResources() {
+        self.resources = [:]
+
+        let mockObservation = Observation(
+            code: CodeableConcept(coding: [Coding(code: "1234".asFHIRStringPrimitive())]),
+            status: FHIRPrimitive(ObservationStatus.final)
+        )
+
+        let mockFHIRResource = FHIRResource(
+            versionedResource: .r4(mockObservation),
+            displayName: "Mock Resource"
+        )
+
+        self.resources = ["Observation": [mockFHIRResource]]
+    }
     
     private func loadFHIRResources() {
-        Task { @MainActor in
+        _Concurrency.Task { @MainActor in
             let resources = await fhirStandard.resources
             self.resources = [:]
             for resource in resources {
