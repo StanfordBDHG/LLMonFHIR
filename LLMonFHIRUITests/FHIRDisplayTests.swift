@@ -16,14 +16,12 @@ final class FHIRDisplayTests: XCTestCase {
         continueAfterFailure = false
 
         let app = XCUIApplication()
-        app.launchArguments = ["--skipOnboarding"]
+        app.launchArguments = ["--skipOnboarding", "--testMode"]
         app.deleteAndLaunch(withSpringboardAppName: "LLMonFHIR")
     }
 
     func testFHIRResourcesView() throws {
         let app = XCUIApplication()
-        app.launchArguments = ["--skipOnboarding", "--testMode"]
-        app.launch()
 
         let mockResource = app.otherElements.buttons["Mock Resource"]
         XCTAssertTrue(mockResource.exists, "The 'Mock Resource' does not exist.")
