@@ -6,6 +6,7 @@
 // SPDX-License-Identifier: MIT
 //
 
+import ModelsR4
 import SpeziOpenAI
 import SwiftUI
 
@@ -34,22 +35,18 @@ struct FHIRResourcesView: View {
             }
                 .searchable(text: $searchText)
                 .navigationDestination(for: FHIRResource.self) { resource in
-                    InspecResourceView(resource: resource)
+                    InspectResourceView(resource: resource)
                 }
                 .onReceive(fhirStandard.objectWillChange) {
                     loadFHIRResources()
                 }
-                .toolbar {
-                    ToolbarItem(placement: .primaryAction) {
-                        Button(
-                            action: {
-                                showSettings.toggle()
-                            },
-                            label: {
-                                Image(systemName: "gear")
-                            }
-                        )
+                .onAppear {
+                    if FeatureFlags.testMode {
+                        loadMockResources()
                     }
+                }
+                .toolbar {
+                    settingsToolbarItem()
                 }
                 .sheet(isPresented: $showSettings) {
                     SettingsView()
@@ -57,7 +54,7 @@ struct FHIRResourcesView: View {
                 .navigationTitle("FHIR_RESOURCES_TITLE")
         }
     }
-    
+
     @ViewBuilder
     private var instructionsView: some View {
         if resources.isEmpty {
@@ -109,18 +106,47 @@ struct FHIRResourcesView: View {
         }
     }
 
+    func settingsToolbarItem() -> some ToolbarContent {
+        ToolbarItem(placement: .primaryAction) {
+            Button(
+                action: {
+                    showSettings.toggle()
+                },
+                label: {
+                    Image(systemName: "gear")
+                }
+            )
+        }
+    }
+
     private func resources(for resourceType: String) -> some View {
         let filteredResources = (resources[resourceType] ?? []).filterByDisplayName(with: searchText)
 
         return ForEach(filteredResources) { resource in
-            NavigationLink(destination: ResourceSummaryView(resource: resource)) {
+            NavigationLink(value: resource) {
                 ResourceSummaryView(resource: resource)
             }
         }
     }
+
+    private func loadMockResources() {
+        self.resources = [:]
+
+        let mockObservation = Observation(
+            code: CodeableConcept(coding: [Coding(code: "1234".asFHIRStringPrimitive())]),
+            status: FHIRPrimitive(ObservationStatus.final)
+        )
+
+        let mockFHIRResource = FHIRResource(
+            versionedResource: .r4(mockObservation),
+            displayName: "Mock Resource"
+        )
+
+        self.resources = ["Observation": [mockFHIRResource]]
+    }
     
     private func loadFHIRResources() {
-        Task { @MainActor in
+        _Concurrency.Task { @MainActor in
             let resources = await fhirStandard.resources
             self.resources = [:]
             for resource in resources {

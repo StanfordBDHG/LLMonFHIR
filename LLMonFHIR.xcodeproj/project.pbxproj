@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		27D2125C2A30BB5900486694 /* FHIRResource+Search.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27D2125B2A30BB5900486694 /* FHIRResource+Search.swift */; };
+		27F7730B2A327FBC004D476D /* FHIRDisplayTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27F7730A2A327FBC004D476D /* FHIRDisplayTests.swift */; };
 		2F0F90BA2A1E6556006D7E03 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F0F90B92A1E6556006D7E03 /* SettingsView.swift */; };
 		2F0F90BC2A1E6B19006D7E03 /* PromptSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F0F90BB2A1E6B19006D7E03 /* PromptSettingsView.swift */; };
 		2F0F90BE2A1E702B006D7E03 /* Prompt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F0F90BD2A1E702B006D7E03 /* Prompt.swift */; };
@@ -69,6 +70,7 @@
 
 /* Begin PBXFileReference section */
 		27D2125B2A30BB5900486694 /* FHIRResource+Search.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FHIRResource+Search.swift"; sourceTree = "<group>"; };
+		27F7730A2A327FBC004D476D /* FHIRDisplayTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FHIRDisplayTests.swift; sourceTree = "<group>"; };
 		2F0F90B92A1E6556006D7E03 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		2F0F90BB2A1E6B19006D7E03 /* PromptSettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PromptSettingsView.swift; sourceTree = "<group>"; };
 		2F0F90BD2A1E702B006D7E03 /* Prompt.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Prompt.swift; sourceTree = "<group>"; };
@@ -278,6 +280,7 @@
 			isa = PBXGroup;
 			children = (
 				2F4E237D2989A2FE0013F3D9 /* OnboardingTests.swift */,
+				27F7730A2A327FBC004D476D /* FHIRDisplayTests.swift */,
 			);
 			path = LLMonFHIRUITests;
 			sourceTree = "<group>";
@@ -509,6 +512,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				2F4E237E2989A2FE0013F3D9 /* OnboardingTests.swift in Sources */,
+				27F7730B2A327FBC004D476D /* FHIRDisplayTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
