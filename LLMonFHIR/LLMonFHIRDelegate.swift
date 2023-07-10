@@ -21,6 +21,7 @@ class LLMonFHIRDelegate: SpeziAppDelegate {
             }
             OpenAIComponent()
             FHIRResourceInterpreter()
+            FHIRMultipleResourceInterpreter()
             FHIRResourceSummary()
         }
     }
@@ -31,7 +32,7 @@ class LLMonFHIRDelegate: SpeziAppDelegate {
             CollectSamples(
                 [
                     HKClinicalType(.allergyRecord),
-                    HKClinicalType(.clinicalNoteRecord),
+//                    HKClinicalType(.clinicalNoteRecord),
                     HKClinicalType(.conditionRecord),
                     HKClinicalType(.coverageRecord),
                     HKClinicalType(.immunizationRecord),

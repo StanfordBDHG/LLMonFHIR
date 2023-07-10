@@ -9,15 +9,41 @@
 import ModelsR4
 import SpeziOpenAI
 import SwiftUI
+import SpeziLocalStorage
 
 
 struct FHIRResourcesView: View {
     @EnvironmentObject var fhirStandard: FHIR
     @State var resources: [String: [FHIRResource]] = [:]
+    @State var allResourcesArray: [FHIRResource] = []
     @State var showSettings = false
+    @State var showMultipleResourcesChat = false
+    @State var interpretingMultipleResources = false
+    @State var error: String?
     @State var searchText = ""
     @AppStorage(StorageKeys.onboardingInstructions) var onboardingInstructions = true
+
+    @EnvironmentObject var fhirMultipleResourceInterpreter: FHIRMultipleResourceInterpreter<FHIR>
+    @EnvironmentObject var localStorage: LocalStorage<FHIR>
+
+
+    var presentAlert: Binding<Bool> {
+        Binding(
+            get: {
+                error != nil
+            },
+            set: { newValue in
+                if !newValue {
+                    error = nil
+                }
+            }
+        )
+    }
     
+    private enum FHIRMultipleResourceInterpreterConstants {
+        static let storageKey = "FHIRMultipleResourceInterpreter.Cache"
+    }
+    typealias multipleResourceInterpretation = String
     
     var body: some View {
         NavigationStack {
@@ -46,13 +72,76 @@ struct FHIRResourcesView: View {
                     }
                 }
                 .toolbar {
+                    ToolbarItem(placement: .navigationBarTrailing) {
+                        Button(action: {
+                            if !interpretingMultipleResources {
+                                showMultipleResourcesChat.toggle()
+                            } else {
+                            }
+                        }) {
+                            if interpretingMultipleResources {
+                                ProgressView("Interpreting...")
+                            } else {
+                                Text("Chat with All Records")
+                            }
+                        }
+                    }
                     settingsToolbarItem()
                 }
                 .sheet(isPresented: $showSettings) {
                     SettingsView()
                 }
+                .sheet(isPresented: $showMultipleResourcesChat) {
+
+                    MultipleResourceChat(
+                        chat: fhirMultipleResourceInterpreter.chat(resources: allResourcesArray)
+                     )
+                }
+                .task {
+                    allResourcesArray = await fhirStandard.resources
+                    
+                    await interpretMultipleResources()
+          
+
+                }
                 .navigationTitle("FHIR_RESOURCES_TITLE")
         }
+    }
+    
+
+    private func interpretMultipleResources() async {
+        interpretingMultipleResources = true
+        
+        do {
+            try await fhirMultipleResourceInterpreter.interpretMultipleResources(resources: fhirStandard.resources)
+        } catch {
+            self.error = error.localizedDescription
+        }
+        interpretingMultipleResources = false
+        
+        
+//        guard let cachedInterpretation: multipleResourceInterpretation = try? localStorage.read(storageKey: FHIRMultipleResourceInterpreterConstants.storageKey)
+//        else {
+//
+//            interpretingMultipleResources = true
+//
+//            do {
+//                try await fhirMultipleResourceInterpreter.interpretMultipleResources(resources: fhirStandard.resources)
+//            } catch {
+//                self.error = error.localizedDescription
+//            }
+//            interpretingMultipleResources = false
+//
+//            return
+//        }
+//
+
+        
+        
+            
+            
+        
+
     }
 
     @ViewBuilder
