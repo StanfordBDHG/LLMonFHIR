@@ -19,10 +19,9 @@ private enum FHIRMultipleResourceInterpreterConstants {
 
 
 class FHIRMultipleResourceInterpreter<ComponentStandard: Standard>: DefaultInitializable, Component, ObservableObject, ObservableObjectProvider {
+    typealias MultipleResourceInterpretation = String
     @Dependency private var localStorage: LocalStorage
     @Dependency private var openAIComponent = OpenAIComponent()
-    
-    typealias MultipleResourceInterpretation = String
     
     var interpretations: MultipleResourceInterpretation = "" {
         willSet {
@@ -79,7 +78,6 @@ class FHIRMultipleResourceInterpreter<ComponentStandard: Standard>: DefaultIniti
 
     
     private func systemPrompt(forResources resources: [FHIRResource]) -> Chat {
-        
         var allJSONResources = ""
         
         for resource in resources {

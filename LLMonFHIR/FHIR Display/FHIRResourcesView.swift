@@ -7,13 +7,14 @@
 //
 
 import ModelsR4
-import SpeziOpenAI
 import SpeziLocalStorage
+import SpeziOpenAI
 import SwiftUI
 
-
 struct FHIRResourcesView: View {
-    @EnvironmentObject var fhirStandard: FHIR
+    @EnvironmentObject var fhirMultipleResourceInterpreter: FHIRMultipleResourceInterpreter<FHIR>
+    @EnvironmentObject var localStorage: LocalStorage<FHIR>
+
     @State var resources: [String: [FHIRResource]] = [:]
     @State var allResourcesArray: [FHIRResource] = []
     @State var showSettings = false
@@ -23,9 +24,7 @@ struct FHIRResourcesView: View {
     @State var searchText = ""
     @AppStorage(StorageKeys.onboardingInstructions) var onboardingInstructions = true
 
-    @EnvironmentObject var fhirMultipleResourceInterpreter: FHIRMultipleResourceInterpreter<FHIR>
-    @EnvironmentObject var localStorage: LocalStorage<FHIR>
-
+    @EnvironmentObject var fhirStandard: FHIR
 
     var presentAlert: Binding<Bool> {
         Binding(
@@ -43,7 +42,6 @@ struct FHIRResourcesView: View {
     private enum FHIRMultipleResourceInterpreterConstants {
         static let storageKey = "FHIRMultipleResourceInterpreter.Cache"
     }
-    typealias MultipleResourceInterpretation = String
     
     var body: some View {
         NavigationStack {
@@ -92,7 +90,6 @@ struct FHIRResourcesView: View {
                     SettingsView()
                 }
                 .sheet(isPresented: $showMultipleResourcesChat) {
-
                     MultipleResourceChat(
                         chat: fhirMultipleResourceInterpreter.chat(resources: allResourcesArray)
                      )
@@ -101,14 +98,11 @@ struct FHIRResourcesView: View {
                     allResourcesArray = await fhirStandard.resources
                     
                     await interpretMultipleResources()
-          
-
                 }
                 .navigationTitle("FHIR_RESOURCES_TITLE")
         }
     }
     
-
     private func interpretMultipleResources() async {
         interpretingMultipleResources = true
         
