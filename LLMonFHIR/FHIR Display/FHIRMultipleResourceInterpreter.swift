@@ -19,7 +19,6 @@ private enum FHIRMultipleResourceInterpreterConstants {
 
 
 class FHIRMultipleResourceInterpreter<ComponentStandard: Standard>: DefaultInitializable, Component, ObservableObject, ObservableObjectProvider {
-    
     @Dependency private var localStorage: LocalStorage
     @Dependency private var openAIComponent = OpenAIComponent()
     
@@ -45,16 +44,15 @@ class FHIRMultipleResourceInterpreter<ComponentStandard: Standard>: DefaultIniti
     
     
     func configure() {
-        guard let cachedInterpretation: MultipleResourceInterpretation = try? localStorage.read(storageKey: FHIRMultipleResourceInterpreterConstants.storageKey) else {
+        guard let cachedInterpretation: MultipleResourceInterpretation = try? localStorage.read(
+            storageKey: FHIRMultipleResourceInterpreterConstants.storageKey
+        ) else {
             return
         }
-
         self.interpretations = cachedInterpretation
     }
     
-    
     func interpretMultipleResources(resources: [FHIRResource]) async throws {
-
         let chatStreamResults = try await openAIComponent.queryAPI(withChat: [systemPrompt(forResources: resources)])
         
         interpretations = ""

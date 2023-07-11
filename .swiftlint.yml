@@ -382,9 +382,9 @@ excluded: # paths to ignore during linting. Takes precedence over `included`.
   - .swiftpm
   - .derivedData
 
-closure_body_length: # Closure bodies should not span too many lines.
-  - 35 # warning - default: 20
-  - 35 # error - default: 100
+# closure_body_length: # Closure bodies should not span too many lines.
+#   - 35 # warning - default: 20
+#   - 35 # error - default: 100
 
 enum_case_associated_values_count: # Number of associated values in an enum case should be low
   - 5 # warning - default: 5

@@ -8,8 +8,8 @@
 
 import ModelsR4
 import SpeziOpenAI
-import SwiftUI
 import SpeziLocalStorage
+import SwiftUI
 
 
 struct FHIRResourcesView: View {
@@ -43,7 +43,7 @@ struct FHIRResourcesView: View {
     private enum FHIRMultipleResourceInterpreterConstants {
         static let storageKey = "FHIRMultipleResourceInterpreter.Cache"
     }
-    typealias multipleResourceInterpretation = String
+    typealias MultipleResourceInterpretation = String
     
     var body: some View {
         NavigationStack {
@@ -118,30 +118,6 @@ struct FHIRResourcesView: View {
             self.error = error.localizedDescription
         }
         interpretingMultipleResources = false
-        
-        
-//        guard let cachedInterpretation: multipleResourceInterpretation = try? localStorage.read(storageKey: FHIRMultipleResourceInterpreterConstants.storageKey)
-//        else {
-//
-//            interpretingMultipleResources = true
-//
-//            do {
-//                try await fhirMultipleResourceInterpreter.interpretMultipleResources(resources: fhirStandard.resources)
-//            } catch {
-//                self.error = error.localizedDescription
-//            }
-//            interpretingMultipleResources = false
-//
-//            return
-//        }
-//
-
-        
-        
-            
-            
-        
-
     }
 
     @ViewBuilder
