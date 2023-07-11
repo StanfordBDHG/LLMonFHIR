@@ -67,5 +67,4 @@ struct MultipleResourceChat: View {
             gettingAnswer = false
         }
     }
-    
 }

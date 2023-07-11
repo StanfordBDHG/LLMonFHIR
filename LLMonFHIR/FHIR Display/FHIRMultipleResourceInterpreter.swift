@@ -23,12 +23,9 @@ class FHIRMultipleResourceInterpreter<ComponentStandard: Standard>: DefaultIniti
     @Dependency private var localStorage: LocalStorage
     @Dependency private var openAIComponent = OpenAIComponent()
     
-//    var multipleResourceInterpretation = ""
-    typealias multipleResourceInterpretation = String
-
+    typealias MultipleResourceInterpretation = String
     
-    
-    var interpretations: multipleResourceInterpretation = "" {
+    var interpretations: MultipleResourceInterpretation = "" {
         willSet {
             Task { @MainActor in
                 objectWillChange.send()
@@ -48,7 +45,7 @@ class FHIRMultipleResourceInterpreter<ComponentStandard: Standard>: DefaultIniti
     
     
     func configure() {
-        guard let cachedInterpretation: multipleResourceInterpretation = try? localStorage.read(storageKey: FHIRMultipleResourceInterpreterConstants.storageKey) else {
+        guard let cachedInterpretation: MultipleResourceInterpretation = try? localStorage.read(storageKey: FHIRMultipleResourceInterpreterConstants.storageKey) else {
             return
         }
 
@@ -90,14 +87,10 @@ class FHIRMultipleResourceInterpreter<ComponentStandard: Standard>: DefaultIniti
         for resource in resources {
             allJSONResources = allJSONResources + "\n" + resource.compactJSONDescription
         }
-        
-        print("JSON: "+allJSONResources)
-        
-        
+
         return Chat(
             role: .system,
-            content: Prompt.interpret_multiple_resources.prompt.replacingOccurrences(of: Prompt.promptPlaceholder, with: allJSONResources)
-            
+            content: Prompt.interpretMultipleResources.prompt.replacingOccurrences(of: Prompt.promptPlaceholder, with: allJSONResources)
         )
     }
 }
