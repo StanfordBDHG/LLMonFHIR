@@ -8,16 +8,12 @@
 
 import ModelsR4
 import SpeziLocalStorage
+import SpeziOnboarding
 import SpeziOpenAI
 import SwiftUI
-import SpeziOnboarding
 
 struct FHIRResourcesView: View {
     typealias MultipleResourceInterpretation = String
-
-    @EnvironmentObject var fhirMultipleResourceInterpreter: FHIRMultipleResourceInterpreter<FHIR>
-    @EnvironmentObject var localStorage: LocalStorage<FHIR>
-    @EnvironmentObject var fhirStandard: FHIR
 
     @State var resources: [String: [FHIRResource]] = [:]
     @State var allResourcesArray: [FHIRResource] = []
@@ -27,6 +23,10 @@ struct FHIRResourcesView: View {
     @State var error: String?
     @State var searchText = ""
     @AppStorage(StorageKeys.onboardingInstructions) var onboardingInstructions = true
+
+    @EnvironmentObject var fhirMultipleResourceInterpreter: FHIRMultipleResourceInterpreter<FHIR>
+    @EnvironmentObject var localStorage: LocalStorage<FHIR>
+    @EnvironmentObject var fhirStandard: FHIR
 
     private enum FHIRMultipleResourceInterpreterConstants {
             static let storageKey = "FHIRMultipleResourceInterpreter.Cache"
