@@ -52,9 +52,10 @@ struct InspectResourceChat: View {
                     for choice in chatStreamResult.choices {
                         if chat.last?.role == .assistant {
                             let previousChatMessage = chat.last ?? Chat(role: .assistant, content: "")
+                            let deltaContent = choice.delta.content ?? ""
                             chat[chat.count - 1] = Chat(
                                 role: .assistant,
-                                content: previousChatMessage.content + (choice.delta.content ?? "")
+                                content: previousChatMessage.content! + deltaContent
                             )
                         } else {
                             chat.append(Chat(role: .assistant, content: choice.delta.content ?? ""))
