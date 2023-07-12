@@ -32,7 +32,7 @@ class LLMonFHIRDelegate: SpeziAppDelegate {
             CollectSamples(
                 [
                     HKClinicalType(.allergyRecord),
-//                    HKClinicalType(.clinicalNoteRecord),
+                    HKClinicalType(.clinicalNoteRecord),
                     HKClinicalType(.conditionRecord),
                     HKClinicalType(.coverageRecord),
                     HKClinicalType(.immunizationRecord),

@@ -24,6 +24,10 @@
 
 "WELCOME_BUTTON" = "Learn More";
 
+// MARK: Chat with all resources
+"CHAT_WITH_ALL_RESOURCES" = "Chat with all resources";
+"CHAT_WITH_ALL_RESOURCES_TITLE" = "All FHIR Resources";
+
 // MARK: Disclaimer
 "DISCLAIMER_TITLE" = "Disclaimer";
 "DISCLAIMER_SUBTITLE" = "LLM on FHIR is an experimental iOS app that allows users to interact with health data stored in Apple Health using OpenAI models.";

@@ -23,7 +23,7 @@ class FHIRMultipleResourceInterpreter<ComponentStandard: Standard>: DefaultIniti
     @Dependency private var localStorage: LocalStorage
     @Dependency private var openAIComponent = OpenAIComponent()
     
-    var interpretations: MultipleResourceInterpretation = "" {
+    var interpretation: String? {
         willSet {
             Task { @MainActor in
                 objectWillChange.send()
@@ -31,7 +31,7 @@ class FHIRMultipleResourceInterpreter<ComponentStandard: Standard>: DefaultIniti
         }
         didSet {
             do {
-                try localStorage.store(interpretations, storageKey: FHIRMultipleResourceInterpreterConstants.storageKey)
+                try localStorage.store(interpretation, storageKey: FHIRMultipleResourceInterpreterConstants.storageKey)
             } catch {
                 print(error)
             }
@@ -48,18 +48,16 @@ class FHIRMultipleResourceInterpreter<ComponentStandard: Standard>: DefaultIniti
         ) else {
             return
         }
-        self.interpretations = cachedInterpretation
+        self.interpretation = cachedInterpretation
     }
     
     func interpretMultipleResources(resources: [FHIRResource]) async throws {
         let chatStreamResults = try await openAIComponent.queryAPI(withChat: [systemPrompt(forResources: resources)])
         
-        interpretations = ""
-        
         for try await chatStreamResult in chatStreamResults {
             for choice in chatStreamResult.choices {
-                let previousInterpretation = interpretations ?? ""
-                interpretations = previousInterpretation + (choice.delta.content ?? "")
+                let previousInterpretation = interpretation ?? ""
+                interpretation = (interpretation ?? "") + (choice.delta.content ?? "")
             }
         }
     }
@@ -67,10 +65,8 @@ class FHIRMultipleResourceInterpreter<ComponentStandard: Standard>: DefaultIniti
     func chat(resources: [FHIRResource]) -> [Chat] {
         var chat = [systemPrompt(forResources: resources)]
         
-        if let interpretation: String? = interpretations {
-            if let interpretation = interpretation {
-                chat.append(Chat(role: .assistant, content: interpretation))
-            }
+        if let interpretation = interpretation {
+                    chat.append(Chat(role: .assistant, content: interpretation))
         }
         
         return chat

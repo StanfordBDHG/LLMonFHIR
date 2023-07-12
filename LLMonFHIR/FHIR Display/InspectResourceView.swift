@@ -45,9 +45,9 @@ struct InspectResourceView: View {
                 Text(error)
             }
             .sheet(isPresented: $showResourceChat) {
-                InspectResourceChat(
+                ResourceChatView(
                     chat: fhirResourceInterpreter.chat(forResource: resource),
-                    resource: resource
+                    title: resource.displayName
                 )
             }
             .task {

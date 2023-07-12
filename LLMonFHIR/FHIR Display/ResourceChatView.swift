@@ -10,7 +10,7 @@ import SpeziOpenAI
 import SwiftUI
 
 
-struct MultipleResourceChat: View {
+struct ResourceChatView: View {
     @Environment(\.dismiss) var dismiss
     @EnvironmentObject var openAPIComponent: OpenAIComponent<FHIR>
     @EnvironmentObject var fhirResourceSummary: FHIRResourceSummary<FHIR>
@@ -18,11 +18,13 @@ struct MultipleResourceChat: View {
 
     @State var chat: [Chat]
     @State var gettingAnswer = false
+    
+    let title: String
 
     var body: some View {
         NavigationStack {
             ChatView($chat, disableInput: $gettingAnswer)
-                .navigationTitle("All FHIR Resources")
+                .navigationTitle(title)
                 .toolbar {
                     ToolbarItem(placement: .cancellationAction) {
                         Button("FHIR_RESOURCES_CHAT_CANCEL") {

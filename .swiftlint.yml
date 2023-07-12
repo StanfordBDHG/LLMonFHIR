@@ -10,8 +10,6 @@
 only_rules:
   # All Images that provide context should have an accessibility label. Purely decorative images can be hidden from accessibility.
   - accessibility_label_for_image
-  # # Attributes should be on their own lines in functions and types, but on the same line as variables and imports.
-  # - attributes
   # Prefer using Array(seq) over seq.map { $0 } to convert a sequence into an Array.
   - array_init
   # Prefer the new block based KVO API with keypaths when using Swift 3.2 or later.
@@ -313,7 +311,7 @@ only_rules:
   # See large_tuple below for the exact configuration.
   - type_body_length
   # Specifies the order of subtypes, properties, methods & more within a type.
-  # - type_contents_order
+  - type_contents_order
   # Type name should only contain alphanumeric characters, start with an uppercase character and span between 3 and 40 characters in length.
   # Excluded types are listed below.
   - type_name
@@ -383,8 +381,8 @@ excluded: # paths to ignore during linting. Takes precedence over `included`.
   - .derivedData
 
 closure_body_length: # Closure bodies should not span too many lines.
-  - 80 # warning - default: 20
-  - 80 # error - default: 100
+  - 35 # warning - default: 20
+  - 35 # error - default: 100
 
 enum_case_associated_values_count: # Number of associated values in an enum case should be low
   - 5 # warning - default: 5
