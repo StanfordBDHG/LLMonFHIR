@@ -52,7 +52,7 @@ struct MultipleResourceChat: View {
                             let previousChatMessage = chat.last ?? Chat(role: .assistant, content: "")
                             chat[chat.count - 1] = Chat(
                                 role: .assistant,
-                                content: previousChatMessage.content + (choice.delta.content ?? "")
+                                content: (previousChatMessage.content ?? "") + (choice.delta.content ?? "")
                             )
                         } else {
                             chat.append(Chat(role: .assistant, content: choice.delta.content ?? ""))
