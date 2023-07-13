@@ -53,16 +53,17 @@ class FHIRMultipleResourceInterpreter<ComponentStandard: Standard>: DefaultIniti
     }
     
     func interpretMultipleResources(resources: [FHIRResource]) async throws {
-        guard interpretation != nil else {
-            let chatStreamResults = try await openAIComponent.queryAPI(withChat: [systemPrompt(forResources: resources)])
-            
-            for try await chatStreamResult in chatStreamResults {
-                for choice in chatStreamResult.choices {
-                    let previousInterpretation = interpretation ?? ""
-                    interpretation = (interpretation ?? "") + (choice.delta.content ?? "")
-                }
-            }
+        guard interpretation == nil else {
             return
+        }
+        
+        let chatStreamResults = try await openAIComponent.queryAPI(withChat: [systemPrompt(forResources: resources)])
+        
+        for try await chatStreamResult in chatStreamResults {
+            for choice in chatStreamResult.choices {
+                let previousInterpretation = interpretation ?? ""
+                interpretation = (interpretation ?? "") + (choice.delta.content ?? "")
+            }
         }
     }
     
