@@ -45,7 +45,7 @@ struct InspectResourceView: View {
                 Text(error)
             }
             .sheet(isPresented: $showResourceChat) {
-                ResourceChatView(
+                OpenAIChatView(
                     chat: fhirResourceInterpreter.chat(forResource: resource),
                     title: resource.displayName
                 )

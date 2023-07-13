@@ -13,8 +13,6 @@ import SwiftUI
 struct OpenAIChatView: View {
     @Environment(\.dismiss) var dismiss
     @EnvironmentObject var openAPIComponent: OpenAIComponent<FHIR>
-    @EnvironmentObject var fhirResourceSummary: FHIRResourceSummary<FHIR>
-    @EnvironmentObject var fhirStandard: FHIR
 
     @State var chat: [Chat]
     @State var gettingAnswer = false

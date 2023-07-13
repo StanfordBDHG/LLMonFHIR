@@ -23,6 +23,7 @@ class FHIRMultipleResourceInterpreter<ComponentStandard: Standard>: DefaultIniti
     @Dependency private var localStorage: LocalStorage
     @Dependency private var openAIComponent = OpenAIComponent()
     
+    
     var interpretation: String? {
         willSet {
             Task { @MainActor in
@@ -52,13 +53,16 @@ class FHIRMultipleResourceInterpreter<ComponentStandard: Standard>: DefaultIniti
     }
     
     func interpretMultipleResources(resources: [FHIRResource]) async throws {
-        let chatStreamResults = try await openAIComponent.queryAPI(withChat: [systemPrompt(forResources: resources)])
-        
-        for try await chatStreamResult in chatStreamResults {
-            for choice in chatStreamResult.choices {
-                let previousInterpretation = interpretation ?? ""
-                interpretation = (interpretation ?? "") + (choice.delta.content ?? "")
+        guard interpretation != nil else {
+            let chatStreamResults = try await openAIComponent.queryAPI(withChat: [systemPrompt(forResources: resources)])
+            
+            for try await chatStreamResult in chatStreamResults {
+                for choice in chatStreamResult.choices {
+                    let previousInterpretation = interpretation ?? ""
+                    interpretation = (interpretation ?? "") + (choice.delta.content ?? "")
+                }
             }
+            return
         }
     }
     
@@ -66,7 +70,7 @@ class FHIRMultipleResourceInterpreter<ComponentStandard: Standard>: DefaultIniti
         var chat = [systemPrompt(forResources: resources)]
         
         if let interpretation = interpretation {
-                    chat.append(Chat(role: .assistant, content: interpretation))
+            chat.append(Chat(role: .assistant, content: interpretation))
         }
         
         return chat
@@ -74,11 +78,7 @@ class FHIRMultipleResourceInterpreter<ComponentStandard: Standard>: DefaultIniti
 
     
     private func systemPrompt(forResources resources: [FHIRResource]) -> Chat {
-        var allJSONResources = ""
-        
-        for resource in resources {
-            allJSONResources = allJSONResources + "\n" + resource.compactJSONDescription
-        }
+        let allJSONResources = resources.map(\.compactJSONDescription).joined(separator: "\n")
 
         return Chat(
             role: .system,

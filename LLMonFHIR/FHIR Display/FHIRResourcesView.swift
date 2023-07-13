@@ -14,28 +14,23 @@ import SwiftUI
 
 struct FHIRResourcesView: View {
     typealias MultipleResourceInterpretation = String
+    
+    @AppStorage(StorageKeys.onboardingInstructions) var onboardingInstructions = true
 
     @State var resources: [String: [FHIRResource]] = [:]
     @State var allResourcesArray: [FHIRResource] = []
     @State var showSettings = false
     @State var showMultipleResourcesChat = false
     @State var interpretingMultipleResources = false
-    @State var error: String?
     @State var searchText = ""
-    @AppStorage(StorageKeys.onboardingInstructions) var onboardingInstructions = true
+    
 
     @EnvironmentObject var fhirMultipleResourceInterpreter: FHIRMultipleResourceInterpreter<FHIR>
-    @EnvironmentObject var localStorage: LocalStorage<FHIR>
     @EnvironmentObject var fhirStandard: FHIR
-
-    private enum FHIRMultipleResourceInterpreterConstants {
-            static let storageKey = "FHIRMultipleResourceInterpreter.Cache"
-        }
 
     var body: some View {
         NavigationStack {
             List {
-                chatAllResourceSection
                 instructionsView
             }
                 .searchable(text: $searchText)
@@ -59,37 +54,16 @@ struct FHIRResourcesView: View {
                 .sheet(isPresented: $showMultipleResourcesChat) {
                     resourceChatView
                 }
-                .task {
-                    allResourcesArray = await fhirStandard.resources
-                    await interpretMultipleResources()
-                }
                 .navigationTitle("FHIR_RESOURCES_TITLE")
-        }
-    }
-    
-    private func interpretMultipleResources() async {
-        guard let cache: MultipleResourceInterpretation = try? localStorage.read(storageKey: FHIRMultipleResourceInterpreterConstants.storageKey)
-        else {
-            interpretingMultipleResources = true
-
-            do {
-                try await fhirMultipleResourceInterpreter.interpretMultipleResources(resources: fhirStandard.resources)
-            } catch {
-                self.error = error.localizedDescription
-            }
-
-            interpretingMultipleResources = false
-
-            return
         }
     }
     
     @ViewBuilder
     private var resourceChatView: some View {
-        ResourceChatView(
+        OpenAIChatView(
             chat: fhirMultipleResourceInterpreter.chat(resources: allResourcesArray),
             title: "All FHIR Resources"
-         )
+        )
     }
     
     
@@ -99,6 +73,7 @@ struct FHIRResourcesView: View {
             OnboardingActionsView(
                 "CHAT_WITH_ALL_RESOURCES",
                 action: {
+                    allResourcesArray = await fhirStandard.resources
                     await interpretMultipleResources()
                     showMultipleResourcesChat.toggle()
                 }
@@ -150,6 +125,7 @@ struct FHIRResourcesView: View {
         if filteredResourceKeys.isEmpty {
             Text("FHIR_RESOURCES_EMPTY_SEARCH_MESSAGE")
         } else {
+            chatAllResourceSection
             ForEach(filteredResourceKeys, id: \.self) { resourceType in
                 Section(resourceType) {
                     resources(for: resourceType)
@@ -178,6 +154,20 @@ struct FHIRResourcesView: View {
                 }
             )
         }
+    }
+    
+    private func interpretMultipleResources() async {
+        interpretingMultipleResources = true
+        
+        do {
+            try await fhirMultipleResourceInterpreter.interpretMultipleResources(resources: fhirStandard.resources)
+        } catch {
+            print("Error running multiple resource interpreter")
+        }
+
+        interpretingMultipleResources = false
+        
+        return
     }
 
     private func resources(for resourceType: String) -> some View {
