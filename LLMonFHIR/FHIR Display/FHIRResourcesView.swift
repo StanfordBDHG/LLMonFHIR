@@ -13,8 +13,6 @@ import SpeziOpenAI
 import SwiftUI
 
 struct FHIRResourcesView: View {
-    typealias MultipleResourceInterpretation = String
-    
     @AppStorage(StorageKeys.onboardingInstructions) var onboardingInstructions = true
 
     @State var resources: [String: [FHIRResource]] = [:]
