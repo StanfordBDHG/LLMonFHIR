@@ -163,8 +163,6 @@ struct FHIRResourcesView: View {
         }
 
         interpretingMultipleResources = false
-        
-        return
     }
 
     private func resources(for resourceType: String) -> some View {
