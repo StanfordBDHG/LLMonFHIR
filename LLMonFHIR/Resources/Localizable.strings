@@ -159,7 +159,6 @@ The tense should be present.
 "SETTINGS_PROMPTS" = "Prompt Settings";
 "SETTINGS_PROMPTS_SUMMARY" = "Summary Prompt";
 "SETTINGS_PROMPTS_INTERPRETATION" = "Interpretation Prompt";
-// Have to add support for this
 "SETTINGS_PROMPTS_INTERPRETATION_MULTIPLE_RESOURCES" = "Interpretation Prompt for Multiple Resources";
 "SETTINGS_PROMPT_DESCRITPTION %@" = "Customize the %@ prompt.";
 "SETTINGS_PROMPT_CAPTION %@" = "SPlace %@ at the position in the prompt where the FHIR resource should be inserted.";
