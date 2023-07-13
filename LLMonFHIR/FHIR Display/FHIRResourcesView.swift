@@ -7,7 +7,6 @@
 //
 
 import ModelsR4
-import SpeziLocalStorage
 import SpeziOnboarding
 import SpeziOpenAI
 import SwiftUI
