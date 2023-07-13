@@ -19,7 +19,6 @@ private enum FHIRMultipleResourceInterpreterConstants {
 
 
 class FHIRMultipleResourceInterpreter<ComponentStandard: Standard>: DefaultInitializable, Component, ObservableObject, ObservableObjectProvider {
-    typealias MultipleResourceInterpretation = String
     @Dependency private var localStorage: LocalStorage
     @Dependency private var openAIComponent = OpenAIComponent()
     
@@ -44,7 +43,7 @@ class FHIRMultipleResourceInterpreter<ComponentStandard: Standard>: DefaultIniti
     
     
     func configure() {
-        guard let cachedInterpretation: MultipleResourceInterpretation = try? localStorage.read(
+        guard let cachedInterpretation: String = try? localStorage.read(
             storageKey: FHIRMultipleResourceInterpreterConstants.storageKey
         ) else {
             return
