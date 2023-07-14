@@ -1,0 +1,113 @@
+{
+  "pins" : [
+    {
+      "identity" : "fhirmodels",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/apple/FHIRModels",
+      "state" : {
+        "revision" : "861afd5816a98d38f86220eab2f812d76cad84a0",
+        "version" : "0.5.0"
+      }
+    },
+    {
+      "identity" : "healthkitonfhir",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/StanfordBDHG/HealthKitOnFHIR.git",
+      "state" : {
+        "revision" : "fdf8e4543718a940643598e4bd5e750e9c4c5540",
+        "version" : "0.2.4"
+      }
+    },
+    {
+      "identity" : "openai",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/MacPaw/OpenAI",
+      "state" : {
+        "revision" : "a51a7fde78173e57b9166d38d1f665d17a3c4383",
+        "version" : "0.2.3"
+      }
+    },
+    {
+      "identity" : "spezi",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/StanfordSpezi/Spezi",
+      "state" : {
+        "revision" : "cfcb4d81640f3b7794f36f47e70d72ccfa00f099",
+        "version" : "0.5.3"
+      }
+    },
+    {
+      "identity" : "spezihealthkit",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/StanfordSpezi/SpeziHealthKit.git",
+      "state" : {
+        "revision" : "0a26f415c90d586a2417f31b1444bb08e004db17",
+        "version" : "0.2.2"
+      }
+    },
+    {
+      "identity" : "speziml",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/StanfordSpezi/SpeziML.git",
+      "state" : {
+        "revision" : "190c7b2fda06c359bc650b73aa38bc9809ade422",
+        "version" : "0.1.8"
+      }
+    },
+    {
+      "identity" : "spezionboarding",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/StanfordSpezi/SpeziOnboarding.git",
+      "state" : {
+        "revision" : "a84ddd7cdb5ce48935ca3daf2a33ddc512d76b33",
+        "version" : "0.3.1"
+      }
+    },
+    {
+      "identity" : "spezistorage",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/StanfordSpezi/SpeziStorage.git",
+      "state" : {
+        "revision" : "5dc128a257a6b4f7d2f4d96803c0cf89238bb922",
+        "version" : "0.3.1"
+      }
+    },
+    {
+      "identity" : "speziviews",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/StanfordSpezi/SpeziViews.git",
+      "state" : {
+        "revision" : "c6975e84c735b8b8a13740012c1c194f48893fa8",
+        "version" : "0.3.0"
+      }
+    },
+    {
+      "identity" : "xctestextensions",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/StanfordBDHG/XCTestExtensions.git",
+      "state" : {
+        "revision" : "625477e0937294cb3fd6e7bbf72b78f951644b1d",
+        "version" : "0.4.6"
+      }
+    },
+    {
+      "identity" : "xcthealthkit",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/StanfordBDHG/XCTHealthKit.git",
+      "state" : {
+        "revision" : "6e9344a2d632b801d94fe3bbd1d891817e032103",
+        "version" : "0.3.5"
+      }
+    },
+    {
+      "identity" : "xctruntimeassertions",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/StanfordSpezi/XCTRuntimeAssertions",
+      "state" : {
+        "revision" : "8471ac76b9bb5645ba5ccb36a893919fccbf8851",
+        "version" : "0.2.3"
+      }
+    }
+  ],
+  "version" : 2
+}
