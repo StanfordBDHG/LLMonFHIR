@@ -21,6 +21,7 @@ class LLMonFHIRDelegate: SpeziAppDelegate {
             }
             OpenAIComponent()
             FHIRResourceInterpreter()
+            FHIRMultipleResourceInterpreter()
             FHIRResourceSummary()
         }
     }

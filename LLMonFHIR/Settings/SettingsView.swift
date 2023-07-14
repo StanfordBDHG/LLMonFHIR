@@ -16,6 +16,7 @@ struct SettingsView: View {
         case openAIModel
         case promptSummary
         case promptInterpretation
+        case promptMultipleResourceInterpretation
     }
     
     @State private var path = NavigationPath()
@@ -39,6 +40,9 @@ struct SettingsView: View {
                     }
                     NavigationLink(value: SettingsDestinations.promptInterpretation) {
                         Text("SETTINGS_PROMPTS_INTERPRETATION")
+                    }
+                    NavigationLink(value: SettingsDestinations.promptMultipleResourceInterpretation) {
+                            Text("SETTINGS_PROMPTS_INTERPRETATION_MULTIPLE_RESOURCES")
                     }
                 }
             }
@@ -72,6 +76,8 @@ struct SettingsView: View {
                 PromptSettingsView(promptType: .summary, path: $path)
             case .promptInterpretation:
                 PromptSettingsView(promptType: .interpretation, path: $path)
+            case .promptMultipleResourceInterpretation:
+                PromptSettingsView(promptType: .interpretMultipleResources, path: $path)
             }
         }
     }

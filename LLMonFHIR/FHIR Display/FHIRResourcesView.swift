@@ -7,31 +7,28 @@
 //
 
 import ModelsR4
+import SpeziOnboarding
 import SpeziOpenAI
 import SwiftUI
 
-
 struct FHIRResourcesView: View {
-    @EnvironmentObject var fhirStandard: FHIR
-    @State var resources: [String: [FHIRResource]] = [:]
-    @State var showSettings = false
-    @State var searchText = ""
     @AppStorage(StorageKeys.onboardingInstructions) var onboardingInstructions = true
+
+    @State var resources: [String: [FHIRResource]] = [:]
+    @State var allResourcesArray: [FHIRResource] = []
+    @State var showSettings = false
+    @State var showMultipleResourcesChat = false
+    @State var interpretingMultipleResources = false
+    @State var searchText = ""
     
-    
+
+    @EnvironmentObject var fhirMultipleResourceInterpreter: FHIRMultipleResourceInterpreter<FHIR>
+    @EnvironmentObject var fhirStandard: FHIR
+
     var body: some View {
         NavigationStack {
             List {
                 instructionsView
-                if filteredResourceKeys.isEmpty {
-                    Text("FHIR_RESOURCES_EMPTY_SEARCH_MESSAGE")
-                } else {
-                    ForEach(filteredResourceKeys, id: \.self) { resourceType in
-                        Section(resourceType) {
-                            resources(for: resourceType)
-                        }
-                    }
-                }
             }
                 .searchable(text: $searchText)
                 .navigationDestination(for: FHIRResource.self) { resource in
@@ -51,7 +48,34 @@ struct FHIRResourcesView: View {
                 .sheet(isPresented: $showSettings) {
                     SettingsView()
                 }
+                .sheet(isPresented: $showMultipleResourcesChat) {
+                    resourceChatView
+                }
                 .navigationTitle("FHIR_RESOURCES_TITLE")
+        }
+    }
+    
+    @ViewBuilder
+    private var resourceChatView: some View {
+        OpenAIChatView(
+            chat: fhirMultipleResourceInterpreter.chat(resources: allResourcesArray),
+            title: "All FHIR Resources"
+        )
+    }
+    
+    
+    @ViewBuilder
+    private var chatAllResourceSection: some View {
+        Section {
+            OnboardingActionsView(
+                "CHAT_WITH_ALL_RESOURCES",
+                action: {
+                    allResourcesArray = await fhirStandard.resources
+                    await interpretMultipleResources()
+                    showMultipleResourcesChat.toggle()
+                }
+            )
+            .padding(-20)
         }
     }
 
@@ -95,6 +119,16 @@ struct FHIRResourcesView: View {
         } else {
             EmptyView()
         }
+        if filteredResourceKeys.isEmpty {
+            Text("FHIR_RESOURCES_EMPTY_SEARCH_MESSAGE")
+        } else {
+            chatAllResourceSection
+            ForEach(filteredResourceKeys, id: \.self) { resourceType in
+                Section(resourceType) {
+                    resources(for: resourceType)
+                }
+            }
+        }
     }
 
     private var filteredResourceKeys: [String] {
@@ -117,6 +151,18 @@ struct FHIRResourcesView: View {
                 }
             )
         }
+    }
+    
+    private func interpretMultipleResources() async {
+        interpretingMultipleResources = true
+        
+        do {
+            try await fhirMultipleResourceInterpreter.interpretMultipleResources(resources: fhirStandard.resources)
+        } catch {
+            print("Error running multiple resource interpreter")
+        }
+
+        interpretingMultipleResources = false
     }
 
     private func resources(for resourceType: String) -> some View {

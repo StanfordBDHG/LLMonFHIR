@@ -15,6 +15,8 @@ enum Prompt: String {
     /// The interpretation prompt
     case interpretation = "prompt.interpretation"
     
+    case interpretMultipleResources = "prompt.interpretMultipleResources"
+    
     
     static let promptPlaceholder = "%@"
     
@@ -25,6 +27,8 @@ enum Prompt: String {
             return String(localized: "SETTINGS_PROMPTS_SUMMARY")
         case .interpretation:
             return String(localized: "SETTINGS_PROMPTS_INTERPRETATION")
+        case .interpretMultipleResources:
+            return String(localized: "SETTINGS_PROMPTS_INTERPRETATION_MULTIPLE_RESOURCES")
         }
     }
     
@@ -34,6 +38,8 @@ enum Prompt: String {
             return String(localized: "FHIR_RESOURCE_SUMMARY_PROMPT \("%@")")
         case .interpretation:
             return String(localized: "FHIR_RESOURCE_INTERPRETATION_PROMPT \("%@")")
+        case .interpretMultipleResources:
+            return String(localized: "FHIR_MULTIPLE_RESOURCE_INTERPRETATION_PROMPT \("%@")")
         }
     }
     

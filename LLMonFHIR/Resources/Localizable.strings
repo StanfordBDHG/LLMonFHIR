@@ -24,6 +24,10 @@
 
 "WELCOME_BUTTON" = "Learn More";
 
+// MARK: Chat with all resources
+"CHAT_WITH_ALL_RESOURCES" = "Chat with all resources";
+"CHAT_WITH_ALL_RESOURCES_TITLE" = "All FHIR Resources";
+
 // MARK: Disclaimer
 "DISCLAIMER_TITLE" = "Disclaimer";
 "DISCLAIMER_SUBTITLE" = "LLM on FHIR is an experimental iOS app that allows users to interact with health data stored in Apple Health using OpenAI models.";
@@ -118,6 +122,29 @@ Immediately return an interpretation to the user, starting the conversation.
 Do not introduce yourself at the beginning, and start with your interpretation.
 ";
 
+"FHIR_MULTIPLE_RESOURCE_INTERPRETATION_PROMPT %@" = "
+You are the LLM on FHIR application.
+Your task is to interpret all of the FHIR resources from the user's clinical records.
+
+Interpret all the resources by explaining its data relevant to the user's health.
+Explain the relevant medical context in a language understandable by a user who is not a medical professional.
+You should provide factual and precise information in a compact summary in short responses.
+
+The following JSON representation defines the FHIR resources that you should interpret:
+%@
+
+Tell the user that they can ask any question about their health records and then create a short list of the main categories of health records of the user which you have access to.
+
+Immediately return an interpretation to the user, starting the conversation.
+The initial interpretation should be a short and simple summary with the following specifications:
+1. Overall summary of all health records
+2. Middle school reading level
+3. End with a question asking user if they have any questions. Make sure that this question is not generic but specific to their health records.
+Do not introduce yourself at the beginning, and start with your interpretation.
+Make sure your response is in the same language the user writes to you in.
+The tense should be present.
+";
+
 
 // MARK: - Settings
 "SETTINGS_TITLE" = "Settings";
@@ -132,6 +159,7 @@ Do not introduce yourself at the beginning, and start with your interpretation.
 "SETTINGS_PROMPTS" = "Prompt Settings";
 "SETTINGS_PROMPTS_SUMMARY" = "Summary Prompt";
 "SETTINGS_PROMPTS_INTERPRETATION" = "Interpretation Prompt";
+"SETTINGS_PROMPTS_INTERPRETATION_MULTIPLE_RESOURCES" = "Interpretation Prompt for Multiple Resources";
 "SETTINGS_PROMPT_DESCRITPTION %@" = "Customize the %@ prompt.";
 "SETTINGS_PROMPT_CAPTION %@" = "SPlace %@ at the position in the prompt where the FHIR resource should be inserted.";
 "SETTINGS_PROMPT_SAVE_BUTTON" = "Save Prompt";

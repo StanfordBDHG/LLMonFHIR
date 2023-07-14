@@ -17,7 +17,6 @@
 		2F4E23832989D51F0013F3D9 /* LLMonFHIRTestingSetup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F4E23822989D51F0013F3D9 /* LLMonFHIRTestingSetup.swift */; };
 		2F55FC532A1AE8750051DF48 /* FHIRResourceInterpreter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F55FC522A1AE8750051DF48 /* FHIRResourceInterpreter.swift */; };
 		2F5E32BD297E05EA003432F8 /* LLMonFHIRDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F5E32BC297E05EA003432F8 /* LLMonFHIRDelegate.swift */; };
-		2F61A32E2A1B4BFB000A7796 /* InspectResourceChat.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F61A32D2A1B4BFB000A7796 /* InspectResourceChat.swift */; };
 		2F61A3302A1B51BF000A7796 /* FHIRResourceSummary.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F61A32F2A1B51BF000A7796 /* FHIRResourceSummary.swift */; };
 		2F61A3322A1B560B000A7796 /* ResourceSummaryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F61A3312A1B560B000A7796 /* ResourceSummaryView.swift */; };
 		2F901CE22A1A03360007C167 /* SpeziOpenAI in Frameworks */ = {isa = PBXBuildFile; productRef = 2F901CE12A1A03360007C167 /* SpeziOpenAI */; };
@@ -46,6 +45,8 @@
 		2FE5DC8129EDD91D004B9AB4 /* SpeziOnboarding in Frameworks */ = {isa = PBXBuildFile; productRef = 2FE5DC8029EDD91D004B9AB4 /* SpeziOnboarding */; };
 		2FE5DC9929EDD9D9004B9AB4 /* XCTestExtensions in Frameworks */ = {isa = PBXBuildFile; productRef = 2FE5DC9829EDD9D9004B9AB4 /* XCTestExtensions */; };
 		2FE5DC9C29EDD9EF004B9AB4 /* XCTHealthKit in Frameworks */ = {isa = PBXBuildFile; productRef = 2FE5DC9B29EDD9EF004B9AB4 /* XCTHealthKit */; };
+		433352442A5C96090043A440 /* FHIRMultipleResourceInterpreter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 433352432A5C96090043A440 /* FHIRMultipleResourceInterpreter.swift */; };
+		43B9CDCD2A5E6E7C002F13A6 /* OpenAIChatView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43B9CDCC2A5E6E7C002F13A6 /* OpenAIChatView.swift */; };
 		653A2551283387FE005D4D48 /* LLMonFHIR.swift in Sources */ = {isa = PBXBuildFile; fileRef = 653A2550283387FE005D4D48 /* LLMonFHIR.swift */; };
 		653A255528338800005D4D48 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 653A255428338800005D4D48 /* Assets.xcassets */; };
 		653A256228338800005D4D48 /* LLMonFHIRTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 653A256128338800005D4D48 /* LLMonFHIRTests.swift */; };
@@ -78,7 +79,6 @@
 		2F4E23822989D51F0013F3D9 /* LLMonFHIRTestingSetup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LLMonFHIRTestingSetup.swift; sourceTree = "<group>"; };
 		2F55FC522A1AE8750051DF48 /* FHIRResourceInterpreter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FHIRResourceInterpreter.swift; sourceTree = "<group>"; };
 		2F5E32BC297E05EA003432F8 /* LLMonFHIRDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LLMonFHIRDelegate.swift; sourceTree = "<group>"; };
-		2F61A32D2A1B4BFB000A7796 /* InspectResourceChat.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InspectResourceChat.swift; sourceTree = "<group>"; };
 		2F61A32F2A1B51BF000A7796 /* FHIRResourceSummary.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FHIRResourceSummary.swift; sourceTree = "<group>"; };
 		2F61A3312A1B560B000A7796 /* ResourceSummaryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResourceSummaryView.swift; sourceTree = "<group>"; };
 		2FAEC07F297F583900C11C42 /* LLMonFHIR.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = LLMonFHIR.entitlements; sourceTree = "<group>"; };
@@ -100,10 +100,12 @@
 		2FE5DC4229EDD7F2004B9AB4 /* Binding+Negate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Binding+Negate.swift"; sourceTree = "<group>"; };
 		2FE5DC4329EDD7F2004B9AB4 /* Bundle+Image.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Bundle+Image.swift"; sourceTree = "<group>"; };
 		2FE5DC4429EDD7F2004B9AB4 /* CodableArray+RawRepresentable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CodableArray+RawRepresentable.swift"; sourceTree = "<group>"; };
+		433352432A5C96090043A440 /* FHIRMultipleResourceInterpreter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FHIRMultipleResourceInterpreter.swift; sourceTree = "<group>"; };
+		43B9CDCC2A5E6E7C002F13A6 /* OpenAIChatView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenAIChatView.swift; sourceTree = "<group>"; };
 		653A254D283387FE005D4D48 /* LLMonFHIR.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LLMonFHIR.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		653A2550283387FE005D4D48 /* LLMonFHIR.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LLMonFHIR.swift; sourceTree = "<group>"; };
 		653A255428338800005D4D48 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		653A255D28338800005D4D48 /* LLMonFHIRTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = LLMonFHIRTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		653A255D28338800005D4D48 /* LLMonFHIRTests.swift */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; name = LLMonFHIRTests.swift; path = LLMonFHIRTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		653A256128338800005D4D48 /* LLMonFHIRTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LLMonFHIRTests.swift; sourceTree = "<group>"; };
 		653A256728338800005D4D48 /* LLMonFHIRUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = LLMonFHIRUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		653A258928339462005D4D48 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -180,9 +182,10 @@
 				2FD8E83A2A1AD10300357F4E /* FHIRResourcesView.swift */,
 				2F61A3312A1B560B000A7796 /* ResourceSummaryView.swift */,
 				2FD8E83C2A1AE24F00357F4E /* InspectResourceView.swift */,
+				433352432A5C96090043A440 /* FHIRMultipleResourceInterpreter.swift */,
 				2F55FC522A1AE8750051DF48 /* FHIRResourceInterpreter.swift */,
 				2F61A32F2A1B51BF000A7796 /* FHIRResourceSummary.swift */,
-				2F61A32D2A1B4BFB000A7796 /* InspectResourceChat.swift */,
+				43B9CDCC2A5E6E7C002F13A6 /* OpenAIChatView.swift */,
 			);
 			path = "FHIR Display";
 			sourceTree = "<group>";
@@ -243,7 +246,7 @@
 			isa = PBXGroup;
 			children = (
 				653A254D283387FE005D4D48 /* LLMonFHIR.app */,
-				653A255D28338800005D4D48 /* LLMonFHIRTests.xctest */,
+				653A255D28338800005D4D48 /* LLMonFHIRTests.swift */,
 				653A256728338800005D4D48 /* LLMonFHIRUITests.xctest */,
 			);
 			name = Products;
@@ -338,7 +341,7 @@
 			);
 			name = LLMonFHIRTests;
 			productName = LLMonFHIRTests;
-			productReference = 653A255D28338800005D4D48 /* LLMonFHIRTests.xctest */;
+			productReference = 653A255D28338800005D4D48 /* LLMonFHIRTests.swift */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
 		653A256628338800005D4D48 /* LLMonFHIRUITests */ = {
@@ -471,7 +474,6 @@
 			files = (
 				2FE5DC4129EDD7EE004B9AB4 /* StorageKeys.swift in Sources */,
 				2FE5DC3929EDD7CA004B9AB4 /* String+ModuleLocalized.swift in Sources */,
-				2F61A32E2A1B4BFB000A7796 /* InspectResourceChat.swift in Sources */,
 				2F61A3302A1B51BF000A7796 /* FHIRResourceSummary.swift in Sources */,
 				2FE5DC3A29EDD7CA004B9AB4 /* Welcome.swift in Sources */,
 				2FE5DC3829EDD7CA004B9AB4 /* Disclaimer.swift in Sources */,
@@ -482,6 +484,7 @@
 				2F0F90BA2A1E6556006D7E03 /* SettingsView.swift in Sources */,
 				2FD8E83B2A1AD10300357F4E /* FHIRResourcesView.swift in Sources */,
 				2FD8E82E2A1AAFC300357F4E /* HealthKitToFHIRAdapter.swift in Sources */,
+				43B9CDCD2A5E6E7C002F13A6 /* OpenAIChatView.swift in Sources */,
 				2F0F90BE2A1E702B006D7E03 /* Prompt.swift in Sources */,
 				2FE5DC4529EDD7F2004B9AB4 /* Binding+Negate.swift in Sources */,
 				2FC975A82978F11A00BA99FE /* Home.swift in Sources */,
@@ -490,6 +493,7 @@
 				2FE5DC4029EDD7EE004B9AB4 /* FeatureFlags.swift in Sources */,
 				2FE5DC4629EDD7F2004B9AB4 /* Bundle+Image.swift in Sources */,
 				2F4E23832989D51F0013F3D9 /* LLMonFHIRTestingSetup.swift in Sources */,
+				433352442A5C96090043A440 /* FHIRMultipleResourceInterpreter.swift in Sources */,
 				2FD8E8272A1AAD9B00357F4E /* FHIR.swift in Sources */,
 				2F5E32BD297E05EA003432F8 /* LLMonFHIRDelegate.swift in Sources */,
 				2F55FC532A1AE8750051DF48 /* FHIRResourceInterpreter.swift in Sources */,
@@ -582,7 +586,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 16.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -727,7 +731,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 16.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -781,7 +785,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 16.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
