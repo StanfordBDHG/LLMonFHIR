@@ -143,6 +143,7 @@ The initial interpretation should be a short and simple summary with the followi
 Do not introduce yourself at the beginning, and start with your interpretation.
 Make sure your response is in the same language the user writes to you in.
 The tense should be present.
+Chat with the user in the same language they chat in.
 ";
 
 
