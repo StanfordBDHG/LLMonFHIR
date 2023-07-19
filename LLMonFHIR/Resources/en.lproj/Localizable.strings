@@ -105,6 +105,7 @@ The following JSON representation defines the FHIR resource that you should inte
 Provide a short one-sentence summary of the resource in less than 20 words.
 Do NOT respond with more content than the single line containing the summary.
 Directly provide the content without any additional structure.
+Chat with the user in
 ";
 
 "FHIR_RESOURCE_INTERPRETATION_PROMPT %@" = "
@@ -120,6 +121,8 @@ The following JSON representation defines the FHIR resource that you should inte
 
 Immediately return an interpretation to the user, starting the conversation.
 Do not introduce yourself at the beginning, and start with your interpretation.
+Chat with the user in the same language they chat in.
+Chat with the user in
 ";
 
 "FHIR_MULTIPLE_RESOURCE_INTERPRETATION_PROMPT %@" = "
@@ -144,6 +147,7 @@ Do not introduce yourself at the beginning, and start with your interpretation.
 Make sure your response is in the same language the user writes to you in.
 The tense should be present.
 Chat with the user in the same language they chat in.
+Chat with the user in
 ";
 
 

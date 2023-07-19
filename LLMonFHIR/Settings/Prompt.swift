@@ -45,9 +45,8 @@ enum Prompt: String {
     
     
     var prompt: String {
-        let preferredLanguage = Locale.preferredLanguages[0]
         var prompt = UserDefaults.standard.string(forKey: rawValue) ?? defaultPrompt
-        prompt += "\n Chat with the user in \(preferredLanguage)"
+        prompt += Locale.preferredLanguages[0]
         return prompt
     }
     
