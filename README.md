@@ -17,10 +17,12 @@ SPDX-License-Identifier: MIT
 *"Demystifying Health Records - A Conversational Interface to Your Health Data"*
 
 <p float="left">
- <img width="200" alt="HealthRecords" src="Figures/HealthRecords.jpeg">
+ <img width="200" alt="AllHealthRecords" src="Figures/AllHealthRecords.jpeg">
+ <img width="200" alt="AllResourcesChat" src="Figures/AllResourcesChat.jpeg">
  <img width="200" alt="LabResultSummary" src="Figures/LabResultSummary.jpeg">
- <img width="200" alt="ConverstationQuestion" src="Figures/ConverstationQuestion.jpeg">
- <img width="200" alt="ConverstationFollowUpQuestion" src="Figures/ConverstationFollowUpQuestion.jpeg">
+ <img width="200" alt="ConversationQuestion" src="Figures/ConversationQuestion.jpeg">
+ <img width="200" alt="ConversationSpanish" src="Figures/ConversationSpanish.jpeg">
+ <img width="200" alt="HealthRecordsSpanish" src="Figures/HealthRecordsSpanish.jpeg">
 </p>
 
 This repository contains the LLM on FHIR Application to demonstrate the power of LLMs to explain and provide helpful context around patient data provided in the FHIR format.
