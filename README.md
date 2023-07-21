@@ -20,7 +20,6 @@ SPDX-License-Identifier: MIT
  <img width="150" alt="AllHealthRecords" src="Figures/AllHealthRecords.jpeg">
  <img width="150" alt="AllResourcesChat" src="Figures/AllResourcesChat.jpeg">
  <img width="150" alt="LabResultSummary" src="Figures/LabResultSummary.jpeg">
- <img width="150" alt="ConversationQuestion" src="Figures/ConversationQuestion.jpeg">
  <img width="150" alt="HealthRecordsSpanish" src="Figures/HealthRecordsSpanish.jpeg">
  <img width="150" alt="ConversationSpanish" src="Figures/ConversationSpanish.jpeg">
 </p>
