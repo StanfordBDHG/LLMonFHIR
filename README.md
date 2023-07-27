@@ -20,6 +20,12 @@ SPDX-License-Identifier: MIT
  <img alt="AllHealthRecords" src="Figures/LLMonFHIR_Screenshots_Main.png">
 </p>
 
+LLMonFHIR has multilingual support. The LLM is prompt engineered to converse with the user based on their system language. The full app currently translates to English, Spanish, Chinese, German, and French.
+
+<p float="left">
+ <img alt="AllHealthRecords" src="Figures/LLMonFHIR_Screenshots_Translation.png">
+</p>
+
 This repository contains the LLM on FHIR Application to demonstrate the power of LLMs to explain and provide helpful context around patient data provided in the FHIR format.
 It demonstrates using the [Spezi](https://github.com/StanfordSpezi/Spezi) framework and builds on top of the [Stanford Spezi Template Application](https://github.com/StanfordSpezi/SpeziTemplateApplication). The application connects to the OpenAI GPT API to interpret FHIR resources using the GPT suite of large language models.
 
