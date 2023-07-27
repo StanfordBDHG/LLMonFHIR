@@ -17,9 +17,7 @@ enum Prompt: String {
     
     case interpretMultipleResources = "prompt.interpretMultipleResources"
     
-    
     static let promptPlaceholder = "%@"
-    
     
     var localizedDescription: String {
         switch self {
@@ -46,7 +44,9 @@ enum Prompt: String {
     
     var prompt: String {
         var prompt = UserDefaults.standard.string(forKey: rawValue) ?? defaultPrompt
-        prompt += Locale.preferredLanguages[0]
+        var promptTranslation = String(localized: "FHIR_PROMPT_TRANSLATION \("%@")")
+        promptTranslation = promptTranslation.replacingOccurrences(of: Prompt.promptPlaceholder, with: Locale.preferredLanguages[0])
+        prompt += promptTranslation
         return prompt
     }
     
