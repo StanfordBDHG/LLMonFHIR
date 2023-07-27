@@ -94,6 +94,9 @@ Puede cargar un título y un resumen para cada recurso usando una pulsación lar
 // MARK: FHIR Resource Chat
 "FHIR_RESOURCES_CHAT_CANCEL" = "Cancelar";
 
+// MARK: FHIR Prompt Translation
+"FHIR_PROMPT_TRANSLATION %@" = "Chat with the user in the same language they chat in.
+Chat with the user in %@";
 
 // MARK: - Prompts
 "FHIR_RESOURCE_SUMMARY_PROMPT %@" = "
