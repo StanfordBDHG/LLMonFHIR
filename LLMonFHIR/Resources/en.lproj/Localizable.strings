@@ -94,6 +94,9 @@ You can load a title and summary for each resource using a long press on a resou
 // MARK: FHIR Resource Chat
 "FHIR_RESOURCES_CHAT_CANCEL" = "Cancel";
 
+// MARK: FHIR Prompt Translation
+"FHIR_PROMPT_TRANSLATION %@" = "Chat with the user in the same language they chat in.
+Chat with the user in %@";
 
 // MARK: - Prompts
 "FHIR_RESOURCE_SUMMARY_PROMPT %@" = "
@@ -121,8 +124,6 @@ The following JSON representation defines the FHIR resource that you should inte
 
 Immediately return an interpretation to the user, starting the conversation.
 Do not introduce yourself at the beginning, and start with your interpretation.
-Chat with the user in the same language they chat in.
-Chat with the user in
 ";
 
 "FHIR_MULTIPLE_RESOURCE_INTERPRETATION_PROMPT %@" = "
@@ -146,8 +147,6 @@ The initial interpretation should be a short and simple summary with the followi
 Do not introduce yourself at the beginning, and start with your interpretation.
 Make sure your response is in the same language the user writes to you in.
 The tense should be present.
-Chat with the user in the same language they chat in.
-Chat with the user in
 ";
 
 
