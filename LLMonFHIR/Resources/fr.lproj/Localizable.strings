@@ -94,6 +94,9 @@ Vous pouvez charger un titre et un résumé pour chaque ressource en utilisant u
 // MARK: FHIR Resource Chat
 "FHIR_RESOURCES_CHAT_CANCEL" = "Annuler";
 
+// MARK: FHIR Prompt Translation
+"FHIR_PROMPT_TRANSLATION %@" = "Chat with the user in the same language they chat in.
+Chat with the user in %@";
 
 // MARK: - Prompts
 "FHIR_RESOURCE_SUMMARY_PROMPT %@" = "
