@@ -1,0 +1,168 @@
+//
+// This source file is part of the Stanford LLM on FHIR project
+//
+// SPDX-FileCopyrightText: 2023 Stanford University
+//
+// SPDX-License-Identifier: MIT
+//
+
+
+// MARK: - Onboarding
+
+// MARK: Welcome
+"WELCOME_TITLE" = "LLM en FHIR";
+"WELCOME_SUBTITLE" = "Descifrando los Registros de Salud";
+
+"WELCOME_AREA1_TITLE" = "Inspeccionar sus Datos de Salud";
+"WELCOME_AREA1_DESCRIPTION" = "Los datos de salud se proporcionan mediante su API de datos de paciente FHIR utilizando la aplicación Apple Health.";
+
+"WELCOME_AREA2_TITLE" = "Resumir e Interpretar sus Datos";
+"WELCOME_AREA2_DESCRIPTION" = "LLM en FHIR le permite resumir e interpretar sus datos clínicos.";
+
+"WELCOME_AREA3_TITLE" = "Aprender más sobre sus Datos";
+"WELCOME_AREA3_DESCRIPTION" = "Utilice la funcionalidad de chat para hacer preguntas de seguimiento y obtener más información sobre sus registros clínicos.";
+
+"WELCOME_BUTTON" = "Aprender más";
+
+// MARK: Chat with all resources
+"CHAT_WITH_ALL_RESOURCES" = "Chat con todos los recursos";
+"CHAT_WITH_ALL_RESOURCES_TITLE" = "Todos los Recursos FHIR";
+
+// MARK: Disclaimer
+"DISCLAIMER_TITLE" = "Renuncia";
+"DISCLAIMER_SUBTITLE" = "LLM en FHIR es una aplicación experimental para iOS que permite a los usuarios interactuar con datos de salud almacenados en Apple Health utilizando modelos de OpenAI.";
+
+"DISCLAIMER_AREA1_TITLE" = "Advertencia";
+"DISCLAIMER_AREA1_DESCRIPTION" = "LLM en FHIR se proporciona únicamente con fines informativos generales y no pretende ser un sustituto de asesoramiento médico profesional, diagnóstico o tratamiento.";
+
+"DISCLAIMER_AREA2_TITLE" = "Advertencia";
+"DISCLAIMER_AREA2_DESCRIPTION" = "Se sabe que los modelos de lenguaje grandes, como los proporcionados por OpenAI, tienen alucinaciones y en ocasiones proporcionan información incorrecta.";
+
+"DISCLAIMER_AREA3_TITLE" = "Advertencia";
+"DISCLAIMER_AREA3_DESCRIPTION" = "El uso de LLM en FHIR es bajo su propio riesgo. Siempre consulte a un proveedor de atención médica calificado para obtener consejos personalizados sobre su salud y bienestar.";
+
+"DISCLAIMER_AREA4_TITLE" = "Advertencia";
+"DISCLAIMER_AREA4_DESCRIPTION" = "Esta aplicación es solo para fines de demostración y no debe usarse para procesar ninguna información personal de salud.";
+
+"DISCLAIMER_AREA5_TITLE" = "Advertencia";
+"DISCLAIMER_AREA5_DESCRIPTION" = "Recuerde que sus datos de salud se enviarán a OpenAI para su procesamiento. Por favor, inspeccione y lea cuidadosamente las políticas y configuraciones de uso de datos de la API de OpenAI.";
+
+"DISCLAIMER_BUTTON" = "Acepto";
+
+
+// MARK: HealthKit
+"HEALTHKIT_PERMISSIONS_TITLE" = "Acceso a HealthKit";
+"HEALTHKIT_PERMISSIONS_SUBTITLE" = "LLM en FHIR requiere acceso a los registros de salud FHIR almacenados en la aplicación Apple Health.";
+"HEALTHKIT_PERMISSIONS_DESCRIPTION" = "Puede seleccionar los diferentes tipos de registros de salud que le gustaría inspeccionar en LLM en FHIR.";
+"HEALTHKIT_PERMISSIONS_BUTTON" = "Conceder Acceso";
+
+
+// MARK: - FHIR Resources Title
+"FHIR_RESOURCES_TITLE" = "Sus Registros de Salud";
+"FHIR_RESOURCES_VIEW_NO_RESOURCES" = "
+No hay registros de salud disponibles.
+
+Por favor, siga las instrucciones para conectarse y recuperar sus registros de salud de su proveedor: [Soporte de Apple - Ver registros de salud en su iPhone o iPod touch](https://support.apple.com/en-us/HT208680).
+
+Puede encontrar una lista de instituciones compatibles en [Soporte de Apple - Instituciones que admiten registros de salud en iPhone y iPod touch](https://platform.openai.com/account/api-keys).
+
+Si puede ver sus registros de salud en la aplicación Apple Health, asegúrese de que LLM en FHIR tenga acceso a sus registros de salud en la aplicación Apple Health. Puede encontrar estas configuraciones en la sección de privacidad de su perfil en Apple Health.
+";
+"FHIR_RESOURCES_VIEW_INSTRUCTION" = "Bienvenido a LLM en FHIR
+
+Puede inspeccionar los diferentes recursos en su aplicación Apple Health tocando un recurso. Puede hacer preguntas de seguimiento en la vista de chat de cada recurso.
+
+Puede cargar un título y un resumen para cada recurso usando una pulsación larga en un recurso.
+";
+"FHIR_RESOURCES_EMPTY_SEARCH_MESSAGE" = "No se encontraron coincidencias";
+
+
+// MARK: FHIR Resource Summary
+"FHIR_RESOURCES_SUMMARY_ID_TITLE %@" = "Recurso con ID %@";
+"FHIR_RESOURCES_SUMMARY_INSTRUCTION" = "Pulse prolongadamente el recurso y seleccione \"Cargar Resumen del Recurso\" para que LLM en FHIR cree un título y un resumen de este recurso.";
+"FHIR_RESOURCES_SUMMARY_SECTION" = "Resumen";
+"FHIR_RESOURCES_SUMMARY_BUTTON" = "Cargar Resumen del Recurso";
+
+// MARK: FHIR Resource Interpretation
+"FHIR_RESOURCES_INTERPRETATION_SECTION" = "Interpretación de LLM en FHIR";
+"FHIR_RESOURCES_INTERPRETATION_LEARN_MORE_BUTTON" = "Saber más ...";
+"FHIR_RESOURCES_INTERPRETATION_LOADING" = "Cargando resultado ...";
+"FHIR_RESOURCES_INTERPRETATION_RESOURCE" = "Recurso FHIR";
+"FHIR_RESOURCES_INTERPRETATION_ERROR" = "Error";
+
+
+// MARK: FHIR Resource Chat
+"FHIR_RESOURCES_CHAT_CANCEL" = "Cancelar";
+
+// MARK: FHIR Prompt Translation
+"FHIR_PROMPT_TRANSLATION %@" = "Chat with the user in the same language they chat in.
+Chat with the user in %@";
+
+// MARK: - Prompts
+"FHIR_RESOURCE_SUMMARY_PROMPT %@" = "
+Su tarea es interpretar el siguiente recurso FHIR de los registros clínicos del usuario.
+ 
+La siguiente representación JSON define el recurso FHIR que debe interpretar:
+%@
+ 
+Proporcione un breve resumen de una oración del recurso en menos de 20 palabras.
+NO responda con más contenido que la línea única que contiene el resumen.
+Proporcione el contenido directamente sin ninguna estructura adicional.
+";
+
+"FHIR_RESOURCE_INTERPRETATION_PROMPT %@" = "
+Usted es la aplicación LLM en FHIR.
+Su tarea es interpretar el siguiente recurso FHIR de los registros clínicos del usuario.
+
+Interprete el recurso explicando sus datos relevantes para la salud del usuario.
+Explique el contexto médico relevante en un lenguaje comprensible para un usuario que no es un profesional médico.
+Debe proporcionar información factual y precisa en un resumen compacto en respuestas cortas.
+
+La siguiente representación JSON define el recurso FHIR que debe interpretar:
+%@
+
+Devuelva una interpretación al usuario de inmediato para comenzar la conversación.
+No se presente al principio, y comience con su interpretación.
+";
+
+"FHIR_MULTIPLE_RESOURCE_INTERPRETATION_PROMPT %@" = "
+Usted es la aplicación LLM en FHIR.
+Su tarea es interpretar todos los recursos FHIR de los registros clínicos del usuario.
+
+Interprete todos los recursos explicando sus datos relevantes para la salud del usuario.
+Explique el contexto médico relevante en un lenguaje comprensible para un usuario que no es un profesional médico.
+Debe proporcionar información factual y precisa en un resumen compacto en respuestas cortas.
+
+La siguiente representación JSON define todos los recursos FHIR que debe interpretar:
+%@
+
+Informar al usuario que puede hacer preguntas sobre sus registros de salud y luego crear una breve lista de las principales categorías de registros de salud del usuario a las que tiene acceso.
+
+Devuelva una interpretación al usuario de inmediato para comenzar la conversación.
+La interpretación inicial debe ser un resumen breve y simple con las siguientes especificaciones:
+1. Resumen general de todos los registros de salud
+2. Nivel de lectura de la escuela secundaria
+3. Terminar con una pregunta que le pregunte al usuario si tiene alguna pregunta. Asegúrese de que esta pregunta no sea genérica, sino específica para sus registros de salud.
+No se presente al principio, y comience con su interpretación.
+Asegúrese de que su respuesta esté en el mismo idioma en que el usuario le escribe.
+El tiempo verbal debe ser presente.
+";
+
+
+// MARK: - Settings
+"SETTINGS_TITLE" = "Configuración";
+
+"SETTINGS_OPENAI" = "Configuración de Open AI";
+"SETTINGS_OPENAI_KEY" = "Clave de API de Open AI";
+"SETTINGS_OPENAI_MODEL" = "Modelo de Open AI";
+
+"OPEN_AI_KEY_SAVE_ACTION" = "Guardar Clave de API";
+"OPEN_AI_MODEL_SAVE_ACTION" = "Guardar Selección de Modelo";
+
+"SETTINGS_PROMPTS" = "Configuración de Preguntas";
+"SETTINGS_PROMPTS_SUMMARY" = "Pregunta para Resumen";
+"SETTINGS_PROMPTS_INTERPRETATION" = "Pregunta para Interpretación";
+"SETTINGS_PROMPTS_INTERPRETATION_MULTIPLE_RESOURCES" = "Pregunta para Interpretación de Múltiples Recursos";
+"SETTINGS_PROMPT_DESCRITPTION %@" = "Personalice la pregunta para %@.";
+"SETTINGS_PROMPT_CAPTION %@" = "Coloque %@ en la posición de la pregunta donde debe insertarse el recurso FHIR.";
+"SETTINGS_PROMPT_SAVE_BUTTON" = "Guardar Pregunta";

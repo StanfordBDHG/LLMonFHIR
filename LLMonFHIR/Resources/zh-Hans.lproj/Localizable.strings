@@ -1,0 +1,168 @@
+//
+// This source file is part of the Stanford LLM on FHIR project
+//
+// SPDX-FileCopyrightText: 2023 Stanford University
+//
+// SPDX-License-Identifier: MIT
+//
+
+
+// MARK: - Onboarding
+
+// MARK: Welcome
+"WELCOME_TITLE" = "LLM on FHIR";
+"WELCOME_SUBTITLE" = "解析健康记录";
+
+"WELCOME_AREA1_TITLE" = "检视您的健康数据";
+"WELCOME_AREA1_DESCRIPTION" = "使用苹果健康应用程序的FHIR患者数据API提供健康数据。";
+
+"WELCOME_AREA2_TITLE" = "总结和解释您的数据";
+"WELCOME_AREA2_DESCRIPTION" = "LLM on FHIR允许您总结和解释您的临床数据。";
+
+"WELCOME_AREA3_TITLE" = "了解更多关于您的数据";
+"WELCOME_AREA3_DESCRIPTION" = "使用聊天功能询问后续问题并获取更多有关您的临床记录的信息。";
+
+"WELCOME_BUTTON" = "了解更多";
+
+// MARK: Chat with all resources
+"CHAT_WITH_ALL_RESOURCES" = "与所有资源交谈";
+"CHAT_WITH_ALL_RESOURCES_TITLE" = "所有FHIR资源";
+
+// MARK: Disclaimer
+"DISCLAIMER_TITLE" = "免责声明";
+"DISCLAIMER_SUBTITLE" = "LLM on FHIR是一款实验性iOS应用程序，允许用户使用OpenAI模型与存储在Apple Health中的健康数据进行交互。";
+
+"DISCLAIMER_AREA1_TITLE" = "警告";
+"DISCLAIMER_AREA1_DESCRIPTION" = "LLM on FHIR仅供一般信息目的，并不旨在替代专业医疗建议、诊断或治疗。";
+
+"DISCLAIMER_AREA2_TITLE" = "警告";
+"DISCLAIMER_AREA2_DESCRIPTION" = "众所周知，OpenAI等大型语言模型有时会产生幻觉并提供虚假信息。";
+
+"DISCLAIMER_AREA3_TITLE" = "警告";
+"DISCLAIMER_AREA3_DESCRIPTION" = "使用LLM on FHIR需自担风险。始终咨询合格的医疗保健提供者以获得有关您健康和福祉的个性化建议。";
+
+"DISCLAIMER_AREA4_TITLE" = "警告";
+"DISCLAIMER_AREA4_DESCRIPTION" = "此应用程序仅供演示，不应用于处理任何个人健康信息。";
+
+"DISCLAIMER_AREA5_TITLE" = "警告";
+"DISCLAIMER_AREA5_DESCRIPTION" = "请注意，您的健康数据将被发送给OpenAI进行处理。请仔细阅读OpenAI API的数据使用政策和设置。";
+
+"DISCLAIMER_BUTTON" = "我同意";
+
+
+// MARK: HealthKit
+"HEALTHKIT_PERMISSIONS_TITLE" = "HealthKit访问权限";
+"HEALTHKIT_PERMISSIONS_SUBTITLE" = "LLM on FHIR需要访问存储在Apple Health中的FHIR健康记录。";
+"HEALTHKIT_PERMISSIONS_DESCRIPTION" = "您可以选择您希望在LLM on FHIR中检视的不同类型的健康记录。";
+"HEALTHKIT_PERMISSIONS_BUTTON" = "授予访问权限";
+
+
+// MARK: - FHIR Resources Title
+"FHIR_RESOURCES_TITLE" = "您的健康记录";
+"FHIR_RESOURCES_VIEW_NO_RESOURCES" = "
+没有可用的健康记录。
+
+请按照以下说明连接并从您的提供者检索健康记录：[Apple支持-在iPhone或iPod touch上查看健康记录](https://support.apple.com/en-us/HT208680)。
+
+您可以在[Apple支持-支持iPhone和iPod touch上的健康记录的机构](https://platform.openai.com/account/api-keys)找到支持的机构列表。
+
+如果您可以在Apple Health应用程序中查看您的健康记录，请确保LLM on FHIR可以访问您在Apple Health应用程序中的健康记录。您可以在Apple Health个人资料的隐私部分找到这些设置。
+";
+"FHIR_RESOURCES_VIEW_INSTRUCTION" = "欢迎使用LLM on FHIR
+
+您可以通过点击资源来检视您的Apple Health应用程序中的各种资源。您可以在每个资源的聊天视图中询问后续问题。
+
+您可以通过长按资源来加载标题和摘要。
+";
+"FHIR_RESOURCES_EMPTY_SEARCH_MESSAGE" = "未找到匹配项";
+
+
+// MARK: FHIR Resource Summary
+"FHIR_RESOURCES_SUMMARY_ID_TITLE %@" = "ID为%@的资源";
+"FHIR_RESOURCES_SUMMARY_INSTRUCTION" = "长按资源并选择“加载资源摘要”来让LLM on FHIR创建该资源的标题和摘要。";
+"FHIR_RESOURCES_SUMMARY_SECTION" = "摘要";
+"FHIR_RESOURCES_SUMMARY_BUTTON" = "加载资源摘要";
+
+// MARK: FHIR Resource Interpretation
+"FHIR_RESOURCES_INTERPRETATION_SECTION" = "LLM on FHIR解释";
+"FHIR_RESOURCES_INTERPRETATION_LEARN_MORE_BUTTON" = "了解更多...";
+"FHIR_RESOURCES_INTERPRETATION_LOADING" = "正在加载结果...";
+"FHIR_RESOURCES_INTERPRETATION_RESOURCE" = "FHIR资源";
+"FHIR_RESOURCES_INTERPRETATION_ERROR" = "错误";
+
+
+// MARK: FHIR Resource Chat
+"FHIR_RESOURCES_CHAT_CANCEL" = "取消";
+
+// MARK: FHIR Prompt Translation
+"FHIR_PROMPT_TRANSLATION %@" = "Chat with the user in the same language they chat in.
+Chat with the user in %@";
+
+// MARK: - Prompts
+"FHIR_RESOURCE_SUMMARY_PROMPT %@" = "
+您的任务是解释用户临床记录中的以下FHIR资源。
+ 
+以下JSON表示定义了您应该解释的FHIR资源：
+%@
+ 
+提供不超过20个字的资源简短一句摘要。
+请勿用超过包含摘要的一行的内容作出回应。
+直接提供内容，不要有任何额外的结构。
+";
+
+"FHIR_RESOURCE_INTERPRETATION_PROMPT %@" = "
+您是LLM on FHIR应用程序。
+您的任务是解释用户临床记录中的以下FHIR资源。
+
+通过解释与用户健康相关的数据来解释该资源。
+用非医学专业人士能理解的语言解释相关的医学背景。
+您应该在简短的回答中提供事实和准确的信息，以紧凑的摘要形式。
+
+以下JSON表示定义了您应该解释的FHIR资源：
+%@
+
+立即向用户返回解释，开始对话。
+在开始时不要介绍自己，直接开始解释。
+";
+
+"FHIR_MULTIPLE_RESOURCE_INTERPRETATION_PROMPT %@" = "
+您是LLM on FHIR应用程序。
+您的任务是解释用户临床记录中的所有FHIR资源。
+
+通过解释与用户健康相关的数据来解释所有资源。
+用非医学专业人士能理解的语言解释相关的医学背景。
+您应该在简短的回答中提供事实和准确的信息，以紧凑的摘要形式。
+
+以下JSON表示定义了您应该解释的所有FHIR资源：
+%@
+
+告诉用户他们可以就他们的健康记录询问任何问题，然后简要列出您可以访问的用户主要健康记录的主要类别。
+
+立即向用户返回解释，开始对话。
+首次解释应该是简短且简单的总结，具体规格如下：
+1. 所有健康记录的总体摘要
+2. 中学阅读水平
+3. 结尾时询问用户是否有任何问题。确保这个问题不是泛泛而谈，而是特定于他们的健康记录。
+在开始时不要介绍自己，直接开始解释。
+确保您的回应用与用户写给您的语言相同。
+动词时态应为现在时。
+";
+
+
+// MARK: - Settings
+"SETTINGS_TITLE" = "设置";
+
+"SETTINGS_OPENAI" = "Open AI设置";
+"SETTINGS_OPENAI_KEY" = "Open AI API密钥";
+"SETTINGS_OPENAI_MODEL" = "Open AI模型";
+
+"OPEN_AI_KEY_SAVE_ACTION" = "保存API密钥";
+"OPEN_AI_MODEL_SAVE_ACTION" = "保存模型选择";
+
+"SETTINGS_PROMPTS" = "提示设置";
+"SETTINGS_PROMPTS_SUMMARY" = "摘要提示";
+"SETTINGS_PROMPTS_INTERPRETATION" = "解释提示";
+"SETTINGS_PROMPTS_INTERPRETATION_MULTIPLE_RESOURCES" = "多资源解释提示";
+"SETTINGS_PROMPT_DESCRITPTION %@" = "自定义%@提示。";
+"SETTINGS_PROMPT_CAPTION %@" = "在提示中的位置插入%@的位置。";
+"SETTINGS_PROMPT_SAVE_BUTTON" = "保存提示";

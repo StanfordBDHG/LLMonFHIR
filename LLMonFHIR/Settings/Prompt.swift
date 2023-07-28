@@ -14,12 +14,10 @@ enum Prompt: String {
     case summary = "prompt.summary"
     /// The interpretation prompt
     case interpretation = "prompt.interpretation"
-    
+    /// The multiple resource interpretation prompt
     case interpretMultipleResources = "prompt.interpretMultipleResources"
     
-    
     static let promptPlaceholder = "%@"
-    
     
     var localizedDescription: String {
         switch self {
@@ -45,7 +43,9 @@ enum Prompt: String {
     
     
     var prompt: String {
-        UserDefaults.standard.string(forKey: rawValue) ?? defaultPrompt
+        var prompt = UserDefaults.standard.string(forKey: rawValue) ?? defaultPrompt
+        prompt += String(localized: "FHIR_PROMPT_TRANSLATION \(Locale.preferredLanguages[0])")
+        return prompt
     }
     
     func save(prompt: String) {

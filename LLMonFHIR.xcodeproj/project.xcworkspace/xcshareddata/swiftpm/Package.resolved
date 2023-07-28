@@ -104,8 +104,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/StanfordSpezi/XCTRuntimeAssertions",
       "state" : {
-        "revision" : "8471ac76b9bb5645ba5ccb36a893919fccbf8851",
-        "version" : "0.2.3"
+        "revision" : "9226052589b8faece98861bc3d7b33b3ebfe4f5a",
+        "version" : "0.2.5"
       }
     }
   ],
