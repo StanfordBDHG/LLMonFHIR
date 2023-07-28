@@ -108,7 +108,6 @@ The following JSON representation defines the FHIR resource that you should inte
 Provide a short one-sentence summary of the resource in less than 20 words.
 Do NOT respond with more content than the single line containing the summary.
 Directly provide the content without any additional structure.
-Chat with the user in
 ";
 
 "FHIR_RESOURCE_INTERPRETATION_PROMPT %@" = "
