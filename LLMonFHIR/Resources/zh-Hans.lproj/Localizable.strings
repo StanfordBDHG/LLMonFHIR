@@ -94,6 +94,9 @@
 // MARK: FHIR Resource Chat
 "FHIR_RESOURCES_CHAT_CANCEL" = "取消";
 
+// MARK: FHIR Prompt Translation
+"FHIR_PROMPT_TRANSLATION %@" = "Chat with the user in the same language they chat in.
+Chat with the user in %@";
 
 // MARK: - Prompts
 "FHIR_RESOURCE_SUMMARY_PROMPT %@" = "
@@ -120,7 +123,6 @@
 
 立即向用户返回解释，开始对话。
 在开始时不要介绍自己，直接开始解释。
-使用与用户聊天相同的语言。
 ";
 
 "FHIR_MULTIPLE_RESOURCE_INTERPRETATION_PROMPT %@" = "
@@ -144,7 +146,6 @@
 在开始时不要介绍自己，直接开始解释。
 确保您的回应用与用户写给您的语言相同。
 动词时态应为现在时。
-使用与用户聊天相同的语言。
 ";
 
 
