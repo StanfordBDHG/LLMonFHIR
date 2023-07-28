@@ -123,7 +123,6 @@ La représentation JSON suivante définit la ressource FHIR que vous devez inter
 
 Retournez une interprétation à l'utilisateur immédiatement pour commencer la conversation.
 Ne vous présentez pas au début, et commencez par votre interprétation.
-Discutez avec l'utilisateur dans la même langue qu'il écrit.
 ";
 
 "FHIR_MULTIPLE_RESOURCE_INTERPRETATION_PROMPT %@" = "
@@ -147,7 +146,6 @@ L'interprétation initiale doit être un bref résumé simple avec les spécific
 Ne vous présentez pas au début, et commencez par votre interprétation.
 Assurez-vous que votre réponse est dans la même langue que celle de l'utilisateur.
 Le temps verbal doit être au présent.
-Discutez avec l'utilisateur dans la même langue qu'il écrit.
 ";
 
 
