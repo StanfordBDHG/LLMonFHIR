@@ -19,7 +19,6 @@ enum Prompt: String {
     
     static let promptPlaceholder = "%@"
     
-    
     var localizedDescription: String {
         switch self {
         case .summary:
