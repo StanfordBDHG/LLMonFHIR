@@ -123,7 +123,6 @@ La siguiente representación JSON define el recurso FHIR que debe interpretar:
 
 Devuelva una interpretación al usuario de inmediato para comenzar la conversación.
 No se presente al principio, y comience con su interpretación.
-Chatee con el usuario en el mismo idioma en que chatea.
 ";
 
 "FHIR_MULTIPLE_RESOURCE_INTERPRETATION_PROMPT %@" = "
@@ -147,7 +146,6 @@ La interpretación inicial debe ser un resumen breve y simple con las siguientes
 No se presente al principio, y comience con su interpretación.
 Asegúrese de que su respuesta esté en el mismo idioma en que el usuario le escribe.
 El tiempo verbal debe ser presente.
-Chatee con el usuario en el mismo idioma en que chatea.
 ";
 
 
