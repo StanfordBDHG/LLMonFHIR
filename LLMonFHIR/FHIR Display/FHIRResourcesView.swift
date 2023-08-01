@@ -55,8 +55,7 @@ struct FHIRResourcesView: View {
         }
     }
     
-    @ViewBuilder
-    private var resourceChatView: some View {
+    @ViewBuilder private var resourceChatView: some View {
         OpenAIChatView(
             chat: fhirMultipleResourceInterpreter.chat(resources: allResourcesArray),
             title: "All FHIR Resources"
@@ -64,8 +63,7 @@ struct FHIRResourcesView: View {
     }
     
     
-    @ViewBuilder
-    private var chatAllResourceSection: some View {
+    @ViewBuilder private var chatAllResourceSection: some View {
         Section {
             OnboardingActionsView(
                 "CHAT_WITH_ALL_RESOURCES",
@@ -79,8 +77,7 @@ struct FHIRResourcesView: View {
         }
     }
 
-    @ViewBuilder
-    private var instructionsView: some View {
+    @ViewBuilder private var instructionsView: some View {
         if resources.isEmpty {
             VStack(alignment: .center) {
                 Image(systemName: "doc.text.magnifyingglass")

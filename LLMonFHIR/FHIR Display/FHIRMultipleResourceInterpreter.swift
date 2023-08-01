@@ -60,7 +60,6 @@ class FHIRMultipleResourceInterpreter<ComponentStandard: Standard>: DefaultIniti
         
         for try await chatStreamResult in chatStreamResults {
             for choice in chatStreamResult.choices {
-                let previousInterpretation = interpretation ?? ""
                 interpretation = (interpretation ?? "") + (choice.delta.content ?? "")
             }
         }

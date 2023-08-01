@@ -6,33 +6,20 @@
 // SPDX-License-Identifier: MIT
 //
 
+import OpenAI
 import SpeziViews
 import SwiftUI
-
 
 struct InspectResourceView: View {
     @EnvironmentObject var fhirResourceInterpreter: FHIRResourceInterpreter<FHIR>
     @EnvironmentObject var fhirResourceSummary: FHIRResourceSummary<FHIR>
     
-    @State var error: String?
-    @State var interpreting = false
+    @State var interpreting: ViewState = .idle
+    @State var loadingSummary: ViewState = .idle
     @State var showResourceChat = false
-    @State var loadingSummary = false
     
     var resource: FHIRResource
     
-    var presentAlert: Binding<Bool> {
-        Binding(
-            get: {
-                error != nil
-            },
-            set: { newValue in
-                if !newValue {
-                    error = nil
-                }
-            }
-        )
-    }
     
     var body: some View {
         List {
@@ -41,9 +28,8 @@ struct InspectResourceView: View {
             resourceSection
         }
             .navigationTitle(resource.displayName)
-            .alert("FHIR_RESOURCES_INTERPRETATION_ERROR", isPresented: presentAlert, presenting: error) { error in
-                Text(error)
-            }
+            .viewStateAlert(state: $interpreting)
+            .viewStateAlert(state: $loadingSummary)
             .sheet(isPresented: $showResourceChat) {
                 OpenAIChatView(
                     chat: fhirResourceInterpreter.chat(forResource: resource),
@@ -51,16 +37,17 @@ struct InspectResourceView: View {
                 )
             }
             .task {
-                if fhirResourceInterpreter.interpretations[resource.id] == nil {
-                    await interpret()
+                if let interpretation = fhirResourceInterpreter.interpretations[resource.id], !interpretation.isEmpty {
+                    return
                 }
+                
+                await interpret()
             }
     }
     
-    @ViewBuilder
-    private var summarySection: some View {
+    @ViewBuilder private var summarySection: some View {
         Section("FHIR_RESOURCES_SUMMARY_SECTION") {
-            if loadingSummary {
+            if loadingSummary == .processing {
                 HStack {
                     Spacer()
                     ProgressView()
@@ -79,13 +66,12 @@ struct InspectResourceView: View {
         }
     }
     
-    @ViewBuilder
-    private var interpretationSection: some View {
+    @ViewBuilder private var interpretationSection: some View {
         Section("FHIR_RESOURCES_INTERPRETATION_SECTION") {
             if let interpretation = fhirResourceInterpreter.interpretations[resource.id], !interpretation.isEmpty {
                 Text(interpretation)
                     .multilineTextAlignment(.leading)
-                if !interpreting {
+                if interpreting != .processing {
                     Button(
                         action: {
                             showResourceChat.toggle()
@@ -100,19 +86,26 @@ struct InspectResourceView: View {
                     )
                         .buttonStyle(.borderedProminent)
                 }
-            } else {
+            } else if interpreting == .processing {
                 VStack(alignment: .center) {
                     Text("FHIR_RESOURCES_INTERPRETATION_LOADING")
                         .frame(maxWidth: .infinity)
                     ProgressView()
                         .progressViewStyle(.circular)
                 }
+            } else {
+                VStack(alignment: .center) {
+                    Button("FHIR_RESOURCES_INTERPRETATION_BUTTON") {
+                        Task {
+                            await interpret()
+                        }
+                    }
+                }
             }
         }
     }
     
-    @ViewBuilder
-    private var resourceSection: some View {
+    @ViewBuilder private var resourceSection: some View {
         Section("FHIR_RESOURCES_INTERPRETATION_RESOURCE") {
             LazyText(text: resource.jsonDescription)
                 .fontDesign(.monospaced)
@@ -122,26 +115,28 @@ struct InspectResourceView: View {
     }
     
     private func loadSummary() async {
-        loadingSummary = true
+        loadingSummary = .processing
         
         do {
             try await fhirResourceSummary.summarize(resource: resource)
+            loadingSummary = .idle
+        } catch let error as APIErrorResponse {
+            loadingSummary = .error(error)
         } catch {
-            self.error = error.localizedDescription
+            loadingSummary = .error("Unknown error")
         }
-        
-        loadingSummary = false
     }
     
     private func interpret() async {
-        interpreting = true
+        interpreting = .processing
         
         do {
             try await fhirResourceInterpreter.interpret(resource: resource)
+            interpreting = .idle
+        } catch let error as APIErrorResponse {
+            loadingSummary = .error(error)
         } catch {
-            self.error = error.localizedDescription
+            loadingSummary = .error("Unknown error")
         }
-        
-        interpreting = false
     }
 }
