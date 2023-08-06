@@ -37,11 +37,7 @@ struct InspectResourceView: View {
                 )
             }
             .task {
-                if let interpretation = fhirResourceInterpreter.interpretations[resource.id], !interpretation.isEmpty {
-                    return
-                }
-                
-                await interpret()
+                interpret()
             }
     }
     
@@ -56,21 +52,29 @@ struct InspectResourceView: View {
             } else if let summary = fhirResourceSummary.summaries[resource.id] {
                 Text(summary.summary)
                     .multilineTextAlignment(.leading)
+                    .contextMenu {
+                        Button("FHIR_RESOURCES_SUMMARY_BUTTON") {
+                            loadSummary(forceReload: true)
+                        }
+                    }
             } else {
                 Button("FHIR_RESOURCES_SUMMARY_BUTTON") {
-                    Task {
-                        await loadSummary()
-                    }
+                    loadSummary()
                 }
             }
         }
     }
     
     @ViewBuilder private var interpretationSection: some View {
-        Section("FHIR_RESOURCES_INTERPRETATION_SECTION") {
+        Section("FHIR_RESOURCES_INTERPRETATION_SECTION") { // swiftlint:disable:this closure_body_length
             if let interpretation = fhirResourceInterpreter.interpretations[resource.id], !interpretation.isEmpty {
                 Text(interpretation)
                     .multilineTextAlignment(.leading)
+                    .contextMenu {
+                        Button("FHIR_RESOURCES_INTERPRETATION_BUTTON") {
+                            interpret(forceReload: true)
+                        }
+                    }
                 if interpreting != .processing {
                     Button(
                         action: {
@@ -96,9 +100,7 @@ struct InspectResourceView: View {
             } else {
                 VStack(alignment: .center) {
                     Button("FHIR_RESOURCES_INTERPRETATION_BUTTON") {
-                        Task {
-                            await interpret()
-                        }
+                        interpret()
                     }
                 }
             }
@@ -114,29 +116,33 @@ struct InspectResourceView: View {
         }
     }
     
-    private func loadSummary() async {
+    private func loadSummary(forceReload: Bool = false) {
         loadingSummary = .processing
-        
-        do {
-            try await fhirResourceSummary.summarize(resource: resource)
-            loadingSummary = .idle
-        } catch let error as APIErrorResponse {
-            loadingSummary = .error(error)
-        } catch {
-            loadingSummary = .error("Unknown error")
+            
+        Task {
+            do {
+                try await fhirResourceSummary.summarize(resource: resource, forceReload: forceReload)
+                loadingSummary = .idle
+            } catch let error as APIErrorResponse {
+                loadingSummary = .error(error)
+            } catch {
+                loadingSummary = .error("Unknown error")
+            }
         }
     }
     
-    private func interpret() async {
+    private func interpret(forceReload: Bool = false) {
         interpreting = .processing
         
-        do {
-            try await fhirResourceInterpreter.interpret(resource: resource)
-            interpreting = .idle
-        } catch let error as APIErrorResponse {
-            loadingSummary = .error(error)
-        } catch {
-            loadingSummary = .error("Unknown error")
+        Task {
+            do {
+                try await fhirResourceInterpreter.interpret(resource: resource, forceReload: forceReload)
+                interpreting = .idle
+            } catch let error as APIErrorResponse {
+                loadingSummary = .error(error)
+            } catch {
+                loadingSummary = .error("Unknown error")
+            }
         }
     }
 }

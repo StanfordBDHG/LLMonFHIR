@@ -54,7 +54,11 @@ class FHIRResourceInterpreter<ComponentStandard: Standard>: DefaultInitializable
     }
     
     
-    func interpret(resource: FHIRResource) async throws {
+    func interpret(resource: FHIRResource, forceReload: Bool = false) async throws {
+        if let interpretation = interpretations[resource.id], !interpretation.isEmpty, !forceReload {
+            return
+        }
+        
         let chatStreamResults = try await openAIComponent.queryAPI(withChat: [systemPrompt(forResource: resource)])
         
         self.interpretations[resource.id] = ""
