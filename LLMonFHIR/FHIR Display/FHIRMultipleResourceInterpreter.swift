@@ -43,12 +43,12 @@ class FHIRMultipleResourceInterpreter<ComponentStandard: Standard>: DefaultIniti
     
     
     func configure() {
-//        guard let cachedInterpretation: String = try? localStorage.read(
-//            storageKey: FHIRMultipleResourceInterpreterConstants.storageKey
-//        ) else {
-//            return
-//        }
-//        self.interpretation = cachedInterpretation
+        guard let cachedInterpretation: String = try? localStorage.read(
+            storageKey: FHIRMultipleResourceInterpreterConstants.storageKey
+        ) else {
+            return
+        }
+        self.interpretation = cachedInterpretation
     }
     
     func interpretMultipleResources(resources: [FHIRResource]) async throws {
