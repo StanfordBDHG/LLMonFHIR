@@ -23,7 +23,6 @@ struct OpenAIChatView: View {
     private let multipleResourceChat: Bool
     private let title: String
     
-    
     private var disableInput: Binding<Bool> {
         Binding(
             get: {
@@ -53,13 +52,12 @@ struct OpenAIChatView: View {
         }
     }
     
-    
     init(chat: [Chat], title: String, multipleResourceChat: Bool) {
         self._chat = State(initialValue: chat)
         self.title = title
         self.multipleResourceChat = multipleResourceChat
     }
-    
+  
     private func getAnswer() {
         Task {
             do {
@@ -68,9 +66,9 @@ struct OpenAIChatView: View {
                 if multipleResourceChat {
                     try await processMultipleResourceChat()
                 }
-                
+              
                 try await processChatStreamResults()
-                
+              
                 viewState = .idle
             } catch let error as APIErrorResponse {
                 viewState = .error(error)
