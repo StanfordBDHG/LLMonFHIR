@@ -78,8 +78,8 @@ class FHIRResourceSummary<ComponentStandard: Standard>: DefaultInitializable, Co
         self.summaries = cachedSummaries
     }
     
-    func summarize(resource: FHIRResource) async throws {
-        guard summaries[resource.id] == nil else {
+    func summarize(resource: FHIRResource, forceReload: Bool = false) async throws {
+        guard summaries[resource.id] == nil || forceReload else {
             return
         }
         

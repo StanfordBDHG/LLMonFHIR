@@ -16,6 +16,7 @@
 		2F4E237E2989A2FE0013F3D9 /* OnboardingTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F4E237D2989A2FE0013F3D9 /* OnboardingTests.swift */; };
 		2F4E23832989D51F0013F3D9 /* LLMonFHIRTestingSetup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F4E23822989D51F0013F3D9 /* LLMonFHIRTestingSetup.swift */; };
 		2F55FC532A1AE8750051DF48 /* FHIRResourceInterpreter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F55FC522A1AE8750051DF48 /* FHIRResourceInterpreter.swift */; };
+		2F5BD9D12A78AAED0004E0AC /* String+LocalizedError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F5BD9D02A78AAED0004E0AC /* String+LocalizedError.swift */; };
 		2F5E32BD297E05EA003432F8 /* LLMonFHIRDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F5E32BC297E05EA003432F8 /* LLMonFHIRDelegate.swift */; };
 		2F61A3302A1B51BF000A7796 /* FHIRResourceSummary.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F61A32F2A1B51BF000A7796 /* FHIRResourceSummary.swift */; };
 		2F61A3322A1B560B000A7796 /* ResourceSummaryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F61A3312A1B560B000A7796 /* ResourceSummaryView.swift */; };
@@ -78,6 +79,7 @@
 		2F4E237D2989A2FE0013F3D9 /* OnboardingTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingTests.swift; sourceTree = "<group>"; };
 		2F4E23822989D51F0013F3D9 /* LLMonFHIRTestingSetup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LLMonFHIRTestingSetup.swift; sourceTree = "<group>"; };
 		2F55FC522A1AE8750051DF48 /* FHIRResourceInterpreter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FHIRResourceInterpreter.swift; sourceTree = "<group>"; };
+		2F5BD9D02A78AAED0004E0AC /* String+LocalizedError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "String+LocalizedError.swift"; sourceTree = "<group>"; };
 		2F5E32BC297E05EA003432F8 /* LLMonFHIRDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LLMonFHIRDelegate.swift; sourceTree = "<group>"; };
 		2F61A32F2A1B51BF000A7796 /* FHIRResourceSummary.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FHIRResourceSummary.swift; sourceTree = "<group>"; };
 		2F61A3312A1B560B000A7796 /* ResourceSummaryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResourceSummaryView.swift; sourceTree = "<group>"; };
@@ -227,6 +229,7 @@
 		2FE5DC3D29EDD7E4004B9AB4 /* Helper */ = {
 			isa = PBXGroup;
 			children = (
+				2F5BD9D02A78AAED0004E0AC /* String+LocalizedError.swift */,
 				2FE5DC4229EDD7F2004B9AB4 /* Binding+Negate.swift */,
 				2FE5DC4329EDD7F2004B9AB4 /* Bundle+Image.swift */,
 				2FE5DC4429EDD7F2004B9AB4 /* CodableArray+RawRepresentable.swift */,
@@ -498,6 +501,7 @@
 				2FC975A82978F11A00BA99FE /* Home.swift in Sources */,
 				2FE5DC3729EDD7CA004B9AB4 /* OnboardingFlow.swift in Sources */,
 				2FE5DC4729EDD7F2004B9AB4 /* CodableArray+RawRepresentable.swift in Sources */,
+				2F5BD9D12A78AAED0004E0AC /* String+LocalizedError.swift in Sources */,
 				2FE5DC4029EDD7EE004B9AB4 /* FeatureFlags.swift in Sources */,
 				2FE5DC4629EDD7F2004B9AB4 /* Bundle+Image.swift in Sources */,
 				2F4E23832989D51F0013F3D9 /* LLMonFHIRTestingSetup.swift in Sources */,

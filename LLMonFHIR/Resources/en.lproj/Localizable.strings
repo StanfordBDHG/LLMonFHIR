@@ -86,6 +86,7 @@ You can load a title and summary for each resource using a long press on a resou
 // MARK: FHIR Resource Interpretation
 "FHIR_RESOURCES_INTERPRETATION_SECTION" = "LLM on FHIR Interpretation";
 "FHIR_RESOURCES_INTERPRETATION_LEARN_MORE_BUTTON" = "Learn More ...";
+"FHIR_RESOURCES_INTERPRETATION_BUTTON" = "Load Interpretation";
 "FHIR_RESOURCES_INTERPRETATION_LOADING" = "Loading result ...";
 "FHIR_RESOURCES_INTERPRETATION_RESOURCE" = "FHIR Resource";
 "FHIR_RESOURCES_INTERPRETATION_ERROR" = "Error";

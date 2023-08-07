@@ -6,33 +6,20 @@
 // SPDX-License-Identifier: MIT
 //
 
+import OpenAI
 import SpeziViews
 import SwiftUI
-
 
 struct InspectResourceView: View {
     @EnvironmentObject var fhirResourceInterpreter: FHIRResourceInterpreter<FHIR>
     @EnvironmentObject var fhirResourceSummary: FHIRResourceSummary<FHIR>
     
-    @State var error: String?
-    @State var interpreting = false
+    @State var interpreting: ViewState = .idle
+    @State var loadingSummary: ViewState = .idle
     @State var showResourceChat = false
-    @State var loadingSummary = false
     
     var resource: FHIRResource
     
-    var presentAlert: Binding<Bool> {
-        Binding(
-            get: {
-                error != nil
-            },
-            set: { newValue in
-                if !newValue {
-                    error = nil
-                }
-            }
-        )
-    }
     
     var body: some View {
         List {
@@ -41,9 +28,8 @@ struct InspectResourceView: View {
             resourceSection
         }
             .navigationTitle(resource.displayName)
-            .alert("FHIR_RESOURCES_INTERPRETATION_ERROR", isPresented: presentAlert, presenting: error) { error in
-                Text(error)
-            }
+            .viewStateAlert(state: $interpreting)
+            .viewStateAlert(state: $loadingSummary)
             .sheet(isPresented: $showResourceChat) {
                 OpenAIChatView(
                     chat: fhirResourceInterpreter.chat(forResource: resource),
@@ -51,16 +37,13 @@ struct InspectResourceView: View {
                 )
             }
             .task {
-                if fhirResourceInterpreter.interpretations[resource.id] == nil {
-                    await interpret()
-                }
+                interpret()
             }
     }
     
-    @ViewBuilder
-    private var summarySection: some View {
+    @ViewBuilder private var summarySection: some View {
         Section("FHIR_RESOURCES_SUMMARY_SECTION") {
-            if loadingSummary {
+            if loadingSummary == .processing {
                 HStack {
                     Spacer()
                     ProgressView()
@@ -69,23 +52,30 @@ struct InspectResourceView: View {
             } else if let summary = fhirResourceSummary.summaries[resource.id] {
                 Text(summary.summary)
                     .multilineTextAlignment(.leading)
+                    .contextMenu {
+                        Button("FHIR_RESOURCES_SUMMARY_BUTTON") {
+                            loadSummary(forceReload: true)
+                        }
+                    }
             } else {
                 Button("FHIR_RESOURCES_SUMMARY_BUTTON") {
-                    Task {
-                        await loadSummary()
-                    }
+                    loadSummary()
                 }
             }
         }
     }
     
-    @ViewBuilder
-    private var interpretationSection: some View {
-        Section("FHIR_RESOURCES_INTERPRETATION_SECTION") {
+    @ViewBuilder private var interpretationSection: some View {
+        Section("FHIR_RESOURCES_INTERPRETATION_SECTION") { // swiftlint:disable:this closure_body_length
             if let interpretation = fhirResourceInterpreter.interpretations[resource.id], !interpretation.isEmpty {
                 Text(interpretation)
                     .multilineTextAlignment(.leading)
-                if !interpreting {
+                    .contextMenu {
+                        Button("FHIR_RESOURCES_INTERPRETATION_BUTTON") {
+                            interpret(forceReload: true)
+                        }
+                    }
+                if interpreting != .processing {
                     Button(
                         action: {
                             showResourceChat.toggle()
@@ -100,19 +90,24 @@ struct InspectResourceView: View {
                     )
                         .buttonStyle(.borderedProminent)
                 }
-            } else {
+            } else if interpreting == .processing {
                 VStack(alignment: .center) {
                     Text("FHIR_RESOURCES_INTERPRETATION_LOADING")
                         .frame(maxWidth: .infinity)
                     ProgressView()
                         .progressViewStyle(.circular)
                 }
+            } else {
+                VStack(alignment: .center) {
+                    Button("FHIR_RESOURCES_INTERPRETATION_BUTTON") {
+                        interpret()
+                    }
+                }
             }
         }
     }
     
-    @ViewBuilder
-    private var resourceSection: some View {
+    @ViewBuilder private var resourceSection: some View {
         Section("FHIR_RESOURCES_INTERPRETATION_RESOURCE") {
             LazyText(text: resource.jsonDescription)
                 .fontDesign(.monospaced)
@@ -121,27 +116,33 @@ struct InspectResourceView: View {
         }
     }
     
-    private func loadSummary() async {
-        loadingSummary = true
-        
-        do {
-            try await fhirResourceSummary.summarize(resource: resource)
-        } catch {
-            self.error = error.localizedDescription
+    private func loadSummary(forceReload: Bool = false) {
+        loadingSummary = .processing
+            
+        Task {
+            do {
+                try await fhirResourceSummary.summarize(resource: resource, forceReload: forceReload)
+                loadingSummary = .idle
+            } catch let error as APIErrorResponse {
+                loadingSummary = .error(error)
+            } catch {
+                loadingSummary = .error("Unknown error")
+            }
         }
-        
-        loadingSummary = false
     }
     
-    private func interpret() async {
-        interpreting = true
+    private func interpret(forceReload: Bool = false) {
+        interpreting = .processing
         
-        do {
-            try await fhirResourceInterpreter.interpret(resource: resource)
-        } catch {
-            self.error = error.localizedDescription
+        Task {
+            do {
+                try await fhirResourceInterpreter.interpret(resource: resource, forceReload: forceReload)
+                interpreting = .idle
+            } catch let error as APIErrorResponse {
+                loadingSummary = .error(error)
+            } catch {
+                loadingSummary = .error("Unknown error")
+            }
         }
-        
-        interpreting = false
     }
 }

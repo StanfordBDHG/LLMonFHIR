@@ -6,23 +6,34 @@
 // SPDX-License-Identifier: MIT
 //
 
+import OpenAI
 import SpeziOpenAI
+import SpeziViews
 import SwiftUI
 
 
 struct OpenAIChatView: View {
-    @Environment(\.dismiss) var dismiss
-    @EnvironmentObject var openAPIComponent: OpenAIComponent<FHIR>
+    @Environment(\.dismiss) private var dismiss
+    @EnvironmentObject private var openAPIComponent: OpenAIComponent<FHIR>
 
-    @State var chat: [Chat]
-    @State var gettingAnswer = false
+    @State private var chat: [Chat]
+    @State private var viewState: ViewState = .idle
     
-    let title: String
+    private let title: String
     
+    
+    private var disableInput: Binding<Bool> {
+        Binding(
+            get: {
+                viewState == .processing
+            },
+            set: { _ in }
+        )
+    }
 
     var body: some View {
         NavigationStack {
-            ChatView($chat, disableInput: $gettingAnswer)
+            ChatView($chat, disableInput: disableInput)
                 .navigationTitle(title)
                 .toolbar {
                     ToolbarItem(placement: .cancellationAction) {
@@ -31,8 +42,9 @@ struct OpenAIChatView: View {
                         }
                     }
                 }
+                .viewStateAlert(state: $viewState)
                 .onChange(of: chat) { _ in
-                    if !gettingAnswer {
+                    if viewState == .idle && chat.last?.role == .user {
                         getAnswer()
                     }
                 }
@@ -40,10 +52,16 @@ struct OpenAIChatView: View {
     }
     
     
+    init(chat: [Chat], title: String) {
+        self._chat = State(initialValue: chat)
+        self.title = title
+    }
+    
+    
     private func getAnswer() {
         Task {
             do {
-                gettingAnswer = true
+                viewState = .processing
                 
                 let chatStreamResults = try await openAPIComponent.queryAPI(withChat: chat)
                 
@@ -61,11 +79,12 @@ struct OpenAIChatView: View {
                     }
                 }
                 
-                gettingAnswer = false
+                viewState = .idle
+            } catch let error as APIErrorResponse {
+                viewState = .error(error)
             } catch {
-                print(error)
+                viewState = .error(error.localizedDescription)
             }
-            gettingAnswer = false
         }
     }
 }
