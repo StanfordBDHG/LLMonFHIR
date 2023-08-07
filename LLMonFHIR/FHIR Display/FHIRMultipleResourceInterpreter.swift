@@ -43,12 +43,12 @@ class FHIRMultipleResourceInterpreter<ComponentStandard: Standard>: DefaultIniti
     
     
     func configure() {
-        guard let cachedInterpretation: String = try? localStorage.read(
-            storageKey: FHIRMultipleResourceInterpreterConstants.storageKey
-        ) else {
-            return
-        }
-        self.interpretation = cachedInterpretation
+//        guard let cachedInterpretation: String = try? localStorage.read(
+//            storageKey: FHIRMultipleResourceInterpreterConstants.storageKey
+//        ) else {
+//            return
+//        }
+//        self.interpretation = cachedInterpretation
     }
     
     func interpretMultipleResources(resources: [FHIRResource]) async throws {
@@ -77,11 +77,15 @@ class FHIRMultipleResourceInterpreter<ComponentStandard: Standard>: DefaultIniti
 
     
     private func systemPrompt(forResources resources: [FHIRResource]) -> Chat {
-        let allJSONResources = resources.map(\.compactJSONDescription).joined(separator: "\n")
+        var resourceCategories = String()
+        
+        for resource in resources {
+            resourceCategories += (resource.resourceType + ": " + resource.displayName + "\n")
+        }
 
         return Chat(
             role: .system,
-            content: Prompt.interpretMultipleResources.prompt.replacingOccurrences(of: Prompt.promptPlaceholder, with: allJSONResources)
+            content: Prompt.interpretMultipleResources.prompt.replacingOccurrences(of: Prompt.promptPlaceholder, with: resourceCategories)
         )
     }
 }

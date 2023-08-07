@@ -58,7 +58,8 @@ struct FHIRResourcesView: View {
     @ViewBuilder private var resourceChatView: some View {
         OpenAIChatView(
             chat: fhirMultipleResourceInterpreter.chat(resources: allResourcesArray),
-            title: "All FHIR Resources"
+            title: "All FHIR Resources",
+            multipleResourceChat: true
         )
     }
     
