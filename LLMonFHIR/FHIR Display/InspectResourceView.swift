@@ -11,8 +11,8 @@ import SpeziViews
 import SwiftUI
 
 struct InspectResourceView: View {
-    @EnvironmentObject var fhirResourceInterpreter: FHIRResourceInterpreter<FHIR>
-    @EnvironmentObject var fhirResourceSummary: FHIRResourceSummary<FHIR>
+    @EnvironmentObject var fhirResourceInterpreter: FHIRResourceInterpreter
+    @EnvironmentObject var fhirResourceSummary: FHIRResourceSummary
     
     @State var interpreting: ViewState = .idle
     @State var loadingSummary: ViewState = .idle

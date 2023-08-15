@@ -12,8 +12,8 @@ import SwiftUI
 
 
 struct HealthKitPermissions: View {
-    @EnvironmentObject var healthKitDataSource: HealthKit<FHIR>
-    @AppStorage(StorageKeys.onboardingFlowComplete) var completedOnboardingFlow = false
+    @EnvironmentObject var healthKitDataSource: HealthKit
+    @EnvironmentObject private var onboardingNavigationPath: OnboardingNavigationPath
     @State var healthKitProcessing = false
     
     
@@ -49,7 +49,7 @@ struct HealthKitPermissions: View {
                         } catch {
                             print("Could not request HealthKit permissions.")
                         }
-                        completedOnboardingFlow = true
+                        onboardingNavigationPath.nextStep()
                         healthKitProcessing = false
                     }
                 )

@@ -42,7 +42,7 @@ struct SettingsView: View {
                         Text("SETTINGS_PROMPTS_INTERPRETATION")
                     }
                     NavigationLink(value: SettingsDestinations.promptMultipleResourceInterpretation) {
-                            Text("SETTINGS_PROMPTS_INTERPRETATION_MULTIPLE_RESOURCES")
+                        Text("SETTINGS_PROMPTS_INTERPRETATION_MULTIPLE_RESOURCES")
                     }
                 }
             }
@@ -65,11 +65,11 @@ struct SettingsView: View {
         Group {
             switch destination {
             case .openAIKey:
-                OpenAIAPIKeyOnboardingStep<FHIR>(actionText: String(localized: "OPEN_AI_KEY_SAVE_ACTION")) {
+                OpenAIAPIKeyOnboardingStep(actionText: "OPEN_AI_KEY_SAVE_ACTION") {
                     path.removeLast()
                 }
             case .openAIModel:
-                OpenAIModelSelectionOnboardingStep<FHIR>(actionText: String(localized: "OPEN_AI_MODEL_SAVE_ACTION")) {
+                OpenAIModelSelectionOnboardingStep(actionText: "OPEN_AI_MODEL_SAVE_ACTION", models: [Model.gpt4, Model.gpt3_5Turbo0613]) {
                     path.removeLast()
                 }
             case .promptSummary:

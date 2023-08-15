@@ -14,7 +14,7 @@ import SwiftUI
 
 struct OpenAIChatView: View {
     @Environment(\.dismiss) private var dismiss
-    @EnvironmentObject private var openAPIComponent: OpenAIComponent<FHIR>
+    @EnvironmentObject private var openAPIComponent: OpenAIComponent
 
     @State private var chat: [Chat]
     @State private var viewState: ViewState = .idle
