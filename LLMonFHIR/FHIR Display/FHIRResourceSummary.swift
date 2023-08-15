@@ -18,7 +18,7 @@ private enum FHIRResourceSummaryConstants {
 }
 
 
-class FHIRResourceSummary<ComponentStandard: Standard>: DefaultInitializable, Component, ObservableObject, ObservableObjectProvider {
+class FHIRResourceSummary: DefaultInitializable, Component, ObservableObject, ObservableObjectProvider {
     typealias Summaries = [FHIRResource.ID: FHIRResourceSummary]
     
     

@@ -11,7 +11,7 @@ import SwiftUI
 
 
 struct Disclaimer: View {
-    @Binding private var onboardingSteps: [OnboardingFlow.Step]
+    @EnvironmentObject private var onboardingNavigationPath: OnboardingNavigationPath
     
     
     var body: some View {
@@ -42,25 +42,17 @@ struct Disclaimer: View {
             ],
             actionText: "DISCLAIMER_BUTTON".moduleLocalized,
             action: {
-                onboardingSteps.append(.openAIAPIKey)
+                onboardingNavigationPath.nextStep()
             }
         )
-    }
-    
-    
-    init(onboardingSteps: Binding<[OnboardingFlow.Step]>) {
-        self._onboardingSteps = onboardingSteps
     }
 }
 
 
 #if DEBUG
 struct Disclaimer_Previews: PreviewProvider {
-    @State private static var path: [OnboardingFlow.Step] = []
-    
-    
     static var previews: some View {
-        Disclaimer(onboardingSteps: $path)
+        Disclaimer()
     }
 }
 #endif

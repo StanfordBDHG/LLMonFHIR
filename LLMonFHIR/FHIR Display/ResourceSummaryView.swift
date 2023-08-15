@@ -10,7 +10,7 @@ import SwiftUI
 
 
 struct ResourceSummaryView: View {
-    @EnvironmentObject var fhirResourceSummary: FHIRResourceSummary<FHIR>
+    @EnvironmentObject var fhirResourceSummary: FHIRResourceSummary
     
     @State var loading = false
     

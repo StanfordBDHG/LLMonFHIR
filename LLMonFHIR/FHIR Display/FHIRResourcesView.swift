@@ -22,7 +22,7 @@ struct FHIRResourcesView: View {
     @State var searchText = ""
     
 
-    @EnvironmentObject var fhirMultipleResourceInterpreter: FHIRMultipleResourceInterpreter<FHIR>
+    @EnvironmentObject var fhirMultipleResourceInterpreter: FHIRMultipleResourceInterpreter
     @EnvironmentObject var fhirStandard: FHIR
 
     var body: some View {
