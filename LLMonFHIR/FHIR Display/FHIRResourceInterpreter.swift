@@ -18,7 +18,7 @@ private enum FHIRResourceInterpreterConstants {
 }
 
 
-class FHIRResourceInterpreter<ComponentStandard: Standard>: DefaultInitializable, Component, ObservableObject, ObservableObjectProvider {
+class FHIRResourceInterpreter: DefaultInitializable, Component, ObservableObject, ObservableObjectProvider {
     typealias Interpretations = [FHIRResource.ID: String]
     
     

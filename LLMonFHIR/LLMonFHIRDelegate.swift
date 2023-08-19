@@ -19,7 +19,7 @@ class LLMonFHIRDelegate: SpeziAppDelegate {
             if HKHealthStore.isHealthDataAvailable() {
                 healthKit
             }
-            OpenAIComponent()
+            OpenAIComponent(openAIModel: .gpt3_5Turbo0613)
             FHIRResourceInterpreter()
             FHIRMultipleResourceInterpreter()
             FHIRResourceSummary()
@@ -27,7 +27,7 @@ class LLMonFHIRDelegate: SpeziAppDelegate {
     }
     
     
-    private var healthKit: HealthKit<FHIR> {
+    private var healthKit: HealthKit {
         HealthKit {
             CollectSamples(
                 [
@@ -48,8 +48,6 @@ class LLMonFHIRDelegate: SpeziAppDelegate {
                 ),
                 deliverySetting: .anchorQuery(saveAnchor: false)
             )
-        } adapter: {
-            HealthKitToFHIRAdapter()
         }
     }
 }

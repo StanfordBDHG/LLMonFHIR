@@ -12,6 +12,7 @@
 		2F0F90BA2A1E6556006D7E03 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F0F90B92A1E6556006D7E03 /* SettingsView.swift */; };
 		2F0F90BC2A1E6B19006D7E03 /* PromptSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F0F90BB2A1E6B19006D7E03 /* PromptSettingsView.swift */; };
 		2F0F90BE2A1E702B006D7E03 /* Prompt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F0F90BD2A1E702B006D7E03 /* Prompt.swift */; };
+		2F42429B2A8B14AC006E2B01 /* OpenAIAPIKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F42429A2A8B14AC006E2B01 /* OpenAIAPIKey.swift */; };
 		2F49B7762980407C00BCB272 /* Spezi in Frameworks */ = {isa = PBXBuildFile; productRef = 2F49B7752980407B00BCB272 /* Spezi */; };
 		2F4E237E2989A2FE0013F3D9 /* OnboardingTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F4E237D2989A2FE0013F3D9 /* OnboardingTests.swift */; };
 		2F4E23832989D51F0013F3D9 /* LLMonFHIRTestingSetup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F4E23822989D51F0013F3D9 /* LLMonFHIRTestingSetup.swift */; };
@@ -25,7 +26,6 @@
 		2FD8E8272A1AAD9B00357F4E /* FHIR.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FD8E8262A1AAD9B00357F4E /* FHIR.swift */; };
 		2FD8E82A2A1AADDA00357F4E /* ModelsDSTU2 in Frameworks */ = {isa = PBXBuildFile; productRef = 2FD8E8292A1AADDA00357F4E /* ModelsDSTU2 */; };
 		2FD8E82C2A1AADDA00357F4E /* ModelsR4 in Frameworks */ = {isa = PBXBuildFile; productRef = 2FD8E82B2A1AADDA00357F4E /* ModelsR4 */; };
-		2FD8E82E2A1AAFC300357F4E /* HealthKitToFHIRAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FD8E82D2A1AAFC300357F4E /* HealthKitToFHIRAdapter.swift */; };
 		2FD8E8312A1AB00D00357F4E /* HealthKitOnFHIR in Frameworks */ = {isa = PBXBuildFile; productRef = 2FD8E8302A1AB00D00357F4E /* HealthKitOnFHIR */; };
 		2FD8E8332A1AB68E00357F4E /* FHIRResource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FD8E8322A1AB68E00357F4E /* FHIRResource.swift */; };
 		2FD8E83B2A1AD10300357F4E /* FHIRResourcesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FD8E83A2A1AD10300357F4E /* FHIRResourcesView.swift */; };
@@ -76,6 +76,7 @@
 		2F0F90B92A1E6556006D7E03 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		2F0F90BB2A1E6B19006D7E03 /* PromptSettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PromptSettingsView.swift; sourceTree = "<group>"; };
 		2F0F90BD2A1E702B006D7E03 /* Prompt.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Prompt.swift; sourceTree = "<group>"; };
+		2F42429A2A8B14AC006E2B01 /* OpenAIAPIKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenAIAPIKey.swift; sourceTree = "<group>"; };
 		2F4E237D2989A2FE0013F3D9 /* OnboardingTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingTests.swift; sourceTree = "<group>"; };
 		2F4E23822989D51F0013F3D9 /* LLMonFHIRTestingSetup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LLMonFHIRTestingSetup.swift; sourceTree = "<group>"; };
 		2F55FC522A1AE8750051DF48 /* FHIRResourceInterpreter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FHIRResourceInterpreter.swift; sourceTree = "<group>"; };
@@ -87,7 +88,6 @@
 		2FC94CD4298B0A1D009C8209 /* LLMonFHIR.xctestplan */ = {isa = PBXFileReference; lastKnownFileType = text; path = LLMonFHIR.xctestplan; sourceTree = "<group>"; };
 		2FC975A72978F11A00BA99FE /* Home.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Home.swift; sourceTree = "<group>"; };
 		2FD8E8262A1AAD9B00357F4E /* FHIR.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FHIR.swift; sourceTree = "<group>"; };
-		2FD8E82D2A1AAFC300357F4E /* HealthKitToFHIRAdapter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HealthKitToFHIRAdapter.swift; sourceTree = "<group>"; };
 		2FD8E8322A1AB68E00357F4E /* FHIRResource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FHIRResource.swift; sourceTree = "<group>"; };
 		2FD8E83A2A1AD10300357F4E /* FHIRResourcesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FHIRResourcesView.swift; sourceTree = "<group>"; };
 		2FD8E83C2A1AE24F00357F4E /* InspectResourceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InspectResourceView.swift; sourceTree = "<group>"; };
@@ -176,7 +176,6 @@
 			children = (
 				2FD8E8262A1AAD9B00357F4E /* FHIR.swift */,
 				2FD8E8322A1AB68E00357F4E /* FHIRResource.swift */,
-				2FD8E82D2A1AAFC300357F4E /* HealthKitToFHIRAdapter.swift */,
 				27D2125B2A30BB5900486694 /* FHIRResource+Search.swift */,
 			);
 			path = "FHIR Standard";
@@ -201,6 +200,7 @@
 			children = (
 				2FE5DC3029EDD7CA004B9AB4 /* HealthKitPermissions.swift */,
 				2FE5DC3229EDD7CA004B9AB4 /* Disclaimer.swift */,
+				2F42429A2A8B14AC006E2B01 /* OpenAIAPIKey.swift */,
 				2FE5DC3129EDD7CA004B9AB4 /* OnboardingFlow.swift */,
 				2FE5DC3329EDD7CA004B9AB4 /* String+ModuleLocalized.swift */,
 				2FE5DC3429EDD7CA004B9AB4 /* Welcome.swift */,
@@ -484,6 +484,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				2FE5DC4129EDD7EE004B9AB4 /* StorageKeys.swift in Sources */,
+				2F42429B2A8B14AC006E2B01 /* OpenAIAPIKey.swift in Sources */,
 				2FE5DC3929EDD7CA004B9AB4 /* String+ModuleLocalized.swift in Sources */,
 				2F61A3302A1B51BF000A7796 /* FHIRResourceSummary.swift in Sources */,
 				2FE5DC3A29EDD7CA004B9AB4 /* Welcome.swift in Sources */,
@@ -494,7 +495,6 @@
 				2FD8E83D2A1AE24F00357F4E /* InspectResourceView.swift in Sources */,
 				2F0F90BA2A1E6556006D7E03 /* SettingsView.swift in Sources */,
 				2FD8E83B2A1AD10300357F4E /* FHIRResourcesView.swift in Sources */,
-				2FD8E82E2A1AAFC300357F4E /* HealthKitToFHIRAdapter.swift in Sources */,
 				43B9CDCD2A5E6E7C002F13A6 /* OpenAIChatView.swift in Sources */,
 				2F0F90BE2A1E702B006D7E03 /* Prompt.swift in Sources */,
 				2FE5DC4529EDD7F2004B9AB4 /* Binding+Negate.swift in Sources */,
@@ -1049,7 +1049,7 @@
 			repositoryURL = "https://github.com/StanfordSpezi/Spezi";
 			requirement = {
 				kind = upToNextMinorVersion;
-				minimumVersion = 0.5.0;
+				minimumVersion = 0.7.1;
 			};
 		};
 		2F901CE02A1A03360007C167 /* XCRemoteSwiftPackageReference "SpeziML" */ = {
@@ -1057,7 +1057,7 @@
 			repositoryURL = "https://github.com/StanfordSpezi/SpeziML.git";
 			requirement = {
 				kind = upToNextMinorVersion;
-				minimumVersion = 0.1.5;
+				minimumVersion = 0.2.2;
 			};
 		};
 		2FD8E8282A1AADDA00357F4E /* XCRemoteSwiftPackageReference "FHIRModels" */ = {
@@ -1073,7 +1073,7 @@
 			repositoryURL = "https://github.com/StanfordBDHG/HealthKitOnFHIR.git";
 			requirement = {
 				kind = upToNextMinorVersion;
-				minimumVersion = 0.2.3;
+				minimumVersion = 0.2.4;
 			};
 		};
 		2FD8E83E2A1AE3F200357F4E /* XCRemoteSwiftPackageReference "SpeziViews" */ = {
@@ -1081,7 +1081,7 @@
 			repositoryURL = "https://github.com/StanfordSpezi/SpeziViews.git";
 			requirement = {
 				kind = upToNextMinorVersion;
-				minimumVersion = 0.3.0;
+				minimumVersion = 0.4.1;
 			};
 		};
 		2FE5DC7029EDD8D3004B9AB4 /* XCRemoteSwiftPackageReference "SpeziHealthKit" */ = {
@@ -1089,7 +1089,7 @@
 			repositoryURL = "https://github.com/StanfordSpezi/SpeziHealthKit.git";
 			requirement = {
 				kind = upToNextMinorVersion;
-				minimumVersion = 0.2.1;
+				minimumVersion = 0.3.1;
 			};
 		};
 		2FE5DC7F29EDD91D004B9AB4 /* XCRemoteSwiftPackageReference "SpeziOnboarding" */ = {
@@ -1097,7 +1097,7 @@
 			repositoryURL = "https://github.com/StanfordSpezi/SpeziOnboarding.git";
 			requirement = {
 				kind = upToNextMinorVersion;
-				minimumVersion = 0.3.0;
+				minimumVersion = 0.4.2;
 			};
 		};
 		2FE5DC9729EDD9D9004B9AB4 /* XCRemoteSwiftPackageReference "XCTestExtensions" */ = {
@@ -1105,7 +1105,7 @@
 			repositoryURL = "https://github.com/StanfordBDHG/XCTestExtensions.git";
 			requirement = {
 				kind = upToNextMinorVersion;
-				minimumVersion = 0.4.2;
+				minimumVersion = 0.4.6;
 			};
 		};
 		2FE5DC9A29EDD9EF004B9AB4 /* XCRemoteSwiftPackageReference "XCTHealthKit" */ = {
@@ -1113,7 +1113,7 @@
 			repositoryURL = "https://github.com/StanfordBDHG/XCTHealthKit.git";
 			requirement = {
 				kind = upToNextMinorVersion;
-				minimumVersion = 0.3.3;
+				minimumVersion = 0.3.5;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */
