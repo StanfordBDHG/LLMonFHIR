@@ -53,7 +53,6 @@ struct OpenAIChatView: View {
     }
     
     init(chat: [Chat], title: String, multipleResourceChat: Bool) {
-        
         self._chat = State(initialValue: chat)
         self.title = title
         self.multipleResourceChat = multipleResourceChat
@@ -95,15 +94,11 @@ struct OpenAIChatView: View {
         let functions = [
             ChatFunctionDeclaration(
                 name: "get_resource_titles",
-                description: String(localized: "MULTIPLE_RESOURCE_FUNCTION_DESCRIPTION"),
+                description: String(localized: "FUNCTION_DESCRIPTION"),
                 parameters: JSONSchema(
                     type: .object,
                     properties: [
-                        "resources": .init(
-                            type: .string,
-                            description: String(localized: "MULTIPLE_RESOURCE_PARAMETER_DESCRIPTION"),
-                            enumValues: stringResourcesArray
-                        )
+                        "resources": .init(type: .string, description: String(localized: "PARAMETER_DESCRIPTION"), enumValues: stringResourcesArray)
                     ],
                     required: ["resources"]
                 )
@@ -112,32 +107,28 @@ struct OpenAIChatView: View {
 
         let chat = [
             Chat(role: .user, content: chat.last?.content ?? ""),
-            Chat(role: .system, content: String(localized: "MULTIPLE_RESOURCE_FUNCTION_CONTEXT") + stringResourcesArray.rawValue)
+            Chat(role: .system, content: String(localized: "FUNCTION_CONTEXT") + stringResourcesArray.rawValue)
         ]
         
         let chatStreamResults = try await openAPIComponent.queryAPI(withChat: chat, withFunction: functions)
-
-        class ChatFunctionCallBuilder {
-            public var name: String?
-            public var arguments: String?
-            public var finishReason: String?
+        
+        class ChatFunctionCall {
+            var name: String = "", arguments: String = "", finishReason: String = ""
         }
         
-        var functionCall = ChatFunctionCallBuilder()
+        var functionCall = ChatFunctionCall()
         
         for try await chatStreamResult in chatStreamResults {
             for choice in chatStreamResult.choices {
-                if let delta = choice.delta.name {
-                    functionCall.name = (functionCall.name ?? "") + delta
+                if let deltaName = choice.delta.name {
+                    functionCall.name += deltaName
                 }
-                if let delta = choice.delta.functionCall?.arguments {
-                    functionCall.arguments = (functionCall.arguments ?? "") + delta
+                if let deltaArguments = choice.delta.functionCall?.arguments {
+                    functionCall.arguments += deltaArguments
                 }
                 if let finishReason = choice.finishReason {
-                    functionCall.finishReason = (functionCall.finishReason ?? "") + finishReason
-                    if finishReason == "get_resource_titles" {
-                        break
-                    }
+                    functionCall.finishReason += finishReason
+                    if finishReason == "get_resource_titles" { break }
                 }
             }
         }
@@ -145,20 +136,13 @@ struct OpenAIChatView: View {
         var functionCallOutputArray = [String]()
         
         if functionCall.finishReason == "function_call" {
-            let rawFunctionCallOutput = functionCall
+            let trimmedArguments = functionCall.arguments.trimmingCharacters(in: .whitespacesAndNewlines)
             
-            if let functionArguments = rawFunctionCallOutput.arguments {
-                let trimmedFunctionArguments = functionArguments.trimmingCharacters(in: .whitespacesAndNewlines)
-                
-                if let resourcesRange = trimmedFunctionArguments.range(of: "\"resources\": \"([^\"]+)\"", options: .regularExpression) {
-                    let trimmedResources = trimmedFunctionArguments[resourcesRange]
-                    let resourcesString = trimmedResources
-                        .replacingOccurrences(of: "\"resources\": \"", with: "")
-                        .replacingOccurrences(of: "\"", with: "")
-                    let resourcesArray = resourcesString.components(separatedBy: ",")
-                    
-                    functionCallOutputArray = resourcesArray
-                }
+            if let resourcesRange = trimmedArguments.range(of: "\"resources\": \"([^\"]+)\"", options: .regularExpression) {
+                functionCallOutputArray = trimmedArguments[resourcesRange]
+                    .replacingOccurrences(of: "\"resources\": \"", with: "")
+                    .replacingOccurrences(of: "\"", with: "")
+                    .components(separatedBy: ",")
             }
         }
         
@@ -170,7 +154,6 @@ struct OpenAIChatView: View {
         for resource in functionCallOutputArray {
             var stringResource = resource
             stringResource = resource.trimmingCharacters(in: .whitespaces)
-            print(stringResource)
             if let index = stringResourcesArray.firstIndex(of: stringResource) {
                 let resourceJSON = resourcesArray[index].jsonDescription
                 let functionContent = """
