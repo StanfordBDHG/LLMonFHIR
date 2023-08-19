@@ -14,8 +14,8 @@ import SwiftUI
 
 struct OpenAIChatView: View {
     @Environment(\.dismiss) private var dismiss
-    @EnvironmentObject private var fhirStandard: FHIR
     @EnvironmentObject private var openAPIComponent: OpenAIComponent
+    @EnvironmentObject private var fhirStandard: FHIR
 
     @State private var chat: [Chat]
     @State private var viewState: ViewState = .idle
@@ -45,7 +45,7 @@ struct OpenAIChatView: View {
                 }
                 .viewStateAlert(state: $viewState)
                 .onChange(of: chat) { _ in
-                    if viewState == .idle && chat.last?.role == .user {
+                    if viewState == .idle && chat.last?.role != .assistant {
                         getAnswer()
                     }
                 }
@@ -53,6 +53,7 @@ struct OpenAIChatView: View {
     }
     
     init(chat: [Chat], title: String, multipleResourceChat: Bool) {
+        
         self._chat = State(initialValue: chat)
         self.title = title
         self.multipleResourceChat = multipleResourceChat
@@ -83,8 +84,7 @@ struct OpenAIChatView: View {
         var stringResourcesArray = resourcesArray.map { "\($0.displayName) in \($0.resourceType)" }
         stringResourcesArray.append("N/A")
         let functionCallOutputArray = try await getFunctionCallOutputArray(stringResourcesArray)
-        
-        if !functionCallOutputArray.contains(where: { $0 == "N/A" }) && !functionCallOutputArray.contains(where: { $0 == " N/A" }) {
+        if !functionCallOutputArray.contains(where: { $0.contains("N/A") }) {
             processFunctionCallOutputArray(functionCallOutputArray: functionCallOutputArray, resourcesArray: resourcesArray)
         }
     }
@@ -109,56 +109,76 @@ struct OpenAIChatView: View {
                 )
             )
         ]
+
+        let chat = [
+            Chat(role: .user, content: chat.last?.content ?? ""),
+            Chat(role: .system, content: String(localized: "MULTIPLE_RESOURCE_FUNCTION_CONTEXT") + stringResourcesArray.rawValue)
+        ]
         
-        let query = ChatQuery(
-            model: "gpt-3.5-turbo-0613",
-            messages: [
-                Chat(role: .user, content: chat.last?.content ?? ""),
-                Chat(role: .system, content: String(localized: "MULTIPLE_RESOURCE_FUNCTION_CONTEXT") + stringResourcesArray.rawValue)
-            ],
-            functions: functions
-        )
+        let chatStreamResults = try await openAPIComponent.queryAPI(withChat: chat, withFunction: functions)
+
+        class ChatFunctionCallBuilder {
+            public var name: String?
+            public var arguments: String?
+            public var finishReason: String?
+        }
         
-        let result = try await openAI.chats(query: query)
+        var functionCall = ChatFunctionCallBuilder()
+        
+        for try await chatStreamResult in chatStreamResults {
+            for choice in chatStreamResult.choices {
+                if let delta = choice.delta.name {
+                    functionCall.name = (functionCall.name ?? "") + delta
+                }
+                if let delta = choice.delta.functionCall?.arguments {
+                    functionCall.arguments = (functionCall.arguments ?? "") + delta
+                }
+                if let finishReason = choice.finishReason {
+                    functionCall.finishReason = (functionCall.finishReason ?? "") + finishReason
+                    if finishReason == "get_resource_titles" {
+                        break
+                    }
+                }
+            }
+        }
         
         var functionCallOutputArray = [String]()
         
-        let rawFunctionCallOutput = result.choices.rawValue
-        if let rawData = rawFunctionCallOutput.data(using: .utf8) {
-            if let jsonArray = try? JSONSerialization.jsonObject(with: rawData, options: .allowFragments) as? [[String: Any]] {
-                for jsonDictionary in jsonArray {
-                    guard let finishReason = jsonDictionary["finish_reason"] as? String,
-                          let messageDict = jsonDictionary["message"] as? [String: Any],
-                          let functionCallDict = messageDict["function_call"] as? [String: Any],
-                          let arguments = functionCallDict["arguments"] as? String,
-                          let data = arguments.data(using: .utf8),
-                          let argumentsJson = try? JSONSerialization.jsonObject(with: data, options: []) as? [String: Any],
-                          let resources = argumentsJson["resources"] as? String else {
-                        print("Error extracting data")
-                        continue
-                    }
+        if functionCall.finishReason == "function_call" {
+            let rawFunctionCallOutput = functionCall
+            
+            if let functionArguments = rawFunctionCallOutput.arguments {
+                let trimmedFunctionArguments = functionArguments.trimmingCharacters(in: .whitespacesAndNewlines)
+                
+                if let resourcesRange = trimmedFunctionArguments.range(of: "\"resources\": \"([^\"]+)\"", options: .regularExpression) {
+                    let trimmedResources = trimmedFunctionArguments[resourcesRange]
+                    let resourcesString = trimmedResources
+                        .replacingOccurrences(of: "\"resources\": \"", with: "")
+                        .replacingOccurrences(of: "\"", with: "")
+                    let resourcesArray = resourcesString.components(separatedBy: ",")
                     
-                    functionCallOutputArray = resources.components(separatedBy: ",")
-                    print("Resources: \(functionCallOutputArray)")
+                    functionCallOutputArray = resourcesArray
                 }
-            } else {
-                print("Error extracting data")
             }
         }
-
+        
         return functionCallOutputArray
     }
 
     private func processFunctionCallOutputArray(functionCallOutputArray: [String], resourcesArray: [FHIRResource]) {
-        var stringResourcesArray = resourcesArray.map { "\($0.displayName) in \($0.resourceType)" }
+        let stringResourcesArray = resourcesArray.map { "\($0.displayName) in \($0.resourceType)" }
         for resource in functionCallOutputArray {
             var stringResource = resource
             stringResource = resource.trimmingCharacters(in: .whitespaces)
-            
+            print(stringResource)
             if let index = stringResourcesArray.firstIndex(of: stringResource) {
                 let resourceJSON = resourcesArray[index].jsonDescription
-                print(resourceJSON)
-                chat.append(Chat(role: .system, content: "Based on the function get_resource_title you have requested the health record: \(stringResource). This is the associated JSON data for the resource which you will use to answer the users question: \(resourceJSON). Use this health record to answer the users question ONLY IF the health record is applicable to the question."))
+                let functionContent = """
+                Based on the function get_resource_titles you have requested the following health records: \(stringResource).
+                This is the associated JSON data for the resources which you will use to answer the users question: \(resourceJSON).
+                Use this health record to answer the users question ONLY IF the health record is applicable to the question.
+                """
+                chat.append(Chat(role: .function, content: functionContent, name: "get_resource_titles"))
             } else {
                 print("Resource '\(resource)' not found in stringResourcesArray.")
             }
