@@ -21,7 +21,7 @@ class LLMonFHIRDelegate: SpeziAppDelegate {
             }
             OpenAIComponent(openAIModel: .gpt3_5Turbo0613)
             FHIRResourceInterpreter()
-            FHIRMultipleResourceInterpreter<FHIR>()
+            FHIRMultipleResourceInterpreter()
             FHIRResourceSummary()
         }
     }

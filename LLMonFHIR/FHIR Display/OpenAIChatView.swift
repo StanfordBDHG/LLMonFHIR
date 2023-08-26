@@ -19,6 +19,7 @@ struct OpenAIChatView: View {
 
     @State private var chat: [Chat]
     @State private var viewState: ViewState = .idle
+    @State private var systemFuncMessageAdded = false
     
     private let multipleResourceChat: Bool
     private let title: String
@@ -45,7 +46,7 @@ struct OpenAIChatView: View {
                 }
                 .viewStateAlert(state: $viewState)
                 .onChange(of: chat) { _ in
-                    if viewState == .idle && chat.last?.role != .assistant {
+                    if viewState == .idle && chat.last?.role == .user {
                         getAnswer()
                     }
                 }
@@ -58,12 +59,17 @@ struct OpenAIChatView: View {
         self.multipleResourceChat = multipleResourceChat
     }
   
+    
     private func getAnswer() {
         Task {
             do {
                 viewState = .processing
                 
                 if multipleResourceChat {
+                    if systemFuncMessageAdded == false {
+                        try await addSystemFuncMessage()
+                        systemFuncMessageAdded = true
+                    }
                     try await processMultipleResourceChat()
                 }
               
@@ -78,9 +84,16 @@ struct OpenAIChatView: View {
         }
     }
     
+    private func addSystemFuncMessage() async throws {
+        let resourcesArray = await fhirStandard.resources
+        var stringResourcesArray = resourcesArray.map { $0.identifier }
+        stringResourcesArray.append("N/A")
+        self.chat.append(Chat(role: .system, content: String(localized: "FUNCTION_CONTEXT") + stringResourcesArray.rawValue))
+    }
+    
     private func processMultipleResourceChat() async throws {
         let resourcesArray = await fhirStandard.resources
-        var stringResourcesArray = resourcesArray.map { "\($0.displayName) in \($0.resourceType)" }
+        var stringResourcesArray = resourcesArray.map { $0.identifier }
         stringResourcesArray.append("N/A")
         let functionCallOutputArray = try await getFunctionCallOutputArray(stringResourcesArray)
         if !functionCallOutputArray.contains(where: { $0.contains("N/A") }) {
@@ -106,8 +119,7 @@ struct OpenAIChatView: View {
         ]
 
         let chat = [
-            Chat(role: .user, content: chat.last?.content ?? ""),
-            Chat(role: .system, content: String(localized: "FUNCTION_CONTEXT") + stringResourcesArray.rawValue)
+            Chat(role: .user, content: chat.rawValue)
         ]
         
         let chatStreamResults = try await openAPIComponent.queryAPI(withChat: chat, withFunction: functions)
@@ -150,23 +162,28 @@ struct OpenAIChatView: View {
     }
 
     private func processFunctionCallOutputArray(functionCallOutputArray: [String], resourcesArray: [FHIRResource]) {
-        let stringResourcesArray = resourcesArray.map { "\($0.displayName) in \($0.resourceType)" }
-        for resource in functionCallOutputArray {
-            var stringResource = resource
-            stringResource = resource.trimmingCharacters(in: .whitespaces)
-            if let index = stringResourcesArray.firstIndex(of: stringResource) {
-                let resourceJSON = resourcesArray[index].jsonDescription
-                let functionContent = """
-                Based on the function get_resource_titles you have requested the following health records: \(stringResource).
-                This is the associated JSON data for the resources which you will use to answer the users question: \(resourceJSON).
-                Use this health record to answer the users question ONLY IF the health record is applicable to the question.
-                """
-                chat.append(Chat(role: .function, content: functionContent, name: "get_resource_titles"))
-            } else {
-                print("Resource '\(resource)' not found in stringResourcesArray.")
+            let stringResourcesArray = resourcesArray.map {$0.identifier}
+            for resource in functionCallOutputArray {
+                guard let matchingResource = resourcesArray.first(where: { $0.identifier == resource }) else {
+                    continue
+                }
+                
+                var stringResource = resource
+                stringResource = resource.trimmingCharacters(in: .whitespaces)
+                if let index = stringResourcesArray.firstIndex(of: stringResource) {
+                    let resourceJSON = matchingResource.jsonDescription
+                    let functionContent = """
+                    Based on the function get_resource_titles you have requested the following health records: \(stringResource).
+                    This is the associated JSON data for the resources which you will use to answer the users question: \(resourceJSON).
+                    Use this health record to answer the users question ONLY IF the health record is applicable to the question.
+                    """
+                    print(resourceJSON)
+                    chat.append(Chat(role: .function, content: functionContent, name: "get_resource_titles"))
+                } else {
+                    print("Resource '\(resource)' not found in stringResourcesArray.")
+                }
             }
         }
-    }
     
     private func processChatStreamResults() async throws {
         let chatStreamResults = try await openAPIComponent.queryAPI(withChat: chat)
