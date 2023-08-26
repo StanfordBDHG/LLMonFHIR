@@ -162,7 +162,7 @@ struct OpenAIChatView: View {
     }
 
     private func processFunctionCallOutputArray(functionCallOutputArray: [String], resourcesArray: [FHIRResource]) {
-            let stringResourcesArray = resourcesArray.map {$0.identifier}
+            let stringResourcesArray = resourcesArray.map { $0.identifier }
             for resource in functionCallOutputArray {
                 guard let matchingResource = resourcesArray.first(where: { $0.identifier == resource }) else {
                     continue
