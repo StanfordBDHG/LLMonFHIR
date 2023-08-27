@@ -80,7 +80,7 @@ class FHIRMultipleResourceInterpreter: DefaultInitializable, Component, Observab
         var resourceCategories = String()
         
         for resource in resources {
-            resourceCategories += (resource.identifier + "\n")
+            resourceCategories += (resource.functionCallIdentifier + "\n")
         }
 
         return Chat(

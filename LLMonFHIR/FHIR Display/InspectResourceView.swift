@@ -34,7 +34,7 @@ struct InspectResourceView: View {
                 OpenAIChatView(
                     chat: fhirResourceInterpreter.chat(forResource: resource),
                     title: resource.displayName,
-                    multipleResourceChat: false
+                    enableFunctionCalling: false
                 )
             }
             .task {

@@ -59,7 +59,7 @@ struct FHIRResourcesView: View {
         OpenAIChatView(
             chat: fhirMultipleResourceInterpreter.chat(resources: allResourcesArray),
             title: "All FHIR Resources",
-            multipleResourceChat: true
+            enableFunctionCalling: true
         )
     }
     
