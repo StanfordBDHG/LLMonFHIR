@@ -77,11 +77,15 @@ class FHIRMultipleResourceInterpreter: DefaultInitializable, Component, Observab
 
     
     private func systemPrompt(forResources resources: [FHIRResource]) -> Chat {
-        let allJSONResources = resources.map(\.compactJSONDescription).joined(separator: "\n")
+        var resourceCategories = String()
+        
+        for resource in resources {
+            resourceCategories += (resource.functionCallIdentifier + "\n")
+        }
 
         return Chat(
             role: .system,
-            content: Prompt.interpretMultipleResources.prompt.replacingOccurrences(of: Prompt.promptPlaceholder, with: allJSONResources)
+            content: Prompt.interpretMultipleResources.prompt.replacingOccurrences(of: Prompt.promptPlaceholder, with: resourceCategories)
         )
     }
 }

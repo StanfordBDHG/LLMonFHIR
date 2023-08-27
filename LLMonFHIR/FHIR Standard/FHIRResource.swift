@@ -53,6 +53,10 @@ struct FHIRResource: Sendable, Identifiable, Hashable {
         json(withConfiguration: [.prettyPrinted, .sortedKeys, .withoutEscapingSlashes])
     }
     
+    var functionCallIdentifier: String {
+        resourceType.filter { !$0.isWhitespace } + displayName.filter { !$0.isWhitespace }
+    }
+    
     
     private func json(withConfiguration outputFormatting: JSONEncoder.OutputFormatting) -> String {
         let encoder = JSONEncoder()
