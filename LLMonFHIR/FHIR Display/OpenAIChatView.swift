@@ -153,13 +153,16 @@ struct OpenAIChatView: View {
             return []
         }
         
-        class FunctionCallOutput: Decodable {
-            var resources: [String]
+        let trimmedArguments = functionCall.arguments.trimmingCharacters(in: .whitespacesAndNewlines)
+        
+        guard let resourcesRange = trimmedArguments.range(of: "\"resources\": \"([^\"]+)\"", options: .regularExpression) else {
+            return []
         }
         
-        let output = try? JSONDecoder().decode(FunctionCallOutput.self, from: Data(functionCall.arguments.utf8))
-        
-        return output?.resources ?? []
+        return trimmedArguments[resourcesRange]
+            .replacingOccurrences(of: "\"resources\": \"", with: "")
+            .replacingOccurrences(of: "\"", with: "")
+            .components(separatedBy: ",")
     }
     
     private func processFunctionCallOutputArray(functionCallOutputArray: [String], resourcesArray: [FHIRResource]) {
@@ -170,11 +173,13 @@ struct OpenAIChatView: View {
             
             let functionContent = """
             Based on the function get_resource_titles you have requested the following health records: \(resource).
-            This is the associated JSON data for the resources which you will use to answer the users question: \(matchingResource.jsonDescription).
+            This is the associated JSON data for the resources which you will use to answer the users question:
+            \(matchingResource.jsonDescription)
+            
             Use this health record to answer the users question ONLY IF the health record is applicable to the question.
             """
             
-            chat.append(Chat(role: .system, content: functionContent, name: "get_resource_titles"))
+            chat.append(Chat(role: .function, content: functionContent, name: "get_resource_titles"))
         }
     }
     
