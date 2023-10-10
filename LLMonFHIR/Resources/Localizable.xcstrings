@@ -531,7 +531,14 @@
       }
     },
     "DISMISS_ONBOARDING_HINT" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Dismiss onboarding hint"
+          }
+        }
+      }
     },
     "FHIR_MULTIPLE_RESOURCE_INTERPRETATION_PROMPT %@" : {
       "localizations" : {
@@ -1477,7 +1484,14 @@
 
     },
     "SETTINGS" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Settings"
+          }
+        }
+      }
     },
     "SETTINGS_OPENAI" : {
       "localizations" : {
@@ -1877,10 +1891,24 @@
       }
     },
     "SPEAKER_DISABLED" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Text to speech is disabled, press to enable text to speech."
+          }
+        }
+      }
     },
     "SPEAKER_ENABLED" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Text to speech is enabled, press to disable text to speech."
+          }
+        }
+      }
     },
     "WELCOME_AREA1_DESCRIPTION" : {
       "extractionState" : "manual",
