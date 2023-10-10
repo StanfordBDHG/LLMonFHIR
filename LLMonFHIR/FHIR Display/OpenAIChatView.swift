@@ -110,7 +110,7 @@ struct OpenAIChatView: View {
     }
     
     private func addSystemFuncMessage() async throws {
-        let resourcesArray = await fhirStandard.resources
+        let resourcesArray = await fhirStandard.relevantResources
         
         var stringResourcesArray = resourcesArray.map { $0.functionCallIdentifier }
         stringResourcesArray.append("N/A")
@@ -119,7 +119,7 @@ struct OpenAIChatView: View {
     }
     
     private func processFunctionCalling() async throws {
-        let resourcesArray = await fhirStandard.resources
+        let resourcesArray = await fhirStandard.relevantResources
         
         var stringResourcesArray = resourcesArray.map { $0.functionCallIdentifier }
         stringResourcesArray.append("N/A")

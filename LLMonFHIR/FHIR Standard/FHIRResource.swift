@@ -36,6 +36,34 @@ struct FHIRResource: Sendable, Identifiable, Hashable {
         }
     }
     
+    var dateRecorded: Date? {
+        switch versionedResource {
+        case let .r4(resource):
+            switch resource {
+            case let observation as ModelsR4.Observation:
+                return try? observation.issued?.value?.asNSDate()
+            default:
+                return nil
+            }
+        case let .dstu2(resource):
+            switch resource {
+            case let observation as ModelsDSTU2.Observation:
+                return try? observation.issued?.value?.asNSDate()
+            case let medicationOrder as ModelsDSTU2.MedicationOrder:
+                return try? medicationOrder.dateWritten?.value?.asNSDate()
+            case let condition as ModelsDSTU2.MedicationOrder:
+                return try? condition.dateWritten?.value?.asNSDate()
+            case let procedure as ModelsDSTU2.Procedure:
+                guard case let .dateTime(date) = procedure.performed else {
+                    return nil
+                }
+                return try? date.value?.asNSDate()
+            default:
+                return nil
+            }
+        }
+    }
+    
     var resourceType: String {
         switch versionedResource {
         case let .r4(resource):

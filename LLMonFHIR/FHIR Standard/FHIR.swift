@@ -34,6 +34,25 @@ actor FHIR: Standard, ObservableObject, ObservableObjectProvider, HealthKitConst
         Array(_resources.values)
     }
     
+    var relevantResources: [FHIRResource] {
+        Array(
+            _resources
+                .values
+                .lazy
+                .filter {
+                    $0.dateRecorded != nil
+                }
+                .sorted {
+                    guard let lhs = $0.dateRecorded, let rhs = $1.dateRecorded else {
+                        return true
+                    }
+                    
+                    return lhs > rhs
+                }
+                .prefix(250)
+        )
+    }
+    
     
     init() {
         guard HKHealthStore.isHealthDataAvailable() else {
