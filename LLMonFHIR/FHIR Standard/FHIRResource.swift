@@ -36,7 +36,7 @@ struct FHIRResource: Sendable, Identifiable, Hashable {
         }
     }
     
-    var dateRecorded: Date? {
+    var date: Date? {
         switch versionedResource {
         case let .r4(resource):
             switch resource {

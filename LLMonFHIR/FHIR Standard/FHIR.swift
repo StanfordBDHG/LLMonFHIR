@@ -40,10 +40,10 @@ actor FHIR: Standard, ObservableObject, ObservableObjectProvider, HealthKitConst
                 .values
                 .lazy
                 .filter {
-                    $0.dateRecorded != nil
+                    $0.date != nil
                 }
                 .sorted {
-                    guard let lhs = $0.dateRecorded, let rhs = $1.dateRecorded else {
+                    guard let lhs = $0.date, let rhs = $1.date else {
                         return true
                     }
                     
