@@ -28,8 +28,9 @@ struct SettingsView: View {
     var body: some View {
         NavigationStack(path: $path) {
             List {
-                speechSettings
                 openAISettings
+                speechSettings
+                resourcesLimitSettings
                 promptsSettings
             }
                 .navigationTitle("SETTINGS_TITLE")

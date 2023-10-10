@@ -164,7 +164,7 @@ struct FHIRResourcesView: View {
         
         do {
             viewState = .processing
-            try await fhirMultipleResourceInterpreter.interpretMultipleResources(resources: fhirStandard.resources)
+            try await fhirMultipleResourceInterpreter.interpretMultipleResources(resources: fhirStandard.relevantResources)
             viewState = .idle
         } catch let error as APIErrorResponse {
             viewState = .error(error)
