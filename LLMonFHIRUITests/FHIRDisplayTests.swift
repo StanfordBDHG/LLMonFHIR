@@ -22,6 +22,8 @@ final class FHIRDisplayTests: XCTestCase {
 
     func testFHIRResourcesView() throws {
         let app = XCUIApplication()
+        
+        app.swipeUp()
 
         let mockResource = app.otherElements.buttons["Mock Resource"]
         XCTAssertTrue(mockResource.exists, "The 'Mock Resource' does not exist.")
