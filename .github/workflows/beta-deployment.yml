@@ -1,5 +1,5 @@
 #
-# This source file is part of the Stanford LLM on FHIR project
+# This source file is part of the Stanford Spezi Template Application project
 #
 # SPDX-FileCopyrightText: 2023 Stanford University
 #
@@ -18,14 +18,14 @@ jobs:
   buildandtest:
     name: Build and Test
     uses: ./.github/workflows/build-and-test.yml
-    secrets: inherit
+    permissions:
+      security-events: write
+      actions: read
   iosapptestflightdeployment:
     name: iOS App TestFlight Deployment
     needs: buildandtest
     uses: StanfordBDHG/.github/.github/workflows/xcodebuild-or-fastlane.yml@v2
     secrets: inherit
     with:
-      artifactname: LLMonFHIR.xcresult
-      runsonlabels: '["macos-13"]'
-      fastlanelane: beta
       setupsigning: true
+      fastlanelane: beta
