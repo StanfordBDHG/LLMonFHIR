@@ -21,7 +21,8 @@ struct SettingsView: View {
     
     @State private var path = NavigationPath()
     @Environment(\.dismiss) private var dismiss
-    @AppStorage(StorageKeys.enableTextToSpeech) private var enableTextToSpeech = false
+    @AppStorage(StorageKeys.enableTextToSpeech) private var enableTextToSpeech = StorageKeys.Defaults.enableTextToSpeech
+    @AppStorage(StorageKeys.resourceLimit) private var resourceLimit = StorageKeys.Defaults.resourceLimit
     
     
     var body: some View {
@@ -49,6 +50,14 @@ struct SettingsView: View {
         Section("SETTINGS_SPEECH") {
             Toggle(isOn: $enableTextToSpeech) {
                 Text("SETTINGS_SPEECH_TEXT_TO_SPEECH")
+            }
+        }
+    }
+    
+    private var resourcesLimitSettings: some View {
+        Section("SETTINGS_RESOURCES_LIMIT") {
+            Stepper(value: $resourceLimit, in: 10...500, step: 10) {
+                Text("RESOURCE_LIMIT_TEXT \(resourceLimit)")
             }
         }
     }

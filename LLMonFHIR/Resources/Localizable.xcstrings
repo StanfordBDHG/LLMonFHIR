@@ -1483,6 +1483,9 @@
     "Place %@ at the position in the prompt where the FHIR resource should be inserted." : {
 
     },
+    "RESOURCE_LIMIT_TEXT %lld" : {
+
+    },
     "SETTINGS" : {
       "localizations" : {
         "en" : {
@@ -1834,6 +1837,9 @@
           }
         }
       }
+    },
+    "SETTINGS_RESOURCES_LIMIT" : {
+
     },
     "SETTINGS_SPEECH" : {
       "localizations" : {

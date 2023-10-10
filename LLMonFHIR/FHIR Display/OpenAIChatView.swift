@@ -24,7 +24,7 @@ struct OpenAIChatView: View {
     @State private var viewState: ViewState = .idle
     @State private var systemFuncMessageAdded = false
     
-    @AppStorage(StorageKeys.enableTextToSpeech) private var textToSpeech = false
+    @AppStorage(StorageKeys.enableTextToSpeech) private var textToSpeech = StorageKeys.Defaults.enableTextToSpeech
     
     private let enableFunctionCalling: Bool
     private let title: String
