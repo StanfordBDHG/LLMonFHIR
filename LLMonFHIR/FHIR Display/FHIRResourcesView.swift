@@ -190,6 +190,7 @@ struct FHIRResourcesView: View {
 
         let mockObservation = Observation(
             code: CodeableConcept(coding: [Coding(code: "1234".asFHIRStringPrimitive())]),
+            issued: FHIRPrimitive<Instant>(try? Instant(date: .now)),
             status: FHIRPrimitive(ObservationStatus.final)
         )
 
