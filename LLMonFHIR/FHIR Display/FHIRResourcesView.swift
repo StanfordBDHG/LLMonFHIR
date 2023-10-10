@@ -82,6 +82,7 @@ struct FHIRResourcesView: View {
         if resources.isEmpty {
             VStack(alignment: .center) {
                 Image(systemName: "doc.text.magnifyingglass")
+                    .accessibilityHidden(true)
                     .font(.system(size: 90))
                     .foregroundColor(.accentColor)
                     .padding(.vertical, 8)
@@ -101,12 +102,14 @@ struct FHIRResourcesView: View {
                         },
                         label: {
                             Image(systemName: "xmark")
+                                .accessibilityLabel(Text("DISMISS_ONBOARDING_HINT"))
                                 .foregroundColor(.secondary)
                         }
                     )
                 }
                     .padding(.horizontal, -8)
                 Image(systemName: "hand.wave.fill")
+                    .accessibilityHidden(true)
                     .font(.system(size: 75))
                     .foregroundColor(.accentColor)
                     .padding(.bottom, 8)
@@ -146,6 +149,7 @@ struct FHIRResourcesView: View {
                 },
                 label: {
                     Image(systemName: "gear")
+                        .accessibilityLabel(Text("SETTINGS"))
                 }
             )
         }

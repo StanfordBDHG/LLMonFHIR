@@ -23,8 +23,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/MacPaw/OpenAI",
       "state" : {
-        "revision" : "a51a7fde78173e57b9166d38d1f665d17a3c4383",
-        "version" : "0.2.3"
+        "revision" : "c45f3320ffa760f043c0239f724850c0e4f8bde5",
+        "version" : "0.2.4"
       }
     },
     {
@@ -32,8 +32,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/StanfordSpezi/Spezi",
       "state" : {
-        "revision" : "9ad506d4d2e36eb7a0c1ff8cc6bb0ef9c972724c",
-        "version" : "0.7.1"
+        "revision" : "e75ea4d241b6eb611ca4c1c25926097cf324ce37",
+        "version" : "0.7.3"
       }
     },
     {
@@ -50,8 +50,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/StanfordSpezi/SpeziML.git",
       "state" : {
-        "revision" : "700ab5e524ec4f12f3012b514ea24822bdc6066b",
-        "version" : "0.2.2"
+        "revision" : "a0707552d6c1baf1f3a3bae8bb45def5dcca7c5e",
+        "version" : "0.2.5"
       }
     },
     {
@@ -59,17 +59,17 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/StanfordSpezi/SpeziOnboarding.git",
       "state" : {
-        "revision" : "8e84137a08510f051d93cca546fdce3acb67e012",
-        "version" : "0.4.2"
+        "revision" : "13efb08a3d4341352115e9e34aabe973c94496d3",
+        "version" : "0.5.2"
       }
     },
     {
       "identity" : "spezistorage",
       "kind" : "remoteSourceControl",
-      "location" : "https://github.com/StanfordSpezi/SpeziStorage.git",
+      "location" : "https://github.com/StanfordSpezi/SpeziStorage",
       "state" : {
-        "revision" : "77666f57cc0b7f148bc3949f173db8498ef9b4a6",
-        "version" : "0.4.1"
+        "revision" : "58f79a21291da6d2d2193275486fa3c69b4f31fa",
+        "version" : "0.4.3"
       }
     },
     {
@@ -77,8 +77,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/StanfordSpezi/SpeziViews.git",
       "state" : {
-        "revision" : "3131708f262064231751a8963eb263f8648b6879",
-        "version" : "0.4.1"
+        "revision" : "4b7cc423fd823123d354ec1d541ca7d2e0a9d6e3",
+        "version" : "0.5.1"
       }
     },
     {
@@ -86,8 +86,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/StanfordBDHG/XCTestExtensions.git",
       "state" : {
-        "revision" : "625477e0937294cb3fd6e7bbf72b78f951644b1d",
-        "version" : "0.4.6"
+        "revision" : "388a6d6a5be48eff5d98a2c45e0b50f30ed21dc3",
+        "version" : "0.4.7"
       }
     },
     {

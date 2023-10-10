@@ -17,17 +17,38 @@ platform :ios do
   desc "Build and test"
   lane :test do
     run_tests(
-      code_coverage: true,
+      skip_build: true,
       derived_data_path: ".derivedData",
+      code_coverage: true,
+      devices: ["iPhone 15 Pro"],
+      force_quit_simulator: true,
+      reset_simulator: true,
+      prelaunch_simulator: false,
+      concurrent_workers: 1,
+      max_concurrent_simulators: 1,
       result_bundle: true,
       output_directory: "."
+    )
+  end
+
+  desc "CodeQL"
+  lane :codeql do
+    build_app(
+      skip_archive: true,
+      skip_codesigning: true,
+      derived_data_path: ".derivedData"
     )
   end
 
   desc "Build app"
   lane :build do
     build_app(
-      derived_data_path: ".derivedData"
+      derived_data_path: ".derivedData",
+      export_options: {
+        provisioningProfiles: {
+          "edu.stanford.bdhg.llmonfhir" => "LLM on FHIR"
+        }
+      }
     )
   end
 
@@ -44,10 +65,11 @@ platform :ios do
   desc "Publish a beta release to internal TestFlight testers"
   lane :beta do
     signin
-    increment_build_number({
-      build_number: latest_testflight_build_number + 1,
-      xcodeproj: "LLMonFHIR.xcodeproj"
-    })
+    increment_build_number(
+      {
+        build_number: latest_testflight_build_number + 1
+      }
+    )
     build
     commit = last_git_commit
     upload_to_testflight(

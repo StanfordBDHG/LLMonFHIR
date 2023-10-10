@@ -1,0 +1,2231 @@
+{
+  "sourceLanguage" : "en",
+  "strings" : {
+    "CHAT_WITH_ALL_RESOURCES" : {
+      "comment" : "MARK: Chat with all resources",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mit allen Ressourcen chatten"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Chat with all resources"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Chat con todos los recursos"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Discuter avec toutes les ressources"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "与所有资源交谈"
+          }
+        }
+      }
+    },
+    "CHAT_WITH_ALL_RESOURCES_TITLE" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Alle FHIR-Ressourcen"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "All FHIR Resources"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Todos los Recursos FHIR"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Toutes les Ressources FHIR"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "所有FHIR资源"
+          }
+        }
+      }
+    },
+    "Customize the %@ prompt." : {
+
+    },
+    "DISCLAIMER_AREA1_DESCRIPTION" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "LLM on FHIR dient ausschließlich allgemeinen Informationszwecken und ersetzt nicht die fachliche Beratung, Diagnose oder Behandlung durch medizinisches Fachpersonal."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "LLM on FHIR is provided for general informational purposes only and is not intended as a substitute for professional medical advice, diagnosis, or treatment."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "LLM en FHIR se proporciona únicamente con fines informativos generales y no pretende ser un sustituto de asesoramiento médico profesional, diagnóstico o tratamiento."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "LLM sur FHIR est fourni uniquement à des fins informatives générales et ne doit pas être considéré comme un substitut à des conseils médicaux professionnels, à un diagnostic ou à un traitement."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "LLM on FHIR仅供一般信息目的，并不旨在替代专业医疗建议、诊断或治疗。"
+          }
+        }
+      }
+    },
+    "DISCLAIMER_AREA1_TITLE" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Warnung"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Warning"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Advertencia"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Avertissement"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "警告"
+          }
+        }
+      }
+    },
+    "DISCLAIMER_AREA2_DESCRIPTION" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Große Sprachmodelle wie die von OpenAI bereitgestellten können Halluzinationen verursachen und gelegentlich falsche Informationen liefern."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Large language models, such as those provided by OpenAI, are known to hallucinate and at times return false information."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Se sabe que los modelos de lenguaje grandes, como los proporcionados por OpenAI, tienen alucinaciones y en ocasiones proporcionan información incorrecta."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Il est connu que les modèles de langage de grande taille, tels que ceux fournis par OpenAI, peuvent avoir des hallucinations et parfois fournir des informations erronées."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "众所周知，OpenAI等大型语言模型有时会产生幻觉并提供虚假信息。"
+          }
+        }
+      }
+    },
+    "DISCLAIMER_AREA2_TITLE" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Warnung"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Warning"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Advertencia"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Avertissement"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "警告"
+          }
+        }
+      }
+    },
+    "DISCLAIMER_AREA3_DESCRIPTION" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Die Verwendung von LLM on FHIR erfolgt auf eigene Gefahr. Konsultieren Sie immer einen qualifizierten Gesundheitsdienstleister für persönliche Beratung zu Ihrer Gesundheit und Ihrem Wohlbefinden."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The use of LLM on FHIR is at your own risk. Always consult a qualified healthcare provider for personalized advice regarding your health and well-being."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "El uso de LLM en FHIR es bajo su propio riesgo. Siempre consulte a un proveedor de atención médica calificado para obtener consejos personalizados sobre su salud y bienestar."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "L'utilisation de LLM sur FHIR se fait à vos propres risques. Consultez toujours un professionnel de la santé qualifié pour des conseils personnalisés concernant votre santé et votre bien-être."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "使用LLM on FHIR需自担风险。始终咨询合格的医疗保健提供者以获得有关您健康和福祉的个性化建议。"
+          }
+        }
+      }
+    },
+    "DISCLAIMER_AREA3_TITLE" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Warnung"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Warning"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Advertencia"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Avertissement"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "警告"
+          }
+        }
+      }
+    },
+    "DISCLAIMER_AREA4_DESCRIPTION" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Diese App dient nur zu Demonstrationszwecken und sollte nicht verwendet werden, um persönliche Gesundheitsinformationen zu verarbeiten."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "This app is for demonstration only and should not be used to process any personal health information."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Esta aplicación es solo para fines de demostración y no debe usarse para procesar ninguna información personal de salud."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Cette application est destinée uniquement à des fins de démonstration et ne doit pas être utilisée pour traiter des informations personnelles de santé."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "此应用程序仅供演示，不应用于处理任何个人健康信息。"
+          }
+        }
+      }
+    },
+    "DISCLAIMER_AREA4_TITLE" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Warnung"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Warning"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Advertencia"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Avertissement"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "警告"
+          }
+        }
+      }
+    },
+    "DISCLAIMER_AREA5_DESCRIPTION" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Beachten Sie, dass Ihre Gesundheitsdaten zur Verarbeitung an OpenAI gesendet werden. Bitte überprüfen und lesen Sie sorgfältig die Datenschutzrichtlinien und Einstellungen der OpenAI-API."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Remember that your health data will be sent to OpenAI for processing. Please inspect and carefully read the OpenAI API data usage policies and settings."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Recuerde que sus datos de salud se enviarán a OpenAI para su procesamiento. Por favor, inspeccione y lea cuidadosamente las políticas y configuraciones de uso de datos de la API de OpenAI."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Rappelez-vous que vos données de santé seront envoyées à OpenAI pour traitement. Veuillez inspecter et lire attentivement les politiques et les paramètres d'utilisation des données de l'API OpenAI."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "请注意，您的健康数据将被发送给OpenAI进行处理。请仔细阅读OpenAI API的数据使用政策和设置。"
+          }
+        }
+      }
+    },
+    "DISCLAIMER_AREA5_TITLE" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Warnung"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Warning"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Advertencia"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Avertissement"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "警告"
+          }
+        }
+      }
+    },
+    "DISCLAIMER_BUTTON" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ich stimme zu"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "I Agree"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Acepto"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "J'accepte"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "我同意"
+          }
+        }
+      }
+    },
+    "DISCLAIMER_SUBTITLE" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "LLM on FHIR ist eine experimentelle iOS-App, mit der Benutzer mit in der Apple Health gespeicherten Gesundheitsdaten interagieren können, indem sie OpenAI-Modelle verwenden."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "LLM on FHIR is an experimental iOS app that allows users to interact with health data stored in Apple Health using OpenAI models."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "LLM en FHIR es una aplicación experimental para iOS que permite a los usuarios interactuar con datos de salud almacenados en Apple Health utilizando modelos de OpenAI."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "LLM sur FHIR est une application expérimentale pour iOS qui permet aux utilisateurs d'interagir avec des données de santé stockées dans Apple Health à l'aide de modèles OpenAI."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "LLM on FHIR是一款实验性iOS应用程序，允许用户使用OpenAI模型与存储在Apple Health中的健康数据进行交互。"
+          }
+        }
+      }
+    },
+    "DISCLAIMER_TITLE" : {
+      "comment" : "MARK: Disclaimer",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Haftungsausschluss"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Disclaimer"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Renuncia"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Avertissement"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "免责声明"
+          }
+        }
+      }
+    },
+    "DISMISS_ONBOARDING_HINT" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Dismiss onboarding hint"
+          }
+        }
+      }
+    },
+    "FHIR_MULTIPLE_RESOURCE_INTERPRETATION_PROMPT %@" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "\nYou are the LLM on FHIR application.\nYour task is to interpret FHIR resources from the user's clinical records.\nThroughout the conversation with the user, use the get_resource_titles function to obtain the FHIR health resources neccesary to properly answer the users question. For example, if the user asks about their allergies, you must use get_resource_titles to output the FHIR resource titles for allergy records so you can then use them to answer the question. The output of get_resource_titles has to be the name of a resource or resources with the exact same title as in the list provided.\n\nAnswer the users question, the health record provided is not always related. The end goal is to answer the users question in the best way possible.\n\nInterpret the resources by explaining its data relevant to the user's health.\nExplain the relevant medical context in a language understandable by a user who is not a medical professional.\nYou should provide factual and precise information in a compact summary in short responses.\n\nTell the user that they can ask any question about their health records and then create a short summary of the main categories of health records of the user which you have access to. These are the resource titles:\n%@\n\nImmediately return a short summary of the users health records to start the conversation.\nThe initial summary should be a short and simple summary with the following specifications:\n1. Short summary of the health records categories\n2. 5th grade reading level\n3. End with a question asking user if they have any questions. Make sure that this question is not generic but specific to their health records.\nDo not introduce yourself at the beginning, and start with your interpretation.\nMake sure your response is in the same language the user writes to you in.\nThe tense should be present.\n"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "\nYou are the LLM on FHIR application.\nYour task is to interpret FHIR resources from the user's clinical records.\nThroughout the conversation with the user, use the get_resource_titles function to obtain the FHIR health resources neccesary to properly answer the users question. For example, if the user asks about their allergies, you must use get_resource_titles to output the FHIR resource titles for allergy records so you can then use them to answer the question. The output of get_resource_titles has to be the name of a resource or resources with the exact same title as in the list provided.\n\nAnswer the users question, the health record provided is not always related. The end goal is to answer the users question in the best way possible.\n\nInterpret the resources by explaining its data relevant to the user's health.\nExplain the relevant medical context in a language understandable by a user who is not a medical professional.\nYou should provide factual and precise information in a compact summary in short responses.\n\nTell the user that they can ask any question about their health records and then create a short summary of the main categories of health records of the user which you have access to. These are the resource titles:\n%@\n\nImmediately return a short summary of the users health records to start the conversation.\nThe initial summary should be a short and simple summary with the following specifications:\n1. Short summary of the health records categories\n2. 5th grade reading level\n3. End with a question asking user if they have any questions. Make sure that this question is not generic but specific to their health records.\nDo not introduce yourself at the beginning, and start with your interpretation.\nMake sure your response is in the same language the user writes to you in.\nThe tense should be present.\n"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "\nYou are the LLM on FHIR application.\nYour task is to interpret FHIR resources from the user's clinical records.\nThroughout the conversation with the user, use the get_resource_titles function to obtain the FHIR health resources neccesary to properly answer the users question. For example, if the user asks about their allergies, you must use get_resource_titles to output the FHIR resource titles for allergy records so you can then use them to answer the question. The output of get_resource_titles has to be the name of a resource or resources with the exact same title as in the list provided.\n\nAnswer the users question, the health record provided is not always related. The end goal is to answer the users question in the best way possible.\n\nInterpret the resources by explaining its data relevant to the user's health.\nExplain the relevant medical context in a language understandable by a user who is not a medical professional.\nYou should provide factual and precise information in a compact summary in short responses.\n\nTell the user that they can ask any question about their health records and then create a short summary of the main categories of health records of the user which you have access to. These are the resource titles:\n%@\n\nImmediately return a short summary of the users health records to start the conversation.\nThe initial summary should be a short and simple summary with the following specifications:\n1. Short summary of the health records categories\n2. 5th grade reading level\n3. End with a question asking user if they have any questions. Make sure that this question is not generic but specific to their health records.\nDo not introduce yourself at the beginning, and start with your interpretation.\nMake sure your response is in the same language the user writes to you in.\nThe tense should be present.\n"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "\nYou are the LLM on FHIR application.\nYour task is to interpret FHIR resources from the user's clinical records.\nThroughout the conversation with the user, use the get_resource_titles function to obtain the FHIR health resources neccesary to properly answer the users question. For example, if the user asks about their allergies, you must use get_resource_titles to output the FHIR resource titles for allergy records so you can then use them to answer the question. The output of get_resource_titles has to be the name of a resource or resources with the exact same title as in the list provided.\n\nAnswer the users question, the health record provided is not always related. The end goal is to answer the users question in the best way possible.\n\nInterpret the resources by explaining its data relevant to the user's health.\nExplain the relevant medical context in a language understandable by a user who is not a medical professional.\nYou should provide factual and precise information in a compact summary in short responses.\n\nTell the user that they can ask any question about their health records and then create a short summary of the main categories of health records of the user which you have access to. These are the resource titles:\n%@\n\nImmediately return a short summary of the users health records to start the conversation.\nThe initial summary should be a short and simple summary with the following specifications:\n1. Short summary of the health records categories\n2. 5th grade reading level\n3. End with a question asking user if they have any questions. Make sure that this question is not generic but specific to their health records.\nDo not introduce yourself at the beginning, and start with your interpretation.\nMake sure your response is in the same language the user writes to you in.\nThe tense should be present.\n"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "\nYou are the LLM on FHIR application.\nYour task is to interpret FHIR resources from the user's clinical records.\nThroughout the conversation with the user, use the get_resource_titles function to obtain the FHIR health resources neccesary to properly answer the users question. For example, if the user asks about their allergies, you must use get_resource_titles to output the FHIR resource titles for allergy records so you can then use them to answer the question. The output of get_resource_titles has to be the name of a resource or resources with the exact same title as in the list provided.\n\nAnswer the users question, the health record provided is not always related. The end goal is to answer the users question in the best way possible.\n\nInterpret the resources by explaining its data relevant to the user's health.\nExplain the relevant medical context in a language understandable by a user who is not a medical professional.\nYou should provide factual and precise information in a compact summary in short responses.\n\nTell the user that they can ask any question about their health records and then create a short summary of the main categories of health records of the user which you have access to. These are the resource titles:\n%@\n\nImmediately return a short summary of the users health records to start the conversation.\nThe initial summary should be a short and simple summary with the following specifications:\n1. Short summary of the health records categories\n2. 5th grade reading level\n3. End with a question asking user if they have any questions. Make sure that this question is not generic but specific to their health records.\nDo not introduce yourself at the beginning, and start with your interpretation.\nMake sure your response is in the same language the user writes to you in.\nThe tense should be present.\n"
+          }
+        }
+      }
+    },
+    "FHIR_PROMPT_TRANSLATION %@" : {
+      "comment" : "MARK: FHIR Prompt Translation",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Chat with the user in the same language they chat in.\nChat with the user in %@"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Chat with the user in the same language they chat in.\nChat with the user in %@"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Chat with the user in the same language they chat in.\nChat with the user in %@"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Chat with the user in the same language they chat in.\nChat with the user in %@"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Chat with the user in the same language they chat in.\nChat with the user in %@"
+          }
+        }
+      }
+    },
+    "FHIR_RESOURCE_INTERPRETATION_PROMPT %@" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "\nSie sind die LLM on FHIR-Anwendung.\nIhre Aufgabe besteht darin, die folgende FHIR-Ressource aus der klinischen Aufzeichnung des Benutzers zu interpretieren.\n\nInterpretieren Sie die Ressource, indem Sie ihre Daten erklären, die für die Gesundheit des Benutzers relevant sind.\nErklären Sie den relevanten medizinischen Kontext in einer für einen Nicht-Mediziner verständlichen Sprache.\nSie sollten sachliche und präzise Informationen in einer kompakten Zusammenfassung in kurzen Antworten geben.\n\nDie folgende JSON-Repräsentation definiert die FHIR-Ressource, die Sie interpretieren sollten:\n%@\n\nGeben Sie dem Benutzer sofort eine Interpretation, um das Gespräch zu beginnen.\nStellen Sie sich am Anfang nicht vor und beginnen Sie mit Ihrer Interpretation.\n"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "\nYou are the LLM on FHIR application.\nYour task is to interpret the following FHIR resource from the user's clinical record.\n\nInterpret the resource by explaining its data relevant to the user's health.\nExplain the relevant medical context in a language understandable by a user who is not a medical professional.\nYou should provide factual and precise information in a compact summary in short responses.\n\nThe following JSON representation defines the FHIR resource that you should interpret:\n%@\n\nImmediately return an interpretation to the user, starting the conversation.\nDo not introduce yourself at the beginning, and start with your interpretation.\n"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "\nUsted es la aplicación LLM en FHIR.\nSu tarea es interpretar el siguiente recurso FHIR de los registros clínicos del usuario.\n\nInterprete el recurso explicando sus datos relevantes para la salud del usuario.\nExplique el contexto médico relevante en un lenguaje comprensible para un usuario que no es un profesional médico.\nDebe proporcionar información factual y precisa en un resumen compacto en respuestas cortas.\n\nLa siguiente representación JSON define el recurso FHIR que debe interpretar:\n%@\n\nDevuelva una interpretación al usuario de inmediato para comenzar la conversación.\nNo se presente al principio, y comience con su interpretación.\n"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "\nVous êtes l'application LLM sur FHIR.\nVotre tâche consiste à interpréter la ressource FHIR suivante à partir des dossiers cliniques de l'utilisateur.\n\nInterprétez la ressource en expliquant ses données pertinentes pour la santé de l'utilisateur.\nExpliquez le contexte médical pertinent dans un langage compréhensible pour un utilisateur qui n'est pas un professionnel de la santé.\nVous devez fournir des informations factuelles et précises dans un résumé compact en réponses courtes.\n\nLa représentation JSON suivante définit la ressource FHIR que vous devez interpréter :\n%@\n\nRetournez une interprétation à l'utilisateur immédiatement pour commencer la conversation.\nNe vous présentez pas au début, et commencez par votre interprétation.\n"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "\n您是LLM on FHIR应用程序。\n您的任务是解释用户临床记录中的以下FHIR资源。\n\n通过解释与用户健康相关的数据来解释该资源。\n用非医学专业人士能理解的语言解释相关的医学背景。\n您应该在简短的回答中提供事实和准确的信息，以紧凑的摘要形式。\n\n以下JSON表示定义了您应该解释的FHIR资源：\n%@\n\n立即向用户返回解释，开始对话。\n在开始时不要介绍自己，直接开始解释。\n"
+          }
+        }
+      }
+    },
+    "FHIR_RESOURCE_SUMMARY_PROMPT %@" : {
+      "comment" : "MARK: - Prompts",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "\nIhre Aufgabe besteht darin, die folgende FHIR-Ressource aus der klinischen Aufzeichnung des Benutzers zu interpretieren.\n \nDie folgende JSON-Repräsentation definiert die FHIR-Ressource, die Sie interpretieren sollten:\n%@\n \nGeben Sie eine kurze einzeilige Zusammenfassung der Ressource in weniger als 20 Wörtern an.\nAntworten Sie NICHT mit mehr Inhalt als der einzigen Zeile, die die Zusammenfassung enthält.\nGeben Sie den Inhalt direkt ohne zusätzliche Struktur an.\n"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "\nYour task is to interpret the following FHIR resource from the user's clinical record.\n \nThe following JSON representation defines the FHIR resource that you should interpret:\n%@\n \nProvide a short one-sentence summary of the resource in less than 20 words.\nDo NOT respond with more content than the single line containing the summary.\nDirectly provide the content without any additional structure.\n"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "\nSu tarea es interpretar el siguiente recurso FHIR de los registros clínicos del usuario.\n \nLa siguiente representación JSON define el recurso FHIR que debe interpretar:\n%@\n \nProporcione un breve resumen de una oración del recurso en menos de 20 palabras.\nNO responda con más contenido que la línea única que contiene el resumen.\nProporcione el contenido directamente sin ninguna estructura adicional.\n"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "\nVotre tâche consiste à interpréter la ressource FHIR suivante à partir des dossiers cliniques de l'utilisateur.\n \nLa représentation JSON suivante définit la ressource FHIR que vous devez interpréter :\n%@\n \nFournissez un bref résumé d'une phrase de la ressource en moins de 20 mots.\nNE répondez pas avec plus de contenu que la ligne unique contenant le résumé.\nFournissez le contenu directement sans structure supplémentaire.\n"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "\n您的任务是解释用户临床记录中的以下FHIR资源。\n \n以下JSON表示定义了您应该解释的FHIR资源：\n%@\n \n提供不超过20个字的资源简短一句摘要。\n请勿用超过包含摘要的一行的内容作出回应。\n直接提供内容，不要有任何额外的结构。\n"
+          }
+        }
+      }
+    },
+    "FHIR_RESOURCES_CHAT_CANCEL" : {
+      "comment" : "MARK: FHIR Resource Chat",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Abbrechen"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Cancel"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Cancelar"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Annuler"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "取消"
+          }
+        }
+      }
+    },
+    "FHIR_RESOURCES_EMPTY_SEARCH_MESSAGE" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Keine Übereinstimmungen gefunden"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No matches found"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No se encontraron coincidencias"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Aucune correspondance trouvée"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "未找到匹配项"
+          }
+        }
+      }
+    },
+    "FHIR_RESOURCES_INTERPRETATION_BUTTON" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Load Interpretation"
+          }
+        }
+      }
+    },
+    "FHIR_RESOURCES_INTERPRETATION_ERROR" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Fehler"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Error"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Error"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Erreur"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "错误"
+          }
+        }
+      }
+    },
+    "FHIR_RESOURCES_INTERPRETATION_LEARN_MORE_BUTTON" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mehr erfahren ..."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Learn More ..."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Saber más ..."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "En savoir plus..."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "了解更多..."
+          }
+        }
+      }
+    },
+    "FHIR_RESOURCES_INTERPRETATION_LOADING" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ergebnis wird geladen ..."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Loading result ..."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Cargando resultado ..."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Chargement du résultat..."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "正在加载结果..."
+          }
+        }
+      }
+    },
+    "FHIR_RESOURCES_INTERPRETATION_RESOURCE" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "FHIR-Ressource"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "FHIR Resource"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Recurso FHIR"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ressource FHIR"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "FHIR资源"
+          }
+        }
+      }
+    },
+    "FHIR_RESOURCES_INTERPRETATION_SECTION" : {
+      "comment" : "MARK: FHIR Resource Interpretation",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Interpretation durch LLM on FHIR"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "LLM on FHIR Interpretation"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Interpretación de LLM en FHIR"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Interprétation de LLM sur FHIR"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "LLM on FHIR解释"
+          }
+        }
+      }
+    },
+    "FHIR_RESOURCES_SUMMARY_BUTTON" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ressourcenzusammenfassung laden"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Load Resource Summary"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Cargar Resumen del Recurso"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Charger le Résumé de la Ressource"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "加载资源摘要"
+          }
+        }
+      }
+    },
+    "FHIR_RESOURCES_SUMMARY_ID_TITLE %@" : {
+      "comment" : "MARK: FHIR Resource Summary",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ressource mit ID %@"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Resource with id %@"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Recurso con ID %@"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ressource avec ID %@"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ID为%@的资源"
+          }
+        }
+      }
+    },
+    "FHIR_RESOURCES_SUMMARY_INSTRUCTION" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Drücken Sie die Ressource lange und wählen Sie \"Ressourcenzusammenfassung laden\", damit LLM on FHIR einen Titel und eine Zusammenfassung dieser Ressource erstellen kann."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Long press the resource and select \"Load Resource Summary\" to let LLM on FHIR create a title and summary of this resource."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pulse prolongadamente el recurso y seleccione \"Cargar Resumen del Recurso\" para que LLM en FHIR cree un título y un resumen de este recurso."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Maintenez le doigt appuyé sur la ressource et sélectionnez \"Charger le Résumé de la Ressource\" pour que LLM sur FHIR crée un titre et un résumé de cette ressource."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "长按资源并选择“加载资源摘要”来让LLM on FHIR创建该资源的标题和摘要。"
+          }
+        }
+      }
+    },
+    "FHIR_RESOURCES_SUMMARY_SECTION" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Zusammenfassung"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Summary"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Resumen"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Résumé"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "摘要"
+          }
+        }
+      }
+    },
+    "FHIR_RESOURCES_TITLE" : {
+      "comment" : "MARK: - FHIR Resources Title",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ihre Gesundheitsaufzeichnungen"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Your Health Records"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sus Registros de Salud"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Vos Dossiers de Santé"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "您的健康记录"
+          }
+        }
+      }
+    },
+    "FHIR_RESOURCES_VIEW_INSTRUCTION" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Willkommen bei LLM on FHIR\n\nSie können die verschiedenen Ressourcen in Ihrer Apple Health App überprüfen, indem Sie auf eine Ressource tippen. Sie können im Chat-Verlauf jeder Ressource Nachfragen stellen.\n\nSie können einen Titel und eine Zusammenfassung für jede Ressource laden, indem Sie lange auf eine Ressource drücken.\n"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Welcome to LLM on FHIR\n\nYou can inspect the different resources in your Apple Health app by tapping on a resource. You can ask follow-up questions in the chat view in each resource.\n\nYou can load a title and summary for each resource using a long press on a resource.\n"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bienvenido a LLM en FHIR\n\nPuede inspeccionar los diferentes recursos en su aplicación Apple Health tocando un recurso. Puede hacer preguntas de seguimiento en la vista de chat de cada recurso.\n\nPuede cargar un título y un resumen para cada recurso usando una pulsación larga en un recurso.\n"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bienvenue dans LLM sur FHIR\n\nVous pouvez inspecter les différentes ressources dans votre application Apple Health en touchant une ressource. Vous pouvez poser des questions de suivi dans la vue de discussion de chaque ressource.\n\nVous pouvez charger un titre et un résumé pour chaque ressource en utilisant un appui long sur une ressource.\n"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "欢迎使用LLM on FHIR\n\n您可以通过点击资源来检视您的Apple Health应用程序中的各种资源。您可以在每个资源的聊天视图中询问后续问题。\n\n您可以通过长按资源来加载标题和摘要。\n"
+          }
+        }
+      }
+    },
+    "FHIR_RESOURCES_VIEW_NO_RESOURCES" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "\nKeine Gesundheitsaufzeichnungen verfügbar.\n\nBitte befolgen Sie die Anweisungen, um Ihre Gesundheitsaufzeichnungen von Ihrem Anbieter abzurufen: [Apple Support - Gesundheitsaufzeichnungen auf iPhone oder iPod touch anzeigen](https://support.apple.com/en-us/HT208680).\n\nEine Liste der unterstützten Institutionen finden Sie unter [Apple Support - Institutionen, die Gesundheitsaufzeichnungen auf iPhone und iPod touch unterstützen](https://platform.openai.com/account/api-keys).\n\nWenn Sie Ihre Gesundheitsaufzeichnungen in der Apple Health App sehen können, stellen Sie bitte sicher, dass LLM on FHIR Zugriff auf Ihre Gesundheitsaufzeichnungen in der Apple Health App hat. Diese Einstellungen finden Sie im Datenschutzabschnitt Ihres Profils in Apple Health.\n"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "\nNo health records are available.\n\nPlease follow the instructions to connect to retrieve your health records from your provider: [Apple Support - View health records on your iPhone or iPod touch](https://support.apple.com/en-us/HT208680).\n\nYou can find a list of supported institutions at [Apple Support - Institutions that support health records on iPhone and iPod touch](https://platform.openai.com/account/api-keys).\n\nIf you can see your health records in the Apple Health app, please ensure that LLM on FHIR has access to your health records in the Apple Health App. You can find these settings in the privacy section of your profile in Apple Health.\n"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "\nNo hay registros de salud disponibles.\n\nPor favor, siga las instrucciones para conectarse y recuperar sus registros de salud de su proveedor: [Soporte de Apple - Ver registros de salud en su iPhone o iPod touch](https://support.apple.com/en-us/HT208680).\n\nPuede encontrar una lista de instituciones compatibles en [Soporte de Apple - Instituciones que admiten registros de salud en iPhone y iPod touch](https://platform.openai.com/account/api-keys).\n\nSi puede ver sus registros de salud en la aplicación Apple Health, asegúrese de que LLM en FHIR tenga acceso a sus registros de salud en la aplicación Apple Health. Puede encontrar estas configuraciones en la sección de privacidad de su perfil en Apple Health.\n"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "\nAucun dossier de santé n'est disponible.\n\nVeuillez suivre les instructions pour vous connecter et récupérer vos dossiers de santé auprès de votre fournisseur : [Support Apple - Afficher les dossiers de santé sur votre iPhone ou iPod touch](https://support.apple.com/fr-fr/HT208680).\n\nVous pouvez trouver une liste d'institutions prises en charge sur [Support Apple - Institutions prenant en charge les dossiers de santé sur iPhone et iPod touch](https://platform.openai.com/account/api-keys).\n\nSi vous pouvez voir vos dossiers de santé dans l'application Apple Health, assurez-vous que LLM sur FHIR a accès à vos dossiers de santé dans l'application Apple Health. Vous pouvez trouver ces paramètres dans la section confidentialité de votre profil dans Apple Health.\n"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "\n没有可用的健康记录。\n\n请按照以下说明连接并从您的提供者检索健康记录：[Apple支持-在iPhone或iPod touch上查看健康记录](https://support.apple.com/en-us/HT208680)。\n\n您可以在[Apple支持-支持iPhone和iPod touch上的健康记录的机构](https://platform.openai.com/account/api-keys)找到支持的机构列表。\n\n如果您可以在Apple Health应用程序中查看您的健康记录，请确保LLM on FHIR可以访问您在Apple Health应用程序中的健康记录。您可以在Apple Health个人资料的隐私部分找到这些设置。\n"
+          }
+        }
+      }
+    },
+    "FUNCTION_CONTEXT" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Use the function call 'get_resource_titles' and provide a comma-separated list resource titles directly applicable to the question. The function will determine which FHIR health record titles are relevant to the user's question using this array: "
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Use the function call 'get_resource_titles' and provide a comma-separated list resource titles directly applicable to the question. The function will determine which FHIR health record titles are relevant to the user's question using this array: "
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Use the function call 'get_resource_titles' and provide a comma-separated list resource titles directly applicable to the question. The function will determine which FHIR health record titles are relevant to the user's question using this array: "
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Use the function call 'get_resource_titles' and provide a comma-separated list resource titles directly applicable to the question. The function will determine which FHIR health record titles are relevant to the user's question using this array: "
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Use the function call 'get_resource_titles' and provide a comma-separated list resource titles directly applicable to the question. The function will determine which FHIR health record titles are relevant to the user's question using this array: "
+          }
+        }
+      }
+    },
+    "FUNCTION_DESCRIPTION" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Call this function to determine the relevant FHIR health record titles based on the user's question. The titles must have the exact name as in the enumValues array given. A question can build upon a previous question and does not need to explicilty state a health record. The function will decide which health record titles are applicable to the question and it can return multiple titles or N/A if no category is suitable. Only output a record title/titles if it is directly applicable to the question otherwise output N/A. Always try to output the least amount of resource titles to be sent to the model to prevent exceeding the token limit."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Call this function to determine the relevant FHIR health record titles based on the user's question. The titles must have the exact name as in the enumValues array given. A question can build upon a previous question and does not need to explicilty state a health record. The function will decide which health record titles are applicable to the question and it can return multiple titles or N/A if no category is suitable. Only output a record title/titles if it is directly applicable to the question otherwise output N/A. Always try to output the least amount of resource titles to be sent to the model to prevent exceeding the token limit."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Call this function to determine the relevant FHIR health record titles based on the user's question. The titles must have the exact name as in the enumValues array given. A question can build upon a previous question and does not need to explicilty state a health record. The function will decide which health record titles are applicable to the question and it can return multiple titles or N/A if no category is suitable. Only output a record title/titles if it is directly applicable to the question otherwise output N/A. Always try to output the least amount of resource titles to be sent to the model to prevent exceeding the token limit."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Call this function to determine the relevant FHIR health record titles based on the user's question. The titles must have the exact name as in the enumValues array given. A question can build upon a previous question and does not need to explicilty state a health record. The function will decide which health record titles are applicable to the question and it can return multiple titles or N/A if no category is suitable. Only output a record title/titles if it is directly applicable to the question otherwise output N/A. Always try to output the least amount of resource titles to be sent to the model to prevent exceeding the token limit."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Call this function to determine the relevant FHIR health record titles based on the user's question. The titles must have the exact name as in the enumValues array given. A question can build upon a previous question and does not need to explicilty state a health record. The function will decide which health record titles are applicable to the question and it can return multiple titles or N/A if no category is suitable. Only output a record title/titles if it is directly applicable to the question otherwise output N/A. Always try to output the least amount of resource titles to be sent to the model to prevent exceeding the token limit."
+          }
+        }
+      }
+    },
+    "HEALTHKIT_PERMISSIONS_BUTTON" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Zugriff gewähren"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Grant Access"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Conceder Acceso"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Accorder l'Accès"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "授予访问权限"
+          }
+        }
+      }
+    },
+    "HEALTHKIT_PERMISSIONS_DESCRIPTION" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sie können die verschiedenen Arten von Gesundheitsdaten auswählen, die Sie in LLM on FHIR überprüfen möchten."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "You can select the different types of health records that you like to inspect in LLM on FHIR"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Puede seleccionar los diferentes tipos de registros de salud que le gustaría inspeccionar en LLM en FHIR."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Vous pouvez sélectionner les différents types de dossiers de santé que vous souhaitez inspecter dans LLM sur FHIR."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "您可以选择您希望在LLM on FHIR中检视的不同类型的健康记录。"
+          }
+        }
+      }
+    },
+    "HEALTHKIT_PERMISSIONS_SUBTITLE" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "LLM on FHIR benötigt Zugriff auf die in der Apple Health App gespeicherten FHIR-Gesundheitsdaten."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "LLM on FHIR requires access to the FHIR health records stored in the Apple Health app."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "LLM en FHIR requiere acceso a los registros de salud FHIR almacenados en la aplicación Apple Health."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "LLM sur FHIR nécessite l'accès aux dossiers de santé FHIR stockés dans l'application Apple Health."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "LLM on FHIR需要访问存储在Apple Health中的FHIR健康记录。"
+          }
+        }
+      }
+    },
+    "HEALTHKIT_PERMISSIONS_TITLE" : {
+      "comment" : "MARK: HealthKit",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Zugriff auf HealthKit"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "HealthKit Access"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Acceso a HealthKit"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Accès à HealthKit"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "HealthKit访问权限"
+          }
+        }
+      }
+    },
+    "OPEN_AI_KEY_SAVE_ACTION" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "API-Schlüssel speichern"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Save API Key"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Guardar Clave de API"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Enregistrer la Clé d'API"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "保存API密钥"
+          }
+        }
+      }
+    },
+    "OPEN_AI_MODEL_SAVE_ACTION" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Auswahl des Modells speichern"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Save Model Selection"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Guardar Selección de Modelo"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Enregistrer la Sélection du Modèle"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "保存模型选择"
+          }
+        }
+      }
+    },
+    "PARAMETER_DESCRIPTION" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Provide a comma-separated list of all the FHIR health record titles with the EXACT SAME NAME AS GIVEN IN THE LIST that are applicable to answer the user's questions. These titles have to be the SAME NAME AS GIVEN IN THE ARRAY provided. If multiple titles apply, separate each title by a comma and space (e.g for multiple medications). Try to provide all the required titles to allow yourself to fully answer the question in a comprehensive manner. If the question doesn't fit into any category, output N/A. For example, if a user asks: 'Tell me more about my medications,' then output all titles associated with medications. A question can build upon a previous question and does not need to be explicit. e.g. if a user says prescribe, this is associated with medication. Do not exceed token limit with outputted titles."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Provide a comma-separated list of all the FHIR health record titles with the EXACT SAME NAME AS GIVEN IN THE LIST that are applicable to answer the user's questions. These titles have to be the SAME NAME AS GIVEN IN THE ARRAY provided. If multiple titles apply, separate each title by a comma and space (e.g for multiple medications). Try to provide all the required titles to allow yourself to fully answer the question in a comprehensive manner. If the question doesn't fit into any category, output N/A. For example, if a user asks: 'Tell me more about my medications,' then output all titles associated with medications. A question can build upon a previous question and does not need to be explicit. e.g. if a user says prescribe, this is associated with medication. Do not exceed token limit with outputted titles."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Provide a comma-separated list of all the FHIR health record titles with the EXACT SAME NAME AS GIVEN IN THE LIST that are applicable to answer the user's questions. These titles have to be the SAME NAME AS GIVEN IN THE ARRAY provided. If multiple titles apply, separate each title by a comma and space (e.g for multiple medications). Try to provide all the required titles to allow yourself to fully answer the question in a comprehensive manner. If the question doesn't fit into any category, output N/A. For example, if a user asks: 'Tell me more about my medications,' then output all titles associated with medications. A question can build upon a previous question and does not need to be explicit. e.g. if a user says prescribe, this is associated with medication. Do not exceed token limit with outputted titles."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Provide a comma-separated list of all the FHIR health record titles with the EXACT SAME NAME AS GIVEN IN THE LIST that are applicable to answer the user's questions. These titles have to be the SAME NAME AS GIVEN IN THE ARRAY provided. If multiple titles apply, separate each title by a comma and space (e.g for multiple medications). Try to provide all the required titles to allow yourself to fully answer the question in a comprehensive manner. If the question doesn't fit into any category, output N/A. For example, if a user asks: 'Tell me more about my medications,' then output all titles associated with medications. A question can build upon a previous question and does not need to be explicit. e.g. if a user says prescribe, this is associated with medication. Do not exceed token limit with outputted titles."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Provide a comma-separated list of all the FHIR health record titles with the EXACT SAME NAME AS GIVEN IN THE LIST that are applicable to answer the user's questions. These titles have to be the SAME NAME AS GIVEN IN THE ARRAY provided. If multiple titles apply, separate each title by a comma and space (e.g for multiple medications). Try to provide all the required titles to allow yourself to fully answer the question in a comprehensive manner. If the question doesn't fit into any category, output N/A. For example, if a user asks: 'Tell me more about my medications,' then output all titles associated with medications. A question can build upon a previous question and does not need to be explicit. e.g. if a user says prescribe, this is associated with medication. Do not exceed token limit with outputted titles."
+          }
+        }
+      }
+    },
+    "Place %@ at the position in the prompt where the FHIR resource should be inserted." : {
+
+    },
+    "SETTINGS" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Settings"
+          }
+        }
+      }
+    },
+    "SETTINGS_OPENAI" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Open AI-Einstellungen"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Open AI Settings"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Configuración de Open AI"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Paramètres d'Open AI"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Open AI设置"
+          }
+        }
+      }
+    },
+    "SETTINGS_OPENAI_KEY" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Open AI API-Schlüssel"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Open AI API Key"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Clave de API de Open AI"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Clé d'API d'Open AI"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Open AI API密钥"
+          }
+        }
+      }
+    },
+    "SETTINGS_OPENAI_MODEL" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Open AI-Modell"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Open AI Model"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Modelo de Open AI"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Modèle d'Open AI"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Open AI模型"
+          }
+        }
+      }
+    },
+    "SETTINGS_PROMPT_CAPTION %@" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Platzieren Sie %@ an der Stelle im Prompt, an der die FHIR-Ressource eingefügt werden soll."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "SPlace %@ at the position in the prompt where the FHIR resource should be inserted."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Coloque %@ en la posición de la pregunta donde debe insertarse el recurso FHIR."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Placez %@ à l'emplacement de l'invite où la ressource FHIR doit être insérée."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "在提示中的位置插入%@的位置。"
+          }
+        }
+      }
+    },
+    "SETTINGS_PROMPT_DESCRITPTION %@" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Passen Sie den %@-Prompt an."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Customize the %@ prompt."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Personalice la pregunta para %@."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Personnalisez l'invite pour %@."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "自定义%@提示。"
+          }
+        }
+      }
+    },
+    "SETTINGS_PROMPT_SAVE_BUTTON" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Prompt speichern"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Save Prompt"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Guardar Pregunta"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Enregistrer l'Invite"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "保存提示"
+          }
+        }
+      }
+    },
+    "SETTINGS_PROMPTS" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Prompt-Einstellungen"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Prompt Settings"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Configuración de Preguntas"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Paramètres des Invites"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "提示设置"
+          }
+        }
+      }
+    },
+    "SETTINGS_PROMPTS_INTERPRETATION" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Interpretations-Prompt"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Interpretation Prompt"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pregunta para Interpretación"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Invite pour Interprétation"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "解释提示"
+          }
+        }
+      }
+    },
+    "SETTINGS_PROMPTS_INTERPRETATION_MULTIPLE_RESOURCES" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Interpretations-Prompt für mehrere Ressourcen"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Interpretation Prompt for Multiple Resources"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pregunta para Interpretación de Múltiples Recursos"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Invite pour Interprétation de Multiples Ressources"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "多资源解释提示"
+          }
+        }
+      }
+    },
+    "SETTINGS_PROMPTS_SUMMARY" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Zusammenfassungs-Prompt"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Summary Prompt"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pregunta para Resumen"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Invite pour Résumé"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "摘要提示"
+          }
+        }
+      }
+    },
+    "SETTINGS_SPEECH" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Speech Settings"
+          }
+        }
+      }
+    },
+    "SETTINGS_SPEECH_TEXT_TO_SPEECH" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Enable Text to Speech"
+          }
+        }
+      }
+    },
+    "SETTINGS_TITLE" : {
+      "comment" : "MARK: - Settings",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Einstellungen"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Settings"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Configuración"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Paramètres"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "设置"
+          }
+        }
+      }
+    },
+    "SPEAKER_DISABLED" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Text to speech is disabled, press to enable text to speech."
+          }
+        }
+      }
+    },
+    "SPEAKER_ENABLED" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Text to speech is enabled, press to disable text to speech."
+          }
+        }
+      }
+    },
+    "WELCOME_AREA1_DESCRIPTION" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Gesundheitsdaten werden über die FHIR-Patientendaten-API Ihres Anbieters über die Apple Health App bereitgestellt."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Health data is provided using your provides FHIR patient data API using the Apple Health app."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Los datos de salud se proporcionan mediante su API de datos de paciente FHIR utilizando la aplicación Apple Health."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Les données de santé sont fournies via votre API de données de patient FHIR utilisant l'application Apple Health."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "使用苹果健康应用程序的FHIR患者数据API提供健康数据。"
+          }
+        }
+      }
+    },
+    "WELCOME_AREA1_TITLE" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ihre Gesundheitsdaten überprüfen"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Inspect Your Health Data"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Inspeccionar sus Datos de Salud"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Inspecter Vos Données de Santé"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "检视您的健康数据"
+          }
+        }
+      }
+    },
+    "WELCOME_AREA2_DESCRIPTION" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "LLM on FHIR ermöglicht es Ihnen, Ihre klinischen Daten zusammenzufassen und zu interpretieren."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "LLM on FHIR allows you to summarize and interpret your clinical data."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "LLM en FHIR le permite resumir e interpretar sus datos clínicos."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "LLM sur FHIR vous permet de résumer et d'interpréter vos données cliniques."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "LLM on FHIR允许您总结和解释您的临床数据。"
+          }
+        }
+      }
+    },
+    "WELCOME_AREA2_TITLE" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ihre Daten zusammenfassen und interpretieren"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Summarize & Interpret Your Data"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Resumir e Interpretar sus Datos"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Résumer et Interpréter Vos Données"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "总结和解释您的数据"
+          }
+        }
+      }
+    },
+    "WELCOME_AREA3_DESCRIPTION" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Verwenden Sie die Chat-Funktion, um Nachfragen zu stellen und weitere Informationen zu Ihren klinischen Aufzeichnungen zu erhalten."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Use the chat functionality to ask follow up questions and get more information about your clinical records."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Utilice la funcionalidad de chat para hacer preguntas de seguimiento y obtener más información sobre sus registros clínicos."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Utilisez la fonctionnalité de chat pour poser des questions de suivi et obtenir plus d'informations sur vos dossiers cliniques."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "使用聊天功能询问后续问题并获取更多有关您的临床记录的信息。"
+          }
+        }
+      }
+    },
+    "WELCOME_AREA3_TITLE" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mehr über Ihre Daten erfahren"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Learn More About Your Data"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Aprender más sobre sus Datos"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "En savoir plus sur Vos Données"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "了解更多关于您的数据"
+          }
+        }
+      }
+    },
+    "WELCOME_BUTTON" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mehr erfahren"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Learn More"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Aprender más"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "En savoir plus"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "了解更多"
+          }
+        }
+      }
+    },
+    "WELCOME_SUBTITLE" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Entmystifizierung von Gesundheitsdaten"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Demystifying Health Records"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Descifrando los Registros de Salud"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Démystifier les Dossiers de Santé"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "解析健康记录"
+          }
+        }
+      }
+    },
+    "WELCOME_TITLE" : {
+      "comment" : "MARK: Welcome",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "LLM on FHIR"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "LLM on FHIR"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "LLM en FHIR"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "LLM sur FHIR"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "LLM on FHIR"
+          }
+        }
+      }
+    }
+  },
+  "version" : "1.0"
+}
