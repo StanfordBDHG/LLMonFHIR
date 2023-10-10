@@ -530,6 +530,9 @@
         }
       }
     },
+    "DISMISS_ONBOARDING_HINT" : {
+
+    },
     "FHIR_MULTIPLE_RESOURCE_INTERPRETATION_PROMPT %@" : {
       "localizations" : {
         "de" : {
@@ -1473,6 +1476,9 @@
     "Place %@ at the position in the prompt where the FHIR resource should be inserted." : {
 
     },
+    "SETTINGS" : {
+
+    },
     "SETTINGS_OPENAI" : {
       "localizations" : {
         "de" : {
@@ -1815,6 +1821,26 @@
         }
       }
     },
+    "SETTINGS_SPEECH" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Speech Settings"
+          }
+        }
+      }
+    },
+    "SETTINGS_SPEECH_TEXT_TO_SPEECH" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Enable Text to Speech"
+          }
+        }
+      }
+    },
     "SETTINGS_TITLE" : {
       "comment" : "MARK: - Settings",
       "localizations" : {
@@ -1849,6 +1875,12 @@
           }
         }
       }
+    },
+    "SPEAKER_DISABLED" : {
+
+    },
+    "SPEAKER_ENABLED" : {
+
     },
     "WELCOME_AREA1_DESCRIPTION" : {
       "extractionState" : "manual",

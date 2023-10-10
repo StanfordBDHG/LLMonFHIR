@@ -84,6 +84,7 @@ struct InspectResourceView: View {
                         label: {
                             HStack {
                                 Image(systemName: "message.fill")
+                                    .accessibilityHidden(true)
                                 Text("FHIR_RESOURCES_INTERPRETATION_LEARN_MORE_BUTTON")
                             }
                                 .frame(maxWidth: .infinity, minHeight: 40)

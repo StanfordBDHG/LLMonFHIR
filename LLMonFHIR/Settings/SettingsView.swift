@@ -21,30 +21,15 @@ struct SettingsView: View {
     
     @State private var path = NavigationPath()
     @Environment(\.dismiss) private var dismiss
-
+    @AppStorage(StorageKeys.enableTextToSpeech) private var enableTextToSpeech = false
+    
     
     var body: some View {
         NavigationStack(path: $path) {
             List {
-                Section("SETTINGS_OPENAI") {
-                    NavigationLink(value: SettingsDestinations.openAIKey) {
-                        Text("SETTINGS_OPENAI_KEY")
-                    }
-                    NavigationLink(value: SettingsDestinations.openAIModel) {
-                        Text("SETTINGS_OPENAI_MODEL")
-                    }
-                }
-                Section("SETTINGS_PROMPTS") {
-                    NavigationLink(value: SettingsDestinations.promptSummary) {
-                        Text("SETTINGS_PROMPTS_SUMMARY")
-                    }
-                    NavigationLink(value: SettingsDestinations.promptInterpretation) {
-                        Text("SETTINGS_PROMPTS_INTERPRETATION")
-                    }
-                    NavigationLink(value: SettingsDestinations.promptMultipleResourceInterpretation) {
-                        Text("SETTINGS_PROMPTS_INTERPRETATION_MULTIPLE_RESOURCES")
-                    }
-                }
+                speechSettings
+                openAISettings
+                promptsSettings
             }
                 .navigationTitle("SETTINGS_TITLE")
                 .navigationDestination(for: SettingsDestinations.self) { destination in
@@ -57,6 +42,39 @@ struct SettingsView: View {
                         }
                     }
                 }
+        }
+    }
+    
+    private var speechSettings: some View {
+        Section("SETTINGS_SPEECH") {
+            Toggle(isOn: $enableTextToSpeech) {
+                Text("SETTINGS_SPEECH_TEXT_TO_SPEECH")
+            }
+        }
+    }
+    
+    private var openAISettings: some View {
+        Section("SETTINGS_OPENAI") {
+            NavigationLink(value: SettingsDestinations.openAIKey) {
+                Text("SETTINGS_OPENAI_KEY")
+            }
+            NavigationLink(value: SettingsDestinations.openAIModel) {
+                Text("SETTINGS_OPENAI_MODEL")
+            }
+        }
+    }
+    
+    private var promptsSettings: some View {
+        Section("SETTINGS_PROMPTS") {
+            NavigationLink(value: SettingsDestinations.promptSummary) {
+                Text("SETTINGS_PROMPTS_SUMMARY")
+            }
+            NavigationLink(value: SettingsDestinations.promptInterpretation) {
+                Text("SETTINGS_PROMPTS_INTERPRETATION")
+            }
+            NavigationLink(value: SettingsDestinations.promptMultipleResourceInterpretation) {
+                Text("SETTINGS_PROMPTS_INTERPRETATION_MULTIPLE_RESOURCES")
+            }
         }
     }
     

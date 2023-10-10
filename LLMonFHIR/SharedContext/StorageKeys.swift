@@ -18,4 +18,9 @@ enum StorageKeys {
     // MARK: - Home
     /// Show the onboarding instructions
     static let onboardingInstructions = "resources.onboardingInstructions"
+    
+    
+    // MARK: - Settings
+    /// Indicates if the messages should be spoken
+    static let enableTextToSpeech = "settings.enableTextToSpeech"
 }

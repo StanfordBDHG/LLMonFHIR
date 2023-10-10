@@ -8,6 +8,7 @@
 
 import OpenAI
 import SpeziOpenAI
+import SpeziSpeechSynthesizer
 import SpeziViews
 import SwiftUI
 
@@ -17,9 +18,13 @@ struct OpenAIChatView: View {
     @EnvironmentObject private var openAPIComponent: OpenAIComponent
     @EnvironmentObject private var fhirStandard: FHIR
     
+    @StateObject private var speechSynthesizer = SpeechSynthesizer()
+    
     @State private var chat: [Chat]
     @State private var viewState: ViewState = .idle
     @State private var systemFuncMessageAdded = false
+    
+    @AppStorage(StorageKeys.enableTextToSpeech) private var textToSpeech = false
     
     private let enableFunctionCalling: Bool
     private let title: String
@@ -43,6 +48,22 @@ struct OpenAIChatView: View {
                         Button("FHIR_RESOURCES_CHAT_CANCEL") {
                             dismiss()
                         }
+                    }
+                    ToolbarItem(placement: .primaryAction) {
+                        Button(
+                            action: {
+                                textToSpeech.toggle()
+                            },
+                            label: {
+                                if textToSpeech {
+                                    Image(systemName: "speaker")
+                                        .accessibilityLabel(Text("SPEAKER_ENABLED"))
+                                } else {
+                                    Image(systemName: "speaker.slash")
+                                        .accessibilityLabel(Text("SPEAKER_DISABLED"))
+                                }
+                            }
+                        )
                     }
                 }
                 .viewStateAlert(state: $viewState)
@@ -188,15 +209,20 @@ struct OpenAIChatView: View {
         
         for try await chatStreamResult in chatStreamResults {
             for choice in chatStreamResult.choices {
-                if chat.last?.role == .assistant {
-                    let previousChatMessage = chat.last ?? Chat(role: .assistant, content: "")
+                guard let newContent = choice.delta.content else {
+                    continue
+                }
+                
+                if chat.last?.role == .assistant, let previousContent = chat.last?.content {
                     chat[chat.count - 1] = Chat(
                         role: .assistant,
-                        content: (previousChatMessage.content ?? "") + (choice.delta.content ?? "")
+                        content: previousContent + newContent
                     )
                 } else {
-                    chat.append(Chat(role: .assistant, content: choice.delta.content ?? ""))
+                    chat.append(Chat(role: .assistant, content: newContent))
                 }
+                
+                speechSynthesizer.speak(newContent)
             }
         }
     }
