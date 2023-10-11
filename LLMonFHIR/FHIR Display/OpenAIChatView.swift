@@ -24,7 +24,7 @@ struct OpenAIChatView: View {
     @State private var viewState: ViewState = .idle
     @State private var systemFuncMessageAdded = false
     
-    @AppStorage(StorageKeys.enableTextToSpeech) private var textToSpeech = false
+    @AppStorage(StorageKeys.enableTextToSpeech) private var textToSpeech = StorageKeys.Defaults.enableTextToSpeech
     
     private let enableFunctionCalling: Bool
     private let title: String
@@ -89,7 +89,6 @@ struct OpenAIChatView: View {
         Task {
             do {
                 viewState = .processing
-                
                 if enableFunctionCalling {
                     if systemFuncMessageAdded == false {
                         try await addSystemFuncMessage()
@@ -195,7 +194,7 @@ struct OpenAIChatView: View {
             let functionContent = """
             Based on the function get_resource_titles you have requested the following health records: \(resource).
             This is the associated JSON data for the resources which you will use to answer the users question:
-            \(matchingResource.jsonDescription)
+            \(matchingResource.compactJSONDescription)
             
             Use this health record to answer the users question ONLY IF the health record is applicable to the question.
             """
@@ -221,9 +220,11 @@ struct OpenAIChatView: View {
                 } else {
                     chat.append(Chat(role: .assistant, content: newContent))
                 }
-                
-                speechSynthesizer.speak(newContent)
             }
+        }
+        
+        if let lastMessageContent = chat.last?.content {
+            speechSynthesizer.speak(lastMessageContent)
         }
     }
 }

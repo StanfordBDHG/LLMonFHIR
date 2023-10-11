@@ -1483,6 +1483,16 @@
     "Place %@ at the position in the prompt where the FHIR resource should be inserted." : {
 
     },
+    "RESOURCE_LIMIT_TEXT %lld" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Resource Limit of %lld"
+          }
+        }
+      }
+    },
     "SETTINGS" : {
       "localizations" : {
         "en" : {
@@ -1831,6 +1841,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "摘要提示"
+          }
+        }
+      }
+    },
+    "SETTINGS_RESOURCES_LIMIT" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Resource Limit"
           }
         }
       }

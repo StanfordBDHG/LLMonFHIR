@@ -7,8 +7,10 @@
 //
 
 import ModelsR4
+import OpenAI
 import SpeziOnboarding
 import SpeziOpenAI
+import SpeziViews
 import SwiftUI
 
 struct FHIRResourcesView: View {
@@ -20,6 +22,7 @@ struct FHIRResourcesView: View {
     @State var showMultipleResourcesChat = false
     @State var interpretingMultipleResources = false
     @State var searchText = ""
+    @State var viewState: ViewState = .idle
     
 
     @EnvironmentObject var fhirMultipleResourceInterpreter: FHIRMultipleResourceInterpreter
@@ -35,11 +38,10 @@ struct FHIRResourcesView: View {
                     InspectResourceView(resource: resource)
                 }
                 .onReceive(fhirStandard.objectWillChange) {
-                    loadFHIRResources()
-                }
-                .onAppear {
                     if FeatureFlags.testMode {
                         loadMockResources()
+                    } else {
+                        loadFHIRResources()
                     }
                 }
                 .toolbar {
@@ -51,6 +53,7 @@ struct FHIRResourcesView: View {
                 .sheet(isPresented: $showMultipleResourcesChat) {
                     resourceChatView
                 }
+                .viewStateAlert(state: $viewState)
                 .navigationTitle("FHIR_RESOURCES_TITLE")
         }
     }
@@ -159,9 +162,13 @@ struct FHIRResourcesView: View {
         interpretingMultipleResources = true
         
         do {
-            try await fhirMultipleResourceInterpreter.interpretMultipleResources(resources: fhirStandard.resources)
+            viewState = .processing
+            try await fhirMultipleResourceInterpreter.interpretMultipleResources(resources: fhirStandard.relevantResources)
+            viewState = .idle
+        } catch let error as APIErrorResponse {
+            viewState = .error(error)
         } catch {
-            print("Error running multiple resource interpreter")
+            viewState = .error(error.localizedDescription)
         }
 
         interpretingMultipleResources = false
@@ -182,6 +189,7 @@ struct FHIRResourcesView: View {
 
         let mockObservation = Observation(
             code: CodeableConcept(coding: [Coding(code: "1234".asFHIRStringPrimitive())]),
+            issued: FHIRPrimitive<Instant>(try? Instant(date: .now)),
             status: FHIRPrimitive(ObservationStatus.final)
         )
 

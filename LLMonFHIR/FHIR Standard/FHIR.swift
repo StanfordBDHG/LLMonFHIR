@@ -14,10 +14,12 @@ import ModelsR4
 import OSLog
 import Spezi
 import SpeziHealthKit
+import SwiftUI
 import XCTRuntimeAssertions
 
 
 actor FHIR: Standard, ObservableObject, ObservableObjectProvider, HealthKitConstraint {
+    @AppStorage(StorageKeys.resourceLimit) private var resourceLimit = StorageKeys.Defaults.resourceLimit
     private let logger = Logger(subsystem: "LLMonFHIR", category: "FHIR Standard")
     private let hkHealthStore: HKHealthStore?
     
@@ -49,7 +51,7 @@ actor FHIR: Standard, ObservableObject, ObservableObjectProvider, HealthKitConst
                     
                     return lhs > rhs
                 }
-                .prefix(250)
+                .prefix(resourceLimit)
         )
     }
     
