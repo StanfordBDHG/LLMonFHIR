@@ -648,31 +648,31 @@
       "localizations" : {
         "de" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "\nIhre Aufgabe besteht darin, die folgende FHIR-Ressource aus der klinischen Aufzeichnung des Benutzers zu interpretieren.\n \nDie folgende JSON-Repräsentation definiert die FHIR-Ressource, die Sie interpretieren sollten:\n%@\n \nGeben Sie eine kurze einzeilige Zusammenfassung der Ressource in weniger als 20 Wörtern an.\nAntworten Sie NICHT mit mehr Inhalt als der einzigen Zeile, die die Zusammenfassung enthält.\nGeben Sie den Inhalt direkt ohne zusätzliche Struktur an.\n"
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "\nYour task is to interpret the following FHIR resource from the user's clinical record.\n \nThe following JSON representation defines the FHIR resource that you should interpret:\n%@\n \nProvide a short one-sentence summary of the resource in less than 20 words.\nDo NOT respond with more content than the single line containing the summary.\nDirectly provide the content without any additional structure.\n"
+            "value" : "\nYour task is to interpret the following FHIR resource from the user's clinical record.\n \nThe following JSON representation defines the FHIR resource that you should interpret:\n%@\n \nProvide a short one-sentence summary of the resource in less than 40 words.\nDo NOT respond with more content than the single line containing the summary.\nDirectly provide the content without any additional structure.\n"
           }
         },
         "es" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "\nSu tarea es interpretar el siguiente recurso FHIR de los registros clínicos del usuario.\n \nLa siguiente representación JSON define el recurso FHIR que debe interpretar:\n%@\n \nProporcione un breve resumen de una oración del recurso en menos de 20 palabras.\nNO responda con más contenido que la línea única que contiene el resumen.\nProporcione el contenido directamente sin ninguna estructura adicional.\n"
           }
         },
         "fr" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "\nVotre tâche consiste à interpréter la ressource FHIR suivante à partir des dossiers cliniques de l'utilisateur.\n \nLa représentation JSON suivante définit la ressource FHIR que vous devez interpréter :\n%@\n \nFournissez un bref résumé d'une phrase de la ressource en moins de 20 mots.\nNE répondez pas avec plus de contenu que la ligne unique contenant le résumé.\nFournissez le contenu directement sans structure supplémentaire.\n"
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "\n您的任务是解释用户临床记录中的以下FHIR资源。\n \n以下JSON表示定义了您应该解释的FHIR资源：\n%@\n \n提供不超过20个字的资源简短一句摘要。\n请勿用超过包含摘要的一行的内容作出回应。\n直接提供内容，不要有任何额外的结构。\n"
           }
         }
