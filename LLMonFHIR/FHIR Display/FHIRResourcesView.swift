@@ -38,11 +38,10 @@ struct FHIRResourcesView: View {
                     InspectResourceView(resource: resource)
                 }
                 .onReceive(fhirStandard.objectWillChange) {
-                    loadFHIRResources()
-                }
-                .onAppear {
                     if FeatureFlags.testMode {
                         loadMockResources()
+                    } else {
+                        loadFHIRResources()
                     }
                 }
                 .toolbar {
