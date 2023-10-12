@@ -17,6 +17,7 @@ struct OpenAIChatView: View {
     @Environment(\.dismiss) private var dismiss
     @EnvironmentObject private var openAPIComponent: OpenAIComponent
     @EnvironmentObject private var fhirStandard: FHIR
+    @EnvironmentObject private var fhirResourceSummary: FHIRResourceSummary
     
     @StateObject private var speechSynthesizer = SpeechSynthesizer()
     
@@ -125,7 +126,7 @@ struct OpenAIChatView: View {
         
         let functionCallOutputArray = try await getFunctionCallOutputArray(stringResourcesArray)
         
-        processFunctionCallOutputArray(functionCallOutputArray: functionCallOutputArray, resourcesArray: resourcesArray)
+        await processFunctionCallOutputArray(functionCallOutputArray: functionCallOutputArray, resourcesArray: resourcesArray)
     }
     
     private func getFunctionCallOutputArray(_ stringResourcesArray: [String]) async throws -> [String] {
@@ -185,18 +186,21 @@ struct OpenAIChatView: View {
             .components(separatedBy: ",")
     }
     
-    private func processFunctionCallOutputArray(functionCallOutputArray: [String], resourcesArray: [FHIRResource]) {
+    private func processFunctionCallOutputArray(functionCallOutputArray: [String], resourcesArray: [FHIRResource]) async {
         for resource in functionCallOutputArray {
             guard let matchingResource = resourcesArray.first(where: { $0.functionCallIdentifier == resource }) else {
                 continue
             }
             
-            let functionContent = """
-            Based on the function get_resource_titles you have requested the following health records: \(resource).
-            This is the associated JSON data for the resources which you will use to answer the users question:
-            \(matchingResource.compactJSONDescription)
+            guard let resourceDescription = try? await fhirResourceSummary.summarize(resource: matchingResource) else {
+                continue
+            }
             
+            let functionContent = """
+            This is the description of the following resource: \(resource).
             Use this health record to answer the users question ONLY IF the health record is applicable to the question.
+            
+            \(resourceDescription)
             """
             
             chat.append(Chat(role: .function, content: functionContent, name: "get_resource_titles"))

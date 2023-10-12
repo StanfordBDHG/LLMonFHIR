@@ -78,9 +78,10 @@ class FHIRResourceSummary: DefaultInitializable, Component, ObservableObject, Ob
         self.summaries = cachedSummaries
     }
     
-    func summarize(resource: FHIRResource, forceReload: Bool = false) async throws {
+    @discardableResult
+    func summarize(resource: FHIRResource, forceReload: Bool = false) async throws -> String? {
         guard summaries[resource.id] == nil || forceReload else {
-            return
+            return summaries[resource.id]?.summary
         }
         
         
@@ -94,6 +95,8 @@ class FHIRResourceSummary: DefaultInitializable, Component, ObservableObject, Ob
         }
         
         self.summaries[resource.id] = FHIRResourceSummary(summaryString)
+        
+        return summaryString
     }
     
     
