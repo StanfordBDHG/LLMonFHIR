@@ -8,13 +8,14 @@
 
 import SpeziFHIR
 import SpeziFHIRInterpretation
+import SpeziViews
 import SwiftUI
 
 
 struct ResourceSummaryView: View {
     @Environment(FHIRResourceSummary.self) var fhirResourceSummary
     
-    @State var loading = false
+    @State var viewState: ViewState = .idle
     @State var summary: String = ""
     
     let resource: FHIRResource
@@ -22,17 +23,17 @@ struct ResourceSummaryView: View {
     
     var body: some View {
         ZStack {
-            if let summary = fhirResourceSummary.summaries[resource.id] {
+            if let summary = fhirResourceSummary.cachedSummary(forResource: resource) {
                 VStack(alignment: .leading, spacing: 4) {
                     Text(resource.displayName)
-                    Text(summary.summary)
+                    Text(summary)
                         .font(.caption)
                 }
                     .multilineTextAlignment(.leading)
             } else {
                 VStack(alignment: .leading, spacing: 4) {
                     Text(resource.displayName)
-                    if loading {
+                    if viewState == .processing {
                         ProgressView()
                             .progressViewStyle(.circular)
                             .padding(.vertical, 6)
@@ -41,13 +42,18 @@ struct ResourceSummaryView: View {
                     .contextMenu {
                         Button("FHIR_RESOURCES_SUMMARY_BUTTON") {
                             Task {
-                                loading = true
-                                try? await fhirResourceSummary.summarize(resource: resource)
-                                loading = false
+                                viewState = .processing
+                                do {
+                                    try await fhirResourceSummary.summarize(resource: resource)
+                                    viewState = .idle
+                                } catch {
+                                    viewState = .error("Failed to summarize the resource: \(resource)")
+                                }
                             }
                         }
                     }
             }
         }
+            .viewStateAlert(state: $viewState)
     }
 }

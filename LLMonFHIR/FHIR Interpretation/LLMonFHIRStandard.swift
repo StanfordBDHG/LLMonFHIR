@@ -1,24 +1,37 @@
-////
-//// This source file is part of the Stanford LLM on FHIR project
-////
-//// SPDX-FileCopyrightText: 2023 Stanford University
-////
-//// SPDX-License-Identifier: MIT
-////
 //
-//import Foundation
-//import HealthKit
-//import HealthKitOnFHIR
-//import ModelsDSTU2
-//import ModelsR4
-//import OSLog
-//import Spezi
-//import SpeziHealthKit
-//import SwiftUI
-//import XCTRuntimeAssertions
+// This source file is part of the Stanford LLM on FHIR project
 //
+// SPDX-FileCopyrightText: 2023 Stanford University
 //
-//actor FHIR: Standard, ObservableObject, ObservableObjectProvider, HealthKitConstraint {
+// SPDX-License-Identifier: MIT
+//
+
+import Foundation
+import HealthKit
+import HealthKitOnFHIR
+import ModelsDSTU2
+import ModelsR4
+import OSLog
+import Spezi
+import SpeziFHIR
+import SpeziFHIRHealthKit
+import SpeziHealthKit
+import SwiftUI
+import XCTRuntimeAssertions
+
+
+actor LLMonFHIRStandard: Standard, HealthKitConstraint {
+    @Dependency var fhirStore: FHIRStore
+    
+    
+    func add(sample: HKSample) async {
+        await fhirStore.add(sample: sample)
+    }
+    
+    func remove(sample: HKDeletedObject) async {
+        await fhirStore.remove(sample: sample)
+    }
+    
 //    @AppStorage(StorageKeys.resourceLimit) private var resourceLimit = StorageKeys.Defaults.resourceLimit
 //    private let logger = Logger(subsystem: "LLMonFHIR", category: "FHIR Standard")
 //    private let hkHealthStore: HKHealthStore?
@@ -123,4 +136,4 @@
 //            )
 //        }
 //    }
-//}
+}

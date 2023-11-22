@@ -965,6 +965,7 @@
     },
     "FHIR_RESOURCES_SUMMARY_ID_TITLE %@" : {
       "comment" : "MARK: FHIR Resource Summary",
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -1929,6 +1930,9 @@
           }
         }
       }
+    },
+    "TODO: FHIRResourcesView" : {
+
     },
     "WELCOME_AREA1_DESCRIPTION" : {
       "extractionState" : "manual",

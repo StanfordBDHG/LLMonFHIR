@@ -7,6 +7,8 @@
 //
 
 import OpenAI
+import SpeziFHIR
+import SpeziFHIRInterpretation
 import SpeziOpenAI
 import SpeziSpeechSynthesizer
 import SpeziViews
@@ -15,9 +17,10 @@ import SwiftUI
 
 struct OpenAIChatView: View {
     @Environment(\.dismiss) private var dismiss
-    @EnvironmentObject private var openAPIComponent: OpenAIComponent
-    @EnvironmentObject private var fhirStandard: FHIR
-    @EnvironmentObject private var fhirResourceSummary: FHIRResourceSummary
+    
+    @Environment(OpenAIModel.self) private var openAPIModel
+    @Environment(FHIRStore.self) private var fhirStore
+    @Environment(FHIRResourceSummary.self) private var fhirResourceSummary
     
     @StateObject private var speechSynthesizer = SpeechSynthesizer()
     
@@ -68,7 +71,7 @@ struct OpenAIChatView: View {
                     }
                 }
                 .viewStateAlert(state: $viewState)
-                .onChange(of: chat) { _ in
+                .onChange(of: chat) {
                     getAnswer()
                 }
         }
@@ -109,24 +112,14 @@ struct OpenAIChatView: View {
         }
     }
     
+    
     private func addSystemFuncMessage() async throws {
-        let resourcesArray = await fhirStandard.relevantResources
-        
-        var stringResourcesArray = resourcesArray.map { $0.functionCallIdentifier }
-        stringResourcesArray.append("N/A")
-        
-        self.chat.append(Chat(role: .system, content: String(localized: "FUNCTION_CONTEXT") + stringResourcesArray.rawValue))
+        self.chat.append(Chat(role: .system, content: String(localized: "FUNCTION_CONTEXT") + fhirStore.allResourcesFunctionCallIdentifier.rawValue))
     }
     
     private func processFunctionCalling() async throws {
-        let resourcesArray = await fhirStandard.relevantResources
-        
-        var stringResourcesArray = resourcesArray.map { $0.functionCallIdentifier }
-        stringResourcesArray.append("N/A")
-        
-        let functionCallOutputArray = try await getFunctionCallOutputArray(stringResourcesArray)
-        
-        await processFunctionCallOutputArray(functionCallOutputArray: functionCallOutputArray, resourcesArray: resourcesArray)
+        let functionCallOutputArray = try await getFunctionCallOutputArray(fhirStore.allResourcesFunctionCallIdentifier)
+        await processFunctionCallOutputArray(functionCallOutputArray: functionCallOutputArray)
     }
     
     private func getFunctionCallOutputArray(_ stringResourcesArray: [String]) async throws -> [String] {
@@ -144,7 +137,7 @@ struct OpenAIChatView: View {
             )
         ]
         
-        let chatStreamResults = try await openAPIComponent.queryAPI(withChat: chat, withFunction: functions)
+        let chatStreamResults = try await openAPIModel.queryAPI(withChat: chat, withFunction: functions)
         
         
         class ChatFunctionCall {
@@ -186,9 +179,9 @@ struct OpenAIChatView: View {
             .components(separatedBy: ",")
     }
     
-    private func processFunctionCallOutputArray(functionCallOutputArray: [String], resourcesArray: [FHIRResource]) async {
+    private func processFunctionCallOutputArray(functionCallOutputArray: [String]) async {
         for resource in functionCallOutputArray {
-            guard let matchingResource = resourcesArray.first(where: { $0.functionCallIdentifier == resource }) else {
+            guard let matchingResource = fhirStore.allResources.first(where: { $0.functionCallIdentifier == resource }) else {
                 continue
             }
             
@@ -208,7 +201,7 @@ struct OpenAIChatView: View {
     }
     
     private func processChatStreamResults() async throws {
-        let chatStreamResults = try await openAPIComponent.queryAPI(withChat: chat)
+        let chatStreamResults = try await openAPIModel.queryAPI(withChat: chat)
         
         for try await chatStreamResult in chatStreamResults {
             for choice in chatStreamResult.choices {

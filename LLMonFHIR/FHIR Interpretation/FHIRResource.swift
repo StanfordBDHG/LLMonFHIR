@@ -6,12 +6,12 @@
 //// SPDX-License-Identifier: MIT
 ////
 //
-//import Foundation
-//@preconcurrency import ModelsDSTU2
-//@preconcurrency import ModelsR4
+// import Foundation
+// @preconcurrency import ModelsDSTU2
+// @preconcurrency import ModelsR4
 //
 //
-//struct FHIRResource: Sendable, Identifiable, Hashable {
+// struct FHIRResource: Sendable, Identifiable, Hashable {
 //    enum VersionedFHIRResource: Hashable {
 //        case r4(ModelsR4.Resource) // swiftlint:disable:this identifier_name
 //        case dstu2(ModelsDSTU2.Resource)
@@ -97,7 +97,7 @@
 //            return (try? String(decoding: encoder.encode(resource), as: UTF8.self)) ?? "{}"
 //        }
 //    }
-//}
+// }
 
 import SpeziFHIR
 

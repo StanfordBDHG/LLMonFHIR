@@ -7,12 +7,14 @@
 //
 
 import OpenAI
+import SpeziFHIR
+import SpeziFHIRInterpretation
 import SpeziViews
 import SwiftUI
 
 struct InspectResourceView: View {
-    @EnvironmentObject var fhirResourceInterpreter: FHIRResourceInterpreter
-    @EnvironmentObject var fhirResourceSummary: FHIRResourceSummary
+    @Environment(FHIRResourceInterpreter.self) var fhirResourceInterpreter
+    @Environment(FHIRResourceSummary.self) var fhirResourceSummary
     
     @State var interpreting: ViewState = .idle
     @State var loadingSummary: ViewState = .idle
@@ -50,8 +52,8 @@ struct InspectResourceView: View {
                     ProgressView()
                     Spacer()
                 }
-            } else if let summary = fhirResourceSummary.summaries[resource.id] {
-                Text(summary.summary)
+            } else if let summary = fhirResourceSummary.cachedSummary(forResource: resource) {
+                Text(summary)
                     .multilineTextAlignment(.leading)
                     .contextMenu {
                         Button("FHIR_RESOURCES_SUMMARY_BUTTON") {
@@ -68,7 +70,7 @@ struct InspectResourceView: View {
     
     @ViewBuilder private var interpretationSection: some View {
         Section("FHIR_RESOURCES_INTERPRETATION_SECTION") { // swiftlint:disable:this closure_body_length
-            if let interpretation = fhirResourceInterpreter.interpretations[resource.id], !interpretation.isEmpty {
+            if let interpretation = fhirResourceInterpreter.cachedInterpretation(forResource: resource), !interpretation.isEmpty {
                 Text(interpretation)
                     .multilineTextAlignment(.leading)
                     .contextMenu {
@@ -111,7 +113,7 @@ struct InspectResourceView: View {
     
     @ViewBuilder private var resourceSection: some View {
         Section("FHIR_RESOURCES_INTERPRETATION_RESOURCE") {
-            LazyText(text: resource.jsonDescription)
+            LazyText(verbatim: resource.jsonDescription)
                 .fontDesign(.monospaced)
                 .lineLimit(1)
                 .font(.caption2)
@@ -138,7 +140,7 @@ struct InspectResourceView: View {
         
         Task {
             do {
-                try await fhirResourceInterpreter.interpret(resource: resource, forceReload: forceReload)
+                try await fhirResourceInterpreter.summarize(resource: resource, forceReload: forceReload)
                 interpreting = .idle
             } catch let error as APIErrorResponse {
                 loadingSummary = .error(error)

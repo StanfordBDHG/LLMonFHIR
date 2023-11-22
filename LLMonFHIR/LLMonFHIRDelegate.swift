@@ -20,8 +20,8 @@ class LLMonFHIRDelegate: SpeziAppDelegate {
             if HKHealthStore.isHealthDataAvailable() {
                 healthKit
             }
-            OpenAIModule(openAIModel: .gpt3_5Turbo0613)
-            FHIRInterpretation
+            OpenAIModule(openAIModel: .gpt4_1106_preview)
+            FHIRInterpretationModule()
         }
     }
     

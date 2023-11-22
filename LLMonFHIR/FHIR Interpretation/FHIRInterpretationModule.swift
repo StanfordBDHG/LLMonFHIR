@@ -17,7 +17,7 @@ import class SpeziOpenAI.OpenAIModel
 class FHIRInterpretationModule: Module {
     @Dependency private var localStorage: LocalStorage
     @Dependency private var openAI: OpenAIModule
-    @StandardActor private var fhirStandard: FHIR
+    @Dependency private var fhirStore: FHIRStore
     
     @Model private var resourceSummary: FHIRResourceSummary
     @Model private var resourceInterpreter: FHIRResourceInterpreter
@@ -25,13 +25,12 @@ class FHIRInterpretationModule: Module {
     
     
     func configure() async {
-        #warning("Will not work as this is actor isolated ...")
         resourceSummary = FHIRResourceSummary(localStorage: localStorage, openAIModel: openAI.model)
         resourceInterpreter = FHIRResourceInterpreter(localStorage: localStorage, openAIModel: openAI.model)
-        multipleResourceInterpreter = await FHIRMultipleResourceInterpreter(
+        multipleResourceInterpreter = FHIRMultipleResourceInterpreter(
             localStorage: localStorage,
             openAIModel: openAI.model,
-            fhirStore: fhirStandard.store
+            fhirStore: fhirStore
         )
     }
 }

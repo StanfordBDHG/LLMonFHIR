@@ -6,15 +6,15 @@
 //// SPDX-License-Identifier: MIT
 ////
 //
-//import ModelsR4
-//import OpenAI
-//import SpeziFHIR
-//import SpeziOnboarding
-//import SpeziOpenAI
-//import SpeziViews
-//import SwiftUI
+// import ModelsR4
+// import OpenAI
+// import SpeziFHIR
+// import SpeziOnboarding
+// import SpeziOpenAI
+// import SpeziViews
+// import SwiftUI
 //
-//struct FHIRResourcesView: View {
+// struct FHIRResourcesView: View {
 //    @AppStorage(StorageKeys.onboardingInstructions) var onboardingInstructions = true
 //
 //    @State var resources: [String: [FHIRResource]] = [:]
@@ -38,7 +38,7 @@
 //                .navigationDestination(for: FHIRResource.self) { resource in
 //                    InspectResourceView(resource: resource)
 //                }
-//#warning("How to address the object will change elements?")
+// #warning("How to address the object will change elements?")
 ////                .onReceive(fhirStandard.objectWillChange) {
 ////                    if FeatureFlags.testMode {
 ////                        loadMockResources()
@@ -214,4 +214,4 @@
 //            }
 //        }
 //    }
-//}
+// }

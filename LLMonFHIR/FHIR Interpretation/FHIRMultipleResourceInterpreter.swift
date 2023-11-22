@@ -27,11 +27,6 @@ class FHIRMultipleResourceInterpreter {
     
     
     var interpretation: String? {
-        willSet {
-            Task { @MainActor in
-                objectWillChange.send()
-            }
-        }
         didSet {
             do {
                 try localStorage.store(interpretation, storageKey: FHIRMultipleResourceInterpreterConstants.storageKey)
@@ -63,7 +58,7 @@ class FHIRMultipleResourceInterpreter {
             return
         }
         
-        let chatStreamResults = try await openAIComponent.queryAPI(withChat: [systemPrompt(forResources: resources)])
+        let chatStreamResults = try await openAIModel.queryAPI(withChat: [systemPrompt(forResources: resources)])
         
         for try await chatStreamResult in chatStreamResults {
             for choice in chatStreamResult.choices {
