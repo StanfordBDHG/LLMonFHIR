@@ -9,6 +9,11 @@
 /* Begin PBXBuildFile section */
 		27D2125C2A30BB5900486694 /* FHIRResource+Search.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27D2125B2A30BB5900486694 /* FHIRResource+Search.swift */; };
 		27F7730B2A327FBC004D476D /* FHIRDisplayTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27F7730A2A327FBC004D476D /* FHIRDisplayTests.swift */; };
+		2F036E992B0E0562009B2745 /* SpeziFHIR in Frameworks */ = {isa = PBXBuildFile; productRef = 2F036E982B0E0562009B2745 /* SpeziFHIR */; };
+		2F036E9B2B0E0562009B2745 /* SpeziFHIRHealthKit in Frameworks */ = {isa = PBXBuildFile; productRef = 2F036E9A2B0E0562009B2745 /* SpeziFHIRHealthKit */; };
+		2F036E9D2B0E0562009B2745 /* SpeziFHIRInterpretation in Frameworks */ = {isa = PBXBuildFile; productRef = 2F036E9C2B0E0562009B2745 /* SpeziFHIRInterpretation */; };
+		2F036E9F2B0E0562009B2745 /* SpeziFHIRMockPatients in Frameworks */ = {isa = PBXBuildFile; productRef = 2F036E9E2B0E0562009B2745 /* SpeziFHIRMockPatients */; };
+		2F036EA12B0E4B22009B2745 /* FHIRInterpretationModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F036EA02B0E4B22009B2745 /* FHIRInterpretationModule.swift */; };
 		2F0F90BA2A1E6556006D7E03 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F0F90B92A1E6556006D7E03 /* SettingsView.swift */; };
 		2F0F90BC2A1E6B19006D7E03 /* PromptSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F0F90BB2A1E6B19006D7E03 /* PromptSettingsView.swift */; };
 		2F0F90BE2A1E702B006D7E03 /* Prompt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F0F90BD2A1E702B006D7E03 /* Prompt.swift */; };
@@ -74,6 +79,7 @@
 /* Begin PBXFileReference section */
 		27D2125B2A30BB5900486694 /* FHIRResource+Search.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FHIRResource+Search.swift"; sourceTree = "<group>"; };
 		27F7730A2A327FBC004D476D /* FHIRDisplayTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FHIRDisplayTests.swift; sourceTree = "<group>"; };
+		2F036EA02B0E4B22009B2745 /* FHIRInterpretationModule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FHIRInterpretationModule.swift; sourceTree = "<group>"; };
 		2F0F90B92A1E6556006D7E03 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		2F0F90BB2A1E6B19006D7E03 /* PromptSettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PromptSettingsView.swift; sourceTree = "<group>"; };
 		2F0F90BD2A1E702B006D7E03 /* Prompt.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Prompt.swift; sourceTree = "<group>"; };
@@ -108,7 +114,7 @@
 		653A254D283387FE005D4D48 /* LLMonFHIR.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LLMonFHIR.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		653A2550283387FE005D4D48 /* LLMonFHIR.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LLMonFHIR.swift; sourceTree = "<group>"; };
 		653A255428338800005D4D48 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		653A255D28338800005D4D48 /* LLMonFHIRTests.swift */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; name = LLMonFHIRTests.swift; path = LLMonFHIRTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		653A255D28338800005D4D48 /* LLMonFHIRTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = LLMonFHIRTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		653A256128338800005D4D48 /* LLMonFHIRTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LLMonFHIRTests.swift; sourceTree = "<group>"; };
 		653A256728338800005D4D48 /* LLMonFHIRUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = LLMonFHIRUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		653A258928339462005D4D48 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -123,9 +129,13 @@
 				2F901CE22A1A03360007C167 /* SpeziOpenAI in Frameworks */,
 				2FD8E82A2A1AADDA00357F4E /* ModelsDSTU2 in Frameworks */,
 				2FD8E8402A1AE3F200357F4E /* SpeziViews in Frameworks */,
+				2F036E9B2B0E0562009B2745 /* SpeziFHIRHealthKit in Frameworks */,
 				2FE5DC7229EDD8D3004B9AB4 /* SpeziHealthKit in Frameworks */,
 				2F49B7762980407C00BCB272 /* Spezi in Frameworks */,
+				2F036E9D2B0E0562009B2745 /* SpeziFHIRInterpretation in Frameworks */,
+				2F036E9F2B0E0562009B2745 /* SpeziFHIRMockPatients in Frameworks */,
 				2FD8E8312A1AB00D00357F4E /* HealthKitOnFHIR in Frameworks */,
+				2F036E992B0E0562009B2745 /* SpeziFHIR in Frameworks */,
 				2FE5DC8129EDD91D004B9AB4 /* SpeziOnboarding in Frameworks */,
 				2FC186072AD52FE20065EBB2 /* SpeziSpeechSynthesizer in Frameworks */,
 			);
@@ -169,14 +179,18 @@
 			path = "Supporting Files";
 			sourceTree = "<group>";
 		};
-		2FD8E81D2A1AAC6900357F4E /* FHIR Standard */ = {
+		2FD8E81D2A1AAC6900357F4E /* FHIR Interpretation */ = {
 			isa = PBXGroup;
 			children = (
 				2FD8E8262A1AAD9B00357F4E /* FHIR.swift */,
 				2FD8E8322A1AB68E00357F4E /* FHIRResource.swift */,
 				27D2125B2A30BB5900486694 /* FHIRResource+Search.swift */,
+				2F036EA02B0E4B22009B2745 /* FHIRInterpretationModule.swift */,
+				433352432A5C96090043A440 /* FHIRMultipleResourceInterpreter.swift */,
+				2F55FC522A1AE8750051DF48 /* FHIRResourceInterpreter.swift */,
+				2F61A32F2A1B51BF000A7796 /* FHIRResourceSummary.swift */,
 			);
-			path = "FHIR Standard";
+			path = "FHIR Interpretation";
 			sourceTree = "<group>";
 		};
 		2FD8E8392A1AD0E900357F4E /* FHIR Display */ = {
@@ -185,9 +199,6 @@
 				2FD8E83A2A1AD10300357F4E /* FHIRResourcesView.swift */,
 				2F61A3312A1B560B000A7796 /* ResourceSummaryView.swift */,
 				2FD8E83C2A1AE24F00357F4E /* InspectResourceView.swift */,
-				433352432A5C96090043A440 /* FHIRMultipleResourceInterpreter.swift */,
-				2F55FC522A1AE8750051DF48 /* FHIRResourceInterpreter.swift */,
-				2F61A32F2A1B51BF000A7796 /* FHIRResourceSummary.swift */,
 				43B9CDCC2A5E6E7C002F13A6 /* OpenAIChatView.swift */,
 			);
 			path = "FHIR Display";
@@ -251,7 +262,7 @@
 			isa = PBXGroup;
 			children = (
 				653A254D283387FE005D4D48 /* LLMonFHIR.app */,
-				653A255D28338800005D4D48 /* LLMonFHIRTests.swift */,
+				653A255D28338800005D4D48 /* LLMonFHIRTests.xctest */,
 				653A256728338800005D4D48 /* LLMonFHIRUITests.xctest */,
 			);
 			name = Products;
@@ -265,7 +276,7 @@
 				2F4E23822989D51F0013F3D9 /* LLMonFHIRTestingSetup.swift */,
 				2FC975A72978F11A00BA99FE /* Home.swift */,
 				2FE5DC2829EDD398004B9AB4 /* Onboarding */,
-				2FD8E81D2A1AAC6900357F4E /* FHIR Standard */,
+				2FD8E81D2A1AAC6900357F4E /* FHIR Interpretation */,
 				2FD8E8392A1AD0E900357F4E /* FHIR Display */,
 				2F0F90B82A1E6542006D7E03 /* Settings */,
 				2FE5DC3C29EDD7DA004B9AB4 /* SharedContext */,
@@ -327,6 +338,10 @@
 				2FD8E8302A1AB00D00357F4E /* HealthKitOnFHIR */,
 				2FD8E83F2A1AE3F200357F4E /* SpeziViews */,
 				2FC186062AD52FE20065EBB2 /* SpeziSpeechSynthesizer */,
+				2F036E982B0E0562009B2745 /* SpeziFHIR */,
+				2F036E9A2B0E0562009B2745 /* SpeziFHIRHealthKit */,
+				2F036E9C2B0E0562009B2745 /* SpeziFHIRInterpretation */,
+				2F036E9E2B0E0562009B2745 /* SpeziFHIRMockPatients */,
 			);
 			productName = LLMonFHIR;
 			productReference = 653A254D283387FE005D4D48 /* LLMonFHIR.app */;
@@ -347,7 +362,7 @@
 			);
 			name = LLMonFHIRTests;
 			productName = LLMonFHIRTests;
-			productReference = 653A255D28338800005D4D48 /* LLMonFHIRTests.swift */;
+			productReference = 653A255D28338800005D4D48 /* LLMonFHIRTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
 		653A256628338800005D4D48 /* LLMonFHIRUITests */ = {
@@ -380,7 +395,7 @@
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
 				LastSwiftUpdateCheck = 1340;
-				LastUpgradeCheck = 1340;
+				LastUpgradeCheck = 1500;
 				TargetAttributes = {
 					653A254C283387FE005D4D48 = {
 						CreatedOnToolsVersion = 13.4;
@@ -418,6 +433,7 @@
 				2FD8E8282A1AADDA00357F4E /* XCRemoteSwiftPackageReference "FHIRModels" */,
 				2FD8E82F2A1AB00D00357F4E /* XCRemoteSwiftPackageReference "HealthKitOnFHIR" */,
 				2FD8E83E2A1AE3F200357F4E /* XCRemoteSwiftPackageReference "SpeziViews" */,
+				2F036E972B0E0562009B2745 /* XCRemoteSwiftPackageReference "SpeziFHIR" */,
 			);
 			productRefGroup = 653A254E283387FE005D4D48 /* Products */;
 			projectDirPath = "";
@@ -494,6 +510,7 @@
 				2FD8E83D2A1AE24F00357F4E /* InspectResourceView.swift in Sources */,
 				2F0F90BA2A1E6556006D7E03 /* SettingsView.swift in Sources */,
 				2FD8E83B2A1AD10300357F4E /* FHIRResourcesView.swift in Sources */,
+				2F036EA12B0E4B22009B2745 /* FHIRInterpretationModule.swift in Sources */,
 				43B9CDCD2A5E6E7C002F13A6 /* OpenAIChatView.swift in Sources */,
 				2F0F90BE2A1E702B006D7E03 /* Prompt.swift in Sources */,
 				2FE5DC4529EDD7F2004B9AB4 /* Binding+Negate.swift in Sources */,
@@ -551,6 +568,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
 				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
@@ -598,7 +616,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
@@ -637,7 +655,6 @@
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
-				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -665,7 +682,6 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 637867499T;
 				GENERATE_INFOPLIST_FILE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = edu.stanford.bdhg.llmonfhir.tests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -684,7 +700,6 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 637867499T;
 				GENERATE_INFOPLIST_FILE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = edu.stanford.bdhg.llmonfhiruitests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -699,6 +714,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
 				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
@@ -746,7 +762,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
@@ -761,6 +777,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
 				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
@@ -802,7 +819,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
@@ -841,7 +858,6 @@
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
-				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -890,7 +906,6 @@
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
-				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -919,7 +934,6 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 637867499T;
 				GENERATE_INFOPLIST_FILE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = edu.stanford.bdhg.llmonfhir.tests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -939,7 +953,6 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 637867499T;
 				GENERATE_INFOPLIST_FILE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = edu.stanford.bdhg.llmonfhir.tests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -958,7 +971,6 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 637867499T;
 				GENERATE_INFOPLIST_FILE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = edu.stanford.bdhg.llmonfhiruitests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -977,7 +989,6 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 637867499T;
 				GENERATE_INFOPLIST_FILE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = edu.stanford.bdhg.llmonfhiruitests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1034,12 +1045,20 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		2F036E972B0E0562009B2745 /* XCRemoteSwiftPackageReference "SpeziFHIR" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/StanfordSpezi/SpeziFHIR.git";
+			requirement = {
+				kind = upToNextMinorVersion;
+				minimumVersion = 0.4.2;
+			};
+		};
 		2F49B7742980407B00BCB272 /* XCRemoteSwiftPackageReference "Spezi" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/StanfordSpezi/Spezi";
 			requirement = {
 				kind = upToNextMinorVersion;
-				minimumVersion = 0.7.3;
+				minimumVersion = 0.8.1;
 			};
 		};
 		2F901CE02A1A03360007C167 /* XCRemoteSwiftPackageReference "SpeziML" */ = {
@@ -1047,7 +1066,7 @@
 			repositoryURL = "https://github.com/StanfordSpezi/SpeziML.git";
 			requirement = {
 				kind = upToNextMinorVersion;
-				minimumVersion = 0.2.5;
+				minimumVersion = 0.3.1;
 			};
 		};
 		2FD8E8282A1AADDA00357F4E /* XCRemoteSwiftPackageReference "FHIRModels" */ = {
@@ -1063,7 +1082,7 @@
 			repositoryURL = "https://github.com/StanfordBDHG/HealthKitOnFHIR.git";
 			requirement = {
 				kind = upToNextMinorVersion;
-				minimumVersion = 0.2.4;
+				minimumVersion = 0.2.5;
 			};
 		};
 		2FD8E83E2A1AE3F200357F4E /* XCRemoteSwiftPackageReference "SpeziViews" */ = {
@@ -1071,7 +1090,7 @@
 			repositoryURL = "https://github.com/StanfordSpezi/SpeziViews.git";
 			requirement = {
 				kind = upToNextMinorVersion;
-				minimumVersion = 0.5.1;
+				minimumVersion = 0.6.2;
 			};
 		};
 		2FE5DC7029EDD8D3004B9AB4 /* XCRemoteSwiftPackageReference "SpeziHealthKit" */ = {
@@ -1079,7 +1098,7 @@
 			repositoryURL = "https://github.com/StanfordSpezi/SpeziHealthKit.git";
 			requirement = {
 				kind = upToNextMinorVersion;
-				minimumVersion = 0.3.1;
+				minimumVersion = 0.4.0;
 			};
 		};
 		2FE5DC7F29EDD91D004B9AB4 /* XCRemoteSwiftPackageReference "SpeziOnboarding" */ = {
@@ -1087,7 +1106,7 @@
 			repositoryURL = "https://github.com/StanfordSpezi/SpeziOnboarding.git";
 			requirement = {
 				kind = upToNextMinorVersion;
-				minimumVersion = 0.5.2;
+				minimumVersion = 0.7.0;
 			};
 		};
 		2FE5DC9729EDD9D9004B9AB4 /* XCRemoteSwiftPackageReference "XCTestExtensions" */ = {
@@ -1109,6 +1128,26 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		2F036E982B0E0562009B2745 /* SpeziFHIR */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 2F036E972B0E0562009B2745 /* XCRemoteSwiftPackageReference "SpeziFHIR" */;
+			productName = SpeziFHIR;
+		};
+		2F036E9A2B0E0562009B2745 /* SpeziFHIRHealthKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 2F036E972B0E0562009B2745 /* XCRemoteSwiftPackageReference "SpeziFHIR" */;
+			productName = SpeziFHIRHealthKit;
+		};
+		2F036E9C2B0E0562009B2745 /* SpeziFHIRInterpretation */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 2F036E972B0E0562009B2745 /* XCRemoteSwiftPackageReference "SpeziFHIR" */;
+			productName = SpeziFHIRInterpretation;
+		};
+		2F036E9E2B0E0562009B2745 /* SpeziFHIRMockPatients */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 2F036E972B0E0562009B2745 /* XCRemoteSwiftPackageReference "SpeziFHIR" */;
+			productName = SpeziFHIRMockPatients;
+		};
 		2F49B7752980407B00BCB272 /* Spezi */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 2F49B7742980407B00BCB272 /* XCRemoteSwiftPackageReference "Spezi" */;

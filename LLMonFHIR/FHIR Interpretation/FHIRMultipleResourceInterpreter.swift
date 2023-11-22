@@ -8,6 +8,7 @@
 
 import OpenAI
 import Spezi
+import SpeziFHIR
 import SpeziLocalStorage
 import SpeziOpenAI
 import SwiftUI
@@ -18,9 +19,11 @@ private enum FHIRMultipleResourceInterpreterConstants {
 }
 
 
-class FHIRMultipleResourceInterpreter: DefaultInitializable, Component, ObservableObject, ObservableObjectProvider {
-    @Dependency private var localStorage: LocalStorage
-    @Dependency private var openAIComponent = OpenAIComponent()
+@Observable
+class FHIRMultipleResourceInterpreter {
+    private let localStorage: LocalStorage
+    private let openAIModel: OpenAIModel
+    private let fhirStore: FHIRStore
     
     
     var interpretation: String? {
@@ -39,7 +42,11 @@ class FHIRMultipleResourceInterpreter: DefaultInitializable, Component, Observab
     }
     
     
-    required init() {}
+    required init(localStorage: LocalStorage, openAIModel: OpenAIModel, fhirStore: FHIRStore) {
+        self.localStorage = localStorage
+        self.openAIModel = openAIModel
+        self.fhirStore = fhirStore
+    }
     
     
     func configure() {

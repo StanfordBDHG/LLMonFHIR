@@ -6,13 +6,16 @@
 // SPDX-License-Identifier: MIT
 //
 
+import SpeziFHIR
+import SpeziFHIRInterpretation
 import SwiftUI
 
 
 struct ResourceSummaryView: View {
-    @EnvironmentObject var fhirResourceSummary: FHIRResourceSummary
+    @Environment(FHIRResourceSummary.self) var fhirResourceSummary
     
     @State var loading = false
+    @State var summary: String = ""
     
     let resource: FHIRResource
     

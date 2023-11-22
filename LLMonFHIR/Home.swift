@@ -11,7 +11,8 @@ import SwiftUI
 
 struct HomeView: View {
     var body: some View {
-        FHIRResourcesView()
+        Text("TODO: FHIRResourcesView")
+        // FHIRResourcesView()
     }
 }
 

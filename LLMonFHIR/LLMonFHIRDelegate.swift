@@ -8,6 +8,7 @@
 
 import HealthKit
 import Spezi
+import SpeziFHIR
 import SpeziHealthKit
 import SpeziOpenAI
 import SwiftUI
@@ -19,10 +20,8 @@ class LLMonFHIRDelegate: SpeziAppDelegate {
             if HKHealthStore.isHealthDataAvailable() {
                 healthKit
             }
-            OpenAIComponent(openAIModel: .gpt3_5Turbo0613)
-            FHIRResourceInterpreter()
-            FHIRMultipleResourceInterpreter()
-            FHIRResourceSummary()
+            OpenAIModule(openAIModel: .gpt3_5Turbo0613)
+            FHIRInterpretation
         }
     }
     
