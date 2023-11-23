@@ -1931,9 +1931,6 @@
         }
       }
     },
-    "TODO: FHIRResourcesView" : {
-
-    },
     "WELCOME_AREA1_DESCRIPTION" : {
       "extractionState" : "manual",
       "localizations" : {

@@ -6,6 +6,7 @@
 // SPDX-License-Identifier: MIT
 //
 
+import ModelsR4
 import SpeziFHIR
 
 
@@ -18,5 +19,24 @@ extension FHIRStore {
         var stringResourcesArray = allResources.map { $0.functionCallIdentifier }
         stringResourcesArray.append("N/A")
         return stringResourcesArray
+    }
+    
+    
+    func loadMockResources() {
+        if FeatureFlags.testMode {
+            let mockObservation = Observation(
+                code: CodeableConcept(coding: [Coding(code: "1234".asFHIRStringPrimitive())]),
+                issued: FHIRPrimitive<Instant>(try? Instant(date: .now)),
+                status: FHIRPrimitive(ObservationStatus.final)
+            )
+            
+            let mockFHIRResource = FHIRResource(
+                versionedResource: .r4(mockObservation),
+                displayName: "Mock Resource"
+            )
+            
+            removeAllResources()
+            insert(resource: mockFHIRResource)
+        }
     }
 }

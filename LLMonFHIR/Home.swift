@@ -10,9 +10,33 @@ import SwiftUI
 
 
 struct HomeView: View {
+    @State private var showSettings = false
+    @AppStorage(StorageKeys.onboardingInstructions) private var onboardingInstructions = true
+    
+    
     var body: some View {
-        Text("TODO: FHIRResourcesView")
-        // FHIRResourcesView()
+        FHIRResourcesView()
+            .toolbar {
+                settingsToolbarItem
+            }
+            .sheet(isPresented: $showSettings) {
+                SettingsView()
+            }
+    }
+    
+    
+    @ToolbarContentBuilder private var settingsToolbarItem: some ToolbarContent {
+        ToolbarItem(placement: .primaryAction) {
+            Button(
+                action: {
+                    showSettings.toggle()
+                },
+                label: {
+                    Image(systemName: "gear")
+                        .accessibilityLabel(Text("SETTINGS"))
+                }
+            )
+        }
     }
 }
 
