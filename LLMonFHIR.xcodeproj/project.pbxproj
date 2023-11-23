@@ -15,6 +15,18 @@
 		2F036EA12B0E4B22009B2745 /* FHIRInterpretationModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F036EA02B0E4B22009B2745 /* FHIRInterpretationModule.swift */; };
 		2F036EA32B0EC9BC009B2745 /* FHIRStore+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F036EA22B0EC9BC009B2745 /* FHIRStore+Extensions.swift */; };
 		2F036EA52B0ED1F0009B2745 /* FHIRResourcesInstructionsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F036EA42B0ED1F0009B2745 /* FHIRResourcesInstructionsView.swift */; };
+		2F036EB22B0EEAD6009B2745 /* Schultz324_Monte913_54_a55e3391-c6e5-4bb2-8fae-bb39d245fdac.json in Resources */ = {isa = PBXBuildFile; fileRef = 2F036EA82B0EEAD5009B2745 /* Schultz324_Monte913_54_a55e3391-c6e5-4bb2-8fae-bb39d245fdac.json */; };
+		2F036EB32B0EEAD6009B2745 /* Porfirio146_Jakubowski832_5b70be80-a0f2-849f-a286-8a8d2eab86b9.json in Resources */ = {isa = PBXBuildFile; fileRef = 2F036EA92B0EEAD5009B2745 /* Porfirio146_Jakubowski832_5b70be80-a0f2-849f-a286-8a8d2eab86b9.json */; };
+		2F036EB42B0EEAD6009B2745 /* Jacklyn830_Veum823_e0e1f21a-22a7-d166-7bb1-63f6bbce1a32.json in Resources */ = {isa = PBXBuildFile; fileRef = 2F036EAA2B0EEAD5009B2745 /* Jacklyn830_Veum823_e0e1f21a-22a7-d166-7bb1-63f6bbce1a32.json */; };
+		2F036EB52B0EEAD6009B2745 /* Gonzalo160_Duenas839_ed70a28f-30b2-acb7-658a-8b340dadd685.json in Resources */ = {isa = PBXBuildFile; fileRef = 2F036EAB2B0EEAD5009B2745 /* Gonzalo160_Duenas839_ed70a28f-30b2-acb7-658a-8b340dadd685.json */; };
+		2F036EB62B0EEAD6009B2745 /* Maggio705_Rosalind390_56_eada06e6-c017-4130-9ede-a3368e295145.json in Resources */ = {isa = PBXBuildFile; fileRef = 2F036EAC2B0EEAD5009B2745 /* Maggio705_Rosalind390_56_eada06e6-c017-4130-9ede-a3368e295145.json */; };
+		2F036EB72B0EEAD6009B2745 /* Cole983_Kian544_68_d7155ec9-1a93-4a8d-8f86-f26eaaacc548.json in Resources */ = {isa = PBXBuildFile; fileRef = 2F036EAD2B0EEAD6009B2745 /* Cole983_Kian544_68_d7155ec9-1a93-4a8d-8f86-f26eaaacc548.json */; };
+		2F036EB82B0EEAD6009B2745 /* Gregoria352_Shan714_Koss676_b5fab35c-8cd1-49f0-b28c-122866af8614.json in Resources */ = {isa = PBXBuildFile; fileRef = 2F036EAE2B0EEAD6009B2745 /* Gregoria352_Shan714_Koss676_b5fab35c-8cd1-49f0-b28c-122866af8614.json */; };
+		2F036EB92B0EEAD6009B2745 /* Beatris270_Bogan287_5b3645de-a2d0-d016-0839-bab3757c4c58.json in Resources */ = {isa = PBXBuildFile; fileRef = 2F036EAF2B0EEAD6009B2745 /* Beatris270_Bogan287_5b3645de-a2d0-d016-0839-bab3757c4c58.json */; };
+		2F036EBA2B0EEAD6009B2745 /* Hilpert863_Lelia643_77_9147a74d-6272-465a-a75c-789b491774dc.json in Resources */ = {isa = PBXBuildFile; fileRef = 2F036EB02B0EEAD6009B2745 /* Hilpert863_Lelia643_77_9147a74d-6272-465a-a75c-789b491774dc.json */; };
+		2F036EBB2B0EEAD6009B2745 /* Micah422_Stehr398_10acd373-14d9-6077-f0fc-790e06d7c6c5.json in Resources */ = {isa = PBXBuildFile; fileRef = 2F036EB12B0EEAD6009B2745 /* Micah422_Stehr398_10acd373-14d9-6077-f0fc-790e06d7c6c5.json */; };
+		2F036EBF2B0EEB10009B2745 /* MockData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F036EBE2B0EEB10009B2745 /* MockData.swift */; };
+		2F036EC12B0EEE07009B2745 /* ResourceSelection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F036EC02B0EEE07009B2745 /* ResourceSelection.swift */; };
 		2F0F90BA2A1E6556006D7E03 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F0F90B92A1E6556006D7E03 /* SettingsView.swift */; };
 		2F42429B2A8B14AC006E2B01 /* OpenAIAPIKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F42429A2A8B14AC006E2B01 /* OpenAIAPIKey.swift */; };
 		2F49B7762980407C00BCB272 /* Spezi in Frameworks */ = {isa = PBXBuildFile; productRef = 2F49B7752980407B00BCB272 /* Spezi */; };
@@ -78,6 +90,18 @@
 		2F036EA02B0E4B22009B2745 /* FHIRInterpretationModule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FHIRInterpretationModule.swift; sourceTree = "<group>"; };
 		2F036EA22B0EC9BC009B2745 /* FHIRStore+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FHIRStore+Extensions.swift"; sourceTree = "<group>"; };
 		2F036EA42B0ED1F0009B2745 /* FHIRResourcesInstructionsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FHIRResourcesInstructionsView.swift; sourceTree = "<group>"; };
+		2F036EA82B0EEAD5009B2745 /* Schultz324_Monte913_54_a55e3391-c6e5-4bb2-8fae-bb39d245fdac.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "Schultz324_Monte913_54_a55e3391-c6e5-4bb2-8fae-bb39d245fdac.json"; sourceTree = "<group>"; };
+		2F036EA92B0EEAD5009B2745 /* Porfirio146_Jakubowski832_5b70be80-a0f2-849f-a286-8a8d2eab86b9.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "Porfirio146_Jakubowski832_5b70be80-a0f2-849f-a286-8a8d2eab86b9.json"; sourceTree = "<group>"; };
+		2F036EAA2B0EEAD5009B2745 /* Jacklyn830_Veum823_e0e1f21a-22a7-d166-7bb1-63f6bbce1a32.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "Jacklyn830_Veum823_e0e1f21a-22a7-d166-7bb1-63f6bbce1a32.json"; sourceTree = "<group>"; };
+		2F036EAB2B0EEAD5009B2745 /* Gonzalo160_Duenas839_ed70a28f-30b2-acb7-658a-8b340dadd685.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "Gonzalo160_Duenas839_ed70a28f-30b2-acb7-658a-8b340dadd685.json"; sourceTree = "<group>"; };
+		2F036EAC2B0EEAD5009B2745 /* Maggio705_Rosalind390_56_eada06e6-c017-4130-9ede-a3368e295145.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "Maggio705_Rosalind390_56_eada06e6-c017-4130-9ede-a3368e295145.json"; sourceTree = "<group>"; };
+		2F036EAD2B0EEAD6009B2745 /* Cole983_Kian544_68_d7155ec9-1a93-4a8d-8f86-f26eaaacc548.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "Cole983_Kian544_68_d7155ec9-1a93-4a8d-8f86-f26eaaacc548.json"; sourceTree = "<group>"; };
+		2F036EAE2B0EEAD6009B2745 /* Gregoria352_Shan714_Koss676_b5fab35c-8cd1-49f0-b28c-122866af8614.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "Gregoria352_Shan714_Koss676_b5fab35c-8cd1-49f0-b28c-122866af8614.json"; sourceTree = "<group>"; };
+		2F036EAF2B0EEAD6009B2745 /* Beatris270_Bogan287_5b3645de-a2d0-d016-0839-bab3757c4c58.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "Beatris270_Bogan287_5b3645de-a2d0-d016-0839-bab3757c4c58.json"; sourceTree = "<group>"; };
+		2F036EB02B0EEAD6009B2745 /* Hilpert863_Lelia643_77_9147a74d-6272-465a-a75c-789b491774dc.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "Hilpert863_Lelia643_77_9147a74d-6272-465a-a75c-789b491774dc.json"; sourceTree = "<group>"; };
+		2F036EB12B0EEAD6009B2745 /* Micah422_Stehr398_10acd373-14d9-6077-f0fc-790e06d7c6c5.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "Micah422_Stehr398_10acd373-14d9-6077-f0fc-790e06d7c6c5.json"; sourceTree = "<group>"; };
+		2F036EBE2B0EEB10009B2745 /* MockData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockData.swift; sourceTree = "<group>"; };
+		2F036EC02B0EEE07009B2745 /* ResourceSelection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResourceSelection.swift; sourceTree = "<group>"; };
 		2F0F90B92A1E6556006D7E03 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		2F42429A2A8B14AC006E2B01 /* OpenAIAPIKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenAIAPIKey.swift; sourceTree = "<group>"; };
 		2F4E237D2989A2FE0013F3D9 /* OnboardingTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingTests.swift; sourceTree = "<group>"; };
@@ -154,10 +178,36 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		2F036EBC2B0EEAD9009B2745 /* Mock Patients */ = {
+			isa = PBXGroup;
+			children = (
+				2F036EAF2B0EEAD6009B2745 /* Beatris270_Bogan287_5b3645de-a2d0-d016-0839-bab3757c4c58.json */,
+				2F036EAD2B0EEAD6009B2745 /* Cole983_Kian544_68_d7155ec9-1a93-4a8d-8f86-f26eaaacc548.json */,
+				2F036EAB2B0EEAD5009B2745 /* Gonzalo160_Duenas839_ed70a28f-30b2-acb7-658a-8b340dadd685.json */,
+				2F036EAE2B0EEAD6009B2745 /* Gregoria352_Shan714_Koss676_b5fab35c-8cd1-49f0-b28c-122866af8614.json */,
+				2F036EB02B0EEAD6009B2745 /* Hilpert863_Lelia643_77_9147a74d-6272-465a-a75c-789b491774dc.json */,
+				2F036EAA2B0EEAD5009B2745 /* Jacklyn830_Veum823_e0e1f21a-22a7-d166-7bb1-63f6bbce1a32.json */,
+				2F036EAC2B0EEAD5009B2745 /* Maggio705_Rosalind390_56_eada06e6-c017-4130-9ede-a3368e295145.json */,
+				2F036EB12B0EEAD6009B2745 /* Micah422_Stehr398_10acd373-14d9-6077-f0fc-790e06d7c6c5.json */,
+				2F036EA92B0EEAD5009B2745 /* Porfirio146_Jakubowski832_5b70be80-a0f2-849f-a286-8a8d2eab86b9.json */,
+				2F036EA82B0EEAD5009B2745 /* Schultz324_Monte913_54_a55e3391-c6e5-4bb2-8fae-bb39d245fdac.json */,
+			);
+			path = "Mock Patients";
+			sourceTree = "<group>";
+		};
+		2F036EBD2B0EEAF5009B2745 /* Mock Data */ = {
+			isa = PBXGroup;
+			children = (
+				2F036EBE2B0EEB10009B2745 /* MockData.swift */,
+			);
+			path = "Mock Data";
+			sourceTree = "<group>";
+		};
 		2F0F90B82A1E6542006D7E03 /* Settings */ = {
 			isa = PBXGroup;
 			children = (
 				2F0F90B92A1E6556006D7E03 /* SettingsView.swift */,
+				2F036EC02B0EEE07009B2745 /* ResourceSelection.swift */,
 			);
 			path = Settings;
 			sourceTree = "<group>";
@@ -211,6 +261,7 @@
 		2FE5DC2D29EDD792004B9AB4 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				2F036EBC2B0EEAD9009B2745 /* Mock Patients */,
 				653A255428338800005D4D48 /* Assets.xcassets */,
 				2FC186082AD52FFF0065EBB2 /* Localizable.xcstrings */,
 			);
@@ -269,6 +320,7 @@
 				2FE5DC2829EDD398004B9AB4 /* Onboarding */,
 				2FD8E81D2A1AAC6900357F4E /* FHIR Interpretation */,
 				2FD8E8392A1AD0E900357F4E /* FHIR Display */,
+				2F036EBD2B0EEAF5009B2745 /* Mock Data */,
 				2F0F90B82A1E6542006D7E03 /* Settings */,
 				2FE5DC3C29EDD7DA004B9AB4 /* SharedContext */,
 				2FE5DC3D29EDD7E4004B9AB4 /* Helper */,
@@ -442,8 +494,18 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2F036EB22B0EEAD6009B2745 /* Schultz324_Monte913_54_a55e3391-c6e5-4bb2-8fae-bb39d245fdac.json in Resources */,
+				2F036EB72B0EEAD6009B2745 /* Cole983_Kian544_68_d7155ec9-1a93-4a8d-8f86-f26eaaacc548.json in Resources */,
 				653A255528338800005D4D48 /* Assets.xcassets in Resources */,
+				2F036EB42B0EEAD6009B2745 /* Jacklyn830_Veum823_e0e1f21a-22a7-d166-7bb1-63f6bbce1a32.json in Resources */,
+				2F036EBA2B0EEAD6009B2745 /* Hilpert863_Lelia643_77_9147a74d-6272-465a-a75c-789b491774dc.json in Resources */,
+				2F036EB52B0EEAD6009B2745 /* Gonzalo160_Duenas839_ed70a28f-30b2-acb7-658a-8b340dadd685.json in Resources */,
+				2F036EB62B0EEAD6009B2745 /* Maggio705_Rosalind390_56_eada06e6-c017-4130-9ede-a3368e295145.json in Resources */,
+				2F036EB82B0EEAD6009B2745 /* Gregoria352_Shan714_Koss676_b5fab35c-8cd1-49f0-b28c-122866af8614.json in Resources */,
 				2FC186092AD52FFF0065EBB2 /* Localizable.xcstrings in Resources */,
+				2F036EB92B0EEAD6009B2745 /* Beatris270_Bogan287_5b3645de-a2d0-d016-0839-bab3757c4c58.json in Resources */,
+				2F036EB32B0EEAD6009B2745 /* Porfirio146_Jakubowski832_5b70be80-a0f2-849f-a286-8a8d2eab86b9.json in Resources */,
+				2F036EBB2B0EEAD6009B2745 /* Micah422_Stehr398_10acd373-14d9-6077-f0fc-790e06d7c6c5.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -492,8 +554,10 @@
 				2FE5DC4129EDD7EE004B9AB4 /* StorageKeys.swift in Sources */,
 				2F42429B2A8B14AC006E2B01 /* OpenAIAPIKey.swift in Sources */,
 				2FE5DC3929EDD7CA004B9AB4 /* String+ModuleLocalized.swift in Sources */,
+				2F036EC12B0EEE07009B2745 /* ResourceSelection.swift in Sources */,
 				2F036EA32B0EC9BC009B2745 /* FHIRStore+Extensions.swift in Sources */,
 				2FE5DC3A29EDD7CA004B9AB4 /* Welcome.swift in Sources */,
+				2F036EBF2B0EEB10009B2745 /* MockData.swift in Sources */,
 				2FE5DC3829EDD7CA004B9AB4 /* Disclaimer.swift in Sources */,
 				2FD8E8332A1AB68E00357F4E /* FHIRResource+Extensions.swift in Sources */,
 				2FD8E83D2A1AE24F00357F4E /* InspectResourceView.swift in Sources */,

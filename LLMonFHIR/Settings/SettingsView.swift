@@ -15,6 +15,7 @@ struct SettingsView: View {
     private enum SettingsDestinations {
         case openAIKey
         case openAIModel
+        case resourceSelection
         case promptSummary
         case promptInterpretation
         case promptMultipleResourceInterpretation
@@ -31,7 +32,7 @@ struct SettingsView: View {
             List {
                 openAISettings
                 speechSettings
-                resourcesLimitSettings
+                resourcesSettings
                 promptsSettings
             }
                 .navigationTitle("SETTINGS_TITLE")
@@ -56,10 +57,10 @@ struct SettingsView: View {
         }
     }
     
-    private var resourcesLimitSettings: some View {
-        Section("SETTINGS_RESOURCES_LIMIT") {
-            Stepper(value: $resourceLimit, in: 10...500, step: 10) {
-                Text("RESOURCE_LIMIT_TEXT \(resourceLimit)")
+    private var resourcesSettings: some View {
+        Section("Resources Selection") {
+            NavigationLink(value: SettingsDestinations.resourceSelection) {
+                Text("Resource Selection")
             }
         }
     }
@@ -104,6 +105,8 @@ struct SettingsView: View {
                 ) {
                     path.removeLast()
                 }
+            case .resourceSelection:
+                ResourceSelection()
             case .promptSummary:
                 FHIRPromptSettingsView(promptType: .summary) {
                     path.removeLast()
