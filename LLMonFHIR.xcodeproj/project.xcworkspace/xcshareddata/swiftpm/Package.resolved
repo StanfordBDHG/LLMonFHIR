@@ -41,8 +41,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/StanfordSpezi/SpeziFHIR.git",
       "state" : {
-        "branch" : "feature/improveSetup",
-        "revision" : "bea228cf3d002c34d224adb7ae8d0dc71ec5177d"
+        "revision" : "82c771f7f2a48f58ca2ddaa875c5249e66eb4a6b",
+        "version" : "0.5.0"
       }
     },
     {
