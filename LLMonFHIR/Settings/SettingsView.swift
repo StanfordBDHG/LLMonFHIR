@@ -100,7 +100,7 @@ struct SettingsView: View {
             case .openAIModel:
                 OpenAIModelSelectionOnboardingStep(
                     actionText: "OPEN_AI_MODEL_SAVE_ACTION",
-                    models: [Model.gpt4, Model.gpt4_32k, Model.gpt4_1106_preview]
+                    models: [Model.gpt4, Model.gpt4_1106_preview]
                 ) {
                     path.removeLast()
                 }

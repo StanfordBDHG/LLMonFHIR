@@ -12,11 +12,12 @@ import SpeziFHIR
 import SpeziFHIRInterpretation
 import SpeziLocalStorage
 import SpeziOpenAI
+import SpeziViews
 import SwiftUI
 
 
 private enum FHIRMultipleResourceInterpreterConstants {
-    static let storageKey = "FHIRMultipleResourceInterpreter.Cache"
+    static let chat = "FHIRMultipleResourceInterpreter.chat"
 }
 
 
@@ -25,59 +26,56 @@ class FHIRMultipleResourceInterpreter {
     private let localStorage: LocalStorage
     private let openAIModel: OpenAIModel
     private let fhirStore: FHIRStore
+    private let resourceSummary: FHIRResourceSummary
+    
+    var chat: [Chat] = []
+    var viewState: ViewState = .idle
     
     
-    var interpretation: String? {
-        didSet {
-            do {
-                try localStorage.store(interpretation, storageKey: FHIRMultipleResourceInterpreterConstants.storageKey)
-            } catch {
-                print(error)
-            }
-        }
-    }
-    
-    
-    required init(localStorage: LocalStorage, openAIModel: OpenAIModel, fhirStore: FHIRStore) {
+    required init(localStorage: LocalStorage, openAIModel: OpenAIModel, fhirStore: FHIRStore, resourceSummary: FHIRResourceSummary) {
         self.localStorage = localStorage
         self.openAIModel = openAIModel
         self.fhirStore = fhirStore
+        self.resourceSummary = resourceSummary
+        
+        chat = (try? localStorage.read(storageKey: FHIRMultipleResourceInterpreterConstants.chat)) ?? []
     }
     
     
-    func configure() {
-        guard let cachedInterpretation: String = try? localStorage.read(
-            storageKey: FHIRMultipleResourceInterpreterConstants.storageKey
-        ) else {
-            return
-        }
-        self.interpretation = cachedInterpretation
+    func resetChat() {
+        chat = []
+        queryLLM()
     }
     
-    func interpretMultipleResources(resources: [FHIRResource]) async throws {
-        guard interpretation == nil else {
+    func queryLLM() {
+        guard viewState == .idle, chat.last?.role == .user || !chat.contains(where: { $0.role == .assistant }) else {
             return
         }
         
-        let chatStreamResults = try await openAIModel.queryAPI(withChat: [systemPrompt(forResources: resources)])
-        
-        for try await chatStreamResult in chatStreamResults {
-            for choice in chatStreamResult.choices {
-                interpretation = (interpretation ?? "") + (choice.delta.content ?? "")
+        Task {
+            do {
+                viewState = .processing
+                
+                if chat.isEmpty {
+                    chat = [
+                        systemPrompt(forResources: fhirStore.allResources),
+                        Chat(role: .system, content: String(localized: "FUNCTION_CONTEXT") + fhirStore.allResourcesFunctionCallIdentifier.rawValue)
+                    ]
+                }
+                
+                try await processFunctionCalling()
+                try await processChatStreamResults()
+                
+                try localStorage.store(chat, storageKey: FHIRMultipleResourceInterpreterConstants.chat)
+                
+                viewState = .idle
+            } catch let error as APIErrorResponse {
+                viewState = .error(error)
+            } catch {
+                viewState = .error(error.localizedDescription)
             }
         }
     }
-    
-    func chat(resources: [FHIRResource]) -> [Chat] {
-        var chat = [systemPrompt(forResources: resources)]
-        
-        if let interpretation = interpretation {
-            chat.append(Chat(role: .assistant, content: interpretation))
-        }
-        
-        return chat
-    }
-
     
     private func systemPrompt(forResources resources: [FHIRResource]) -> Chat {
         var resourceCategories = String()
@@ -90,6 +88,110 @@ class FHIRMultipleResourceInterpreter {
             role: .system,
             content: FHIRPrompt.interpretMultipleResources.prompt(withFHIRResource: resourceCategories)
         )
+    }
+    
+    private func processFunctionCalling() async throws {
+        let functionCallOutputArray = try await getFunctionCallOutputArray(fhirStore.allResourcesFunctionCallIdentifier)
+        await processFunctionCallOutputArray(functionCallOutputArray: functionCallOutputArray)
+    }
+    
+    private func getFunctionCallOutputArray(_ stringResourcesArray: [String]) async throws -> [String] {
+        let functions = [
+            ChatFunctionDeclaration(
+                name: "get_resource_titles",
+                description: String(localized: "FUNCTION_DESCRIPTION"),
+                parameters: JSONSchema(
+                    type: .object,
+                    properties: [
+                        "resources": .init(type: .string, description: String(localized: "PARAMETER_DESCRIPTION"), enumValues: stringResourcesArray)
+                    ],
+                    required: ["resources"]
+                )
+            )
+        ]
+        
+        let chatStreamResults = try await openAIModel.queryAPI(withChat: chat, withFunction: functions)
+        
+        
+        class ChatFunctionCall {
+            var name: String = ""
+            var arguments: String = ""
+            var finishReason: String = ""
+        }
+        
+        let functionCall = ChatFunctionCall()
+        
+        for try await chatStreamResult in chatStreamResults {
+            for choice in chatStreamResult.choices {
+                if let deltaName = choice.delta.name {
+                    functionCall.name += deltaName
+                }
+                if let deltaArguments = choice.delta.functionCall?.arguments {
+                    functionCall.arguments += deltaArguments
+                }
+                if let finishReason = choice.finishReason {
+                    functionCall.finishReason += finishReason
+                    if finishReason == "get_resource_titles" { break }
+                }
+            }
+        }
+        
+        guard functionCall.finishReason == "function_call" else {
+            return []
+        }
+        
+        let trimmedArguments = functionCall.arguments.trimmingCharacters(in: .whitespacesAndNewlines)
+        
+        guard let resourcesRange = trimmedArguments.range(of: "\"resources\": \"([^\"]+)\"", options: .regularExpression) else {
+            return []
+        }
+        
+        return trimmedArguments[resourcesRange]
+            .replacingOccurrences(of: "\"resources\": \"", with: "")
+            .replacingOccurrences(of: "\"", with: "")
+            .components(separatedBy: ",")
+    }
+    
+    private func processFunctionCallOutputArray(functionCallOutputArray: [String]) async {
+        for resource in functionCallOutputArray {
+            guard let matchingResource = fhirStore.allResources.first(where: { $0.functionCallIdentifier == resource }) else {
+                continue
+            }
+            
+            guard let resourceDescription = try? await resourceSummary.summarize(resource: matchingResource) else {
+                continue
+            }
+            
+            let functionContent = """
+            This is the description of the following resource: \(resource).
+            Use this health record to answer the users question ONLY IF the health record is applicable to the question.
+            
+            \(resourceDescription)
+            """
+            
+            chat.append(Chat(role: .function, content: functionContent, name: "get_resource_titles"))
+        }
+    }
+    
+    private func processChatStreamResults() async throws {
+        let chatStreamResults = try await openAIModel.queryAPI(withChat: chat)
+        
+        for try await chatStreamResult in chatStreamResults {
+            for choice in chatStreamResult.choices {
+                guard let newContent = choice.delta.content else {
+                    continue
+                }
+                
+                if chat.last?.role == .assistant, let previousContent = chat.last?.content {
+                    chat[chat.count - 1] = Chat(
+                        role: .assistant,
+                        content: previousContent + newContent
+                    )
+                } else {
+                    chat.append(Chat(role: .assistant, content: newContent))
+                }
+            }
+        }
     }
 }
 

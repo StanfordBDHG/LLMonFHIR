@@ -16,12 +16,10 @@ import SpeziViews
 import SwiftUI
 
 struct FHIRResourcesView: View {
-    @Environment(FHIRMultipleResourceInterpreter.self) private var fhirMultipleResourceInterpreter
     @Environment(FHIRStore.self) private var fhirStore
         
     @State private var showMultipleResourcesChat = false
     @State private var searchText = ""
-    @State private var viewState: ViewState = .idle
     
     
     var body: some View {
@@ -44,27 +42,25 @@ struct FHIRResourcesView: View {
                 fhirStore.loadMockResources()
             }
             .sheet(isPresented: $showMultipleResourcesChat) {
-                OpenAIChatView(
-                    chat: fhirMultipleResourceInterpreter.chat(resources: fhirStore.allResources),
-                    title: "All FHIR Resources",
-                    enableFunctionCalling: true
-                )
+                MultipleResourcesChatView()
             }
-            .viewStateAlert(state: $viewState)
             .navigationTitle("FHIR_RESOURCES_TITLE")
     }
     
     
     @ViewBuilder private var chatAllResourceSection: some View {
         Section {
-            OnboardingActionsView(
-                "CHAT_WITH_ALL_RESOURCES",
+            Button(
                 action: {
-                    await interpretMultipleResources()
                     showMultipleResourcesChat.toggle()
+                },
+                label: {
+                    Text("CHAT_WITH_ALL_RESOURCES")
+                        .frame(maxWidth: .infinity, minHeight: 38)
                 }
             )
-            .padding(-20)
+                .buttonStyle(.borderedProminent)
+                .padding(-20)
         }
     }
     
@@ -100,17 +96,5 @@ struct FHIRResourcesView: View {
                 }
             }
         )
-    }
-    
-    private func interpretMultipleResources() async {
-        do {
-            viewState = .processing
-            try await fhirMultipleResourceInterpreter.interpretMultipleResources(resources: fhirStore.allResources)
-            viewState = .idle
-        } catch let error as APIErrorResponse {
-            viewState = .error(error)
-        } catch {
-            viewState = .error(error.localizedDescription)
-        }
     }
 }

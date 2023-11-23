@@ -30,7 +30,8 @@ class FHIRInterpretationModule: Module {
         multipleResourceInterpreter = FHIRMultipleResourceInterpreter(
             localStorage: localStorage,
             openAIModel: openAI.model,
-            fhirStore: fhirStore
+            fhirStore: fhirStore,
+            resourceSummary: resourceSummary
         )
     }
 }

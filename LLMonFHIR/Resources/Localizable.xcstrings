@@ -1,6 +1,28 @@
 {
   "sourceLanguage" : "en",
   "strings" : {
+    "All FHIR Resources" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "All FHIR Resources"
+          }
+        }
+      }
+    },
+    "Cancel" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Cancel"
+          }
+        }
+      }
+    },
     "CHAT_WITH_ALL_RESOURCES" : {
       "comment" : "MARK: Chat with all resources",
       "localizations" : {
@@ -70,6 +92,9 @@
           }
         }
       }
+    },
+    "Close" : {
+
     },
     "Conditions" : {
       "localizations" : {
@@ -681,40 +706,6 @@
         }
       }
     },
-    "FHIR_RESOURCES_INTERPRETATION_LEARN_MORE_BUTTON" : {
-      "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Mehr erfahren ..."
-          }
-        },
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Learn More ..."
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Saber más ..."
-          }
-        },
-        "fr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "En savoir plus..."
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "了解更多..."
-          }
-        }
-      }
-    },
     "FHIR_RESOURCES_INTERPRETATION_LOADING" : {
       "localizations" : {
         "de" : {
@@ -1264,6 +1255,9 @@
         }
       }
     },
+    "LLM on FHIR" : {
+
+    },
     "Medications" : {
       "localizations" : {
         "en" : {
@@ -1402,6 +1396,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Procedures"
+          }
+        }
+      }
+    },
+    "Reset Chat" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Reset Chat"
           }
         }
       }
@@ -1799,22 +1803,22 @@
         }
       }
     },
-    "SPEAKER_DISABLED" : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Text to speech is disabled, press to enable text to speech."
-          }
-        }
-      }
-    },
-    "SPEAKER_ENABLED" : {
+    "Text to speech is disabled, press to enable text to speech." : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Text to speech is enabled, press to disable text to speech."
+          }
+        }
+      }
+    },
+    "Text to speech is enabled, press to disable text to speech." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Text to speech is disabled, press to enable text to speech."
           }
         }
       }

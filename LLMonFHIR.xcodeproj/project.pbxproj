@@ -50,7 +50,7 @@
 		2FE5DC9929EDD9D9004B9AB4 /* XCTestExtensions in Frameworks */ = {isa = PBXBuildFile; productRef = 2FE5DC9829EDD9D9004B9AB4 /* XCTestExtensions */; };
 		2FE5DC9C29EDD9EF004B9AB4 /* XCTHealthKit in Frameworks */ = {isa = PBXBuildFile; productRef = 2FE5DC9B29EDD9EF004B9AB4 /* XCTHealthKit */; };
 		433352442A5C96090043A440 /* FHIRMultipleResourceInterpreter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 433352432A5C96090043A440 /* FHIRMultipleResourceInterpreter.swift */; };
-		43B9CDCD2A5E6E7C002F13A6 /* OpenAIChatView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43B9CDCC2A5E6E7C002F13A6 /* OpenAIChatView.swift */; };
+		43B9CDCD2A5E6E7C002F13A6 /* MultipleResourcesChatView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43B9CDCC2A5E6E7C002F13A6 /* MultipleResourcesChatView.swift */; };
 		653A2551283387FE005D4D48 /* LLMonFHIR.swift in Sources */ = {isa = PBXBuildFile; fileRef = 653A2550283387FE005D4D48 /* LLMonFHIR.swift */; };
 		653A255528338800005D4D48 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 653A255428338800005D4D48 /* Assets.xcassets */; };
 		653A256228338800005D4D48 /* LLMonFHIRTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 653A256128338800005D4D48 /* LLMonFHIRTests.swift */; };
@@ -104,7 +104,7 @@
 		2FE5DC4329EDD7F2004B9AB4 /* Bundle+Image.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Bundle+Image.swift"; sourceTree = "<group>"; };
 		2FE5DC4429EDD7F2004B9AB4 /* CodableArray+RawRepresentable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CodableArray+RawRepresentable.swift"; sourceTree = "<group>"; };
 		433352432A5C96090043A440 /* FHIRMultipleResourceInterpreter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FHIRMultipleResourceInterpreter.swift; sourceTree = "<group>"; };
-		43B9CDCC2A5E6E7C002F13A6 /* OpenAIChatView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenAIChatView.swift; sourceTree = "<group>"; };
+		43B9CDCC2A5E6E7C002F13A6 /* MultipleResourcesChatView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultipleResourcesChatView.swift; sourceTree = "<group>"; };
 		653A254D283387FE005D4D48 /* LLMonFHIR.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LLMonFHIR.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		653A2550283387FE005D4D48 /* LLMonFHIR.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LLMonFHIR.swift; sourceTree = "<group>"; };
 		653A255428338800005D4D48 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -189,7 +189,7 @@
 			children = (
 				2FD8E83A2A1AD10300357F4E /* FHIRResourcesView.swift */,
 				2FD8E83C2A1AE24F00357F4E /* InspectResourceView.swift */,
-				43B9CDCC2A5E6E7C002F13A6 /* OpenAIChatView.swift */,
+				43B9CDCC2A5E6E7C002F13A6 /* MultipleResourcesChatView.swift */,
 				2F036EA42B0ED1F0009B2745 /* FHIRResourcesInstructionsView.swift */,
 			);
 			path = "FHIR Display";
@@ -500,7 +500,7 @@
 				2F0F90BA2A1E6556006D7E03 /* SettingsView.swift in Sources */,
 				2FD8E83B2A1AD10300357F4E /* FHIRResourcesView.swift in Sources */,
 				2F036EA12B0E4B22009B2745 /* FHIRInterpretationModule.swift in Sources */,
-				43B9CDCD2A5E6E7C002F13A6 /* OpenAIChatView.swift in Sources */,
+				43B9CDCD2A5E6E7C002F13A6 /* MultipleResourcesChatView.swift in Sources */,
 				2FE5DC4529EDD7F2004B9AB4 /* Binding+Negate.swift in Sources */,
 				2FC975A82978F11A00BA99FE /* Home.swift in Sources */,
 				2FE5DC3729EDD7CA004B9AB4 /* OnboardingFlow.swift in Sources */,

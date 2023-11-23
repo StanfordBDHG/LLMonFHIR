@@ -18,7 +18,6 @@ struct InspectResourceView: View {
     
     @State var interpreting: ViewState = .idle
     @State var loadingSummary: ViewState = .idle
-    @State var showResourceChat = false
     
     var resource: FHIRResource
     
@@ -32,13 +31,6 @@ struct InspectResourceView: View {
             .navigationTitle(resource.displayName)
             .viewStateAlert(state: $interpreting)
             .viewStateAlert(state: $loadingSummary)
-            .sheet(isPresented: $showResourceChat) {
-                OpenAIChatView(
-                    chat: fhirResourceInterpreter.chat(forResource: resource),
-                    title: resource.displayName,
-                    enableFunctionCalling: false
-                )
-            }
             .task {
                 interpret()
             }
@@ -69,7 +61,7 @@ struct InspectResourceView: View {
     }
     
     @ViewBuilder private var interpretationSection: some View {
-        Section("FHIR_RESOURCES_INTERPRETATION_SECTION") { // swiftlint:disable:this closure_body_length
+        Section("FHIR_RESOURCES_INTERPRETATION_SECTION") {
             if let interpretation = fhirResourceInterpreter.cachedInterpretation(forResource: resource), !interpretation.isEmpty {
                 Text(interpretation)
                     .multilineTextAlignment(.leading)
@@ -78,22 +70,6 @@ struct InspectResourceView: View {
                             interpret(forceReload: true)
                         }
                     }
-                if interpreting != .processing {
-                    Button(
-                        action: {
-                            showResourceChat.toggle()
-                        },
-                        label: {
-                            HStack {
-                                Image(systemName: "message.fill")
-                                    .accessibilityHidden(true)
-                                Text("FHIR_RESOURCES_INTERPRETATION_LEARN_MORE_BUTTON")
-                            }
-                                .frame(maxWidth: .infinity, minHeight: 40)
-                        }
-                    )
-                        .buttonStyle(.borderedProminent)
-                }
             } else if interpreting == .processing {
                 VStack(alignment: .center) {
                     Text("FHIR_RESOURCES_INTERPRETATION_LOADING")
