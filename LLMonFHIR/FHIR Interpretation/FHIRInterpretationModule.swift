@@ -24,7 +24,7 @@ class FHIRInterpretationModule: Module {
     @Model private var multipleResourceInterpreter: FHIRMultipleResourceInterpreter
     
     
-    func configure() async {
+    func configure() {
         resourceSummary = FHIRResourceSummary(localStorage: localStorage, openAIModel: openAI.model)
         resourceInterpreter = FHIRResourceInterpreter(localStorage: localStorage, openAIModel: openAI.model)
         multipleResourceInterpreter = FHIRMultipleResourceInterpreter(

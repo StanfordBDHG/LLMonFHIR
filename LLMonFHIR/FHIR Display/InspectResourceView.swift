@@ -140,7 +140,7 @@ struct InspectResourceView: View {
         
         Task {
             do {
-                try await fhirResourceInterpreter.summarize(resource: resource, forceReload: forceReload)
+                try await fhirResourceInterpreter.interpret(resource: resource, forceReload: forceReload)
                 interpreting = .idle
             } catch let error as APIErrorResponse {
                 loadingSummary = .error(error)

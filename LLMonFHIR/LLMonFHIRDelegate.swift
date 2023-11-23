@@ -16,7 +16,7 @@ import SwiftUI
 
 class LLMonFHIRDelegate: SpeziAppDelegate {
     override var configuration: Configuration {
-        Configuration(standard: FHIR()) {
+        Configuration(standard: LLMonFHIRStandard()) {
             if HKHealthStore.isHealthDataAvailable() {
                 healthKit
             }
