@@ -8,6 +8,7 @@
 
 import HealthKit
 import Spezi
+import SpeziFHIR
 import SpeziHealthKit
 import SpeziOpenAI
 import SwiftUI
@@ -15,14 +16,12 @@ import SwiftUI
 
 class LLMonFHIRDelegate: SpeziAppDelegate {
     override var configuration: Configuration {
-        Configuration(standard: FHIR()) {
+        Configuration(standard: LLMonFHIRStandard()) {
             if HKHealthStore.isHealthDataAvailable() {
                 healthKit
             }
-            OpenAIComponent(openAIModel: .gpt3_5Turbo0613)
-            FHIRResourceInterpreter()
-            FHIRMultipleResourceInterpreter()
-            FHIRResourceSummary()
+            OpenAIModule(openAIModel: .gpt4)
+            FHIRInterpretationModule()
         }
     }
     

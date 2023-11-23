@@ -14,8 +14,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/StanfordBDHG/HealthKitOnFHIR.git",
       "state" : {
-        "revision" : "fdf8e4543718a940643598e4bd5e750e9c4c5540",
-        "version" : "0.2.4"
+        "revision" : "825e96007d83ed83f81ee49eb3ebab29d7b7ba2f",
+        "version" : "0.2.5"
       }
     },
     {
@@ -23,8 +23,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/MacPaw/OpenAI",
       "state" : {
-        "revision" : "c45f3320ffa760f043c0239f724850c0e4f8bde5",
-        "version" : "0.2.4"
+        "revision" : "ac5892fd0de8d283362ddc30f8e9f1a0eaba8cc0",
+        "version" : "0.2.5"
       }
     },
     {
@@ -32,8 +32,26 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/StanfordSpezi/Spezi",
       "state" : {
-        "revision" : "e75ea4d241b6eb611ca4c1c25926097cf324ce37",
-        "version" : "0.7.3"
+        "revision" : "092eabc50a3600d8a03b43ad0d2dcd02914b223f",
+        "version" : "0.8.1"
+      }
+    },
+    {
+      "identity" : "spezifhir",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/StanfordSpezi/SpeziFHIR.git",
+      "state" : {
+        "revision" : "82c771f7f2a48f58ca2ddaa875c5249e66eb4a6b",
+        "version" : "0.5.0"
+      }
+    },
+    {
+      "identity" : "spezifoundation",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/StanfordSpezi/SpeziFoundation",
+      "state" : {
+        "revision" : "683c66f922a4cfe0882c4a86a43854f613b48541",
+        "version" : "0.1.0"
       }
     },
     {
@@ -41,8 +59,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/StanfordSpezi/SpeziHealthKit.git",
       "state" : {
-        "revision" : "f8f664549e81c8fa107a1fff616e0eaca6e8a6fa",
-        "version" : "0.3.1"
+        "revision" : "30e12a0f66bed98830dddd6ab2be06140d078aaa",
+        "version" : "0.4.0"
       }
     },
     {
@@ -50,8 +68,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/StanfordSpezi/SpeziML.git",
       "state" : {
-        "revision" : "a0707552d6c1baf1f3a3bae8bb45def5dcca7c5e",
-        "version" : "0.2.5"
+        "revision" : "786dbba6023feaedf59aeff2f92d324cc7afaaba",
+        "version" : "0.3.1"
       }
     },
     {
@@ -59,8 +77,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/StanfordSpezi/SpeziOnboarding.git",
       "state" : {
-        "revision" : "13efb08a3d4341352115e9e34aabe973c94496d3",
-        "version" : "0.5.2"
+        "revision" : "70d1a740a0da8a5bc83d95bcff177ebd3e7402c0",
+        "version" : "0.7.0"
       }
     },
     {
@@ -68,8 +86,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/StanfordSpezi/SpeziStorage",
       "state" : {
-        "revision" : "58f79a21291da6d2d2193275486fa3c69b4f31fa",
-        "version" : "0.4.3"
+        "revision" : "e9be3c2743e462894bf56d41339b040f4060b567",
+        "version" : "0.5.0"
       }
     },
     {
@@ -77,8 +95,17 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/StanfordSpezi/SpeziViews.git",
       "state" : {
-        "revision" : "4b7cc423fd823123d354ec1d541ca7d2e0a9d6e3",
-        "version" : "0.5.1"
+        "revision" : "eac443080926649d09a703483a6dd6f5a8bb7d51",
+        "version" : "0.6.2"
+      }
+    },
+    {
+      "identity" : "swift-collections",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/apple/swift-collections.git",
+      "state" : {
+        "revision" : "a902f1823a7ff3c9ab2fba0f992396b948eda307",
+        "version" : "1.0.5"
       }
     },
     {

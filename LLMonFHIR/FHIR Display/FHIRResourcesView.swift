@@ -8,215 +8,93 @@
 
 import ModelsR4
 import OpenAI
+import SpeziFHIR
+import SpeziFHIRInterpretation
 import SpeziOnboarding
 import SpeziOpenAI
 import SpeziViews
 import SwiftUI
 
 struct FHIRResourcesView: View {
-    @AppStorage(StorageKeys.onboardingInstructions) var onboardingInstructions = true
-
-    @State var resources: [String: [FHIRResource]] = [:]
-    @State var allResourcesArray: [FHIRResource] = []
-    @State var showSettings = false
-    @State var showMultipleResourcesChat = false
-    @State var interpretingMultipleResources = false
-    @State var searchText = ""
-    @State var viewState: ViewState = .idle
+    @Environment(FHIRStore.self) private var fhirStore
+        
+    @State private var showMultipleResourcesChat = false
+    @State private var searchText = ""
     
-
-    @EnvironmentObject var fhirMultipleResourceInterpreter: FHIRMultipleResourceInterpreter
-    @EnvironmentObject var fhirStandard: FHIR
-
+    
     var body: some View {
-        NavigationStack {
-            List {
-                instructionsView
+        List {
+            FHIRResourcesInstructionsView()
+            if searchText.isEmpty {
+                chatAllResourceSection
             }
-                .searchable(text: $searchText)
-                .navigationDestination(for: FHIRResource.self) { resource in
-                    InspectResourceView(resource: resource)
-                }
-                .onReceive(fhirStandard.objectWillChange) {
-                    if FeatureFlags.testMode {
-                        loadMockResources()
-                    } else {
-                        loadFHIRResources()
-                    }
-                }
-                .toolbar {
-                    settingsToolbarItem()
-                }
-                .sheet(isPresented: $showSettings) {
-                    SettingsView()
-                }
-                .sheet(isPresented: $showMultipleResourcesChat) {
-                    resourceChatView
-                }
-                .viewStateAlert(state: $viewState)
-                .navigationTitle("FHIR_RESOURCES_TITLE")
+            if fhirStore.allResources.filterByDisplayName(with: searchText).isEmpty {
+                Text("FHIR_RESOURCES_EMPTY_SEARCH_MESSAGE")
+            } else {
+                resourcesSection
+            }
         }
-    }
-    
-    @ViewBuilder private var resourceChatView: some View {
-        OpenAIChatView(
-            chat: fhirMultipleResourceInterpreter.chat(resources: allResourcesArray),
-            title: "All FHIR Resources",
-            enableFunctionCalling: true
-        )
+            .searchable(text: $searchText)
+            .navigationDestination(for: FHIRResource.self) { resource in
+                InspectResourceView(resource: resource)
+            }
+            .task {
+                fhirStore.loadMockResources()
+            }
+            .sheet(isPresented: $showMultipleResourcesChat) {
+                MultipleResourcesChatView()
+            }
+            .navigationTitle("FHIR_RESOURCES_TITLE")
     }
     
     
     @ViewBuilder private var chatAllResourceSection: some View {
         Section {
-            OnboardingActionsView(
-                "CHAT_WITH_ALL_RESOURCES",
-                action: {
-                    allResourcesArray = await fhirStandard.resources
-                    await interpretMultipleResources()
-                    showMultipleResourcesChat.toggle()
-                }
-            )
-            .padding(-20)
-        }
-    }
-
-    @ViewBuilder private var instructionsView: some View {
-        if resources.isEmpty {
-            VStack(alignment: .center) {
-                Image(systemName: "doc.text.magnifyingglass")
-                    .accessibilityHidden(true)
-                    .font(.system(size: 90))
-                    .foregroundColor(.accentColor)
-                    .padding(.vertical, 8)
-                Text("FHIR_RESOURCES_VIEW_NO_RESOURCES")
-                    .frame(maxWidth: .infinity)
-                    .multilineTextAlignment(.leading)
-            }
-        } else if onboardingInstructions {
-            VStack(alignment: .center) {
-                HStack {
-                    Spacer()
-                    Button(
-                        action: {
-                            withAnimation {
-                                onboardingInstructions = false
-                            }
-                        },
-                        label: {
-                            Image(systemName: "xmark")
-                                .accessibilityLabel(Text("DISMISS_ONBOARDING_HINT"))
-                                .foregroundColor(.secondary)
-                        }
-                    )
-                }
-                    .padding(.horizontal, -8)
-                Image(systemName: "hand.wave.fill")
-                    .accessibilityHidden(true)
-                    .font(.system(size: 75))
-                    .foregroundColor(.accentColor)
-                    .padding(.bottom, 8)
-                Text("FHIR_RESOURCES_VIEW_INSTRUCTION")
-                    .frame(maxWidth: .infinity)
-                    .multilineTextAlignment(.leading)
-            }
-        } else {
-            EmptyView()
-        }
-        if filteredResourceKeys.isEmpty {
-            Text("FHIR_RESOURCES_EMPTY_SEARCH_MESSAGE")
-        } else {
-            chatAllResourceSection
-            ForEach(filteredResourceKeys, id: \.self) { resourceType in
-                Section(resourceType) {
-                    resources(for: resourceType)
-                }
-            }
-        }
-    }
-
-    private var filteredResourceKeys: [String] {
-        resources.keys.sorted().filter { resourceType in
-            guard let resourceArray = resources[resourceType] else {
-                return false
-            }
-            return !resourceArray.filterByDisplayName(with: searchText).isEmpty
-        }
-    }
-
-    func settingsToolbarItem() -> some ToolbarContent {
-        ToolbarItem(placement: .primaryAction) {
             Button(
                 action: {
-                    showSettings.toggle()
+                    showMultipleResourcesChat.toggle()
                 },
                 label: {
-                    Image(systemName: "gear")
-                        .accessibilityLabel(Text("SETTINGS"))
+                    Text("CHAT_WITH_ALL_RESOURCES")
+                        .frame(maxWidth: .infinity, minHeight: 38)
                 }
             )
+                .buttonStyle(.borderedProminent)
+                .padding(-20)
         }
     }
     
-    private func interpretMultipleResources() async {
-        interpretingMultipleResources = true
+    @ViewBuilder private var resourcesSection: some View {
+        section(for: \.conditions, sectionName: String(localized: "Conditions"))
+        section(for: \.diagnostics, sectionName: String(localized: "Diagnostics"))
+        section(for: \.encounters, sectionName: String(localized: "Encounters"))
+        section(for: \.immunizations, sectionName: String(localized: "Immunizations"))
+        section(for: \.medications, sectionName: String(localized: "Medications"))
+        section(for: \.observations, sectionName: String(localized: "Observations"))
+        section(for: \.procedures, sectionName: String(localized: "Procedures"))
+        section(for: \.otherResources, sectionName: String(localized: "Other Resources"))
+    }
+    
+    
+    private func section(for keyPath: KeyPath<FHIRStore, [FHIRResource]>, sectionName: String) -> some View {
+        var resources = fhirStore[keyPath: keyPath]
         
-        do {
-            viewState = .processing
-            try await fhirMultipleResourceInterpreter.interpretMultipleResources(resources: fhirStandard.relevantResources)
-            viewState = .idle
-        } catch let error as APIErrorResponse {
-            viewState = .error(error)
-        } catch {
-            viewState = .error(error.localizedDescription)
+        if !searchText.isEmpty {
+            resources = resources.filterByDisplayName(with: searchText)
         }
-
-        interpretingMultipleResources = false
-    }
-
-    private func resources(for resourceType: String) -> some View {
-        let filteredResources = (resources[resourceType] ?? []).filterByDisplayName(with: searchText)
-
-        return ForEach(filteredResources) { resource in
-            NavigationLink(value: resource) {
-                ResourceSummaryView(resource: resource)
+        
+        guard !resources.isEmpty else {
+            return AnyView(EmptyView())
+        }
+        
+        return AnyView(
+            Section(sectionName) {
+                ForEach(resources) { resource in
+                    NavigationLink(value: resource) {
+                        FHIRResourceSummaryView(resource: resource)
+                    }
+                }
             }
-        }
-    }
-
-    private func loadMockResources() {
-        self.resources = [:]
-
-        let mockObservation = Observation(
-            code: CodeableConcept(coding: [Coding(code: "1234".asFHIRStringPrimitive())]),
-            issued: FHIRPrimitive<Instant>(try? Instant(date: .now)),
-            status: FHIRPrimitive(ObservationStatus.final)
         )
-
-        let mockFHIRResource = FHIRResource(
-            versionedResource: .r4(mockObservation),
-            displayName: "Mock Resource"
-        )
-
-        self.resources = ["Observation": [mockFHIRResource]]
-    }
-    
-    private func loadFHIRResources() {
-        _Concurrency.Task { @MainActor in
-            let resources = await fhirStandard.resources
-            self.resources = [:]
-            for resource in resources {
-                var currentResources = self.resources[resource.resourceType, default: []]
-                currentResources.append(resource)
-                self.resources[resource.resourceType] = currentResources
-            }
-        }
-    }
-}
-
-struct FHIRDisplay_Previews: PreviewProvider {
-    static var previews: some View {
-        FHIRResourcesView()
-            .environmentObject(FHIR())
     }
 }

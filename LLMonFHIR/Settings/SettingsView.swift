@@ -6,6 +6,7 @@
 // SPDX-License-Identifier: MIT
 //
 
+import SpeziFHIRInterpretation
 import SpeziOpenAI
 import SwiftUI
 
@@ -97,15 +98,24 @@ struct SettingsView: View {
                     path.removeLast()
                 }
             case .openAIModel:
-                OpenAIModelSelectionOnboardingStep(actionText: "OPEN_AI_MODEL_SAVE_ACTION", models: [Model.gpt4, Model.gpt3_5Turbo0613]) {
+                OpenAIModelSelectionOnboardingStep(
+                    actionText: "OPEN_AI_MODEL_SAVE_ACTION",
+                    models: [Model.gpt4, Model.gpt4_1106_preview]
+                ) {
                     path.removeLast()
                 }
             case .promptSummary:
-                PromptSettingsView(promptType: .summary, path: $path)
+                FHIRPromptSettingsView(promptType: .summary) {
+                    path.removeLast()
+                }
             case .promptInterpretation:
-                PromptSettingsView(promptType: .interpretation, path: $path)
+                FHIRPromptSettingsView(promptType: .interpretation) {
+                    path.removeLast()
+                }
             case .promptMultipleResourceInterpretation:
-                PromptSettingsView(promptType: .interpretMultipleResources, path: $path)
+                FHIRPromptSettingsView(promptType: .interpretMultipleResources) {
+                    path.removeLast()
+                }
             }
         }
     }
