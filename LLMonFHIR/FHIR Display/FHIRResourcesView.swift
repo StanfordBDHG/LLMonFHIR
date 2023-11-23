@@ -25,35 +25,33 @@ struct FHIRResourcesView: View {
     
     
     var body: some View {
-        NavigationStack {
-            List {
-                FHIRResourcesInstructionsView()
-                if searchText.isEmpty {
-                    chatAllResourceSection
-                }
-                if fhirStore.allResources.filterByDisplayName(with: searchText).isEmpty {
-                    Text("FHIR_RESOURCES_EMPTY_SEARCH_MESSAGE")
-                } else {
-                    resourcesSection
-                }
+        List {
+            FHIRResourcesInstructionsView()
+            if searchText.isEmpty {
+                chatAllResourceSection
             }
-                .searchable(text: $searchText)
-                .navigationDestination(for: FHIRResource.self) { resource in
-                    InspectResourceView(resource: resource)
-                }
-                .task {
-                    fhirStore.loadMockResources()
-                }
-                .sheet(isPresented: $showMultipleResourcesChat) {
-                    OpenAIChatView(
-                        chat: fhirMultipleResourceInterpreter.chat(resources: fhirStore.allResources),
-                        title: "All FHIR Resources",
-                        enableFunctionCalling: true
-                    )
-                }
-                .viewStateAlert(state: $viewState)
-                .navigationTitle("FHIR_RESOURCES_TITLE")
+            if fhirStore.allResources.filterByDisplayName(with: searchText).isEmpty {
+                Text("FHIR_RESOURCES_EMPTY_SEARCH_MESSAGE")
+            } else {
+                resourcesSection
+            }
         }
+            .searchable(text: $searchText)
+            .navigationDestination(for: FHIRResource.self) { resource in
+                InspectResourceView(resource: resource)
+            }
+            .task {
+                fhirStore.loadMockResources()
+            }
+            .sheet(isPresented: $showMultipleResourcesChat) {
+                OpenAIChatView(
+                    chat: fhirMultipleResourceInterpreter.chat(resources: fhirStore.allResources),
+                    title: "All FHIR Resources",
+                    enableFunctionCalling: true
+                )
+            }
+            .viewStateAlert(state: $viewState)
+            .navigationTitle("FHIR_RESOURCES_TITLE")
     }
     
     
@@ -71,18 +69,18 @@ struct FHIRResourcesView: View {
     }
     
     @ViewBuilder private var resourcesSection: some View {
-        section(for: \.conditions)
-        section(for: \.diagnostics)
-        section(for: \.encounters)
-        section(for: \.immunizations)
-        section(for: \.medications)
-        section(for: \.observations)
-        section(for: \.otherResources)
-        section(for: \.procedures)
+        section(for: \.conditions, sectionName: String(localized: "Conditions"))
+        section(for: \.diagnostics, sectionName: String(localized: "Diagnostics"))
+        section(for: \.encounters, sectionName: String(localized: "Encounters"))
+        section(for: \.immunizations, sectionName: String(localized: "Immunizations"))
+        section(for: \.medications, sectionName: String(localized: "Medications"))
+        section(for: \.observations, sectionName: String(localized: "Observations"))
+        section(for: \.procedures, sectionName: String(localized: "Procedures"))
+        section(for: \.otherResources, sectionName: String(localized: "Other Resources"))
     }
     
     
-    private func section(for keyPath: KeyPath<FHIRStore, [FHIRResource]>) -> some View {
+    private func section(for keyPath: KeyPath<FHIRStore, [FHIRResource]>, sectionName: String) -> some View {
         var resources = fhirStore[keyPath: keyPath]
         
         if !searchText.isEmpty {
@@ -94,9 +92,11 @@ struct FHIRResourcesView: View {
         }
         
         return AnyView(
-            ForEach(resources) { resource in
-                NavigationLink(value: resource) {
-                    FHIRResourceSummaryView(resource: resource)
+            Section(sectionName) {
+                ForEach(resources) { resource in
+                    NavigationLink(value: resource) {
+                        FHIRResourceSummaryView(resource: resource)
+                    }
                 }
             }
         )

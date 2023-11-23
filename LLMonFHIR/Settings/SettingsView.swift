@@ -6,6 +6,7 @@
 // SPDX-License-Identifier: MIT
 //
 
+import SpeziFHIRInterpretation
 import SpeziOpenAI
 import SwiftUI
 
@@ -104,11 +105,17 @@ struct SettingsView: View {
                     path.removeLast()
                 }
             case .promptSummary:
-                PromptSettingsView(promptType: .summary, path: $path)
+                FHIRPromptSettingsView(promptType: .summary) {
+                    path.removeLast()
+                }
             case .promptInterpretation:
-                PromptSettingsView(promptType: .interpretation, path: $path)
+                FHIRPromptSettingsView(promptType: .interpretation) {
+                    path.removeLast()
+                }
             case .promptMultipleResourceInterpretation:
-                PromptSettingsView(promptType: .interpretMultipleResources, path: $path)
+                FHIRPromptSettingsView(promptType: .interpretMultipleResources) {
+                    path.removeLast()
+                }
             }
         }
     }

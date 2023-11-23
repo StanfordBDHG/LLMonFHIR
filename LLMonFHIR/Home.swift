@@ -15,13 +15,15 @@ struct HomeView: View {
     
     
     var body: some View {
-        FHIRResourcesView()
-            .toolbar {
-                settingsToolbarItem
-            }
-            .sheet(isPresented: $showSettings) {
-                SettingsView()
-            }
+        NavigationStack {
+            FHIRResourcesView()
+                .toolbar {
+                    settingsToolbarItem
+                }
+                .sheet(isPresented: $showSettings) {
+                    SettingsView()
+                }
+        }
     }
     
     

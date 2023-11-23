@@ -9,6 +9,7 @@
 import OpenAI
 import Spezi
 import SpeziFHIR
+import SpeziFHIRInterpretation
 import SpeziLocalStorage
 import SpeziOpenAI
 import SwiftUI
@@ -84,10 +85,30 @@ class FHIRMultipleResourceInterpreter {
         for resource in resources {
             resourceCategories += (resource.functionCallIdentifier + "\n")
         }
-
+        
         return Chat(
             role: .system,
-            content: Prompt.interpretMultipleResources.prompt.replacingOccurrences(of: Prompt.promptPlaceholder, with: resourceCategories)
+            content: FHIRPrompt.interpretMultipleResources.prompt(withFHIRResource: resourceCategories)
         )
     }
+}
+
+
+extension FHIRPrompt {
+    /// Prompt used to interpret multple FHIR resources
+    ///
+    /// This prompt is used by the ``FHIRMultipleResourceInterpreter``.
+    public static let interpretMultipleResources: FHIRPrompt = {
+        FHIRPrompt(
+            storageKey: "prompt.interpretMultipleResources",
+            localizedDescription: String(
+                localized: "Interpretation Prompt",
+                comment: "Title of the multiple resources interpretation prompt."
+            ),
+            defaultPrompt: String(
+                localized: "Interpretation Prompt Content",
+                comment: "Content of the multiple resources interpretation prompt."
+            )
+        )
+    }()
 }
