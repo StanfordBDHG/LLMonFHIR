@@ -32,6 +32,11 @@ class FHIRMultipleResourceInterpreter {
     var viewState: ViewState = .idle
     
     
+    private var functions: [ChatFunctionDeclaration] {
+        [LLMFunction.getResources(allResourcesFunctionCallIdentifier: fhirStore.allResourcesFunctionCallIdentifier)]
+    }
+    
+    
     required init(localStorage: LocalStorage, openAIModel: OpenAIModel, fhirStore: FHIRStore, resourceSummary: FHIRResourceSummary) {
         self.localStorage = localStorage
         self.openAIModel = openAIModel
@@ -58,13 +63,21 @@ class FHIRMultipleResourceInterpreter {
                 
                 if chat.isEmpty {
                     chat = [
-                        systemPrompt(forResources: fhirStore.allResources),
-                        Chat(role: .system, content: String(localized: "FUNCTION_CONTEXT") + fhirStore.allResourcesFunctionCallIdentifier.rawValue)
+                        Chat(
+                            role: .system,
+                            content: FHIRPrompt.interpretation.prompt
+                        ),
+                        Chat(
+                            role: .system,
+                            content: String(
+                                localized: "Content of the function context passed to the LLM",
+                                comment: "The list of possible titles will be appended to the end of this prompt."
+                            ) + fhirStore.allResourcesFunctionCallIdentifier.rawValue
+                        )
                     ]
                 }
                 
-                try await processFunctionCalling()
-                try await processChatStreamResults()
+                try await executeLLMQueries()
                 
                 try localStorage.store(chat, storageKey: FHIRMultipleResourceInterpreterConstants.chat)
                 
@@ -77,119 +90,90 @@ class FHIRMultipleResourceInterpreter {
         }
     }
     
-    private func systemPrompt(forResources resources: [FHIRResource]) -> Chat {
-        var resourceCategories = String()
-        
-        for resource in resources {
-            resourceCategories += (resource.functionCallIdentifier + "\n")
-        }
-        
-        return Chat(
-            role: .system,
-            content: FHIRPrompt.interpretMultipleResources.prompt(withFHIRResource: resourceCategories)
-        )
-    }
-    
-    private func processFunctionCalling() async throws {
-        let functionCallOutputArray = try await getFunctionCallOutputArray(fhirStore.allResourcesFunctionCallIdentifier)
-        await processFunctionCallOutputArray(functionCallOutputArray: functionCallOutputArray)
-    }
-    
-    private func getFunctionCallOutputArray(_ stringResourcesArray: [String]) async throws -> [String] {
-        let functions = [
-            ChatFunctionDeclaration(
-                name: "get_resource_titles",
-                description: String(localized: "FUNCTION_DESCRIPTION"),
-                parameters: JSONSchema(
-                    type: .object,
-                    properties: [
-                        "resources": .init(type: .string, description: String(localized: "PARAMETER_DESCRIPTION"), enumValues: stringResourcesArray)
-                    ],
-                    required: ["resources"]
-                )
-            )
-        ]
-        
-        let chatStreamResults = try await openAIModel.queryAPI(withChat: chat, withFunction: functions)
-        
-        
-        class ChatFunctionCall {
-            var name: String = ""
-            var arguments: String = ""
-            var finishReason: String = ""
-        }
-        
-        let functionCall = ChatFunctionCall()
-        
-        for try await chatStreamResult in chatStreamResults {
-            for choice in chatStreamResult.choices {
-                if let deltaName = choice.delta.name {
-                    functionCall.name += deltaName
-                }
-                if let deltaArguments = choice.delta.functionCall?.arguments {
-                    functionCall.arguments += deltaArguments
-                }
-                if let finishReason = choice.finishReason {
-                    functionCall.finishReason += finishReason
-                    if finishReason == "get_resource_titles" { break }
-                }
-            }
-        }
-        
-        guard functionCall.finishReason == "function_call" else {
-            return []
-        }
-        
-        let trimmedArguments = functionCall.arguments.trimmingCharacters(in: .whitespacesAndNewlines)
-        
-        guard let resourcesRange = trimmedArguments.range(of: "\"resources\": \"([^\"]+)\"", options: .regularExpression) else {
-            return []
-        }
-        
-        return trimmedArguments[resourcesRange]
-            .replacingOccurrences(of: "\"resources\": \"", with: "")
-            .replacingOccurrences(of: "\"", with: "")
-            .components(separatedBy: ",")
-    }
-    
-    private func processFunctionCallOutputArray(functionCallOutputArray: [String]) async {
-        for resource in functionCallOutputArray {
-            guard let matchingResource = fhirStore.allResources.first(where: { $0.functionCallIdentifier == resource }) else {
-                continue
-            }
+    private func executeLLMQueries() async throws {
+        while true {
+            let chatStreamResults = try await openAIModel.queryAPI(withChat: chat, withFunction: functions)
             
-            guard let resourceDescription = try? await resourceSummary.summarize(resource: matchingResource) else {
-                continue
-            }
+            let currentMessageCount = chat.count
+            var llmStreamResults: [LLMStreamResult] = []
             
-            let functionContent = """
-            This is the description of the following resource: \(resource).
-            Use this health record to answer the users question ONLY IF the health record is applicable to the question.
-            
-            \(resourceDescription)
-            """
-            
-            chat.append(Chat(role: .function, content: functionContent, name: "get_resource_titles"))
-        }
-    }
-    
-    private func processChatStreamResults() async throws {
-        let chatStreamResults = try await openAIModel.queryAPI(withChat: chat)
-        
-        for try await chatStreamResult in chatStreamResults {
-            for choice in chatStreamResult.choices {
-                guard let newContent = choice.delta.content else {
-                    continue
+            for try await chatStreamResult in chatStreamResults {
+                // Parse the different elements in mutable llm stream results.
+                for choice in chatStreamResult.choices {
+                    let existingLLMStreamResult = llmStreamResults.first(where: { $0.id == choice.index })
+                    let llmStreamResult: LLMStreamResult
+                    
+                    if let existingLLMStreamResult {
+                        llmStreamResult = existingLLMStreamResult
+                    } else {
+                        llmStreamResult = LLMStreamResult(id: choice.index)
+                        llmStreamResults.append(llmStreamResult)
+                    }
+                    
+                    llmStreamResult.append(choice: choice)
                 }
                 
-                if chat.last?.role == .assistant, let previousContent = chat.last?.content {
-                    chat[chat.count - 1] = Chat(
+                // Append assistant messages during the streaming to ensure that they are presented in the UI.
+                // Limitation: We currently don't really handle multiple llmStreamResults, messages could overwritten.
+                for llmStreamResult in llmStreamResults where llmStreamResult.role == .assistant && !(llmStreamResult.content?.isEmpty ?? true) {
+                    let newMessage = Chat(
                         role: .assistant,
-                        content: previousContent + newContent
+                        content: llmStreamResult.content
                     )
-                } else {
-                    chat.append(Chat(role: .assistant, content: newContent))
+                    
+                    if chat.indices.contains(currentMessageCount) {
+                        chat[currentMessageCount] = newMessage
+                    } else {
+                        chat.append(newMessage)
+                    }
                 }
+            }
+            
+            let functionCalls = llmStreamResults.compactMap { $0.functionCall }
+            
+            // Exit the while loop if we don't have any function calls.
+            guard !functionCalls.isEmpty else {
+                break
+            }
+            
+            for functionCall in functionCalls {
+                print("Function Call - Name: \(functionCall.name ?? ""), Arguments: \(functionCall.arguments ?? "")")
+                
+                switch functionCall.name {
+                case LLMFunction.getResourcesName:
+                    callGetResources(functionCall: functionCall)
+                default:
+                    break
+                }
+            }
+        }
+    }
+    
+    
+    private func callGetResources(functionCall: LLMStreamResult.FunctionCall) {
+        struct Response: Codable {
+            let resources: String
+        }
+            
+        guard let jsonData = functionCall.arguments?.data(using: .utf8),
+              let response = try? JSONDecoder().decode(Response.self, from: jsonData) else {
+            return
+        }
+        
+        let requestedResources = response.resources.filter { !$0.isWhitespace }.components(separatedBy: ",")
+        
+        print("Parsed Resources: \(requestedResources)")
+        
+        for requestedResource in requestedResources {
+            if let resource = fhirStore.allResources.first(where: { $0.functionCallIdentifier == requestedResource }) {
+                print("Appending Resource: \(resource)")
+                chat.append(
+                    Chat(
+                        role: .function,
+                        content: String(localized: "This is the content of the requested \(requestedResource):\n\n\(resource.jsonDescription)"),
+                        name: LLMFunction.getResourcesName
+                    )
+                )
             }
         }
     }

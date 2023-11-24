@@ -49,7 +49,7 @@ struct FHIRResourcesView: View {
     }
     
     
-    @ViewBuilder private var chatAllResourceSection: some View {
+    @MainActor @ViewBuilder private var chatAllResourceSection: some View {
         Section {
             Button(
                 action: {

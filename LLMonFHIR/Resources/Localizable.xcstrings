@@ -106,6 +106,17 @@
         }
       }
     },
+    "Content of the function context passed to the LLM" : {
+      "comment" : "The list of possible titles will be appended to the end of this prompt.",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Use the function call 'get_resources' and provide a comma-separated list resource titles directly applicable to the question. The function will determine which FHIR health record titles are relevant to the user's question using this array: "
+          }
+        }
+      }
+    },
     "Diagnostics" : {
       "localizations" : {
         "en" : {
@@ -1016,34 +1027,35 @@
       }
     },
     "FUNCTION_CONTEXT" : {
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "Use the function call 'get_resource_titles' and provide a comma-separated list resource titles directly applicable to the question. The function will determine which FHIR health record titles are relevant to the user's question using this array: "
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Use the function call 'get_resource_titles' and provide a comma-separated list resource titles directly applicable to the question. The function will determine which FHIR health record titles are relevant to the user's question using this array: "
+            "value" : "Use the function call 'get_resources' and provide a comma-separated list resource titles directly applicable to the question. The function will determine which FHIR health record titles are relevant to the user's question using this array: "
           }
         },
         "es" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "Use the function call 'get_resource_titles' and provide a comma-separated list resource titles directly applicable to the question. The function will determine which FHIR health record titles are relevant to the user's question using this array: "
           }
         },
         "fr" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "Use the function call 'get_resource_titles' and provide a comma-separated list resource titles directly applicable to the question. The function will determine which FHIR health record titles are relevant to the user's question using this array: "
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "Use the function call 'get_resource_titles' and provide a comma-separated list resource titles directly applicable to the question. The function will determine which FHIR health record titles are relevant to the user's question using this array: "
           }
         }
@@ -1053,31 +1065,31 @@
       "localizations" : {
         "de" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "Call this function to determine the relevant FHIR health record titles based on the user's question. The titles must have the exact name as in the enumValues array given. A question can build upon a previous question and does not need to explicilty state a health record. The function will decide which health record titles are applicable to the question and it can return multiple titles or N/A if no category is suitable. Only output a record title/titles if it is directly applicable to the question otherwise output N/A. Always try to output the least amount of resource titles to be sent to the model to prevent exceeding the token limit."
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Call this function to determine the relevant FHIR health record titles based on the user's question. The titles must have the exact name as in the enumValues array given. A question can build upon a previous question and does not need to explicilty state a health record. The function will decide which health record titles are applicable to the question and it can return multiple titles or N/A if no category is suitable. Only output a record title/titles if it is directly applicable to the question otherwise output N/A. Always try to output the least amount of resource titles to be sent to the model to prevent exceeding the token limit."
+            "value" : "Call this function to determine the relevant FHIR health record titles based on the user's question. The titles must have the exact name defined in the initial prompt. \n\nPass in one or more titles separated by commas that you need access to the \"resources\" property as a string. \n\nAlways try to output the least amount of resource titles to be sent to the model to prevent exceeding the token limit."
           }
         },
         "es" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "Call this function to determine the relevant FHIR health record titles based on the user's question. The titles must have the exact name as in the enumValues array given. A question can build upon a previous question and does not need to explicilty state a health record. The function will decide which health record titles are applicable to the question and it can return multiple titles or N/A if no category is suitable. Only output a record title/titles if it is directly applicable to the question otherwise output N/A. Always try to output the least amount of resource titles to be sent to the model to prevent exceeding the token limit."
           }
         },
         "fr" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "Call this function to determine the relevant FHIR health record titles based on the user's question. The titles must have the exact name as in the enumValues array given. A question can build upon a previous question and does not need to explicilty state a health record. The function will decide which health record titles are applicable to the question and it can return multiple titles or N/A if no category is suitable. Only output a record title/titles if it is directly applicable to the question otherwise output N/A. Always try to output the least amount of resource titles to be sent to the model to prevent exceeding the token limit."
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "Call this function to determine the relevant FHIR health record titles based on the user's question. The titles must have the exact name as in the enumValues array given. A question can build upon a previous question and does not need to explicilty state a health record. The function will decide which health record titles are applicable to the question and it can return multiple titles or N/A if no category is suitable. Only output a record title/titles if it is directly applicable to the question otherwise output N/A. Always try to output the least amount of resource titles to be sent to the model to prevent exceeding the token limit."
           }
         }
@@ -1250,7 +1262,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "You are the LLM on FHIR application.\nYour task is to interpret FHIR resources from the user's clinical records.\nThroughout the conversation with the user, use the get_resource_titles function to obtain the FHIR health resources necessary to properly answer the users question. For example, if the user asks about their allergies, you must use get_resource_titles to output the FHIR resource titles for allergy records so you can then use them to answer the question. The output of get_resource_titles has to be the name of a resource or resources with the exact same title as in the list provided.\n\nAnswer the users question, the health record provided is not always related. The end goal is to answer the users question in the best way possible.\n\nInterpret the resources by explaining its data relevant to the user's health.\nExplain the relevant medical context in a language understandable by a user who is not a medical professional.\nYou should provide factual and precise information in a compact summary in short responses.\n\nTell the user that they can ask any question about their health records and then create a short summary of the main categories of health records of the user which you have access to. These are the resource titles:\n{{FHIR_RESOURCE}}\n\nImmediately return a short summary of the users health records to start the conversation.\nThe initial summary should be a short and simple summary with the following specifications:\n1. Short summary of the health records categories\n2. 5th grade reading level\n3. End with a question asking user if they have any questions. Make sure that this question is not generic but specific to their health records.\nDo not introduce yourself at the beginning, and start with your interpretation.\nMake sure your response is in the same language the user writes to you in.\nThe tense should be present."
+            "value" : "You are the LLM on FHIR application.\nYour task is to interpret FHIR resources from the user's clinical records.\n\nThroughout the conversation with the user, use the \"get_resources\" function to obtain the FHIR health resources necessary to properly answer the users question. For example, if the user asks about their allergies, you must use the \"get_resources\" function to output the FHIR resource titles for allergy records so you can then use them to answer the question. The end goal is to answer the users question in the best way possible while taking the FHIR resources obtained using \"get_resources\" into consideration.\n\nThese are the resource titles of the resources you can request using \"get_resources\":\n{{FHIR_RESOURCE}}\n\nInterpret the resources by explaining its data relevant to the user's health.\nExplain the relevant medical context in a language understandable by a user who is not a medical professional, ideally in a 5th grade reading level.\nYou should provide factual and precise information in a compact summary in short responses.\n\nDo not introduce yourself at the beginning, and start with your interpretation. \n\nImmediately return a short summary of the users health records to start the conversation.\nThe initial summary should be a short and simple summary and NOT just list the titles of the records.\nEnd with a question asking user if they have any questions. Make sure that this question is not generic but specific to their health records.\nMake sure your response is in the same language the user writes to you in.\nThe tense should be present."
           }
         }
       }
@@ -1360,31 +1372,31 @@
       "localizations" : {
         "de" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "Provide a comma-separated list of all the FHIR health record titles with the EXACT SAME NAME AS GIVEN IN THE LIST that are applicable to answer the user's questions. These titles have to be the SAME NAME AS GIVEN IN THE ARRAY provided. If multiple titles apply, separate each title by a comma and space (e.g for multiple medications). Try to provide all the required titles to allow yourself to fully answer the question in a comprehensive manner. If the question doesn't fit into any category, output N/A. For example, if a user asks: 'Tell me more about my medications,' then output all titles associated with medications. A question can build upon a previous question and does not need to be explicit. e.g. if a user says prescribe, this is associated with medication. Do not exceed token limit with outputted titles."
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Provide a comma-separated list of all the FHIR health record titles with the EXACT SAME NAME AS GIVEN IN THE LIST that are applicable to answer the user's questions. These titles have to be the SAME NAME AS GIVEN IN THE ARRAY provided. If multiple titles apply, separate each title by a comma and space (e.g for multiple medications). Try to provide all the required titles to allow yourself to fully answer the question in a comprehensive manner. If the question doesn't fit into any category, output N/A. For example, if a user asks: 'Tell me more about my medications,' then output all titles associated with medications. A question can build upon a previous question and does not need to be explicit. e.g. if a user says prescribe, this is associated with medication. Do not exceed token limit with outputted titles."
+            "value" : "Provide a comma-separated list of all the FHIR health record titles with the EXACT SAME NAME AS GIVEN IN THE LIST that are applicable to answer the user's questions. These titles have to be the SAME NAME AS GIVEN IN THE ARRAY provided. If multiple titles apply, separate each title by a comma and space (e.g for multiple medications). \n\nTry to provide all the required titles to allow yourself to fully answer the question in a comprehensive manner. \n\nFor example, if a user asks: 'Tell me more about my medications,' then output all titles associated with medications. A question can build upon a previous question and does not need to be explicit. e.g. if a user says prescribe, this is associated with medication. Do not exceed token limit with outputted titles."
           }
         },
         "es" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "Provide a comma-separated list of all the FHIR health record titles with the EXACT SAME NAME AS GIVEN IN THE LIST that are applicable to answer the user's questions. These titles have to be the SAME NAME AS GIVEN IN THE ARRAY provided. If multiple titles apply, separate each title by a comma and space (e.g for multiple medications). Try to provide all the required titles to allow yourself to fully answer the question in a comprehensive manner. If the question doesn't fit into any category, output N/A. For example, if a user asks: 'Tell me more about my medications,' then output all titles associated with medications. A question can build upon a previous question and does not need to be explicit. e.g. if a user says prescribe, this is associated with medication. Do not exceed token limit with outputted titles."
           }
         },
         "fr" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "Provide a comma-separated list of all the FHIR health record titles with the EXACT SAME NAME AS GIVEN IN THE LIST that are applicable to answer the user's questions. These titles have to be the SAME NAME AS GIVEN IN THE ARRAY provided. If multiple titles apply, separate each title by a comma and space (e.g for multiple medications). Try to provide all the required titles to allow yourself to fully answer the question in a comprehensive manner. If the question doesn't fit into any category, output N/A. For example, if a user asks: 'Tell me more about my medications,' then output all titles associated with medications. A question can build upon a previous question and does not need to be explicit. e.g. if a user says prescribe, this is associated with medication. Do not exceed token limit with outputted titles."
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "Provide a comma-separated list of all the FHIR health record titles with the EXACT SAME NAME AS GIVEN IN THE LIST that are applicable to answer the user's questions. These titles have to be the SAME NAME AS GIVEN IN THE ARRAY provided. If multiple titles apply, separate each title by a comma and space (e.g for multiple medications). Try to provide all the required titles to allow yourself to fully answer the question in a comprehensive manner. If the question doesn't fit into any category, output N/A. For example, if a user asks: 'Tell me more about my medications,' then output all titles associated with medications. A question can build upon a previous question and does not need to be explicit. e.g. if a user says prescribe, this is associated with medication. Do not exceed token limit with outputted titles."
           }
         }
@@ -1830,6 +1842,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Text to speech is disabled, press to enable text to speech."
+          }
+        }
+      }
+    },
+    "This is the content of the requested %@:\n\n%@" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "This is the content of the requested %1$@:\n\n%2$@"
           }
         }
       }
