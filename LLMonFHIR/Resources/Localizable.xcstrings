@@ -1,30 +1,7 @@
 {
   "sourceLanguage" : "en",
   "strings" : {
-    "All FHIR Resources" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "All FHIR Resources"
-          }
-        }
-      }
-    },
-    "Cancel" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Cancel"
-          }
-        }
-      }
-    },
     "CHAT_WITH_ALL_RESOURCES" : {
-      "comment" : "MARK: Chat with all resources",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -94,7 +71,14 @@
       }
     },
     "Close" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Close"
+          }
+        }
+      }
     },
     "Conditions" : {
       "localizations" : {
@@ -548,7 +532,6 @@
       }
     },
     "DISCLAIMER_TITLE" : {
-      "comment" : "MARK: Disclaimer",
       "extractionState" : "manual",
       "localizations" : {
         "de" : {
@@ -604,7 +587,6 @@
       }
     },
     "FHIR_RESOURCES_CHAT_CANCEL" : {
-      "comment" : "MARK: FHIR Resource Chat",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -786,7 +768,6 @@
       }
     },
     "FHIR_RESOURCES_INTERPRETATION_SECTION" : {
-      "comment" : "MARK: FHIR Resource Interpretation",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -924,7 +905,6 @@
       }
     },
     "FHIR_RESOURCES_TITLE" : {
-      "comment" : "MARK: - FHIR Resources Title",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -1022,41 +1002,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "\n没有可用的健康记录。\n\n请按照以下说明连接并从您的提供者检索健康记录：[Apple支持-在iPhone或iPod touch上查看健康记录](https://support.apple.com/en-us/HT208680)。\n\n您可以在[Apple支持-支持iPhone和iPod touch上的健康记录的机构](https://platform.openai.com/account/api-keys)找到支持的机构列表。\n\n如果您可以在Apple Health应用程序中查看您的健康记录，请确保LLM on FHIR可以访问您在Apple Health应用程序中的健康记录。您可以在Apple Health个人资料的隐私部分找到这些设置。\n"
-          }
-        }
-      }
-    },
-    "FUNCTION_CONTEXT" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Use the function call 'get_resource_titles' and provide a comma-separated list resource titles directly applicable to the question. The function will determine which FHIR health record titles are relevant to the user's question using this array: "
-          }
-        },
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Use the function call 'get_resources' and provide a comma-separated list resource titles directly applicable to the question. The function will determine which FHIR health record titles are relevant to the user's question using this array: "
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Use the function call 'get_resource_titles' and provide a comma-separated list resource titles directly applicable to the question. The function will determine which FHIR health record titles are relevant to the user's question using this array: "
-          }
-        },
-        "fr" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Use the function call 'get_resource_titles' and provide a comma-separated list resource titles directly applicable to the question. The function will determine which FHIR health record titles are relevant to the user's question using this array: "
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Use the function call 'get_resource_titles' and provide a comma-separated list resource titles directly applicable to the question. The function will determine which FHIR health record titles are relevant to the user's question using this array: "
           }
         }
       }
@@ -1200,7 +1145,6 @@
       }
     },
     "HEALTHKIT_PERMISSIONS_TITLE" : {
-      "comment" : "MARK: HealthKit",
       "extractionState" : "manual",
       "localizations" : {
         "de" : {
@@ -1268,7 +1212,14 @@
       }
     },
     "LLM on FHIR" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "LLM on FHIR"
+          }
+        }
+      }
     },
     "Medications" : {
       "localizations" : {
@@ -1423,24 +1374,24 @@
       }
     },
     "Resource Selection" : {
-
-    },
-    "Resource Settings" : {
-
-    },
-    "RESOURCE_LIMIT_TEXT %lld" : {
-      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Resource Limit of %lld"
+            "value" : "Resources Selection"
           }
         }
       }
     },
-    "Resources Selection" : {
-
+    "Resource Settings" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Resources Settings"
+          }
+        }
+      }
     },
     "SETTINGS" : {
       "localizations" : {
@@ -1760,17 +1711,6 @@
         }
       }
     },
-    "SETTINGS_RESOURCES_LIMIT" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Resource Limit"
-          }
-        }
-      }
-    },
     "SETTINGS_SPEECH" : {
       "localizations" : {
         "en" : {
@@ -1792,7 +1732,6 @@
       }
     },
     "SETTINGS_TITLE" : {
-      "comment" : "MARK: - Settings",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -1857,7 +1796,14 @@
       }
     },
     "Use HealthKit Resources" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Use HealthKit Resources"
+          }
+        }
+      }
     },
     "WELCOME_AREA1_DESCRIPTION" : {
       "extractionState" : "manual",
@@ -2140,7 +2086,6 @@
       }
     },
     "WELCOME_TITLE" : {
-      "comment" : "MARK: Welcome",
       "extractionState" : "manual",
       "localizations" : {
         "de" : {

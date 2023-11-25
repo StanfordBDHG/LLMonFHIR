@@ -58,7 +58,7 @@ struct SettingsView: View {
     }
     
     private var resourcesSettings: some View {
-        Section("Resources Selection") {
+        Section("Resource Selection") {
             NavigationLink(value: SettingsDestinations.resourceSelection) {
                 Text("Resource Selection")
             }
