@@ -16,8 +16,9 @@ import SpeziViews
 import SwiftUI
 
 struct FHIRResourcesView: View {
+    @Environment(LLMonFHIRStandard.self) private var standard
     @Environment(FHIRStore.self) private var fhirStore
-        
+    
     @State private var showMultipleResourcesChat = false
     @State private var searchText = ""
     
@@ -48,7 +49,7 @@ struct FHIRResourcesView: View {
     }
     
     
-    @ViewBuilder private var chatAllResourceSection: some View {
+    @MainActor @ViewBuilder private var chatAllResourceSection: some View {
         Section {
             Button(
                 action: {
