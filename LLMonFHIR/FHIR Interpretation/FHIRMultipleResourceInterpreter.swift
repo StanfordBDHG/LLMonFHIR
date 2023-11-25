@@ -165,7 +165,7 @@ class FHIRMultipleResourceInterpreter {
         print("Parsed Resources: \(requestedResources)")
         
         for requestedResource in requestedResources {
-            if let resource = fhirStore.allResources.first(where: { $0.functionCallIdentifier == requestedResource }) {
+            for resource in fhirStore.allResources.filter({ $0.functionCallIdentifier == requestedResource }) {
                 print("Appending Resource: \(resource)")
                 chat.append(
                     Chat(

@@ -16,9 +16,7 @@ extension FHIRStore {
     }
     
     var allResourcesFunctionCallIdentifier: [String] {
-        var stringResourcesArray = allResources.map { $0.functionCallIdentifier }
-        stringResourcesArray.append("N/A")
-        return stringResourcesArray
+        Array(Set(allResources.map { $0.functionCallIdentifier }))
     }
     
     

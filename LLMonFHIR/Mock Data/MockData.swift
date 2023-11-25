@@ -27,18 +27,33 @@ extension ModelsR4.Bundle {
         }
     }
     
-    private static var _cole983Kian544: ModelsR4.Bundle?
-    static var cole983Kian544: ModelsR4.Bundle {
+    private static var _domingo513Bashirian201: ModelsR4.Bundle?
+    static var domingo513Bashirian201: ModelsR4.Bundle {
         get async {
-            if let cole983Kian544 = _cole983Kian544 {
-                return cole983Kian544
+            if let domingo513Bashirian201 = _domingo513Bashirian201 {
+                return domingo513Bashirian201
             }
             
-            let cole983Kian544 = await Foundation.Bundle.main.loadFHIRBundle(
-                withName: "Cole983_Kian544_68_d7155ec9-1a93-4a8d-8f86-f26eaaacc548"
+            let domingo513Bashirian201 = await Foundation.Bundle.main.loadFHIRBundle(
+                withName: "Domingo513_Bashirian201_ff0e4d0e-6181-e36e-d817-64dbcaecb5d0"
             )
-            ModelsR4.Bundle._cole983Kian544 = cole983Kian544
-            return cole983Kian544
+            ModelsR4.Bundle._domingo513Bashirian201 = domingo513Bashirian201
+            return domingo513Bashirian201
+        }
+    }
+    
+    private static var _edythe31Morar593: ModelsR4.Bundle?
+    static var edythe31Morar593: ModelsR4.Bundle {
+        get async {
+            if let edythe31Morar593 = _edythe31Morar593 {
+                return edythe31Morar593
+            }
+            
+            let edythe31Morar593 = await Foundation.Bundle.main.loadFHIRBundle(
+                withName: "Edythe31_Morar593_9c3df38a-d3b7-2198-3898-51f9153d023d"
+            )
+            ModelsR4.Bundle._edythe31Morar593 = edythe31Morar593
+            return edythe31Morar593
         }
     }
     
@@ -72,21 +87,6 @@ extension ModelsR4.Bundle {
         }
     }
     
-    private static var _hilpert863Lelia643: ModelsR4.Bundle?
-    static var hilpert863Lelia643: ModelsR4.Bundle {
-        get async {
-            if let hilpert863Lelia643 = _hilpert863Lelia643 {
-                return hilpert863Lelia643
-            }
-            
-            let hilpert863Lelia643 = await Foundation.Bundle.main.loadFHIRBundle(
-                withName: "Hilpert863_Lelia643_77_9147a74d-6272-465a-a75c-789b491774dc"
-            )
-            ModelsR4.Bundle._hilpert863Lelia643 = hilpert863Lelia643
-            return hilpert863Lelia643
-        }
-    }
-    
     private static var _jacklyn830Veum823: ModelsR4.Bundle?
     static var jacklyn830Veum823: ModelsR4.Bundle {
         get async {
@@ -99,21 +99,6 @@ extension ModelsR4.Bundle {
             )
             ModelsR4.Bundle._jacklyn830Veum823 = jacklyn830Veum823
             return jacklyn830Veum823
-        }
-    }
-    
-    private static var _maggio705Rosalind390: ModelsR4.Bundle?
-    static var maggio705Rosalind390: ModelsR4.Bundle {
-        get async {
-            if let maggio705Rosalind390 = _maggio705Rosalind390 {
-                return maggio705Rosalind390
-            }
-            
-            let maggio705Rosalind390 = await Foundation.Bundle.main.loadFHIRBundle(
-                withName: "Maggio705_Rosalind390_56_eada06e6-c017-4130-9ede-a3368e295145"
-            )
-            ModelsR4.Bundle._maggio705Rosalind390 = maggio705Rosalind390
-            return maggio705Rosalind390
         }
     }
     
@@ -132,6 +117,36 @@ extension ModelsR4.Bundle {
         }
     }
     
+    private static var _milton509Ortiz186: ModelsR4.Bundle?
+    static var milton509Ortiz186: ModelsR4.Bundle {
+        get async {
+            if let milton509Ortiz186 = _milton509Ortiz186 {
+                return milton509Ortiz186
+            }
+            
+            let milton509Ortiz186 = await Foundation.Bundle.main.loadFHIRBundle(
+                withName: "Milton509_Ortiz186_d66b5418-06cb-fc8a-8c13-85685b6ac939"
+            )
+            ModelsR4.Bundle._milton509Ortiz186 = milton509Ortiz186
+            return milton509Ortiz186
+        }
+    }
+    
+    private static var _pasquale620Kuhn96: ModelsR4.Bundle?
+    static var pasquale620Kuhn96: ModelsR4.Bundle {
+        get async {
+            if let pasquale620Kuhn96 = _pasquale620Kuhn96 {
+                return pasquale620Kuhn96
+            }
+            
+            let pasquale620Kuhn96 = await Foundation.Bundle.main.loadFHIRBundle(
+                withName: "Pasquale620_Kuhn96_792a51c0-a2a4-ee26-c23c-7cb24f8a0e35"
+            )
+            ModelsR4.Bundle._pasquale620Kuhn96 = pasquale620Kuhn96
+            return pasquale620Kuhn96
+        }
+    }
+    
     private static var _porfirio146Jakubowski832: ModelsR4.Bundle?
     static var porfirio146Jakubowski832: ModelsR4.Bundle {
         get async {
@@ -147,39 +162,20 @@ extension ModelsR4.Bundle {
         }
     }
     
-    private static var _schultz324Monte913: ModelsR4.Bundle?
-    static var schultz324Monte913: ModelsR4.Bundle {
-        get async {
-            if let schultz324Monte913 = _schultz324Monte913 {
-                return schultz324Monte913
-            }
-            
-            let schultz324Monte913 = await Foundation.Bundle.main.loadFHIRBundle(
-                withName: "Schultz324_Monte913_54_a55e3391-c6e5-4bb2-8fae-bb39d245fdac"
-            )
-            ModelsR4.Bundle._schultz324Monte913 = schultz324Monte913
-            return schultz324Monte913
-        }
-    }
-    
     
     static var llmOnFHIRMockPatients: [Bundle] {
         get async {
             await [
                 .beatris270Bogan287,
-                // Fails with SpeziFHIRMockPatients/FoundationBundle+LoadBundle.swift:30: Fatal error: Could not decode the FHIR bundle named "Cole983_Kian544_68_d7155ec9-1a93-4a8d-8f86-f26eaaacc548.json": typeMismatch(Swift.Dictionary<Swift.String, Any>, Swift.DecodingError.Context(codingPath: [CodingKeys(stringValue: "entry", intValue: nil), _JSONKey(stringValue: "Index 3", intValue: 3), CodingKeys(stringValue: "resource", intValue: nil), CodingKeys(stringValue: "clinicalStatus", intValue: nil)], debugDescription: "Expected to decode Dictionary<String, Any> but found a string instead.", underlyingError: nil))
-                // .cole983Kian544,
+                .domingo513Bashirian201,
+                .edythe31Morar593,
                 .gonzalo160Duenas839,
                 .gregoria352Shan714,
-                // Fails with SpeziFHIRMockPatients/FoundationBundle+LoadBundle.swift:30: Fatal error: Could not decode the FHIR bundle named "Hilpert863_Lelia643_77_9147a74d-6272-465a-a75c-789b491774dc.json": typeMismatch(Swift.Dictionary<Swift.String, Any>, Swift.DecodingError.Context(codingPath: [CodingKeys(stringValue: "entry", intValue: nil), _JSONKey(stringValue: "Index 3", intValue: 3), CodingKeys(stringValue: "resource", intValue: nil), CodingKeys(stringValue: "clinicalStatus", intValue: nil)], debugDescription: "Expected to decode Dictionary<String, Any> but found a string instead.", underlyingError: nil))
-                // .hilpert863Lelia643,
                 .jacklyn830Veum823,
-                // Fails with SpeziFHIRMockPatients/FoundationBundle+LoadBundle.swift:30: Fatal error: Could not decode the FHIR bundle named "Maggio705_Rosalind390_56_eada06e6-c017-4130-9ede-a3368e295145.json": typeMismatch(Swift.Dictionary<Swift.String, Any>, Swift.DecodingError.Context(codingPath: [CodingKeys(stringValue: "entry", intValue: nil), _JSONKey(stringValue: "Index 3", intValue: 3), CodingKeys(stringValue: "resource", intValue: nil), CodingKeys(stringValue: "clinicalStatus", intValue: nil)], debugDescription: "Expected to decode Dictionary<String, Any> but found a string instead.", underlyingError: nil))
-                // .maggio705Rosalind390,
                 .micah422Stehr398,
+                .milton509Ortiz186,
+                .pasquale620Kuhn96,
                 .porfirio146Jakubowski832
-                // Fails with SpeziFHIRMockPatients/FoundationBundle+LoadBundle.swift:30: Fatal error: Could not decode the FHIR bundle named "Schultz324_Monte913_54_a55e3391-c6e5-4bb2-8fae-bb39d245fdac.json": typeMismatch(Swift.Dictionary<Swift.String, Any>, Swift.DecodingError.Context(codingPath: [CodingKeys(stringValue: "entry", intValue: nil), _JSONKey(stringValue: "Index 3", intValue: 3), CodingKeys(stringValue: "resource", intValue: nil), CodingKeys(stringValue: "clinicalStatus", intValue: nil)], debugDescription: "Expected to decode Dictionary<String, Any> but found a string instead.", underlyingError: nil))
-                // .schultz324Monte913
             ]
         }
     }
