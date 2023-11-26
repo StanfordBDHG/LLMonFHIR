@@ -32,6 +32,7 @@ struct SettingsView: View {
             List {
                 openAISettings
                 speechSettings
+                resourcesLimitSettings
                 resourcesSettings
                 promptsSettings
             }
@@ -53,6 +54,14 @@ struct SettingsView: View {
         Section("SETTINGS_SPEECH") {
             Toggle(isOn: $enableTextToSpeech) {
                 Text("SETTINGS_SPEECH_TEXT_TO_SPEECH")
+            }
+        }
+    }
+    
+    private var resourcesLimitSettings: some View {
+        Section("Resource Limit") {
+            Stepper(value: $resourceLimit, in: 10...2000, step: 10) {
+                Text("Resource Limit \(resourceLimit)")
             }
         }
     }

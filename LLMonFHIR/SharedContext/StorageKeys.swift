@@ -10,7 +10,7 @@
 enum StorageKeys {
     enum Defaults {
         static let enableTextToSpeech = false
-        static let resourceLimit = 50
+        static let resourceLimit = 250
     }
     
     

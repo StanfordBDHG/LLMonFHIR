@@ -45,13 +45,25 @@ struct InspectResourceView: View {
                     Spacer()
                 }
             } else if let summary = fhirResourceSummary.cachedSummary(forResource: resource) {
-                Text(summary)
-                    .multilineTextAlignment(.leading)
-                    .contextMenu {
-                        Button("FHIR_RESOURCES_SUMMARY_BUTTON") {
-                            loadSummary(forceReload: true)
-                        }
+                VStack {
+                    HStack(spacing: 0) {
+                        Text(summary.title)
+                            .font(.title2)
+                            .multilineTextAlignment(.leading)
+                            .bold()
+                        Spacer()
                     }
+                    HStack(spacing: 0) {
+                        Text(summary.summary)
+                            .multilineTextAlignment(.leading)
+                            .contextMenu {
+                                Button("FHIR_RESOURCES_SUMMARY_BUTTON") {
+                                    loadSummary(forceReload: true)
+                                }
+                            }
+                        Spacer()
+                    }
+                }
             } else {
                 Button("FHIR_RESOURCES_SUMMARY_BUTTON") {
                     loadSummary()

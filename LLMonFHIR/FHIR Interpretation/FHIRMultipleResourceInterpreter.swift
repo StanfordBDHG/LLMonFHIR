@@ -141,7 +141,7 @@ class FHIRMultipleResourceInterpreter {
                 
                 switch functionCall.name {
                 case LLMFunction.getResourcesName:
-                    callGetResources(functionCall: functionCall)
+                    try await callGetResources(functionCall: functionCall)
                 default:
                     break
                 }
@@ -150,7 +150,7 @@ class FHIRMultipleResourceInterpreter {
     }
     
     
-    private func callGetResources(functionCall: LLMStreamResult.FunctionCall) {
+    private func callGetResources(functionCall: LLMStreamResult.FunctionCall) async throws {
         struct Response: Codable {
             let resources: String
         }
@@ -165,12 +165,21 @@ class FHIRMultipleResourceInterpreter {
         print("Parsed Resources: \(requestedResources)")
         
         for requestedResource in requestedResources {
-            for resource in fhirStore.allResources.filter({ $0.functionCallIdentifier == requestedResource }) {
+            var fittingResources = fhirStore.allResources.filter { $0.functionCallIdentifier == requestedResource }
+            print("Fitting Resources: \(fittingResources.count)")
+            if fittingResources.count > 20 {
+                fittingResources = fittingResources.lazy.sorted(by: { $0.date ?? .distantPast < $1.date ?? .distantPast }).suffix(10)
+                print("Reduced to the following 20 resources: \(fittingResources.map { $0.functionCallIdentifier }.joined(separator: ","))")
+            }
+            
+            for resource in fittingResources {
                 print("Appending Resource: \(resource)")
+                let summary = try await resourceSummary.summarize(resource: resource)
+                print("Summary of Resource generated: \(summary)")
                 chat.append(
                     Chat(
                         role: .function,
-                        content: String(localized: "This is the content of the requested \(requestedResource):\n\n\(resource.jsonDescription)"),
+                        content: String(localized: "This is the summary of the requested \(requestedResource):\n\n\(summary.description)"),
                         name: LLMFunction.getResourcesName
                     )
                 )
