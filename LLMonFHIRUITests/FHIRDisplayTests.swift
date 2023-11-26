@@ -25,7 +25,7 @@ final class FHIRDisplayTests: XCTestCase {
         
         app.swipeUp()
 
-        let mockResource = app.otherElements.buttons["Mock Resource"]
+        let mockResource = app.staticTexts["Mock Resource"]
         XCTAssertTrue(mockResource.exists, "The 'Mock Resource' does not exist.")
 
         mockResource.tap()
