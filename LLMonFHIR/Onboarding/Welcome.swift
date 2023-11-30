@@ -16,26 +16,35 @@ struct Welcome: View {
     
     var body: some View {
         OnboardingView(
-            title: "WELCOME_TITLE".moduleLocalized,
-            subtitle: "WELCOME_SUBTITLE".moduleLocalized,
+            title: "WELCOME_TITLE",
+            subtitle: "WELCOME_SUBTITLE",
             areas: [
-                .init(
-                    icon: Image(systemName: "apps.iphone"), // swiftlint:disable:this accessibility_label_for_image
-                    title: "WELCOME_AREA1_TITLE".moduleLocalized,
-                    description: "WELCOME_AREA1_DESCRIPTION".moduleLocalized
+                OnboardingInformationView.Content(
+                    icon: {
+                        Image(systemName: "apps.iphone")
+                            .accessibilityHidden(true)
+                    },
+                    title: "WELCOME_AREA1_TITLE",
+                    description: "WELCOME_AREA1_DESCRIPTION"
                 ),
-                .init(
-                    icon: Image(systemName: "shippingbox.fill"), // swiftlint:disable:this accessibility_label_for_image
-                    title: "WELCOME_AREA2_TITLE".moduleLocalized,
-                    description: "WELCOME_AREA2_DESCRIPTION".moduleLocalized
+                OnboardingInformationView.Content(
+                    icon: {
+                        Image(systemName: "shippingbox.fill")
+                            .accessibilityHidden(true)
+                    },
+                    title: "WELCOME_AREA2_TITLE",
+                    description: "WELCOME_AREA2_DESCRIPTION"
                 ),
-                .init(
-                    icon: Image(systemName: "list.bullet.clipboard.fill"), // swiftlint:disable:this accessibility_label_for_image
-                    title: "WELCOME_AREA3_TITLE".moduleLocalized,
-                    description: "WELCOME_AREA3_DESCRIPTION".moduleLocalized
+                OnboardingInformationView.Content(
+                    icon: {
+                        Image(systemName: "list.bullet.clipboard.fill")
+                            .accessibilityHidden(true)
+                    },
+                    title: "WELCOME_AREA3_TITLE",
+                    description: "WELCOME_AREA3_DESCRIPTION"
                 )
             ],
-            actionText: "WELCOME_BUTTON".moduleLocalized,
+            actionText: "WELCOME_BUTTON",
             action: {
                 onboardingNavigationPath.nextStep()
             }

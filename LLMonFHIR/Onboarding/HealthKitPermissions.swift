@@ -22,8 +22,8 @@ struct HealthKitPermissions: View {
             contentView: {
                 VStack {
                     OnboardingTitleView(
-                        title: "HEALTHKIT_PERMISSIONS_TITLE".moduleLocalized,
-                        subtitle: "HEALTHKIT_PERMISSIONS_SUBTITLE".moduleLocalized
+                        title: "HEALTHKIT_PERMISSIONS_TITLE",
+                        subtitle: "HEALTHKIT_PERMISSIONS_SUBTITLE"
                     )
                     Spacer()
                     Image(systemName: "heart.text.square.fill")
@@ -37,7 +37,7 @@ struct HealthKitPermissions: View {
                 }
             }, actionView: {
                 OnboardingActionsView(
-                    verbatim: "HEALTHKIT_PERMISSIONS_BUTTON".moduleLocalized,
+                    verbatim: "HEALTHKIT_PERMISSIONS_BUTTON",
                     action: {
                         do {
                             healthKitProcessing = true
