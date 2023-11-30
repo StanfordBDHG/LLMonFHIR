@@ -14,7 +14,7 @@ enum LLMFunction {
     
     static func getResources(allResourcesFunctionCallIdentifier: [String]) -> ChatFunctionDeclaration {
         ChatFunctionDeclaration(
-            name: LLMFunction.getResourcesName,
+            name: Self.getResourcesName,
             description: String(localized: "FUNCTION_DESCRIPTION"),
             parameters: JSONSchema(
                 type: .object,
