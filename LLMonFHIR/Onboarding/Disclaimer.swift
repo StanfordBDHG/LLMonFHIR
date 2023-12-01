@@ -16,31 +16,31 @@ struct Disclaimer: View {
     
     var body: some View {
         SequentialOnboardingView(
-            title: "DISCLAIMER_TITLE".moduleLocalized,
-            subtitle: "DISCLAIMER_SUBTITLE".moduleLocalized,
+            title: "DISCLAIMER_TITLE",
+            subtitle: "DISCLAIMER_SUBTITLE",
             content: [
                 .init(
-                    title: "DISCLAIMER_AREA1_TITLE".moduleLocalized,
-                    description: "DISCLAIMER_AREA1_DESCRIPTION".moduleLocalized
+                    title: "DISCLAIMER_AREA1_TITLE",
+                    description: "DISCLAIMER_AREA1_DESCRIPTION"
                 ),
                 .init(
-                    title: "DISCLAIMER_AREA2_TITLE".moduleLocalized,
-                    description: "DISCLAIMER_AREA2_DESCRIPTION".moduleLocalized
+                    title: "DISCLAIMER_AREA2_TITLE",
+                    description: "DISCLAIMER_AREA2_DESCRIPTION"
                 ),
                 .init(
-                    title: "DISCLAIMER_AREA3_TITLE".moduleLocalized,
-                    description: "DISCLAIMER_AREA3_DESCRIPTION".moduleLocalized
+                    title: "DISCLAIMER_AREA3_TITLE",
+                    description: "DISCLAIMER_AREA3_DESCRIPTION"
                 ),
                 .init(
-                    title: "DISCLAIMER_AREA4_TITLE".moduleLocalized,
-                    description: "DISCLAIMER_AREA4_DESCRIPTION".moduleLocalized
+                    title: "DISCLAIMER_AREA4_TITLE",
+                    description: "DISCLAIMER_AREA4_DESCRIPTION"
                 ),
                 .init(
-                    title: "DISCLAIMER_AREA5_TITLE".moduleLocalized,
-                    description: "DISCLAIMER_AREA5_DESCRIPTION".moduleLocalized
+                    title: "DISCLAIMER_AREA5_TITLE",
+                    description: "DISCLAIMER_AREA5_DESCRIPTION"
                 )
             ],
-            actionText: "DISCLAIMER_BUTTON".moduleLocalized,
+            actionText: "DISCLAIMER_BUTTON",
             action: {
                 onboardingNavigationPath.nextStep()
             }

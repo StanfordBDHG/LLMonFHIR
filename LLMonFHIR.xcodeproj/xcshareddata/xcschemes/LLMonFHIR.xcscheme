@@ -78,10 +78,6 @@
       </BuildableProductRunnable>
       <CommandLineArguments>
          <CommandLineArgument
-            argument = "--disableFirebase"
-            isEnabled = "NO">
-         </CommandLineArgument>
-         <CommandLineArgument
             argument = "--showOnboarding"
             isEnabled = "NO">
          </CommandLineArgument>
@@ -90,7 +86,7 @@
             isEnabled = "NO">
          </CommandLineArgument>
          <CommandLineArgument
-            argument = "--useFirebaseEmulator"
+            argument = "--testMode"
             isEnabled = "NO">
          </CommandLineArgument>
       </CommandLineArguments>

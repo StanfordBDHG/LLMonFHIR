@@ -17,6 +17,7 @@ extension FHIRResource {
         return dateFormatter
     }()
     
+    
     var functionCallIdentifier: String {
         resourceType.filter { !$0.isWhitespace }
             + displayName.filter { !$0.isWhitespace }
