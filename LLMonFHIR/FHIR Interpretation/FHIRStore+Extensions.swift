@@ -20,6 +20,18 @@ extension FHIRStore {
         @AppStorage(StorageKeys.resourceLimit) var resourceLimit = StorageKeys.Defaults.resourceLimit
         
         let relevantResources: [FHIRResource]
+
+        var sortedMedications = medications
+
+        for (index, medication) in sortedMedications.enumerated().reversed() {
+            let description = medication.jsonDescription
+            let name = medication.displayName
+            print("Name of medication: "+name)
+            if description.contains("inpatient") || name == "MedicationAdministration"  {
+                print("Removed '\(name)'")
+                sortedMedications.remove(at: index)
+            }
+        }
         if allResources.count > resourceLimit {
             var limitedResources: [FHIRResource] = []
             limitedResources.append(contentsOf: allergyIntolerances.dateSuffix(maxLength: resourceLimit / 9))
@@ -27,7 +39,7 @@ extension FHIRStore {
             limitedResources.append(contentsOf: diagnostics.dateSuffix(maxLength: resourceLimit / 9))
             limitedResources.append(contentsOf: encounters.dateSuffix(maxLength: resourceLimit / 9))
             limitedResources.append(contentsOf: immunizations.dateSuffix(maxLength: resourceLimit / 9))
-            limitedResources.append(contentsOf: medications.dateSuffix(maxLength: resourceLimit / 9))
+            limitedResources.append(contentsOf: sortedMedications.dateSuffix(maxLength: resourceLimit / 9))
             limitedResources.append(contentsOf: observations.dateSuffix(maxLength: resourceLimit / 9))
             limitedResources.append(contentsOf: otherResources.dateSuffix(maxLength: resourceLimit / 9))
             limitedResources.append(contentsOf: procedures.dateSuffix(maxLength: resourceLimit / 9))
