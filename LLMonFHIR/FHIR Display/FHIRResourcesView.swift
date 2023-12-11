@@ -34,6 +34,9 @@ struct FHIRResourcesView: View {
             } else {
                 resourcesSection
             }
+            Section { } footer: {
+                Text("Total Number of Resources: \(fhirStore.allResources.count)")
+            }
         }
             .searchable(text: $searchText)
             .navigationDestination(for: FHIRResource.self) { resource in

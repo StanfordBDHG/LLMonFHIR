@@ -32,8 +32,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/StanfordSpezi/Spezi",
       "state" : {
-        "revision" : "092eabc50a3600d8a03b43ad0d2dcd02914b223f",
-        "version" : "0.8.1"
+        "revision" : "d56ed07327cce8254b919665eb61e20bfd1467b0",
+        "version" : "0.8.2"
       }
     },
     {
@@ -41,8 +41,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/StanfordSpezi/SpeziFHIR.git",
       "state" : {
-        "revision" : "d60882bf6f91f2719f33d413e22d1fc3e6f32705",
-        "version" : "0.5.2"
+        "revision" : "07c2e56b8dd08bbf33ae4e3dfa2f2b9ca24807ea",
+        "version" : "0.5.3"
       }
     },
     {
@@ -95,8 +95,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/StanfordSpezi/SpeziViews.git",
       "state" : {
-        "revision" : "eac443080926649d09a703483a6dd6f5a8bb7d51",
-        "version" : "0.6.2"
+        "revision" : "dcd0bc10ae8f22cba771ff9ab3ce16549f46f667",
+        "version" : "0.6.3"
       }
     },
     {
