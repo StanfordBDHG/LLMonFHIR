@@ -1107,8 +1107,8 @@
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/StanfordSpezi/SpeziFHIR.git";
 			requirement = {
-				branch = procedure_date;
-				kind = branch;
+				kind = upToNextMinorVersion;
+				minimumVersion = 0.5.3;
 			};
 		};
 		2F49B7742980407B00BCB272 /* XCRemoteSwiftPackageReference "Spezi" */ = {
