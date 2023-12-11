@@ -61,21 +61,7 @@ class FHIRMultipleResourceInterpreter {
             do {
                 viewState = .processing
                 
-                if chat.isEmpty {
-                    chat = [
-                        Chat(
-                            role: .system,
-                            content: FHIRPrompt.interpretation.prompt
-                        ),
-                        Chat(
-                            role: .system,
-                            content: String(
-                                localized: "Content of the function context passed to the LLM",
-                                comment: "The list of possible titles will be appended to the end of this prompt."
-                            ) + fhirStore.allResourcesFunctionCallIdentifier.rawValue
-                        )
-                    ]
-                }
+                prepareSystemPrompt()
                 
                 try await executeLLMQueries()
                 
@@ -87,6 +73,36 @@ class FHIRMultipleResourceInterpreter {
             } catch {
                 viewState = .error(error.localizedDescription)
             }
+        }
+    }
+    
+    private func prepareSystemPrompt() {
+        if chat.isEmpty {
+            chat = [
+                Chat(
+                    role: .system,
+                    content: FHIRPrompt.interpretMultipleResources.prompt
+                ),
+                Chat(
+                    role: .system,
+                    content: String(
+                        localized: "Content of the function context passed to the LLM",
+                        comment: "The list of possible titles will be appended to the end of this prompt."
+                    ) + fhirStore.allResourcesFunctionCallIdentifier.rawValue
+                )
+            ]
+        }
+        
+        if let patient = fhirStore.patient {
+            chat.append(
+                Chat(
+                    role: .system,
+                    content: String(
+                        localized: "Content of the patient resource \(patient.jsonDescription)",
+                        comment: "System prompt used by the FHIRMultipleResourceInterpreter to pass in the patient JSON."
+                    )
+                )
+            )
         }
     }
     
