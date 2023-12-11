@@ -13,15 +13,13 @@ import SwiftUI
 
 extension FHIRStore {
     var llmRelevantResources: [FHIRResource] {
-        let llmRelevantResources = allergyIntolerances
+        allergyIntolerances
             + llmConditions
             + encounters.uniqueDisplayNames
             + immunizations
             + llmMedications
             + observations.uniqueDisplayNames
             + procedures.uniqueDisplayNames
-        print(llmRelevantResources.count)
-        return llmRelevantResources
     }
     
     var allResources: [FHIRResource] {
@@ -68,15 +66,19 @@ extension FHIRStore {
     }
     
     private var llmMedications: [FHIRResource] {
-        medications
-            .filter { resource in
-                guard case let .r4(resource) = resource.versionedResource,
-                      let medicationRequest = resource as? ModelsR4.MedicationRequest else {
-                    return false
-                }
-                
-                
-                guard medicationRequest.category?
+        func medicationRequest(resource: FHIRResource) -> MedicationRequest? {
+            guard case let .r4(resource) = resource.versionedResource,
+                  let medicationRequest = resource as? ModelsR4.MedicationRequest else {
+                return nil
+            }
+            
+            return medicationRequest
+        }
+        
+        let outpatientMedications = medications
+            .filter { medication in
+                guard let medicationRequest = medicationRequest(resource: medication),
+                     medicationRequest.category?
                           .contains(where: { codableconcept in
                               codableconcept.text?.value?.string.lowercased() == "outpatient"
                           })
@@ -84,8 +86,22 @@ extension FHIRStore {
                     return false
                 }
                 
-                return medicationRequest.status == .active
+                return true
             }
+            .uniqueDisplayNames
+        
+        let activeMedications = medications
+            .filter { medication in
+                guard let medicationRequest = medicationRequest(resource: medication),
+                      medicationRequest.status == .active else {
+                    return false
+                }
+                
+                return true
+            }
+            .uniqueDisplayNames
+        
+        return outpatientMedications + activeMedications
     }
     
     var allResourcesFunctionCallIdentifier: [String] {
@@ -95,6 +111,7 @@ extension FHIRStore {
         
         if llmRelevantResources.count > resourceLimit {
             relevantResources = llmRelevantResources
+                .lazy
                 .filter {
                     $0.date != nil
                 }

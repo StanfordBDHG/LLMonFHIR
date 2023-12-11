@@ -63,6 +63,8 @@ class FHIRMultipleResourceInterpreter {
                 
                 prepareSystemPrompt()
                 
+                print("The Multiple Resource Interpreter has access to \(fhirStore.llmRelevantResources.count) resources.")
+                
                 try await executeLLMQueries()
                 
                 try localStorage.store(chat, storageKey: FHIRMultipleResourceInterpreterConstants.chat)
@@ -82,13 +84,6 @@ class FHIRMultipleResourceInterpreter {
                 Chat(
                     role: .system,
                     content: FHIRPrompt.interpretMultipleResources.prompt
-                ),
-                Chat(
-                    role: .system,
-                    content: String(
-                        localized: "Content of the function context passed to the LLM",
-                        comment: "The list of possible titles will be appended to the end of this prompt."
-                    ) + fhirStore.allResourcesFunctionCallIdentifier.rawValue
                 )
             ]
         }
@@ -98,7 +93,7 @@ class FHIRMultipleResourceInterpreter {
                 Chat(
                     role: .system,
                     content: String(
-                        localized: "Content of the patient resource \(patient.jsonDescription)",
+                        localized: "Here is the JSON content of the patient resource as an initial context: \n\n \(patient.jsonDescription)",
                         comment: "System prompt used by the FHIRMultipleResourceInterpreter to pass in the patient JSON."
                     )
                 )
@@ -181,11 +176,23 @@ class FHIRMultipleResourceInterpreter {
         print("Parsed Resources: \(requestedResources)")
         
         for requestedResource in requestedResources {
-            var fittingResources = fhirStore.allResources.filter { $0.functionCallIdentifier == requestedResource }
+            var fittingResources = fhirStore.llmRelevantResources.filter { $0.functionCallIdentifier.contains(requestedResource) }
+            
+            guard !fittingResources.isEmpty else {
+                chat.append(
+                    Chat(
+                        role: .function,
+                        content: String(localized: "The medical record does not include any FHIR resources for the search term \(requestedResource)."),
+                        name: LLMFunction.getResourcesName
+                    )
+                )
+                continue
+            }
+            
             print("Fitting Resources: \(fittingResources.count)")
-            if fittingResources.count > 20 {
-                fittingResources = fittingResources.lazy.sorted(by: { $0.date ?? .distantPast < $1.date ?? .distantPast }).suffix(10)
-                print("Reduced to the following 20 resources: \(fittingResources.map { $0.functionCallIdentifier }.joined(separator: ","))")
+            if fittingResources.count > 64 {
+                fittingResources = fittingResources.lazy.sorted(by: { $0.date ?? .distantPast < $1.date ?? .distantPast }).suffix(64)
+                print("Reduced to the following 64 resources: \(fittingResources.map { $0.functionCallIdentifier }.joined(separator: ","))")
             }
             
             for resource in fittingResources {
