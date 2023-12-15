@@ -37,17 +37,17 @@ final class FHIRDisplayTests: XCTestCase {
     
     @MainActor
     func testLLMOnFHIRPaperTest() async throws {
-        // throw XCTSkip()
+        throw XCTSkip()
         
         let app = XCUIApplication()
         
         let patients = [
-            "Allen322 Ferry570", // @Paul
-            "Beatris270 Bogan287", // @Paul
-            "Edythe31 Morar593", // @Paul
-            "Gonzalo160 Dueñas839", // @Vishnu
-            "Jacklyn830 Veum823", // @Vishnu
-            "Milton509 Ortiz186" // @Vishnu
+            "Allen322 Ferry570",
+            "Beatris270 Bogan287",
+            "Edythe31 Morar593",
+            "Gonzalo160 Dueñas839",
+            "Jacklyn830 Veum823",
+            "Milton509 Ortiz186"
         ]
         
         let questions = [
