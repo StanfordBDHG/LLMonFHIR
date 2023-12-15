@@ -12,6 +12,21 @@ import SpeziFHIRMockPatients
 
 
 extension ModelsR4.Bundle {
+    private static var _allen322Ferry570: ModelsR4.Bundle?
+    static var allen322Ferry570: ModelsR4.Bundle {
+        get async {
+            if let allen322Ferry570 = _allen322Ferry570 {
+                return allen322Ferry570
+            }
+            
+            let allen322Ferry570 = await Foundation.Bundle.main.loadFHIRBundle(
+                withName: "Allen322_Ferry570_ad134528-56a5-35fd-c37f-466ff119c625"
+            )
+            ModelsR4.Bundle._allen322Ferry570 = allen322Ferry570
+            return allen322Ferry570
+        }
+    }
+    
     private static var _beatris270Bogan287: ModelsR4.Bundle?
     static var beatris270Bogan287: ModelsR4.Bundle {
         get async {
@@ -87,31 +102,16 @@ extension ModelsR4.Bundle {
         }
     }
     
-    private static var _pasquale620Kuhn96: ModelsR4.Bundle?
-    static var pasquale620Kuhn96: ModelsR4.Bundle {
-        get async {
-            if let pasquale620Kuhn96 = _pasquale620Kuhn96 {
-                return pasquale620Kuhn96
-            }
-            
-            let pasquale620Kuhn96 = await Foundation.Bundle.main.loadFHIRBundle(
-                withName: "Pasquale620_Kuhn96_792a51c0-a2a4-ee26-c23c-7cb24f8a0e35"
-            )
-            ModelsR4.Bundle._pasquale620Kuhn96 = pasquale620Kuhn96
-            return pasquale620Kuhn96
-        }
-    }
-    
     
     static var llmOnFHIRMockPatients: [Bundle] {
         get async {
             await [
+                .allen322Ferry570,
                 .beatris270Bogan287,
                 .edythe31Morar593,
                 .gonzalo160Duenas839,
                 .jacklyn830Veum823,
-                .milton509Ortiz186,
-                .pasquale620Kuhn96
+                .milton509Ortiz186
             ]
         }
     }

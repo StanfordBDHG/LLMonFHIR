@@ -79,18 +79,22 @@ class FHIRMultipleResourceInterpreter {
     }
     
     private func prepareSystemPrompt() {
-        var prompt = FHIRPrompt.interpretMultipleResources.prompt
-        if let patient = fhirStore.patient {
-            prompt.append(patient.jsonDescription)
-        }
-        
         if chat.isEmpty {
             chat = [
                 Chat(
                     role: .system,
-                    content: prompt
+                    content: FHIRPrompt.interpretMultipleResources.prompt
                 )
             ]
+        }
+        
+        if let patient = fhirStore.patient {
+            chat.append(
+                Chat(
+                    role: .system,
+                    content: patient.jsonDescription
+                )
+            )
         }
     }
     

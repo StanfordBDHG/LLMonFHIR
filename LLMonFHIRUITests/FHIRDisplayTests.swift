@@ -42,12 +42,12 @@ final class FHIRDisplayTests: XCTestCase {
         let app = XCUIApplication()
         
         let patients = [
-            // "Beatris270 Bogan287",
-            // "Edythe31 Morar593",
+            "Allen322 Ferry570",
+            "Beatris270 Bogan287",
+            "Edythe31 Morar593",
             "Gonzalo160 Dueñas839",
             "Jacklyn830 Veum823",
-            "Milton509 Ortiz186",
-            "Pasquale620 Kuhn96"
+            "Milton509 Ortiz186"
         ]
         
         let questions = [
