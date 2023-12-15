@@ -92,10 +92,7 @@ class FHIRMultipleResourceInterpreter {
             chat.append(
                 Chat(
                     role: .system,
-                    content: String(
-                        localized: "Here is the JSON content of the patient resource as an initial context: \n\n \(patient.jsonDescription)",
-                        comment: "System prompt used by the FHIRMultipleResourceInterpreter to pass in the patient JSON."
-                    )
+                    content: patient.jsonDescription
                 )
             )
         }

@@ -89,6 +89,7 @@ struct MultipleResourcesChatView: View {
                         .accessibilityLabel(Text("Reset Chat"))
                 }
             )
+            .disabled(multipleResourceInterpreter.viewState == .processing)
         }
     }
 }

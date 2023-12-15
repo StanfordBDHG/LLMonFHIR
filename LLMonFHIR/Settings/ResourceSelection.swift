@@ -22,7 +22,11 @@ struct ResourceSelection: View {
     @MainActor var useHealthKitResources: Binding<Bool> {
         Binding(
             get: {
-                standard.useHealthKitResources
+                if FeatureFlags.mockPatients {
+                    showBundleSelection = true
+                    return false
+                }
+                return standard.useHealthKitResources
             },
             set: { newValue in
                 showBundleSelection = !newValue
@@ -38,7 +42,7 @@ struct ResourceSelection: View {
                 Toggle(isOn: useHealthKitResources) {
                     Text("Use HealthKit Resources")
                 }
-                    .onChange(of: useHealthKitResources.wrappedValue) {
+                    .onChange(of: useHealthKitResources.wrappedValue, initial: true) {
                         if useHealthKitResources.wrappedValue {
                             _Concurrency.Task {
                                 await standard.loadHealthKitResources()
