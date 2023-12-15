@@ -79,25 +79,18 @@ class FHIRMultipleResourceInterpreter {
     }
     
     private func prepareSystemPrompt() {
+        var prompt = FHIRPrompt.interpretMultipleResources.prompt
+        if let patient = fhirStore.patient {
+            prompt.append(patient.jsonDescription)
+        }
+        
         if chat.isEmpty {
             chat = [
                 Chat(
                     role: .system,
-                    content: FHIRPrompt.interpretMultipleResources.prompt
+                    content: prompt
                 )
             ]
-        }
-        
-        if let patient = fhirStore.patient {
-            chat.append(
-                Chat(
-                    role: .system,
-                    content: String(
-                        localized: "Here is the JSON content of the patient resource as an initial context: \n\n \(patient.jsonDescription)",
-                        comment: "System prompt used by the FHIRMultipleResourceInterpreter to pass in the patient JSON."
-                    )
-                )
-            )
         }
     }
     

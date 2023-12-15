@@ -131,6 +131,7 @@ extension FHIRStore {
         if FeatureFlags.testMode {
             let mockObservation = Observation(
                 code: CodeableConcept(coding: [Coding(code: "1234".asFHIRStringPrimitive())]),
+                id: FHIRPrimitive<FHIRString>("1234"),
                 issued: FHIRPrimitive<Instant>(try? Instant(date: .now)),
                 status: FHIRPrimitive(ObservationStatus.final)
             )

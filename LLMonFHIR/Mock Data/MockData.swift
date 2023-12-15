@@ -27,21 +27,6 @@ extension ModelsR4.Bundle {
         }
     }
     
-    private static var _domingo513Bashirian201: ModelsR4.Bundle?
-    static var domingo513Bashirian201: ModelsR4.Bundle {
-        get async {
-            if let domingo513Bashirian201 = _domingo513Bashirian201 {
-                return domingo513Bashirian201
-            }
-            
-            let domingo513Bashirian201 = await Foundation.Bundle.main.loadFHIRBundle(
-                withName: "Domingo513_Bashirian201_ff0e4d0e-6181-e36e-d817-64dbcaecb5d0"
-            )
-            ModelsR4.Bundle._domingo513Bashirian201 = domingo513Bashirian201
-            return domingo513Bashirian201
-        }
-    }
-    
     private static var _edythe31Morar593: ModelsR4.Bundle?
     static var edythe31Morar593: ModelsR4.Bundle {
         get async {
@@ -72,21 +57,6 @@ extension ModelsR4.Bundle {
         }
     }
     
-    private static var _gregoria352Shan714: ModelsR4.Bundle?
-    static var gregoria352Shan714: ModelsR4.Bundle {
-        get async {
-            if let gregoria352Shan714 = _gregoria352Shan714 {
-                return gregoria352Shan714
-            }
-            
-            let gregoria352Shan714 = await Foundation.Bundle.main.loadFHIRBundle(
-                withName: "Gregoria352_Shan714_Koss676_b5fab35c-8cd1-49f0-b28c-122866af8614"
-            )
-            ModelsR4.Bundle._gregoria352Shan714 = gregoria352Shan714
-            return gregoria352Shan714
-        }
-    }
-    
     private static var _jacklyn830Veum823: ModelsR4.Bundle?
     static var jacklyn830Veum823: ModelsR4.Bundle {
         get async {
@@ -99,21 +69,6 @@ extension ModelsR4.Bundle {
             )
             ModelsR4.Bundle._jacklyn830Veum823 = jacklyn830Veum823
             return jacklyn830Veum823
-        }
-    }
-    
-    private static var _micah422Stehr398: ModelsR4.Bundle?
-    static var micah422Stehr398: ModelsR4.Bundle {
-        get async {
-            if let micah422Stehr398 = _micah422Stehr398 {
-                return micah422Stehr398
-            }
-            
-            let micah422Stehr398 = await Foundation.Bundle.main.loadFHIRBundle(
-                withName: "Micah422_Stehr398_10acd373-14d9-6077-f0fc-790e06d7c6c5"
-            )
-            ModelsR4.Bundle._micah422Stehr398 = micah422Stehr398
-            return micah422Stehr398
         }
     }
     
@@ -147,35 +102,16 @@ extension ModelsR4.Bundle {
         }
     }
     
-    private static var _porfirio146Jakubowski832: ModelsR4.Bundle?
-    static var porfirio146Jakubowski832: ModelsR4.Bundle {
-        get async {
-            if let porfirio146Jakubowski832 = _porfirio146Jakubowski832 {
-                return porfirio146Jakubowski832
-            }
-            
-            let porfirio146Jakubowski832 = await Foundation.Bundle.main.loadFHIRBundle(
-                withName: "Porfirio146_Jakubowski832_5b70be80-a0f2-849f-a286-8a8d2eab86b9"
-            )
-            ModelsR4.Bundle._porfirio146Jakubowski832 = porfirio146Jakubowski832
-            return porfirio146Jakubowski832
-        }
-    }
-    
     
     static var llmOnFHIRMockPatients: [Bundle] {
         get async {
             await [
                 .beatris270Bogan287,
-                .domingo513Bashirian201,
                 .edythe31Morar593,
                 .gonzalo160Duenas839,
-                .gregoria352Shan714,
                 .jacklyn830Veum823,
-                .micah422Stehr398,
                 .milton509Ortiz186,
-                .pasquale620Kuhn96,
-                .porfirio146Jakubowski832
+                .pasquale620Kuhn96
             ]
         }
     }
