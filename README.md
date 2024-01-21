@@ -29,6 +29,9 @@ It demonstrates using the [Spezi](https://github.com/StanfordSpezi/Spezi) framew
 
 LLMonFHIR supports multiple languages. The LLM is prompt-engineered to converse with users based on their system language. The application is currently translated into English, Spanish, Chinese, German, and French.
 
+> [!NOTE] 
+> Do you want to try out the LLM on FHIR Application? You can download it to your iOS device using [TestFlight](https://testflight.apple.com/join/HBFZ5WOn)!
+
 ## Overview
 
 - **Inspect Your Health Data:** Our application connects with the Apple Health app via the FHIR (Fast Healthcare Interoperability Resources) patient data API, allowing you to view your health data conveniently.
