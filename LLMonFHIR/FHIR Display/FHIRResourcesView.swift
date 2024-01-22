@@ -11,7 +11,7 @@ import OpenAI
 import SpeziFHIR
 import SpeziFHIRInterpretation
 import SpeziOnboarding
-import SpeziOpenAI
+import SpeziLLMOpenAI
 import SpeziViews
 import SwiftUI
 

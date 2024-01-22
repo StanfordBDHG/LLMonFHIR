@@ -10,13 +10,13 @@ import Spezi
 import SpeziFHIR
 import SpeziFHIRInterpretation
 import SpeziLocalStorage
-import class SpeziOpenAI.OpenAIModule
-import class SpeziOpenAI.OpenAIModel
+import SpeziLLM
+import SpeziLLMOpenAI
 
 
 class FHIRInterpretationModule: Module {
     @Dependency private var localStorage: LocalStorage
-    @Dependency private var openAI: OpenAIModule
+    @Dependency private var llmRunner: LLMRunner
     @Dependency private var fhirStore: FHIRStore
     
     @Model private var resourceSummary: FHIRResourceSummary
@@ -29,7 +29,10 @@ class FHIRInterpretationModule: Module {
         resourceInterpreter = FHIRResourceInterpreter(localStorage: localStorage, openAIModel: openAI.model)
         multipleResourceInterpreter = FHIRMultipleResourceInterpreter(
             localStorage: localStorage,
-            openAIModel: openAI.model,
+            llmRunner: llmRunner,
+            llm: LLMOpenAI(parameters: .init(modelType: .gpt4_1106_preview), {
+                // TODO: Code change in SpeziLLM to enable default value
+            }),
             fhirStore: fhirStore,
             resourceSummary: resourceSummary
         )

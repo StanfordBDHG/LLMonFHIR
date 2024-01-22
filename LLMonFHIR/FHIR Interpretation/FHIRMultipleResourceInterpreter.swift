@@ -11,7 +11,7 @@ import Spezi
 import SpeziFHIR
 import SpeziFHIRInterpretation
 import SpeziLocalStorage
-import SpeziOpenAI
+import SpeziLLMOpenAI
 import SpeziViews
 import SwiftUI
 

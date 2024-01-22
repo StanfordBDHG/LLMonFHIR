@@ -7,9 +7,10 @@
 //
 
 import OpenAI
+import SpeziChat
 import SpeziFHIR
 import SpeziFHIRInterpretation
-import SpeziOpenAI
+import SpeziLLMOpenAI
 import SpeziSpeechSynthesizer
 import SpeziViews
 import SwiftUI
@@ -20,7 +21,7 @@ struct MultipleResourcesChatView: View {
     
     @Environment(FHIRMultipleResourceInterpreter.self) private var multipleResourceInterpreter
     
-    @StateObject private var speechSynthesizer = SpeechSynthesizer()
+    @State private var speechSynthesizer = SpeechSynthesizer()
     @AppStorage(StorageKeys.enableTextToSpeech) private var textToSpeech = StorageKeys.Defaults.enableTextToSpeech
     
     

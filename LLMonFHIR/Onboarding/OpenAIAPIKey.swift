@@ -7,7 +7,7 @@
 //
 
 import SpeziOnboarding
-import SpeziOpenAI
+import SpeziLLMOpenAI
 import SwiftUI
 
 
@@ -16,7 +16,7 @@ struct OpenAIAPIKey: View {
     
     
     var body: some View {
-        OpenAIAPIKeyOnboardingStep {
+        LLMOpenAIAPITokenOnboardingStep {
             onboardingNavigationPath.nextStep()
         }
     }

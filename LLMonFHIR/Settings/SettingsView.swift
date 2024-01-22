@@ -7,7 +7,7 @@
 //
 
 import SpeziFHIRInterpretation
-import SpeziOpenAI
+import SpeziLLMOpenAI
 import SwiftUI
 
 

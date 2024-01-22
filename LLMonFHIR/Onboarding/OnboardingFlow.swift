@@ -7,7 +7,7 @@
 //
 
 import SpeziOnboarding
-import SpeziOpenAI
+import SpeziLLMOpenAI
 import SwiftUI
 
 
