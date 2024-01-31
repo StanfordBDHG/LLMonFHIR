@@ -53,10 +53,6 @@ struct Welcome: View {
 }
 
 
-#if DEBUG
-struct Welcome_Previews: PreviewProvider {
-    static var previews: some View {
-        Welcome()
-    }
+#Preview {
+    Welcome()
 }
-#endif

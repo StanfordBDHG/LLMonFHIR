@@ -7,7 +7,6 @@
 //
 
 import ModelsR4
-import OpenAI
 import SpeziFHIR
 import SpeziFHIRInterpretation
 import SpeziOnboarding

@@ -6,12 +6,12 @@
 // SPDX-License-Identifier: MIT
 //
 
-import OpenAI
 import Spezi
 import SpeziFHIR
 import SpeziFHIRInterpretation
-import SpeziLocalStorage
+import SpeziLLM
 import SpeziLLMOpenAI
+import SpeziLocalStorage
 import SpeziViews
 import SwiftUI
 
@@ -24,36 +24,37 @@ private enum FHIRMultipleResourceInterpreterConstants {
 @Observable
 class FHIRMultipleResourceInterpreter {
     private let localStorage: LocalStorage
-    private let openAIModel: OpenAIModel
+    private let llmRunner: LLMRunner
     private let fhirStore: FHIRStore
     private let resourceSummary: FHIRResourceSummary
     
-    var chat: [Chat] = []
-    var viewState: ViewState = .idle
+    @MainActor var viewState: ViewState = .idle
+    var llm: any LLM
     
     
-    private var functions: [ChatFunctionDeclaration] {
-        [LLMFunction.getResources(allResourcesFunctionCallIdentifier: fhirStore.allResourcesFunctionCallIdentifier)]
-    }
-    
-    
-    required init(localStorage: LocalStorage, openAIModel: OpenAIModel, fhirStore: FHIRStore, resourceSummary: FHIRResourceSummary) {
+    required init(localStorage: LocalStorage, llmRunner: LLMRunner, llm: any LLM, fhirStore: FHIRStore, resourceSummary: FHIRResourceSummary) {
         self.localStorage = localStorage
-        self.openAIModel = openAIModel
+        self.llmRunner = llmRunner
+        self.llm = llm
         self.fhirStore = fhirStore
         self.resourceSummary = resourceSummary
         
-        chat = (try? localStorage.read(storageKey: FHIRMultipleResourceInterpreterConstants.chat)) ?? []
+        Task { @MainActor in
+            llm.context = (try? localStorage.read(storageKey: FHIRMultipleResourceInterpreterConstants.chat)) ?? []
+        }
     }
     
     
+    @MainActor
     func resetChat() {
-        chat = []
+        llm.context = []
         queryLLM()
     }
     
+    // TODO: Can we get rid of this main actor annotation?
+    @MainActor
     func queryLLM() {
-        guard viewState == .idle, chat.last?.role == .user || !chat.contains(where: { $0.role == .assistant }) else {
+        guard viewState == .idle, llm.context.last?.role == .user || !llm.context.contains(where: { $0.role == .assistant }) else {
             return
         }
         
@@ -61,43 +62,45 @@ class FHIRMultipleResourceInterpreter {
             do {
                 viewState = .processing
                 
-                prepareSystemPrompt()
+                if llm.context.isEmpty {
+                    llm.context.append(systemMessage: FHIRPrompt.interpretMultipleResources.prompt)
+                }
+                
+                if let patient = fhirStore.patient {
+                    llm.context.append(systemMessage: patient.jsonDescription)
+                }
                 
                 print("The Multiple Resource Interpreter has access to \(fhirStore.llmRelevantResources.count) resources.")
                 
-                try await executeLLMQueries()
+                //try await executeLLMQueries()
+                do {
+                    let stream = try await llmRunner(with: llm).generate()
+                    
+                    for try await token in stream {
+                        llm.context.append(assistantOutput: token)
+                    }
+                } catch let error as LLMError {
+                    llm.state = .error(error: error)
+                } catch {
+                    llm.state = .error(error: LLMRunnerError.setupError)
+                }
                 
-                try localStorage.store(chat, storageKey: FHIRMultipleResourceInterpreterConstants.chat)
+                try localStorage.store(llm.context, storageKey: FHIRMultipleResourceInterpreterConstants.chat)
                 
                 viewState = .idle
-            } catch let error as APIErrorResponse {
+            } 
+            /*  Do we need something like that?
+            catch let error as APIErrorResponse {
                 viewState = .error(error)
-            } catch {
+            }
+             */
+            catch {
                 viewState = .error(error.localizedDescription)
             }
         }
     }
     
-    private func prepareSystemPrompt() {
-        if chat.isEmpty {
-            chat = [
-                Chat(
-                    role: .system,
-                    content: FHIRPrompt.interpretMultipleResources.prompt
-                )
-            ]
-        }
-        
-        if let patient = fhirStore.patient {
-            chat.append(
-                Chat(
-                    role: .system,
-                    content: patient.jsonDescription
-                )
-            )
-        }
-    }
-    
+    /*
     private func executeLLMQueries() async throws {
         while true {
             let chatStreamResults = try await openAIModel.queryAPI(withChat: chat, withFunction: functions)
@@ -206,6 +209,7 @@ class FHIRMultipleResourceInterpreter {
             }
         }
     }
+     */
 }
 
 

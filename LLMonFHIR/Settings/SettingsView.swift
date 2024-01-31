@@ -25,6 +25,8 @@ struct SettingsView: View {
     @Environment(\.dismiss) private var dismiss
     @AppStorage(StorageKeys.enableTextToSpeech) private var enableTextToSpeech = StorageKeys.Defaults.enableTextToSpeech
     @AppStorage(StorageKeys.resourceLimit) private var resourceLimit = StorageKeys.Defaults.resourceLimit
+    @AppStorage(StorageKeys.openAIModel) private var openAIModel = StorageKeys.Defaults.openAIModel
+    
     
     
     var body: some View {
@@ -104,14 +106,15 @@ struct SettingsView: View {
         Group {
             switch destination {
             case .openAIKey:
-                OpenAIAPIKeyOnboardingStep(actionText: "OPEN_AI_KEY_SAVE_ACTION") {
+                LLMOpenAIAPITokenOnboardingStep(actionText: "OPEN_AI_KEY_SAVE_ACTION") {
                     path.removeLast()
                 }
             case .openAIModel:
-                OpenAIModelSelectionOnboardingStep(
+                LLMOpenAIModelOnboardingStep(
                     actionText: "OPEN_AI_MODEL_SAVE_ACTION",
-                    models: [Model.gpt4, Model.gpt4_1106_preview]
-                ) {
+                    models: [.gpt4, .gpt4_1106_preview]
+                ) { chosenModelType in
+                    openAIModel = chosenModelType
                     path.removeLast()
                 }
             case .resourceSelection:
@@ -131,4 +134,9 @@ struct SettingsView: View {
             }
         }
     }
+}
+
+
+#Preview {
+    SettingsView()
 }

@@ -6,7 +6,6 @@
 // SPDX-License-Identifier: MIT
 //
 
-import OpenAI
 import SpeziChat
 import SpeziFHIR
 import SpeziFHIRInterpretation
@@ -25,25 +24,19 @@ struct MultipleResourcesChatView: View {
     @AppStorage(StorageKeys.enableTextToSpeech) private var textToSpeech = StorageKeys.Defaults.enableTextToSpeech
     
     
-    private var disableInput: Binding<Bool> {
-        Binding(
-            get: {
-                multipleResourceInterpreter.viewState == .processing
-            },
-            set: { _ in }
-        )
-    }
-    
     var body: some View {
         @Bindable var multipleResourceInterpreter = multipleResourceInterpreter
         NavigationStack {
-            ChatView($multipleResourceInterpreter.chat, disableInput: disableInput)
+            ChatView(
+                $multipleResourceInterpreter.llm.context,
+                disableInput: multipleResourceInterpreter.viewState == .processing
+            )
                 .navigationTitle("LLM on FHIR")
                 .toolbar {
                     toolbar
                 }
                 .viewStateAlert(state: $multipleResourceInterpreter.viewState)
-                .onChange(of: multipleResourceInterpreter.chat) {
+                .onChange(of: multipleResourceInterpreter.llm.context) {
                     multipleResourceInterpreter.queryLLM()
                 }
                 .onAppear {
@@ -54,6 +47,7 @@ struct MultipleResourcesChatView: View {
     }
     
     
+    @MainActor
     @ToolbarContentBuilder private var toolbar: some ToolbarContent {
         ToolbarItem(placement: .cancellationAction) {
             if multipleResourceInterpreter.viewState == .processing {

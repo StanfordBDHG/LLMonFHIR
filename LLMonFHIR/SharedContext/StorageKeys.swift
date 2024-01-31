@@ -6,11 +6,15 @@
 // SPDX-License-Identifier: MIT
 //
 
+import SpeziLLMOpenAI
+
+
 /// Constants shared across the Spezi Template Application to access storage information including the `AppStorage` and `SceneStorage`
 enum StorageKeys {
     enum Defaults {
         static let enableTextToSpeech = false
         static let resourceLimit = 250
+        static let openAIModel: Model = .gpt4_1106_preview
     }
     
     
@@ -29,4 +33,6 @@ enum StorageKeys {
     static let enableTextToSpeech = "settings.enableTextToSpeech"
     /// Indicates the limit of resources that should be included in the all resources query
     static let resourceLimit = "settings.resourceLimit"
+    /// Indicates the chosen OpenAI GPT model
+    static let openAIModel = "settings.openAIModel"
 }

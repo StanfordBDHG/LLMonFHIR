@@ -6,8 +6,8 @@
 // SPDX-License-Identifier: MIT
 //
 
-import SpeziOnboarding
 import SpeziLLMOpenAI
+import SpeziOnboarding
 import SwiftUI
 
 
@@ -20,4 +20,9 @@ struct OpenAIAPIKey: View {
             onboardingNavigationPath.nextStep()
         }
     }
+}
+
+
+#Preview {
+    OpenAIAPIKey()
 }

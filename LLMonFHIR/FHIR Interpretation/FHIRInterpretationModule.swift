@@ -9,9 +9,10 @@
 import Spezi
 import SpeziFHIR
 import SpeziFHIRInterpretation
-import SpeziLocalStorage
 import SpeziLLM
-import SpeziLLMOpenAI
+import class SpeziLLMOpenAI.LLMOpenAI
+import SpeziLocalStorage
+import SwiftUI
 
 
 class FHIRInterpretationModule: Module {
@@ -25,14 +26,39 @@ class FHIRInterpretationModule: Module {
     
     
     func configure() {
-        resourceSummary = FHIRResourceSummary(localStorage: localStorage, openAIModel: openAI.model)
-        resourceInterpreter = FHIRResourceInterpreter(localStorage: localStorage, openAIModel: openAI.model)
+        let openAIModelType = UserDefaults.standard.string(forKey: StorageKeys.openAIModel) ?? .gpt4_1106_preview
+        
+        resourceSummary = FHIRResourceSummary(
+            localStorage: localStorage,
+            llmRunner: llmRunner,
+            llm: LLMOpenAI(
+                parameters: .init(
+                    modelType: openAIModelType,
+                    systemPrompt: nil   // No system prompt as this will be determined later by the resource interpreter
+                )
+            )
+        )
+        
+        resourceInterpreter = FHIRResourceInterpreter(
+            localStorage: localStorage,
+            llmRunner: llmRunner,
+            llm: LLMOpenAI(
+                parameters: .init(
+                    modelType: openAIModelType,
+                    systemPrompt: nil   // No system prompt as this will be determined later by the resource interpreter
+                )
+            )
+        )
+        
         multipleResourceInterpreter = FHIRMultipleResourceInterpreter(
             localStorage: localStorage,
             llmRunner: llmRunner,
-            llm: LLMOpenAI(parameters: .init(modelType: .gpt4_1106_preview), {
-                // TODO: Code change in SpeziLLM to enable default value
-            }),
+            llm: LLMOpenAI(
+                parameters: .init(
+                    modelType: openAIModelType,
+                    systemPrompt: nil   // No system prompt as this will be determined later by the resource interpreter
+                )
+            ),
             fhirStore: fhirStore,
             resourceSummary: resourceSummary
         )

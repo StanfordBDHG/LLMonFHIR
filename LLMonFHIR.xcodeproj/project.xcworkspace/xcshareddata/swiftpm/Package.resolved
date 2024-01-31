@@ -23,8 +23,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/StanfordBDHG/llama.cpp",
       "state" : {
-        "revision" : "bcbf5bf9f677b92262aa28a2849defeddc00505d",
-        "version" : "0.1.6"
+        "revision" : "b0611c7d3cb049822f9911878514e4706b80e2ac",
+        "version" : "0.1.8"
       }
     },
     {
@@ -48,19 +48,10 @@
     {
       "identity" : "spezichat",
       "kind" : "remoteSourceControl",
-      "location" : "https://github.com/StanfordSpezi/SpeziChat.git",
+      "location" : "https://github.com/StanfordSpezi/SpeziChat",
       "state" : {
-        "revision" : "9d45c10bcf859c98f2998ecd4f6a80f31894fe2c",
-        "version" : "0.1.4"
-      }
-    },
-    {
-      "identity" : "spezifhir",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/StanfordSpezi/SpeziFHIR",
-      "state" : {
-        "branch" : "feat/lift-to-spezi-llm",
-        "revision" : "28953591898c4b448028944f52cf4998895866ed"
+        "revision" : "ea5e21b4f42d99a5549dd7a7033e2a3efeb5fd36",
+        "version" : "0.1.5"
       }
     },
     {
@@ -82,21 +73,12 @@
       }
     },
     {
-      "identity" : "spezillm",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/StanfordSpezi/SpeziLLM.git",
-      "state" : {
-        "revision" : "24d6c197f1821925e3fc1ee9589859b6853aee01",
-        "version" : "0.6.0"
-      }
-    },
-    {
       "identity" : "spezionboarding",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/StanfordSpezi/SpeziOnboarding.git",
       "state" : {
-        "revision" : "3ee713576eaeaa03200ba26bbc1269ceeb6abb25",
-        "version" : "1.0.1"
+        "revision" : "8fb6d9f1a080661c0cc564a93b82ead3c8d44d4f",
+        "version" : "1.0.2"
       }
     },
     {
@@ -131,8 +113,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/apple/swift-collections.git",
       "state" : {
-        "revision" : "a902f1823a7ff3c9ab2fba0f992396b948eda307",
-        "version" : "1.0.5"
+        "revision" : "d029d9d39c87bed85b1c50adee7c41795261a192",
+        "version" : "1.0.6"
       }
     },
     {
@@ -140,8 +122,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/StanfordBDHG/XCTestExtensions.git",
       "state" : {
-        "revision" : "388a6d6a5be48eff5d98a2c45e0b50f30ed21dc3",
-        "version" : "0.4.7"
+        "revision" : "fb7fcee97c574b950e03b0a53874e26db27db2fe",
+        "version" : "0.4.8"
       }
     },
     {

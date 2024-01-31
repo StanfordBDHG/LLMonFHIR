@@ -6,7 +6,6 @@
 // SPDX-License-Identifier: MIT
 //
 
-import OpenAI
 import SpeziFHIR
 import SpeziFHIRInterpretation
 import SpeziViews
@@ -115,9 +114,9 @@ struct InspectResourceView: View {
             do {
                 try await fhirResourceSummary.summarize(resource: resource, forceReload: forceReload)
                 loadingSummary = .idle
-            } catch let error as APIErrorResponse {
+            }/* catch let error as APIErrorResponse {
                 loadingSummary = .error(error)
-            } catch {
+            }*/ catch {
                 loadingSummary = .error("Unknown error")
             }
         }
@@ -130,9 +129,9 @@ struct InspectResourceView: View {
             do {
                 try await fhirResourceInterpreter.interpret(resource: resource, forceReload: forceReload)
                 interpreting = .idle
-            } catch let error as APIErrorResponse {
+            } /*catch let error as APIErrorResponse {
                 loadingSummary = .error(error)
-            } catch {
+            }*/ catch {
                 loadingSummary = .error("Unknown error")
             }
         }

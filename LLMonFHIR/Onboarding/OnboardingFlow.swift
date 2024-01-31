@@ -29,10 +29,6 @@ struct OnboardingFlow: View {
 }
 
 
-#if DEBUG
-struct OnboardingFlow_Previews: PreviewProvider {
-    static var previews: some View {
-        OnboardingFlow()
-    }
+#Preview {
+    OnboardingFlow()
 }
-#endif
