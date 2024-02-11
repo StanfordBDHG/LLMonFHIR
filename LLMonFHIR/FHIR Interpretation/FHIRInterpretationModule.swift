@@ -26,7 +26,7 @@ class FHIRInterpretationModule: Module {
     
     
     func configure() {
-        let openAIModelType = UserDefaults.standard.string(forKey: StorageKeys.openAIModel) ?? .gpt4_turbo_preview
+        let openAIModelType = UserDefaults.standard.string(forKey: StorageKeys.openAIModel) ?? StorageKeys.Defaults.openAIModel
         
         resourceSummary = FHIRResourceSummary(
             localStorage: localStorage,
