@@ -32,7 +32,9 @@ struct InspectResourceView: View {
             .viewStateAlert(state: $interpreting)
             .viewStateAlert(state: $loadingSummary)
             .task {
-                interpret()
+                if !FeatureFlags.testMode {
+                    interpret()
+                }
             }
     }
     
