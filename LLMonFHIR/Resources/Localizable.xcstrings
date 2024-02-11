@@ -1006,7 +1006,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Call this function to determine the relevant FHIR health record titles based on the user's question. The titles must have the exact name defined in the initial prompt. \n\nPass in one or more titles separated by commas that you need access to the \"resources\" property as a string. \n\nAlways try to output the least amount of resource titles to be sent to the model to prevent exceeding the token limit."
+            "value" : "Call this function to determine the relevant FHIR health record titles based on the user's question. The titles must have the exact name defined in the initial prompt. \n\nPass in one or more titles that you need access within the \"resources\" property as an array of Strings.\n\nAlways try to output the least amount of resource titles to be sent to the model to prevent exceeding the token limit."
           }
         },
         "es" : {
@@ -1319,7 +1319,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Provide an array of all the FHIR health record titles with the exact same name as given in the list that are applicable to answer the user's questions. It is possible that multiple titles apply to the users's question (e.g for multiple medications). You can also request a larger set of FHIR resources by, e.g., just stating the resource type but this might not include all relevant resources to avoid exceeding the token limit.\n\nThe FHIR resource identifiers are composed of three elements:\n1. The FHIR resource type, e.g., MedicationRequest, Condition, and more.\n2. The title of the FHIR resource\n3. The date associated with the FHIR resource.\n\nUse these informations to determine the best possible FHIR resource for each question. Try to request all the required titles to allow yourself to fully answer the question in a comprehensive manner. \n\nFor example, if the user asks about their Medication it would be recommended to request all MedicationRequest FHIR resource types as well as other related FHIR resources.\n\nA question can build upon a previous question and does not need to be explicit. e.g. if a user says prescribe, this is associated with medication."
+            "value" : "An array of all the FHIR health record titles with the exact same name as given in the list that are applicable to answer the user's questions. It is possible that multiple titles apply to the users's question (e.g for multiple medications). You can also request a larger set of FHIR resources by, e.g., just stating the resource type but this might not include all relevant resources to avoid exceeding the token limit.\n\nThe FHIR resource identifiers are composed of three elements:\n1. The FHIR resource type, e.g., MedicationRequest, Condition, and more.\n2. The title of the FHIR resource\n3. The date associated with the FHIR resource.\n\nUse these informations to determine the best possible FHIR resource for each question. Try to request all the required titles to allow yourself to fully answer the question in a comprehensive manner. \n\nFor example, if the user asks about their Medication it would be recommended to request all MedicationRequest FHIR resource types as well as other related FHIR resources.\n\nA question can build upon a previous question and does not need to be explicit. e.g. if a user says prescribe, this is associated with medication."
           }
         },
         "es" : {
@@ -1796,6 +1796,16 @@
     },
     "The medical record does not include any FHIR resources for the search term %@." : {
 
+    },
+    "This is the summary of the requested %@:\n\n%@" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "This is the summary of the requested %1$@:\n\n%2$@"
+          }
+        }
+      }
     },
     "Total Number of Resources: %lld" : {
 

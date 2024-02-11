@@ -10,7 +10,7 @@ import Spezi
 import SpeziFHIR
 import SpeziFHIRInterpretation
 import SpeziLLM
-import class SpeziLLMOpenAI.LLMOpenAI
+import SpeziLLMOpenAI
 import SpeziLocalStorage
 import SwiftUI
 
@@ -26,12 +26,12 @@ class FHIRInterpretationModule: Module {
     
     
     func configure() {
-        let openAIModelType = UserDefaults.standard.string(forKey: StorageKeys.openAIModel) ?? .gpt4_1106_preview
+        let openAIModelType = UserDefaults.standard.string(forKey: StorageKeys.openAIModel) ?? .gpt4_turbo_preview
         
         resourceSummary = FHIRResourceSummary(
             localStorage: localStorage,
             llmRunner: llmRunner,
-            llm: LLMOpenAI(
+            llmSchema: LLMOpenAISchema(
                 parameters: .init(
                     modelType: openAIModelType,
                     systemPrompt: nil   // No system prompt as this will be determined later by the resource interpreter
@@ -42,7 +42,7 @@ class FHIRInterpretationModule: Module {
         resourceInterpreter = FHIRResourceInterpreter(
             localStorage: localStorage,
             llmRunner: llmRunner,
-            llm: LLMOpenAI(
+            llmSchema: LLMOpenAISchema(
                 parameters: .init(
                     modelType: openAIModelType,
                     systemPrompt: nil   // No system prompt as this will be determined later by the resource interpreter
@@ -53,12 +53,18 @@ class FHIRInterpretationModule: Module {
         multipleResourceInterpreter = FHIRMultipleResourceInterpreter(
             localStorage: localStorage,
             llmRunner: llmRunner,
-            llm: LLMOpenAI(
+            llmSchema: LLMOpenAISchema(
                 parameters: .init(
                     modelType: openAIModelType,
                     systemPrompt: nil   // No system prompt as this will be determined later by the resource interpreter
                 )
-            ),
+            ) {
+                FHIRInterpretationFunction(
+                    fhirStore: self.fhirStore,
+                    resourceSummary: self.resourceSummary,
+                    allResourcesFunctionCallIdentifier: self.fhirStore.allResourcesFunctionCallIdentifier
+                )
+            },
             fhirStore: fhirStore,
             resourceSummary: resourceSummary
         )

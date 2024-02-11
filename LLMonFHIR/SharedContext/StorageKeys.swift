@@ -6,6 +6,7 @@
 // SPDX-License-Identifier: MIT
 //
 
+import struct OpenAI.Model
 import SpeziLLMOpenAI
 
 
@@ -14,7 +15,7 @@ enum StorageKeys {
     enum Defaults {
         static let enableTextToSpeech = false
         static let resourceLimit = 250
-        static let openAIModel: Model = .gpt4_1106_preview
+        static let openAIModel: Model = .gpt4_turbo_preview
     }
     
     

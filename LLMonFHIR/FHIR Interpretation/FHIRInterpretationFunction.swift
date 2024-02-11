@@ -7,9 +7,9 @@
 //
 
 import os
-import SpeziLLMOpenAI
 import SpeziFHIR
 import SpeziFHIRInterpretation
+import SpeziLLMOpenAI
 
 
 struct FHIRInterpretationFunction: LLMFunction {
@@ -23,8 +23,7 @@ struct FHIRInterpretationFunction: LLMFunction {
     private let allResourcesFunctionCallIdentifier: [String]
     
     
-    @Parameter
-    var resources: [String]
+    @Parameter var resources: [String]
     
     
     init(fhirStore: FHIRStore, resourceSummary: FHIRResourceSummary, allResourcesFunctionCallIdentifier: [String]) {
@@ -65,7 +64,7 @@ struct FHIRInterpretationFunction: LLMFunction {
                         // Iterate over fitting resources and summarizing them
                         for resource in fittingResources {
                             innerGroup.addTask {
-                                return try await summarizeResource(fhirResource: resource, resourceType: requestedResource)
+                                try await summarizeResource(fhirResource: resource, resourceType: requestedResource)
                             }
                         }
                         
@@ -88,7 +87,7 @@ struct FHIRInterpretationFunction: LLMFunction {
     
     private func summarizeResource(fhirResource: FHIRResource, resourceType: String) async throws -> String {
         let summary = try await resourceSummary.summarize(resource: fhirResource)
-        Self.logger.debug("Summary of appended resource: \(summary)")
+        Self.logger.debug("Summary of appended FHIR resource \(resourceType): \(summary.description)")
         return String(localized: "This is the summary of the requested \(resourceType):\n\n\(summary.description)")
     }
     
@@ -102,7 +101,8 @@ struct FHIRInterpretationFunction: LLMFunction {
             Self.logger.debug(
                 """
                 Reduced to the following 64 resources: \(fittingResources.map { $0.functionCallIdentifier }.joined(separator: ","))
-                """)
+                """
+            )
         }
         
         return fittingResources

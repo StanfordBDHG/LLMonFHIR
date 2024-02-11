@@ -8,6 +8,7 @@
 
 import SpeziFHIR
 import SpeziFHIRInterpretation
+import SpeziLLM
 import SpeziViews
 import SwiftUI
 
@@ -114,10 +115,10 @@ struct InspectResourceView: View {
             do {
                 try await fhirResourceSummary.summarize(resource: resource, forceReload: forceReload)
                 loadingSummary = .idle
-            }/* catch let error as APIErrorResponse {
+            } catch let error as LLMError {
                 loadingSummary = .error(error)
-            }*/ catch {
-                loadingSummary = .error("Unknown error")
+            } catch {
+                loadingSummary = .error("Unknown LLM processing error")
             }
         }
     }
@@ -129,10 +130,10 @@ struct InspectResourceView: View {
             do {
                 try await fhirResourceInterpreter.interpret(resource: resource, forceReload: forceReload)
                 interpreting = .idle
-            } /*catch let error as APIErrorResponse {
-                loadingSummary = .error(error)
-            }*/ catch {
-                loadingSummary = .error("Unknown error")
+            } catch let error as LLMError {
+                interpreting = .error(error)
+            } catch {
+                interpreting = .error("Unknown LLM processing error")
             }
         }
     }

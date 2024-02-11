@@ -27,18 +27,27 @@ struct MultipleResourcesChatView: View {
     var body: some View {
         @Bindable var multipleResourceInterpreter = multipleResourceInterpreter
         NavigationStack {
-            ChatView(
-                $multipleResourceInterpreter.llm.context,
-                disableInput: multipleResourceInterpreter.viewState == .processing
-            )
+            Group {
+                if let llm = multipleResourceInterpreter.llm {
+                    let contextBinding = Binding { llm.context } set: { llm.context = $0 }
+                    ChatView(
+                        contextBinding,
+                        disableInput: multipleResourceInterpreter.viewState == .processing
+                    )
+                        .onChange(of: llm.context) {
+                            multipleResourceInterpreter.queryLLM()
+                        }
+                } else {
+                    ChatView(
+                        .constant([])
+                    )
+                }
+            }
                 .navigationTitle("LLM on FHIR")
                 .toolbar {
                     toolbar
                 }
                 .viewStateAlert(state: $multipleResourceInterpreter.viewState)
-                .onChange(of: multipleResourceInterpreter.llm.context) {
-                    multipleResourceInterpreter.queryLLM()
-                }
                 .onAppear {
                     multipleResourceInterpreter.queryLLM()
                 }
@@ -47,8 +56,7 @@ struct MultipleResourcesChatView: View {
     }
     
     
-    @MainActor
-    @ToolbarContentBuilder private var toolbar: some ToolbarContent {
+    @MainActor @ToolbarContentBuilder private var toolbar: some ToolbarContent {
         ToolbarItem(placement: .cancellationAction) {
             if multipleResourceInterpreter.viewState == .processing {
                 ProgressView()

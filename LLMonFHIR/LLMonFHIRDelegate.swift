@@ -22,7 +22,7 @@ class LLMonFHIRDelegate: SpeziAppDelegate {
                 healthKit
             }
             LLMRunner {
-                LLMOpenAIRunnerSetupTask()
+                LLMOpenAIPlatform(configuration: .init(concurrentStreams: 25))
             }
             FHIRInterpretationModule()
         }

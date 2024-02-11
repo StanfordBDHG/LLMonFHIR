@@ -28,7 +28,6 @@ struct SettingsView: View {
     @AppStorage(StorageKeys.openAIModel) private var openAIModel = StorageKeys.Defaults.openAIModel
     
     
-    
     var body: some View {
         NavigationStack(path: $path) {
             List {
@@ -112,7 +111,7 @@ struct SettingsView: View {
             case .openAIModel:
                 LLMOpenAIModelOnboardingStep(
                     actionText: "OPEN_AI_MODEL_SAVE_ACTION",
-                    models: [.gpt4, .gpt4_1106_preview]
+                    models: [.gpt4_turbo_preview, .gpt4]
                 ) { chosenModelType in
                     openAIModel = chosenModelType
                     path.removeLast()
