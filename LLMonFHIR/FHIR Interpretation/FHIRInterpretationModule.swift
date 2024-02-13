@@ -59,6 +59,7 @@ class FHIRInterpretationModule: Module {
                     systemPrompt: nil   // No system prompt as this will be determined later by the resource interpreter
                 )
             ) {
+                // FHIR interpretation function
                 FHIRInterpretationFunction(
                     fhirStore: self.fhirStore,
                     resourceSummary: self.resourceSummary,

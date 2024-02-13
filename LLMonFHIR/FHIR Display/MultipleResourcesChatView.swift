@@ -32,10 +32,13 @@ struct MultipleResourcesChatView: View {
                     let contextBinding = Binding { llm.context } set: { llm.context = $0 }
                     ChatView(
                         contextBinding,
-                        disableInput: multipleResourceInterpreter.viewState == .processing
+                        disableInput: llm.state.representation == .processing
                     )
+                        .viewStateAlert(state: llm.state)
                         .onChange(of: llm.context) {
-                            multipleResourceInterpreter.queryLLM()
+                            if llm.state == .ready {
+                                multipleResourceInterpreter.queryLLM()
+                            }
                         }
                 } else {
                     ChatView(
@@ -47,7 +50,6 @@ struct MultipleResourcesChatView: View {
                 .toolbar {
                     toolbar
                 }
-                .viewStateAlert(state: $multipleResourceInterpreter.viewState)
                 .onAppear {
                     multipleResourceInterpreter.queryLLM()
                 }
@@ -58,7 +60,7 @@ struct MultipleResourcesChatView: View {
     
     @MainActor @ToolbarContentBuilder private var toolbar: some ToolbarContent {
         ToolbarItem(placement: .cancellationAction) {
-            if multipleResourceInterpreter.viewState == .processing {
+            if multipleResourceInterpreter.llm?.state.representation == .processing {
                 ProgressView()
             } else {
                 Button("Close") {
@@ -92,7 +94,7 @@ struct MultipleResourcesChatView: View {
                         .accessibilityLabel(Text("Reset Chat"))
                 }
             )
-            .disabled(multipleResourceInterpreter.viewState == .processing)
+            .disabled(multipleResourceInterpreter.llm?.state.representation == .processing)
         }
     }
 }
