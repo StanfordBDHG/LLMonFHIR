@@ -71,6 +71,7 @@
       }
     },
     "Close" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -81,6 +82,7 @@
       }
     },
     "Conditions" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -91,6 +93,7 @@
       }
     },
     "Diagnostics" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -566,6 +569,7 @@
       }
     },
     "Encounters" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -610,6 +614,7 @@
       }
     },
     "FHIR_RESOURCES_EMPTY_SEARCH_MESSAGE" : {
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -644,6 +649,7 @@
       }
     },
     "FHIR_RESOURCES_INTERPRETATION_BUTTON" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -689,6 +695,7 @@
       }
     },
     "FHIR_RESOURCES_INTERPRETATION_LOADING" : {
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -723,6 +730,7 @@
       }
     },
     "FHIR_RESOURCES_INTERPRETATION_RESOURCE" : {
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -757,6 +765,7 @@
       }
     },
     "FHIR_RESOURCES_INTERPRETATION_SECTION" : {
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -791,6 +800,7 @@
       }
     },
     "FHIR_RESOURCES_SUMMARY_BUTTON" : {
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -860,6 +870,7 @@
       }
     },
     "FHIR_RESOURCES_SUMMARY_SECTION" : {
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -894,6 +905,7 @@
       }
     },
     "FHIR_RESOURCES_TITLE" : {
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -996,6 +1008,7 @@
       }
     },
     "FUNCTION_DESCRIPTION" : {
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -1169,6 +1182,7 @@
       }
     },
     "Immunizations" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -1180,6 +1194,7 @@
     },
     "Interpretation Prompt" : {
       "comment" : "Title of the multiple resources interpretation prompt.",
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -1191,6 +1206,7 @@
     },
     "Interpretation Prompt Content" : {
       "comment" : "Content of the multiple resources interpretation prompt.",
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -1211,6 +1227,7 @@
       }
     },
     "Medications" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -1221,6 +1238,7 @@
       }
     },
     "Observations" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -1299,6 +1317,7 @@
       }
     },
     "Other Resources" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -1309,6 +1328,7 @@
       }
     },
     "PARAMETER_DESCRIPTION" : {
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -1343,6 +1363,7 @@
       }
     },
     "Procedures" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -1353,6 +1374,7 @@
       }
     },
     "Reset Chat" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -1775,6 +1797,7 @@
       }
     },
     "Text to speech is disabled, press to enable text to speech." : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -1785,6 +1808,7 @@
       }
     },
     "Text to speech is enabled, press to disable text to speech." : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -1793,22 +1817,6 @@
           }
         }
       }
-    },
-    "The medical record does not include any FHIR resources for the search term %@." : {
-
-    },
-    "This is the summary of the requested %@:\n\n%@" : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "new",
-            "value" : "This is the summary of the requested %1$@:\n\n%2$@"
-          }
-        }
-      }
-    },
-    "Total Number of Resources: %lld" : {
-
     },
     "Use HealthKit Resources" : {
       "localizations" : {
@@ -2134,6 +2142,9 @@
           }
         }
       }
+    },
+    "Your Health Records" : {
+
     }
   },
   "version" : "1.0"

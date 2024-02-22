@@ -8,9 +8,11 @@
 
 import SwiftUI
 
-
-extension String: LocalizedError {
-    public var errorDescription: String? {
-        self
-    }
-}
+// TODO: Not needed anymore
+/*
+ extension String: LocalizedError {
+ public var errorDescription: String? {
+ self
+ }
+ }
+ */

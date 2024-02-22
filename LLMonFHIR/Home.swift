@@ -6,22 +6,31 @@
 // SPDX-License-Identifier: MIT
 //
 
+import SpeziFHIRInterpretation
 import SwiftUI
 
 
 struct HomeView: View {
     @State private var showSettings = false
+    @State private var showMultipleResourcesChat = false
     @AppStorage(StorageKeys.onboardingInstructions) private var onboardingInstructions = true
+    @AppStorage(StorageKeys.enableTextToSpeech) private var textToSpeech = StorageKeys.Defaults.enableTextToSpeech
     
     
     var body: some View {
         NavigationStack {
-            FHIRResourcesView()
+            ResourceView(showMultipleResourcesChat: $showMultipleResourcesChat)
                 .toolbar {
                     settingsToolbarItem
                 }
                 .sheet(isPresented: $showSettings) {
                     SettingsView()
+                }
+                .sheet(isPresented: $showMultipleResourcesChat) {
+                    MultipleResourcesChatView(
+                        navigationTitle: "LLM on FHIR",
+                        textToSpeech: $textToSpeech
+                    )
                 }
         }
     }
@@ -45,4 +54,5 @@ struct HomeView: View {
 
 #Preview {
     HomeView()
+        .previewWith(standard: LLMonFHIRStandard()) {}
 }

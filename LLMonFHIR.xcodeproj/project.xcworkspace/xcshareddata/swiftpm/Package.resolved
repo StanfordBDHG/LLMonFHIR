@@ -32,7 +32,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/MacPaw/OpenAI",
       "state" : {
-        "revision" : "35afc9a6ee127b8f22a85a31aec2036a987478af"
+        "revision" : "35afc9a6ee127b8f22a85a31aec2036a987478af",
+        "version" : "0.2.6"
       }
     },
     {
@@ -54,24 +55,6 @@
       }
     },
     {
-      "identity" : "spezichat",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/StanfordSpezi/SpeziChat",
-      "state" : {
-        "revision" : "ea5e21b4f42d99a5549dd7a7033e2a3efeb5fd36",
-        "version" : "0.1.5"
-      }
-    },
-    {
-      "identity" : "spezifhir",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/StanfordSpezi/SpeziFHIR",
-      "state" : {
-        "branch" : "feat/lift-to-spezi-llm",
-        "revision" : "b58ba7afc34ff1b83d4f4ab3525d3d13f372b080"
-      }
-    },
-    {
       "identity" : "spezifoundation",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/StanfordSpezi/SpeziFoundation",
@@ -87,15 +70,6 @@
       "state" : {
         "revision" : "d882734a4ed31fce1bffd7b9977e2669080f21de",
         "version" : "0.5.0"
-      }
-    },
-    {
-      "identity" : "spezillm",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/StanfordSpezi/SpeziLLM",
-      "state" : {
-        "branch" : "feat/structural-improvments",
-        "revision" : "f30f4d311cf99a396e76e5b732dca6462463f663"
       }
     },
     {

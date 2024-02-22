@@ -9,6 +9,7 @@
 import HealthKit
 import Spezi
 import SpeziFHIR
+import SpeziFHIRInterpretation
 import SpeziHealthKit
 import SpeziLLM
 import SpeziLLMOpenAI
@@ -22,7 +23,7 @@ class LLMonFHIRDelegate: SpeziAppDelegate {
                 healthKit
             }
             LLMRunner {
-                LLMOpenAIPlatform(configuration: .init(concurrentStreams: 25))
+                LLMOpenAIPlatform(configuration: .init(concurrentStreams: 5))
             }
             FHIRInterpretationModule()
         }
