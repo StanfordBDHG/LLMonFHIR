@@ -34,6 +34,12 @@ enum StorageKeys {
     static let enableTextToSpeech = "settings.enableTextToSpeech"
     /// Indicates the limit of resources that should be included in the all resources query
     static let resourceLimit = "settings.resourceLimit"
-    /// Indicates the chosen OpenAI GPT model
-    static let openAIModel = "settings.openAIModel"
+    /// Indicates allowed resource identifier that can be queried by the LLM via function calling
+    static let allowedResourcesFunctionCallIdentifiers = "settings.allowedResourcesFunctionCallIdentifiers"
+    /// Indicates the chosen OpenAI GPT model for summarization
+    static let openAIModelSummarization = "settings.openAIModel.summarization"
+    /// Indicates the chosen OpenAI GPT model for interpretation
+    static let openAIModelInterpretation = "settings.openAIModel.interpretation"
+    /// Indicates the chosen OpenAI GPT model for multiple resource interpretation
+    static let openAIModelMultipleInterpretation = "settings.openAIModel.multipleResourceInterpretation"
 }

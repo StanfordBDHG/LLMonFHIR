@@ -7,7 +7,7 @@
 //
 
 import SpeziFHIR
-import SpeziFHIRInterpretation
+import SpeziFHIRLLM
 import SpeziFHIRMockPatients
 import SwiftUI
 
@@ -22,30 +22,30 @@ struct ResourceView: View {
             navigationTitle: "Your Health Records",
             contentView: {
                 FHIRResourcesInstructionsView()
-            }) {
-                Button(
-                    action: {
-                        showMultipleResourcesChat.toggle()
-                    },
-                    label: {
-                        Text("CHAT_WITH_ALL_RESOURCES")
-                            .frame(maxWidth: .infinity, minHeight: 38)
-                    }
-                )
-                    .buttonStyle(.borderedProminent)
-                    .padding(-20)
             }
-                .task {
-                    if FeatureFlags.testMode {
-                        fhirStore.loadTestingResources()
-                    }
+        ) {
+            Button(
+                action: {
+                    showMultipleResourcesChat.toggle()
+                },
+                label: {
+                    Text("CHAT_WITH_ALL_RESOURCES")
+                        .frame(maxWidth: .infinity, minHeight: 38)
                 }
+            )
+                .buttonStyle(.borderedProminent)
+                .padding(-20)
+        }
+            .task {
+                if FeatureFlags.testMode {
+                    fhirStore.loadTestingResources()
+                }
+            }
     }
 }
 
 #Preview {
     ResourceView(showMultipleResourcesChat: .constant(false))
         .previewWith(standard: LLMonFHIRStandard()) {
-            
         }
 }

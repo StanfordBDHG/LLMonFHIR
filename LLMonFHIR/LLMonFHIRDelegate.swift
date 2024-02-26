@@ -9,7 +9,7 @@
 import HealthKit
 import Spezi
 import SpeziFHIR
-import SpeziFHIRInterpretation
+import SpeziFHIRLLM
 import SpeziHealthKit
 import SpeziLLM
 import SpeziLLMOpenAI

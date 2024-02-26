@@ -6,7 +6,7 @@
 // SPDX-License-Identifier: MIT
 //
 
-import SpeziFHIRInterpretation
+import SpeziFHIRLLM
 import SpeziLLMOpenAI
 import SwiftUI
 
@@ -14,7 +14,9 @@ import SwiftUI
 struct SettingsView: View {
     private enum SettingsDestinations {
         case openAIKey
-        case openAIModel
+        case openAIModelSummary
+        case openAIModelInterpretation
+        case openAIModelMultipleInterpretation
         case resourceSelection
         case promptSummary
         case promptInterpretation
@@ -23,9 +25,17 @@ struct SettingsView: View {
     
     @State private var path = NavigationPath()
     @Environment(\.dismiss) private var dismiss
+    @Environment(FHIRResourceSummary.self) var resourceSummary
+    @Environment(FHIRResourceInterpreter.self) var resourceInterpreter
+    @Environment(FHIRMultipleResourceInterpreter.self) var multipleResourceInterpreter
+    
     @AppStorage(StorageKeys.enableTextToSpeech) private var enableTextToSpeech = StorageKeys.Defaults.enableTextToSpeech
     @AppStorage(StorageKeys.resourceLimit) private var resourceLimit = StorageKeys.Defaults.resourceLimit
-    @AppStorage(StorageKeys.openAIModel) private var openAIModel = StorageKeys.Defaults.openAIModel
+    @AppStorage(StorageKeys.allowedResourcesFunctionCallIdentifiers) private var allowedResourceIdentifiers = [String]()
+    @AppStorage(StorageKeys.openAIModelSummarization) private var openAIModelSummarization = StorageKeys.Defaults.openAIModel
+    @AppStorage(StorageKeys.openAIModelInterpretation) private var openAIModelInterpretation = StorageKeys.Defaults.openAIModel
+    @AppStorage(StorageKeys.openAIModelMultipleInterpretation) private var openAIModelMultipleInterpretation =
+    StorageKeys.Defaults.openAIModel
     
     
     var body: some View {
@@ -39,7 +49,7 @@ struct SettingsView: View {
             }
                 .navigationTitle("SETTINGS_TITLE")
                 .navigationDestination(for: SettingsDestinations.self) { destination in
-                    navigationDesination(for: destination)
+                    navigationDestination(for: destination)
                 }
                 .toolbar {
                     ToolbarItem(placement: .cancellationAction) {
@@ -63,6 +73,15 @@ struct SettingsView: View {
         Section("Resource Limit") {
             Stepper(value: $resourceLimit, in: 10...2000, step: 10) {
                 Text("Resource Limit \(resourceLimit)")
+            } onEditingChanged: { complete in
+                if complete {
+                    multipleResourceInterpreter.changeLLMSchema(
+                        openAIModel: openAIModelMultipleInterpretation,
+                        resourceCountLimit: resourceLimit,
+                        resourceSummary: resourceSummary,
+                        allowedResourcesFunctionCallIdentifiers: Set(allowedResourceIdentifiers)
+                    )
+                }
             }
         }
     }
@@ -80,8 +99,14 @@ struct SettingsView: View {
             NavigationLink(value: SettingsDestinations.openAIKey) {
                 Text("SETTINGS_OPENAI_KEY")
             }
-            NavigationLink(value: SettingsDestinations.openAIModel) {
-                Text("SETTINGS_OPENAI_MODEL")
+            NavigationLink(value: SettingsDestinations.openAIModelSummary) {
+                Text("SETTINGS_OPENAI_MODEL_SUMMARY")
+            }
+            NavigationLink(value: SettingsDestinations.openAIModelInterpretation) {
+                Text("SETTINGS_OPENAI_MODEL_INTERPRETATION")
+            }
+            NavigationLink(value: SettingsDestinations.openAIModelMultipleInterpretation) {
+                Text("SETTINGS_OPENAI_MODEL_MULTIPLE_RESOURCE_INTERPRETATION")
             }
         }
     }
@@ -101,19 +126,57 @@ struct SettingsView: View {
     }
     
     
-    private func navigationDesination(for destination: SettingsDestinations) -> some View {
-        Group {
+    private func navigationDestination(for destination: SettingsDestinations) -> some View {    // swiftlint:disable:this function_body_length
+        Group {     // swiftlint:disable:this closure_body_length
             switch destination {
             case .openAIKey:
                 LLMOpenAIAPITokenOnboardingStep(actionText: "OPEN_AI_KEY_SAVE_ACTION") {
                     path.removeLast()
                 }
-            case .openAIModel:
+            case .openAIModelSummary:
+                LLMOpenAIModelOnboardingStep(
+                    actionText: "OPEN_AI_MODEL_SAVE_ACTION",
+                    models: [.gpt4_turbo_preview, .gpt4, .gpt3_5Turbo]
+                ) { chosenModelType in
+                    openAIModelSummarization = chosenModelType
+                    resourceSummary.changeLLMSchema(
+                        to: LLMOpenAISchema(
+                            parameters: .init(
+                                modelType: chosenModelType,
+                                systemPrompts: []
+                            )
+                        )
+                    )
+                    path.removeLast()
+                }
+            case .openAIModelInterpretation:
+                LLMOpenAIModelOnboardingStep(
+                    actionText: "OPEN_AI_MODEL_SAVE_ACTION",
+                    models: [.gpt4_turbo_preview, .gpt4, .gpt3_5Turbo]
+                ) { chosenModelType in
+                    openAIModelInterpretation = chosenModelType
+                    resourceInterpreter.changeLLMSchema(
+                        to: LLMOpenAISchema(
+                            parameters: .init(
+                                modelType: chosenModelType,
+                                systemPrompts: []
+                            )
+                        )
+                    )
+                    path.removeLast()
+                }
+            case .openAIModelMultipleInterpretation:
                 LLMOpenAIModelOnboardingStep(
                     actionText: "OPEN_AI_MODEL_SAVE_ACTION",
                     models: [.gpt4_turbo_preview, .gpt4]
                 ) { chosenModelType in
-                    openAIModel = chosenModelType
+                    openAIModelMultipleInterpretation = chosenModelType
+                    multipleResourceInterpreter.changeLLMSchema(
+                        openAIModel: chosenModelType,
+                        resourceCountLimit: resourceLimit,
+                        resourceSummary: resourceSummary,
+                        allowedResourcesFunctionCallIdentifiers: Set(allowedResourceIdentifiers)
+                    )
                     path.removeLast()
                 }
             case .resourceSelection:
