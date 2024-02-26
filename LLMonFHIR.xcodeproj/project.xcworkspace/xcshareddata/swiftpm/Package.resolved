@@ -68,8 +68,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/StanfordSpezi/SpeziFHIR",
       "state" : {
-        "branch" : "feat/lift-to-spezi-llm",
-        "revision" : "a1f2fcc112093f72a248143a2833a4a4a55da90e"
+        "revision" : "9a171a21d7028042c30a24c661bfdfc6e363c9c3",
+        "version" : "0.6.0"
       }
     },
     {
