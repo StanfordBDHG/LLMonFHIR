@@ -9,8 +9,10 @@
 import HealthKit
 import Spezi
 import SpeziFHIR
+import SpeziFHIRLLM
 import SpeziHealthKit
-import SpeziOpenAI
+import SpeziLLM
+import SpeziLLMOpenAI
 import SwiftUI
 
 
@@ -20,7 +22,9 @@ class LLMonFHIRDelegate: SpeziAppDelegate {
             if HKHealthStore.isHealthDataAvailable() {
                 healthKit
             }
-            OpenAIModule(openAIModel: .gpt4_1106_preview)
+            LLMRunner {
+                LLMOpenAIPlatform(configuration: .init(concurrentStreams: 20))
+            }
             FHIRInterpretationModule()
         }
     }

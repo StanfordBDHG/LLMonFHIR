@@ -61,10 +61,6 @@ struct HealthKitPermissions: View {
 }
 
 
-#if DEBUG
-struct HealthKitPermissions_Previews: PreviewProvider {
-    static var previews: some View {
-        HealthKitPermissions()
-    }
+#Preview {
+    HealthKitPermissions()
 }
-#endif

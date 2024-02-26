@@ -73,11 +73,24 @@ struct ResourceSelection: View {
             }
         }
             .task {
-                self.bundles = await ModelsR4.Bundle.llmOnFHIRMockPatients
+                self.bundles = await mockPatients
             }
             .onAppear {
                 showBundleSelection = !standard.useHealthKitResources
             }
             .navigationTitle(Text("Resource Settings"))
+    }
+    
+    private var mockPatients: [ModelsR4.Bundle] {
+        get async {
+            await [
+                .allen322Ferry570,
+                .beatris270Bogan287,
+                .edythe31Morar593,
+                .gonzalo160Duenas839,
+                .jacklyn830Veum823,
+                .milton509Ortiz186
+            ]
+        }
     }
 }

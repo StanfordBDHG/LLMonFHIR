@@ -49,10 +49,6 @@ struct Disclaimer: View {
 }
 
 
-#if DEBUG
-struct Disclaimer_Previews: PreviewProvider {
-    static var previews: some View {
-        Disclaimer()
-    }
+#Preview {
+    Disclaimer()
 }
-#endif

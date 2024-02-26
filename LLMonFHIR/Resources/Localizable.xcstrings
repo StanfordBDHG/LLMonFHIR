@@ -36,7 +36,7 @@
       }
     },
     "CHAT_WITH_ALL_RESOURCES_TITLE" : {
-      "extractionState" : "manual",
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -70,38 +70,7 @@
         }
       }
     },
-    "Close" : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Close"
-          }
-        }
-      }
-    },
-    "Conditions" : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Conditions"
-          }
-        }
-      }
-    },
-    "Diagnostics" : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Diagnostics"
-          }
-        }
-      }
-    },
     "DISCLAIMER_AREA1_DESCRIPTION" : {
-      "extractionState" : "manual",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -136,7 +105,6 @@
       }
     },
     "DISCLAIMER_AREA1_TITLE" : {
-      "extractionState" : "manual",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -171,7 +139,6 @@
       }
     },
     "DISCLAIMER_AREA2_DESCRIPTION" : {
-      "extractionState" : "manual",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -206,7 +173,6 @@
       }
     },
     "DISCLAIMER_AREA2_TITLE" : {
-      "extractionState" : "manual",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -241,7 +207,6 @@
       }
     },
     "DISCLAIMER_AREA3_DESCRIPTION" : {
-      "extractionState" : "manual",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -276,7 +241,6 @@
       }
     },
     "DISCLAIMER_AREA3_TITLE" : {
-      "extractionState" : "manual",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -311,7 +275,6 @@
       }
     },
     "DISCLAIMER_AREA4_DESCRIPTION" : {
-      "extractionState" : "manual",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -346,7 +309,6 @@
       }
     },
     "DISCLAIMER_AREA4_TITLE" : {
-      "extractionState" : "manual",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -381,7 +343,6 @@
       }
     },
     "DISCLAIMER_AREA5_DESCRIPTION" : {
-      "extractionState" : "manual",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -416,7 +377,6 @@
       }
     },
     "DISCLAIMER_AREA5_TITLE" : {
-      "extractionState" : "manual",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -451,7 +411,6 @@
       }
     },
     "DISCLAIMER_BUTTON" : {
-      "extractionState" : "manual",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -486,7 +445,6 @@
       }
     },
     "DISCLAIMER_SUBTITLE" : {
-      "extractionState" : "manual",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -521,7 +479,6 @@
       }
     },
     "DISCLAIMER_TITLE" : {
-      "extractionState" : "manual",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -557,20 +514,34 @@
     },
     "DISMISS_ONBOARDING_HINT" : {
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Onboarding-Hinweis verwerfen"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Dismiss onboarding hint"
           }
-        }
-      }
-    },
-    "Encounters" : {
-      "localizations" : {
-        "en" : {
+        },
+        "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Encounters"
+            "value" : "Descartar la sugerencia de incorporación"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Supprimer l'indice d'onboarding"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "取消入职提示"
           }
         }
       }
@@ -609,52 +580,8 @@
         }
       }
     },
-    "FHIR_RESOURCES_EMPTY_SEARCH_MESSAGE" : {
-      "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Keine Übereinstimmungen gefunden"
-          }
-        },
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "No matches found"
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "No se encontraron coincidencias"
-          }
-        },
-        "fr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Aucune correspondance trouvée"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "未找到匹配项"
-          }
-        }
-      }
-    },
-    "FHIR_RESOURCES_INTERPRETATION_BUTTON" : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Load Interpretation"
-          }
-        }
-      }
-    },
     "FHIR_RESOURCES_INTERPRETATION_ERROR" : {
-      "extractionState" : "manual",
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -688,144 +615,8 @@
         }
       }
     },
-    "FHIR_RESOURCES_INTERPRETATION_LOADING" : {
-      "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Ergebnis wird geladen ..."
-          }
-        },
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Loading result ..."
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Cargando resultado ..."
-          }
-        },
-        "fr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Chargement du résultat..."
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "正在加载结果..."
-          }
-        }
-      }
-    },
-    "FHIR_RESOURCES_INTERPRETATION_RESOURCE" : {
-      "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "FHIR-Ressource"
-          }
-        },
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "FHIR Resource"
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Recurso FHIR"
-          }
-        },
-        "fr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Ressource FHIR"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "FHIR资源"
-          }
-        }
-      }
-    },
-    "FHIR_RESOURCES_INTERPRETATION_SECTION" : {
-      "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Interpretation durch LLM on FHIR"
-          }
-        },
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "LLM on FHIR Interpretation"
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Interpretación de LLM en FHIR"
-          }
-        },
-        "fr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Interprétation de LLM sur FHIR"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "LLM on FHIR解释"
-          }
-        }
-      }
-    },
-    "FHIR_RESOURCES_SUMMARY_BUTTON" : {
-      "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Ressourcenzusammenfassung laden"
-          }
-        },
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Load Resource Summary"
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Cargar Resumen del Recurso"
-          }
-        },
-        "fr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Charger le Résumé de la Ressource"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "加载资源摘要"
-          }
-        }
-      }
-    },
     "FHIR_RESOURCES_SUMMARY_INSTRUCTION" : {
-      "extractionState" : "manual",
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -855,74 +646,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "长按资源并选择“加载资源摘要”来让LLM on FHIR创建该资源的标题和摘要。"
-          }
-        }
-      }
-    },
-    "FHIR_RESOURCES_SUMMARY_SECTION" : {
-      "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Zusammenfassung"
-          }
-        },
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Summary"
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Resumen"
-          }
-        },
-        "fr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Résumé"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "摘要"
-          }
-        }
-      }
-    },
-    "FHIR_RESOURCES_TITLE" : {
-      "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Ihre Gesundheitsaufzeichnungen"
-          }
-        },
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Your Health Records"
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Sus Registros de Salud"
-          }
-        },
-        "fr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Vos Dossiers de Santé"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "您的健康记录"
           }
         }
       }
@@ -995,42 +718,7 @@
         }
       }
     },
-    "FUNCTION_DESCRIPTION" : {
-      "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Call this function to determine the relevant FHIR health record titles based on the user's question. The titles must have the exact name as in the enumValues array given. A question can build upon a previous question and does not need to explicilty state a health record. The function will decide which health record titles are applicable to the question and it can return multiple titles or N/A if no category is suitable. Only output a record title/titles if it is directly applicable to the question otherwise output N/A. Always try to output the least amount of resource titles to be sent to the model to prevent exceeding the token limit."
-          }
-        },
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Call this function to determine the relevant FHIR health record titles based on the user's question. The titles must have the exact name defined in the initial prompt. \n\nPass in one or more titles separated by commas that you need access to the \"resources\" property as a string. \n\nAlways try to output the least amount of resource titles to be sent to the model to prevent exceeding the token limit."
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Call this function to determine the relevant FHIR health record titles based on the user's question. The titles must have the exact name as in the enumValues array given. A question can build upon a previous question and does not need to explicilty state a health record. The function will decide which health record titles are applicable to the question and it can return multiple titles or N/A if no category is suitable. Only output a record title/titles if it is directly applicable to the question otherwise output N/A. Always try to output the least amount of resource titles to be sent to the model to prevent exceeding the token limit."
-          }
-        },
-        "fr" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Call this function to determine the relevant FHIR health record titles based on the user's question. The titles must have the exact name as in the enumValues array given. A question can build upon a previous question and does not need to explicilty state a health record. The function will decide which health record titles are applicable to the question and it can return multiple titles or N/A if no category is suitable. Only output a record title/titles if it is directly applicable to the question otherwise output N/A. Always try to output the least amount of resource titles to be sent to the model to prevent exceeding the token limit."
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Call this function to determine the relevant FHIR health record titles based on the user's question. The titles must have the exact name as in the enumValues array given. A question can build upon a previous question and does not need to explicilty state a health record. The function will decide which health record titles are applicable to the question and it can return multiple titles or N/A if no category is suitable. Only output a record title/titles if it is directly applicable to the question otherwise output N/A. Always try to output the least amount of resource titles to be sent to the model to prevent exceeding the token limit."
-          }
-        }
-      }
-    },
     "HEALTHKIT_PERMISSIONS_BUTTON" : {
-      "extractionState" : "manual",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -1099,7 +787,6 @@
       }
     },
     "HEALTHKIT_PERMISSIONS_SUBTITLE" : {
-      "extractionState" : "manual",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -1134,7 +821,6 @@
       }
     },
     "HEALTHKIT_PERMISSIONS_TITLE" : {
-      "extractionState" : "manual",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -1168,64 +854,36 @@
         }
       }
     },
-    "Immunizations" : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Immunizations"
-          }
-        }
-      }
-    },
-    "Interpretation Prompt" : {
-      "comment" : "Title of the multiple resources interpretation prompt.",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Interpretation Prompt"
-          }
-        }
-      }
-    },
-    "Interpretation Prompt Content" : {
-      "comment" : "Content of the multiple resources interpretation prompt.",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "You are the LLM on FHIR application. Your task is to interpret FHIR resources from the user's clinical records.\n\nThroughout the conversation with the user, use the \"get_resources\" function to obtain the FHIR health resources necessary to answer the user's question properly. For example, if the user asks about their allergies, you must use the \"get_resources\" function to output the FHIR resource titles for allergy records so you can then use them to answer the question. The end goal is to answer the user's question in the best way possible while taking the FHIR resources obtained using \"get_resources\" into consideration. Leave out any technical details like JSON, FHIR resources, and other implementation details of the underlying data resources.\nOnly request relevant resources and focus on recent resources. Try to reduce the number of requested resources to a reasonable scope.\nE.g. if the user asks about their Medication it would be recommended to request all MedicationRequest FHIR resource types.\n\nInterpret the resources by explaining the data relevant to the user's health. Explain the relevant medical context in a language understandable by a user who is not a medical professional, ideally at a 5th-grade reading level. You should provide factual and precise information in a compact summary in short responses.\n\nThe patient resource is provided as the initial context. Ensure to leave out any like SSN, passport number, and telephone number. \nDo not introduce yourself at the beginning and immediately return a summary of the user based on the FHIR patient resources. No not request any FHIR resources using the \"get_resources\" function for your first message. The initial summary should be short and simple; stay at a high level. End with a question asking the user if they have any questions. Make sure your response is in the same language the user writes to you in, not the one stated in the patient resource. The tense should be present."
-          }
-        }
-      }
-    },
     "LLM on FHIR" : {
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "LLM on FHIR"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "LLM on FHIR"
           }
-        }
-      }
-    },
-    "Medications" : {
-      "localizations" : {
-        "en" : {
+        },
+        "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Medications"
+            "value" : "LLM sobre FHIR"
           }
-        }
-      }
-    },
-    "Observations" : {
-      "localizations" : {
-        "en" : {
+        },
+        "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Observations"
+            "value" : "LLM sur FHIR"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "关于 FHIR 的法律硕士"
           }
         }
       }
@@ -1298,116 +956,172 @@
         }
       }
     },
-    "Other Resources" : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Other Resources"
-          }
-        }
-      }
-    },
-    "PARAMETER_DESCRIPTION" : {
+    "Resource Limit" : {
       "localizations" : {
         "de" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Provide a comma-separated list of all the FHIR health record titles with the EXACT SAME NAME AS GIVEN IN THE LIST that are applicable to answer the user's questions. These titles have to be the SAME NAME AS GIVEN IN THE ARRAY provided. If multiple titles apply, separate each title by a comma and space (e.g for multiple medications). Try to provide all the required titles to allow yourself to fully answer the question in a comprehensive manner. If the question doesn't fit into any category, output N/A. For example, if a user asks: 'Tell me more about my medications,' then output all titles associated with medications. A question can build upon a previous question and does not need to be explicit. e.g. if a user says prescribe, this is associated with medication. Do not exceed token limit with outputted titles."
-          }
-        },
-        "en" : {
-          "stringUnit" : {
             "state" : "translated",
-            "value" : "Provide a comma-separated list of all the FHIR health record titles with the exact same name as given in the list that are applicable to answer the user's questions. If multiple titles apply, separate each title by a comma and space (e.g for multiple medications). You can also request a larger set of FHIR resources by, e.g., just stating the resource type but this might not include all relevant resources to avoid exceeding the token limit.\n\nThe FHIR resource identifiers are composed of three elements:\n1. The FHIR resource type, e.g., MedicationRequest, Condition, and more.\n2. The title of the FHIR resource\n3. The date associated with the FHIR resource.\n\nUse these informations to determine the best possible FHIR resource for each question. Try to request all the required titles to allow yourself to fully answer the question in a comprehensive manner. \n\nFor example, if the user asks about their Medication it would be recommended to request all MedicationRequest FHIR resource types as well as other related FHIR resources.\n\nA question can build upon a previous question and does not need to be explicit. e.g. if a user says prescribe, this is associated with medication."
+            "value" : "Resource Limit"
           }
         },
-        "es" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Provide a comma-separated list of all the FHIR health record titles with the EXACT SAME NAME AS GIVEN IN THE LIST that are applicable to answer the user's questions. These titles have to be the SAME NAME AS GIVEN IN THE ARRAY provided. If multiple titles apply, separate each title by a comma and space (e.g for multiple medications). Try to provide all the required titles to allow yourself to fully answer the question in a comprehensive manner. If the question doesn't fit into any category, output N/A. For example, if a user asks: 'Tell me more about my medications,' then output all titles associated with medications. A question can build upon a previous question and does not need to be explicit. e.g. if a user says prescribe, this is associated with medication. Do not exceed token limit with outputted titles."
-          }
-        },
-        "fr" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Provide a comma-separated list of all the FHIR health record titles with the EXACT SAME NAME AS GIVEN IN THE LIST that are applicable to answer the user's questions. These titles have to be the SAME NAME AS GIVEN IN THE ARRAY provided. If multiple titles apply, separate each title by a comma and space (e.g for multiple medications). Try to provide all the required titles to allow yourself to fully answer the question in a comprehensive manner. If the question doesn't fit into any category, output N/A. For example, if a user asks: 'Tell me more about my medications,' then output all titles associated with medications. A question can build upon a previous question and does not need to be explicit. e.g. if a user says prescribe, this is associated with medication. Do not exceed token limit with outputted titles."
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Provide a comma-separated list of all the FHIR health record titles with the EXACT SAME NAME AS GIVEN IN THE LIST that are applicable to answer the user's questions. These titles have to be the SAME NAME AS GIVEN IN THE ARRAY provided. If multiple titles apply, separate each title by a comma and space (e.g for multiple medications). Try to provide all the required titles to allow yourself to fully answer the question in a comprehensive manner. If the question doesn't fit into any category, output N/A. For example, if a user asks: 'Tell me more about my medications,' then output all titles associated with medications. A question can build upon a previous question and does not need to be explicit. e.g. if a user says prescribe, this is associated with medication. Do not exceed token limit with outputted titles."
-          }
-        }
-      }
-    },
-    "Procedures" : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Procedures"
-          }
-        }
-      }
-    },
-    "Reset Chat" : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Reset Chat"
-          }
-        }
-      }
-    },
-    "Resource Limit" : {
-      "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Resource Limit"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Límite de recursos"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Limite des ressources"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "资源限制"
           }
         }
       }
     },
     "Resource Limit %lld" : {
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Resource Limit %lld"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Resource Limit %lld"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Límite de recursos %lld"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Limite de ressources %lld"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "资源限制 %lld"
           }
         }
       }
     },
     "Resource Selection" : {
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Resourcen Auswahl"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Resources Selection"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Selección de recursos"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sélection des ressources"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "资源选择"
           }
         }
       }
     },
     "Resource Settings" : {
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Resourcen Einstellungen"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Resources Settings"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Configuración de recursos"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Paramètres des ressources"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "资源设置"
           }
         }
       }
     },
     "SETTINGS" : {
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Einstellungen"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Settings"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ajustes"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Paramètres"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "设置"
           }
         }
       }
@@ -1480,42 +1194,110 @@
         }
       }
     },
-    "SETTINGS_OPENAI_MODEL" : {
+    "SETTINGS_OPENAI_MODEL_INTERPRETATION" : {
       "localizations" : {
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Open AI-Modell"
+            "value" : "OpenAI Interpretationsmodell"
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Open AI Model"
+            "value" : "Open AI Interpretation Model"
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Modelo de Open AI"
+            "value" : "Modelo abierto de interpretación de la IA"
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Modèle d'Open AI"
+            "value" : "Modèle ouvert d'interprétation de l'IA"
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Open AI模型"
+            "value" : "开放式人工智能解释模型"
+          }
+        }
+      }
+    },
+    "SETTINGS_OPENAI_MODEL_MULTIPLE_RESOURCE_INTERPRETATION" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "OpenAI Mehrere Resourcen Interpretationsmodell"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Open AI Multiple Resource Interpretation Model"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Modelo de interpretación de recursos múltiples de IA abierta"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Modèle ouvert d'interprétation des ressources multiples de l'IA"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "开放式人工智能多种资源解释模型"
+          }
+        }
+      }
+    },
+    "SETTINGS_OPENAI_MODEL_SUMMARY" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "OpenAI Zusammenfassungsmodell"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Open AI Summarization Model"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Modelo abierto de síntesis de IA"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Modèle ouvert de résumé de l'IA"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "开放式人工智能总结模型"
           }
         }
       }
     },
     "SETTINGS_PROMPT_CAPTION %@" : {
-      "extractionState" : "manual",
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -1550,7 +1332,7 @@
       }
     },
     "SETTINGS_PROMPT_DESCRITPTION %@" : {
-      "extractionState" : "manual",
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -1722,20 +1504,68 @@
     },
     "SETTINGS_SPEECH" : {
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Spracheinstellungen"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Speech Settings"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ajustes de voz"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Paramètres de la parole"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "语音设置"
           }
         }
       }
     },
     "SETTINGS_SPEECH_TEXT_TO_SPEECH" : {
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Text-zu-Sprache"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Enable Text to Speech"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Activar la conversión de texto a voz"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Activer la synthèse vocale"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "启用文本到语音"
           }
         }
       }
@@ -1774,54 +1604,41 @@
         }
       }
     },
-    "Text to speech is disabled, press to enable text to speech." : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Text to speech is enabled, press to disable text to speech."
-          }
-        }
-      }
-    },
-    "Text to speech is enabled, press to disable text to speech." : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Text to speech is disabled, press to enable text to speech."
-          }
-        }
-      }
-    },
-    "The medical record does not include any FHIR resources for the search term %@." : {
-
-    },
-    "This is the summary of the requested %@:\n\n%@" : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "new",
-            "value" : "This is the summary of the requested %1$@:\n\n%2$@"
-          }
-        }
-      }
-    },
-    "Total Number of Resources: %lld" : {
-
-    },
     "Use HealthKit Resources" : {
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nutze HealthKit Daten"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Use HealthKit Resources"
           }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Utilizar los recursos de HealthKit"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Utiliser les ressources de HealthKit"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "使用 HealthKit 资源"
+          }
         }
       }
     },
     "WELCOME_AREA1_DESCRIPTION" : {
-      "extractionState" : "manual",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -1856,7 +1673,6 @@
       }
     },
     "WELCOME_AREA1_TITLE" : {
-      "extractionState" : "manual",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -1891,7 +1707,6 @@
       }
     },
     "WELCOME_AREA2_DESCRIPTION" : {
-      "extractionState" : "manual",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -1926,7 +1741,6 @@
       }
     },
     "WELCOME_AREA2_TITLE" : {
-      "extractionState" : "manual",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -1961,7 +1775,6 @@
       }
     },
     "WELCOME_AREA3_DESCRIPTION" : {
-      "extractionState" : "manual",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -1996,7 +1809,6 @@
       }
     },
     "WELCOME_AREA3_TITLE" : {
-      "extractionState" : "manual",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -2031,7 +1843,6 @@
       }
     },
     "WELCOME_BUTTON" : {
-      "extractionState" : "manual",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -2066,7 +1877,6 @@
       }
     },
     "WELCOME_SUBTITLE" : {
-      "extractionState" : "manual",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -2101,7 +1911,6 @@
       }
     },
     "WELCOME_TITLE" : {
-      "extractionState" : "manual",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -2131,6 +1940,34 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "LLM on FHIR"
+          }
+        }
+      }
+    },
+    "Your Health Records" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Dein Gesundheitsdaten"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Su historial médico"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Votre dossier médical"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "您的健康记录"
           }
         }
       }
