@@ -6,6 +6,7 @@
 // SPDX-License-Identifier: MIT
 //
 
+import HealthKit
 import ModelsR4
 import SpeziFHIR
 import SpeziFHIRMockPatients
@@ -19,10 +20,11 @@ struct ResourceSelection: View {
     @State private var bundles: [ModelsR4.Bundle] = []
     @State private var showBundleSelection = false
     
-    @MainActor var useHealthKitResources: Binding<Bool> {
+    
+    @MainActor private var useHealthKitResources: Binding<Bool> {
         Binding(
             get: {
-                if FeatureFlags.mockPatients {
+                if !HKHealthStore.isHealthDataAvailable() {
                     showBundleSelection = true
                     return false
                 }
@@ -38,9 +40,11 @@ struct ResourceSelection: View {
     
     var body: some View {
         Form {
-            Section {
-                Toggle(isOn: useHealthKitResources) {
-                    Text("Use HealthKit Resources")
+            if HKHealthStore.isHealthDataAvailable() {
+                Section {
+                    Toggle(isOn: useHealthKitResources) {
+                        Text("Use HealthKit Resources")
+                    }
                 }
                     .onChange(of: useHealthKitResources.wrappedValue, initial: true) {
                         if useHealthKitResources.wrappedValue {
@@ -73,10 +77,8 @@ struct ResourceSelection: View {
             }
         }
             .task {
+                showBundleSelection = !standard.useHealthKitResources || !HKHealthStore.isHealthDataAvailable()
                 self.bundles = await mockPatients
-            }
-            .onAppear {
-                showBundleSelection = !standard.useHealthKitResources
             }
             .navigationTitle(Text("Resource Settings"))
     }

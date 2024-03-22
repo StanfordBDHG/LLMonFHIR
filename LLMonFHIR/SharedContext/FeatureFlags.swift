@@ -14,6 +14,4 @@ enum FeatureFlags {
     static let showOnboarding = CommandLine.arguments.contains("--showOnboarding")
     /// Sets the application in test mode
     static let testMode = CommandLine.arguments.contains("--testMode")
-    /// Use mock patients
-    static let mockPatients = CommandLine.arguments.contains("--mockPatients")
 }
