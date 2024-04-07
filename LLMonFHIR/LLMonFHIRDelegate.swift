@@ -18,6 +18,12 @@ import SwiftUI
 
 
 class LLMonFHIRDelegate: SpeziAppDelegate {
+    @AppStorage(StorageKeys.llmSourceSummarizationInterpretation) private var llmSourceSummarizationInterpretation =
+        StorageKeys.Defaults.llmSourceSummarizationInterpretation
+    @AppStorage(StorageKeys.llmOpenAiMultipleInterpretation) private var llmOpenAiMultipleInterpretation =
+        StorageKeys.Defaults.llmOpenAiMultipleInterpretation
+    
+    
     override var configuration: Configuration {
         Configuration(standard: LLMonFHIRStandard()) {
             if HKHealthStore.isHealthDataAvailable() {
@@ -25,23 +31,12 @@ class LLMonFHIRDelegate: SpeziAppDelegate {
             }
             LLMRunner {
                 LLMOpenAIPlatform(configuration: .init(concurrentStreams: 20))
-                LLMFogPlatform(configuration: .i)
+                LLMFogPlatform(configuration: .init(caCertificate: nil, concurrentStreams: 1, timeout: 120))
             }
             FHIRInterpretationModule(
-                summaryLLMSchema:
-                    LLMOpenAISchema(
-                        parameters: .init(
-                            modelType: .gpt4_1106_preview,
-                            systemPrompts: []   // No system prompt as this will be determined later by the resource interpreter
-                        )
-                    ),
-                interpretationLLMSchema: LLMOpenAISchema(
-                    parameters: .init(
-                        modelType: .gpt4_1106_preview,
-                        systemPrompts: []   // No system prompt as this will be determined later by the resource interpreter
-                    )
-                ),
-                multipleResourceInterpretationOpenAIModel: .gpt4_1106_preview
+                summaryLLMSchema: llmSourceSummarizationInterpretation.llmSchema,
+                interpretationLLMSchema: llmSourceSummarizationInterpretation.llmSchema,
+                multipleResourceInterpretationOpenAIModel: llmOpenAiMultipleInterpretation
             )
         }
     }

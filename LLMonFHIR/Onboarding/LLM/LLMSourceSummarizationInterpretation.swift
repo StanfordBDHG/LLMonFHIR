@@ -46,18 +46,18 @@ enum LLMSourceSummarizationInterpretation: CaseIterable, Identifiable, Codable, 
         switch self {
         case .local:
             LLMLocalSchema(
-                modelPath: .cachesDirectory.appending(path: "llm.gguf")
+                modelPath: .cachesDirectory.appending(path: "llm.gguf"),
+                parameters: .init(systemPrompt: nil)
             )
         case .fog:
-            // TODO: Adjust to fog with certs and auth token
-            LLMLocalSchema(
-                modelPath: .cachesDirectory.appending(path: "llm.gguf")
+            LLMFogSchema(
+                parameters: .init(modelType: .llama7B, systemPrompt: nil, authToken: { nil })
             )
         case .openAi(let modelType):
             LLMOpenAISchema(
                 parameters: .init(
                     modelType: modelType,
-                    systemPrompts: []
+                    systemPrompt: nil
                 )
             )
         }
