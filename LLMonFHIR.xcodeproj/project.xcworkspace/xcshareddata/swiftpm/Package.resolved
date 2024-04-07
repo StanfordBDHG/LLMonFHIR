@@ -1,5 +1,5 @@
 {
-  "originHash" : "492223cc8959b40571851f634503febc2f994cab9f439437a2002b77d2fda831",
+  "originHash" : "e74800ca4a62f3834d772ecd330df5a1fb6f4dc220c9542170a4ed97987809f1",
   "pins" : [
     {
       "identity" : "fhirmodels",
@@ -31,10 +31,10 @@
     {
       "identity" : "openai",
       "kind" : "remoteSourceControl",
-      "location" : "https://github.com/MacPaw/OpenAI",
+      "location" : "https://github.com/StanfordBDHG/OpenAI",
       "state" : {
-        "revision" : "35afc9a6ee127b8f22a85a31aec2036a987478af",
-        "version" : "0.2.6"
+        "revision" : "29316babb446c34bb07bf528d96de7eb41e7b03c",
+        "version" : "0.2.8"
       }
     },
     {
@@ -51,17 +51,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/StanfordSpezi/SpeziChat",
       "state" : {
-        "revision" : "2334583105224b0c04fc36989db82b000021d31d",
-        "version" : "0.1.9"
-      }
-    },
-    {
-      "identity" : "spezifhir",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/StanfordSpezi/SpeziFHIR",
-      "state" : {
-        "revision" : "9a171a21d7028042c30a24c661bfdfc6e363c9c3",
-        "version" : "0.6.0"
+        "revision" : "aaa10d71431b78ece8bf29f95c0050632714984d",
+        "version" : "0.2.0"
       }
     },
     {
@@ -80,15 +71,6 @@
       "state" : {
         "revision" : "1e9cb5a6036ac7f4ff37ea1c3ed4898103339ad1",
         "version" : "0.5.3"
-      }
-    },
-    {
-      "identity" : "spezillm",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/StanfordSpezi/SpeziLLM",
-      "state" : {
-        "revision" : "dc37b91ed55c9d50eaf58e645d454cb62e3681d1",
-        "version" : "0.7.2"
       }
     },
     {

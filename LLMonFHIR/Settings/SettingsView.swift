@@ -8,22 +8,22 @@
 
 import SpeziFHIRLLM
 import SpeziLLMOpenAI
+import SpeziOnboarding
 import SwiftUI
 
 
 struct SettingsView: View {
     private enum SettingsDestinations {
-        case openAIKey
-        case openAIModelSummary
-        case openAIModelInterpretation
-        case openAIModelMultipleInterpretation
+        case llmSelection
         case resourceSelection
         case promptSummary
         case promptInterpretation
         case promptMultipleResourceInterpretation
     }
     
+    
     @State private var path = NavigationPath()
+    @State private var llmSelectionComplete = false
     @Environment(\.dismiss) private var dismiss
     @Environment(FHIRResourceSummary.self) var resourceSummary
     @Environment(FHIRResourceInterpreter.self) var resourceInterpreter
@@ -32,16 +32,17 @@ struct SettingsView: View {
     @AppStorage(StorageKeys.enableTextToSpeech) private var enableTextToSpeech = StorageKeys.Defaults.enableTextToSpeech
     @AppStorage(StorageKeys.resourceLimit) private var resourceLimit = StorageKeys.Defaults.resourceLimit
     @AppStorage(StorageKeys.allowedResourcesFunctionCallIdentifiers) private var allowedResourceIdentifiers = [String]()
-    @AppStorage(StorageKeys.openAIModelSummarization) private var openAIModelSummarization = StorageKeys.Defaults.openAIModel
-    @AppStorage(StorageKeys.openAIModelInterpretation) private var openAIModelInterpretation = StorageKeys.Defaults.openAIModel
-    @AppStorage(StorageKeys.openAIModelMultipleInterpretation) private var openAIModelMultipleInterpretation =
-    StorageKeys.Defaults.openAIModel
+    
+    @AppStorage(StorageKeys.llmSourceSummarizationInterpretation) private var llmSourceSummarizationInterpretation =
+        StorageKeys.Defaults.llmSourceSummarizationInterpretation
+    @AppStorage(StorageKeys.llmOpenAiMultipleInterpretation) private var llmOpenAiMultipleInterpretation =
+        StorageKeys.Defaults.llmOpenAiMultipleInterpretation
     
     
     var body: some View {
         NavigationStack(path: $path) {
             List {
-                openAISettings
+                llmSettings
                 speechSettings
                 resourcesLimitSettings
                 resourcesSettings
@@ -76,7 +77,7 @@ struct SettingsView: View {
             } onEditingChanged: { complete in
                 if complete {
                     multipleResourceInterpreter.changeLLMSchema(
-                        openAIModel: openAIModelMultipleInterpretation,
+                        openAIModel: llmOpenAiMultipleInterpretation,
                         resourceCountLimit: resourceLimit,
                         resourceSummary: resourceSummary,
                         allowedResourcesFunctionCallIdentifiers: Set(allowedResourceIdentifiers)
@@ -94,19 +95,10 @@ struct SettingsView: View {
         }
     }
     
-    private var openAISettings: some View {
-        Section("SETTINGS_OPENAI") {
-            NavigationLink(value: SettingsDestinations.openAIKey) {
-                Text("SETTINGS_OPENAI_KEY")
-            }
-            NavigationLink(value: SettingsDestinations.openAIModelSummary) {
-                Text("SETTINGS_OPENAI_MODEL_SUMMARY")
-            }
-            NavigationLink(value: SettingsDestinations.openAIModelInterpretation) {
-                Text("SETTINGS_OPENAI_MODEL_INTERPRETATION")
-            }
-            NavigationLink(value: SettingsDestinations.openAIModelMultipleInterpretation) {
-                Text("SETTINGS_OPENAI_MODEL_MULTIPLE_RESOURCE_INTERPRETATION")
+    private var llmSettings: some View {
+        Section("SETTINGS_LLM") {
+            NavigationLink(value: SettingsDestinations.llmSelection) {
+                Text("SETTINGS_LLM_SELECTION")
             }
         }
     }
@@ -126,59 +118,23 @@ struct SettingsView: View {
     }
     
     
+    @MainActor
     private func navigationDestination(for destination: SettingsDestinations) -> some View {    // swiftlint:disable:this function_body_length
         Group {     // swiftlint:disable:this closure_body_length
             switch destination {
-            case .openAIKey:
-                LLMOpenAIAPITokenOnboardingStep(actionText: "OPEN_AI_KEY_SAVE_ACTION") {
-                    path.removeLast()
+            case .llmSelection:
+                OnboardingStack(onboardingFlowComplete: $llmSelectionComplete) {
+                    // Select model for summarization and interpretation
+                    LLMSourceSelectionView()
+                    // Multiple Resource Chat always uses OpenAI, collect model type and API key
+                    LLMOpenAIModelOnboardingView(multipleResourceModel: true)
+                    LLMOpenAIAPIKeyView()
                 }
-            case .openAIModelSummary:
-                LLMOpenAIModelOnboardingStep(
-                    actionText: "OPEN_AI_MODEL_SAVE_ACTION",
-                    models: [.gpt4_turbo_preview, .gpt4, .gpt3_5Turbo]
-                ) { chosenModelType in
-                    openAIModelSummarization = chosenModelType
-                    resourceSummary.changeLLMSchema(
-                        to: LLMOpenAISchema(
-                            parameters: .init(
-                                modelType: chosenModelType,
-                                systemPrompts: []
-                            )
-                        )
-                    )
-                    path.removeLast()
-                }
-            case .openAIModelInterpretation:
-                LLMOpenAIModelOnboardingStep(
-                    actionText: "OPEN_AI_MODEL_SAVE_ACTION",
-                    models: [.gpt4_turbo_preview, .gpt4, .gpt3_5Turbo]
-                ) { chosenModelType in
-                    openAIModelInterpretation = chosenModelType
-                    resourceInterpreter.changeLLMSchema(
-                        to: LLMOpenAISchema(
-                            parameters: .init(
-                                modelType: chosenModelType,
-                                systemPrompts: []
-                            )
-                        )
-                    )
-                    path.removeLast()
-                }
-            case .openAIModelMultipleInterpretation:
-                LLMOpenAIModelOnboardingStep(
-                    actionText: "OPEN_AI_MODEL_SAVE_ACTION",
-                    models: [.gpt4_turbo_preview, .gpt4]
-                ) { chosenModelType in
-                    openAIModelMultipleInterpretation = chosenModelType
-                    multipleResourceInterpreter.changeLLMSchema(
-                        openAIModel: chosenModelType,
-                        resourceCountLimit: resourceLimit,
-                        resourceSummary: resourceSummary,
-                        allowedResourcesFunctionCallIdentifiers: Set(allowedResourceIdentifiers)
-                    )
-                    path.removeLast()
-                }
+                    .onChange(of: llmSelectionComplete) { _, newValue in
+                        if newValue {
+                            path.removeLast()
+                        }
+                    }
             case .resourceSelection:
                 ResourceSelection()
             case .promptSummary:

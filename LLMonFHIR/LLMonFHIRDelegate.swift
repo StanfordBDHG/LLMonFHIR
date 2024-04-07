@@ -12,6 +12,7 @@ import SpeziFHIR
 import SpeziFHIRLLM
 import SpeziHealthKit
 import SpeziLLM
+import SpeziLLMFog
 import SpeziLLMOpenAI
 import SwiftUI
 
@@ -24,8 +25,24 @@ class LLMonFHIRDelegate: SpeziAppDelegate {
             }
             LLMRunner {
                 LLMOpenAIPlatform(configuration: .init(concurrentStreams: 20))
+                LLMFogPlatform(configuration: .i)
             }
-            FHIRInterpretationModule()
+            FHIRInterpretationModule(
+                summaryLLMSchema:
+                    LLMOpenAISchema(
+                        parameters: .init(
+                            modelType: .gpt4_1106_preview,
+                            systemPrompts: []   // No system prompt as this will be determined later by the resource interpreter
+                        )
+                    ),
+                interpretationLLMSchema: LLMOpenAISchema(
+                    parameters: .init(
+                        modelType: .gpt4_1106_preview,
+                        systemPrompts: []   // No system prompt as this will be determined later by the resource interpreter
+                    )
+                ),
+                multipleResourceInterpretationOpenAIModel: .gpt4_1106_preview
+            )
         }
     }
     

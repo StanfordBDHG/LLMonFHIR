@@ -14,7 +14,8 @@ enum StorageKeys {
     enum Defaults {
         static let enableTextToSpeech = false
         static let resourceLimit = 250
-        static let openAIModel: LLMOpenAIModelType = .gpt4_turbo_preview
+        static let llmSourceSummarizationInterpretation: LLMSourceSummarizationInterpretation = .openAi(.gpt4_turbo_preview)
+        static let llmOpenAiMultipleInterpretation: LLMOpenAIModelType = .gpt4_turbo_preview
     }
     
     
@@ -35,10 +36,8 @@ enum StorageKeys {
     static let resourceLimit = "settings.resourceLimit"
     /// Indicates allowed resource identifier that can be queried by the LLM via function calling
     static let allowedResourcesFunctionCallIdentifiers = "settings.allowedResourcesFunctionCallIdentifiers"
-    /// Indicates the chosen OpenAI GPT model for summarization
-    static let openAIModelSummarization = "settings.openAIModel.summarization"
-    /// Indicates the chosen OpenAI GPT model for interpretation
-    static let openAIModelInterpretation = "settings.openAIModel.interpretation"
+    /// Indicates the chosen LLM model for summarization / interpretation
+    static let llmSourceSummarizationInterpretation = "settings.llmModel.summarizationInterpretation"
     /// Indicates the chosen OpenAI GPT model for multiple resource interpretation
-    static let openAIModelMultipleInterpretation = "settings.openAIModel.multipleResourceInterpretation"
+    static let llmOpenAiMultipleInterpretation = "settings.openAIModel.multipleResourceInterpretation"
 }

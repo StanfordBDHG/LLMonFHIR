@@ -718,6 +718,9 @@
         }
       }
     },
+    "FOG_LLM_LABEL" : {
+
+    },
     "HEALTHKIT_PERMISSIONS_BUTTON" : {
       "localizations" : {
         "de" : {
@@ -854,6 +857,15 @@
         }
       }
     },
+    "LLAMA2_DOWNLOAD_DESCRIPTION" : {
+
+    },
+    "LLM for Multiple Resource Chat" : {
+
+    },
+    "LLM for Summarization / Interpretation" : {
+
+    },
     "LLM on FHIR" : {
       "localizations" : {
         "de" : {
@@ -888,7 +900,23 @@
         }
       }
     },
+    "LLM_SOURCE_PICKER_LABEL" : {
+
+    },
+    "LLM_SOURCE_SELECTION_BUTTON" : {
+
+    },
+    "LLM_SOURCE_SELECTION_SUBTITLE" : {
+
+    },
+    "LLM_SOURCE_SELECTION_TITLE" : {
+
+    },
+    "LOCAL_LLM_LABEL" : {
+
+    },
     "OPEN_AI_KEY_SAVE_ACTION" : {
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -923,6 +951,7 @@
       }
     },
     "OPEN_AI_MODEL_SAVE_ACTION" : {
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -955,6 +984,9 @@
           }
         }
       }
+    },
+    "OPENAI_LLM_LABEL" : {
+
     },
     "Resource Limit" : {
       "localizations" : {
@@ -1126,7 +1158,14 @@
         }
       }
     },
+    "SETTINGS_LLM" : {
+
+    },
+    "SETTINGS_LLM_SELECTION" : {
+
+    },
     "SETTINGS_OPENAI" : {
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -1161,6 +1200,7 @@
       }
     },
     "SETTINGS_OPENAI_KEY" : {
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -1195,6 +1235,7 @@
       }
     },
     "SETTINGS_OPENAI_MODEL_INTERPRETATION" : {
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -1229,6 +1270,7 @@
       }
     },
     "SETTINGS_OPENAI_MODEL_MULTIPLE_RESOURCE_INTERPRETATION" : {
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -1263,6 +1305,7 @@
       }
     },
     "SETTINGS_OPENAI_MODEL_SUMMARY" : {
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {

@@ -46,6 +46,5 @@ struct ResourceView: View {
 
 #Preview {
     ResourceView(showMultipleResourcesChat: .constant(false))
-        .previewWith(standard: LLMonFHIRStandard()) {
-        }
+        .previewWith(standard: LLMonFHIRStandard()) {}
 }

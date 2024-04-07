@@ -29,9 +29,15 @@ struct OnboardingFlow: View {
     
     var body: some View {
         OnboardingStack(onboardingFlowComplete: $completedOnboardingFlow) {
-            Welcome()
-            Disclaimer()
-            OpenAIAPIKey()
+            //Welcome()
+            //Disclaimer()
+            
+            // Select model for summarization and interpretation
+            LLMSourceSelectionView()
+            // Multiple Resource Chat always uses OpenAI, collect model type and API key
+            LLMOpenAIModelOnboardingView(multipleResourceModel: true)
+            LLMOpenAIAPIKeyView()
+            
             if HKHealthStore.isHealthDataAvailable() && !healthKitAuthorization {
                 HealthKitPermissions()
             }

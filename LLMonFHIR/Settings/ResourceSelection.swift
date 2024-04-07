@@ -28,6 +28,9 @@ struct ResourceSelection: View {
                     showBundleSelection = true
                     return false
                 }
+                if FeatureFlags.mockPatients {
+                    return false
+                }
                 return standard.useHealthKitResources
             },
             set: { newValue in
@@ -77,7 +80,7 @@ struct ResourceSelection: View {
             }
         }
             .task {
-                showBundleSelection = !standard.useHealthKitResources || !HKHealthStore.isHealthDataAvailable()
+                showBundleSelection = !standard.useHealthKitResources || !HKHealthStore.isHealthDataAvailable() || FeatureFlags.mockPatients
                 self.bundles = await mockPatients
             }
             .navigationTitle(Text("Resource Settings"))
