@@ -13,6 +13,7 @@ import SpeziFHIRLLM
 import SpeziHealthKit
 import SpeziLLM
 import SpeziLLMFog
+import SpeziLLMLocal
 import SpeziLLMOpenAI
 import SwiftUI
 
@@ -31,6 +32,7 @@ class LLMonFHIRDelegate: SpeziAppDelegate {
             }
             LLMRunner {
                 LLMOpenAIPlatform(configuration: .init(concurrentStreams: 20))
+                LLMLocalPlatform()
                 LLMFogPlatform(configuration: .init(caCertificate: nil, concurrentStreams: 1, timeout: 120))
             }
             FHIRInterpretationModule(
