@@ -1,5 +1,5 @@
 {
-  "originHash" : "0f5ec655ec0ece9be6474c3d4f979b62353d29e9fc181be53b44a04237325ea3",
+  "originHash" : "ba25e03f96176869eb16eff816add82265b9f18b602261a3f50d9822f350899a",
   "pins" : [
     {
       "identity" : "fhirmodels",
@@ -15,8 +15,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/StanfordBDHG/HealthKitOnFHIR.git",
       "state" : {
-        "revision" : "d6ceecf11800d73fed0c6ce33717f3dc71a44bd7",
-        "version" : "0.2.7"
+        "revision" : "418929f315f37e6d9c8f30f40030bc65b9cc47c9",
+        "version" : "0.2.8"
       }
     },
     {
@@ -24,8 +24,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/StanfordBDHG/llama.cpp",
       "state" : {
-        "revision" : "7bfd6d4b5bbc9fd47bd023bdbb35f96c827977f3",
-        "version" : "0.2.1"
+        "revision" : "6839853a321778906e210a33ee2c6aec52f34c97",
+        "version" : "0.3.3"
       }
     },
     {
@@ -33,8 +33,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/StanfordBDHG/OpenAI",
       "state" : {
-        "revision" : "29316babb446c34bb07bf528d96de7eb41e7b03c",
-        "version" : "0.2.8"
+        "revision" : "1ad95dd531d7c854a3f98f588b0eb68fa83e8a8c",
+        "version" : "0.2.9"
       }
     },
     {
@@ -87,8 +87,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/StanfordSpezi/SpeziLLM",
       "state" : {
-        "revision" : "cbaf20496e600c985dea2358f35a497fe4964116",
-        "version" : "0.8.1"
+        "revision" : "3663884f23e55c67c875a97c5da08ed172ea02ac",
+        "version" : "0.8.3"
       }
     },
     {

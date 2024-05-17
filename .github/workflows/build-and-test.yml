@@ -20,6 +20,15 @@ jobs:
   swiftlint:
     name: SwiftLint
     uses: StanfordBDHG/.github/.github/workflows/swiftlint.yml@v2
+  codeql:
+    name: CodeQL
+    uses: StanfordBDHG/.github/.github/workflows/xcodebuild-or-fastlane.yml@v2
+    with:
+      codeql: true
+      fastlanelane: codeql
+    permissions:
+      security-events: write
+      actions: read
   buildandtest:
     name: Build and Test
     uses: StanfordBDHG/.github/.github/workflows/xcodebuild-or-fastlane.yml@v2
@@ -33,3 +42,5 @@ jobs:
     uses: StanfordBDHG/.github/.github/workflows/create-and-upload-coverage-report.yml@v2
     with:
       coveragereports: LLMonFHIR.xcresult
+    secrets:
+      token: ${{ secrets.CODECOV_TOKEN }}

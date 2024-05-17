@@ -9,6 +9,15 @@
     }
   ],
   "defaultOptions" : {
+    "codeCoverage" : {
+      "targets" : [
+        {
+          "containerPath" : "container:LLMonFHIR.xcodeproj",
+          "identifier" : "653A254C283387FE005D4D48",
+          "name" : "LLMonFHIR"
+        }
+      ]
+    },
     "targetForVariableExpansion" : {
       "containerPath" : "container:LLMonFHIR.xcodeproj",
       "identifier" : "653A254C283387FE005D4D48",
