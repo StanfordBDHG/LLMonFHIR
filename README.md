@@ -63,6 +63,8 @@ LLM on FHIR requires access to the FHIR health records stored in the Apple Healt
 
 In case no health records are available, please follow the instructions to connect and retrieve your health records from your provider. If your health records are visible in the Apple Health app, please ensure that LLM on FHIR has access to your health records in the Apple Health App. You can find these settings in the privacy section of your profile in Apple Health.
 
+> [!TIP]
+> You can also use a set of [Synthea](https://doi.org/10.1093/jamia/ocx079)-based patients loaded from [SpeziFHIR](https://github.com/StanfordSpezi/SpeziFHIR) ([SpeziFHIRMockPatients](https://github.com/StanfordSpezi/SpeziFHIR/tree/main/Sources/SpeziFHIRMockPatients)) to test out the application without the need to connect it to HealthKit. You can select the synthetic patients in the account settings view of the application.
 
 ## Application Structure
 
