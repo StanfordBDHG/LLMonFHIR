@@ -6,7 +6,6 @@
 // SPDX-License-Identifier: MIT
 //
 
-import SpeziFHIRLLM
 import SpeziLLMOpenAI
 import SwiftUI
 

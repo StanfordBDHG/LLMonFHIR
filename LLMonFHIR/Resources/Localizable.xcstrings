@@ -70,6 +70,192 @@
         }
       }
     },
+    "Close" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Schließen"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Cerrar"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Fermer"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "关闭"
+          }
+        }
+      }
+    },
+    "Conditions" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bedingungen"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Condiciones"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Conditions"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "条件"
+          }
+        }
+      }
+    },
+    "Could not create FHIR Summary" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "FHIR-Zusammenfassung konnte nicht erstellt werden"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Could not create FHIR Summary"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No se ha podido crear el resumen FHIR"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Impossible de créer un résumé FHIR"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "无法创建 FHIR 摘要"
+          }
+        }
+      }
+    },
+    "Create Resource Summary" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ressourcenzusammenfassung erstellen"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Create Resource Summary"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Crear resumen de recursos"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Créer un résumé des ressources"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "创建资源摘要"
+          }
+        }
+      }
+    },
+    "Customize the %@." : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Customize the %@."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Customize the %@."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Personaliza el %@."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Personnalisez le %@."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "自定义 %@。"
+          }
+        }
+      }
+    },
+    "Diagnostics" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Diagnostik"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Diagnóstico"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Diagnostics"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "诊断"
+          }
+        }
+      }
+    },
     "DISCLAIMER_AREA1_DESCRIPTION" : {
       "localizations" : {
         "de" : {
@@ -546,6 +732,34 @@
         }
       }
     },
+    "Encounters" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Begegnungen"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Encuentros"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Rencontres"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "邂逅"
+          }
+        }
+      }
+    },
     "FHIR_RESOURCES_CHAT_CANCEL" : {
       "localizations" : {
         "de" : {
@@ -576,6 +790,74 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "取消"
+          }
+        }
+      }
+    },
+    "FHIR_RESOURCES_EMPTY_SEARCH_MESSAGE" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Keine Treffer gefunden"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No matches found"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No se han encontrado coincidencias"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Aucune correspondance trouvée"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "未找到匹配项"
+          }
+        }
+      }
+    },
+    "FHIR_RESOURCES_INTERPRETATION_BUTTON" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Lade Interpretation"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Load Interpretation"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Interpretación de la carga"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Interprétation de la charge"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "负载释义"
           }
         }
       }
@@ -615,6 +897,142 @@
         }
       }
     },
+    "FHIR_RESOURCES_INTERPRETATION_LOADING" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ergebnis laden ..."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Loading result ..."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Cargando resultado ..."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Chargement du résultat ..."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "加载结果..."
+          }
+        }
+      }
+    },
+    "FHIR_RESOURCES_INTERPRETATION_RESOURCE" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "FHIR-Ressource"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "FHIR Resource"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Recurso FHIR"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "FHIR Resource"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "FHIR 资源"
+          }
+        }
+      }
+    },
+    "FHIR_RESOURCES_INTERPRETATION_SECTION" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Interpretation"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Interpretation"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Interpretación"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Interprétation"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "口译"
+          }
+        }
+      }
+    },
+    "FHIR_RESOURCES_SUMMARY_BUTTON" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Zusammenfassung der Ressourcen"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Load Resource Summary"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Resumen de recursos de carga"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Load Resource Summary"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "负荷资源汇总"
+          }
+        }
+      }
+    },
     "FHIR_RESOURCES_SUMMARY_INSTRUCTION" : {
       "extractionState" : "stale",
       "localizations" : {
@@ -646,6 +1064,40 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "长按资源并选择“加载资源摘要”来让LLM on FHIR创建该资源的标题和摘要。"
+          }
+        }
+      }
+    },
+    "FHIR_RESOURCES_SUMMARY_SECTION" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Zusammenfassung"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Summary"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Resumen"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Résumé"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "摘要"
           }
         }
       }
@@ -714,6 +1166,40 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "\n没有可用的健康记录。\n\n请按照以下说明连接并从您的提供者检索健康记录：[Apple支持-在iPhone或iPod touch上查看健康记录](https://support.apple.com/en-us/HT208680)。\n\n您可以在[Apple支持-支持iPhone和iPod touch上的健康记录的机构](https://platform.openai.com/account/api-keys)找到支持的机构列表。\n\n如果您可以在Apple Health应用程序中查看您的健康记录，请确保LLM on FHIR可以访问您在Apple Health应用程序中的健康记录。您可以在Apple Health个人资料的隐私部分找到这些设置。\n"
+          }
+        }
+      }
+    },
+    "FUNCTION_DESCRIPTION" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Rufen Sie diese Funktion auf, um die relevanten FHIR-Gesundheitsdatentitel basierend auf der Frage des Benutzers zu ermitteln. Die Titel müssen den genauen Namen haben, der in der anfänglichen Aufforderung definiert wurde. \n\nÜbergeben Sie einen oder mehrere Titel, auf die Sie Zugriff benötigen, in der Eigenschaft \"resources\" als Array von Strings.\n\nVersuchen Sie immer, die geringste Anzahl von Ressourcentiteln auszugeben, die an das Modell gesendet werden, um ein Überschreiten des Token-Limits zu vermeiden."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Call this function to determine the relevant FHIR health record titles based on the user's question. The titles must have the exact name defined in the initial prompt. \n\nPass in one or more titles that you need access within the \"resources\" property as an array of Strings.\n\nAlways try to output the least amount of resource titles to be sent to the model to prevent exceeding the token limit."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Llame a esta función para determinar los títulos de registros sanitarios FHIR relevantes en función de la pregunta del usuario. Los títulos deben tener el nombre exacto definido en la pregunta inicial. \n\nPase uno o más títulos a los que necesite acceder dentro de la propiedad \"resources\" como un array de Strings.\n\nIntente siempre enviar la menor cantidad de títulos de recursos al modelo para evitar exceder el límite de tokens."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Appeler cette fonction pour déterminer les titres d'enregistrements de santé FHIR pertinents en fonction de la question de l'utilisateur. Les titres doivent porter le nom exact défini dans l'invite initiale. \n\nTransmettez un ou plusieurs titres auxquels vous devez accéder dans la propriété \"resources\" sous la forme d'un tableau de chaînes de caractères.\n\nEssayez toujours de produire le moins de titres de ressources possible à envoyer au modèle pour éviter de dépasser la limite de jetons."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "调用此函数可根据用户的问题确定相关的 FHIR 健康记录标题。标题必须与初始提示中定义的名称完全一致。\n\n以字符串数组的形式在 \"resources \"属性中输入一个或多个需要访问的标题。\n\n始终尽量少输出要发送到模型的资源标题，以防止超出标记限制。"
           }
         }
       }
@@ -854,6 +1340,40 @@
         }
       }
     },
+    "Immunizations" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Impfungen"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Vacunas"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Vaccinations"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "免疫接种"
+          }
+        }
+      }
+    },
+    "Interpretation Prompt" : {
+      "comment" : "Title of the interpretation prompt.\nTitle of the multiple resources interpretation prompt."
+    },
+    "Interpretation Prompt Content" : {
+      "comment" : "Content of the interpretation prompt."
+    },
     "LLM on FHIR" : {
       "localizations" : {
         "de" : {
@@ -884,6 +1404,65 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "关于 FHIR 的法律硕士"
+          }
+        }
+      }
+    },
+    "Medications" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Medikamente"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Medicamentos"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Médicaments"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "药物"
+          }
+        }
+      }
+    },
+    "Multiple Resource Interpretation Prompt Content" : {
+      "comment" : "Content of the multiple resources interpretation prompt."
+    },
+    "Observations" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Beobachtungen"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Observaciones"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Observations"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "意见"
           }
         }
       }
@@ -952,6 +1531,134 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "保存模型选择"
+          }
+        }
+      }
+    },
+    "Other Resources" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Andere Ressourcen"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Otros recursos"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Autres ressources"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "其他资源"
+          }
+        }
+      }
+    },
+    "PARAMETER_DESCRIPTION" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ein Array aller FHIR-Gesundheitsdatentitel mit dem exakt gleichen Namen wie in der Liste angegeben, die für die Beantwortung der Fragen des Benutzers in Frage kommen. Es ist möglich, dass mehrere Titel auf die Frage des Benutzers zutreffen (z. B. für mehrere Medikamente). Sie können auch einen größeren Satz von FHIR-Ressourcen anfordern, indem Sie z. B. nur den Ressourcentyp angeben, was jedoch möglicherweise nicht alle relevanten Ressourcen umfasst, um eine Überschreitung des Token-Limits zu vermeiden.\n\nDie FHIR-Ressourcenbezeichner setzen sich aus drei Elementen zusammen:\n1. Der FHIR-Ressourcentyp, z.B. MedicationRequest, Condition, und weitere.\n2. Der Titel der FHIR-Ressource\n3. Das mit der FHIR-Ressource verbundene Datum.\n\nVerwenden Sie diese Informationen, um die bestmögliche FHIR-Ressource für jede Frage zu bestimmen. Versuchen Sie, alle erforderlichen Titel abzufragen, damit Sie die Frage umfassend beantworten können. \n\nWenn der Benutzer beispielsweise nach seiner Medikation fragt, wäre es empfehlenswert, alle FHIR-Ressourcentypen \"MedicationRequest\" sowie andere verwandte FHIR-Ressourcen anzufordern.\n\nEine Frage kann auf einer vorherigen Frage aufbauen und muss nicht explizit sein. Wenn ein Benutzer z. B. \"prescribe\" (verschreiben) sagt, ist dies mit \"medication\" (Medikamente) verbunden."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "An array of all the FHIR health record titles with the exact same name as given in the list that are applicable to answer the user's questions. It is possible that multiple titles apply to the users's question (e.g for multiple medications). You can also request a larger set of FHIR resources by, e.g., just stating the resource type but this might not include all relevant resources to avoid exceeding the token limit.\n\nThe FHIR resource identifiers are composed of three elements:\n1. The FHIR resource type, e.g., MedicationRequest, Condition, and more.\n2. The title of the FHIR resource\n3. The date associated with the FHIR resource.\n\nUse these informations to determine the best possible FHIR resource for each question. Try to request all the required titles to allow yourself to fully answer the question in a comprehensive manner. \n\nFor example, if the user asks about their Medication it would be recommended to request all MedicationRequest FHIR resource types as well as other related FHIR resources.\n\nA question can build upon a previous question and does not need to be explicit. e.g. if a user says prescribe, this is associated with medication."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Una matriz de todos los títulos de historiales médicos FHIR con el mismo nombre exacto que el indicado en la lista que son aplicables para responder a las preguntas del usuario. Es posible que se apliquen varios títulos a la pregunta del usuario (por ejemplo, para varios medicamentos). También puede solicitar un conjunto más amplio de recursos FHIR, por ejemplo, indicando sólo el tipo de recurso, pero es posible que no incluya todos los recursos relevantes para evitar superar el límite de tokens.\n\nLos identificadores de recursos FHIR se componen de tres elementos:\n1. 1. El tipo de recurso FHIR, por ejemplo, MedicationRequest, Condition, etc.\n2. El título del recurso FHIR.\n3. La fecha asociada al recurso FHIR.\n\nUtilice esta información para determinar el mejor recurso FHIR posible para cada pregunta. Intente solicitar todos los títulos necesarios para poder responder a la pregunta de forma completa. \n\nPor ejemplo, si el usuario pregunta sobre su medicación, sería recomendable solicitar todos los tipos de recursos FHIR MedicationRequest, así como otros recursos FHIR relacionados.\n\nUna pregunta puede basarse en una pregunta anterior y no necesita ser explícita. Por ejemplo, si un usuario dice prescribir, esto se asocia con la medicación."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Un tableau de tous les titres d'enregistrements de santé FHIR ayant exactement le même nom que celui donné dans la liste et qui sont applicables pour répondre aux questions de l'utilisateur. Il est possible que plusieurs titres s'appliquent à la question de l'utilisateur (par exemple pour plusieurs médicaments). Vous pouvez également demander un ensemble plus large de ressources FHIR, par exemple en indiquant simplement le type de ressource, mais il se peut que cela n'inclue pas toutes les ressources pertinentes pour éviter de dépasser la limite de jetons.\n\nLes identifiants de ressources FHIR sont composés de trois éléments :\n1. Le type de ressource FHIR, par exemple MedicationRequest, Condition, etc.\n2. Le titre de la ressource FHIR\n3. La date associée à la ressource FHIR.\n\nUtilisez ces informations pour déterminer la meilleure ressource FHIR possible pour chaque question. Essayez de demander tous les titres requis pour vous permettre de répondre à la question de manière complète. \n\nPar exemple, si l'utilisateur pose une question sur ses médicaments, il est recommandé de demander tous les types de ressources FHIR MedicationRequest ainsi que d'autres ressources FHIR connexes.\n\nUne question peut s'appuyer sur une question précédente et n'a pas besoin d'être explicite. Par exemple, si un utilisateur dit \"prescrire\", cela est associé aux médicaments."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "一个数组，包含与列表中给出的名称完全相同且适用于回答用户问题的所有 FHIR 健康记录标题。可能有多个标题适用于用户的问题（如多种药物）。您也可以请求更多的 FHIR 资源，例如只说明资源类型，但这可能不包括所有相关资源，以避免超出令牌限制。\n\nFHIR 资源标识符由三个元素组成：\n1. FHIR 资源类型，如 MedicationRequest、Condition 等。\n2. FHIR 资源的标题\n3. 与 FHIR 资源相关的日期。\n\n使用这些信息为每个问题确定最佳的 FHIR 资源。尽量要求提供所有必要的标题，以便全面回答问题。\n\n例如，如果用户询问他们的用药情况，建议请求所有 MedicationRequest FHIR 资源类型以及其他相关的 FHIR 资源。\n\n例如，如果用户说 \"处方\"，这就与用药相关联。"
+          }
+        }
+      }
+    },
+    "Place %@ at the position in the prompt where the FHIR resource should be inserted. Optionally place %@ where you would like to insert the current locale." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Place %1$@ at the position in the prompt where the FHIR resource should be inserted. Optionally place %2$@ where you would like to insert the current locale."
+          }
+        }
+      }
+    },
+    "Procedures" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Verfahren"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Procedimientos"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Procédures"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "程序"
+          }
+        }
+      }
+    },
+    "Reset Chat" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Chat zurücksetzen"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Reiniciar chat"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Réinitialiser le chat"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "重置聊天"
           }
         }
       }
@@ -1088,6 +1795,40 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "资源设置"
+          }
+        }
+      }
+    },
+    "Save Prompt" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Prompt speichern"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Save Prompt"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Guardar aviso"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sauvegarder l'invite"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "保存提示"
           }
         }
       }
@@ -1603,6 +2344,93 @@
           }
         }
       }
+    },
+    "Summary Prompt" : {
+      "comment" : "Title of the summary prompt."
+    },
+    "Summary Prompt Content" : {
+      "comment" : "Content of the summary prompt."
+    },
+    "The medical record does not include any FHIR resources for the search term %@." : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Die Krankenakte enthält keine FHIR-Ressourcen für den Suchbegriff %@."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The medical record does not include any FHIR resources for the search term %@."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "La historia clínica no incluye ningún recurso FHIR para el término de búsqueda %@."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Le dossier médical ne contient aucune ressource FHIR pour le terme de recherche %@."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "病历中不包含搜索词 %@ 的任何 FHIR 资源。"
+          }
+        }
+      }
+    },
+    "This is the summary of the requested %@:\n\n%@" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "This is the summary of the requested %1$@:\n\n%2$@"
+          }
+        }
+      }
+    },
+    "Total Number of Resources: %lld" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Gesamtzahl der Ressourcen: %lld"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Total Number of Resources: %lld"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Número total de recursos: %lld"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nombre total de ressources : %lld"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "资源总数： %lld"
+          }
+        }
+      }
+    },
+    "Unable to parse result of the LLM prompt." : {
+      "comment" : "Error thrown if the result can not be parsed in the underlying type."
     },
     "Use HealthKit Resources" : {
       "localizations" : {
