@@ -8,6 +8,7 @@
 
 import SpeziLLMOpenAI
 import SwiftUI
+import SpeziLLMLocalDownload
 
 
 struct SettingsView: View {
@@ -20,6 +21,7 @@ struct SettingsView: View {
         case promptSummary
         case promptInterpretation
         case promptMultipleResourceInterpretation
+        case downloadLocalLLM
     }
     
     @State private var path = NavigationPath()
@@ -41,6 +43,7 @@ struct SettingsView: View {
         NavigationStack(path: $path) {
             List {
                 openAISettings
+                downloadModelSettings
                 speechSettings
                 resourcesLimitSettings
                 resourcesSettings
@@ -51,12 +54,20 @@ struct SettingsView: View {
                     navigationDestination(for: destination)
                 }
                 .toolbar {
-                    ToolbarItem(placement: .cancellationAction) {
-                        Button("FHIR_RESOURCES_CHAT_CANCEL") {
+                    ToolbarItem(placement: .confirmationAction) {
+                        Button("SETTINGS_DONE") {
                             dismiss()
                         }
                     }
                 }
+        }
+    }
+    
+    private var downloadModelSettings: some View {
+        Section("SETTINGS_DOWNLOAD_MODEL") {
+            NavigationLink(value: SettingsDestinations.downloadLocalLLM) {
+                Text("SETTINGS_DOWNLOAD_LOCAL_LLM_MODEL")
+            }
         }
     }
     
@@ -181,7 +192,7 @@ struct SettingsView: View {
             case .resourceSelection:
                 ResourceSelection()
             case .promptSummary:
-                FHIRPromptSettingsView(promptType: .summary) {
+                FHIRPromptSettingsView(promptType: .summaryOpenAI) {
                     path.removeLast()
                 }
             case .promptInterpretation:
@@ -192,6 +203,14 @@ struct SettingsView: View {
                 FHIRPromptSettingsView(promptType: .interpretMultipleResources) {
                     path.removeLast()
                 }
+            case .downloadLocalLLM:
+                LLMLocalDownloadView(
+                    model: .custom(id: "mlx-community/OpenHermes-2.5-Mistral-7B-4bit-mlx"),
+                    downloadDescription: "Download the LLM model to generate summaries of FHIR resources."
+                ) {
+                    path.removeLast()
+                }
+                .interactiveDismissDisabled()
             }
         }
     }

@@ -12,6 +12,7 @@ import SpeziFHIR
 import SpeziHealthKit
 import SpeziLLM
 import SpeziLLMOpenAI
+import SpeziLLMLocal
 import SwiftUI
 
 
@@ -22,9 +23,19 @@ class LLMonFHIRDelegate: SpeziAppDelegate {
                 healthKit
             }
             LLMRunner {
+                LLMLocalPlatform()
                 LLMOpenAIPlatform(configuration: .init(concurrentStreams: 20))
             }
-            FHIRInterpretationModule()
+            
+            // All OpenAI
+//            FHIRInterpretationModule()
+            
+            // Local Summary, Remote (OpenAI) Interpretation
+            FHIRInterpretationModule(
+                summaryLLMSchema: FHIRInterpretationModule.Defaults.llmLocalSchema,
+                interpretationLLMSchema: FHIRInterpretationModule.Defaults.llmOpenAISchema,
+                multipleResourceInterpretationAIModel: .openAI(.gpt4_o)
+            )
         }
     }
     

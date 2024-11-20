@@ -32,7 +32,7 @@ struct InspectResourceView: View {
             .viewStateAlert(state: $loadingSummary)
             .task {
                 #if !TEST
-                interpret()
+//                interpret()
                 #endif
             }
     }

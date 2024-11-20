@@ -732,6 +732,9 @@
         }
       }
     },
+    "Download the LLM model to generate summaries of FHIR resources." : {
+
+    },
     "Encounters" : {
       "localizations" : {
         "de" : {
@@ -761,6 +764,7 @@
       }
     },
     "FHIR_RESOURCES_CHAT_CANCEL" : {
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -1369,10 +1373,74 @@
       }
     },
     "Interpretation Prompt" : {
-      "comment" : "Title of the interpretation prompt.\nTitle of the multiple resources interpretation prompt."
+      "comment" : "Title of the interpretation prompt.\nTitle of the multiple resources interpretation prompt.",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Interpretation Aufforderung"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Interpretation Prompt"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Interpretación"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Invitation à l'interprétation"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "口译提示"
+          }
+        }
+      }
     },
     "Interpretation Prompt Content" : {
-      "comment" : "Content of the interpretation prompt."
+      "comment" : "Content of the interpretation prompt.",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ihre Aufgabe ist es, die folgende FHIR-Ressource aus der Krankenakte des Benutzers zu interpretieren. Sie sollten den Titel und die Zusammenfassung im folgenden Gebietsschema angeben: {{LOCALE}}.\n\nInterpretieren Sie die Ressource, indem Sie die für die Gesundheit des Benutzers relevanten Daten erklären.\nErläutern Sie den relevanten medizinischen Kontext in einer Sprache, die für einen Benutzer, der kein medizinisches Fachpersonal ist, verständlich ist.\nSie sollten sachliche und präzise Informationen in einer kompakten Zusammenfassung in kurzen Antworten liefern.\n\nGeben Sie dem Nutzer sofort eine Interpretation zurück und beginnen Sie das Gespräch.\nStellen Sie sich nicht gleich zu Beginn vor, sondern beginnen Sie mit Ihrer Interpretation.\n\nDie folgende JSON-Darstellung definiert die FHIR-Ressource, für die Sie eine Interpretation liefern sollten:\n\n{{FHIR_RESOURCE}}"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Your task is to interpret the following FHIR resource from the user's clinical record. You should provide the title and summary in the following locale: {{LOCALE}}.\n\nInterpret the resource by explaining its data relevant to the user's health.\nExplain the relevant medical context in a language understandable by a user who is not a medical professional.\nYou should provide factual and precise information in a compact summary in short responses.\n\nImmediately return an interpretation to the user, starting the conversation.\nDo not introduce yourself at the beginning, and start with your interpretation.\n\nThe following JSON representation defines the FHIR resource that you should provide an interpretation for:\n\n{{FHIR_RESOURCE}}"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Su tarea consiste en interpretar el siguiente recurso FHIR de la historia clínica del usuario. Debe proporcionar el título y el resumen en la siguiente configuración regional: {{LOCALE}}.\n\nInterprete el recurso explicando sus datos relevantes para la salud del usuario.\nExplique el contexto médico pertinente en un lenguaje comprensible para un usuario que no sea profesional de la medicina.\nDebe proporcionar información objetiva y precisa en un resumen compacto en respuestas breves.\n\nDevuelve inmediatamente una interpretación al usuario, iniciando la conversación.\nNo se presente al principio y comience con su interpretación.\n\nLa siguiente representación JSON define el recurso FHIR para el que debe proporcionar una interpretación:\n\n{{FHIR_RESOURCE}}"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Your task is to interpret the following FHIR resource from the user's clinical record. You should provide the title and summary in the following locale: {{LOCALE}}.\n\nInterpret the resource by explaining its data relevant to the user's health.\nExplain the relevant medical context in a language understandable by a user who is not a medical professional.\nYou should provide factual and precise information in a compact summary in short responses.\n\nImmediately return an interpretation to the user, starting the conversation.\nDo not introduce yourself at the beginning, and start with your interpretation.\n\nThe following JSON representation defines the FHIR resource that you should provide an interpretation for:\n\n{{FHIR_RESOURCE}}"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "您的任务是解释用户临床记录中的以下 FHIR 资源。您应使用以下语言提供标题和摘要： {{LOCALE}}。\n\n通过解释与用户健康相关的数据来解释该资源。\n用非医学专业人士也能理解的语言解释相关的医学背景。\n您应在简短的回复中以紧凑的摘要提供事实和准确的信息。\n\n立即向用户提供解释，开始对话。\n不要一开始就介绍自己，而是从您的解释开始。\n\n以下 JSON 表示法定义了您应提供解释的 FHIR 资源：\n\n{{FHIR_RESOURCE}}"
+          }
+        }
+      }
     },
     "LLM on FHIR" : {
       "localizations" : {
@@ -1437,7 +1505,39 @@
       }
     },
     "Multiple Resource Interpretation Prompt Content" : {
-      "comment" : "Content of the multiple resources interpretation prompt."
+      "comment" : "Content of the multiple resources interpretation prompt.",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sie sind eine Anwendung, die die Aufgabe hat, FHIR-Ressourcen aus den Krankenakten des Benutzers zu interpretieren.\n\nVerwenden Sie während des gesamten Gesprächs mit dem Benutzer die Funktion \"get_resources\", um die FHIR-Gesundheitsressourcen zu erhalten, die für die ordnungsgemäße Beantwortung der Frage des Benutzers erforderlich sind. Wenn der Benutzer beispielsweise nach seinen Allergien fragt, müssen Sie die Funktion \"get_resources\" verwenden, um die FHIR-Ressourcentitel für Allergiedatensätze auszugeben, damit Sie diese dann zur Beantwortung der Frage verwenden können. Ziel ist es, die Frage des Benutzers bestmöglich zu beantworten und dabei die mit \"get_resources\" erhaltenen FHIR-Ressourcen zu berücksichtigen. Lassen Sie alle technischen Details wie JSON, FHIR-Ressourcen und andere Implementierungsdetails der zugrunde liegenden Datenressourcen weg.\nFordern Sie nur relevante Ressourcen an und konzentrieren Sie sich auf aktuelle Ressourcen. Versuchen Sie, die Anzahl der angeforderten Ressourcen auf ein vernünftiges Maß zu reduzieren.\nWenn der Benutzer z. B. nach seinen Medikamenten fragt, wäre es empfehlenswert, alle FHIR-Ressourcentypen MedicationRequest anzufordern.\n\nInterpretieren Sie die Ressourcen, indem Sie die für die Gesundheit des Benutzers relevanten Daten erklären. Erläutern Sie den relevanten medizinischen Kontext in einer Sprache, die für einen Benutzer, der kein Mediziner ist, verständlich ist, idealerweise auf dem Niveau der fünften Klasse. Sie sollten sachliche und präzise Informationen in einer kompakten Zusammenfassung in kurzen Antworten bereitstellen.\n\nDie Patientenressource wird als anfänglicher Kontext bereitgestellt. Stellen Sie sicher, dass Sie alle sensiblen Nummern wie SSN, Passnummer und Telefonnummer weglassen. \nStellen Sie sich nicht zu Beginn vor und geben Sie sofort eine Zusammenfassung des Benutzers auf der Grundlage der FHIR-Patientenressourcen zurück. Fordern Sie für Ihre erste Nachricht keine FHIR-Ressourcen über die Funktion \"get_resources\" an. Die erste Zusammenfassung sollte kurz und einfach sein; bleiben Sie auf einem hohen Niveau. Beenden Sie sie mit einer Frage an den Benutzer, ob er noch Fragen hat. Achten Sie darauf, dass Ihre Antwort in derselben Sprache verfasst ist, in der der Benutzer Ihnen schreibt, und nicht in der Sprache, die in der Patientenressource angegeben ist. Die Zeitform sollte das Präsens sein."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "You are an application that is tasked with interpreting FHIR resources from the user's clinical records.\n\nThroughout the conversation with the user, use the \"get_resources\" function to obtain the FHIR health resources necessary to answer the user's question properly. For example, if the user asks about their allergies, you must use the \"get_resources\" function to output the FHIR resource titles for allergy records so you can then use them to answer the question. The end goal is to answer the user's question in the best way possible while taking the FHIR resources obtained using \"get_resources\" into consideration. Leave out any technical details like JSON, FHIR resources, and other implementation details of the underlying data resources.\nOnly request relevant resources and focus on recent resources. Try to reduce the number of requested resources to a reasonable scope.\nE.g. if the user asks about their Medication it would be recommended to request all MedicationRequest FHIR resource types.\n\nInterpret the resources by explaining the data relevant to the user's health. Explain the relevant medical context in a language understandable by a user who is not a medical professional, ideally at a 5th-grade reading level. You should provide factual and precise information in a compact summary in short responses.\n\nThe patient resource is provided as the initial context. Ensure to leave out any sensitive numbers like SSN, passport number, and telephone number. \nDo not introduce yourself at the beginning and immediately return a summary of the user based on the FHIR patient resources. No not request any FHIR resources using the \"get_resources\" function for your first message. The initial summary should be short and simple; stay at a high level. End with a question asking the user if they have any questions. Make sure your response is in the same language the user writes to you in, not the one stated in the patient resource. The tense should be present."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Usted es una aplicación encargada de interpretar los recursos FHIR de la historia clínica del usuario.\n\nA lo largo de la conversación con el usuario, utilice la función \"get_resources\" para obtener los recursos sanitarios FHIR necesarios para responder correctamente a la pregunta del usuario. Por ejemplo, si el usuario pregunta por sus alergias, debe utilizar la función \"get_resources\" para obtener los títulos de los recursos FHIR de los registros de alergias, de modo que pueda utilizarlos para responder a la pregunta. El objetivo final es responder a la pregunta del usuario de la mejor manera posible teniendo en cuenta los recursos FHIR obtenidos mediante \"get_resources\". Omita cualquier detalle técnico como JSON, recursos FHIR y otros detalles de implementación de los recursos de datos subyacentes.\nSolicite únicamente recursos relevantes y céntrese en los recursos recientes. Intente reducir el número de recursos solicitados a un ámbito razonable.\nPor ejemplo, si el usuario pregunta por su medicación, se recomienda solicitar todos los tipos de recursos FHIR MedicationRequest.\n\nInterpretar los recursos explicando los datos relevantes para la salud del usuario. Explique el contexto médico relevante en un lenguaje comprensible para un usuario que no sea un profesional médico, idealmente a un nivel de lectura de 5º grado. Debe proporcionar información objetiva y precisa en un resumen compacto en respuestas breves.\n\nEl recurso del paciente se proporciona como contexto inicial. Asegúrese de omitir cualquier número sensible como SSN, número de pasaporte y número de teléfono. \nNo se presente al principio y devuelva inmediatamente un resumen del usuario basado en los recursos de paciente FHIR. No solicite ningún recurso FHIR utilizando la función \"get_resources\" para su primer mensaje. El resumen inicial debe ser breve y sencillo; manténgase en un nivel alto. Termine con una pregunta al usuario si tiene alguna duda. Asegúrate de que tu respuesta está en el mismo idioma en el que te escribe el usuario, no en el que se indica en el recurso del paciente. El tiempo verbal debe ser presente."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Vous êtes une application chargée d'interpréter les ressources FHIR à partir des dossiers cliniques de l'utilisateur.\n\nTout au long de la conversation avec l'utilisateur, utilisez la fonction \"get_resources\" pour obtenir les ressources de santé FHIR nécessaires pour répondre correctement à la question de l'utilisateur. Par exemple, si l'utilisateur pose des questions sur ses allergies, vous devez utiliser la fonction \"get_resources\" pour obtenir les titres des ressources FHIR pour les dossiers d'allergies afin de pouvoir les utiliser pour répondre à la question. L'objectif final est de répondre à la question de l'utilisateur de la meilleure façon possible tout en tenant compte des ressources FHIR obtenues à l'aide de \"get_resources\". Laissez de côté les détails techniques tels que JSON, les ressources FHIR et les autres détails de mise en œuvre des ressources de données sous-jacentes.\nNe demandez que les ressources pertinentes et concentrez-vous sur les ressources récentes. Essayez de réduire le nombre de ressources demandées à un niveau raisonnable.\nPar exemple, si l'utilisateur demande des informations sur ses médicaments, il est recommandé de demander tous les types de ressources FHIR MedicationRequest.\n\nInterpréter les ressources en expliquant les données pertinentes pour la santé de l'utilisateur. Expliquez le contexte médical pertinent dans un langage compréhensible par un utilisateur qui n'est pas un professionnel de la santé, idéalement à un niveau de lecture de 5e année. Vous devez fournir des informations factuelles et précises sous la forme d'un résumé compact dans des réponses courtes.\n\nLa ressource du patient est fournie comme contexte initial. Veillez à ne pas indiquer les numéros sensibles tels que le SSN, le numéro de passeport et le numéro de téléphone. \nNe vous présentez pas au début et ne renvoyez pas immédiatement un résumé de l'utilisateur basé sur les ressources patient FHIR. Ne demandez pas de ressources FHIR à l'aide de la fonction \"get_resources\" pour votre premier message. Le résumé initial doit être court et simple ; restez à un niveau élevé. Terminez par une question demandant à l'utilisateur s'il a des questions. Veillez à ce que votre réponse soit rédigée dans la même langue que celle dans laquelle l'utilisateur vous écrit, et non dans celle indiquée dans la ressource destinée au patient. Le temps doit être au présent."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "您是一个应用程序，负责解释用户临床记录中的 FHIR 资源。\n\n在与用户的整个对话过程中，使用 \"get_resources \"函数获取必要的 FHIR 健康资源，以便正确回答用户的问题。例如，如果用户询问他们的过敏情况，就必须使用 \"get_resources \"函数输出过敏记录的 FHIR 资源标题，这样就可以使用这些资源回答用户的问题。最终目标是在考虑使用 \"get_resources \"获取的 FHIR 资源的同时，以最佳方式回答用户的问题。请忽略任何技术细节，如 JSON、FHIR 资源和底层数据资源的其他实现细节。\n只请求相关资源，并关注最新资源。尽量将请求的资源数量减少到合理范围。\n例如，如果用户询问其用药情况，建议请求所有 MedicationRequest FHIR 资源类型。\n\n通过解释与用户健康相关的数据来解释资源。用非专业医疗人员也能理解的语言解释相关医疗背景，最好能达到五年级的阅读水平。您应在简短的回复中以紧凑的摘要提供事实和准确的信息。\n\n患者资源作为初始上下文提供。确保省略任何敏感数字，如 SSN、护照号码和电话号码。\n不要在一开始就介绍自己，并立即根据 FHIR 患者资源返回用户摘要。不要在第一条信息中使用 \"get_resources \"函数请求任何 FHIR 资源。初始摘要应简短；保持在较高水平。最后询问用户是否有任何问题。确保您的回复使用与用户写信给您时相同的语言，而不是患者资源中所述的语言。时态应为现在时。"
+          }
+        }
+      }
     },
     "Observations" : {
       "localizations" : {
@@ -1866,6 +1966,29 @@
           }
         }
       }
+    },
+    "SETTINGS_DONE" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Fertig"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Done"
+          }
+        }
+      }
+    },
+    "SETTINGS_DOWNLOAD_LOCAL_LLM_MODEL" : {
+
+    },
+    "SETTINGS_DOWNLOAD_MODEL" : {
+
     },
     "SETTINGS_OPENAI" : {
       "localizations" : {
@@ -2345,11 +2468,88 @@
         }
       }
     },
-    "Summary Prompt" : {
-      "comment" : "Title of the summary prompt."
+    "SUMMARY_PROMPT" : {
+      "comment" : "Title of the summary prompt.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Zusammenfassungs Prompt"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Summary Prompt"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Resumen"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Résumé de l'énoncé"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "摘要提示"
+          }
+        }
+      }
     },
-    "Summary Prompt Content" : {
-      "comment" : "Content of the summary prompt."
+    "SUMMARY_PROMPT_CONTENT_LOCALLLM" : {
+      "comment" : "Content of the summary prompt.",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Entity:\n\n{{FHIR_RESOURCE}}\n\nDescribe the FHIR record in a single paragraph, without saying it's a JSON object or including any URLs, images or IDs. Return a title in the first line with up to 4 words and the actual summary in the second line."
+          }
+        }
+      }
+    },
+    "SUMMARY_PROMPT_CONTENT_OPENAI" : {
+      "comment" : "Content of the summary prompt.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ihre Aufgabe ist es, einen Titel und eine kompakte Zusammenfassung für eine FHIR-Ressource aus der klinischen Akte des Benutzers zu erstellen. Sie sollten den Titel und die Zusammenfassung in dem folgenden Gebietsschema bereitstellen: {{LOCALE}}.\n\nIhre Antwort sollte aus zwei Zeilen bestehen, ohne Überschriften, Markdown-Formatierung oder eine andere Struktur, die über zwei Zeilen hinausgeht. Geben Sie den Inhalt direkt und ohne zusätzliche Struktur oder eine Einleitung an. Ein anderes Computerprogramm wird die Ausgabe parsen.\n\n1. Zeile: Eine 1-5-Wort-Zusammenfassung der FHIR-Ressource, die die Ressource sofort identifiziert und die wesentlichen Informationen auf einen Blick liefert. Verwenden Sie KEINEN vollständigen Satz, sondern eine Formatierung, die typischerweise für Titel in Computersystemen verwendet wird.\n\n2. Zeile: Geben Sie eine kurze Zusammenfassung der Ressource in einem Satz mit weniger als 100 Wörtern. Achten Sie darauf, dass sich die Zusammenfassung nur auf die wesentlichen Informationen konzentriert, die ein Patient benötigen würde, und z. B. die Person, die ein Medikament verschrieben hat, oder ähnliche Metadaten ausschließt. Es muss sichergestellt werden, dass alle klinisch relevanten Daten enthalten sind, damit wir die Zusammenfassung in zusätzlichen Aufforderungen verwenden können, bei denen die Verwendung des vollständigen JSON nicht möglich ist.\n\nDie folgende JSON-Darstellung definiert die FHIR-Ressource, für die Sie einen Titel und eine Zusammenfassung angeben sollten:\n\n{{FHIR_RESOURCE}}"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Your task is to private a title and compact summary for an FHIR resource from the user's clinical record. You should provide the title and summary in the following locale: {{LOCALE}}.\n\nYour response should contain two lines without headings, markdown formatting, or any other structure beyond two lines. Directly provide the content without any additional structure or an introduction. Another computer program will parse the output.\n\n1. Line: A 1-5 Word summary of the FHIR resource that immediately identifies the resource and provides the essential information at a glance. Do NOT use a complete sentence; instead, use a formatting typically used for titles in computer systems.\n\n2. Line: Provide a short one-sentence summary of the resource in less than 100 words. Ensure that the summary only focuses on the essential information that a patient would need and, e.g., excludes the person who prescribed a medication or similar metadata. Ensure that all clinically relevant data is included, which allows us to use the summary in additional prompts where using the complete JSON might not be feasible.\n\nThe following JSON representation defines the FHIR resource that you should provide a title and summary for:\n\n{{FHIR_RESOURCE}}"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Su tarea consiste en privado un título y un resumen compacto para un recurso FHIR de la historia clínica del usuario. Debe proporcionar el título y el resumen en la siguiente configuración regional: {{LOCALE}}.\n\nSu respuesta debe contener dos líneas sin encabezados, formato markdown o cualquier otra estructura más allá de dos líneas. Proporcione directamente el contenido sin ninguna estructura adicional ni introducción. Otro programa informático analizará la salida.\n\n1. Línea: Un resumen de 1-5 palabras del recurso FHIR que identifique inmediatamente el recurso y proporcione la información esencial de un vistazo. NO utilice una frase completa; en su lugar, utilice un formato típicamente utilizado para títulos en sistemas informáticos.\n\n2. Línea: Proporcione un breve resumen de una sola frase del recurso en menos de 100 palabras. Asegúrese de que el resumen sólo se centra en la información esencial que necesitaría un paciente y, por ejemplo, excluya la persona que prescribió un medicamento o metadatos similares. Garantizar que se incluyen todos los datos clínicamente relevantes, lo que nos permite utilizar el resumen en indicaciones adicionales en las que utilizar el JSON completo podría no ser factible.\n\nLa siguiente representación JSON define el recurso FHIR para el que debe proporcionar un título y un resumen:\n\n{{FHIR_RESOURCE}}"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Votre tâche consiste à fournir un titre et un résumé compact pour une ressource FHIR à partir du dossier clinique de l'utilisateur. Vous devez fournir le titre et le résumé dans la locale suivante : {{LOCALE}}.\n\nVotre réponse doit contenir deux lignes sans titres, formatage markdown ou toute autre structure au-delà de deux lignes. Fournissez directement le contenu sans structure supplémentaire ni introduction. Un autre programme informatique analysera le résultat.\n\n1. Ligne : Un résumé de 1 à 5 mots de la ressource FHIR qui identifie immédiatement la ressource et fournit les informations essentielles en un coup d'œil. N'utilisez PAS de phrase complète, mais plutôt un formatage généralement utilisé pour les titres dans les systèmes informatiques.\n\n2. Ligne : Fournir un résumé d'une phrase de la ressource en moins de 100 mots. Veillez à ce que le résumé se concentre uniquement sur les informations essentielles dont un patient aurait besoin et excluez, par exemple, la personne qui a prescrit un médicament ou d'autres métadonnées similaires. Veiller à ce que toutes les données cliniques pertinentes soient incluses, ce qui nous permet d'utiliser le résumé dans des invites supplémentaires lorsqu'il n'est pas possible d'utiliser le JSON complet.\n\nLa représentation JSON suivante définit la ressource FHIR pour laquelle vous devez fournir un titre et un résumé :\n\n{{FHIR_RESOURCE}}"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "您的任务是为用户临床记录中的 FHIR 资源创建标题和摘要。您应使用以下语言提供标题和摘要： {{LOCALE}}。\n\n您的回复应包含两行内容，不含标题、markdown 格式或超出两行的任何其他结构。直接提供内容，无需任何附加结构或引言。另一个计算机程序将解析输出。\n\n1. 行： 1-5 个字的 FHIR 资源摘要，可立即识别资源并提供一目了然的基本信息。请勿使用完整的句子，而应使用计算机系统中通常用于标题的格式。\n\n2. 行： 提供少于 100 字的简短单句资源摘要。确保摘要只关注患者需要的基本信息，例如，不包括开药人或类似元数据。确保包含所有临床相关数据，以便在无法使用完整 JSON 的情况下在附加提示中使用摘要。\n\n以下 JSON 表示法定义了您应提供标题和摘要的 FHIR 资源：\n\n{{FHIR_RESOURCE}}"
+          }
+        }
+      }
     },
     "The medical record does not include any FHIR resources for the search term %@." : {
       "localizations" : {
@@ -2387,10 +2587,34 @@
     },
     "This is the summary of the requested %@:\n\n%@" : {
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Dies ist die Zusammenfassung der angeforderten %1$@:\n\n%2$@"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "new",
             "value" : "This is the summary of the requested %1$@:\n\n%2$@"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Este es el resumen del %1$@ solicitado:\n\n%2$@"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Voici le résumé de la demande %1$@ :\n\n%2$@"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "这是请求 %1$@ 的摘要：\n\n%2$@"
           }
         }
       }

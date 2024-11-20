@@ -29,7 +29,10 @@ public class FHIRResourceSummary {
         
         
         public init?(_ description: String) {
-            let components = description.split(separator: "\n")
+            let components = description
+                .replacingOccurrences(of: "Title: ", with: "")
+                .replacingOccurrences(of: "Summary: ", with: "")
+                .split(separator: "\n")
             guard components.count == 2, let title = components.first, let summary = components.last else {
                 return nil
             }
@@ -46,13 +49,13 @@ public class FHIRResourceSummary {
     /// - Parameters:
     ///   - localStorage: Local storage module that needs to be passed to the ``FHIRResourceSummary`` to allow it to cache summaries.
     ///   - openAIModel: OpenAI module that needs to be passed to the ``FHIRResourceSummary`` to allow it to retrieve summaries.
-    public init(localStorage: LocalStorage, llmRunner: LLMRunner, llmSchema: any LLMSchema) {
+    public init(localStorage: LocalStorage, llmRunner: LLMRunner, llmSchema: any LLMSchema, prompt: FHIRPrompt) {
         self.resourceProcessor = FHIRResourceProcessor(
             localStorage: localStorage,
             llmRunner: llmRunner,
             llmSchema: llmSchema,
             storageKey: "FHIRResourceSummary.Summaries",
-            prompt: FHIRPrompt.summary
+            prompt: prompt
         )
     }
     
@@ -87,18 +90,35 @@ public class FHIRResourceSummary {
 
 
 extension FHIRPrompt {
-    /// Prompt used to summarize FHIR resources
+    /// Prompt used to summarize FHIR resources for OpenAI
     ///
     /// This prompt is used by the ``FHIRResourceSummary``.
-    public static let summary: FHIRPrompt = {
+    public static let summaryOpenAI: FHIRPrompt = {
         FHIRPrompt(
-            storageKey: "prompt.summary",
+            storageKey: "prompt.summary.openai",
             localizedDescription: String(
-                localized: "Summary Prompt",
+                localized: "SUMMARY_PROMPT",
                 comment: "Title of the summary prompt."
             ),
             defaultPrompt: String(
-                localized: "Summary Prompt Content",
+                localized: "SUMMARY_PROMPT_CONTENT_OPENAI",
+                comment: "Content of the summary prompt."
+            )
+        )
+    }()
+    
+    /// Prompt used to summarize FHIR resources for local LLM
+    ///
+    /// This prompt is used by the ``FHIRResourceSummary``.
+    public static let summaryLocalLLM: FHIRPrompt = {
+        FHIRPrompt(
+            storageKey: "prompt.summary.localllm",
+            localizedDescription: String(
+                localized: "SUMMARY_PROMPT",
+                comment: "Title of the summary prompt."
+            ),
+            defaultPrompt: String(
+                localized: "SUMMARY_PROMPT_CONTENT_LOCALLLM",
                 comment: "Content of the summary prompt."
             )
         )
