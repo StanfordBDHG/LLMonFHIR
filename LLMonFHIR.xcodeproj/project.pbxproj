@@ -42,15 +42,16 @@
 		9733FC592B60E5FB0024F12C /* SpeziFHIRHealthKit in Frameworks */ = {isa = PBXBuildFile; productRef = 9733FC582B60E5FB0024F12C /* SpeziFHIRHealthKit */; };
 		9733FC5D2B60E5FB0024F12C /* SpeziFHIRMockPatients in Frameworks */ = {isa = PBXBuildFile; productRef = 9733FC5C2B60E5FB0024F12C /* SpeziFHIRMockPatients */; };
 		973C43A12B7F3371006C2349 /* ResourceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 973C43A02B7F3371006C2349 /* ResourceView.swift */; };
+		974089C12CF761390020E4DD /* LLMSelectionInformationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 974089C02CF761370020E4DD /* LLMSelectionInformationView.swift */; };
 		97424E9D2B8C16530010571F /* SpeziChat in Frameworks */ = {isa = PBXBuildFile; productRef = 97424E9C2B8C16530010571F /* SpeziChat */; };
 		97532F312BC1037E00CE5599 /* SpeziFHIR in Frameworks */ = {isa = PBXBuildFile; productRef = 97532F302BC1037E00CE5599 /* SpeziFHIR */; };
 		97532F332BC1037E00CE5599 /* SpeziFHIRHealthKit in Frameworks */ = {isa = PBXBuildFile; productRef = 97532F322BC1037E00CE5599 /* SpeziFHIRHealthKit */; };
 		97532F352BC1037E00CE5599 /* SpeziFHIRLLM in Frameworks */ = {isa = PBXBuildFile; productRef = 97532F342BC1037E00CE5599 /* SpeziFHIRLLM */; };
 		97532F372BC1037E00CE5599 /* SpeziFHIRMockPatients in Frameworks */ = {isa = PBXBuildFile; productRef = 97532F362BC1037E00CE5599 /* SpeziFHIRMockPatients */; };
 		97532F3A2BC1282500CE5599 /* LLMSourceSummarizationInterpretation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97532F392BC1282500CE5599 /* LLMSourceSummarizationInterpretation.swift */; };
-		97532F3C2BC1283A00CE5599 /* LLMSourceSelectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97532F3B2BC1283A00CE5599 /* LLMSourceSelectionView.swift */; };
+		97532F3C2BC1283A00CE5599 /* LLMSingleResourceSelectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97532F3B2BC1283A00CE5599 /* LLMSingleResourceSelectionView.swift */; };
 		97532F3E2BC128DE00CE5599 /* LLMLocalDownloadView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97532F3D2BC128DE00CE5599 /* LLMLocalDownloadView.swift */; };
-		97532F452BC12F1C00CE5599 /* LLMOpenAIModelOnboarding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97532F442BC12F1C00CE5599 /* LLMOpenAIModelOnboarding.swift */; };
+		97532F452BC12F1C00CE5599 /* LLMMultipleResourceSelectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97532F442BC12F1C00CE5599 /* LLMMultipleResourceSelectionView.swift */; };
 		97532F482BC1325300CE5599 /* SpeziLLM in Frameworks */ = {isa = PBXBuildFile; productRef = 97532F472BC1325300CE5599 /* SpeziLLM */; };
 		97532F4A2BC1325300CE5599 /* SpeziLLMFog in Frameworks */ = {isa = PBXBuildFile; productRef = 97532F492BC1325300CE5599 /* SpeziLLMFog */; };
 		97532F4C2BC1325300CE5599 /* SpeziLLMLocal in Frameworks */ = {isa = PBXBuildFile; productRef = 97532F4B2BC1325300CE5599 /* SpeziLLMLocal */; };
@@ -121,10 +122,11 @@
 		653A256728338800005D4D48 /* LLMonFHIRUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = LLMonFHIRUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		653A258928339462005D4D48 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		973C43A02B7F3371006C2349 /* ResourceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResourceView.swift; sourceTree = "<group>"; };
+		974089C02CF761370020E4DD /* LLMSelectionInformationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LLMSelectionInformationView.swift; sourceTree = "<group>"; };
 		97532F392BC1282500CE5599 /* LLMSourceSummarizationInterpretation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LLMSourceSummarizationInterpretation.swift; sourceTree = "<group>"; };
-		97532F3B2BC1283A00CE5599 /* LLMSourceSelectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LLMSourceSelectionView.swift; sourceTree = "<group>"; };
+		97532F3B2BC1283A00CE5599 /* LLMSingleResourceSelectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LLMSingleResourceSelectionView.swift; sourceTree = "<group>"; };
 		97532F3D2BC128DE00CE5599 /* LLMLocalDownloadView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LLMLocalDownloadView.swift; sourceTree = "<group>"; };
-		97532F442BC12F1C00CE5599 /* LLMOpenAIModelOnboarding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LLMOpenAIModelOnboarding.swift; sourceTree = "<group>"; };
+		97532F442BC12F1C00CE5599 /* LLMMultipleResourceSelectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LLMMultipleResourceSelectionView.swift; sourceTree = "<group>"; };
 		97B6C1A42B7F382C0092B0F4 /* FHIRResourcesInstructionsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FHIRResourcesInstructionsView.swift; sourceTree = "<group>"; };
 		97B76BCD2B195D650019D706 /* CONTRIBUTORS.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = CONTRIBUTORS.md; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -325,13 +327,31 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		97532F382BC1281D00CE5599 /* LLM */ = {
+		974089C22CF766B90020E4DD /* SingleResource */ = {
 			isa = PBXGroup;
 			children = (
 				97532F512BC140BB00CE5599 /* Local */,
-				97532F432BC12F1100CE5599 /* OpenAI */,
+				97532F3B2BC1283A00CE5599 /* LLMSingleResourceSelectionView.swift */,
 				97532F392BC1282500CE5599 /* LLMSourceSummarizationInterpretation.swift */,
-				97532F3B2BC1283A00CE5599 /* LLMSourceSelectionView.swift */,
+			);
+			path = SingleResource;
+			sourceTree = "<group>";
+		};
+		974089C32CF766BE0020E4DD /* MultipleResource */ = {
+			isa = PBXGroup;
+			children = (
+				97532F442BC12F1C00CE5599 /* LLMMultipleResourceSelectionView.swift */,
+			);
+			path = MultipleResource;
+			sourceTree = "<group>";
+		};
+		97532F382BC1281D00CE5599 /* LLM */ = {
+			isa = PBXGroup;
+			children = (
+				974089C22CF766B90020E4DD /* SingleResource */,
+				974089C32CF766BE0020E4DD /* MultipleResource */,
+				97532F432BC12F1100CE5599 /* OpenAI */,
+				974089C02CF761370020E4DD /* LLMSelectionInformationView.swift */,
 			);
 			path = LLM;
 			sourceTree = "<group>";
@@ -339,7 +359,6 @@
 		97532F432BC12F1100CE5599 /* OpenAI */ = {
 			isa = PBXGroup;
 			children = (
-				97532F442BC12F1C00CE5599 /* LLMOpenAIModelOnboarding.swift */,
 				2F42429A2A8B14AC006E2B01 /* LLMOpenAIAPIKeyView.swift */,
 			);
 			path = OpenAI;
@@ -573,10 +592,11 @@
 				2FE5DC3A29EDD7CA004B9AB4 /* Welcome.swift in Sources */,
 				2FE5DC3829EDD7CA004B9AB4 /* Disclaimer.swift in Sources */,
 				2F0F90BA2A1E6556006D7E03 /* SettingsView.swift in Sources */,
+				974089C12CF761390020E4DD /* LLMSelectionInformationView.swift in Sources */,
 				2FC975A82978F11A00BA99FE /* Home.swift in Sources */,
 				2FE5DC3729EDD7CA004B9AB4 /* OnboardingFlow.swift in Sources */,
 				2FE5DC4729EDD7F2004B9AB4 /* CodableArray+RawRepresentable.swift in Sources */,
-				97532F452BC12F1C00CE5599 /* LLMOpenAIModelOnboarding.swift in Sources */,
+				97532F452BC12F1C00CE5599 /* LLMMultipleResourceSelectionView.swift in Sources */,
 				2FE5DC4029EDD7EE004B9AB4 /* FeatureFlags.swift in Sources */,
 				97B6C1A52B7F382C0092B0F4 /* FHIRResourcesInstructionsView.swift in Sources */,
 				2FE5DC4629EDD7F2004B9AB4 /* Bundle+Image.swift in Sources */,
@@ -586,7 +606,7 @@
 				2F5E32BD297E05EA003432F8 /* LLMonFHIRDelegate.swift in Sources */,
 				97532F3A2BC1282500CE5599 /* LLMSourceSummarizationInterpretation.swift in Sources */,
 				653A2551283387FE005D4D48 /* LLMonFHIR.swift in Sources */,
-				97532F3C2BC1283A00CE5599 /* LLMSourceSelectionView.swift in Sources */,
+				97532F3C2BC1283A00CE5599 /* LLMSingleResourceSelectionView.swift in Sources */,
 				2FE5DC3629EDD7CA004B9AB4 /* HealthKitPermissions.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1121,7 +1141,7 @@
 			repositoryURL = "https://github.com/StanfordSpezi/Spezi";
 			requirement = {
 				kind = upToNextMinorVersion;
-				minimumVersion = 1.2.0;
+				minimumVersion = 1.8.0;
 			};
 		};
 		2FD8E8282A1AADDA00357F4E /* XCRemoteSwiftPackageReference "FHIRModels" */ = {
@@ -1129,52 +1149,52 @@
 			repositoryURL = "https://github.com/apple/FHIRModels";
 			requirement = {
 				kind = upToNextMinorVersion;
-				minimumVersion = 0.5.0;
+				minimumVersion = 0.6.0;
 			};
 		};
 		2FD8E82F2A1AB00D00357F4E /* XCRemoteSwiftPackageReference "HealthKitOnFHIR" */ = {
 			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/StanfordBDHG/HealthKitOnFHIR.git";
+			repositoryURL = "https://github.com/StanfordBDHG/HealthKitOnFHIR";
 			requirement = {
 				kind = upToNextMinorVersion;
-				minimumVersion = 0.2.5;
+				minimumVersion = 0.2.11;
 			};
 		};
 		2FD8E83E2A1AE3F200357F4E /* XCRemoteSwiftPackageReference "SpeziViews" */ = {
 			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/StanfordSpezi/SpeziViews.git";
+			repositoryURL = "https://github.com/StanfordSpezi/SpeziViews";
 			requirement = {
 				kind = upToNextMinorVersion;
-				minimumVersion = 1.3.0;
+				minimumVersion = 1.7.0;
 			};
 		};
 		2FE5DC7029EDD8D3004B9AB4 /* XCRemoteSwiftPackageReference "SpeziHealthKit" */ = {
 			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/StanfordSpezi/SpeziHealthKit.git";
+			repositoryURL = "https://github.com/StanfordSpezi/SpeziHealthKit";
 			requirement = {
 				kind = upToNextMinorVersion;
-				minimumVersion = 0.5.0;
+				minimumVersion = 0.6.0;
 			};
 		};
 		2FE5DC7F29EDD91D004B9AB4 /* XCRemoteSwiftPackageReference "SpeziOnboarding" */ = {
 			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/StanfordSpezi/SpeziOnboarding.git";
+			repositoryURL = "https://github.com/StanfordSpezi/SpeziOnboarding";
+			requirement = {
+				kind = upToNextMinorVersion;
+				minimumVersion = 1.2.2;
+			};
+		};
+		2FE5DC9729EDD9D9004B9AB4 /* XCRemoteSwiftPackageReference "XCTestExtensions" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/StanfordBDHG/XCTestExtensions";
 			requirement = {
 				kind = upToNextMinorVersion;
 				minimumVersion = 1.1.0;
 			};
 		};
-		2FE5DC9729EDD9D9004B9AB4 /* XCRemoteSwiftPackageReference "XCTestExtensions" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/StanfordBDHG/XCTestExtensions.git";
-			requirement = {
-				kind = upToNextMinorVersion;
-				minimumVersion = 0.4.7;
-			};
-		};
 		2FE5DC9A29EDD9EF004B9AB4 /* XCRemoteSwiftPackageReference "XCTHealthKit" */ = {
 			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/StanfordBDHG/XCTHealthKit.git";
+			repositoryURL = "https://github.com/StanfordBDHG/XCTHealthKit";
 			requirement = {
 				kind = upToNextMinorVersion;
 				minimumVersion = 0.3.5;
@@ -1185,7 +1205,7 @@
 			repositoryURL = "https://github.com/StanfordSpezi/SpeziChat";
 			requirement = {
 				kind = upToNextMinorVersion;
-				minimumVersion = 0.2.0;
+				minimumVersion = 0.2.1;
 			};
 		};
 		9775720B2B5E718A00FB0286 /* XCRemoteSwiftPackageReference "SpeziSpeech" */ = {
@@ -1193,7 +1213,7 @@
 			repositoryURL = "https://github.com/StanfordSpezi/SpeziSpeech";
 			requirement = {
 				kind = upToNextMajorVersion;
-				minimumVersion = 1.0.0;
+				minimumVersion = 1.1.0;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */

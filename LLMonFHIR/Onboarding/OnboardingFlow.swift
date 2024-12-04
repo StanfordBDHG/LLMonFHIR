@@ -32,6 +32,8 @@ struct OnboardingFlow: View {
             //Welcome()
             //Disclaimer()
             
+            LLMSelectionInformationView()
+            
             // Select model for summarization and interpretation
             LLMSourceSelectionView()
             // Multiple Resource Chat always uses OpenAI, collect model type and API key

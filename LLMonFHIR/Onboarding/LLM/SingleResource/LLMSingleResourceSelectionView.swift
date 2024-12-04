@@ -1,5 +1,5 @@
 //
-// This source file is part of the Stanford HealthGPT project
+// This source file is part of the Stanford LLMonFHIR project
 //
 // SPDX-FileCopyrightText: 2024 Stanford University & Project Contributors (see CONTRIBUTORS.md)
 //
@@ -10,7 +10,7 @@ import SpeziOnboarding
 import SwiftUI
 
 
-struct LLMSourceSelectionView: View {
+struct LLMSingleResourceSelectionView: View {
     @Environment(OnboardingNavigationPath.self) private var onboardingNavigationPath
     @AppStorage(StorageKeys.llmSourceSummarizationInterpretation) private var llmSource = StorageKeys.Defaults.llmSourceSummarizationInterpretation
 
@@ -58,5 +58,5 @@ struct LLMSourceSelectionView: View {
 }
 
 #Preview {
-    LLMSourceSelectionView()
+    LLMSingleResourceSelectionView()
 }

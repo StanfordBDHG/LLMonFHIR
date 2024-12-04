@@ -11,7 +11,7 @@ import SpeziOnboarding
 import SwiftUI
 
 
-struct LLMOpenAIModelOnboardingView: View {
+struct LLMMultipleResourceSelectionView: View {
     @Environment(OnboardingNavigationPath.self) private var onboardingNavigationPath
     @AppStorage(StorageKeys.llmSourceSummarizationInterpretation) private var llmSourceSummarizationInterpretation =
         StorageKeys.Defaults.llmSourceSummarizationInterpretation

@@ -125,9 +125,9 @@ struct SettingsView: View {
             case .llmSelection:
                 OnboardingStack(onboardingFlowComplete: $llmSelectionComplete) {
                     // Select model for summarization and interpretation
-                    LLMSourceSelectionView()
+                    LLMSingleResourceSelectionView()
                     // Multiple Resource Chat always uses OpenAI, collect model type and API key
-                    LLMOpenAIModelOnboardingView(multipleResourceModel: true)
+                    LLMMultipleResourceSelectionView(multipleResourceModel: true)
                     LLMOpenAIAPIKeyView()
                 }
                     .onChange(of: llmSelectionComplete) { _, newValue in
