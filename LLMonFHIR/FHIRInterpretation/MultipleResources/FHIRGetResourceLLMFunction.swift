@@ -48,13 +48,31 @@ struct FHIRGetResourceLLMFunction: LLMFunction {
     }
     
     
+    private static func filterFittingResources(_ fittingResources: [FHIRResource]) -> [FHIRResource] {
+        Self.logger.debug("Overall fitting Resources: \(fittingResources.count)")
+        
+        var fittingResources = fittingResources
+        
+        if fittingResources.count > 64 {
+            fittingResources = fittingResources.lazy.sorted(by: { $0.date ?? .distantPast < $1.date ?? .distantPast }).suffix(64)
+            Self.logger.debug(
+                """
+                Reduced to the following 64 resources: \(fittingResources.map { $0.functionCallIdentifier }.joined(separator: ","))
+                """
+            )
+        }
+        
+        return fittingResources
+    }
+    
+    
     func execute() async throws -> String? {
         var functionOutput: [String] = []
         
         try await withThrowingTaskGroup(of: [String].self) { outerGroup in
             // Iterate over all requested resources by the LLM
             for requestedResource in resources {
-                outerGroup.addTask {
+                outerGroup.addTask { @Sendable [fhirStore, resourceSummary] in
                     // Fetch relevant FHIR resources matching the resources requested by the LLM
                     var fittingResources = fhirStore.llmRelevantResources.filter { $0.functionCallIdentifier.contains(requestedResource) }
                     
@@ -71,13 +89,14 @@ struct FHIRGetResourceLLMFunction: LLMFunction {
                     }
                     
                     // Filter out fitting resources (if greater than 64 entries)
-                    fittingResources = filterFittingResources(fittingResources)
-                    
+                    fittingResources = Self.filterFittingResources(fittingResources)
                     try await withThrowingTaskGroup(of: String.self) { innerGroup in
                         // Iterate over fitting resources and summarizing them
                         for resource in fittingResources {
-                            innerGroup.addTask {
-                                try await summarizeResource(fhirResource: resource, resourceType: requestedResource)
+                            innerGroup.addTask { @Sendable [resourceSummary] in
+                                let summary = try await resourceSummary.summarize(resource: resource)
+                                Self.logger.debug("Summary of appended FHIR resource \(requestedResource): \(summary.description)")
+                                return String(localized: "This is the summary of the requested \(requestedResource):\n\n\(summary.description)")
                             }
                         }
                         
@@ -96,28 +115,5 @@ struct FHIRGetResourceLLMFunction: LLMFunction {
         }
         
         return functionOutput.joined(separator: "\n\n")
-    }
-    
-    private func summarizeResource(fhirResource: FHIRResource, resourceType: String) async throws -> String {
-        let summary = try await resourceSummary.summarize(resource: fhirResource)
-        Self.logger.debug("Summary of appended FHIR resource \(resourceType): \(summary.description)")
-        return String(localized: "This is the summary of the requested \(resourceType):\n\n\(summary.description)")
-    }
-    
-    private func filterFittingResources(_ fittingResources: [FHIRResource]) -> [FHIRResource] {
-        Self.logger.debug("Overall fitting Resources: \(fittingResources.count)")
-        
-        var fittingResources = fittingResources
-        
-        if fittingResources.count > 64 {
-            fittingResources = fittingResources.lazy.sorted(by: { $0.date ?? .distantPast < $1.date ?? .distantPast }).suffix(64)
-            Self.logger.debug(
-                """
-                Reduced to the following 64 resources: \(fittingResources.map { $0.functionCallIdentifier }.joined(separator: ","))
-                """
-            )
-        }
-        
-        return fittingResources
     }
 }

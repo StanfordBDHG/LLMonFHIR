@@ -14,7 +14,8 @@ import SpeziLLMOpenAI
 import SpeziLocalStorage
 
 
-class FHIRResourceProcessor<Content: Codable & LosslessStringConvertible> {
+// Unchecked `Sendable` conformance is fine as storage is guarded by `NSLock`.
+final class FHIRResourceProcessor<Content: Codable & LosslessStringConvertible>: @unchecked Sendable {
     typealias Results = [FHIRResource.ID: Content]
     
     

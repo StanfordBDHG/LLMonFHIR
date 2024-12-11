@@ -14,7 +14,7 @@ import SpeziLocalStorage
 
 /// Responsible for interpreting FHIR resources.
 @Observable
-public class FHIRResourceInterpreter {
+public final class FHIRResourceInterpreter: Sendable {
     private let resourceProcessor: FHIRResourceProcessor<String>
     
     
@@ -70,10 +70,12 @@ extension FHIRPrompt {
             storageKey: "prompt.interpretation",
             localizedDescription: String(
                 localized: "Interpretation Prompt",
+                bundle: .module,
                 comment: "Title of the interpretation prompt."
             ),
             defaultPrompt: String(
                 localized: "Interpretation Prompt Content",
+                bundle: .module,
                 comment: "Content of the interpretation prompt."
             )
         )

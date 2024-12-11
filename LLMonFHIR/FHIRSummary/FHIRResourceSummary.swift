@@ -14,9 +14,9 @@ import SpeziLocalStorage
 
 /// Responsible for summarizing FHIR resources.
 @Observable
-public class FHIRResourceSummary {
+public final class FHIRResourceSummary: Sendable {
     /// Summary of a FHIR resource emitted by the ``FHIRResourceSummary``.
-    public struct Summary: Codable, LosslessStringConvertible {
+    public struct Summary: Codable, LosslessStringConvertible, Sendable {
         /// Title of the FHIR resource, should be shorter than 4 words.
         public let title: String
         /// Summary of the FHIR resource, should be a single line of text.
@@ -29,10 +29,7 @@ public class FHIRResourceSummary {
         
         
         public init?(_ description: String) {
-            let components = description
-                .replacingOccurrences(of: "Title: ", with: "")
-                .replacingOccurrences(of: "Summary: ", with: "")
-                .split(separator: "\n")
+            let components = description.split(separator: "\n")
             guard components.count == 2, let title = components.first, let summary = components.last else {
                 return nil
             }
@@ -49,13 +46,13 @@ public class FHIRResourceSummary {
     /// - Parameters:
     ///   - localStorage: Local storage module that needs to be passed to the ``FHIRResourceSummary`` to allow it to cache summaries.
     ///   - openAIModel: OpenAI module that needs to be passed to the ``FHIRResourceSummary`` to allow it to retrieve summaries.
-    public init(localStorage: LocalStorage, llmRunner: LLMRunner, llmSchema: any LLMSchema, prompt: FHIRPrompt) {
+    public init(localStorage: LocalStorage, llmRunner: LLMRunner, llmSchema: any LLMSchema) {
         self.resourceProcessor = FHIRResourceProcessor(
             localStorage: localStorage,
             llmRunner: llmRunner,
             llmSchema: llmSchema,
             storageKey: "FHIRResourceSummary.Summaries",
-            prompt: prompt
+            prompt: FHIRPrompt.summary
         )
     }
     
@@ -90,35 +87,20 @@ public class FHIRResourceSummary {
 
 
 extension FHIRPrompt {
-    /// Prompt used to summarize FHIR resources for OpenAI
+    /// Prompt used to summarize FHIR resources
     ///
     /// This prompt is used by the ``FHIRResourceSummary``.
-    public static let summaryOpenAI: FHIRPrompt = {
+    public static let summary: FHIRPrompt = {
         FHIRPrompt(
-            storageKey: "prompt.summary.openai",
+            storageKey: "prompt.summary",
             localizedDescription: String(
-                localized: "SUMMARY_PROMPT",
+                localized: "Summary Prompt",
+                bundle: .module,
                 comment: "Title of the summary prompt."
             ),
             defaultPrompt: String(
-                localized: "SUMMARY_PROMPT_CONTENT_OPENAI",
-                comment: "Content of the summary prompt."
-            )
-        )
-    }()
-    
-    /// Prompt used to summarize FHIR resources for local LLM
-    ///
-    /// This prompt is used by the ``FHIRResourceSummary``.
-    public static let summaryLocalLLM: FHIRPrompt = {
-        FHIRPrompt(
-            storageKey: "prompt.summary.localllm",
-            localizedDescription: String(
-                localized: "SUMMARY_PROMPT",
-                comment: "Title of the summary prompt."
-            ),
-            defaultPrompt: String(
-                localized: "SUMMARY_PROMPT_CONTENT_LOCALLLM",
+                localized: "Summary Prompt Content",
+                bundle: .module,
                 comment: "Content of the summary prompt."
             )
         )

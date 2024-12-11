@@ -101,6 +101,7 @@ public class FHIRMultipleResourceInterpreter {
     }
     
     /// Change the `LLMSchema` used by the ``FHIRMultipleResourceInterpreter``.
+    @MainActor
     public func changeLLMSchema(
         openAIModel model: LLMOpenAIModelType,
         resourceCountLimit: Int,
@@ -123,7 +124,7 @@ public class FHIRMultipleResourceInterpreter {
         }
         self.llm = nil
         
-        Task { @MainActor in
+        Task {
             await prepareLLM()
         }
     }
@@ -139,10 +140,12 @@ extension FHIRPrompt {
             storageKey: "prompt.interpretMultipleResources",
             localizedDescription: String(
                 localized: "Interpretation Prompt",
+                bundle: .module,
                 comment: "Title of the multiple resources interpretation prompt."
             ),
             defaultPrompt: String(
                 localized: "Multiple Resource Interpretation Prompt Content",
+                bundle: .module,
                 comment: "Content of the multiple resources interpretation prompt."
             )
         )

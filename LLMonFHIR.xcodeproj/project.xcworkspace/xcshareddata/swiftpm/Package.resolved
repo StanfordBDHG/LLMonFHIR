@@ -1,4 +1,5 @@
 {
+  "originHash" : "535b0c5bb44aca8b4a92e6d2f131607f666201afdd05d89e99288ab9a1943554",
   "pins" : [
     {
       "identity" : "fhirmodels",
@@ -10,57 +11,12 @@
       }
     },
     {
-      "identity" : "gzipswift",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/1024jp/GzipSwift",
-      "state" : {
-        "revision" : "731037f6cc2be2ec01562f6597c1d0aa3fe6fd05",
-        "version" : "6.0.1"
-      }
-    },
-    {
       "identity" : "healthkitonfhir",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/StanfordBDHG/HealthKitOnFHIR.git",
       "state" : {
         "revision" : "87a9257e6fa37407f3437e4a0bf21dd09a4ea7c5",
         "version" : "0.2.11"
-      }
-    },
-    {
-      "identity" : "jinja",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/maiqingqiang/Jinja",
-      "state" : {
-        "revision" : "6dbe4c449469fb586d0f7339f900f0dd4d78b167",
-        "version" : "1.0.6"
-      }
-    },
-    {
-      "identity" : "mlx-swift",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/ml-explore/mlx-swift",
-      "state" : {
-        "revision" : "d649c62b77c487c25012910b0d02b30283d388ca",
-        "version" : "0.18.1"
-      }
-    },
-    {
-      "identity" : "mlx-swift-examples",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/ml-explore/mlx-swift-examples",
-      "state" : {
-        "revision" : "7baf9bc2d7a2b68b4bfcae308e448ec68b8ef049",
-        "version" : "1.18.1"
-      }
-    },
-    {
-      "identity" : "openai",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/StanfordBDHG/OpenAI",
-      "state" : {
-        "revision" : "1ad95dd531d7c854a3f98f588b0eb68fa83e8a8c",
-        "version" : "0.2.9"
       }
     },
     {
@@ -136,15 +92,6 @@
       }
     },
     {
-      "identity" : "swift-argument-parser",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/apple/swift-argument-parser.git",
-      "state" : {
-        "revision" : "41982a3656a71c768319979febd796c6fd111d5c",
-        "version" : "1.5.0"
-      }
-    },
-    {
       "identity" : "swift-atomics",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/apple/swift-atomics.git",
@@ -160,24 +107,6 @@
       "state" : {
         "revision" : "3d2dc41a01f9e49d84f0a3925fb858bed64f702d",
         "version" : "1.1.2"
-      }
-    },
-    {
-      "identity" : "swift-numerics",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/apple/swift-numerics",
-      "state" : {
-        "revision" : "0a5bc04095a675662cf24757cc0640aa2204253b",
-        "version" : "1.0.2"
-      }
-    },
-    {
-      "identity" : "swift-transformers",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/huggingface/swift-transformers",
-      "state" : {
-        "revision" : "d42fdae473c49ea216671da8caae58e102d28709",
-        "version" : "0.1.14"
       }
     },
     {
@@ -208,5 +137,5 @@
       }
     }
   ],
-  "version" : 2
+  "version" : 3
 }

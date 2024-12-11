@@ -131,8 +131,6 @@
 		44E55E972CEBC191008A7BD3 /* FHIRResourcesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FHIRResourcesView.swift; sourceTree = "<group>"; };
 		44E55E982CEBC191008A7BD3 /* InspectResourceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InspectResourceView.swift; sourceTree = "<group>"; };
 		44E55E9A2CEBC191008A7BD3 /* FHIRInterpretationModule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FHIRInterpretationModule.swift; sourceTree = "<group>"; };
-		44E55ED72CEBC87A008A7BD3 /* SpeziFHIR */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = SpeziFHIR; path = ../SpeziFHIR; sourceTree = SOURCE_ROOT; };
-		44EA2C632CEBD38600CA068C /* SpeziLLM */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = SpeziLLM; path = ../SpeziLLM; sourceTree = SOURCE_ROOT; };
 		653A254D283387FE005D4D48 /* LLMonFHIR.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LLMonFHIR.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		653A2550283387FE005D4D48 /* LLMonFHIR.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LLMonFHIR.swift; sourceTree = "<group>"; };
 		653A255428338800005D4D48 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -318,8 +316,6 @@
 		653A2544283387FE005D4D48 = {
 			isa = PBXGroup;
 			children = (
-				44EA2C632CEBD38600CA068C /* SpeziLLM */,
-				44E55ED72CEBC87A008A7BD3 /* SpeziFHIR */,
 				97B76BCD2B195D650019D706 /* CONTRIBUTORS.md */,
 				2FC94CD4298B0A1D009C8209 /* LLMonFHIR.xctestplan */,
 				653A254F283387FE005D4D48 /* LLMonFHIR */,

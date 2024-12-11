@@ -10,7 +10,7 @@ import Foundation
 
 
 /// Handle dynamic, localized LLM prompts for FHIR resources.
-public struct FHIRPrompt: Hashable {
+public struct FHIRPrompt: Hashable, Sendable {
     /// Placeholder for FHIR resource in prompts.
     public static let fhirResourcePlaceholder = "{{FHIR_RESOURCE}}"
     /// Placeholder for the current locale in a prompt
