@@ -7,7 +7,6 @@
 //
 
 import SpeziFHIR
-import SpeziFHIRLLM
 import SpeziFHIRMockPatients
 import SwiftUI
 
