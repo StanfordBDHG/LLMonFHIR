@@ -1114,7 +1114,7 @@
 			repositoryURL = "https://github.com/StanfordSpezi/SpeziLLM";
 			requirement = {
 				kind = upToNextMinorVersion;
-				minimumVersion = 0.8.1;
+				minimumVersion = 0.8.3;
 			};
 		};
 		97BBC2912B8C6BCA009EE6D9 /* XCRemoteSwiftPackageReference "SpeziFHIR" */ = {
