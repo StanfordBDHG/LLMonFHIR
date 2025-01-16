@@ -32,9 +32,7 @@ class LLMonFHIRDelegate: SpeziAppDelegate {
             
             // Local Summary, Remote (OpenAI) Interpretation
             FHIRInterpretationModule(
-                summaryLLMSchema: FHIRInterpretationModule.Defaults.llmLocalSchema,
-                interpretationLLMSchema: FHIRInterpretationModule.Defaults.llmOpenAISchema,
-                multipleResourceInterpretationAIModel: .openAI(.gpt4_o)
+                multipleResourceInterpretationOpenAIModel: .gpt4_o
             )
         }
     }

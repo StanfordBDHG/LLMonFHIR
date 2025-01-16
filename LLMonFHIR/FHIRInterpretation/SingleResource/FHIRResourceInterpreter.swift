@@ -70,12 +70,12 @@ extension FHIRPrompt {
             storageKey: "prompt.interpretation",
             localizedDescription: String(
                 localized: "Interpretation Prompt",
-                bundle: .module,
+                bundle: .main,
                 comment: "Title of the interpretation prompt."
             ),
             defaultPrompt: String(
                 localized: "Interpretation Prompt Content",
-                bundle: .module,
+                bundle: .main,
                 comment: "Content of the interpretation prompt."
             )
         )

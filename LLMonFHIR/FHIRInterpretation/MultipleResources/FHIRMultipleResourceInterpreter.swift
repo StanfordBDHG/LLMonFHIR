@@ -140,12 +140,12 @@ extension FHIRPrompt {
             storageKey: "prompt.interpretMultipleResources",
             localizedDescription: String(
                 localized: "Interpretation Prompt",
-                bundle: .module,
+                bundle: .main,
                 comment: "Title of the multiple resources interpretation prompt."
             ),
             defaultPrompt: String(
                 localized: "Multiple Resource Interpretation Prompt Content",
-                bundle: .module,
+                bundle: .main,
                 comment: "Content of the multiple resources interpretation prompt."
             )
         )

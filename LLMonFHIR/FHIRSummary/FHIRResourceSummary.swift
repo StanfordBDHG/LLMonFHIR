@@ -95,12 +95,12 @@ extension FHIRPrompt {
             storageKey: "prompt.summary",
             localizedDescription: String(
                 localized: "Summary Prompt",
-                bundle: .module,
+                bundle: .main,
                 comment: "Title of the summary prompt."
             ),
             defaultPrompt: String(
                 localized: "Summary Prompt Content",
-                bundle: .module,
+                bundle: .main,
                 comment: "Content of the summary prompt."
             )
         )
