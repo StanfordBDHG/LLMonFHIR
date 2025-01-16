@@ -6,9 +6,9 @@
 // SPDX-License-Identifier: MIT
 //
 
+import SpeziLLMLocalDownload
 import SpeziLLMOpenAI
 import SwiftUI
-import SpeziLLMLocalDownload
 
 
 struct SettingsView: View {

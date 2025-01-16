@@ -11,8 +11,8 @@ import Spezi
 import SpeziFHIR
 import SpeziHealthKit
 import SpeziLLM
-import SpeziLLMOpenAI
 import SpeziLLMLocal
+import SpeziLLMOpenAI
 import SwiftUI
 
 
