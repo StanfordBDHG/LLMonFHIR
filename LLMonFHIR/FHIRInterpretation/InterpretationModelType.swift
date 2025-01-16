@@ -1,8 +1,9 @@
 //
-//  Untitled.swift
-//  LLMonFHIR
+// This source file is part of the Stanford Spezi project
 //
-//  Created by Leon Nissen on 11/18/24.
+// SPDX-FileCopyrightText: 2024 Stanford University
+//
+// SPDX-License-Identifier: MIT
 //
 
 import struct OpenAI.Model
