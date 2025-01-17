@@ -147,7 +147,7 @@ struct SettingsView: View {
         case .openAIModelSummary:
             LLMOpenAIModelOnboardingStep(
                 actionText: "OPEN_AI_MODEL_SAVE_ACTION",
-                models: [.gpt4_turbo_preview, .gpt4, .gpt3_5Turbo]
+                models: [.gpt4_o, .gpt4, .gpt3_5Turbo]
             ) { chosenModelType in
                 openAIModelSummarization = chosenModelType
                 resourceSummary.changeLLMSchema(
@@ -163,7 +163,7 @@ struct SettingsView: View {
         case .openAIModelInterpretation:
             LLMOpenAIModelOnboardingStep(
                 actionText: "OPEN_AI_MODEL_SAVE_ACTION",
-                models: [.gpt4_turbo_preview, .gpt4, .gpt3_5Turbo]
+                models: [.gpt4_o, .gpt4, .gpt3_5Turbo]
             ) { chosenModelType in
                 openAIModelInterpretation = chosenModelType
                 resourceInterpreter.changeLLMSchema(
@@ -179,7 +179,7 @@ struct SettingsView: View {
         case .openAIModelMultipleInterpretation:
             LLMOpenAIModelOnboardingStep(
                 actionText: "OPEN_AI_MODEL_SAVE_ACTION",
-                models: [.gpt4_turbo_preview, .gpt4]
+                models: [.gpt4_o, .gpt4]
             ) { chosenModelType in
                 openAIModelMultipleInterpretation = chosenModelType
                 multipleResourceInterpreter.changeLLMSchema(
