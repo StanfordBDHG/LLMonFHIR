@@ -43,7 +43,6 @@ struct SettingsView: View {
         NavigationStack(path: $path) {
             List {
                 openAISettings
-                downloadModelSettings
                 speechSettings
                 resourcesLimitSettings
                 resourcesSettings
@@ -64,15 +63,7 @@ struct SettingsView: View {
                 }
         }
     }
-    
-    private var downloadModelSettings: some View {
-        Section("SETTINGS_DOWNLOAD_MODEL") {
-            NavigationLink(value: SettingsDestinations.downloadLocalLLM) {
-                Text("SETTINGS_DOWNLOAD_LOCAL_LLM_MODEL")
-            }
-        }
-    }
-    
+
     private var speechSettings: some View {
         Section("SETTINGS_SPEECH") {
             Toggle(isOn: $enableTextToSpeech) {
