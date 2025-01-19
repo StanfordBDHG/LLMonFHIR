@@ -26,7 +26,6 @@ jobs:
     with:
       codeql: true
       fastlanelane: codeql
-      xcodeversion: '15.4'
     permissions:
       security-events: write
       actions: read
