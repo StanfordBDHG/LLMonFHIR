@@ -14,7 +14,7 @@ import SwiftUI
 
 
 actor LLMonFHIRStandard: Standard, HealthKitConstraint, EnvironmentAccessible {
-    @Dependency var fhirStore: FHIRStore
+    @Dependency(FHIRStore.self) var fhirStore
     
     @MainActor var useHealthKitResources = true
     private var samples: [HKSample] = []

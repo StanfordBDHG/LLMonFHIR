@@ -1,13 +1,22 @@
 {
-  "originHash" : "ba25e03f96176869eb16eff816add82265b9f18b602261a3f50d9822f350899a",
+  "originHash" : "8525584d8580a0805dcd07acbb93dcce1d6c409f970b4c38d165d5a63cd5b251",
   "pins" : [
     {
       "identity" : "fhirmodels",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/apple/FHIRModels",
       "state" : {
-        "revision" : "861afd5816a98d38f86220eab2f812d76cad84a0",
-        "version" : "0.5.0"
+        "revision" : "ee8b55c245e92389e05b0a56ad2b84d37c1985e5",
+        "version" : "0.6.1"
+      }
+    },
+    {
+      "identity" : "gzipswift",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/1024jp/GzipSwift",
+      "state" : {
+        "revision" : "731037f6cc2be2ec01562f6597c1d0aa3fe6fd05",
+        "version" : "6.0.1"
       }
     },
     {
@@ -15,17 +24,35 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/StanfordBDHG/HealthKitOnFHIR.git",
       "state" : {
-        "revision" : "b0cfe35a2263a517b22196b559d2dd1d1e2afcd9",
-        "version" : "0.2.9"
+        "revision" : "87a9257e6fa37407f3437e4a0bf21dd09a4ea7c5",
+        "version" : "0.2.11"
       }
     },
     {
-      "identity" : "llama.cpp",
+      "identity" : "jinja",
       "kind" : "remoteSourceControl",
-      "location" : "https://github.com/StanfordBDHG/llama.cpp",
+      "location" : "https://github.com/maiqingqiang/Jinja",
       "state" : {
-        "revision" : "6839853a321778906e210a33ee2c6aec52f34c97",
-        "version" : "0.3.3"
+        "revision" : "6dbe4c449469fb586d0f7339f900f0dd4d78b167",
+        "version" : "1.0.6"
+      }
+    },
+    {
+      "identity" : "mlx-swift",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/ml-explore/mlx-swift",
+      "state" : {
+        "revision" : "70dbb62128a5a1471a5ab80363430adb33470cab",
+        "version" : "0.21.2"
+      }
+    },
+    {
+      "identity" : "mlx-swift-examples",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/ml-explore/mlx-swift-examples",
+      "state" : {
+        "revision" : "7baf9bc2d7a2b68b4bfcae308e448ec68b8ef049",
+        "version" : "1.18.1"
       }
     },
     {
@@ -42,8 +69,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/StanfordSpezi/Spezi",
       "state" : {
-        "revision" : "c43e4fa3d3938a847de2b677091a34ddaea5bc76",
-        "version" : "1.2.3"
+        "revision" : "4513a697572e8e1faea1e0ee52e6fad4b8d3dd8d",
+        "version" : "1.8.0"
       }
     },
     {
@@ -51,8 +78,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/StanfordSpezi/SpeziChat",
       "state" : {
-        "revision" : "aaa10d71431b78ece8bf29f95c0050632714984d",
-        "version" : "0.2.0"
+        "revision" : "940ffbec504849968305d9f956344a4f35b6cd48",
+        "version" : "0.2.1"
       }
     },
     {
@@ -60,8 +87,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/StanfordSpezi/SpeziFHIR",
       "state" : {
-        "revision" : "4357bd22bfe3b27bd9beec52330bca62d10ee202",
-        "version" : "0.6.2"
+        "revision" : "a2e68a2e8d2f86dbe03c52ba4f9a99dbbcf137fa",
+        "version" : "0.7.0"
       }
     },
     {
@@ -69,8 +96,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/StanfordSpezi/SpeziFoundation",
       "state" : {
-        "revision" : "4781d96a09587f3d47ac3f3e71d197149b288146",
-        "version" : "1.1.3"
+        "revision" : "5b4ad1b343154b52a68c33a6bfe02d9cb07cb9dc",
+        "version" : "2.0.0"
       }
     },
     {
@@ -78,8 +105,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/StanfordSpezi/SpeziHealthKit.git",
       "state" : {
-        "revision" : "1e9cb5a6036ac7f4ff37ea1c3ed4898103339ad1",
-        "version" : "0.5.3"
+        "revision" : "fbdec78fcb2f90d6338f1968e21dd11fbee65070",
+        "version" : "0.6.0"
       }
     },
     {
@@ -87,8 +114,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/StanfordSpezi/SpeziLLM",
       "state" : {
-        "revision" : "3663884f23e55c67c875a97c5da08ed172ea02ac",
-        "version" : "0.8.3"
+        "revision" : "26b1e07756556b1b329f3a9a3267a5f99c0c2e78",
+        "version" : "0.9.1"
       }
     },
     {
@@ -105,8 +132,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/StanfordSpezi/SpeziSpeech.git",
       "state" : {
-        "revision" : "0b79f72fc8b0606e09787926446dfafb541669d3",
-        "version" : "1.2.0"
+        "revision" : "3becc70cb1399af9ff954bea22711bb043c517d4",
+        "version" : "1.1.1"
       }
     },
     {
@@ -114,8 +141,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/StanfordSpezi/SpeziStorage.git",
       "state" : {
-        "revision" : "9d04bc622c65002aee704b4de5735970a6e19f46",
-        "version" : "1.1.0"
+        "revision" : "0f4a54430e51f82d29da63a7ce5f61bad7dfb9cd",
+        "version" : "1.2.1"
       }
     },
     {
@@ -128,12 +155,48 @@
       }
     },
     {
+      "identity" : "swift-argument-parser",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/apple/swift-argument-parser.git",
+      "state" : {
+        "revision" : "41982a3656a71c768319979febd796c6fd111d5c",
+        "version" : "1.5.0"
+      }
+    },
+    {
+      "identity" : "swift-atomics",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/apple/swift-atomics.git",
+      "state" : {
+        "revision" : "cd142fd2f64be2100422d658e7411e39489da985",
+        "version" : "1.2.0"
+      }
+    },
+    {
       "identity" : "swift-collections",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/apple/swift-collections.git",
       "state" : {
         "revision" : "3d2dc41a01f9e49d84f0a3925fb858bed64f702d",
         "version" : "1.1.2"
+      }
+    },
+    {
+      "identity" : "swift-numerics",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/apple/swift-numerics",
+      "state" : {
+        "revision" : "0a5bc04095a675662cf24757cc0640aa2204253b",
+        "version" : "1.0.2"
+      }
+    },
+    {
+      "identity" : "swift-transformers",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/huggingface/swift-transformers",
+      "state" : {
+        "revision" : "d42fdae473c49ea216671da8caae58e102d28709",
+        "version" : "0.1.14"
       }
     },
     {

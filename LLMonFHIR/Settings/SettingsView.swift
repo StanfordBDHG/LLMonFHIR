@@ -6,7 +6,7 @@
 // SPDX-License-Identifier: MIT
 //
 
-import SpeziFHIRLLM
+import SpeziLLMLocalDownload
 import SpeziLLMOpenAI
 import SwiftUI
 
@@ -21,6 +21,7 @@ struct SettingsView: View {
         case promptSummary
         case promptInterpretation
         case promptMultipleResourceInterpretation
+        case downloadLocalLLM
     }
     
     @State private var path = NavigationPath()
@@ -49,18 +50,20 @@ struct SettingsView: View {
             }
                 .navigationTitle("SETTINGS_TITLE")
                 .navigationDestination(for: SettingsDestinations.self) { destination in
-                    navigationDestination(for: destination)
+                    Group {
+                        settingsDestinationView(destination)
+                    }
                 }
                 .toolbar {
-                    ToolbarItem(placement: .cancellationAction) {
-                        Button("FHIR_RESOURCES_CHAT_CANCEL") {
+                    ToolbarItem(placement: .confirmationAction) {
+                        Button("SETTINGS_DONE") {
                             dismiss()
                         }
                     }
                 }
         }
     }
-    
+
     private var speechSettings: some View {
         Section("SETTINGS_SPEECH") {
             Toggle(isOn: $enableTextToSpeech) {
@@ -125,79 +128,84 @@ struct SettingsView: View {
         }
     }
     
-    
-    private func navigationDestination(for destination: SettingsDestinations) -> some View {    // swiftlint:disable:this function_body_length
-        Group {     // swiftlint:disable:this closure_body_length
-            switch destination {
-            case .openAIKey:
-                LLMOpenAIAPITokenOnboardingStep(actionText: "OPEN_AI_KEY_SAVE_ACTION") {
-                    path.removeLast()
-                }
-            case .openAIModelSummary:
-                LLMOpenAIModelOnboardingStep(
-                    actionText: "OPEN_AI_MODEL_SAVE_ACTION",
-                    models: [.gpt4_turbo_preview, .gpt4, .gpt3_5Turbo]
-                ) { chosenModelType in
-                    openAIModelSummarization = chosenModelType
-                    resourceSummary.changeLLMSchema(
-                        to: LLMOpenAISchema(
-                            parameters: .init(
-                                modelType: chosenModelType,
-                                systemPrompts: []
-                            )
-                        )
-                    )
-                    path.removeLast()
-                }
-            case .openAIModelInterpretation:
-                LLMOpenAIModelOnboardingStep(
-                    actionText: "OPEN_AI_MODEL_SAVE_ACTION",
-                    models: [.gpt4_turbo_preview, .gpt4, .gpt3_5Turbo]
-                ) { chosenModelType in
-                    openAIModelInterpretation = chosenModelType
-                    resourceInterpreter.changeLLMSchema(
-                        to: LLMOpenAISchema(
-                            parameters: .init(
-                                modelType: chosenModelType,
-                                systemPrompts: []
-                            )
-                        )
-                    )
-                    path.removeLast()
-                }
-            case .openAIModelMultipleInterpretation:
-                LLMOpenAIModelOnboardingStep(
-                    actionText: "OPEN_AI_MODEL_SAVE_ACTION",
-                    models: [.gpt4_turbo_preview, .gpt4]
-                ) { chosenModelType in
-                    openAIModelMultipleInterpretation = chosenModelType
-                    multipleResourceInterpreter.changeLLMSchema(
-                        openAIModel: chosenModelType,
-                        resourceCountLimit: resourceLimit,
-                        resourceSummary: resourceSummary,
-                        allowedResourcesFunctionCallIdentifiers: Set(allowedResourceIdentifiers)
-                    )
-                    path.removeLast()
-                }
-            case .resourceSelection:
-                ResourceSelection()
-            case .promptSummary:
-                FHIRPromptSettingsView(promptType: .summary) {
-                    path.removeLast()
-                }
-            case .promptInterpretation:
-                FHIRPromptSettingsView(promptType: .interpretation) {
-                    path.removeLast()
-                }
-            case .promptMultipleResourceInterpretation:
-                FHIRPromptSettingsView(promptType: .interpretMultipleResources) {
-                    path.removeLast()
-                }
+    @ViewBuilder
+    private func settingsDestinationView(_ destination: SettingsDestinations) -> some View { // swiftlint:disable:this function_body_length
+        switch destination {
+        case .openAIKey:
+            LLMOpenAIAPITokenOnboardingStep(actionText: "OPEN_AI_KEY_SAVE_ACTION") {
+                path.removeLast()
             }
+        case .openAIModelSummary:
+            LLMOpenAIModelOnboardingStep(
+                actionText: "OPEN_AI_MODEL_SAVE_ACTION",
+                models: [.gpt4_o, .gpt4, .gpt3_5Turbo]
+            ) { chosenModelType in
+                openAIModelSummarization = chosenModelType
+                resourceSummary.changeLLMSchema(
+                    to: LLMOpenAISchema(
+                        parameters: .init(
+                            modelType: chosenModelType,
+                            systemPrompts: []
+                        )
+                    )
+                )
+                path.removeLast()
+            }
+        case .openAIModelInterpretation:
+            LLMOpenAIModelOnboardingStep(
+                actionText: "OPEN_AI_MODEL_SAVE_ACTION",
+                models: [.gpt4_o, .gpt4, .gpt3_5Turbo]
+            ) { chosenModelType in
+                openAIModelInterpretation = chosenModelType
+                resourceInterpreter.changeLLMSchema(
+                    to: LLMOpenAISchema(
+                        parameters: .init(
+                            modelType: chosenModelType,
+                            systemPrompts: []
+                        )
+                    )
+                )
+                path.removeLast()
+            }
+        case .openAIModelMultipleInterpretation:
+            LLMOpenAIModelOnboardingStep(
+                actionText: "OPEN_AI_MODEL_SAVE_ACTION",
+                models: [.gpt4_o, .gpt4]
+            ) { chosenModelType in
+                openAIModelMultipleInterpretation = chosenModelType
+                multipleResourceInterpreter.changeLLMSchema(
+                    openAIModel: chosenModelType,
+                    resourceCountLimit: resourceLimit,
+                    resourceSummary: resourceSummary,
+                    allowedResourcesFunctionCallIdentifiers: Set(allowedResourceIdentifiers)
+                )
+                path.removeLast()
+            }
+        case .resourceSelection:
+            ResourceSelection()
+        case .promptSummary:
+            FHIRPromptSettingsView(promptType: .summary) {
+                path.removeLast()
+            }
+        case .promptInterpretation:
+            FHIRPromptSettingsView(promptType: .interpretation) {
+                path.removeLast()
+            }
+        case .promptMultipleResourceInterpretation:
+            FHIRPromptSettingsView(promptType: .interpretMultipleResources) {
+                path.removeLast()
+            }
+        case .downloadLocalLLM:
+            LLMLocalDownloadView(
+                model: .custom(id: "mlx-community/OpenHermes-2.5-Mistral-7B-4bit-mlx"),
+                downloadDescription: "Download the LLM model to generate summaries of FHIR resources."
+            ) {
+                path.removeLast()
+            }
+            .interactiveDismissDisabled()
         }
     }
 }
-
 
 #Preview {
     SettingsView()
