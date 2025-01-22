@@ -1,0 +1,42 @@
+#
+# This source file is part of the Stanford LLM on FHIR project
+#
+# SPDX-FileCopyrightText: 2025 Stanford University
+#
+# SPDX-License-Identifier: MIT
+#
+
+name: Static Analysis
+
+on:
+  pull_request:
+  workflow_dispatch:
+  workflow_call:
+
+jobs:
+  reuse_action:
+    name: REUSE Compliance Check
+    uses: StanfordBDHG/.github/.github/workflows/reuse.yml@v2
+    permissions:
+      contents: read
+  swiftlint:
+    name: SwiftLint
+    uses: StanfordBDHG/.github/.github/workflows/swiftlint.yml@v2
+    permissions:
+      contents: read
+  periphery:
+    name: Periphery
+    uses: StanfordBDHG/.github/.github/workflows/periphery.yml@v2
+    permissions:
+      contents: read
+    with:
+      runsonlabels: '["macOS", "self-hosted"]'
+  codeql:
+      name: CodeQL
+      uses: StanfordBDHG/.github/.github/workflows/xcodebuild-or-fastlane.yml@v2
+      with:
+        codeql: true
+        fastlanelane: codeql
+      permissions:
+        security-events: write
+        actions: read
