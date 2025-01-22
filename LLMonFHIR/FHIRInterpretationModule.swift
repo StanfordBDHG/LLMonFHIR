@@ -14,9 +14,9 @@ import SpeziLocalStorage
 import SwiftUI
 
 
-public class FHIRInterpretationModule: Module, DefaultInitializable {
-    public enum Defaults {
-        public static var llmSchema: LLMOpenAISchema {
+class FHIRInterpretationModule: Module, DefaultInitializable {
+    enum Defaults {
+        static var llmSchema: LLMOpenAISchema {
             .init(
                 parameters: .init(
                     modelType: .gpt4_turbo,
@@ -43,7 +43,7 @@ public class FHIRInterpretationModule: Module, DefaultInitializable {
     
     
     /// - Warning: Ensure that passed LLM schema's don't contain a system prompt! This will be configured by the ``FHIRInterpretationModule``.
-    public init<SummaryLLM: LLMSchema, InterpretationLLM: LLMSchema>(
+    init<SummaryLLM: LLMSchema, InterpretationLLM: LLMSchema>(
         summaryLLMSchema: SummaryLLM = Defaults.llmSchema,
         interpretationLLMSchema: InterpretationLLM = Defaults.llmSchema,    // swiftlint:disable:this function_default_parameter_at_end
         multipleResourceInterpretationOpenAIModel: LLMOpenAIModelType,  // swiftlint:disable:this identifier_name
@@ -58,7 +58,7 @@ public class FHIRInterpretationModule: Module, DefaultInitializable {
     }
     
     
-    public required convenience init() {
+    required convenience init() {
         self.init(
             summaryLLMSchema: Defaults.llmSchema,
             interpretationLLMSchema: Defaults.llmSchema,
@@ -67,7 +67,7 @@ public class FHIRInterpretationModule: Module, DefaultInitializable {
     }
     
     
-    public func configure() {
+    func configure() {
         resourceSummary = FHIRResourceSummary(
             localStorage: localStorage,
             llmRunner: llmRunner,

@@ -15,7 +15,7 @@ import SpeziViews
 import SwiftUI
 
 
-public struct MultipleResourcesChatView: View {
+struct MultipleResourcesChatView: View {
     @Environment(FHIRMultipleResourceInterpreter.self) private var multipleResourceInterpreter
     @Environment(\.dismiss) private var dismiss
     
@@ -23,7 +23,7 @@ public struct MultipleResourcesChatView: View {
     private let navigationTitle: Text
     
     
-    public var body: some View {
+    var body: some View {
         @Bindable var multipleResourceInterpreter = multipleResourceInterpreter
         NavigationStack {
             Group {
@@ -88,7 +88,7 @@ public struct MultipleResourcesChatView: View {
     /// - Parameters:
     ///    - navigationTitle: The localized title displayed for purposes of navigation.
     ///    - textToSpeech: Indicates if the output of the LLM is converted to speech and outputted to the user.
-    public init(
+    init(
         navigationTitle: LocalizedStringResource,
         textToSpeech: Binding<Bool>
     ) {
@@ -102,7 +102,7 @@ public struct MultipleResourcesChatView: View {
     ///    - navigationTitle: The title displayed for purposes of navigation.
     ///    - textToSpeech: Indicates if the output of the LLM is converted to speech and outputted to the user.
     @_disfavoredOverload
-    public init<Title: StringProtocol>(
+    init<Title: StringProtocol>(
         navigationTitle: Title,
         textToSpeech: Binding<Bool>
     ) {
