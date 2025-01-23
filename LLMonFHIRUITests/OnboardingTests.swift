@@ -26,23 +26,17 @@ class OnboardingTests: XCTestCase {
     func testOnboardingFlow() throws {
         let app = XCUIApplication()
         
-        try app.navigateOnboardingFlow(assertThatHealthKitConsentIsShown: true)
+        try app.navigateOnboardingFlow()
     }
 }
 
 
 extension XCUIApplication {
-    func conductOnboardingIfNeeded() throws {
-        if self.staticTexts["LLMonFHIR"].waitForExistence(timeout: 5) {
-            try navigateOnboardingFlow(assertThatHealthKitConsentIsShown: false)
-        }
-    }
-    
-    func navigateOnboardingFlow(assertThatHealthKitConsentIsShown: Bool = true) throws {
+    func navigateOnboardingFlow() throws {
         try navigateOnboardingFlowWelcome()
         try navigateOnboardingFlowInterestingModules()
         try navigateOnboardingFlowOpenAI()
-        try navigateOnboardingFlowHealthKitAccess(assertThatHealthKitConsentIsShown: assertThatHealthKitConsentIsShown)
+        try navigateOnboardingFlowHealthKitAccess()
     }
     
     private func navigateOnboardingFlowWelcome() throws {
@@ -71,7 +65,7 @@ extension XCUIApplication {
         buttons["Next"].tap()
     }
     
-    private func navigateOnboardingFlowHealthKitAccess(assertThatHealthKitConsentIsShown: Bool = true) throws {
+    private func navigateOnboardingFlowHealthKitAccess() throws {
         XCTAssertTrue(staticTexts["HealthKit Access"].waitForExistence(timeout: 2))
         
         XCTAssertTrue(buttons["Grant Access"].waitForExistence(timeout: 2))

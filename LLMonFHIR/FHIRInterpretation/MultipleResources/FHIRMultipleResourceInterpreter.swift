@@ -24,7 +24,7 @@ private enum FHIRMultipleResourceInterpreterConstants {
 
 /// Used to interpret multiple FHIR resources via a chat-based interface with an LLM.
 @Observable
-public class FHIRMultipleResourceInterpreter {
+class FHIRMultipleResourceInterpreter {
     static let logger = Logger(subsystem: "edu.stanford.spezi.fhir", category: "SpeziFHIRLLM")
     
     private let localStorage: LocalStorage
@@ -102,7 +102,7 @@ public class FHIRMultipleResourceInterpreter {
     
     /// Change the `LLMSchema` used by the ``FHIRMultipleResourceInterpreter``.
     @MainActor
-    public func changeLLMSchema(
+    func changeLLMSchema(
         openAIModel model: LLMOpenAIModelType,
         resourceCountLimit: Int,
         resourceSummary: FHIRResourceSummary,
@@ -135,7 +135,7 @@ extension FHIRPrompt {
     /// Prompt used to interpret multiple FHIR resources
     ///
     /// This prompt is used by the ``FHIRMultipleResourceInterpreter``.
-    public static let interpretMultipleResources: FHIRPrompt = {
+    static let interpretMultipleResources: FHIRPrompt = {
         FHIRPrompt(
             storageKey: "prompt.interpretMultipleResources",
             localizedDescription: String(

@@ -10,21 +10,21 @@ import Foundation
 
 
 /// Handle dynamic, localized LLM prompts for FHIR resources.
-public struct FHIRPrompt: Hashable, Sendable {
+struct FHIRPrompt: Hashable, Sendable {
     /// Placeholder for FHIR resource in prompts.
-    public static let fhirResourcePlaceholder = "{{FHIR_RESOURCE}}"
+    static let fhirResourcePlaceholder = "{{FHIR_RESOURCE}}"
     /// Placeholder for the current locale in a prompt
-    public static let localePlaceholder = "{{LOCALE}}"
+    static let localePlaceholder = "{{LOCALE}}"
     
     /// The key used for storing and retrieving the prompt.
-    public let storageKey: String
+    let storageKey: String
     /// A human-readable description of the prompt, localized as needed.
-    public let localizedDescription: String
+    let localizedDescription: String
     /// The default prompt text to be used if no custom prompt is set.
-    public let defaultPrompt: String
+    let defaultPrompt: String
     
     /// The current prompt, either from UserDefaults or the default, appended with a localized message that adapts to the user's language settings.
-    public var prompt: String {
+    var prompt: String {
         UserDefaults.standard.string(forKey: storageKey) ?? defaultPrompt
     }
     
@@ -33,7 +33,7 @@ public struct FHIRPrompt: Hashable, Sendable {
     ///   - storageKey: The key used for storing and retrieving the prompt.
     ///   - localizedDescription: A human-readable description of the prompt, localized as needed.
     ///   - defaultPrompt: The default prompt text to be used if no custom prompt is set.
-    public init(
+    init(
         storageKey: String,
         localizedDescription: String,
         defaultPrompt: String
@@ -46,11 +46,11 @@ public struct FHIRPrompt: Hashable, Sendable {
     
     /// Saves a new version of the prompt.
     /// - Parameter prompt: The new prompt.
-    public func save(prompt: String) {
+    func save(prompt: String) {
         UserDefaults.standard.set(prompt, forKey: storageKey)
     }
     
-    public func hash(into hasher: inout Hasher) {
+    func hash(into hasher: inout Hasher) {
         hasher.combine(storageKey)
     }
     
@@ -61,7 +61,7 @@ public struct FHIRPrompt: Hashable, Sendable {
     ///   - resource: The resource that should be inserted in the prompt.
     ///   - locale: The current locale that should be inserted in the prompt.
     /// - Returns: The constructed prompt.
-    public func prompt(withFHIRResource resource: String, locale: String = Locale.preferredLanguages[0]) -> String {
+    func prompt(withFHIRResource resource: String, locale: String = Locale.preferredLanguages[0]) -> String {
         prompt
             .replacingOccurrences(of: FHIRPrompt.fhirResourcePlaceholder, with: resource)
             .replacingOccurrences(of: FHIRPrompt.localePlaceholder, with: locale)

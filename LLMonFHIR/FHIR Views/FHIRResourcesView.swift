@@ -37,7 +37,7 @@ import SwiftUI
 ///     }
 /// }
 /// ```
-public struct FHIRResourcesView<ContentView: View, ActionView: View>: View {
+struct FHIRResourcesView<ContentView: View, ActionView: View>: View {
     @Environment(FHIRStore.self) private var fhirStore
     @State private var searchText = ""
     
@@ -46,7 +46,7 @@ public struct FHIRResourcesView<ContentView: View, ActionView: View>: View {
     private let actionView: ActionView
     
     
-    public var body: some View {
+    var body: some View {
         List {
             Section {
                 contentView
@@ -93,7 +93,7 @@ public struct FHIRResourcesView<ContentView: View, ActionView: View>: View {
     ///    - navigationTitle: The localized title displayed for purposes of navigation.
     ///    - contentView: A custom content `View` that is displayed as the first `Section` of the `List`.
     ///    - actionView: A custom action `View` that is displayed as the second `Section` of the `List`. Only shown if no search `String` is present.
-    public init(
+    init(
         navigationTitle: LocalizedStringResource,
         @ViewBuilder contentView: () -> ContentView = { EmptyView() },
         @ViewBuilder _ actionView: () -> ActionView = { EmptyView() }
@@ -110,7 +110,7 @@ public struct FHIRResourcesView<ContentView: View, ActionView: View>: View {
     ///    - contentView: A custom content `View` that is displayed as the first `Section` of the `List`.
     ///    - actionView: A custom action `View` that is displayed as the second `Section` of the `List`. Only shown if no search `String` is present.
     @_disfavoredOverload
-    public init<Title: StringProtocol>(
+    init<Title: StringProtocol>(
         navigationTitle: Title,
         @ViewBuilder contentView: () -> ContentView = { EmptyView() },
         @ViewBuilder _ actionView: () -> ActionView = { EmptyView() }

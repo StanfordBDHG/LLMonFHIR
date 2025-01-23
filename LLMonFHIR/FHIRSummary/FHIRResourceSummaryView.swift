@@ -12,14 +12,14 @@ import SwiftUI
 
 
 /// Displays a FHIR resource, a summary if loaded, and provides a mechanism to load a summary using a context menu.
-public struct FHIRResourceSummaryView: View {
+struct FHIRResourceSummaryView: View {
     @Environment(FHIRResourceSummary.self) private var fhirResourceSummary
     
     @State private var viewState: ViewState = .idle
     private let resource: FHIRResource
     
     
-    public var body: some View {
+    var body: some View {
         Group {
             if let summary = fhirResourceSummary.cachedSummary(forResource: resource) {
                 VStack(alignment: .leading, spacing: 0) {
@@ -80,7 +80,7 @@ public struct FHIRResourceSummaryView: View {
     }
     
     
-    public init(resource: FHIRResource) {
+    init(resource: FHIRResource) {
         self.resource = resource
     }
 }

@@ -14,21 +14,21 @@ import SpeziLocalStorage
 
 /// Responsible for summarizing FHIR resources.
 @Observable
-public final class FHIRResourceSummary: Sendable {
+final class FHIRResourceSummary: Sendable {
     /// Summary of a FHIR resource emitted by the ``FHIRResourceSummary``.
-    public struct Summary: Codable, LosslessStringConvertible, Sendable {
+    struct Summary: Codable, LosslessStringConvertible, Sendable {
         /// Title of the FHIR resource, should be shorter than 4 words.
-        public let title: String
+        let title: String
         /// Summary of the FHIR resource, should be a single line of text.
-        public let summary: String
+        let summary: String
         
         
-        public var description: String {
+        var description: String {
             title + "\n" + summary
         }
         
         
-        public init?(_ description: String) {
+        init?(_ description: String) {
             let components = description.split(separator: "\n")
             guard components.count == 2, let title = components.first, let summary = components.last else {
                 return nil
@@ -46,7 +46,7 @@ public final class FHIRResourceSummary: Sendable {
     /// - Parameters:
     ///   - localStorage: Local storage module that needs to be passed to the ``FHIRResourceSummary`` to allow it to cache summaries.
     ///   - openAIModel: OpenAI module that needs to be passed to the ``FHIRResourceSummary`` to allow it to retrieve summaries.
-    public init(localStorage: LocalStorage, llmRunner: LLMRunner, llmSchema: any LLMSchema) {
+    init(localStorage: LocalStorage, llmRunner: LLMRunner, llmSchema: any LLMSchema) {
         self.resourceProcessor = FHIRResourceProcessor(
             localStorage: localStorage,
             llmRunner: llmRunner,
@@ -64,7 +64,7 @@ public final class FHIRResourceSummary: Sendable {
     ///   - forceReload: A boolean value that indicates whether to reload and reprocess the resource.
     /// - Returns: An asynchronous `String` representing the summarization of the resource.
     @discardableResult
-    public func summarize(resource: FHIRResource, forceReload: Bool = false) async throws -> Summary {
+    func summarize(resource: FHIRResource, forceReload: Bool = false) async throws -> Summary {
         try await resourceProcessor.process(resource: resource, forceReload: forceReload)
     }
     
@@ -72,7 +72,7 @@ public final class FHIRResourceSummary: Sendable {
     ///
     /// - Parameter resource: The resource where the cached summary should be loaded from.
     /// - Returns: The cached summary. Returns `nil` if the resource is not present.
-    public func cachedSummary(forResource resource: FHIRResource) -> Summary? {
+    func cachedSummary(forResource resource: FHIRResource) -> Summary? {
         resourceProcessor.results[resource.id]
     }
     
@@ -80,7 +80,7 @@ public final class FHIRResourceSummary: Sendable {
     ///
     /// - Parameters:
     ///    - schema: The to-be-used `LLMSchema`.
-    public func changeLLMSchema<Schema: LLMSchema>(to schema: Schema) {
+    func changeLLMSchema<Schema: LLMSchema>(to schema: Schema) {
         self.resourceProcessor.llmSchema = schema
     }
 }
@@ -90,7 +90,7 @@ extension FHIRPrompt {
     /// Prompt used to summarize FHIR resources
     ///
     /// This prompt is used by the ``FHIRResourceSummary``.
-    public static let summary: FHIRPrompt = {
+    static let summary: FHIRPrompt = {
         FHIRPrompt(
             storageKey: "prompt.summary",
             localizedDescription: String(

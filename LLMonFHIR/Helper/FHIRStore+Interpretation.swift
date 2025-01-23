@@ -145,8 +145,4 @@ extension Array where Element == FHIRResource {
         var seen = Set<Element>()
         return filter { seen.insert($0).inserted }
     }
-    
-    fileprivate func dateSuffix(maxLength: Int) -> [FHIRResource] {
-        self.lazy.sorted(by: { $0.date ?? .distantPast < $1.date ?? .distantPast }).suffix(maxLength)
-    }
 }
