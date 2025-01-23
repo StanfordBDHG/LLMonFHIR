@@ -60,9 +60,9 @@ struct MultipleResourcesChatView: View {
         let isProcessing = multipleResourceInterpreter.llm?.state.representation == .processing
         ToolbarItem(placement: .cancellationAction) {
             Button("Close") {
+                multipleResourceInterpreter.llm?.cancel()
                 dismiss()
             }
-            .disabled(isProcessing)
         }
         ToolbarItem(placement: .primaryAction) {
             Button(
