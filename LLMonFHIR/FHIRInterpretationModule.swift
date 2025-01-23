@@ -14,6 +14,7 @@ import SpeziLocalStorage
 import SwiftUI
 
 
+// periphery:ignore - Properties are used through dependency injection and @Model configuration in `configure()`
 class FHIRInterpretationModule: Module, DefaultInitializable {
     enum Defaults {
         static var llmSchema: LLMOpenAISchema {

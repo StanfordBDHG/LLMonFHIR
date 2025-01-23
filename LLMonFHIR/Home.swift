@@ -12,7 +12,6 @@ import SwiftUI
 struct HomeView: View {
     @State private var showSettings = false
     @State private var showMultipleResourcesChat = false
-    @AppStorage(StorageKeys.onboardingInstructions) private var onboardingInstructions = true
     @AppStorage(StorageKeys.enableTextToSpeech) private var textToSpeech = StorageKeys.Defaults.enableTextToSpeech
     
     

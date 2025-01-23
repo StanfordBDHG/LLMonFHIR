@@ -95,18 +95,4 @@ struct MultipleResourcesChatView: View {
         self.navigationTitle = Text(navigationTitle)
         self._textToSpeech = textToSpeech
     }
-    
-    /// Creates a ``MultipleResourcesChatView`` displaying a Spezi `Chat` with all available FHIR resources via a Spezi LLM..
-    ///
-    /// - Parameters:
-    ///    - navigationTitle: The title displayed for purposes of navigation.
-    ///    - textToSpeech: Indicates if the output of the LLM is converted to speech and outputted to the user.
-    @_disfavoredOverload
-    init<Title: StringProtocol>(
-        navigationTitle: Title,
-        textToSpeech: Binding<Bool>
-    ) {
-        self.navigationTitle = Text(verbatim: String(navigationTitle))
-        self._textToSpeech = textToSpeech
-    }
 }

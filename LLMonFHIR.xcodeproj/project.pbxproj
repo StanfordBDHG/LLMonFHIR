@@ -27,7 +27,6 @@
 		2FE5DC3A29EDD7CA004B9AB4 /* Welcome.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FE5DC3429EDD7CA004B9AB4 /* Welcome.swift */; };
 		2FE5DC4029EDD7EE004B9AB4 /* FeatureFlags.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FE5DC3E29EDD7ED004B9AB4 /* FeatureFlags.swift */; };
 		2FE5DC4129EDD7EE004B9AB4 /* StorageKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FE5DC3F29EDD7EE004B9AB4 /* StorageKeys.swift */; };
-		2FE5DC4629EDD7F2004B9AB4 /* Bundle+Image.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FE5DC4329EDD7F2004B9AB4 /* Bundle+Image.swift */; };
 		2FE5DC4729EDD7F2004B9AB4 /* CodableArray+RawRepresentable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FE5DC4429EDD7F2004B9AB4 /* CodableArray+RawRepresentable.swift */; };
 		2FE5DC7229EDD8D3004B9AB4 /* SpeziHealthKit in Frameworks */ = {isa = PBXBuildFile; productRef = 2FE5DC7129EDD8D3004B9AB4 /* SpeziHealthKit */; };
 		2FE5DC8129EDD91D004B9AB4 /* SpeziOnboarding in Frameworks */ = {isa = PBXBuildFile; productRef = 2FE5DC8029EDD91D004B9AB4 /* SpeziOnboarding */; };
@@ -39,7 +38,6 @@
 		44E18E8E2CEBEC9500829A26 /* SpeziLLMLocalDownload in Frameworks */ = {isa = PBXBuildFile; productRef = 44E18E8D2CEBEC9500829A26 /* SpeziLLMLocalDownload */; };
 		44E18E902CEBEC9500829A26 /* SpeziLLMOpenAI in Frameworks */ = {isa = PBXBuildFile; productRef = 44E18E8F2CEBEC9500829A26 /* SpeziLLMOpenAI */; };
 		44E18E932CEBF29200829A26 /* SpeziLocalStorage in Frameworks */ = {isa = PBXBuildFile; productRef = 44E18E922CEBF29200829A26 /* SpeziLocalStorage */; };
-		44E18E952CEBFD3C00829A26 /* InterpretationModelType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44E18E942CEBFD3A00829A26 /* InterpretationModelType.swift */; };
 		44E55E9E2CEBC191008A7BD3 /* FHIRGetResourceLLMFunction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44E55E802CEBC191008A7BD3 /* FHIRGetResourceLLMFunction.swift */; };
 		44E55E9F2CEBC191008A7BD3 /* FHIRResourceProcessor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44E55E872CEBC191008A7BD3 /* FHIRResourceProcessor.swift */; };
 		44E55EA02CEBC191008A7BD3 /* InspectResourceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44E55E982CEBC191008A7BD3 /* InspectResourceView.swift */; };
@@ -115,9 +113,7 @@
 		2FE5DC3429EDD7CA004B9AB4 /* Welcome.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Welcome.swift; sourceTree = "<group>"; };
 		2FE5DC3E29EDD7ED004B9AB4 /* FeatureFlags.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeatureFlags.swift; sourceTree = "<group>"; };
 		2FE5DC3F29EDD7EE004B9AB4 /* StorageKeys.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StorageKeys.swift; sourceTree = "<group>"; };
-		2FE5DC4329EDD7F2004B9AB4 /* Bundle+Image.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Bundle+Image.swift"; sourceTree = "<group>"; };
 		2FE5DC4429EDD7F2004B9AB4 /* CodableArray+RawRepresentable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CodableArray+RawRepresentable.swift"; sourceTree = "<group>"; };
-		44E18E942CEBFD3A00829A26 /* InterpretationModelType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InterpretationModelType.swift; sourceTree = "<group>"; };
 		44E55E802CEBC191008A7BD3 /* FHIRGetResourceLLMFunction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FHIRGetResourceLLMFunction.swift; sourceTree = "<group>"; };
 		44E55E812CEBC191008A7BD3 /* FHIRMultipleResourceInterpreter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FHIRMultipleResourceInterpreter.swift; sourceTree = "<group>"; };
 		44E55E822CEBC191008A7BD3 /* MultipleResourcesChatView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultipleResourcesChatView.swift; sourceTree = "<group>"; };
@@ -267,7 +263,6 @@
 				44E55E8D2CEBC191008A7BD3 /* Binding+Negate.swift */,
 				44E55E8E2CEBC191008A7BD3 /* FHIRResource+Identifier.swift */,
 				44E55E8F2CEBC191008A7BD3 /* FHIRStore+Interpretation.swift */,
-				2FE5DC4329EDD7F2004B9AB4 /* Bundle+Image.swift */,
 				2FE5DC4429EDD7F2004B9AB4 /* CodableArray+RawRepresentable.swift */,
 			);
 			path = Helper;
@@ -294,7 +289,6 @@
 		44E55E862CEBC191008A7BD3 /* FHIRInterpretation */ = {
 			isa = PBXGroup;
 			children = (
-				44E18E942CEBFD3A00829A26 /* InterpretationModelType.swift */,
 				44E55E832CEBC191008A7BD3 /* MultipleResources */,
 				44E55E852CEBC191008A7BD3 /* SingleResource */,
 			);
@@ -610,7 +604,6 @@
 				44E55EA52CEBC191008A7BD3 /* FHIRStore+Interpretation.swift in Sources */,
 				44E55EA62CEBC191008A7BD3 /* MultipleResourcesChatView.swift in Sources */,
 				44E55EA72CEBC191008A7BD3 /* FHIRResource+Identifier.swift in Sources */,
-				44E18E952CEBFD3C00829A26 /* InterpretationModelType.swift in Sources */,
 				44E55EA82CEBC191008A7BD3 /* FHIRResourceInterpreter.swift in Sources */,
 				44E55EA92CEBC191008A7BD3 /* FHIRResourceSummaryView.swift in Sources */,
 				44E55EAA2CEBC191008A7BD3 /* FHIRResourcesView.swift in Sources */,
@@ -623,7 +616,6 @@
 				2FE5DC4729EDD7F2004B9AB4 /* CodableArray+RawRepresentable.swift in Sources */,
 				2FE5DC4029EDD7EE004B9AB4 /* FeatureFlags.swift in Sources */,
 				97B6C1A52B7F382C0092B0F4 /* FHIRResourcesInstructionsView.swift in Sources */,
-				2FE5DC4629EDD7F2004B9AB4 /* Bundle+Image.swift in Sources */,
 				2F4E23832989D51F0013F3D9 /* LLMonFHIRTestingSetup.swift in Sources */,
 				2FD8E8272A1AAD9B00357F4E /* LLMonFHIRStandard.swift in Sources */,
 				2F5E32BD297E05EA003432F8 /* LLMonFHIRDelegate.swift in Sources */,
