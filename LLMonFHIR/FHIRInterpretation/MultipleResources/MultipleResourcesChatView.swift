@@ -60,14 +60,12 @@ struct MultipleResourcesChatView: View {
     
     
     @MainActor @ToolbarContentBuilder private var toolbar: some ToolbarContent {
+        let isProcessing = multipleResourceInterpreter.llm?.state.representation == .processing
         ToolbarItem(placement: .cancellationAction) {
-            if multipleResourceInterpreter.llm?.state.representation == .processing {
-                ProgressView()
-            } else {
-                Button("Close") {
-                    dismiss()
-                }
+            Button("Close") {
+                dismiss()
             }
+            .disabled(isProcessing)
         }
         ToolbarItem(placement: .primaryAction) {
             Button(
@@ -79,7 +77,7 @@ struct MultipleResourcesChatView: View {
                         .accessibilityLabel(Text("Reset Chat"))
                 }
             )
-            .disabled(multipleResourceInterpreter.llm?.state.representation == .processing)
+            .disabled(isProcessing)
         }
     }
     
