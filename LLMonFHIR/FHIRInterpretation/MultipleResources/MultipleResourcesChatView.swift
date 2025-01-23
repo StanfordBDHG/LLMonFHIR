@@ -24,42 +24,39 @@ struct MultipleResourcesChatView: View {
     
     
     var body: some View {
-        @Bindable var multipleResourceInterpreter = multipleResourceInterpreter
         NavigationStack {
-            Group {
-                if let llm = multipleResourceInterpreter.llm {
-                    let contextBinding = Binding { llm.context.chat } set: { llm.context.chat = $0 }
-                    
-                    ChatView(
-                        contextBinding,
-                        disableInput: llm.state.representation == .processing,
-                        messagePendingAnimation: .automatic
-                    )
-                        .speak(llm.context.chat, muted: !textToSpeech)
-                        .speechToolbarButton(muted: !$textToSpeech)
-                        .viewStateAlert(state: llm.state)
-                        .onChange(of: llm.context, initial: true) { _, _ in
-                            if llm.state != .generating {
-                                multipleResourceInterpreter.queryLLM()
-                            }
-                        }
-                } else {
-                    ProgressView()
-                }
-            }
+            chatView
                 .navigationTitle(navigationTitle)
-                .toolbar {
-                    toolbar
-                }
-                .task {
-                    await multipleResourceInterpreter.prepareLLM()
-                }
+                .toolbar { toolbarContent }
+                .task { await multipleResourceInterpreter.prepareLLM() }
         }
-            .interactiveDismissDisabled()
+        .interactiveDismissDisabled()
     }
     
     
-    @MainActor @ToolbarContentBuilder private var toolbar: some ToolbarContent {
+    @MainActor @ViewBuilder private var chatView: some View {
+        if let llm = multipleResourceInterpreter.llm {
+            ChatView(
+                Binding(
+                    get: { llm.context.chat },
+                    set: { llm.context.chat = $0 }
+                ),
+                disableInput: llm.state.representation == .processing,
+                messagePendingAnimation: .automatic
+            )
+            .speak(llm.context.chat, muted: !textToSpeech)
+            .speechToolbarButton(muted: !$textToSpeech)
+            .viewStateAlert(state: llm.state)
+            .onChange(of: llm.context) {
+                if llm.state == .generating { return }
+                multipleResourceInterpreter.queryLLM()
+            }
+        } else {
+            ProgressView()
+        }
+    }
+    
+    @MainActor @ToolbarContentBuilder private var toolbarContent: some ToolbarContent {
         let isProcessing = multipleResourceInterpreter.llm?.state.representation == .processing
         ToolbarItem(placement: .cancellationAction) {
             Button("Close") {
