@@ -32,7 +32,8 @@ struct MultipleResourcesChatView: View {
                     
                     ChatView(
                         contextBinding,
-                        disableInput: llm.state.representation == .processing
+                        disableInput: llm.state.representation == .processing,
+                        messagePendingAnimation: .automatic
                     )
                         .speak(llm.context.chat, muted: !textToSpeech)
                         .speechToolbarButton(muted: !$textToSpeech)
