@@ -48,8 +48,9 @@ struct MultipleResourcesChatView: View {
             .speechToolbarButton(muted: !$textToSpeech)
             .viewStateAlert(state: llm.state)
             .onChange(of: llm.context) {
-                if llm.state == .generating { return }
-                multipleResourceInterpreter.queryLLM()
+                if llm.state != .generating {
+                    multipleResourceInterpreter.queryLLM()
+                }
             }
         } else {
             ProgressView()
