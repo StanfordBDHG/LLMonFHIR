@@ -42,6 +42,7 @@ struct MultipleResourcesChatView: View {
                     set: { llm.context.chat = $0 }
                 ),
                 disableInput: llm.state.representation == .processing,
+                exportFormat: .text,
                 messagePendingAnimation: .automatic
             )
             .speak(llm.context.chat, muted: !textToSpeech)
