@@ -24,6 +24,12 @@ authors:
 - family-names: "Aalami"
   given-names: "Oliver"
   orcid: "https://orcid.org/0000-0002-7799-2429"
+- family-names: "Disho"
+  given-names: "Joan"
+  orcid: "https://orcid.org/0009-0000-9315-2449"
+- family-names: "Nissen"
+  given-names: "Leon"
+  orcid: "https://orcid.org/0009-0009-3884-0850"
 title: "Stanford LLMonFHIR"
 doi: doi.org/10.5281/zenodo.7959850
 url: "https://github.com/StanfordBDHG/LLMonFHIR"
