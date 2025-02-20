@@ -65,7 +65,7 @@ class FHIRMultipleResourceInterpreter {
         
         let llm = llmRunner(with: llmSchema)
         // Read initial conversation from storage
-        if let storedContext: LLMContext = try? localStorage.read(storageKey: FHIRMultipleResourceInterpreterConstants.context) {
+        if let storedContext: LLMContext = try? localStorage.load(.init(FHIRMultipleResourceInterpreterConstants.context)) {
             llm.context = storedContext
         } else {
             llm.context.append(systemMessage: FHIRPrompt.interpretMultipleResources.prompt)
@@ -96,21 +96,21 @@ class FHIRMultipleResourceInterpreter {
             }
             
             // Store conversation to storage
-            try localStorage.store(llm.context, storageKey: FHIRMultipleResourceInterpreterConstants.context)
+            try localStorage.store(llm.context, for: .init(FHIRMultipleResourceInterpreterConstants.context))
         }
     }
     
     /// Change the `LLMSchema` used by the ``FHIRMultipleResourceInterpreter``.
     @MainActor
     func changeLLMSchema(
-        openAIModel model: LLMOpenAIModelType,
+        openAIModel model: LLMOpenAIParameters.ModelType,
         resourceCountLimit: Int,
         resourceSummary: FHIRResourceSummary,
         allowedResourcesFunctionCallIdentifiers: Set<String>? = nil // swiftlint:disable:this discouraged_optional_collection
     ) {
         self.llmSchema = LLMOpenAISchema(
             parameters: .init(
-                modelType: model,
+                modelType: model.rawValue,
                 systemPrompts: []   // No system prompt as this will be determined later by the resource interpreter
             )
         ) {

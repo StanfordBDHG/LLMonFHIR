@@ -26,11 +26,7 @@ class LLMonFHIRDelegate: SpeziAppDelegate {
                 LLMLocalPlatform()
                 LLMOpenAIPlatform(configuration: .init(concurrentStreams: 20))
             }
-
-            // Local Summary, Remote (OpenAI) Interpretation
-            FHIRInterpretationModule(
-                multipleResourceInterpretationOpenAIModel: .gpt4_o
-            )
+            FHIRInterpretationModule()
         }
     }
     

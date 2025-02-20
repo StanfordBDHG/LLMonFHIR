@@ -20,8 +20,8 @@ class FHIRInterpretationModule: Module, DefaultInitializable {
         static var llmSchema: LLMOpenAISchema {
             .init(
                 parameters: .init(
-                    modelType: .gpt4_turbo,
-                    systemPrompts: []   // No system prompt as this will be determined later by the resource interpreter
+                    modelType: .gpt4o,
+                    systemPrompt: nil   // No system prompt as this will be determined later by the resource interpreter
                 )
             )
         }
@@ -38,7 +38,7 @@ class FHIRInterpretationModule: Module, DefaultInitializable {
     
     let summaryLLMSchema: any LLMSchema
     let interpretationLLMSchema: any LLMSchema
-    let openAIModelType: LLMOpenAIModelType
+    let openAIModelType: LLMOpenAIParameters.ModelType
     let resourceCountLimit: Int
     let allowedResourcesFunctionCallIdentifiers: Set<String>?   // swiftlint:disable:this discouraged_optional_collection
     
@@ -47,7 +47,7 @@ class FHIRInterpretationModule: Module, DefaultInitializable {
     init<SummaryLLM: LLMSchema, InterpretationLLM: LLMSchema>(
         summaryLLMSchema: SummaryLLM = Defaults.llmSchema,
         interpretationLLMSchema: InterpretationLLM = Defaults.llmSchema,    // swiftlint:disable:this function_default_parameter_at_end
-        multipleResourceInterpretationOpenAIModel: LLMOpenAIModelType,  // swiftlint:disable:this identifier_name
+        multipleResourceInterpretationOpenAIModel: LLMOpenAIParameters.ModelType,  // swiftlint:disable:this identifier_name
         resourceCountLimit: Int = 250,
         allowedResourcesFunctionCallIdentifiers: Set<String>? = nil // swiftlint:disable:this discouraged_optional_collection
     ) {
@@ -63,7 +63,7 @@ class FHIRInterpretationModule: Module, DefaultInitializable {
         self.init(
             summaryLLMSchema: Defaults.llmSchema,
             interpretationLLMSchema: Defaults.llmSchema,
-            multipleResourceInterpretationOpenAIModel: .gpt4_turbo
+            multipleResourceInterpretationOpenAIModel: .gpt4o
         )
     }
     
@@ -86,7 +86,7 @@ class FHIRInterpretationModule: Module, DefaultInitializable {
             llmRunner: llmRunner,
             llmSchema: LLMOpenAISchema(
                 parameters: .init(
-                    modelType: openAIModelType,
+                    modelType: openAIModelType.rawValue,
                     systemPrompts: []   // No system prompt as this will be determined later by the resource interpreter
                 )
             ) {
