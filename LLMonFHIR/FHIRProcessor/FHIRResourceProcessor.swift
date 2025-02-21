@@ -30,7 +30,7 @@ final class FHIRResourceProcessor<Content: Codable & LosslessStringConvertible>:
     var results: Results = [:] {
         didSet {
             do {
-                try localStorage.store(results, storageKey: storageKey)
+                try localStorage.store(results, for: .init(storageKey))
             } catch {
                 print(error)
             }
@@ -50,7 +50,7 @@ final class FHIRResourceProcessor<Content: Codable & LosslessStringConvertible>:
         self.llmSchema = llmSchema
         self.storageKey = storageKey
         self.prompt = prompt
-        self.results = (try? localStorage.read(storageKey: storageKey)) ?? [:]
+        self.results = (try? localStorage.load(.init(storageKey))) ?? [:]
     }
     
     

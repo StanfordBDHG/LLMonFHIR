@@ -14,7 +14,7 @@ enum StorageKeys {
     enum Defaults {
         static let enableTextToSpeech = false
         static let resourceLimit = 250
-        static let openAIModel: LLMOpenAIModelType = .gpt4_turbo
+        static let openAIModel: LLMOpenAIParameters.ModelType = .gpt4o
     }
     
     

@@ -20,14 +20,16 @@ platform :ios do
       skip_build: true,
       derived_data_path: ".derivedData",
       code_coverage: true,
-      devices: ["iPhone 15 Pro"],
-      force_quit_simulator: true,
-      reset_simulator: true,
-      prelaunch_simulator: false,
+      devices: ["iPhone 16 Pro"],
+      disable_slide_to_type: false,
       concurrent_workers: 1,
       max_concurrent_simulators: 1,
       result_bundle: true,
-      output_directory: "."
+      output_directory: ".",
+      xcargs: [
+        "-skipPackagePluginValidation",
+        "-skipMacroValidation"
+      ]
     )
   end
 
@@ -36,6 +38,10 @@ platform :ios do
     build_app(
       skip_archive: true,
       skip_codesigning: true,
+      xcargs: [
+        "-skipPackagePluginValidation",
+        "-skipMacroValidation"
+      ],
       derived_data_path: ".derivedData"
     )
   end
@@ -44,6 +50,10 @@ platform :ios do
   lane :build do
     build_app(
       derived_data_path: ".derivedData",
+      xcargs: [
+        "-skipPackagePluginValidation",
+        "-skipMacroValidation"
+      ],
       export_options: {
         provisioningProfiles: {
           "edu.stanford.bdhg.llmonfhir" => "LLM on FHIR"

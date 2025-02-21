@@ -1175,7 +1175,7 @@
 			repositoryURL = "https://github.com/StanfordSpezi/SpeziOnboarding.git";
 			requirement = {
 				kind = upToNextMinorVersion;
-				minimumVersion = 1.1.1;
+				minimumVersion = 1.2.2;
 			};
 		};
 		2FE5DC9729EDD9D9004B9AB4 /* XCRemoteSwiftPackageReference "XCTestExtensions" */ = {
@@ -1199,7 +1199,7 @@
 			repositoryURL = "https://github.com/StanfordSpezi/SpeziStorage";
 			requirement = {
 				kind = upToNextMajorVersion;
-				minimumVersion = 1.2.1;
+				minimumVersion = 2.1.0;
 			};
 		};
 		44E18EE82CED09C800829A26 /* XCRemoteSwiftPackageReference "SpeziChat" */ = {
@@ -1223,7 +1223,7 @@
 			repositoryURL = "https://github.com/StanfordSpezi/SpeziLLM";
 			requirement = {
 				kind = upToNextMajorVersion;
-				minimumVersion = 0.9.1;
+				minimumVersion = 0.10.0;
 			};
 		};
 		C0FA07242D39357B002485FF /* XCRemoteSwiftPackageReference "SpeziFHIR" */ = {

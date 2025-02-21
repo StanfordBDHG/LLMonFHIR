@@ -9,3 +9,5 @@
 project: LLMonFHIR.xcodeproj
 schemes:
 - LLMonFHIR
+report_exclude:
+- "**/GeneratedOpenAIClient/OpenAPIGenerator/GeneratedSources/**"
