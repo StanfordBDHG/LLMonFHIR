@@ -32,19 +32,13 @@ struct ResourceView: View {
                         .frame(maxWidth: .infinity, minHeight: 38)
                 }
             )
-                .buttonStyle(.borderedProminent)
-                .padding(-20)
+            .buttonStyle(.borderedProminent)
+            .padding(-20)
         }
-            .task {
-                if FeatureFlags.testMode {
-                    fhirStore.loadTestingResources()
-                }
+        .task {
+            if FeatureFlags.testMode {
+                fhirStore.loadTestingResources()
             }
-    }
-}
-
-#Preview {
-    ResourceView(showMultipleResourcesChat: .constant(false))
-        .previewWith(standard: LLMonFHIRStandard()) {
         }
+    }
 }

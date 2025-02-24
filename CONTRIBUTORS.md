@@ -15,3 +15,5 @@ LLM on FHIR Contributors
 * [Vishnu Ravi](https://github.com/vishnuravi)
 * [Philipp Zagar](https://github.com/philippzagar)
 * [Adrit Rao](https://github.com/AdritRao)
+* [Joan Disho](https://github.com/jdisho)
+* [Leon Nissen](https://github.com/LeonNissen)

@@ -7,29 +7,34 @@
 //
 
 import Spezi
+import SpeziAccessGuard
 import SwiftUI
 
 
 @main
 struct LLMonFHIR: App {
     @UIApplicationDelegateAdaptor(LLMonFHIRDelegate.self) var appDelegate
-    @AppStorage(StorageKeys.onboardingFlowComplete) var completedOnboardingFlow = false
-    
-    
+    @AppStorage(StorageKeys.onboardingFlowComplete) private var completedOnboardingFlow = false
+
+
     var body: some Scene {
         WindowGroup {
-            Group {
-                if completedOnboardingFlow {
-                    HomeView()
-                } else {
-                    EmptyView()
-                }
-            }
-                .sheet(isPresented: !$completedOnboardingFlow) {
+            contentView
+                .sheet(isPresented: .constant(!completedOnboardingFlow)) {
                     OnboardingFlow()
                 }
                 .testingSetup()
                 .spezi(appDelegate)
+        }
+    }
+
+    @ViewBuilder private var contentView: some View {
+        if !completedOnboardingFlow {
+            EmptyView()
+        } else if FeatureFlags.isUserStudyEnabled {
+            UserStudyWelcomeView()
+        } else {
+            HomeView()
         }
     }
 }

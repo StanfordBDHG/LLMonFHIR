@@ -35,6 +35,7 @@ class FHIRInterpretationModule: Module, DefaultInitializable {
     @Model private var resourceSummary: FHIRResourceSummary
     @Model private var resourceInterpreter: FHIRResourceInterpreter
     @Model private var multipleResourceInterpreter: FHIRMultipleResourceInterpreter
+    @Model private var multipleResourceInterpreterUserStudy: UserStudyFHIRMultipleResourceInterpreter
     
     let summaryLLMSchema: any LLMSchema
     let interpretationLLMSchema: any LLMSchema
@@ -82,6 +83,26 @@ class FHIRInterpretationModule: Module, DefaultInitializable {
         )
         
         multipleResourceInterpreter = FHIRMultipleResourceInterpreter(
+            localStorage: localStorage,
+            llmRunner: llmRunner,
+            llmSchema: LLMOpenAISchema(
+                parameters: .init(
+                    modelType: openAIModelType.rawValue,
+                    systemPrompts: []   // No system prompt as this will be determined later by the resource interpreter
+                )
+            ) {
+                // FHIR interpretation function
+                FHIRGetResourceLLMFunction(
+                    fhirStore: self.fhirStore,
+                    resourceSummary: self.resourceSummary,
+                    resourceCountLimit: self.resourceCountLimit,
+                    allowedResourcesFunctionCallIdentifiers: self.allowedResourcesFunctionCallIdentifiers
+                )
+            },
+            fhirStore: fhirStore
+        )
+        
+        multipleResourceInterpreterUserStudy = UserStudyFHIRMultipleResourceInterpreter(
             localStorage: localStorage,
             llmRunner: llmRunner,
             llmSchema: LLMOpenAISchema(

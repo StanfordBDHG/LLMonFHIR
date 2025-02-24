@@ -8,18 +8,17 @@
 
 import SwiftUI
 
-
 struct HomeView: View {
     @State private var showSettings = false
     @State private var showMultipleResourcesChat = false
     @AppStorage(StorageKeys.enableTextToSpeech) private var textToSpeech = StorageKeys.Defaults.enableTextToSpeech
-    
-    
+
+
     var body: some View {
         NavigationStack {
             ResourceView(showMultipleResourcesChat: $showMultipleResourcesChat)
                 .toolbar {
-                    settingsToolbarItem
+                    toolbarContent
                 }
                 .sheet(isPresented: $showSettings) {
                     SettingsView()
@@ -32,9 +31,8 @@ struct HomeView: View {
                 }
         }
     }
-    
-    
-    @ToolbarContentBuilder private var settingsToolbarItem: some ToolbarContent {
+
+    @ToolbarContentBuilder private var toolbarContent: some ToolbarContent {
         ToolbarItem(placement: .primaryAction) {
             Button(
                 action: {
@@ -48,7 +46,6 @@ struct HomeView: View {
         }
     }
 }
-
 
 #Preview {
     HomeView()

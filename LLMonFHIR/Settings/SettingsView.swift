@@ -35,8 +35,7 @@ struct SettingsView: View {
     @AppStorage(StorageKeys.allowedResourcesFunctionCallIdentifiers) private var allowedResourceIdentifiers = [String]()
     @AppStorage(StorageKeys.openAIModelSummarization) private var openAIModelSummarization = StorageKeys.Defaults.openAIModel
     @AppStorage(StorageKeys.openAIModelInterpretation) private var openAIModelInterpretation = StorageKeys.Defaults.openAIModel
-    @AppStorage(StorageKeys.openAIModelMultipleInterpretation) private var openAIModelMultipleInterpretation =
-    StorageKeys.Defaults.openAIModel
+    @AppStorage(StorageKeys.openAIModelMultipleInterpretation) private var openAIModelMultipleInterpretation = StorageKeys.Defaults.openAIModel
     
     
     var body: some View {
@@ -48,19 +47,19 @@ struct SettingsView: View {
                 resourcesSettings
                 promptsSettings
             }
-                .navigationTitle("SETTINGS_TITLE")
-                .navigationDestination(for: SettingsDestinations.self) { destination in
-                    Group {
-                        settingsDestinationView(destination)
+            .navigationTitle("SETTINGS_TITLE")
+            .navigationDestination(for: SettingsDestinations.self) { destination in
+                Group {
+                    settingsDestinationView(destination)
+                }
+            }
+            .toolbar {
+                ToolbarItem(placement: .confirmationAction) {
+                    Button("SETTINGS_DONE") {
+                        dismiss()
                     }
                 }
-                .toolbar {
-                    ToolbarItem(placement: .confirmationAction) {
-                        Button("SETTINGS_DONE") {
-                            dismiss()
-                        }
-                    }
-                }
+            }
         }
     }
 

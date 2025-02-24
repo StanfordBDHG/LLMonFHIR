@@ -89,6 +89,10 @@
             argument = "--testMode"
             isEnabled = "NO">
          </CommandLineArgument>
+         <CommandLineArgument
+            argument = "--userStudy"
+            isEnabled = "NO">
+         </CommandLineArgument>
       </CommandLineArguments>
    </LaunchAction>
    <ProfileAction

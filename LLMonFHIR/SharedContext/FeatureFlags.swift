@@ -14,4 +14,6 @@ enum FeatureFlags {
     static let showOnboarding = CommandLine.arguments.contains("--showOnboarding")
     /// Sets the application in test mode
     static let testMode = CommandLine.arguments.contains("--testMode")
+    /// Sets the application in user study mode
+    static let isUserStudyEnabled = CommandLine.arguments.contains("--userStudy")
 }
