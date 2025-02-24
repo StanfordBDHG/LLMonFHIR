@@ -1,6 +1,15 @@
 {
   "sourceLanguage" : "en",
   "strings" : {
+    "A team member will be with you soon. During this study, you’ll complete a survey about your experiences navigating the healthcare system and have the opportunity to ask the chat questions about your health." : {
+
+    },
+    "Approved by Stanford IRB" : {
+
+    },
+    "Cancel" : {
+
+    },
     "CHAT_WITH_ALL_RESOURCES" : {
       "localizations" : {
         "de" : {
@@ -69,6 +78,9 @@
           }
         }
       }
+    },
+    "Checkmark" : {
+
     },
     "Close" : {
       "localizations" : {
@@ -698,6 +710,9 @@
         }
       }
     },
+    "Dismiss" : {
+
+    },
     "DISMISS_ONBOARDING_HINT" : {
       "localizations" : {
         "de" : {
@@ -731,6 +746,9 @@
           }
         }
       }
+    },
+    "Do you want to continue?" : {
+
     },
     "Download the LLM model to generate summaries of FHIR resources." : {
 
@@ -1208,6 +1226,9 @@
         }
       }
     },
+    "Going back will reset your chat history." : {
+
+    },
     "HEALTHKIT_PERMISSIONS_BUTTON" : {
       "localizations" : {
         "de" : {
@@ -1539,6 +1560,19 @@
         }
       }
     },
+    "Next Task" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Proceed to the next task"
+          }
+        }
+      }
+    },
+    "No" : {
+
+    },
     "Observations" : {
       "localizations" : {
         "de" : {
@@ -1566,6 +1600,9 @@
           }
         }
       }
+    },
+    "Official Stanford Logo. Block S with Tree." : {
+
     },
     "OPEN_AI_KEY_SAVE_ACTION" : {
       "localizations" : {
@@ -1983,12 +2020,6 @@
           }
         }
       }
-    },
-    "SETTINGS_DOWNLOAD_LOCAL_LLM_MODEL" : {
-
-    },
-    "SETTINGS_DOWNLOAD_MODEL" : {
-
     },
     "SETTINGS_OPENAI" : {
       "localizations" : {
@@ -2468,6 +2499,15 @@
         }
       }
     },
+    "Share Results" : {
+
+    },
+    "Start Session" : {
+
+    },
+    "Submit" : {
+
+    },
     "SUMMARY_PROMPT" : {
       "comment" : "Title of the summary prompt.",
       "extractionState" : "manual",
@@ -2506,6 +2546,7 @@
     },
     "SUMMARY_PROMPT_CONTENT_LOCALLLM" : {
       "comment" : "Content of the summary prompt.",
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -2550,6 +2591,9 @@
           }
         }
       }
+    },
+    "Task %lld" : {
+
     },
     "The medical record does not include any FHIR resources for the search term %@." : {
       "localizations" : {
@@ -2689,6 +2733,34 @@
           }
         }
       }
+    },
+    "User Study" : {
+
+    },
+    "User Study Navigation Title" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "User Study"
+          }
+        }
+      }
+    },
+    "User Study Toggle" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Enable User Study"
+          }
+        }
+      }
+    },
+    "Welcome" : {
+
     },
     "WELCOME_AREA1_DESCRIPTION" : {
       "localizations" : {
@@ -2995,6 +3067,9 @@
           }
         }
       }
+    },
+    "Yes" : {
+
     },
     "Your Health Records" : {
       "localizations" : {

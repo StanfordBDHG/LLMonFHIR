@@ -8,6 +8,7 @@
 
 import HealthKit
 import Spezi
+import SpeziAccessGuard
 import SpeziFHIR
 import SpeziHealthKit
 import SpeziLLM
@@ -27,6 +28,9 @@ class LLMonFHIRDelegate: SpeziAppDelegate {
                 LLMOpenAIPlatform(configuration: .init(concurrentStreams: 20))
             }
             FHIRInterpretationModule()
+            AccessGuardModule([
+                .fixed(identifier: .userStudyIndentifier, code: "0218", codeOptions: .fourDigitNumeric, timeout: 60 * 60)
+            ])
         }
     }
     
