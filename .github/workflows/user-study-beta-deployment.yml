@@ -9,9 +9,6 @@
 
 name: User Study Beta Deployment
 on:
-  push:
-    branches:
-      - user-study-deployment
   workflow_dispatch:
 jobs:
   buildandtest:
