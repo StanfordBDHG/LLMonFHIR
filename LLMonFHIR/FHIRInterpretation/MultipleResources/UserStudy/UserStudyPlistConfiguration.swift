@@ -41,8 +41,8 @@ struct UserStudyPlistConfiguration {
         let data = try Data(contentsOf: url)
         let dict = try PropertyListSerialization.propertyList(from: data, format: nil) as? [String: Any]
         guard let plist = dict,
-              let apiKey = plist["OpenAIAPIKey"] as? String,
-              let isUserStudyEnabled = plist["UserStudyEnabled"] as? Bool
+              let apiKey = plist["OPENAI_API_KEY"] as? String,
+              let isUserStudyEnabled = plist["IS_USER_STUDY_ENABLED"] as? Bool
         else {
             throw ConfigurationError.invalidFormat
         }
