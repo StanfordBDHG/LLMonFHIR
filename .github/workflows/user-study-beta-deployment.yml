@@ -31,14 +31,18 @@ jobs:
         uses: actions/checkout@v4
       - name: Setup OpenAI Configuration
         run: >
-          echo -n "${{ secrets.OPENAI_CONFIG_PLIST_BASE64 }}" | base64 --decode -o
-          "LLMonFHIR/Supporting Files/OpenAIConfig.plist"
-      - name: Upload Configuration as Artifact
-        uses: actions/upload-artifact@v4
-        with:
-          name: openai-config
-          path: LLMonFHIR/Supporting Files/OpenAIConfig.plist
-          retention-days: 1
+
+          # Add API key to OpenAIConfig.plist
+
+          /usr/libexec/PlistBuddy -c "Add :OpenAI_API_Key string ${{
+          secrets.OPENAI_API_KEY }}" "LLMonFHIR/Supporting Files/OpenAIConfig.plist"
+
+
+          # Verify the key was added (without exposing it in logs)
+
+          /usr/libexec/PlistBuddy -c "Print :OpenAI_API_Key"
+          "LLMonFHIR/Supporting Files/OpenAIConfig.plist" > /dev/null && echo "API key
+          added successfully" || echo "Failed to add API key"
   userstudytestflightdeployment:
     name: User Study TestFlight Deployment
     needs:
