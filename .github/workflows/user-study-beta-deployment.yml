@@ -1,0 +1,54 @@
+#
+# This source file is part of the Stanford LLM on FHIR project
+#
+# SPDX-FileCopyrightText: 2025 Stanford University
+#
+# SPDX-License-Identifier: MIT
+#
+
+
+name: User Study Beta Deployment
+on:
+  push:
+    branches:
+      - user-study-deployment
+  workflow_dispatch:
+jobs:
+  buildandtest:
+    name: Build and Test
+    uses: ./.github/workflows/build-and-test.yml
+    permissions:
+      contents: read
+      actions: read
+      security-events: write
+    secrets: inherit
+  setup-openai-config:
+    name: Setup OpenAI Configuration
+    runs-on: macos-latest
+    needs: buildandtest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      - name: Setup OpenAI Configuration
+        run: >
+          echo -n "${{ secrets.OPENAI_CONFIG_PLIST_BASE64 }}" | base64 --decode -o
+          "LLMonFHIR/Supporting Files/OpenAIConfig.plist"
+      - name: Upload Configuration as Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: openai-config
+          path: LLMonFHIR/Supporting Files/OpenAIConfig.plist
+          retention-days: 1
+  userstudytestflightdeployment:
+    name: User Study TestFlight Deployment
+    needs:
+      - buildandtest
+      - setup-openai-config
+    uses: StanfordBDHG/.github/.github/workflows/xcodebuild-or-fastlane.yml@v2
+    permissions:
+      contents: read
+    with:
+      runsonlabels: '["macOS", "self-hosted"]'
+      setupsigning: true
+      fastlanelane: beta_user_study
+    secrets: inherit

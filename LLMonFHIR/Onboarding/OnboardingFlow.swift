@@ -31,7 +31,9 @@ struct OnboardingFlow: View {
         OnboardingStack(onboardingFlowComplete: $completedOnboardingFlow) {
             Welcome()
             Disclaimer()
-            OpenAIAPIKey()
+            if !FeatureFlags.isUserStudyEnabled {
+                OpenAIAPIKey()
+            }
             if HKHealthStore.isHealthDataAvailable() && !healthKitAuthorization {
                 HealthKitPermissions()
             }

@@ -93,4 +93,35 @@ platform :ios do
       changelog: commit[:message]
     )
   end
+  
+  desc "Publish a user study build to TestFlight"
+  lane :beta_user_study do
+    signin
+    increment_build_number(
+      {
+        build_number: latest_testflight_build_number + 1
+      }
+    )
+
+    update_info_plist(
+      plist_path: "LLMonFHIR/Supporting Files/Info.plist", 
+      block: proc do |plist|
+        plist["UserStudyEnabled"] = true
+      end
+    )
+    
+    build
+    
+    commit = last_git_commit
+    upload_to_testflight(
+      distribute_external: true,
+      groups: [
+        "External Testers"
+      ],
+      submit_beta_review: true,
+      notify_external_testers: true,
+      expire_previous_builds: true,
+      changelog: commit[:message]
+    )
+  end
 end
