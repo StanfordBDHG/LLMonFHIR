@@ -102,18 +102,12 @@ platform :ios do
         build_number: latest_testflight_build_number + 1
       }
     )
-
+  
     update_info_plist(
-      plist_path: "LLMonFHIR/Supporting Files/Info.plist", 
+      plist_path: "LLMonFHIR/Supporting Files/UserStudyConfig.plist", 
       block: proc do |plist|
         plist["UserStudyEnabled"] = true
-      end
-    )
-    
-    update_info_plist(
-      plist_path: "LLMonFHIR/Supporting Files/OpenAIConfig.plist", 
-      block: proc do |plist|
-        plist["OpenAI_API_Key"] = ENV["GOOGLE_APPLICATION_CREDENTIALS_BASE64"]
+        plist["OpenAIAPIKey"] = ENV["GOOGLE_APPLICATION_CREDENTIALS_BASE64"]
       end
     )
     

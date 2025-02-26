@@ -12,7 +12,7 @@ import SwiftUI
 
 
 struct UserStudyWelcomeView: View {
-    @Environment(LLMOpenAITokenSaver.self) private var tokenSaver
+    @Environment(LLMOpenAITokenSaver.self) private var openAITokenSaver
     @State private var isPresentingSettings = false
     @State private var isPresentingStudy = false
 
@@ -37,7 +37,7 @@ struct UserStudyWelcomeView: View {
                     }
                 }
                 .onAppear {
-                    tokenSaver.token = OpenAIPlistConfiguration.shared.apiKey ?? ""
+                    openAITokenSaver.token = UserStudyPlistConfiguration.shared.apiKey ?? ""
                 }
         }
     }
@@ -132,42 +132,6 @@ struct UserStudyWelcomeView: View {
                     .accessibilityLabel(Text("SETTINGS"))
             }
         }
-    }
-}
-
-private struct OpenAIPlistConfiguration {
-    enum ConfigurationError: Error {
-        case missingFile
-        case invalidFormat
-    }
-
-    static let shared: OpenAIPlistConfiguration = {
-        do {
-            return try loadFromBundle()
-        } catch {
-            #if DEBUG
-            print("OpenAI configuration not available: \(error)")
-            #endif
-            return OpenAIPlistConfiguration(apiKey: nil)
-        }
-    }()
-
-    /// The OpenAI API key loaded from the configuration file.
-    /// Will be nil if the configuration file is missing or invalid.
-    let apiKey: String?
-
-    private static func loadFromBundle() throws -> OpenAIPlistConfiguration {
-        guard let url = Bundle.main.url(forResource: "OpenAIConfig", withExtension: "plist") else {
-            throw ConfigurationError.missingFile
-        }
-
-        let data = try Data(contentsOf: url)
-        let dict = try PropertyListSerialization.propertyList(from: data, format: nil) as? [String: Any]
-        guard let plist = dict, let apiKey = plist["OpenAI_API_Key"] as? String else {
-            throw ConfigurationError.invalidFormat
-        }
-
-        return OpenAIPlistConfiguration(apiKey: apiKey)
     }
 }
 

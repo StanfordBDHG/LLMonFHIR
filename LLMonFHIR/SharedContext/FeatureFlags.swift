@@ -20,6 +20,6 @@ enum FeatureFlags {
     /// Sets the application in user study mode
     static var isUserStudyEnabled: Bool {
         CommandLine.arguments.contains("--userStudy") ||
-        Bundle.main.infoDictionary?["UserStudyEnabled"] as? Bool == true
+        UserStudyPlistConfiguration.shared.isUserStudyEnabled == true
     }
 }
