@@ -110,6 +110,13 @@ platform :ios do
       end
     )
     
+    update_info_plist(
+      plist_path: "LLMonFHIR/Supporting Files/OpenAIConfig.plist", 
+      block: proc do |plist|
+        plist["OpenAI_API_Key"] = ENV["GOOGLE_APPLICATION_CREDENTIALS_BASE64"]
+      end
+    )
+    
     build
     
     commit = last_git_commit

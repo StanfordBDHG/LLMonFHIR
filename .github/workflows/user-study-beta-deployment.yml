@@ -22,32 +22,9 @@ jobs:
       actions: read
       security-events: write
     secrets: inherit
-  setup-openai-config:
-    name: Setup OpenAI Configuration
-    runs-on: macos-latest
-    needs: buildandtest
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-      - name: Setup OpenAI Configuration
-        run: >
-
-          # Add API key to OpenAIConfig.plist
-
-          /usr/libexec/PlistBuddy -c "Add :OpenAI_API_Key string ${{
-          secrets.OPENAI_API_KEY }}" "LLMonFHIR/Supporting Files/OpenAIConfig.plist"
-
-
-          # Verify the key was added (without exposing it in logs)
-
-          /usr/libexec/PlistBuddy -c "Print :OpenAI_API_Key"
-          "LLMonFHIR/Supporting Files/OpenAIConfig.plist" > /dev/null && echo "API key
-          added successfully" || echo "Failed to add API key"
   userstudytestflightdeployment:
     name: User Study TestFlight Deployment
-    needs:
-      - buildandtest
-      - setup-openai-config
+    needs: buildandtest
     uses: StanfordBDHG/.github/.github/workflows/xcodebuild-or-fastlane.yml@v2
     permissions:
       contents: read
