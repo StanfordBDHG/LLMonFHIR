@@ -93,12 +93,6 @@ final class UserStudyViewModel: ObservableObject {
         currentTaskNumber = 1
     }
 
-    /// Generates a report file for the completed study
-    /// - Returns: A shareable file containing the study results
-    func generateReportURL() -> URL {
-        survey.generateReportFile()
-    }
-
     /// Generates a formatted string for the completed study
     /// - Returns: A formatted string containing the study results
     func generateReport() -> String {
