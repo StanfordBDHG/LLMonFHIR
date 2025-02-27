@@ -21,7 +21,7 @@ import SwiftUI
 @MainActor
 final class UserStudyViewModel: ObservableObject {
     /// The current state of the survey navigation
-    enum NavigationState {
+    enum NavigationState: Equatable {
         case introduction
         case task(number: Int, total: Int)
         case completed
@@ -95,8 +95,14 @@ final class UserStudyViewModel: ObservableObject {
 
     /// Generates a report file for the completed study
     /// - Returns: A shareable file containing the study results
-    func generateReport() -> URL {
+    func generateReportURL() -> URL {
         survey.generateReportFile()
+    }
+
+    /// Generates a formatted string for the completed study
+    /// - Returns: A formatted string containing the study results
+    func generateReport() -> String {
+        survey.generateReport()
     }
 
     /// Returns the current task if one is active
@@ -138,7 +144,9 @@ struct ChatToolbar: ToolbarContent {
         }
 
         ToolbarItem(placement: .primaryAction) {
-            navigationButton
+            if viewModel.navigationState != .completed {
+                navigationButton
+            }
         }
     }
 
@@ -163,22 +171,13 @@ struct ChatToolbar: ToolbarContent {
     }
 
     private var navigationButton: some View {
-        Group {
-            if case .completed = viewModel.navigationState {
-                ShareLink(item: viewModel.generateReport()) {
-                    Image(systemName: "square.and.arrow.up")
-                        .accessibilityLabel("Share Results")
-                }
-            } else {
-                Button {
-                    viewModel.isSurveyViewPresented = true
-                } label: {
-                    Image(systemName: "arrow.forward.circle")
-                        .accessibilityLabel("Next Task")
-                }
-                .disabled(isInputDisabled)
-            }
+        Button {
+            viewModel.isSurveyViewPresented = true
+        } label: {
+            Image(systemName: "arrow.forward.circle")
+                .accessibilityLabel("Next Task")
         }
+        .disabled(isInputDisabled)
     }
 }
 
@@ -220,11 +219,19 @@ struct UserStudyChatView: View {
         if let llm = interpreter.llm {
             ChatView(
                 Binding(
-                    get: { llm.context.chat },
+                    get: {
+                        var chat = llm.context.chat
+                        if viewModel.navigationState == .completed {
+                            let surveyReport = viewModel.generateReport()
+                            chat.append(ChatEntity(role: .hidden(type: .init(name: "SURVEY_REPORT")), content: surveyReport))
+                        }
+                        return chat
+                    },
                     set: { llm.context.chat = $0 }
                 ),
                 disableInput: isInputDisabled,
                 speechToText: false,
+                exportFormat: viewModel.navigationState == .completed ? .text : nil,
                 messagePendingAnimation: .manual(
                     shouldDisplay: shouldShowTypingIndicator(llm.context.last?.role)
                 )

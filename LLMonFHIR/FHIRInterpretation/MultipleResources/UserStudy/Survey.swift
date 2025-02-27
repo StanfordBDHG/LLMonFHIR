@@ -202,7 +202,7 @@ extension Survey {
         return reportURL
     }
 
-    private func generateReport() -> String {
+    func generateReport() -> String {
         var report = ["Survey Results\n"]
 
         for task in tasks {
