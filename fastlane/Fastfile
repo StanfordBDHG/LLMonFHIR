@@ -89,7 +89,26 @@ platform :ios do
       ],
       submit_beta_review: true,
       notify_external_testers: true,
-      expire_previous_builds: true,
+      changelog: commit[:message]
+    )
+  end
+
+  desc "Publish a beta release to the user study TestFlight group"
+  lane :userstudy do
+    signin
+    increment_build_number(
+      {
+        build_number: latest_testflight_build_number + 1
+      }
+    )
+    build
+    commit = last_git_commit
+    upload_to_testflight(
+      distribute_external: true,
+      groups: [
+        "User Study"
+      ],
+      submit_beta_review: true,
       changelog: commit[:message]
     )
   end

@@ -28,6 +28,6 @@ jobs:
     with:
       runsonlabels: '["macOS", "self-hosted"]'
       setupsigning: true
-      fastlanelane: beta
+      fastlanelane: userstudy
       googleserviceinfoplistpath: "LLMonFHIR/Supporting Files/UserStudyConfig.plist"
     secrets: inherit
