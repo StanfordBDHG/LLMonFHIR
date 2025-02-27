@@ -1,0 +1,33 @@
+#
+# This source file is part of the Stanford LLM on FHIR project
+#
+# SPDX-FileCopyrightText: 2025 Stanford University
+#
+# SPDX-License-Identifier: MIT
+#
+
+
+name: User Study Beta Deployment
+on:
+  workflow_dispatch:
+jobs:
+  buildandtest:
+    name: Build and Test
+    uses: ./.github/workflows/build-and-test.yml
+    permissions:
+      contents: read
+      actions: read
+      security-events: write
+    secrets: inherit
+  testflightdeployment:
+    name: TestFlight Deployment
+    needs: buildandtest
+    uses: StanfordBDHG/.github/.github/workflows/xcodebuild-or-fastlane.yml@v2
+    permissions:
+      contents: read
+    with:
+      runsonlabels: '["macOS", "self-hosted"]'
+      setupsigning: true
+      fastlanelane: userstudy
+      googleserviceinfoplistpath: "LLMonFHIR/Supporting Files/UserStudyConfig.plist"
+    secrets: inherit

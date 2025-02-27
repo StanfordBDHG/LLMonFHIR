@@ -6,6 +6,9 @@
 // SPDX-License-Identifier: MIT
 //
 
+import Foundation
+
+
 /// A collection of feature flags for the PAWS app.
 enum FeatureFlags {
     /// Skips the onboarding flow to enable easier development of features in the application and to allow UI tests to skip the onboarding flow.
@@ -15,5 +18,8 @@ enum FeatureFlags {
     /// Sets the application in test mode
     static let testMode = CommandLine.arguments.contains("--testMode")
     /// Sets the application in user study mode
-    static let isUserStudyEnabled = CommandLine.arguments.contains("--userStudy")
+    static var isUserStudyEnabled: Bool {
+        CommandLine.arguments.contains("--userStudy") ||
+        UserStudyPlistConfiguration.shared.isUserStudyEnabled == true
+    }
 }

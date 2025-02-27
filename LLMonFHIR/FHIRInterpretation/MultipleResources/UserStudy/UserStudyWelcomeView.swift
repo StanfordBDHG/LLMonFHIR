@@ -7,10 +7,12 @@
 //
 
 import SpeziAccessGuard
+import SpeziLLMOpenAI
 import SwiftUI
 
 
 struct UserStudyWelcomeView: View {
+    @Environment(LLMOpenAITokenSaver.self) private var openAITokenSaver
     @State private var isPresentingSettings = false
     @State private var isPresentingStudy = false
 
@@ -33,6 +35,9 @@ struct UserStudyWelcomeView: View {
                     AccessGuarded(.userStudyIndentifier) {
                         UserStudyChatView(survey: Survey(.defaultTasks))
                     }
+                }
+                .onAppear {
+                    openAITokenSaver.token = UserStudyPlistConfiguration.shared.apiKey ?? ""
                 }
         }
     }
@@ -129,6 +134,7 @@ struct UserStudyWelcomeView: View {
         }
     }
 }
+
 
 extension AccessGuardConfiguration.Identifier {
     /// A unique identifier for user study access control.
