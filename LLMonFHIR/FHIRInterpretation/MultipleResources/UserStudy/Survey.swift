@@ -192,17 +192,9 @@ final class Survey {
 // MARK: - Survey Report Generation
 
 extension Survey {
-    /// Generates a report file containing all survey responses
-    /// - Returns: URL to the generated report file
-    func generateReportFile() -> URL {
-        let reportContent = generateReport()
-        let tempDir = FileManager.default.temporaryDirectory
-        let reportURL = tempDir.appendingPathComponent("survey_report.txt")
-        try? reportContent.write(to: reportURL, atomically: true, encoding: .utf8)
-        return reportURL
-    }
-
-    private func generateReport() -> String {
+    /// Generates a report containing all survey responses, formatted for readability
+    /// - Returns: A formatted string suitable for export or display, with each component on a new line
+    func generateReport() -> String {
         var report = ["Survey Results\n"]
 
         for task in tasks {
