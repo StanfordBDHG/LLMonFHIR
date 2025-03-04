@@ -22,7 +22,8 @@ class FHIRInterpretationModule: Module, DefaultInitializable {
                 parameters: .init(
                     modelType: .gpt4o,
                     systemPrompt: nil   // No system prompt as this will be determined later by the resource interpreter
-                )
+                ),
+                modelParameters: .init(temperature: 0.5)
             )
         }
     }
