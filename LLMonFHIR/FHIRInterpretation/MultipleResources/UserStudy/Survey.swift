@@ -22,15 +22,18 @@ enum Answer: Equatable {
 
 /// Defines the type of question and its validation rules
 enum QuestionType {
-    case likertScale(range: ClosedRange<Int>)
+    case likertScale(responseOptions: [String])
     case freeText
     case netPromoterScore(range: ClosedRange<Int>)
 
-    var validationRange: ClosedRange<Int>? {
+    var range: ClosedRange<Int>? {
         switch self {
-        case .likertScale(let range): return range
-        case .netPromoterScore(let range): return range
-        case .freeText: return nil
+        case .likertScale(let responseOptions):
+            return 1...(responseOptions.count)
+        case .netPromoterScore(let range):
+            return range
+        case .freeText:
+            return nil
         }
     }
 }
@@ -111,12 +114,16 @@ struct Question {
 
     private func validateAnswer(_ answer: Answer) throws {
         switch (type, answer) {
-        case let (.likertScale(range), .likertScale(value)):
-            if !range.contains(value) {
-                throw SurveyError.invalidRange(expected: range)
+        case let (.likertScale(responseOptions), .likertScale(value)):
+            guard let validRange = type.range else {
+                throw SurveyError.invalidRange(expected: 1...responseOptions.count)
+            }
+
+            guard validRange.contains(value) else {
+                throw SurveyError.invalidRange(expected: validRange)
             }
         case let (.netPromoterScore(range), .netPromoterScore(value)):
-            if !range.contains(value) {
+            guard range.contains(value) else {
                 throw SurveyError.invalidRange(expected: range)
             }
         case (.freeText, .freeText):
@@ -216,7 +223,7 @@ extension Survey {
     private func formatAnswer(_ answer: Answer, type: QuestionType) -> String {
         switch answer {
         case .likertScale(let value), .netPromoterScore(let value):
-            if let range = type.validationRange {
+            if let range = type.range {
                 return "\(value) (Scale: \(range.lowerBound)-\(range.upperBound))"
             }
             return "\(value)"

@@ -112,10 +112,10 @@ struct QuestionSectionView: View {
 
     @ViewBuilder private var questionContent: some View {
         switch question.type {
-        case .likertScale(let range):
+        case .likertScale(let responseOptions):
             LikertScaleQuestionView(
-                range: range,
                 index: index,
+                responseOptions: responseOptions,
                 answerState: answerState
             )
         case .freeText:
@@ -178,22 +178,18 @@ struct RadioSelectionView: View {
 
 /// A view for collecting Likert scale responses
 struct LikertScaleQuestionView: View {
-    /// The valid range for this Likert scale
-    let range: ClosedRange<Int>
-
     /// The index of this question
     let index: Int
+
+    /// The response options for this question
+    let responseOptions: [String]
 
     /// The shared state object for managing answers
     @ObservedObject var answerState: SurveyAnswerState
 
-    private let explanations: [Int: String] = [
-        1: "Strongly Disagree",
-        2: "Disagree",
-        3: "Neutral",
-        4: "Agree",
-        5: "Strongly Agree"
-    ]
+    private var range: ClosedRange<Int> {
+        1...responseOptions.count
+    }
 
 
     var body: some View {
@@ -201,7 +197,10 @@ struct LikertScaleQuestionView: View {
             range: range,
             selectedValue: answerState.likertScaleAnswers[index],
             displayText: { value in
-                explanations[value] ?? ""
+                guard value > 0 && value <= responseOptions.count else {
+                    return ""
+                }
+                return responseOptions[value - 1]
             },
             onSelect: { value in
                 answerState.updateLikertScale(value: value, at: index)
@@ -250,8 +249,8 @@ struct NPSQuestionView: View {
             selectedValue: answerState.npsAnswer,
             displayText: { value in
                 switch value {
-                case 0: return "\(value) (Would not Recommend)"
-                case 10: return "\(value) (Would Recommend)"
+                case 0: return "\(value) (Would not recommend)"
+                case 10: return "\(value) (Would recommend)"
                 default: return "\(value)"
                 }
             },
