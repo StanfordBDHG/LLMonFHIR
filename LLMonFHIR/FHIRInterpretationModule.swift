@@ -36,7 +36,9 @@ class FHIRInterpretationModule: Module, DefaultInitializable {
     @Model private var resourceInterpreter: FHIRResourceInterpreter
     @Model private var multipleResourceInterpreter: FHIRMultipleResourceInterpreter
     @Model private var multipleResourceInterpreterUserStudy: UserStudyFHIRMultipleResourceInterpreter
-    
+
+    @AppStorage(StorageKeys.openAIModelTemperature) private var openAIModelTemperature = StorageKeys.Defaults.openAIModelTemperature
+
     let summaryLLMSchema: any LLMSchema
     let interpretationLLMSchema: any LLMSchema
     let openAIModelType: LLMOpenAIParameters.ModelType
@@ -85,41 +87,33 @@ class FHIRInterpretationModule: Module, DefaultInitializable {
         multipleResourceInterpreter = FHIRMultipleResourceInterpreter(
             localStorage: localStorage,
             llmRunner: llmRunner,
-            llmSchema: LLMOpenAISchema(
-                parameters: .init(
-                    modelType: openAIModelType.rawValue,
-                    systemPrompts: []   // No system prompt as this will be determined later by the resource interpreter
-                )
-            ) {
-                // FHIR interpretation function
-                FHIRGetResourceLLMFunction(
-                    fhirStore: self.fhirStore,
-                    resourceSummary: self.resourceSummary,
-                    resourceCountLimit: self.resourceCountLimit,
-                    allowedResourcesFunctionCallIdentifiers: self.allowedResourcesFunctionCallIdentifiers
-                )
-            },
+            llmSchema: createOpenAISchema(),
             fhirStore: fhirStore
         )
         
         multipleResourceInterpreterUserStudy = UserStudyFHIRMultipleResourceInterpreter(
             localStorage: localStorage,
             llmRunner: llmRunner,
-            llmSchema: LLMOpenAISchema(
-                parameters: .init(
-                    modelType: openAIModelType.rawValue,
-                    systemPrompts: []   // No system prompt as this will be determined later by the resource interpreter
-                )
-            ) {
-                // FHIR interpretation function
-                FHIRGetResourceLLMFunction(
-                    fhirStore: self.fhirStore,
-                    resourceSummary: self.resourceSummary,
-                    resourceCountLimit: self.resourceCountLimit,
-                    allowedResourcesFunctionCallIdentifiers: self.allowedResourcesFunctionCallIdentifiers
-                )
-            },
+            llmSchema: createOpenAISchema(),
             fhirStore: fhirStore
         )
+    }
+
+    private func createOpenAISchema() -> LLMOpenAISchema {
+        LLMOpenAISchema(
+            parameters: .init(
+                modelType: openAIModelType.rawValue,
+                systemPrompts: []
+            ),
+            modelParameters: .init(temperature: openAIModelTemperature)
+        ) {
+            // FHIR interpretation function
+            FHIRGetResourceLLMFunction(
+                fhirStore: self.fhirStore,
+                resourceSummary: self.resourceSummary,
+                resourceCountLimit: self.resourceCountLimit,
+                allowedResourcesFunctionCallIdentifiers: self.allowedResourcesFunctionCallIdentifiers
+            )
+        }
     }
 }

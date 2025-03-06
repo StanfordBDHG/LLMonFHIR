@@ -15,6 +15,7 @@ enum StorageKeys {
         static let enableTextToSpeech = false
         static let resourceLimit = 250
         static let openAIModel: LLMOpenAIParameters.ModelType = .gpt4o
+        static let openAIModelTemperature = 0.5
     }
     
     
@@ -41,4 +42,5 @@ enum StorageKeys {
     static let openAIModelInterpretation = "settings.openAIModel.interpretation"
     /// Indicates the chosen OpenAI GPT model for multiple resource interpretation
     static let openAIModelMultipleInterpretation = "settings.openAIModel.multipleResourceInterpretation"
+    static let openAIModelTemperature = "settings.openAIModel.temperature"
 }

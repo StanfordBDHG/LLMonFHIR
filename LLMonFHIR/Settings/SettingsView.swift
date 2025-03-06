@@ -17,6 +17,7 @@ struct SettingsView: View {
         case openAIModelSummary
         case openAIModelInterpretation
         case openAIModelMultipleInterpretation
+        case openAIModelParameters
         case resourceSelection
         case promptSummary
         case promptInterpretation
@@ -110,9 +111,12 @@ struct SettingsView: View {
             NavigationLink(value: SettingsDestinations.openAIModelMultipleInterpretation) {
                 Text("SETTINGS_OPENAI_MODEL_MULTIPLE_RESOURCE_INTERPRETATION")
             }
+            NavigationLink(value: SettingsDestinations.openAIModelParameters) {
+                Text("Model Parameters")
+            }
         }
     }
-    
+
     private var promptsSettings: some View {
         Section("SETTINGS_PROMPTS") {
             NavigationLink(value: SettingsDestinations.promptSummary) {
@@ -180,6 +184,8 @@ struct SettingsView: View {
                 )
                 path.removeLast()
             }
+        case .openAIModelParameters:
+            OpenAIModelParametersView()
         case .resourceSelection:
             ResourceSelection()
         case .promptSummary:
