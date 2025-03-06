@@ -1,10 +1,16 @@
 {
   "sourceLanguage" : "en",
   "strings" : {
+    "%.2f" : {
+
+    },
     "A team member will be with you soon. During this study, you’ll complete a survey about your experiences navigating the healthcare system and have the opportunity to ask the chat questions about your health." : {
 
     },
     "Approved by Stanford IRB" : {
+
+    },
+    "Balanced" : {
 
     },
     "Cancel" : {
@@ -205,6 +211,9 @@
           }
         }
       }
+    },
+    "Creative" : {
+
     },
     "Customize the %@." : {
       "localizations" : {
@@ -1192,6 +1201,9 @@
         }
       }
     },
+    "Focused" : {
+
+    },
     "FUNCTION_DESCRIPTION" : {
       "localizations" : {
         "de" : {
@@ -1365,6 +1377,9 @@
         }
       }
     },
+    "Higher values (0.8+) increase randomness and creativity. Lower values (0.2-) make responses more focused and deterministic." : {
+
+    },
     "Immunizations" : {
       "localizations" : {
         "de" : {
@@ -1524,6 +1539,9 @@
           }
         }
       }
+    },
+    "Model Parameters" : {
+
     },
     "Multiple Resource Interpretation Prompt Content" : {
       "comment" : "Content of the multiple resources interpretation prompt.",
@@ -1744,6 +1762,9 @@
         }
       }
     },
+    "Please quit and reopen the app for the changes to take effect." : {
+
+    },
     "Procedures" : {
       "localizations" : {
         "de" : {
@@ -1771,6 +1792,9 @@
           }
         }
       }
+    },
+    "Random" : {
+
     },
     "Reset Chat" : {
       "localizations" : {
@@ -2590,6 +2614,9 @@
       }
     },
     "Task %lld" : {
+
+    },
+    "Temperature" : {
 
     },
     "The medical record does not include any FHIR resources for the search term %@." : {

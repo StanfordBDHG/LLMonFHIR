@@ -78,6 +78,7 @@
 		C092C19A2D5B69370019C316 /* UserStudyChatView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C092C1992D5B69370019C316 /* UserStudyChatView.swift */; };
 		C092C1A02D5B849F0019C316 /* UserStudyFHIRMultipleResourceInterpreter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C092C19F2D5B849F0019C316 /* UserStudyFHIRMultipleResourceInterpreter.swift */; };
 		C0942DDC2D6684E6002B07D3 /* UserStudyWelcomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0942DDB2D6684E6002B07D3 /* UserStudyWelcomeView.swift */; };
+		C0AC386F2D79C93200804E3C /* OpenAIModelParametersView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0AC386E2D79C93200804E3C /* OpenAIModelParametersView.swift */; };
 		C0F7FB892D6F1FC600D48459 /* UserStudyConfig.plist in Resources */ = {isa = PBXBuildFile; fileRef = C0F7FB882D6F1FC600D48459 /* UserStudyConfig.plist */; };
 		C0F7FB8B2D6F693500D48459 /* UserStudyPlistConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0F7FB8A2D6F693500D48459 /* UserStudyPlistConfiguration.swift */; };
 		C0FA07262D39357B002485FF /* SpeziFHIR in Frameworks */ = {isa = PBXBuildFile; productRef = C0FA07252D39357B002485FF /* SpeziFHIR */; };
@@ -153,6 +154,7 @@
 		C092C1992D5B69370019C316 /* UserStudyChatView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserStudyChatView.swift; sourceTree = "<group>"; };
 		C092C19F2D5B849F0019C316 /* UserStudyFHIRMultipleResourceInterpreter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserStudyFHIRMultipleResourceInterpreter.swift; sourceTree = "<group>"; };
 		C0942DDB2D6684E6002B07D3 /* UserStudyWelcomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserStudyWelcomeView.swift; sourceTree = "<group>"; };
+		C0AC386E2D79C93200804E3C /* OpenAIModelParametersView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenAIModelParametersView.swift; sourceTree = "<group>"; };
 		C0F7FB882D6F1FC600D48459 /* UserStudyConfig.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = UserStudyConfig.plist; sourceTree = "<group>"; };
 		C0F7FB8A2D6F693500D48459 /* UserStudyPlistConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserStudyPlistConfiguration.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -216,6 +218,7 @@
 		2F0F90B82A1E6542006D7E03 /* Settings */ = {
 			isa = PBXGroup;
 			children = (
+				C0AC386E2D79C93200804E3C /* OpenAIModelParametersView.swift */,
 				2F0F90B92A1E6556006D7E03 /* SettingsView.swift */,
 				44E55E942CEBC191008A7BD3 /* FHIRPrompt.swift */,
 				44E55E952CEBC191008A7BD3 /* FHIRPromptSettingsView.swift */,
@@ -630,6 +633,7 @@
 				2FE5DC3829EDD7CA004B9AB4 /* Disclaimer.swift in Sources */,
 				44E55E9E2CEBC191008A7BD3 /* FHIRGetResourceLLMFunction.swift in Sources */,
 				C0F7FB8B2D6F693500D48459 /* UserStudyPlistConfiguration.swift in Sources */,
+				C0AC386F2D79C93200804E3C /* OpenAIModelParametersView.swift in Sources */,
 				C0942DDC2D6684E6002B07D3 /* UserStudyWelcomeView.swift in Sources */,
 				44E55E9F2CEBC191008A7BD3 /* FHIRResourceProcessor.swift in Sources */,
 				44E55EA02CEBC191008A7BD3 /* InspectResourceView.swift in Sources */,
