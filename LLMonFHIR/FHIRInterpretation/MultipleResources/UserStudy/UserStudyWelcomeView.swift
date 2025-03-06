@@ -145,30 +145,54 @@ extension AccessGuardConfiguration.Identifier {
 }
 
 extension [SurveyTask] {
+    private static let clarityScale = [
+        "Extremely unclear",
+        "Pretty unclear",
+        "Neutral",
+        "Pretty clear",
+        "Extremely clear"
+    ]
+
+    private static let effectivenessScale = [
+        "Extremely ineffective",
+        "Pretty ineffective",
+        "Neutral",
+        "Pretty effective",
+        "Extremely effective"
+    ]
+
+    private static let comparisonScale = [
+        "Much worse",
+        "A little bit worse",
+        "Neutral",
+        "A little bit better",
+        "Much better"
+    ]
+
     /// Default set of survey tasks used in the user study
     static let defaultTasks: [SurveyTask] = [
         .init(id: 1, questions: [
             .init(
                 text: "How clear and understandable was the summary provided by the app?",
-                type: .likertScale(range: 1...5)
+                type: .likertScale(responseOptions: clarityScale)
             )
         ]),
         .init(id: 2, questions: [
             .init(
                 text: "How effective is this feature for interpreting and evaluating your medical information?",
-                type: .likertScale(range: 1...5)
+                type: .likertScale(responseOptions: effectivenessScale)
             )
         ]),
         .init(id: 3, questions: [
             .init(
                 text: "How effective are these recommendations in helping you make decisions about your health?",
-                type: .likertScale(range: 1...5)
+                type: .likertScale(responseOptions: effectivenessScale)
             )
         ]),
         .init(id: 4, questions: [
             .init(
                 text: "How effective are these recommendations in helping you make decisions about your health?",
-                type: .likertScale(range: 1...5),
+                type: .likertScale(responseOptions: effectivenessScale),
                 isOptional: true
             ),
             .init(
@@ -180,7 +204,7 @@ extension [SurveyTask] {
         .init(id: 5, questions: [
             .init(
                 text: "Compared to other sources of health information (e.g., websites, doctors), how do you rate the LLM's responses?",
-                type: .likertScale(range: 1...5)
+                type: .likertScale(responseOptions: comparisonScale)
             ),
             .init(
                 text: "What were the most and least useful features of the LLM? Do you have any suggestions that you would like to share?",
