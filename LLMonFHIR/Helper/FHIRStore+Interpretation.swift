@@ -21,6 +21,7 @@ extension FHIRStore {
             + llmMedications
             + observations.uniqueDisplayNames
             + procedures.uniqueDisplayNames
+            + llmDocumentReferences
     }
     
     /// All `FHIRResource`s.
@@ -106,7 +107,22 @@ extension FHIRStore {
         
         return outpatientMedications + activeMedications
     }
-    
+
+    private var llmDocumentReferences: [FHIRResource] {
+        otherResources
+            .filter { resource in
+                guard case let .r4(resource) = resource.versionedResource,
+                        let docRef = resource as? ModelsR4.DocumentReference else {
+                    return false
+                }
+                return docRef.category?.contains { category in
+                    category.coding?.contains { coding in
+                        coding.code?.value?.string == "clinical-note"
+                    } ?? false
+                } ?? false
+            }
+    }
+
     /// Get the function call identifiers of all available health resources in the `FHIRStore`.
     ///
     /// - Tip: We use an array as the order indicates the sorting, oldest resources come first, newest one last
