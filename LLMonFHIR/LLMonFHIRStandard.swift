@@ -21,13 +21,9 @@ actor LLMonFHIRStandard: Standard, HealthKitConstraint, EnvironmentAccessible {
     
     
     func add(sample: HKSample) async {
-        await MainActor.run {
-            FHIRStore.loadHealthKitAttachements = true
-        }
-        
         samples.append(sample)
         if await useHealthKitResources {
-            await fhirStore.add(sample: sample)
+            await fhirStore.add(sample: sample, loadHealthKitAttachements: true)
         }
     }
     
