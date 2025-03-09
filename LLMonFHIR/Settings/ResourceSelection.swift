@@ -37,7 +37,6 @@ struct ResourceSelection: View {
         )
     }
     
-    
     var body: some View {
         Form {
             if HKHealthStore.isHealthDataAvailable() {
@@ -47,18 +46,7 @@ struct ResourceSelection: View {
                     }
                 }
                     .onChange(of: useHealthKitResources.wrappedValue, initial: true) {
-                        if useHealthKitResources.wrappedValue {
-                            _Concurrency.Task {
-                                await standard.loadHealthKitResources()
-                            }
-                        } else {
-                            guard let firstMockPatient = bundles.first else {
-                                return
-                            }
-                            
-                            store.removeAllResources()
-                            store.load(bundle: firstMockPatient)
-                        }
+                        changeHealthKitResourcesSelection()
                     }
             }
             if showBundleSelection {
@@ -93,6 +81,24 @@ struct ResourceSelection: View {
                 .jacklyn830Veum823,
                 .milton509Ortiz186
             ]
+        }
+    }
+    
+    
+    private func changeHealthKitResourcesSelection() {
+        if useHealthKitResources.wrappedValue {
+            _Concurrency.Task {
+                await standard.loadHealthKitResources()
+            }
+        } else {
+            guard let firstMockPatient = bundles.first else {
+                return
+            }
+            
+            store.removeAllResources()
+            _Concurrency.Task {
+                await store.load(bundle: firstMockPatient)
+            }
         }
     }
 }

@@ -19,7 +19,8 @@ enum FeatureFlags {
     static let testMode = CommandLine.arguments.contains("--testMode")
     /// Sets the application in user study mode
     static var isUserStudyEnabled: Bool {
-        CommandLine.arguments.contains("--userStudy") ||
-        UserStudyPlistConfiguration.shared.isUserStudyEnabled == true
+        CommandLine.arguments.contains("--userStudy")
+            || UserStudyPlistConfiguration.shared.isUserStudyEnabled == true
+            || UserDefaults.standard.bool(forKey: StorageKeys.isUsabilityStudyEnabled)
     }
 }

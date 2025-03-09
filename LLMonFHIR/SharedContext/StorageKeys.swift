@@ -13,9 +13,9 @@ import SpeziLLMOpenAI
 enum StorageKeys {
     enum Defaults {
         static let enableTextToSpeech = false
-        static let resourceLimit = 250
+        static let resourceLimit = 300
         static let openAIModel: LLMOpenAIParameters.ModelType = .gpt4o
-        static let openAIModelTemperature = 0.5
+        static let openAIModelTemperature = 0.0
     }
     
     
@@ -27,6 +27,10 @@ enum StorageKeys {
     // MARK: - Home
     /// Show the onboarding instructions
     static let onboardingInstructions = "resources.onboardingInstructions"
+    
+    // MARK: - Usability Study
+    /// Show the onboarding instructions
+    static let isUsabilityStudyEnabled = "study.isUsabilityStudyEnabled"
     
     
     // MARK: - Settings

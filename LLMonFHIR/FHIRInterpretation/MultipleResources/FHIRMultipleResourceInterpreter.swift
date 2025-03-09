@@ -45,6 +45,10 @@ class FHIRMultipleResourceInterpreter {
         self.llmRunner = llmRunner
         self.llmSchema = llmSchema
         self.fhirStore = fhirStore
+        
+        Task { @MainActor in
+            await prepareLLM()
+        }
     }
     
     

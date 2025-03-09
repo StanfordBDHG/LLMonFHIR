@@ -306,9 +306,12 @@ struct SurveyView: View {
         Button(action: handleSubmit) {
             Text("Submit")
                 .frame(maxWidth: .infinity)
+                .padding(4)
         }
-        .buttonStyle(.borderless)
-        .disabled(!areAllQuestionsAnswered)
+            .padding(.horizontal, -16)
+            .buttonStyle(.borderedProminent)
+            .disabled(!areAllQuestionsAnswered)
+            .listRowBackground(Color.clear)
     }
 
     private var cancelButton: some View {

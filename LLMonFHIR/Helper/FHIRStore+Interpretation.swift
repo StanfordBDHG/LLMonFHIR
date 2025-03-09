@@ -13,7 +13,7 @@ import SwiftUI
 
 extension FHIRStore {
     /// All relevant `FHIRResource`s for the LLM interpretation.
-    public var llmRelevantResources: [FHIRResource] {
+    @MainActor public var llmRelevantResources: [FHIRResource] {
         allergyIntolerances
             + llmConditions
             + encounters.uniqueDisplayNames
@@ -21,10 +21,11 @@ extension FHIRStore {
             + llmMedications
             + observations.uniqueDisplayNames
             + procedures.uniqueDisplayNames
+            + documents
     }
     
     /// All `FHIRResource`s.
-    public var allResources: [FHIRResource] {
+    @MainActor public var allResources: [FHIRResource] {
         allergyIntolerances
             + conditions
             + diagnostics
@@ -34,10 +35,11 @@ extension FHIRStore {
             + observations
             + otherResources
             + procedures
+            + documents
     }
     
     /// The patient `FHIRResource`
-    public var patient: FHIRResource? {
+    @MainActor public var patient: FHIRResource? {
         otherResources
             .first { resource in
                 guard case let .r4(resource) = resource.versionedResource,
@@ -49,7 +51,7 @@ extension FHIRStore {
             }
     }
     
-    private var llmConditions: [FHIRResource] {
+    @MainActor private var llmConditions: [FHIRResource] {
         conditions
             .filter { resource in
                 guard case let .r4(resource) = resource.versionedResource,
@@ -68,7 +70,7 @@ extension FHIRStore {
             }
     }
     
-    private var llmMedications: [FHIRResource] {
+    @MainActor private var llmMedications: [FHIRResource] {
         func medicationRequest(resource: FHIRResource) -> MedicationRequest? {
             guard case let .r4(resource) = resource.versionedResource,
                   let medicationRequest = resource as? ModelsR4.MedicationRequest else {
@@ -110,7 +112,7 @@ extension FHIRStore {
     /// Get the function call identifiers of all available health resources in the `FHIRStore`.
     ///
     /// - Tip: We use an array as the order indicates the sorting, oldest resources come first, newest one last
-    public var allResourcesFunctionCallIdentifier: [String] {
+    @MainActor public var allResourcesFunctionCallIdentifier: [String] {
         let relevantResources: [FHIRResource] = llmRelevantResources
             .lazy
             .filter {

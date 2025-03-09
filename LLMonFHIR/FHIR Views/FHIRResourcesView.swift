@@ -76,8 +76,10 @@ struct FHIRResourcesView<ContentView: View, ActionView: View>: View {
     }
     
     @ViewBuilder private var resourcesSection: some View {
+        section(for: \.allergyIntolerances, sectionName: String(localized: "Conditions"))
         section(for: \.conditions, sectionName: String(localized: "Conditions"))
         section(for: \.diagnostics, sectionName: String(localized: "Diagnostics"))
+        section(for: \.documents, sectionName: String(localized: "Diagnostics"))
         section(for: \.encounters, sectionName: String(localized: "Encounters"))
         section(for: \.immunizations, sectionName: String(localized: "Immunizations"))
         section(for: \.medications, sectionName: String(localized: "Medications"))

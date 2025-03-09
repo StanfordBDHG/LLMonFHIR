@@ -45,14 +45,20 @@ struct MultipleResourcesChatView: View {
                 exportFormat: .text,
                 messagePendingAnimation: .automatic
             )
-            .speak(llm.context.chat, muted: !textToSpeech)
-            .speechToolbarButton(muted: !$textToSpeech)
-            .viewStateAlert(state: llm.state)
-            .onChange(of: llm.context) {
-                if llm.state != .generating {
-                    multipleResourceInterpreter.queryLLM()
+                .speak(llm.context.chat, muted: !textToSpeech)
+                .speechToolbarButton(muted: !$textToSpeech)
+                .viewStateAlert(state: llm.state)
+                .onChange(of: llm.context) {
+                    if llm.state != .generating {
+                        multipleResourceInterpreter.queryLLM()
+                    }
                 }
-            }
+                .onAppear {
+                    guard !llm.context.chat.contains(where: { $0.role == .user }) else {
+                        return
+                    }
+                    multipleResourceInterpreter.resetChat()
+                }
         } else {
             ProgressView()
         }

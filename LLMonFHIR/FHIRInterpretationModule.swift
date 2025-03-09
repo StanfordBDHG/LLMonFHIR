@@ -51,7 +51,7 @@ class FHIRInterpretationModule: Module, DefaultInitializable {
         summaryLLMSchema: SummaryLLM = Defaults.llmSchema,
         interpretationLLMSchema: InterpretationLLM = Defaults.llmSchema,    // swiftlint:disable:this function_default_parameter_at_end
         multipleResourceInterpretationOpenAIModel: LLMOpenAIParameters.ModelType,  // swiftlint:disable:this identifier_name
-        resourceCountLimit: Int = 250,
+        resourceCountLimit: Int = 300,
         allowedResourcesFunctionCallIdentifiers: Set<String>? = nil // swiftlint:disable:this discouraged_optional_collection
     ) {
         self.summaryLLMSchema = summaryLLMSchema
@@ -99,6 +99,7 @@ class FHIRInterpretationModule: Module, DefaultInitializable {
         )
     }
 
+    @MainActor
     private func createOpenAISchema() -> LLMOpenAISchema {
         LLMOpenAISchema(
             parameters: .init(

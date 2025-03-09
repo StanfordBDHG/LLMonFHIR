@@ -37,7 +37,7 @@ struct ResourceView: View {
         }
         .task {
             if FeatureFlags.testMode {
-                fhirStore.loadTestingResources()
+                await fhirStore.loadTestingResources()
             }
         }
     }

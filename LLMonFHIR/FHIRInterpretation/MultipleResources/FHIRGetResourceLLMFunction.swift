@@ -24,6 +24,7 @@ struct FHIRGetResourceLLMFunction: LLMFunction {
     @Parameter var resources: [String]
     
     
+    @MainActor
     init(
         fhirStore: FHIRStore,
         resourceSummary: FHIRResourceSummary,
@@ -74,7 +75,7 @@ struct FHIRGetResourceLLMFunction: LLMFunction {
             for requestedResource in resources {
                 outerGroup.addTask { @Sendable [fhirStore, resourceSummary] in
                     // Fetch relevant FHIR resources matching the resources requested by the LLM
-                    var fittingResources = fhirStore.llmRelevantResources.filter { $0.functionCallIdentifier.contains(requestedResource) }
+                    var fittingResources = await fhirStore.llmRelevantResources.filter { $0.functionCallIdentifier.contains(requestedResource) }
                     
                     // Stores output of nested task group summarizing fitting resources
                     var nestedFunctionOutputResults = [String]()
