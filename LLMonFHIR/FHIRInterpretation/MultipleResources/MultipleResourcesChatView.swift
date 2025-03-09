@@ -43,7 +43,7 @@ struct MultipleResourcesChatView: View {
                 ),
                 disableInput: llm.state.representation == .processing,
                 exportFormat: .text,
-                messagePendingAnimation: .automatic
+                messagePendingAnimation: .manual(shouldDisplay: multipleResourceInterpreter.viewState == .processing)
             )
                 .speak(llm.context.chat, muted: !textToSpeech)
                 .speechToolbarButton(muted: !$textToSpeech)

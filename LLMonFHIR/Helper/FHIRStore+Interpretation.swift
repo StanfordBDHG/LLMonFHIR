@@ -16,12 +16,14 @@ extension FHIRStore {
     @MainActor public var llmRelevantResources: [FHIRResource] {
         allergyIntolerances
             + llmConditions
+            + diagnostics.uniqueDisplayNames
+            + documents
             + encounters.uniqueDisplayNames
             + immunizations
             + llmMedications
             + observations.uniqueDisplayNames
             + procedures.uniqueDisplayNames
-            + documents
+            + otherResources.uniqueDisplayNames
     }
     
     /// All `FHIRResource`s.
@@ -29,13 +31,13 @@ extension FHIRStore {
         allergyIntolerances
             + conditions
             + diagnostics
+            + documents
             + encounters
             + immunizations
             + medications
             + observations
-            + otherResources
             + procedures
-            + documents
+            + otherResources
     }
     
     /// The patient `FHIRResource`

@@ -33,6 +33,7 @@ class FHIRMultipleResourceInterpreter {
     private let fhirStore: FHIRStore
     
     var llm: (any LLMSession)?
+    private(set) var viewState: ViewState = .idle
     
     
     required init(
@@ -54,11 +55,13 @@ class FHIRMultipleResourceInterpreter {
     
     @MainActor
     func resetChat() {
+        viewState = .processing
         llm = llmRunner(with: llmSchema)
         llm?.context.append(systemMessage: FHIRPrompt.interpretMultipleResources.prompt)
         if let patient = fhirStore.patient {
             llm?.context.append(systemMessage: patient.jsonDescription)
         }
+        viewState = .idle
     }
     
     @MainActor
@@ -67,6 +70,7 @@ class FHIRMultipleResourceInterpreter {
             return
         }
         
+        viewState = .processing
         let llm = llmRunner(with: llmSchema)
         // Read initial conversation from storage
         if let storedContext: LLMContext = try? localStorage.load(.init(FHIRMultipleResourceInterpreterConstants.context)) {
@@ -79,6 +83,7 @@ class FHIRMultipleResourceInterpreter {
         }
 
         self.llm = llm
+        viewState = .idle
     }
 
     @MainActor
@@ -88,19 +93,23 @@ class FHIRMultipleResourceInterpreter {
             return
         }
         
+        viewState = .processing
         Task {
-            Self.logger.debug("The Multiple Resource Interpreter has access to \(self.fhirStore.llmRelevantResources.count) resources.")
-            
-            guard let stream = try? await llm.generate() else {
-                return
+            do {
+                Self.logger.debug("The Multiple Resource Interpreter has access to \(self.fhirStore.llmRelevantResources.count) resources.")
+                
+                let stream = try await llm.generate()
+                
+                for try await token in stream {
+                    viewState = .idle
+                    llm.context.append(assistantOutput: token)
+                }
+                
+                // Store conversation to storage
+                try localStorage.store(llm.context, for: .init(FHIRMultipleResourceInterpreterConstants.context))
+            } catch {
+                viewState = .error(AnyLocalizedError(error: error))
             }
-            
-            for try await token in stream {
-                llm.context.append(assistantOutput: token)
-            }
-            
-            // Store conversation to storage
-            try localStorage.store(llm.context, for: .init(FHIRMultipleResourceInterpreterConstants.context))
         }
     }
     

@@ -65,7 +65,9 @@ final class FHIRResourceSummary: Sendable {
     /// - Returns: An asynchronous `String` representing the summarization of the resource.
     @discardableResult
     func summarize(resource: FHIRResource, forceReload: Bool = false) async throws -> Summary {
-        try await resourceProcessor.process(resource: resource, forceReload: forceReload)
+        let resource = try resource.copy()
+        try await resource.stringifyAttachements()
+        return try await resourceProcessor.process(resource: resource, forceReload: forceReload)
     }
     
     /// Retrieve the cached summary of a given FHIR resource. Returns a human-readable summary or `nil` if it is not present.
