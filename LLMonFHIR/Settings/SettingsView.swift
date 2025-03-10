@@ -37,6 +37,7 @@ struct SettingsView: View {
     @AppStorage(StorageKeys.openAIModelSummarization) private var openAIModelSummarization = StorageKeys.Defaults.openAIModel
     @AppStorage(StorageKeys.openAIModelInterpretation) private var openAIModelInterpretation = StorageKeys.Defaults.openAIModel
     @AppStorage(StorageKeys.openAIModelMultipleInterpretation) private var openAIModelMultipleInterpretation = StorageKeys.Defaults.openAIModel
+    @AppStorage(StorageKeys.isUsabilityStudyEnabled) private var enableUsabilityStudy = CommandLine.arguments.contains("--userStudy")
     
     
     var body: some View {
@@ -47,6 +48,7 @@ struct SettingsView: View {
                 resourcesLimitSettings
                 resourcesSettings
                 promptsSettings
+                usabilityStudySettings
             }
             .navigationTitle("SETTINGS_TITLE")
             .navigationDestination(for: SettingsDestinations.self) { destination in
@@ -127,6 +129,14 @@ struct SettingsView: View {
             }
             NavigationLink(value: SettingsDestinations.promptMultipleResourceInterpretation) {
                 Text("SETTINGS_PROMPTS_INTERPRETATION_MULTIPLE_RESOURCES")
+            }
+        }
+    }
+    
+    private var usabilityStudySettings: some View {
+        Section("Usability Study Settings") {
+            Toggle(isOn: $enableUsabilityStudy) {
+                Text("Enable Usability Study")
             }
         }
     }

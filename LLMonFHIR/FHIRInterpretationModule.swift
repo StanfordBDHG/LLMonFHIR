@@ -99,6 +99,7 @@ class FHIRInterpretationModule: Module, DefaultInitializable {
         )
     }
 
+    @MainActor
     private func createOpenAISchema() -> LLMOpenAISchema {
         LLMOpenAISchema(
             parameters: .init(
