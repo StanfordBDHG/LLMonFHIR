@@ -13,7 +13,7 @@ import SpeziLLMOpenAI
 enum StorageKeys {
     enum Defaults {
         static let enableTextToSpeech = false
-        static let resourceLimit = 300
+        static let resourceLimit = 250
         static let openAIModel: LLMOpenAIParameters.ModelType = .gpt4o
         static let openAIModelTemperature = 0.0
     }
