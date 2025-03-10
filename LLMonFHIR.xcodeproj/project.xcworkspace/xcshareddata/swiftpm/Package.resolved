@@ -123,7 +123,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/StanfordSpezi/SpeziFHIR",
       "state" : {
-        "revision" : "3e2967d6afe20d1931678e2d57ce97eac39b0077"
+        "revision" : "cc83cce380a587c3ad1a1309425f2cb64b6a9f4a",
+        "version" : "0.7.3"
       }
     },
     {
