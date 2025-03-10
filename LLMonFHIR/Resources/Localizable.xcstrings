@@ -7,6 +7,9 @@
     "A team member will be with you soon. During this study, you’ll complete a survey about your experiences navigating the healthcare system and have the opportunity to ask the chat questions about your health." : {
 
     },
+    "Allergies" : {
+
+    },
     "Approved by Stanford IRB" : {
 
     },
@@ -722,6 +725,9 @@
       }
     },
     "Do you want to continue?" : {
+
+    },
+    "Documents" : {
 
     },
     "Download the LLM model to generate summaries of FHIR resources." : {

@@ -66,7 +66,7 @@ final class FHIRResourceSummary: Sendable {
     @discardableResult
     func summarize(resource: FHIRResource, forceReload: Bool = false) async throws -> Summary {
         let resource = try resource.copy()
-        try await resource.stringifyAttachements()
+        try? resource.stringifyAttachements()
         return try await resourceProcessor.process(resource: resource, forceReload: forceReload)
     }
     
