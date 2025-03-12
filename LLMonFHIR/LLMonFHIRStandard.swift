@@ -15,6 +15,7 @@ import SwiftUI
 
 actor LLMonFHIRStandard: Standard, HealthKitConstraint, EnvironmentAccessible {
     @Dependency(FHIRStore.self) var fhirStore
+    @Dependency(FHIRInterpretationModule.self) var fhirInterpretationModule
     
     @MainActor var useHealthKitResources = true
     private var samples: [HKSample] = []
@@ -24,6 +25,7 @@ actor LLMonFHIRStandard: Standard, HealthKitConstraint, EnvironmentAccessible {
         samples.append(sample)
         if await useHealthKitResources {
             await fhirStore.add(sample: sample, loadHealthKitAttachements: true)
+            await fhirInterpretationModule.updateSchemas()
         }
     }
     

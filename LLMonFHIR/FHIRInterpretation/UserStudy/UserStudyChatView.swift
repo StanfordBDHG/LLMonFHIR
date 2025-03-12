@@ -180,12 +180,20 @@ struct ChatToolbar: ToolbarContent {
 
 /// The main view for conducting a user study chat session
 struct UserStudyChatView: View {
-    @Environment(UserStudyFHIRMultipleResourceInterpreter.self) private var interpreter
+    @Environment(FHIRMultipleResourceInterpreter.self) private var interpreter
     @Environment(\.dismiss) private var dismiss
     @StateObject private var viewModel: UserStudyViewModel
 
     private var isInputDisabled: Bool {
-        interpreter.llm?.state.representation == .processing
+        interpreter.llm.state.representation == .processing
+    }
+    
+    private var noUserMessages: Bool {
+        !interpreter.llm.context.chat.contains(where: { $0.role == .user })
+    }
+    
+    private var noAssistantMessages: Bool {
+        !interpreter.llm.context.chat.contains(where: { $0.role == .assistant })
     }
 
     var body: some View {
@@ -210,35 +218,36 @@ struct UserStudyChatView: View {
 
 
     @ViewBuilder private var chatContent: some View {
-        if let llm = interpreter.llm {
-            ChatView(
-                Binding(
-                    get: {
-                        var chat = llm.context.chat
-                        if viewModel.navigationState == .completed {
-                            let surveyReport = viewModel.generateReport()
-                            chat.append(ChatEntity(role: .hidden(type: .init(name: "SURVEY_REPORT")), content: surveyReport))
-                        }
-                        return chat
-                    },
-                    set: { llm.context.chat = $0 }
-                ),
-                disableInput: isInputDisabled,
-                speechToText: false,
-                exportFormat: viewModel.navigationState == .completed ? .text : nil,
-                messagePendingAnimation: .manual(
-                    shouldDisplay: shouldShowTypingIndicator(llm.context.last?.role)
-                )
-            )
-            .viewStateAlert(state: llm.state)
-            .onChange(of: llm.context, initial: true) {
-                if llm.state != .generating {
+        ChatView(
+            Binding(
+                get: {
+                    var chat = interpreter.llm.context.chat
+                    if viewModel.navigationState == .completed {
+                        let surveyReport = viewModel.generateReport()
+                        chat.append(ChatEntity(role: .hidden(type: .init(name: "SURVEY_REPORT")), content: surveyReport))
+                    }
+                    return chat
+                },
+                set: { interpreter.llm.context.chat = $0 }
+            ),
+            disableInput: isInputDisabled,
+            speechToText: false,
+            exportFormat: viewModel.navigationState == .completed ? .text : nil,
+            messagePendingAnimation: .manual(shouldDisplay: interpreter.viewState == .processing || noAssistantMessages)
+        )
+            .viewStateAlert(state: interpreter.llm.state)
+            .onChange(of: interpreter.llm.context, initial: true) {
+                if interpreter.llm.state != .generating && interpreter.llm.context.chat.last?.role == .user {
                     interpreter.queryLLM()
                 }
             }
-        } else {
-            ProgressView()
-        }
+            .onAppear {
+                guard noUserMessages else {
+                    return
+                }
+                interpreter.resetChat()
+                interpreter.queryLLM()
+            }
     }
 
 
@@ -264,10 +273,6 @@ struct UserStudyChatView: View {
             }
             .presentationDetents([.medium, .large])
         }
-    }
-
-    private func shouldShowTypingIndicator(_ role: LLMContextEntity.Role?) -> Bool {
-        role == .user || role == .system
     }
 
     private func handleAppear() {

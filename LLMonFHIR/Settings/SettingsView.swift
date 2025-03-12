@@ -14,9 +14,7 @@ import SwiftUI
 struct SettingsView: View {
     private enum SettingsDestinations {
         case openAIKey
-        case openAIModelSummary
-        case openAIModelInterpretation
-        case openAIModelMultipleInterpretation
+        case openAIModel
         case openAIModelParameters
         case resourceSelection
         case promptSummary
@@ -27,16 +25,11 @@ struct SettingsView: View {
     
     @State private var path = NavigationPath()
     @Environment(\.dismiss) private var dismiss
-    @Environment(FHIRResourceSummary.self) var resourceSummary
-    @Environment(FHIRResourceInterpreter.self) var resourceInterpreter
-    @Environment(FHIRMultipleResourceInterpreter.self) var multipleResourceInterpreter
+    @Environment(FHIRInterpretationModule.self) var fhirInterpretationModule
     
-    @AppStorage(StorageKeys.enableTextToSpeech) private var enableTextToSpeech = StorageKeys.Defaults.enableTextToSpeech
-    @AppStorage(StorageKeys.resourceLimit) private var resourceLimit = StorageKeys.Defaults.resourceLimit
-    @AppStorage(StorageKeys.allowedResourcesFunctionCallIdentifiers) private var allowedResourceIdentifiers = [String]()
-    @AppStorage(StorageKeys.openAIModelSummarization) private var openAIModelSummarization = StorageKeys.Defaults.openAIModel
-    @AppStorage(StorageKeys.openAIModelInterpretation) private var openAIModelInterpretation = StorageKeys.Defaults.openAIModel
-    @AppStorage(StorageKeys.openAIModelMultipleInterpretation) private var openAIModelMultipleInterpretation = StorageKeys.Defaults.openAIModel
+    @AppStorage(StorageKeys.enableTextToSpeech) private var enableTextToSpeech = StorageKeys.currentEnableTextToSpeech
+    @AppStorage(StorageKeys.resourceLimit) private var resourceLimit = StorageKeys.currentResourceCountLimit
+    @AppStorage(StorageKeys.openAIModel) private var openAIModel = StorageKeys.currentOpenAIModel
     @AppStorage(StorageKeys.isUsabilityStudyEnabled) private var enableUsabilityStudy = CommandLine.arguments.contains("--userStudy")
     
     
@@ -50,19 +43,19 @@ struct SettingsView: View {
                 promptsSettings
                 usabilityStudySettings
             }
-            .navigationTitle("SETTINGS_TITLE")
-            .navigationDestination(for: SettingsDestinations.self) { destination in
-                Group {
-                    settingsDestinationView(destination)
-                }
-            }
-            .toolbar {
-                ToolbarItem(placement: .confirmationAction) {
-                    Button("SETTINGS_DONE") {
-                        dismiss()
+                .navigationTitle("SETTINGS_TITLE")
+                .navigationDestination(for: SettingsDestinations.self) { destination in
+                    Group {
+                        settingsDestinationView(destination)
                     }
                 }
-            }
+                .toolbar {
+                    ToolbarItem(placement: .confirmationAction) {
+                        Button("SETTINGS_DONE") {
+                            dismiss()
+                        }
+                    }
+                }
         }
     }
 
@@ -80,12 +73,7 @@ struct SettingsView: View {
                 Text("Resource Limit \(resourceLimit)")
             } onEditingChanged: { complete in
                 if complete {
-                    multipleResourceInterpreter.changeLLMSchema(
-                        openAIModel: openAIModelMultipleInterpretation,
-                        resourceCountLimit: resourceLimit,
-                        resourceSummary: resourceSummary,
-                        allowedResourcesFunctionCallIdentifiers: Set(allowedResourceIdentifiers)
-                    )
+                    fhirInterpretationModule.updateSchemas()
                 }
             }
         }
@@ -104,14 +92,8 @@ struct SettingsView: View {
             NavigationLink(value: SettingsDestinations.openAIKey) {
                 Text("SETTINGS_OPENAI_KEY")
             }
-            NavigationLink(value: SettingsDestinations.openAIModelSummary) {
-                Text("SETTINGS_OPENAI_MODEL_SUMMARY")
-            }
-            NavigationLink(value: SettingsDestinations.openAIModelInterpretation) {
-                Text("SETTINGS_OPENAI_MODEL_INTERPRETATION")
-            }
-            NavigationLink(value: SettingsDestinations.openAIModelMultipleInterpretation) {
-                Text("SETTINGS_OPENAI_MODEL_MULTIPLE_RESOURCE_INTERPRETATION")
+            NavigationLink(value: SettingsDestinations.openAIModel) {
+                Text("SETTINGS_OPENAI_MODEL")
             }
             NavigationLink(value: SettingsDestinations.openAIModelParameters) {
                 Text("Model Parameters")
@@ -142,56 +124,20 @@ struct SettingsView: View {
     }
     
     @ViewBuilder
-    private func settingsDestinationView(_ destination: SettingsDestinations) -> some View { // swiftlint:disable:this function_body_length
+    private func settingsDestinationView(_ destination: SettingsDestinations) -> some View {
         switch destination {
         case .openAIKey:
             LLMOpenAIAPITokenOnboardingStep(actionText: "OPEN_AI_KEY_SAVE_ACTION") {
+                fhirInterpretationModule.updateSchemas()
                 path.removeLast()
             }
-        case .openAIModelSummary:
+        case .openAIModel:
             LLMOpenAIModelOnboardingStep(
                 actionText: "OPEN_AI_MODEL_SAVE_ACTION",
                 models: [.gpt4o, .gpt4_turbo, .gpt3_5_turbo]
             ) { chosenModelType in
-                openAIModelSummarization = chosenModelType
-                resourceSummary.changeLLMSchema(
-                    to: LLMOpenAISchema(
-                        parameters: .init(
-                            modelType: chosenModelType.rawValue,
-                            systemPrompts: []
-                        )
-                    )
-                )
-                path.removeLast()
-            }
-        case .openAIModelInterpretation:
-            LLMOpenAIModelOnboardingStep(
-                actionText: "OPEN_AI_MODEL_SAVE_ACTION",
-                models: [.gpt4o, .gpt4_turbo, .gpt3_5_turbo]
-            ) { chosenModelType in
-                openAIModelInterpretation = chosenModelType
-                resourceInterpreter.changeLLMSchema(
-                    to: LLMOpenAISchema(
-                        parameters: .init(
-                            modelType: chosenModelType.rawValue,
-                            systemPrompts: []
-                        )
-                    )
-                )
-                path.removeLast()
-            }
-        case .openAIModelMultipleInterpretation:
-            LLMOpenAIModelOnboardingStep(
-                actionText: "OPEN_AI_MODEL_SAVE_ACTION",
-                models: [.gpt4o, .gpt4_turbo]
-            ) { chosenModelType in
-                openAIModelMultipleInterpretation = chosenModelType
-                multipleResourceInterpreter.changeLLMSchema(
-                    openAIModel: chosenModelType,
-                    resourceCountLimit: resourceLimit,
-                    resourceSummary: resourceSummary,
-                    allowedResourcesFunctionCallIdentifiers: Set(allowedResourceIdentifiers)
-                )
+                openAIModel = chosenModelType
+                fhirInterpretationModule.updateSchemas()
                 path.removeLast()
             }
         case .openAIModelParameters:
@@ -200,14 +146,17 @@ struct SettingsView: View {
             ResourceSelection()
         case .promptSummary:
             FHIRPromptSettingsView(promptType: .summary) {
+                fhirInterpretationModule.updateSchemas()
                 path.removeLast()
             }
         case .promptInterpretation:
             FHIRPromptSettingsView(promptType: .interpretation) {
+                fhirInterpretationModule.updateSchemas()
                 path.removeLast()
             }
         case .promptMultipleResourceInterpretation:
             FHIRPromptSettingsView(promptType: .interpretMultipleResources) {
+                fhirInterpretationModule.updateSchemas()
                 path.removeLast()
             }
         case .downloadLocalLLM:
@@ -215,9 +164,10 @@ struct SettingsView: View {
                 model: .custom(id: "mlx-community/OpenHermes-2.5-Mistral-7B-4bit-mlx"),
                 downloadDescription: "Download the LLM model to generate summaries of FHIR resources."
             ) {
+                fhirInterpretationModule.updateSchemas()
                 path.removeLast()
             }
-            .interactiveDismissDisabled()
+                .interactiveDismissDisabled()
         }
     }
 }

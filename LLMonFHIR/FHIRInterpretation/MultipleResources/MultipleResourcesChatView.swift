@@ -16,7 +16,7 @@ import SwiftUI
 
 
 struct MultipleResourcesChatView: View {
-    @Environment(FHIRMultipleResourceInterpreter.self) private var multipleResourceInterpreter
+    @Environment(FHIRMultipleResourceInterpreter.self) private var interpreter
     @Environment(\.dismiss) private var dismiss
     
     @Binding private var textToSpeech: Bool
@@ -28,54 +28,52 @@ struct MultipleResourcesChatView: View {
             chatView
                 .navigationTitle(navigationTitle)
                 .toolbar { toolbarContent }
-                .task { await multipleResourceInterpreter.prepareLLM() }
+                .task { await interpreter.prepareLLM() }
         }
         .interactiveDismissDisabled()
     }
     
     
     @MainActor @ViewBuilder private var chatView: some View {
-        if let llm = multipleResourceInterpreter.llm {
-            ChatView(
-                Binding(
-                    get: { llm.context.chat },
-                    set: { llm.context.chat = $0 }
-                ),
-                disableInput: llm.state.representation == .processing,
-                exportFormat: .text,
-                messagePendingAnimation: .manual(shouldDisplay: multipleResourceInterpreter.viewState == .processing)
-            )
-                .speak(llm.context.chat, muted: !textToSpeech)
-                .speechToolbarButton(muted: !$textToSpeech)
-                .viewStateAlert(state: llm.state)
-                .onChange(of: llm.context) {
-                    if llm.state != .generating {
-                        multipleResourceInterpreter.queryLLM()
-                    }
+        ChatView(
+            Binding(
+                get: { interpreter.llm.context.chat },
+                set: { interpreter.llm.context.chat = $0 }
+            ),
+            disableInput: interpreter.llm.state.representation == .processing,
+            exportFormat: .text,
+            messagePendingAnimation: .manual(shouldDisplay: interpreter.viewState == .processing)
+        )
+            .speak(interpreter.llm.context.chat, muted: !textToSpeech)
+            .speechToolbarButton(muted: !$textToSpeech)
+            .viewStateAlert(state: interpreter.llm.state)
+            .onChange(of: interpreter.llm.context, initial: true) {
+                if interpreter.llm.state != .generating && interpreter.llm.context.chat.last?.role == .user {
+                    interpreter.queryLLM()
                 }
-                .onAppear {
-                    guard !llm.context.chat.contains(where: { $0.role == .user }) else {
-                        return
-                    }
-                    multipleResourceInterpreter.resetChat()
+            }
+            .onAppear {
+                guard !interpreter.llm.context.chat.contains(where: { $0.role == .user }) else {
+                    return
                 }
-        } else {
-            ProgressView()
-        }
+                interpreter.viewState = .processing
+                interpreter.queryLLM()
+            }
     }
     
     @MainActor @ToolbarContentBuilder private var toolbarContent: some ToolbarContent {
-        let isProcessing = multipleResourceInterpreter.llm?.state.representation == .processing
+        let isProcessing = interpreter.llm.state.representation == .processing
         ToolbarItem(placement: .cancellationAction) {
             Button("Close") {
-                multipleResourceInterpreter.llm?.cancel()
+                interpreter.llm.cancel()
                 dismiss()
             }
         }
         ToolbarItem(placement: .primaryAction) {
             Button(
                 action: {
-                    multipleResourceInterpreter.resetChat()
+                    interpreter.resetChat()
+                    interpreter.queryLLM()
                 },
                 label: {
                     Image(systemName: "trash")

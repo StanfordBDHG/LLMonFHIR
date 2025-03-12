@@ -136,7 +136,7 @@ struct FHIRResourcesView<ContentView: View, ActionView: View>: View {
         
         return AnyView(
             Section(sectionName) {
-                ForEach(resources) { resource in
+                ForEach(resources.sorted(by: { ($0.date ?? .distantPast) > ($1.date ?? .distantPast) })) { resource in
                     NavigationLink(value: resource) {
                         FHIRResourceSummaryView(resource: resource)
                     }

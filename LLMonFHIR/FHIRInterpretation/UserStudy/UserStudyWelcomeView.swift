@@ -12,7 +12,10 @@ import SwiftUI
 
 
 struct UserStudyWelcomeView: View {
+    @Environment(LLMonFHIRStandard.self) private var standard
+    @Environment(FHIRInterpretationModule.self) private var fhirInterpretationModule
     @Environment(LLMOpenAITokenSaver.self) private var openAITokenSaver
+    
     @State private var isPresentingSettings = false
     @State private var isPresentingStudy = false
 
@@ -36,8 +39,10 @@ struct UserStudyWelcomeView: View {
                         UserStudyChatView(survey: Survey(.defaultTasks))
                     }
                 }
-                .onAppear {
+                .task {
                     openAITokenSaver.token = UserStudyPlistConfiguration.shared.apiKey ?? ""
+                    await standard.loadHealthKitResources()
+                    fhirInterpretationModule.updateSchemas()
                 }
         }
     }
