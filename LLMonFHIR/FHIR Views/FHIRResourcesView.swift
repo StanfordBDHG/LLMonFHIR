@@ -141,6 +141,7 @@ struct FHIRResourcesView<ContentView: View, ActionView: View>: View {
                 resourcesList(resources: resources, showAll: showAll)
             } header: {
                 sectionHeaderButton(sectionName: sectionName, resources: resources, showAll: showAll)
+                    .textCase(nil)
             }
             .listRowInsets(EdgeInsets(top: 8, leading: 16, bottom: 8, trailing: 16))
         )
