@@ -28,23 +28,14 @@ struct FHIRGetResourceLLMFunction: LLMFunction {
     init(
         fhirStore: FHIRStore,
         resourceSummary: FHIRResourceSummary,
-        resourceCountLimit: Int,
-        allowedResourcesFunctionCallIdentifiers: Set<String>? = nil // swiftlint:disable:this discouraged_optional_collection
+        resourceCountLimit: Int
     ) {
         self.fhirStore = fhirStore
         self.resourceSummary = resourceSummary
         
-        // Only take newest values of the health records
-        var allResourcesFunctionCallIdentifiers = Set(fhirStore.allResourcesFunctionCallIdentifier.suffix(resourceCountLimit))
-        
-        // If identifiers are restricted, filter for only allowed function call identifiers of health records.
-        if let allowedResourcesFunctionCallIdentifiers {
-            allResourcesFunctionCallIdentifiers.formIntersection(allowedResourcesFunctionCallIdentifiers)
-        }
-        
         _resources = Parameter(
-            description: String(localized: "PARAMETER_DESCRIPTION"),
-            enum: Array(allResourcesFunctionCallIdentifiers)
+            description: String(localized: "PARAMETER_DESCRIPTION, \(FHIRResource.functionCallIdentifierDateFormatter.string(from: .now))"),
+            enum: fhirStore.allResourcesFunctionCallIdentifier.suffix(resourceCountLimit)
         )
     }
     

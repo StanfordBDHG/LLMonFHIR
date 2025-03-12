@@ -11,7 +11,7 @@ import SpeziFHIR
 
 
 extension FHIRResource {
-    private static let dateFormatter: DateFormatter = {
+    static let functionCallIdentifierDateFormatter: DateFormatter = {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "MM-dd-yyyy"
         return dateFormatter
@@ -22,6 +22,6 @@ extension FHIRResource {
         resourceType.filter { !$0.isWhitespace }
             + displayName.filter { !$0.isWhitespace }
             + "-"
-            + (date.map { FHIRResource.dateFormatter.string(from: $0) } ?? "")
+            + (date.map { FHIRResource.functionCallIdentifierDateFormatter.string(from: $0) } ?? "")
     }
 }

@@ -11,18 +11,19 @@ import SwiftUI
 
 
 struct OpenAIModelParametersView: View {
-    @AppStorage(StorageKeys.openAIModelTemperature) private var temperature = StorageKeys.Defaults.openAIModelTemperature
+    @AppStorage(StorageKeys.openAIModelTemperature) private var temperature = StorageKeys.currentOpenAIModelTemperature
+    @Environment(FHIRInterpretationModule.self) var fhirInterpretationModule
 
 
     var body: some View {
         Form {
             temperatureSection
         }
-        .navigationTitle("Model Parameters")
-        .navigationBarTitleDisplayMode(.inline)
-        .safeAreaInset(edge: .bottom) {
-            footerText
-        }
+            .navigationTitle("Model Parameters")
+            .navigationBarTitleDisplayMode(.inline)
+            .safeAreaInset(edge: .bottom) {
+                footerText
+            }
     }
 
 
@@ -36,10 +37,13 @@ struct OpenAIModelParametersView: View {
 
                 Slider(value: $temperature, in: 0...2, step: 0.05)
                     .tint(temperatureColor)
+                    .onChange(of: temperature) {
+                        fhirInterpretationModule.updateSchemas()
+                    }
 
                 temperatureLabels
             }
-            .padding(.vertical, 8)
+                .padding(.vertical, 8)
         }
     }
 

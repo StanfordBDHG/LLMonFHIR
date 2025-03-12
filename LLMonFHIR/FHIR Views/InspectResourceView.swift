@@ -30,11 +30,6 @@ struct InspectResourceView: View {
             .navigationTitle(resource.displayName)
             .viewStateAlert(state: $interpreting)
             .viewStateAlert(state: $loadingSummary)
-            .task {
-                #if !TEST
-//                interpret()
-                #endif
-            }
     }
     
     @ViewBuilder private var summarySection: some View {

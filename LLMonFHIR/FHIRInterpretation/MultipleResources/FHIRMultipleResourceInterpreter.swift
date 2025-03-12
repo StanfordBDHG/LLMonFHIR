@@ -31,21 +31,25 @@ class FHIRMultipleResourceInterpreter {
     private let llmRunner: LLMRunner
     private var llmSchema: any LLMSchema
     private let fhirStore: FHIRStore
+    private let fhirResourceSummary: FHIRResourceSummary
     
-    var llm: (any LLMSession)?
-    private(set) var viewState: ViewState = .idle
+    var llm: any LLMSession
+    var viewState: ViewState = .idle
     
     
     required init(
         localStorage: LocalStorage,
         llmRunner: LLMRunner,
         llmSchema: any LLMSchema,
-        fhirStore: FHIRStore
+        fhirStore: FHIRStore,
+        fhirResourceSummary: FHIRResourceSummary
     ) {
         self.localStorage = localStorage
         self.llmRunner = llmRunner
         self.llmSchema = llmSchema
         self.fhirStore = fhirStore
+        self.fhirResourceSummary = fhirResourceSummary
+        self.llm = llmRunner(with: llmSchema)
         
         Task { @MainActor in
             await prepareLLM()
@@ -57,19 +61,15 @@ class FHIRMultipleResourceInterpreter {
     func resetChat() {
         viewState = .processing
         llm = llmRunner(with: llmSchema)
-        llm?.context.append(systemMessage: FHIRPrompt.interpretMultipleResources.prompt)
+        llm.context.append(systemMessage: FHIRPrompt.interpretMultipleResources.prompt)
         if let patient = fhirStore.patient {
-            llm?.context.append(systemMessage: patient.jsonDescription)
+            llm.context.append(systemMessage: patient.jsonDescription)
         }
         viewState = .idle
     }
     
     @MainActor
     func prepareLLM() async {
-        guard llm == nil else {
-            return
-        }
-        
         viewState = .processing
         let llm = llmRunner(with: llmSchema)
         // Read initial conversation from storage
@@ -88,20 +88,23 @@ class FHIRMultipleResourceInterpreter {
 
     @MainActor
     func queryLLM() {
-        guard let llm,
-              llm.context.last?.role == .user || !(llm.context.contains(where: { $0.role == .assistant() }) ) else {
+        guard llm.context.last?.role == .user || !(llm.context.contains(where: { $0.role == .assistant() }) ) else {
             return
         }
         
         viewState = .processing
+        
         Task {
             do {
+                defer {
+                    viewState = .idle
+                }
+                
                 Self.logger.debug("The Multiple Resource Interpreter has access to \(self.fhirStore.llmRelevantResources.count) resources.")
                 
                 let stream = try await llm.generate()
                 
                 for try await token in stream {
-                    viewState = .idle
                     llm.context.append(assistantOutput: token)
                 }
                 
@@ -113,29 +116,12 @@ class FHIRMultipleResourceInterpreter {
         }
     }
     
-    /// Change the `LLMSchema` used by the ``FHIRMultipleResourceInterpreter``.
-    @MainActor
-    func changeLLMSchema(
-        openAIModel model: LLMOpenAIParameters.ModelType,
-        resourceCountLimit: Int,
-        resourceSummary: FHIRResourceSummary,
-        allowedResourcesFunctionCallIdentifiers: Set<String>? = nil // swiftlint:disable:this discouraged_optional_collection
-    ) {
-        self.llmSchema = LLMOpenAISchema(
-            parameters: .init(
-                modelType: model.rawValue,
-                systemPrompts: []   // No system prompt as this will be determined later by the resource interpreter
-            )
-        ) {
-            // FHIR interpretation function
-            FHIRGetResourceLLMFunction(
-                fhirStore: self.fhirStore,
-                resourceSummary: resourceSummary,
-                resourceCountLimit: resourceCountLimit,
-                allowedResourcesFunctionCallIdentifiers: allowedResourcesFunctionCallIdentifiers
-            )
-        }
-        self.llm = nil
+    /// Adjust the LLM schema used by the ``FHIRMultipleResourceInterpreter``.
+    ///
+    /// - Parameters:
+    ///    - schema: The to-be-used `LLMSchema`.
+    func changeLLMSchema<Schema: LLMSchema>(to schema: Schema) {
+        self.llmSchema = schema
         
         Task {
             await prepareLLM()

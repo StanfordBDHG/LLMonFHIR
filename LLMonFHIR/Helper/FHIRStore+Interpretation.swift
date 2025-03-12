@@ -124,7 +124,7 @@ extension FHIRStore {
                 $0.date ?? .distantPast < $1.date ?? .distantPast
             }
         
-        return Array(Set(relevantResources.removingDuplicates().map { $0.functionCallIdentifier }))
+        return relevantResources.map { $0.functionCallIdentifier }
     }
 }
 
@@ -143,10 +143,5 @@ extension Array where Element == FHIRResource {
         )
         
         return Array(reducedEncounters.values)
-    }
-    
-    fileprivate func removingDuplicates() -> [FHIRResource] {
-        var seen = Set<Element>()
-        return filter { seen.insert($0).inserted }
     }
 }

@@ -15,6 +15,7 @@ import SwiftUI
 
 struct ResourceSelection: View {
     @Environment(LLMonFHIRStandard.self) private var standard
+    @Environment(FHIRInterpretationModule.self) var fhirInterpretationModule
     @Environment(FHIRStore.self) private var store
     
     @State private var bundles: [ModelsR4.Bundle] = []
@@ -100,5 +101,7 @@ struct ResourceSelection: View {
                 await store.load(bundle: firstMockPatient)
             }
         }
+        
+        fhirInterpretationModule.updateSchemas()
     }
 }
