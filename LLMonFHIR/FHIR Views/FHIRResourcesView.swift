@@ -40,7 +40,8 @@ import SwiftUI
 struct FHIRResourcesView<ContentView: View, ActionView: View>: View {
     @Environment(FHIRStore.self) private var fhirStore
     @State private var searchText = ""
-    
+    @State private var showAllItems: [String: Bool] = [:]
+
     private let navigationTitle: Text
     private let contentView: ContentView
     private let actionView: ActionView
@@ -124,24 +125,83 @@ struct FHIRResourcesView<ContentView: View, ActionView: View>: View {
     
     
     private func section(for keyPath: KeyPath<FHIRStore, [FHIRResource]>, sectionName: String) -> some View {
-        var resources = fhirStore[keyPath: keyPath]
-        
-        if !searchText.isEmpty {
-            resources = resources.filterByDisplayName(with: searchText)
-        }
-        
+        let resources = filteredResources(for: keyPath)
+
         guard !resources.isEmpty else {
             return AnyView(EmptyView())
         }
-        
+
+        let showAll = Binding(
+            get: { showAllItems[sectionName, default: false] },
+            set: { showAllItems[sectionName] = $0 }
+        )
+
         return AnyView(
-            Section(sectionName) {
-                ForEach(resources.sorted(by: { ($0.date ?? .distantPast) > ($1.date ?? .distantPast) })) { resource in
-                    NavigationLink(value: resource) {
-                        FHIRResourceSummaryView(resource: resource)
-                    }
+            Section {
+                resourcesList(resources: resources, showAll: showAll)
+            } header: {
+                sectionHeaderButton(sectionName: sectionName, resources: resources, showAll: showAll)
+            }
+            .listRowInsets(EdgeInsets(top: 8, leading: 16, bottom: 8, trailing: 16))
+        )
+    }
+
+    private func filteredResources(for keyPath: KeyPath<FHIRStore, [FHIRResource]>) -> [FHIRResource] {
+        var resources = fhirStore[keyPath: keyPath]
+
+        if !searchText.isEmpty {
+            resources = resources.filterByDisplayName(with: searchText)
+        }
+
+        return resources
+    }
+
+    private func sectionHeaderButton(sectionName: String, resources: [FHIRResource], showAll: Binding<Bool>) -> some View {
+        Button {
+            withAnimation {
+                showAll.wrappedValue.toggle()
+            }
+        } label: {
+            HStack {
+                Text(sectionName)
+                    .font(.headline)
+                    .foregroundColor(.primary)
+
+                Text("\(resources.count)")
+                    .font(.caption)
+                    .fontWeight(.semibold)
+                    .padding(.horizontal, 8)
+                    .padding(.vertical, 2)
+                    .background(Color.accentColor)
+                    .foregroundColor(.white)
+                    .clipShape(Capsule())
+
+                Spacer()
+
+                if resources.count > 3 {
+                    Image(systemName: "chevron.right")
+                        .font(.subheadline)
+                        .fontWeight(.medium)
+                        .rotationEffect(.degrees(showAll.wrappedValue ? 90 : 0))
+                        .offset(y: 1)
+                        .accessibilityHidden(true)
+                        .foregroundColor(.accentColor)
                 }
             }
-        )
+                .contentShape(Rectangle())
+                .padding(.vertical, 6)
+        }
+            .buttonStyle(PlainButtonStyle())
+    }
+
+    private func resourcesList(resources: [FHIRResource], showAll: Binding<Bool>) -> some View {
+        let sortedResources = resources.sorted(by: { ($0.date ?? .distantPast) > ($1.date ?? .distantPast) })
+        let visibleResources = showAll.wrappedValue ? sortedResources : Array(sortedResources.prefix(3))
+
+        return ForEach(visibleResources) { resource in
+            NavigationLink(value: resource) {
+                FHIRResourceSummaryView(resource: resource)
+            }
+        }
     }
 }
