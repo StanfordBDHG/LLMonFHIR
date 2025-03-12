@@ -29,13 +29,44 @@ final class FHIRResourceSummary: Sendable {
         
         
         init?(_ description: String) {
-            let components = description.split(separator: "\n")
-            guard components.count == 2, let title = components.first, let summary = components.last else {
+            let lines = description
+                .trimmingCharacters(in: .whitespacesAndNewlines)
+                .components(separatedBy: "\n")
+                .map { $0.trimmingCharacters(in: .whitespacesAndNewlines) }
+                .filter { !$0.isEmpty }
+
+            guard !lines.isEmpty else {
                 return nil
             }
-            
-            self.title = String(title)
-            self.summary = String(summary)
+
+            if lines.count == 1 {
+                let wordCount = lines[0]
+                    .components(separatedBy: .whitespacesAndNewlines)
+                    .filter { !$0.isEmpty }
+                    .count
+
+                if wordCount <= 4 {
+                    self.title = lines[0]
+                    self.summary = "No detailed summary available"
+                } else {
+                    let words = lines[0]
+                        .components(separatedBy: .whitespacesAndNewlines)
+                        .filter { !$0.isEmpty }
+                    self.title = words
+                        .prefix(3)
+                        .joined(separator: " ")
+                    self.summary = lines[0]
+                }
+            } else {
+                self.title = lines[0]
+                self.summary = lines
+                    .dropFirst()
+                    .joined(separator: " ")
+            }
+
+            guard !self.title.isEmpty && !self.summary.isEmpty else {
+                return nil
+            }
         }
     }
     
