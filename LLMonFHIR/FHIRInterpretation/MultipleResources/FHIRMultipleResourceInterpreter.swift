@@ -31,7 +31,6 @@ class FHIRMultipleResourceInterpreter {
     private let llmRunner: LLMRunner
     private var llmSchema: any LLMSchema
     private let fhirStore: FHIRStore
-    private let fhirResourceSummary: FHIRResourceSummary
     
     var llm: any LLMSession
     var viewState: ViewState = .idle
@@ -41,14 +40,12 @@ class FHIRMultipleResourceInterpreter {
         localStorage: LocalStorage,
         llmRunner: LLMRunner,
         llmSchema: any LLMSchema,
-        fhirStore: FHIRStore,
-        fhirResourceSummary: FHIRResourceSummary
+        fhirStore: FHIRStore
     ) {
         self.localStorage = localStorage
         self.llmRunner = llmRunner
         self.llmSchema = llmSchema
         self.fhirStore = fhirStore
-        self.fhirResourceSummary = fhirResourceSummary
         self.llm = llmRunner(with: llmSchema)
         
         Task { @MainActor in

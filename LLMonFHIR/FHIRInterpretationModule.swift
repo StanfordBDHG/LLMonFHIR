@@ -73,8 +73,7 @@ class FHIRInterpretationModule: Module, DefaultInitializable, EnvironmentAccessi
             localStorage: localStorage,
             llmRunner: llmRunner,
             llmSchema: multipleResourceInterpreterOpenAISchema,
-            fhirStore: fhirStore,
-            fhirResourceSummary: resourceSummary
+            fhirStore: fhirStore
         )
         
         // Double-check that we load the right configurations.
