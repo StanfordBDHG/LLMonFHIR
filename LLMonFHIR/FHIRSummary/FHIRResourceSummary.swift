@@ -15,37 +15,36 @@ import SpeziLocalStorage
 /// Responsible for summarizing FHIR resources.
 @Observable
 final class FHIRResourceSummary: Sendable {
+    /// Error thrown when summarization fails.
+    enum SummaryError: Error {
+        case summaryFailed(String)
+    }
+
     /// Summary of a FHIR resource emitted by the ``FHIRResourceSummary``.
     struct Summary: Codable, LosslessStringConvertible, Sendable {
         /// Title of the FHIR resource, should be shorter than 4 words.
         let title: String
         /// Summary of the FHIR resource, should be a single line of text.
         let summary: String
-        /// Indicates if this summary used fallback values due to parsing issues.
-        let needsRetry: Bool
 
         var description: String {
             title + "\n" + summary
         }
 
         
-        init(_ description: String) {
+        init?(_ description: String) {
             let lines = description.components(separatedBy: "\n")
             let nonEmptyLines = lines.filter { !$0.isEmpty }
 
             switch nonEmptyLines.count {
             case 0:
-                title = "Unknown Resource"
-                summary = "Failed to generate summary"
-                needsRetry = true
+                return nil
             case 1:
                 title = nonEmptyLines[0]
                 summary = nonEmptyLines[0]
-                needsRetry = false
             default:
                 title = nonEmptyLines[0]
                 summary = nonEmptyLines.dropFirst().joined(separator: "\n")
-                needsRetry = false
             }
         }
     }
@@ -82,18 +81,22 @@ final class FHIRResourceSummary: Sendable {
         try? resource.stringifyAttachements()
 
         var retryCount = 0
-        var summary: Summary
+        var summary: Summary?
 
         repeat {
             summary = try await resourceProcessor.process(resource: resource, forceReload: forceReload || retryCount > 0)
             retryCount += 1
 
-            if !summary.needsRetry {
+            guard summary == nil else {
                 break
             }
 
-            try? await Task.sleep(nanoseconds: 500_000_000)
+            try? await Task.sleep(for: .seconds(0.5))
         } while retryCount < maxRetries
+
+        guard let summary = summary else {
+            throw SummaryError.summaryFailed("Failed to generate valid summary after \(maxRetries) retries")
+        }
 
         return summary
     }
