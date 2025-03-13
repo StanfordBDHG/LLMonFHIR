@@ -1894,8 +1894,8 @@
       "localizations" : {
         "de" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Open AI-Einstellungen"
+            "state" : "translated",
+            "value" : "OpenAI-Einstellungen"
           }
         },
         "en" : {
@@ -1906,20 +1906,20 @@
         },
         "es" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Configuración de Open AI"
+            "state" : "translated",
+            "value" : "Configuración de OpenAI"
           }
         },
         "fr" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Paramètres d'Open AI"
+            "state" : "translated",
+            "value" : "Paramètres d'OpenAI"
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Open AI设置"
+            "state" : "translated",
+            "value" : "OpenAI设置"
           }
         }
       }
@@ -1928,8 +1928,8 @@
       "localizations" : {
         "de" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Open AI API-Schlüssel"
+            "state" : "translated",
+            "value" : "OpenAI API-Schlüssel"
           }
         },
         "en" : {
@@ -1940,20 +1940,20 @@
         },
         "es" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Clave de API de Open AI"
+            "state" : "translated",
+            "value" : "Clave de API de OpenAI"
           }
         },
         "fr" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Clé d'API d'Open AI"
+            "state" : "translated",
+            "value" : "Clé d'API d'OpenAI"
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Open AI API密钥"
+            "state" : "translated",
+            "value" : "OpenAI API密钥"
           }
         }
       }
