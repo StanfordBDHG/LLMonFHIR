@@ -21,37 +21,44 @@ final class FHIRResourceSummary: Sendable {
         let title: String
         /// Summary of the FHIR resource, should be a single line of text.
         let summary: String
-        
-        
+        /// Indicates if this summary used fallback values due to parsing issues.
+        let needsRetry: Bool
+
         var description: String {
             title + "\n" + summary
         }
+
         
-        
-        init?(_ description: String) {
+        init(_ description: String) {
             let lines = description.components(separatedBy: "\n")
             let nonEmptyLines = lines.filter { !$0.isEmpty }
 
             switch nonEmptyLines.count {
             case 0:
-                return nil
+                title = "Unknown Resource"
+                summary = "Failed to generate summary"
+                needsRetry = true
             case 1:
                 title = nonEmptyLines[0]
                 summary = nonEmptyLines[0]
+                needsRetry = false
             default:
                 title = nonEmptyLines[0]
                 summary = nonEmptyLines.dropFirst().joined(separator: "\n")
+                needsRetry = false
             }
         }
     }
     
     
     private let resourceProcessor: FHIRResourceProcessor<Summary>
-    
-    
+    private let maxRetries = 1
+
+
     /// - Parameters:
     ///   - localStorage: Local storage module that needs to be passed to the ``FHIRResourceSummary`` to allow it to cache summaries.
-    ///   - openAIModel: OpenAI module that needs to be passed to the ``FHIRResourceSummary`` to allow it to retrieve summaries.
+    ///   - llmRunner: OpenAI module that needs to be passed to the ``FHIRResourceSummary`` to allow it to retrieve summaries.
+    ///   - llmSchema: LLM schema to use for generating summaries.
     init(localStorage: LocalStorage, llmRunner: LLMRunner, llmSchema: any LLMSchema) {
         self.resourceProcessor = FHIRResourceProcessor(
             localStorage: localStorage,
@@ -73,7 +80,22 @@ final class FHIRResourceSummary: Sendable {
     func summarize(resource: FHIRResource, forceReload: Bool = false) async throws -> Summary {
         let resource = try resource.copy()
         try? resource.stringifyAttachements()
-        return try await resourceProcessor.process(resource: resource, forceReload: forceReload)
+
+        var retryCount = 0
+        var summary: Summary
+
+        repeat {
+            summary = try await resourceProcessor.process(resource: resource, forceReload: forceReload || retryCount > 0)
+            retryCount += 1
+
+            if !summary.needsRetry {
+                break
+            }
+
+            try? await Task.sleep(nanoseconds: 500_000_000)
+        } while retryCount < maxRetries
+
+        return summary
     }
     
     /// Retrieve the cached summary of a given FHIR resource. Returns a human-readable summary or `nil` if it is not present.
