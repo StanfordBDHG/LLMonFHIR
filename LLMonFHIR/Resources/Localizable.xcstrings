@@ -4,6 +4,9 @@
     "%.2f" : {
 
     },
+    "%lld" : {
+
+    },
     "A team member will be with you soon. During this study, you’ll complete a survey about your experiences navigating the healthcare system and have the opportunity to ask the chat questions about your health." : {
 
     },
