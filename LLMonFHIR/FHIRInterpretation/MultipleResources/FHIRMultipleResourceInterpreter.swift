@@ -99,6 +99,7 @@ class FHIRMultipleResourceInterpreter {
                 
                 Self.logger.debug("The Multiple Resource Interpreter has access to \(self.fhirStore.llmRelevantResources.count) resources.")
                 
+                viewState = .processing
                 let stream = try await llm.generate()
                 
                 for try await token in stream {
