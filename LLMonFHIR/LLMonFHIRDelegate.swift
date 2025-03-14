@@ -24,12 +24,16 @@ class LLMonFHIRDelegate: SpeziAppDelegate {
                 healthKit
             }
             LLMRunner {
-                LLMLocalPlatform()
-                LLMOpenAIPlatform(configuration: .init(concurrentStreams: 20))
+                LLMOpenAIPlatform(configuration: .init(concurrentStreams: 100))
             }
             FHIRInterpretationModule()
             AccessGuardModule([
-                .fixed(identifier: .userStudyIndentifier, code: "0218", codeOptions: .fourDigitNumeric, timeout: 60 * 60)
+                .fixed(
+                    identifier: .userStudyIndentifier,
+                    code: "0218",
+                    codeOptions: .fourDigitNumeric,
+                    timeout: 60 * 60
+                )
             ])
         }
     }
