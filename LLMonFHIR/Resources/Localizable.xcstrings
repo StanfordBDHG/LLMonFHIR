@@ -1412,9 +1412,6 @@
         }
       }
     },
-    "Model Parameters" : {
-
-    },
     "Multiple Resource Interpretation Prompt Content" : {
       "comment" : "Content of the multiple resources interpretation prompt.",
       "localizations" : {
@@ -1898,31 +1895,31 @@
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Open AI-Einstellungen"
+            "value" : "OpenAI-Einstellungen"
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Open AI Settings"
+            "value" : "OpenAI Settings"
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Configuración de Open AI"
+            "value" : "Configuración de OpenAI"
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Paramètres d'Open AI"
+            "value" : "Paramètres d'OpenAI"
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Open AI设置"
+            "value" : "OpenAI设置"
           }
         }
       }
@@ -1932,139 +1929,51 @@
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Open AI API-Schlüssel"
+            "value" : "OpenAI API-Schlüssel"
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Open AI API Key"
+            "value" : "OpenAI API Key"
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Clave de API de Open AI"
+            "value" : "Clave de API de OpenAI"
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Clé d'API d'Open AI"
+            "value" : "Clé d'API d'OpenAI"
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Open AI API密钥"
+            "value" : "OpenAI API密钥"
           }
         }
       }
     },
     "SETTINGS_OPENAI_MODEL" : {
-
-    },
-    "SETTINGS_OPENAI_MODEL_INTERPRETATION" : {
-      "extractionState" : "stale",
       "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "OpenAI Interpretationsmodell"
-          }
-        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Open AI Interpretation Model"
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Modelo abierto de interpretación de la IA"
-          }
-        },
-        "fr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Modèle ouvert d'interprétation de l'IA"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "开放式人工智能解释模型"
+            "value" : "OpenAI Model"
           }
         }
       }
     },
-    "SETTINGS_OPENAI_MODEL_MULTIPLE_RESOURCE_INTERPRETATION" : {
-      "extractionState" : "stale",
+    "SETTINGS_OPENAI_MODEL_PARAMETERS" : {
       "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "OpenAI Mehrere Resourcen Interpretationsmodell"
-          }
-        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Open AI Multiple Resource Interpretation Model"
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Modelo de interpretación de recursos múltiples de IA abierta"
-          }
-        },
-        "fr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Modèle ouvert d'interprétation des ressources multiples de l'IA"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "开放式人工智能多种资源解释模型"
-          }
-        }
-      }
-    },
-    "SETTINGS_OPENAI_MODEL_SUMMARY" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "OpenAI Zusammenfassungsmodell"
-          }
-        },
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Open AI Summarization Model"
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Modelo abierto de síntesis de IA"
-          }
-        },
-        "fr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Modèle ouvert de résumé de l'IA"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "开放式人工智能总结模型"
+            "value" : "OpenAI Model Parameters"
           }
         }
       }
