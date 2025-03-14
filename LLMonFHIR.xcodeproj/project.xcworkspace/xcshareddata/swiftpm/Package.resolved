@@ -96,8 +96,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/StanfordSpezi/Spezi",
       "state" : {
-        "revision" : "4513a697572e8e1faea1e0ee52e6fad4b8d3dd8d",
-        "version" : "1.8.0"
+        "revision" : "49ed1ddcfb7d0f753990b55578c33a887513fb39",
+        "version" : "1.8.1"
       }
     },
     {
@@ -123,8 +123,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/StanfordSpezi/SpeziFHIR",
       "state" : {
-        "revision" : "cc83cce380a587c3ad1a1309425f2cb64b6a9f4a",
-        "version" : "0.7.3"
+        "revision" : "2957b4c5b07c29819e4cf4e0948173c2dfef853a",
+        "version" : "0.7.4"
       }
     },
     {
@@ -249,8 +249,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/apple/swift-openapi-generator",
       "state" : {
-        "revision" : "84b693f9d0559dc488e691edb4837bafbce2aaea",
-        "version" : "1.7.0"
+        "revision" : "755c0ec69bd667aa4e8ba50c8b710585d302879e",
+        "version" : "1.7.1"
       }
     },
     {
@@ -258,8 +258,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/apple/swift-openapi-runtime",
       "state" : {
-        "revision" : "23146bc8710ac5e57abb693113f02dc274cf39b6",
-        "version" : "1.8.0"
+        "revision" : "81c309c7b43cd56b2d2b90ca0170f17ff3d0c433",
+        "version" : "1.8.1"
       }
     },
     {
