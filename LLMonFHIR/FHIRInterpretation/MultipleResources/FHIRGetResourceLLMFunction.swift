@@ -15,7 +15,7 @@ struct FHIRGetResourceLLMFunction: LLMFunction {
     static let logger = Logger(subsystem: "edu.stanford.spezi.fhir", category: "SpeziFHIRLLM")
     
     static let name = "get_resources"
-    static let description = String(localized: "FUNCTION_DESCRIPTION")
+    static let description = String(localized: "FUNCTION_DESCRIPTION \(FHIRResource.functionCallIdentifierDateFormatter.string(from: .now))")
     
     private let fhirStore: FHIRStore
     private let resourceSummary: FHIRResourceSummary
@@ -34,7 +34,7 @@ struct FHIRGetResourceLLMFunction: LLMFunction {
         self.resourceSummary = resourceSummary
         
         _resourceCategories = Parameter(
-            description: String(localized: "PARAMETER_DESCRIPTION, \(FHIRResource.functionCallIdentifierDateFormatter.string(from: .now))"),
+            description: String(localized: "PARAMETER_DESCRIPTION \(FHIRResource.functionCallIdentifierDateFormatter.string(from: .now))"),
             enum: fhirStore.allResourcesFunctionCallIdentifier.suffix(resourceCountLimit)
         )
     }
