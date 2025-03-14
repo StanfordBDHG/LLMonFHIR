@@ -21,8 +21,8 @@ struct FHIRGetResourceLLMFunction: LLMFunction {
     private let resourceSummary: FHIRResourceSummary
     
     
-    @Parameter var resources: [String]
-    
+    @Parameter var resourceCategories: [String]
+
     
     @MainActor
     init(
@@ -33,7 +33,7 @@ struct FHIRGetResourceLLMFunction: LLMFunction {
         self.fhirStore = fhirStore
         self.resourceSummary = resourceSummary
         
-        _resources = Parameter(
+        _resourceCategories = Parameter(
             description: String(localized: "PARAMETER_DESCRIPTION, \(FHIRResource.functionCallIdentifierDateFormatter.string(from: .now))"),
             enum: fhirStore.allResourcesFunctionCallIdentifier.suffix(resourceCountLimit)
         )
@@ -59,53 +59,67 @@ struct FHIRGetResourceLLMFunction: LLMFunction {
     
     
     func execute() async throws -> String? {
+        let allResourceResults = try await processResourceCategories(resourceCategories)
+        return allResourceResults.joined(separator: "\n\n")
+    }
+
+    private func processResourceCategories(_ resourceCategories: [String]) async throws -> [String] {
         var functionOutput: [String] = []
-        
-        try await withThrowingTaskGroup(of: [String].self) { outerGroup in
-            // Iterate over all requested resources by the LLM
-            for requestedResource in resources {
-                outerGroup.addTask { @Sendable [fhirStore, resourceSummary] in
-                    // Fetch relevant FHIR resources matching the resources requested by the LLM
-                    var fittingResources = await fhirStore.llmRelevantResources.filter { $0.functionCallIdentifier.contains(requestedResource) }
-                    
-                    // Stores output of nested task group summarizing fitting resources
-                    var nestedFunctionOutputResults = [String]()
-                    
-                    guard !fittingResources.isEmpty else {
-                        nestedFunctionOutputResults.append(
-                            String(
-                                localized: "The medical record does not include any FHIR resources for the search term \(requestedResource)."
-                            )
-                        )
-                        return []
-                    }
-                    
-                    // Filter out fitting resources (if greater than 64 entries)
-                    fittingResources = Self.filterFittingResources(fittingResources)
-                    try await withThrowingTaskGroup(of: String.self) { innerGroup in
-                        // Iterate over fitting resources and summarizing them
-                        for resource in fittingResources {
-                            innerGroup.addTask { @Sendable [resourceSummary] in
-                                let summary = try await resourceSummary.summarize(resource: resource)
-                                Self.logger.debug("Summary of appended FHIR resource \(requestedResource): \(summary.description)")
-                                return String(localized: "This is the summary of the requested \(requestedResource):\n\n\(summary.description)")
-                            }
-                        }
-                        
-                        for try await nestedResult in innerGroup {
-                            nestedFunctionOutputResults.append(nestedResult)
-                        }
-                    }
-                    
-                    return nestedFunctionOutputResults
+
+        try await withThrowingTaskGroup(of: [String].self) { group in
+            for resourceCategory in resourceCategories {
+                group.addTask {
+                    try await self.processResourceCategory(resourceCategory)
                 }
             }
-            
-            for try await result in outerGroup {
+
+            for try await result in group {
                 functionOutput.append(contentsOf: result)
             }
         }
-        
-        return functionOutput.joined(separator: "\n\n")
+
+        return functionOutput
+    }
+
+    private func processResourceCategory(_ resourceCategory: String) async throws -> [String] {
+        var fittingResources = await fhirStore.llmRelevantResources.filter {
+            $0.functionCallIdentifier.contains(resourceCategory)
+        }
+
+        guard !fittingResources.isEmpty else {
+            return [
+                String(
+                    localized: "The medical record does not include any FHIR resources for the search term \(resourceCategory)."
+                )
+            ]
+        }
+
+        fittingResources = Self.filterFittingResources(fittingResources)
+
+        return try await summarizeFHIRResources(fittingResources, resourceCategory: resourceCategory)
+    }
+
+    private func summarizeFHIRResources(_ resources: [FHIRResource], resourceCategory: String) async throws -> [String] {
+        var summaries: [String] = []
+
+        try await withThrowingTaskGroup(of: String.self) { group in
+            for resource in resources {
+                group.addTask {
+                    try await self.summarizeFHIRResource(resource, resourceCategory: resourceCategory)
+                }
+            }
+
+            for try await summary in group {
+                summaries.append(summary)
+            }
+        }
+
+        return summaries
+    }
+
+    private func summarizeFHIRResource(_ resource: FHIRResource, resourceCategory: String) async throws -> String {
+        let summary = try await resourceSummary.summarize(resource: resource)
+        Self.logger.debug("Summary of appended FHIR resource category \(resourceCategory): \(summary.description)")
+        return String(localized: "This is the summary of the requested \(resourceCategory):\n\n\(summary.description)")
     }
 }

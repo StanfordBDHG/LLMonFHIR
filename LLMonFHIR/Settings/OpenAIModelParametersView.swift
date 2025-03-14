@@ -19,7 +19,7 @@ struct OpenAIModelParametersView: View {
         Form {
             temperatureSection
         }
-            .navigationTitle("Model Parameters")
+            .navigationTitle("SETTINGS_OPENAI_MODEL_PARAMETERS")
             .navigationBarTitleDisplayMode(.inline)
             .safeAreaInset(edge: .bottom) {
                 footerText

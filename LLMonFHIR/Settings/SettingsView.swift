@@ -96,7 +96,7 @@ struct SettingsView: View {
                 Text("SETTINGS_OPENAI_MODEL")
             }
             NavigationLink(value: SettingsDestinations.openAIModelParameters) {
-                Text("Model Parameters")
+                Text("SETTINGS_OPENAI_MODEL_PARAMETERS")
             }
         }
     }
