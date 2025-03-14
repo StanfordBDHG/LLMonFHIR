@@ -91,7 +91,7 @@ final class FHIRResourceSummary: Sendable {
                 break
             }
 
-            try? await Task.sleep(for: .seconds(0.5))
+            try? await Task.sleep(for: .seconds(0.1))
         } while retryCount < maxRetries
 
         guard let summary = summary else {
