@@ -984,7 +984,7 @@
 			repositoryURL = "https://github.com/StanfordSpezi/SpeziFHIR";
 			requirement = {
 				kind = upToNextMinorVersion;
-				minimumVersion = 0.7.3;
+				minimumVersion = 0.7.5;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */
