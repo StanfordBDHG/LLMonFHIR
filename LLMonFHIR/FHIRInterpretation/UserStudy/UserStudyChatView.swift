@@ -233,7 +233,7 @@ struct UserStudyChatView: View {
             disableInput: isInputDisabled,
             speechToText: false,
             exportFormat: viewModel.navigationState == .completed ? .text : nil,
-            messagePendingAnimation: .manual(shouldDisplay: interpreter.viewState == .processing || noAssistantMessages)
+            messagePendingAnimation: .automatic
         )
             .viewStateAlert(state: interpreter.llm.state)
             .onChange(of: interpreter.llm.context, initial: true) {

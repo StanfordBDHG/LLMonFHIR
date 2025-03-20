@@ -24,18 +24,18 @@ private enum FHIRMultipleResourceInterpreterConstants {
 
 /// Used to interpret multiple FHIR resources via a chat-based interface with an LLM.
 @Observable
+@MainActor
 class FHIRMultipleResourceInterpreter {
     static let logger = Logger(subsystem: "edu.stanford.spezi.fhir", category: "SpeziFHIRLLM")
-    
+
     private let localStorage: LocalStorage
     private let llmRunner: LLMRunner
     private var llmSchema: any LLMSchema
     private let fhirStore: FHIRStore
-    
+    private var activeTask: Task<Void, Never>?
+
     var llm: any LLMSession
-    var viewState: ViewState = .idle
-    
-    
+
     required init(
         localStorage: LocalStorage,
         llmRunner: LLMRunner,
@@ -47,83 +47,88 @@ class FHIRMultipleResourceInterpreter {
         self.llmSchema = llmSchema
         self.fhirStore = fhirStore
         self.llm = llmRunner(with: llmSchema)
-        
-        Task { @MainActor in
-            await prepareLLM()
-        }
     }
     
     
-    @MainActor
+
     func resetChat() {
-        viewState = .processing
-        llm = llmRunner(with: llmSchema)
-        llm.context.append(systemMessage: FHIRPrompt.interpretMultipleResources.prompt)
+        cancelOngoingTasks()
+
+        let newLLM = llmRunner(with: llmSchema)
+        newLLM.context.append(systemMessage: FHIRPrompt.interpretMultipleResources.prompt)
         if let patient = fhirStore.patient {
-            llm.context.append(systemMessage: patient.jsonDescription)
+            newLLM.context.append(systemMessage: patient.jsonDescription)
         }
-        viewState = .idle
+        llm = newLLM
     }
-    
-    @MainActor
-    func prepareLLM() async {
-        viewState = .processing
-        let llm = llmRunner(with: llmSchema)
-        // Read initial conversation from storage
+
+    func prepareLLM() {
+        cancelOngoingTasks()
+
+        let newLLM = llmRunner(with: llmSchema)
+
         if let storedContext: LLMContext = try? localStorage.load(.init(FHIRMultipleResourceInterpreterConstants.context)) {
-            llm.context = storedContext
+            newLLM.context = storedContext
         } else {
-            llm.context.append(systemMessage: FHIRPrompt.interpretMultipleResources.prompt)
+            newLLM.context.append(systemMessage: FHIRPrompt.interpretMultipleResources.prompt)
             if let patient = fhirStore.patient {
-                llm.context.append(systemMessage: patient.jsonDescription)
+                newLLM.context.append(systemMessage: patient.jsonDescription)
             }
         }
 
-        self.llm = llm
-        viewState = .idle
+        llm = newLLM
     }
 
-    @MainActor
     func queryLLM() {
-        guard llm.context.last?.role == .user || !(llm.context.contains(where: { $0.role == .assistant() }) ) else {
+        guard llm.context.last?.role == .user || !(llm.context.contains(where: { $0.role == .assistant() })) else {
             return
         }
-        
-        viewState = .processing
-        
-        Task {
+
+        cancelOngoingTasks()
+
+        activeTask = Task {
             do {
-                defer {
-                    viewState = .idle
-                }
-                
                 Self.logger.debug("The Multiple Resource Interpreter has access to \(self.fhirStore.llmRelevantResources.count) resources.")
-                
-                viewState = .processing
+
                 let stream = try await llm.generate()
-                
+
                 for try await token in stream {
+                    if Task.isCancelled {
+                        break
+                    }
                     llm.context.append(assistantOutput: token)
                 }
-                
-                // Store conversation to storage
-                try localStorage.store(llm.context, for: .init(FHIRMultipleResourceInterpreterConstants.context))
+
+                if !Task.isCancelled {
+                    try localStorage.store(llm.context, for: .init(FHIRMultipleResourceInterpreterConstants.context))
+                }
             } catch {
-                viewState = .error(AnyLocalizedError(error: error))
+                if !Task.isCancelled {
+                    //
+                }
             }
         }
     }
-    
+
     /// Adjust the LLM schema used by the ``FHIRMultipleResourceInterpreter``.
     ///
     /// - Parameters:
     ///    - schema: The to-be-used `LLMSchema`.
     func changeLLMSchema<Schema: LLMSchema>(to schema: Schema) {
-        self.llmSchema = schema
-        
-        Task {
-            await prepareLLM()
-        }
+        llmSchema = schema
+        prepareLLM()
+    }
+
+    /// Cancels any ongoing LLM operations
+    func cancelOngoingTasks() {
+        activeTask?.cancel()
+        activeTask = nil
+    }
+
+    /// Cleanup resources and cancel operations
+    func cancel() {
+        cancelOngoingTasks()
+        llm.cancel()
     }
 }
 

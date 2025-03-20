@@ -28,13 +28,25 @@ struct MultipleResourcesChatView: View {
             chatView
                 .navigationTitle(navigationTitle)
                 .toolbar { toolbarContent }
-                .task { await interpreter.prepareLLM() }
+                .task {
+                    interpreter.prepareLLM()
+                }
+                .onChange(of: interpreter.llm.context) {
+                    if interpreter.llm.state != .generating && interpreter.llm.context.chat.last?.role == .user {
+                        interpreter.queryLLM()
+                    }
+                }
+                .onAppear {
+                    guard interpreter.llm.context.chat.contains(where: { $0.role == .user }) else {
+                        interpreter.queryLLM()
+                        return
+                    }
+                }
         }
         .interactiveDismissDisabled()
     }
-    
-    
-    @MainActor @ViewBuilder private var chatView: some View {
+
+    @ViewBuilder private var chatView: some View {
         ChatView(
             Binding(
                 get: { interpreter.llm.context.chat },
@@ -42,33 +54,23 @@ struct MultipleResourcesChatView: View {
             ),
             disableInput: interpreter.llm.state.representation == .processing,
             exportFormat: .text,
-            messagePendingAnimation: .manual(shouldDisplay: interpreter.viewState == .processing)
+            messagePendingAnimation: .automatic
         )
             .speak(interpreter.llm.context.chat, muted: !textToSpeech)
             .speechToolbarButton(muted: !$textToSpeech)
             .viewStateAlert(state: interpreter.llm.state)
-            .onChange(of: interpreter.llm.context, initial: true) {
-                if interpreter.llm.state != .generating && interpreter.llm.context.chat.last?.role == .user {
-                    interpreter.queryLLM()
-                }
-            }
-            .onAppear {
-                guard !interpreter.llm.context.chat.contains(where: { $0.role == .user }) else {
-                    return
-                }
-                interpreter.viewState = .processing
-                interpreter.queryLLM()
-            }
     }
-    
-    @MainActor @ToolbarContentBuilder private var toolbarContent: some ToolbarContent {
+
+    @ToolbarContentBuilder private var toolbarContent: some ToolbarContent {
         let isProcessing = interpreter.llm.state.representation == .processing
+
         ToolbarItem(placement: .cancellationAction) {
             Button("Close") {
-                interpreter.llm.cancel()
+                interpreter.cancel()
                 dismiss()
             }
         }
+
         ToolbarItem(placement: .primaryAction) {
             Button(
                 action: {
