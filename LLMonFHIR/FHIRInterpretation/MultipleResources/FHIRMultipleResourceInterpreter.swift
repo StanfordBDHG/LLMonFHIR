@@ -45,45 +45,6 @@ final class FHIRMultipleResourceInterpreter {
     /// user inputs, and assistant responses. Changes to this property will be reflected in the UI.
     private(set) var llmSession: any LLMSession
 
-    /// Provides a SwiftUI binding to the chat conversation for use in views.
-    ///
-    /// This binding allows views to read the current chat messages and adds new user
-    /// messages to the conversation.
-    var chatBinding: Binding<Chat> {
-        Binding(
-            get: { [weak self] in
-                self?.llmSession.context.chat ?? []
-            },
-            set: { [weak self] newChat in
-                self?.llmSession.context.chat = newChat
-            }
-        )
-    }
-
-    /// Determines whether the interpreter should generate a response in the current context.
-    ///
-    /// Use this property to determine when to call `generateAssistantResponse()`.
-    var shouldGenerateResponse: Bool {
-        if llmSession.state == .generating {
-            return false
-        }
-
-        // Check if the last message is from a user (needs a response)
-        let lastMessageIsUser = llmSession.context.last?.role == .user
-
-        // Check if there are no assistant messages yet (initial prompt needs a response)
-        let noAssistantMessages = !llmSession.context.contains(where: { $0.role == .assistant() })
-
-        // Generate if last message is from user or if there are no assistant messages yet,
-        // but not if the last message is a system message
-        let shouldGenerate = (lastMessageIsUser || noAssistantMessages)
-
-        if !shouldGenerate {
-            Self.logger.debug("Not generating response - no user message or assistant already responded")
-        }
-
-        return shouldGenerate
-    }
 
     /// Initializes a new FHIR resource interpreter with the provided dependencies.
     ///
