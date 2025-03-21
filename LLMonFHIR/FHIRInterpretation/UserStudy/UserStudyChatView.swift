@@ -185,15 +185,15 @@ struct UserStudyChatView: View {
     @StateObject private var viewModel: UserStudyViewModel
 
     private var isInputDisabled: Bool {
-        interpreter.llm.state.representation == .processing
+        interpreter.llmSession.state.representation == .processing
     }
     
     private var noUserMessages: Bool {
-        !interpreter.llm.context.chat.contains(where: { $0.role == .user })
+        !interpreter.llmSession.context.chat.contains(where: { $0.role == .user })
     }
     
     private var noAssistantMessages: Bool {
-        !interpreter.llm.context.chat.contains(where: { $0.role == .assistant })
+        !interpreter.llmSession.context.chat.contains(where: { $0.role == .assistant })
     }
 
     var body: some View {
@@ -221,32 +221,32 @@ struct UserStudyChatView: View {
         ChatView(
             Binding(
                 get: {
-                    var chat = interpreter.llm.context.chat
+                    var chat = interpreter.llmSession.context.chat
                     if viewModel.navigationState == .completed {
                         let surveyReport = viewModel.generateReport()
                         chat.append(ChatEntity(role: .hidden(type: .init(name: "SURVEY_REPORT")), content: surveyReport))
                     }
                     return chat
                 },
-                set: { interpreter.llm.context.chat = $0 }
+                set: { interpreter.llmSession.context.chat = $0 }
             ),
             disableInput: isInputDisabled,
             speechToText: false,
             exportFormat: viewModel.navigationState == .completed ? .text : nil,
-            messagePendingAnimation: .manual(shouldDisplay: interpreter.viewState == .processing || noAssistantMessages)
+            messagePendingAnimation: .automatic
         )
-            .viewStateAlert(state: interpreter.llm.state)
-            .onChange(of: interpreter.llm.context, initial: true) {
-                if interpreter.llm.state != .generating && interpreter.llm.context.chat.last?.role == .user {
-                    interpreter.queryLLM()
+            .viewStateAlert(state: interpreter.llmSession.state)
+            .onChange(of: interpreter.llmSession.context, initial: true) {
+                if interpreter.llmSession.state != .generating && interpreter.llmSession.context.chat.last?.role == .user {
+//                    interpreter.queryLLM()
                 }
             }
             .onAppear {
                 guard noUserMessages else {
                     return
                 }
-                interpreter.resetChat()
-                interpreter.queryLLM()
+                interpreter.startNewConversation()
+//                interpreter.queryLLM()
             }
     }
 
@@ -277,12 +277,12 @@ struct UserStudyChatView: View {
 
     private func handleAppear() {
         viewModel.startSurvey()
-        interpreter.resetChat()
+        interpreter.startNewConversation()
     }
 
     private func handleDismiss() {
         viewModel.resetStudy()
-        interpreter.resetChat()
+        interpreter.startNewConversation()
         dismiss()
     }
 }

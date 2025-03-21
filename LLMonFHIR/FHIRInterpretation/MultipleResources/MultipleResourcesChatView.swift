@@ -18,62 +18,69 @@ import SwiftUI
 struct MultipleResourcesChatView: View {
     @Environment(FHIRMultipleResourceInterpreter.self) private var interpreter
     @Environment(\.dismiss) private var dismiss
-    
+
+    // Track if reset button was recently tapped
+    @State private var isResetting = false
+
     @Binding private var textToSpeech: Bool
     private let navigationTitle: Text
-    
-    
+
+
     var body: some View {
         NavigationStack {
             chatView
                 .navigationTitle(navigationTitle)
                 .toolbar { toolbarContent }
-                .task { await interpreter.prepareLLM() }
         }
         .interactiveDismissDisabled()
     }
-    
-    
-    @MainActor @ViewBuilder private var chatView: some View {
+
+
+    @ViewBuilder private var chatView: some View {
         ChatView(
-            Binding(
-                get: { interpreter.llm.context.chat },
-                set: { interpreter.llm.context.chat = $0 }
-            ),
-            disableInput: interpreter.llm.state.representation == .processing,
+            interpreter.chatBinding,
+            disableInput: interpreter.llmSession.state.representation == .processing || isResetting,
             exportFormat: .text,
-            messagePendingAnimation: .manual(shouldDisplay: interpreter.viewState == .processing)
+            messagePendingAnimation: .automatic
         )
-            .speak(interpreter.llm.context.chat, muted: !textToSpeech)
+            .speak(interpreter.llmSession.context.chat, muted: !textToSpeech)
             .speechToolbarButton(muted: !$textToSpeech)
-            .viewStateAlert(state: interpreter.llm.state)
-            .onChange(of: interpreter.llm.context, initial: true) {
-                if interpreter.llm.state != .generating && interpreter.llm.context.chat.last?.role == .user {
-                    interpreter.queryLLM()
+            .viewStateAlert(state: interpreter.llmSession.state)
+            .onChange(of: interpreter.llmSession.context, initial: true) {
+                if interpreter.llmSession.state != .generating &&
+                   interpreter.llmSession.context.last?.role != .system &&
+                   !isResetting {
+                    interpreter.generateAssistantResponse()
                 }
             }
-            .onAppear {
-                guard !interpreter.llm.context.chat.contains(where: { $0.role == .user }) else {
-                    return
+            .overlay {
+                if isResetting {
+                    ProgressView()
+                        .frame(maxWidth: .infinity, maxHeight: .infinity)
+                        .background(Color.black.opacity(0.1))
                 }
-                interpreter.viewState = .processing
-                interpreter.queryLLM()
             }
     }
-    
+
     @MainActor @ToolbarContentBuilder private var toolbarContent: some ToolbarContent {
-        let isProcessing = interpreter.llm.state.representation == .processing
+        let isProcessing = interpreter.llmSession.state.representation == .processing || isResetting
         ToolbarItem(placement: .cancellationAction) {
             Button("Close") {
-                interpreter.llm.cancel()
+                interpreter.cancel()
                 dismiss()
             }
         }
         ToolbarItem(placement: .primaryAction) {
             Button(
                 action: {
-                    interpreter.resetChat()
-                    interpreter.queryLLM()
+                    isResetting = true
+                    interpreter.startNewConversation()
+                    Task {
+                        try? await Task.sleep(for: .seconds(5))
+                        interpreter.generateAssistantResponse()
+                        try? await Task.sleep(for: .seconds(5))
+                        isResetting = false
+                    }
                 },
                 label: {
                     Image(systemName: "trash")
@@ -83,8 +90,8 @@ struct MultipleResourcesChatView: View {
             .disabled(isProcessing)
         }
     }
-    
-    
+
+
     /// Creates a ``MultipleResourcesChatView`` displaying a Spezi `Chat` with all available FHIR resources via a Spezi LLM..
     ///
     /// - Parameters:

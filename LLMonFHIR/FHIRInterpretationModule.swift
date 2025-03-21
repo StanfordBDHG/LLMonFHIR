@@ -85,6 +85,6 @@ class FHIRInterpretationModule: Module, DefaultInitializable, EnvironmentAccessi
     func updateSchemas() {
         resourceSummary.changeLLMSchema(to: simpleOpenAISchema)
         resourceInterpreter.changeLLMSchema(to: simpleOpenAISchema)
-        multipleResourceInterpreter.changeLLMSchema(to: multipleResourceInterpreterOpenAISchema)
+        multipleResourceInterpreter.updateLLMSchema(to: multipleResourceInterpreterOpenAISchema)
     }
 }
