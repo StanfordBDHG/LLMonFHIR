@@ -19,9 +19,6 @@ struct MultipleResourcesChatView: View {
     @Environment(FHIRMultipleResourceInterpreter.self) private var interpreter
     @Environment(\.dismiss) private var dismiss
 
-    // Track if reset button was recently tapped
-    @State private var isResetting = false
-
     @Binding private var textToSpeech: Bool
     private let navigationTitle: Text
 
@@ -39,7 +36,7 @@ struct MultipleResourcesChatView: View {
     @ViewBuilder private var chatView: some View {
         ChatView(
             interpreter.chatBinding,
-            disableInput: interpreter.llmSession.state.representation == .processing || isResetting,
+            disableInput: interpreter.llmSession.state.representation == .processing,
             exportFormat: .text,
             messagePendingAnimation: .automatic
         )
@@ -47,23 +44,15 @@ struct MultipleResourcesChatView: View {
             .speechToolbarButton(muted: !$textToSpeech)
             .viewStateAlert(state: interpreter.llmSession.state)
             .onChange(of: interpreter.llmSession.context, initial: true) {
-                if interpreter.llmSession.state != .generating &&
-                   interpreter.llmSession.context.last?.role != .system &&
-                   !isResetting {
+                if interpreter.shouldGenerateResponse {
                     interpreter.generateAssistantResponse()
-                }
-            }
-            .overlay {
-                if isResetting {
-                    ProgressView()
-                        .frame(maxWidth: .infinity, maxHeight: .infinity)
-                        .background(Color.black.opacity(0.1))
                 }
             }
     }
 
     @MainActor @ToolbarContentBuilder private var toolbarContent: some ToolbarContent {
-        let isProcessing = interpreter.llmSession.state.representation == .processing || isResetting
+        let isProcessing = interpreter.llmSession.state.representation == .processing
+        let isDisabled = isProcessing
         ToolbarItem(placement: .cancellationAction) {
             Button("Close") {
                 interpreter.cancel()
@@ -73,21 +62,14 @@ struct MultipleResourcesChatView: View {
         ToolbarItem(placement: .primaryAction) {
             Button(
                 action: {
-                    isResetting = true
                     interpreter.startNewConversation()
-                    Task {
-                        try? await Task.sleep(for: .seconds(5))
-                        interpreter.generateAssistantResponse()
-                        try? await Task.sleep(for: .seconds(5))
-                        isResetting = false
-                    }
                 },
                 label: {
                     Image(systemName: "trash")
                         .accessibilityLabel(Text("Reset Chat"))
                 }
             )
-            .disabled(isProcessing)
+            .disabled(isDisabled)
         }
     }
 
