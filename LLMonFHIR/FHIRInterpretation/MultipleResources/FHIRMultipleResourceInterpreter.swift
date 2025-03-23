@@ -45,21 +45,6 @@ final class FHIRMultipleResourceInterpreter {
     /// user inputs, and assistant responses. Changes to this property will be reflected in the UI.
     private(set) var llmSession: any LLMSession
 
-    var shouldGenerateResponse: Bool {
-        if llmSession.state == .generating {
-            return false
-        }
-
-        // Check if the last message is from a user (needs a response)
-        let lastMessageIsUser = llmSession.context.last?.role == .user
-
-        // Check if there are no assistant messages yet (initial prompt needs a response)
-        let noAssistantMessages = !llmSession.context.contains(where: { $0.role == .assistant() })
-
-        // Generate if last message is from user or if there are no assistant messages yet
-        return (lastMessageIsUser || noAssistantMessages)
-    }
-
 
     /// Initializes a new FHIR resource interpreter with the provided dependencies.
     ///
