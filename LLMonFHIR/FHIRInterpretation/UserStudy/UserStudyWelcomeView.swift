@@ -14,6 +14,7 @@ import SwiftUI
 struct UserStudyWelcomeView: View {
     @Environment(LLMonFHIRStandard.self) private var standard
     @Environment(FHIRInterpretationModule.self) private var fhirInterpretationModule
+    @Environment(FHIRMultipleResourceInterpreter.self) private var interpreter
     @Environment(LLMOpenAITokenSaver.self) private var openAITokenSaver
     
     @State private var isPresentingSettings = false
@@ -36,7 +37,10 @@ struct UserStudyWelcomeView: View {
                 }
                 .fullScreenCover(isPresented: $isPresentingStudy) {
                     AccessGuarded(.userStudyIndentifier) {
-                        UserStudyChatView(survey: Survey(.defaultTasks))
+                        UserStudyChatView(
+                            survey: Survey(.defaultTasks),
+                            interpreter: interpreter
+                        )
                     }
                 }
                 .task {

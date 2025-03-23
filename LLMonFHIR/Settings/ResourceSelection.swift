@@ -69,6 +69,9 @@ struct ResourceSelection: View {
                 showBundleSelection = !standard.useHealthKitResources || !HKHealthStore.isHealthDataAvailable()
                 self.bundles = await mockPatients
             }
+            .onDisappear {
+                fhirInterpretationModule.updateSchemas()
+            }
             .navigationTitle(Text("Resource Settings"))
     }
     
@@ -101,7 +104,5 @@ struct ResourceSelection: View {
                 await store.load(bundle: firstMockPatient)
             }
         }
-        
-        fhirInterpretationModule.updateSchemas()
     }
 }
