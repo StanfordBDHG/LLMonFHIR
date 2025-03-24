@@ -26,7 +26,7 @@ final class MultipleResourcesChatViewModel: ObservableObject {
     }
 
     /// Two-way binding to the text-to-speech setting controlled by the view
-    @Binding var textToSpeech: Bool
+    @AppStorage(StorageKeys.enableTextToSpeech) var textToSpeech = StorageKeys.currentEnableTextToSpeech
 
     /// Indicates if the LLM is currently processing or generating a response
     /// This property directly reflects the LLM session's state
@@ -78,11 +78,9 @@ final class MultipleResourcesChatViewModel: ObservableObject {
     /// - Parameters:
     ///   - interpreter: The FHIR resource interpreter to use for LLM operations
     ///   - navigationTitle: The title to display in the navigation bar
-    ///   - textToSpeech: Binding to the text-to-speech setting
-    init(interpreter: FHIRMultipleResourceInterpreter, navigationTitle: String, textToSpeech: Binding<Bool>) {
+    init(interpreter: FHIRMultipleResourceInterpreter, navigationTitle: String) {
         self.interpreter = interpreter
         self.navigationTitle = navigationTitle
-        self._textToSpeech = textToSpeech
     }
 
     /// Starts a new conversation by clearing all user and assistant messages

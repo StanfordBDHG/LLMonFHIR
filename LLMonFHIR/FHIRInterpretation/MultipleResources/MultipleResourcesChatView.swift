@@ -75,12 +75,11 @@ struct MultipleResourcesChatView: View {
     ///   - interpreter: The FHIR resource interpreter that manages the LLM session and healthcare data
     ///   - navigationTitle: The title to display in the navigation bar
     ///   - textToSpeech: A binding to control whether spoken feedback is enabled
-    init(interpreter: FHIRMultipleResourceInterpreter, navigationTitle: String, textToSpeech: Binding<Bool>) {
+    init(interpreter: FHIRMultipleResourceInterpreter, navigationTitle: String) {
         self._viewModel = StateObject(
             wrappedValue: MultipleResourcesChatViewModel(
                 interpreter: interpreter,
-                navigationTitle: navigationTitle,
-                textToSpeech: textToSpeech
+                navigationTitle: navigationTitle
             )
         )
     }
