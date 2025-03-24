@@ -11,7 +11,8 @@ import SwiftUI
 
 struct UserStudyChatView: View {
     @Environment(\.dismiss) private var dismiss
-    @StateObject private var viewModel: UserStudyChatViewModel
+
+    @State private var viewModel: UserStudyChatViewModel
 
 
     var body: some View {
@@ -58,11 +59,9 @@ struct UserStudyChatView: View {
     ///
     /// - Parameter survey: The survey configuration that defines the study's tasks and structure
     init(survey: Survey, interpreter: FHIRMultipleResourceInterpreter) {
-        _viewModel = StateObject(
-            wrappedValue: UserStudyChatViewModel(
-                survey: survey,
-                interpreter: interpreter
-            )
+        viewModel = UserStudyChatViewModel(
+            survey: survey,
+            interpreter: interpreter
         )
     }
 

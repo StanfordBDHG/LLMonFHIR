@@ -16,8 +16,11 @@ import SwiftUI
 
 
 struct MultipleResourcesChatView: View {
-    @StateObject private var viewModel: MultipleResourcesChatViewModel
     @Environment(\.dismiss) private var dismiss
+
+    @State private var viewModel: MultipleResourcesChatViewModel
+
+    @AppStorage(StorageKeys.enableTextToSpeech) private var textToSpeech = StorageKeys.currentEnableTextToSpeech
 
 
     var body: some View {
@@ -37,8 +40,8 @@ struct MultipleResourcesChatView: View {
             exportFormat: .text,
             messagePendingAnimation: .manual(shouldDisplay: viewModel.showTypingIndicator)
         )
-            .speak(viewModel.llmSession.context.chat, muted: !viewModel.textToSpeech)
-            .speechToolbarButton(muted: !viewModel.$textToSpeech)
+            .speak(viewModel.llmSession.context.chat, muted: !textToSpeech)
+            .speechToolbarButton(muted: !$textToSpeech)
             .viewStateAlert(state: viewModel.llmSession.state)
             .onChange(of: viewModel.llmSession.context, initial: true) {
                 viewModel.generateAssistantResponse()
@@ -76,11 +79,9 @@ struct MultipleResourcesChatView: View {
     ///   - navigationTitle: The title to display in the navigation bar
     ///   - textToSpeech: A binding to control whether spoken feedback is enabled
     init(interpreter: FHIRMultipleResourceInterpreter, navigationTitle: String) {
-        self._viewModel = StateObject(
-            wrappedValue: MultipleResourcesChatViewModel(
-                interpreter: interpreter,
-                navigationTitle: navigationTitle
-            )
+        viewModel = MultipleResourcesChatViewModel(
+            interpreter: interpreter,
+            navigationTitle: navigationTitle
         )
     }
 }

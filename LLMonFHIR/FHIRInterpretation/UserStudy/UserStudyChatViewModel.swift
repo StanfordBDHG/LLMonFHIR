@@ -17,7 +17,8 @@ import SwiftUI
 /// It provides UI-specific computed properties and methods while delegating
 /// LLM operations and persistence to the underlying interpreter.
 @MainActor
-final class UserStudyChatViewModel: ObservableObject {
+@Observable
+final class UserStudyChatViewModel {
     // MARK: - Navigation State
 
     /// The current state of the survey navigation
@@ -40,16 +41,16 @@ final class UserStudyChatViewModel: ObservableObject {
     }
 
     /// The current navigation state of the study
-    @Published private(set) var navigationState: NavigationState = .introduction
+    private(set) var navigationState: NavigationState = .introduction
 
     /// Indicates whether the survey portion has been started
-    @Published private(set) var isSurveyStarted = false
+    private(set) var isSurveyStarted = false
 
     /// Controls the visibility of the survey view
-    @Published var isSurveyViewPresented = false
+    var isSurveyViewPresented: Bool
 
     /// Controls the visibility of the dismiss confirmation dialog
-    @Published var isDismissDialogPresented = false
+    var isDismissDialogPresented: Bool
 
     private let survey: Survey
     private let interpreter: FHIRMultipleResourceInterpreter
@@ -125,6 +126,8 @@ final class UserStudyChatViewModel: ObservableObject {
     init(survey: Survey, interpreter: FHIRMultipleResourceInterpreter) {
         self.survey = survey
         self.interpreter = interpreter
+        self.isSurveyViewPresented = false
+        self.isDismissDialogPresented = false
     }
 
 

@@ -17,16 +17,14 @@ import SwiftUI
 /// It provides UI-specific computed properties and methods while delegating
 /// LLM operations and persistence to the underlying interpreter.
 @MainActor
-final class MultipleResourcesChatViewModel: ObservableObject {
+@Observable
+final class MultipleResourcesChatViewModel {
     private let interpreter: FHIRMultipleResourceInterpreter
 
     /// Direct access to the current LLM session for observing state changes
     var llmSession: LLMSession {
         interpreter.llmSession
     }
-
-    /// Two-way binding to the text-to-speech setting controlled by the view
-    @AppStorage(StorageKeys.enableTextToSpeech) var textToSpeech = StorageKeys.currentEnableTextToSpeech
 
     /// Indicates if the LLM is currently processing or generating a response
     /// This property directly reflects the LLM session's state

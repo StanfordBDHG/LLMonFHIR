@@ -10,7 +10,8 @@ import SwiftUI
 
 
 struct UserStudyChatToolbar: ToolbarContent {
-    @ObservedObject var viewModel: UserStudyChatViewModel
+    @State private(set) var viewModel: UserStudyChatViewModel
+
     let isInputDisabled: Bool
     let onDismiss: () -> Void
 
