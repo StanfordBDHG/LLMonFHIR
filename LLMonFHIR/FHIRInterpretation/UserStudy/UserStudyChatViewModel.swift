@@ -60,15 +60,21 @@ final class UserStudyChatViewModel: ObservableObject {
         }
     }
 
+    /// Direct access to the current LLM session for observing state changes
+    var llmSession: LLMSession {
+        interpreter.llmSession
+    }
+
     /// Indicates if the LLM is currently processing or generating a response
     /// This property directly reflects the LLM session's state
     var isProcessing: Bool {
         llmSession.state.representation == .processing
     }
 
-    /// Direct access to the current LLM session for observing state changes
-    var llmSession: LLMSession {
-        interpreter.llmSession
+    /// Determines whether to display a typing indicator in the chat interface.
+    var showTypingIndicator: Bool {
+        let role = llmSession.context.last?.role
+        return role == .user || role == .system
     }
 
     /// Provides a binding to the chat messages for use in SwiftUI views
@@ -107,7 +113,6 @@ final class UserStudyChatViewModel: ObservableObject {
         // Check if there are no assistant messages yet (initial prompt needs a response)
         let noAssistantMessages = !interpreter.llmSession.context.contains(where: { $0.role == .assistant() })
 
-        // Generate if last message is from user or if there are no assistant messages yet
         return (lastMessageIsUser || noAssistantMessages)
     }
 

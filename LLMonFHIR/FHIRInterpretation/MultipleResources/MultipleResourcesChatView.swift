@@ -35,7 +35,7 @@ struct MultipleResourcesChatView: View {
             viewModel.chatBinding,
             disableInput: viewModel.isProcessing,
             exportFormat: .text,
-            messagePendingAnimation: .manual(shouldDisplay: viewModel.isProcessing)
+            messagePendingAnimation: .manual(shouldDisplay: viewModel.showTypingIndicator)
         )
             .speak(viewModel.llmSession.context.chat, muted: !viewModel.textToSpeech)
             .speechToolbarButton(muted: !viewModel.$textToSpeech)

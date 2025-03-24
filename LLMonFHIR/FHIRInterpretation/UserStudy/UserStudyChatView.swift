@@ -43,7 +43,7 @@ struct UserStudyChatView: View {
             disableInput: viewModel.isProcessing,
             speechToText: false,
             exportFormat: viewModel.navigationState == .completed ? .text : nil,
-            messagePendingAnimation: .manual(shouldDisplay: viewModel.isProcessing)
+            messagePendingAnimation: .manual(shouldDisplay: viewModel.showTypingIndicator)
         )
             .viewStateAlert(state: viewModel.llmSession.state)
             .onChange(of: viewModel.llmSession.context, initial: true) {

@@ -20,6 +20,11 @@ import SwiftUI
 final class MultipleResourcesChatViewModel: ObservableObject {
     private let interpreter: FHIRMultipleResourceInterpreter
 
+    /// Direct access to the current LLM session for observing state changes
+    var llmSession: LLMSession {
+        interpreter.llmSession
+    }
+
     /// Two-way binding to the text-to-speech setting controlled by the view
     @Binding var textToSpeech: Bool
 
@@ -27,6 +32,12 @@ final class MultipleResourcesChatViewModel: ObservableObject {
     /// This property directly reflects the LLM session's state
     var isProcessing: Bool {
         llmSession.state.representation == .processing
+    }
+
+    /// Determines whether to display a typing indicator in the chat interface.
+    var showTypingIndicator: Bool {
+        let role = llmSession.context.last?.role
+        return role == .user || role == .system
     }
 
     /// The title displayed in the navigation bar
@@ -45,11 +56,6 @@ final class MultipleResourcesChatViewModel: ObservableObject {
                self?.interpreter.llmSession.context.chat = newChat
            }
        )
-    }
-
-    /// Direct access to the current LLM session for observing state changes
-    var llmSession: LLMSession {
-        interpreter.llmSession
     }
 
     private var shouldGenerateResponse: Bool {
