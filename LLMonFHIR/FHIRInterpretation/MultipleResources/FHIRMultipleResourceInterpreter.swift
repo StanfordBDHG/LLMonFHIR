@@ -77,18 +77,12 @@ final class FHIRMultipleResourceInterpreter {
         }
     }
 
-    /// Starts a new conversation while preserving system messages.
+    /// Starts a new conversation by creating a fresh LLM session.
     ///
-    /// This method:
-    /// - Removes all user and assistant messages from the current session
-    /// - Keeps the original system messages in order to avoid refetching FHIR resources
-    /// - Deletes the stored conversation context from persistent storage
-    ///
-    /// Use this method when you want to start a fresh conversation while maintaining the same system context.
+    /// This  creates an entirely new session and replaces the current one.
     func startNewConversation() {
-        llmSession.context.removeAll(where: { $0.role == .user || $0.role == .assistant() })
-
-        Self.logger.debug("Removed all user and assistant messages from conversation")
+        let newLLMSession = llmRunner(with: llmSchema)
+        newLLMSession.context = createInterpretationContext()
 
         do {
             try localStorage.delete(.init(FHIRMultipleResourceInterpreterConstants.context))
@@ -96,6 +90,9 @@ final class FHIRMultipleResourceInterpreter {
         } catch {
             Self.logger.error("Failed to delete conversation context: \(error)")
         }
+
+        llmSession = newLLMSession
+        Self.logger.debug("Created new LLM session with fresh context")
     }
 
     /// Generates an assistant response based on the current conversation context.
