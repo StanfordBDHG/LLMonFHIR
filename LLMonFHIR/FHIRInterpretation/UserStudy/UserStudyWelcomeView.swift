@@ -110,7 +110,10 @@ struct UserStudyWelcomeView: View {
     }
 
     private var startStudyButton: some View {
-        Button(action: { isPresentingStudy = true }) {
+        Button {
+            interpreter.startNewConversation()
+            isPresentingStudy = true
+        } label: {
             Text("Start Session")
                 .font(.headline)
                 .fontWeight(.semibold)

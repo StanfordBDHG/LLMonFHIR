@@ -85,6 +85,5 @@ struct UserStudyChatView: View {
 
     private func handleAppear() {
         viewModel.startSurvey()
-        viewModel.startNewConversation()
     }
 }

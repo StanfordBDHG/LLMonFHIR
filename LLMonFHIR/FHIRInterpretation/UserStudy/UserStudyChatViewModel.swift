@@ -131,14 +131,6 @@ final class UserStudyChatViewModel {
     }
 
 
-    /// Starts a new conversation by clearing all user and assistant messages
-    ///
-    /// This preserves system messages but removes all conversation history,
-    /// providing the user with a fresh chat while maintaining the interpreter context.
-    func startNewConversation() {
-        interpreter.startNewConversation()
-    }
-
     /// Generates an assistant response if appropriate for the current context
     ///
     /// This method checks if a response is needed and if so, delegates
