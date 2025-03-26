@@ -103,7 +103,11 @@ final class FHIRMultipleResourceInterpreter {
     func generateAssistantResponse() {
         currentGenerationTask?.cancel()
 
-        currentGenerationTask = Task {
+        currentGenerationTask = Task { [weak self] in
+            guard let self else {
+                return
+            }
+
             defer {
                 currentGenerationTask = nil
             }
