@@ -1,5 +1,5 @@
 {
-  "originHash" : "01cef502d89e28109d2b3b51a4a7530b053fc8c98dd9ceb3b6a2a7750e4ba177",
+  "originHash" : "065a78a0fbd76259f6e2dfbe31b9495b32f90d0df81787c26e41278e93557c5c",
   "pins" : [
     {
       "identity" : "collectionconcurrencykit",
@@ -123,8 +123,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/StanfordSpezi/SpeziFHIR",
       "state" : {
-        "revision" : "bb7f7b5ecfb92b331c9eb8a85e1dcca2cb0990e3",
-        "version" : "0.7.5"
+        "revision" : "d5622db006da1c6d460e47074371222d653213fc",
+        "version" : "0.7.6"
       }
     },
     {

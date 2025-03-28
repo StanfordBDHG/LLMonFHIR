@@ -16,85 +16,72 @@ import SwiftUI
 
 
 struct MultipleResourcesChatView: View {
-    @Environment(FHIRMultipleResourceInterpreter.self) private var interpreter
     @Environment(\.dismiss) private var dismiss
-    
-    @Binding private var textToSpeech: Bool
-    private let navigationTitle: Text
-    
-    
+
+    @State private var viewModel: MultipleResourcesChatViewModel
+
+    @AppStorage(StorageKeys.enableTextToSpeech) private var textToSpeech = StorageKeys.currentEnableTextToSpeech
+
+
     var body: some View {
         NavigationStack {
             chatView
-                .navigationTitle(navigationTitle)
+                .navigationTitle(viewModel.navigationTitle)
                 .toolbar { toolbarContent }
-                .task { await interpreter.prepareLLM() }
         }
         .interactiveDismissDisabled()
     }
-    
-    
-    @MainActor @ViewBuilder private var chatView: some View {
+
+
+    @ViewBuilder private var chatView: some View {
         ChatView(
-            Binding(
-                get: { interpreter.llm.context.chat },
-                set: { interpreter.llm.context.chat = $0 }
-            ),
-            disableInput: interpreter.llm.state.representation == .processing,
+            viewModel.chatBinding,
+            disableInput: viewModel.isProcessing,
             exportFormat: .text,
-            messagePendingAnimation: .manual(shouldDisplay: interpreter.viewState == .processing)
+            messagePendingAnimation: .manual(shouldDisplay: viewModel.showTypingIndicator)
         )
-            .speak(interpreter.llm.context.chat, muted: !textToSpeech)
+            .speak(viewModel.llmSession.context.chat, muted: !textToSpeech)
             .speechToolbarButton(muted: !$textToSpeech)
-            .viewStateAlert(state: interpreter.llm.state)
-            .onChange(of: interpreter.llm.context, initial: true) {
-                if interpreter.llm.state != .generating && interpreter.llm.context.chat.last?.role == .user {
-                    interpreter.queryLLM()
-                }
-            }
-            .onAppear {
-                guard !interpreter.llm.context.chat.contains(where: { $0.role == .user }) else {
-                    return
-                }
-                interpreter.viewState = .processing
-                interpreter.queryLLM()
+            .viewStateAlert(state: viewModel.llmSession.state)
+            .onChange(of: viewModel.llmSession.context, initial: true) {
+                viewModel.generateAssistantResponse()
             }
     }
-    
+
     @MainActor @ToolbarContentBuilder private var toolbarContent: some ToolbarContent {
-        let isProcessing = interpreter.llm.state.representation == .processing
         ToolbarItem(placement: .cancellationAction) {
             Button("Close") {
-                interpreter.llm.cancel()
-                dismiss()
+                viewModel.dismiss(dismiss)
             }
         }
         ToolbarItem(placement: .primaryAction) {
             Button(
                 action: {
-                    interpreter.resetChat()
-                    interpreter.queryLLM()
+                    viewModel.startNewConversation()
                 },
                 label: {
                     Image(systemName: "trash")
                         .accessibilityLabel(Text("Reset Chat"))
                 }
             )
-            .disabled(isProcessing)
+            .disabled(viewModel.isProcessing)
         }
     }
-    
-    
-    /// Creates a ``MultipleResourcesChatView`` displaying a Spezi `Chat` with all available FHIR resources via a Spezi LLM..
+
+
+    /// Creates a ``MultipleResourcesChatView`` that displays a chat interface for interacting with FHIR resources.
+    ///
+    /// This initializer sets up the view with the provided interpreter, navigation title, and text-to-speech setting.
+    /// It creates a view model that coordinates between the UI and the FHIR interpreter.
     ///
     /// - Parameters:
-    ///    - navigationTitle: The localized title displayed for purposes of navigation.
-    ///    - textToSpeech: Indicates if the output of the LLM is converted to speech and outputted to the user.
-    init(
-        navigationTitle: LocalizedStringResource,
-        textToSpeech: Binding<Bool>
-    ) {
-        self.navigationTitle = Text(navigationTitle)
-        self._textToSpeech = textToSpeech
+    ///   - interpreter: The FHIR resource interpreter that manages the LLM session and healthcare data
+    ///   - navigationTitle: The title to display in the navigation bar
+    ///   - textToSpeech: A binding to control whether spoken feedback is enabled
+    init(interpreter: FHIRMultipleResourceInterpreter, navigationTitle: String) {
+        viewModel = MultipleResourcesChatViewModel(
+            interpreter: interpreter,
+            navigationTitle: navigationTitle
+        )
     }
 }

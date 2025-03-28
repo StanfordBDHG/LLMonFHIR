@@ -11,7 +11,7 @@ import SwiftUI
 struct HomeView: View {
     @State private var showSettings = false
     @State private var showMultipleResourcesChat = false
-    @AppStorage(StorageKeys.enableTextToSpeech) private var textToSpeech = StorageKeys.currentEnableTextToSpeech
+    @Environment(FHIRMultipleResourceInterpreter.self) var interpreter
 
 
     var body: some View {
@@ -25,8 +25,8 @@ struct HomeView: View {
                 }
                 .sheet(isPresented: $showMultipleResourcesChat) {
                     MultipleResourcesChatView(
-                        navigationTitle: "LLM on FHIR",
-                        textToSpeech: $textToSpeech
+                        interpreter: interpreter,
+                        navigationTitle: "LLM on FHIR"
                     )
                 }
         }
