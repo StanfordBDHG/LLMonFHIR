@@ -203,7 +203,7 @@ extension [SurveyTask] {
         ]),
         .init(id: 4, questions: [
             .init(
-                text: "How effective are these recommendations in helping you make decisions about your health?",
+                text: "How effective was the LLM in helping to answer your health question?",
                 type: .likertScale(responseOptions: effectivenessScale),
                 isOptional: true
             ),
