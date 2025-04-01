@@ -30,7 +30,7 @@ class FHIRInterpretationModule: Module, DefaultInitializable, EnvironmentAccessi
         let temperature = StorageKeys.currentOpenAIModelTemperature
         
         return LLMOpenAISchema(
-            parameters: .init(modelType: openAIModelType.rawValue),
+            parameters: .init(modelType: openAIModelType.rawValue, systemPrompts: []),
             modelParameters: .init(temperature: temperature)
         )
     }
@@ -41,7 +41,7 @@ class FHIRInterpretationModule: Module, DefaultInitializable, EnvironmentAccessi
         let resourceLimit = StorageKeys.currentResourceCountLimit
         
         return LLMOpenAISchema(
-            parameters: .init(modelType: openAIModelType.rawValue),
+            parameters: .init(modelType: openAIModelType.rawValue, systemPrompts: []),
             modelParameters: .init(temperature: temperature)
         ) {
             FHIRGetResourceLLMFunction(
@@ -85,6 +85,6 @@ class FHIRInterpretationModule: Module, DefaultInitializable, EnvironmentAccessi
     func updateSchemas() {
         resourceSummary.changeLLMSchema(to: simpleOpenAISchema)
         resourceInterpreter.changeLLMSchema(to: simpleOpenAISchema)
-        multipleResourceInterpreter.updateLLMSchema(to: multipleResourceInterpreterOpenAISchema)
+        multipleResourceInterpreter.changeLLMSchema(to: multipleResourceInterpreterOpenAISchema)
     }
 }
