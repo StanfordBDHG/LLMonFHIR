@@ -10,6 +10,7 @@ import Foundation
 import SpeziFHIR
 
 
+// periphery:ignore - These objects are used to create a JSON resprestation of the User Study Survey Report
 extension UserStudyChatViewModel {
     /// A report summarizing a user study session, including metadata, FHIR resources, and timeline events.
     struct UserStudyReport: Encodable {
