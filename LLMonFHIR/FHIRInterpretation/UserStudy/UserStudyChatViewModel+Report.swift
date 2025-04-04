@@ -51,6 +51,7 @@ extension UserStudyChatViewModel {
         let resourceType: String
         let displayName: String
         let dateDescription: String?
+        let summary: String?
     }
 
     /// Represents an event in the study timeline, either a chat message or a survey task.

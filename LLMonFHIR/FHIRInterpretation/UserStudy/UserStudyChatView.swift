@@ -50,16 +50,25 @@ struct UserStudyChatView: View {
             }
     }
 
+
     /// Creates a new user study chat view
     ///
     /// This initializer sets up a view for conducting a structured study with
     /// chat-based interactions and survey tasks.
     ///
-    /// - Parameter survey: The survey configuration that defines the study's tasks and structure
-    init(survey: Survey, interpreter: FHIRMultipleResourceInterpreter) {
+    /// - Parameters:
+    ///   - survey: The survey configuration to use for this study
+    ///   - interpreter: The FHIR interpreter to use for chat functionality
+    ///   - resourceSummary: The FHIR resource summary provider for generating summaries of FHIR resources
+    init(
+        survey: Survey,
+        interpreter: FHIRMultipleResourceInterpreter,
+        resourceSummary: FHIRResourceSummary
+    ) {
         viewModel = UserStudyChatViewModel(
             survey: survey,
-            interpreter: interpreter
+            interpreter: interpreter,
+            resourceSummary: resourceSummary
         )
     }
 

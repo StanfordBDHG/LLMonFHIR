@@ -60,6 +60,7 @@ final class UserStudyChatViewModel {
 
     private let survey: Survey
     private let interpreter: FHIRMultipleResourceInterpreter
+    private let resourceSummary: FHIRResourceSummary
 
     private var currentTaskNumber: Int = 0 {
         didSet {
@@ -125,9 +126,15 @@ final class UserStudyChatViewModel {
     /// - Parameters:
     ///   - survey: The survey configuration to use for this study
     ///   - interpreter: The FHIR interpreter to use for chat functionality
-    init(survey: Survey, interpreter: FHIRMultipleResourceInterpreter) {
+    ///   - resourceSummary: The FHIR resource summary provider for generating summaries of FHIR resources
+    init(
+        survey: Survey,
+        interpreter: FHIRMultipleResourceInterpreter,
+        resourceSummary: FHIRResourceSummary
+    ) {
         self.survey = survey
         self.interpreter = interpreter
+        self.resourceSummary = resourceSummary
     }
 
 
@@ -310,11 +317,13 @@ final class UserStudyChatViewModel {
 
         let allResources = interpreter.fhirStore.allResources
             .map { resource in
-                PartialFHIRResource(
+                let summary = resourceSummary.cachedSummary(forResource: resource)
+                return PartialFHIRResource(
                     id: resource.id,
                     resourceType: resource.resourceType,
                     displayName: resource.displayName,
-                    dateDescription: resource.date?.description
+                    dateDescription: resource.date?.description,
+                    summary: summary?.description
                 )
             }
 
