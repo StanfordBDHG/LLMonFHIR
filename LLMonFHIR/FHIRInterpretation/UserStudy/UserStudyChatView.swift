@@ -11,7 +11,6 @@ import SwiftUI
 
 struct UserStudyChatView: View {
     @Environment(\.dismiss) private var dismiss
-
     @State private var viewModel: UserStudyChatViewModel
 
 
@@ -43,7 +42,6 @@ struct UserStudyChatView: View {
             viewModel.chatBinding,
             disableInput: viewModel.isProcessing,
             speechToText: false,
-            exportFormat: viewModel.navigationState == .completed ? .text : nil,
             messagePendingAnimation: .manual(shouldDisplay: viewModel.showTypingIndicator)
         )
             .viewStateAlert(state: viewModel.llmSession.state)

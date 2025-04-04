@@ -35,7 +35,7 @@ final class FHIRMultipleResourceInterpreter {
     private let localStorage: LocalStorage
     private let llmRunner: LLMRunner
     private var llmSchema: any LLMSchema
-    private let fhirStore: FHIRStore
+    let fhirStore: FHIRStore
 
     private var currentGenerationTask: Task<Void, Never>?
 

@@ -17,6 +17,19 @@ enum Answer: Equatable {
     case freeText(String)
     case netPromoterScore(Int)
     case unanswered
+
+    var rawValue: String {
+        switch self {
+        case .likertScale(let value):
+            "\(value)"
+        case .freeText(let value):
+            "\(value)"
+        case .netPromoterScore(let value):
+            "\(value)"
+        case .unanswered:
+            "unanswered"
+        }
+    }
 }
 
 
@@ -191,46 +204,6 @@ final class Survey {
                 try? newTask.updateAnswer(.unanswered, forQuestionIndex: index)
             }
             return newTask
-        }
-    }
-}
-
-
-// MARK: - Survey Report Generation
-
-extension Survey {
-    /// Generates a report containing all survey responses, formatted for readability
-    /// - Returns: A formatted string suitable for export or display, with each component on a new line
-    func generateReport() -> String {
-        var report = ["Survey Results\n"]
-
-        for task in tasks {
-            report.append("\nTask \(task.id)")
-            report.append(String(repeating: "-", count: 20))
-
-            for (index, question) in task.questions.enumerated() {
-                let questionNumber = "\(task.id).\(index + 1)"
-                report.append("\nQuestion \(questionNumber): \(question.text) \(question.isOptional ? "(Optional)" : "")")
-
-                let answerText = formatAnswer(question.answer, type: question.type)
-                report.append("Answer: \(answerText)")
-            }
-        }
-
-        return report.joined(separator: "\n")
-    }
-
-    private func formatAnswer(_ answer: Answer, type: QuestionType) -> String {
-        switch answer {
-        case .likertScale(let value), .netPromoterScore(let value):
-            if let range = type.range {
-                return "\(value) (Scale: \(range.lowerBound)-\(range.upperBound))"
-            }
-            return "\(value)"
-        case .freeText(let text):
-            return text.isEmpty ? "Not answered" : text
-        case .unanswered:
-            return "Not answered"
         }
     }
 }

@@ -46,11 +46,17 @@ final class UserStudyChatViewModel {
     /// Indicates whether the survey portion has been started
     private(set) var isSurveyStarted = false
 
+    /// The generated study report JSON, available when the study is completed
+    private(set) var studyReport: String?
+
     /// Controls the visibility of the survey view
-    var isSurveyViewPresented: Bool
+    var isSurveyViewPresented = false
 
     /// Controls the visibility of the dismiss confirmation dialog
-    var isDismissDialogPresented: Bool
+    var isDismissDialogPresented = false
+
+    /// Controls the visibility of the sharing sheet for exporting the study report
+    var isSharingSheetPresented = false
 
     private let survey: Survey
     private let interpreter: FHIRMultipleResourceInterpreter
@@ -86,16 +92,7 @@ final class UserStudyChatViewModel {
     var chatBinding: Binding<Chat> {
         Binding(
             get: { [weak self] in
-                guard let self = self else {
-                    return []
-                }
-
-                var chat = self.interpreter.llmSession.context.chat
-                if self.navigationState == .completed {
-                    let surveyReport = self.generateReport()
-                    chat.append(ChatEntity(role: .hidden(type: .init(name: "SURVEY_REPORT")), content: surveyReport))
-                }
-                return chat
+                self?.interpreter.llmSession.context.chat ?? []
             },
             set: { [weak self] newChat in
                 self?.interpreter.llmSession.context.chat = newChat
@@ -117,6 +114,11 @@ final class UserStudyChatViewModel {
         return (lastMessageIsUser || noAssistantMessages)
     }
 
+    private let studyStartTime = Date()
+    private let studyID = UUID().uuidString
+    private var taskStartTimes: [Int: Date] = [:]
+    private var taskEndTimes: [Int: Date] = [:]
+    private var resourceAccessTimes: [String: Date] = [:]
 
     /// Creates a new view model for managing a user study chat session
     ///
@@ -126,8 +128,6 @@ final class UserStudyChatViewModel {
     init(survey: Survey, interpreter: FHIRMultipleResourceInterpreter) {
         self.survey = survey
         self.interpreter = interpreter
-        self.isSurveyViewPresented = false
-        self.isDismissDialogPresented = false
     }
 
 
@@ -161,6 +161,8 @@ final class UserStudyChatViewModel {
     /// - Parameter answers: Array of answers provided by the user
     /// - Throws: An error if the submission fails
     func submitSurveyAnswers(_ answers: [Answer]) throws {
+        taskEndTimes[currentTaskNumber] = Date()
+
         for (index, answer) in answers.enumerated() {
             try survey.submitAnswer(answer, forTaskId: currentTaskNumber, questionIndex: index)
         }
@@ -188,6 +190,7 @@ final class UserStudyChatViewModel {
         }
         isSurveyStarted = true
         currentTaskNumber = 1
+        taskStartTimes[currentTaskNumber] = Date()
     }
 
     /// Returns the current task if one is active
@@ -197,15 +200,28 @@ final class UserStudyChatViewModel {
         survey.tasks.first { $0.id == currentTaskNumber }
     }
 
-    private func generateReport() -> String {
-        survey.generateReport()
+    /// Generates a temporary file URL containing the study report
+    ///
+    /// - Returns: The URL of the generated report file, or nil if generation fails
+    func generateStudyReportFile() -> URL? {
+        guard let studyReport = generateStudyReport() else {
+            return nil
+        }
+
+        let tempDir = FileManager.default.temporaryDirectory
+        let reportURL = tempDir.appendingPathComponent("survey_report_\(studyID.lowercased()).txt")
+        try? studyReport.write(to: reportURL, atomically: true, encoding: .utf8)
+        return reportURL
     }
+
 
     private func advanceToNextTask() {
         if currentTaskNumber < survey.tasks.count {
             currentTaskNumber += 1
+            taskStartTimes[currentTaskNumber] = Date()
         } else {
             navigationState = .completed
+            studyReport = generateStudyReport()
         }
     }
 
@@ -215,5 +231,108 @@ final class UserStudyChatViewModel {
             : currentTaskNumber <= survey.tasks.count
                 ? .task(number: currentTaskNumber, total: survey.tasks.count)
                 : .completed
+    }
+
+    private func generateStudyReport() -> String? {
+        let report = UserStudyReport(
+            metadata: generateMetadata(),
+            fhirResources: getFHIRResources(),
+            timeline: generateTimeline()
+        )
+
+        do {
+            let encoder = JSONEncoder()
+            encoder.dateEncodingStrategy = .iso8601
+            encoder.outputFormatting = [.prettyPrinted, .withoutEscapingSlashes]
+            let data = try encoder.encode(report)
+            let string = String(data: data, encoding: .utf8)
+            return string
+        } catch {
+            print("Error generating study report: \(error)")
+            return nil
+        }
+    }
+
+    private func generateMetadata() -> Metadata {
+        Metadata(
+            studyID: studyID,
+            startTime: studyStartTime,
+            endTime: Date()
+        )
+    }
+
+    private func generateTimeline() -> [TimelineEvent] {
+        var timeline: [TimelineEvent] = []
+
+        let chatMessages = interpreter.llmSession.context.chat.map { message in
+            TimelineEvent.chatMessage(TimelineEvent.ChatMessage(
+                timestamp: message.date,
+                role: message.role.rawValue,
+                content: message.content
+            ))
+        }
+
+        timeline.append(contentsOf: chatMessages)
+
+        let surveyTasks = survey.tasks.compactMap { task -> TimelineEvent? in
+            let taskNumber = task.id
+            guard let taskStartTime = taskStartTimes[taskNumber], let taskEndTime = taskEndTimes[taskNumber] else {
+                return nil
+            }
+            
+            let surveyTask = TimelineEvent.SurveyTask(
+                taskNumber: taskNumber,
+                startedAt: taskStartTime,
+                completedAt: taskEndTime,
+                duration: taskEndTime.timeIntervalSince(taskStartTime),
+                questions: task.questions.map { question in
+                    TimelineEvent.SurveyQuestion(
+                        questionText: question.text,
+                        answer: question.answer.rawValue,
+                        isOptional: question.isOptional
+                    )
+                }
+            )
+            
+            return TimelineEvent.surveyTask(surveyTask)
+        }
+        
+        timeline.append(contentsOf: surveyTasks)
+        
+        return timeline.sorted { $0.timestamp < $1.timestamp }
+    }
+
+    private func getFHIRResources() -> FHIRResources {
+        let llmRelevantResources = interpreter.fhirStore.llmRelevantResources
+            .map { resource in
+                FullFHIRResource(resource)
+            }
+
+        let allResources = interpreter.fhirStore.allResources
+            .map { resource in
+                PartialFHIRResource(
+                    id: resource.id,
+                    resourceType: resource.resourceType,
+                    displayName: resource.displayName,
+                    dateDescription: resource.date?.description
+                )
+            }
+
+        return FHIRResources(
+            llmRelevantResources: llmRelevantResources,
+            allResources: allResources
+        )
+    }
+}
+
+extension ChatEntity.Role {
+    var rawValue: String {
+        switch self {
+        case .user: "user"
+        case .assistant: "assistant"
+        case .assistantToolCall: "assistant_tool_call"
+        case .assistantToolResponse: "assistant_tool_response"
+        case .hidden(let type): "hidden_\(type.name)"
+        }
     }
 }
