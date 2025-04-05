@@ -34,18 +34,25 @@ extension UserStudyChatViewModel {
 
     /// A wrapper for a full FHIR resource, delegating encoding to the underlying resource.
     struct FullFHIRResource: Encodable {
-        private let resource: SpeziFHIR.FHIRResource
+        private let versionedResource: SpeziFHIR.FHIRResource.VersionedFHIRResource
 
-        init(_ resource: SpeziFHIR.FHIRResource) {
-            self.resource = resource
+
+        init(_ versionedResource: SpeziFHIR.FHIRResource.VersionedFHIRResource) {
+            self.versionedResource = versionedResource
         }
 
+
         func encode(to encoder: Encoder) throws {
-            try resource.encode(to: encoder)
+            switch versionedResource {
+            case .r4(let resource):
+                try resource.encode(to: encoder)
+            case .dstu2(let resource):
+                try resource.encode(to: encoder)
+            }
         }
     }
 
-    /// A partial representation of an FHIR resource with essential metadata.
+    /// A partial representation of an FHIR resource.
     struct PartialFHIRResource: Encodable {
         let id: String
         let resourceType: String
@@ -59,13 +66,6 @@ extension UserStudyChatViewModel {
         case chatMessage(ChatMessage)
         case surveyTask(SurveyTask)
 
-        var timestamp: Date {
-            switch self {
-            case .chatMessage(let message): return message.timestamp
-            case .surveyTask(let task): return task.completedAt
-            }
-        }
-
         private enum CodingKeys: String, CodingKey {
             case type
             case data
@@ -74,18 +74,6 @@ extension UserStudyChatViewModel {
         private enum EventType: String {
             case chatMessage
             case surveyTask
-        }
-
-        func encode(to encoder: Encoder) throws {
-            var container = encoder.container(keyedBy: CodingKeys.self)
-            switch self {
-            case .chatMessage(let message):
-                try container.encode(EventType.chatMessage.rawValue, forKey: .type)
-                try container.encode(message, forKey: .data)
-            case .surveyTask(let task):
-                try container.encode(EventType.surveyTask.rawValue, forKey: .type)
-                try container.encode(task, forKey: .data)
-            }
         }
 
         struct ChatMessage: Codable {
@@ -106,6 +94,25 @@ extension UserStudyChatViewModel {
             let questionText: String
             let answer: String
             let isOptional: Bool
+        }
+
+        var timestamp: Date {
+            switch self {
+            case .chatMessage(let message): return message.timestamp
+            case .surveyTask(let task): return task.completedAt
+            }
+        }
+
+        func encode(to encoder: Encoder) throws {
+            var container = encoder.container(keyedBy: CodingKeys.self)
+            switch self {
+            case .chatMessage(let message):
+                try container.encode(EventType.chatMessage.rawValue, forKey: .type)
+                try container.encode(message, forKey: .data)
+            case .surveyTask(let task):
+                try container.encode(EventType.surveyTask.rawValue, forKey: .type)
+                try container.encode(task, forKey: .data)
+            }
         }
     }
 }

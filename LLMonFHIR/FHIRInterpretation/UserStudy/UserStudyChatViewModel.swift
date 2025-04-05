@@ -312,7 +312,7 @@ final class UserStudyChatViewModel {
     private func getFHIRResources() -> FHIRResources {
         let llmRelevantResources = interpreter.fhirStore.llmRelevantResources
             .map { resource in
-                FullFHIRResource(resource)
+                FullFHIRResource(resource.versionedResource)
             }
 
         let allResources = interpreter.fhirStore.allResources
