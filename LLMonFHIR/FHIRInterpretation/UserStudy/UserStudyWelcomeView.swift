@@ -15,6 +15,7 @@ struct UserStudyWelcomeView: View {
     @Environment(LLMonFHIRStandard.self) private var standard
     @Environment(FHIRInterpretationModule.self) private var fhirInterpretationModule
     @Environment(FHIRMultipleResourceInterpreter.self) private var interpreter
+    @Environment(FHIRResourceSummary.self) var resourceSummary
     @Environment(LLMOpenAITokenSaver.self) private var openAITokenSaver
     
     @State private var isPresentingSettings = false
@@ -39,7 +40,8 @@ struct UserStudyWelcomeView: View {
                     AccessGuarded(.userStudyIndentifier) {
                         UserStudyChatView(
                             survey: Survey(.defaultTasks),
-                            interpreter: interpreter
+                            interpreter: interpreter,
+                            resourceSummary: resourceSummary
                         )
                     }
                 }

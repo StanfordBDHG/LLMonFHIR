@@ -35,7 +35,7 @@ final class FHIRMultipleResourceInterpreter {
     private let localStorage: LocalStorage
     private let llmRunner: LLMRunner
     private var llmSchema: any LLMSchema
-    private let fhirStore: FHIRStore
+    let fhirStore: FHIRStore
 
     private var currentGenerationTask: Task<Void, Never>?
 
@@ -145,7 +145,7 @@ final class FHIRMultipleResourceInterpreter {
     ///
     /// After calling this method, any new responses will be generated using the new schema,
     /// but the conversation will start fresh with only system messages.
-    func updateLLMSchema<Schema: LLMSchema>(to newSchema: Schema) {
+    func changeLLMSchema<Schema: LLMSchema>(to newSchema: Schema) {
         Self.logger.debug("Updating LLM schema")
         self.llmSchema = newSchema
 
@@ -169,9 +169,6 @@ final class FHIRMultipleResourceInterpreter {
     private func createInterpretationContext() -> LLMContext {
         var context = LLMContext()
         context.append(systemMessage: FHIRPrompt.interpretMultipleResources.prompt)
-        if let patient = fhirStore.patient {
-            context.append(systemMessage: patient.jsonDescription)
-        }
         return context
     }
 }

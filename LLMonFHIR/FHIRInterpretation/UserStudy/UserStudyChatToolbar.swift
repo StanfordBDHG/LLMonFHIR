@@ -17,44 +17,59 @@ struct UserStudyChatToolbar: ToolbarContent {
 
 
     var body: some ToolbarContent {
-        ToolbarItem(placement: .cancellationAction) {
-            dismissButton
-        }
+        dismissButton
+        continueButton
+        shareButton
+    }
 
+
+    private var dismissButton: some ToolbarContent {
+        ToolbarItem(placement: .cancellationAction) {
+            Button(action: { viewModel.isDismissDialogPresented = true }) {
+                Image(systemName: "xmark")
+                    .accessibilityLabel("Dismiss")
+            }
+            .confirmationDialog(
+                "Going back will reset your chat history.",
+                isPresented: $viewModel.isDismissDialogPresented,
+                titleVisibility: .visible,
+                actions: {
+                    Button("Yes", role: .destructive, action: onDismiss)
+                    Button("No", role: .cancel) {}
+                },
+                message: {
+                    Text("Do you want to continue?")
+                }
+            )
+        }
+    }
+
+    private var continueButton: some ToolbarContent {
         ToolbarItem(placement: .primaryAction) {
             if viewModel.navigationState != .completed {
-                navigationButton
+                Button {
+                    viewModel.isSurveyViewPresented = true
+                } label: {
+                    Image(systemName: "arrow.forward.circle")
+                        .accessibilityLabel("Next Task")
+                }
+                .disabled(isInputDisabled)
             }
         }
     }
 
-
-    private var dismissButton: some View {
-        Button(action: { viewModel.isDismissDialogPresented = true }) {
-            Image(systemName: "xmark")
-                .accessibilityLabel("Dismiss")
-        }
-        .confirmationDialog(
-            "Going back will reset your chat history.",
-            isPresented: $viewModel.isDismissDialogPresented,
-            titleVisibility: .visible,
-            actions: {
-                Button("Yes", role: .destructive, action: onDismiss)
-                Button("No", role: .cancel) {}
-            },
-            message: {
-                Text("Do you want to continue?")
+    private var shareButton: some ToolbarContent {
+        ToolbarItem(placement: .topBarTrailing) {
+            if viewModel.navigationState == .completed, let studyReportFile = viewModel.generateStudyReportFile() {
+                Button {
+                    viewModel.isSharingSheetPresented = true
+                } label: {
+                    ShareLink(item: studyReportFile) {
+                        Image(systemName: "square.and.arrow.up")
+                            .accessibilityLabel("Share Survey Results")
+                    }
+                }
             }
-        )
-    }
-
-    private var navigationButton: some View {
-        Button {
-            viewModel.isSurveyViewPresented = true
-        } label: {
-            Image(systemName: "arrow.forward.circle")
-                .accessibilityLabel("Next Task")
         }
-        .disabled(isInputDisabled)
     }
 }

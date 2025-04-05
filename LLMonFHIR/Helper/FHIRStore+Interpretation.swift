@@ -39,20 +39,7 @@ extension FHIRStore {
             + procedures
             + otherResources
     }
-    
-    /// The patient `FHIRResource`
-    @MainActor public var patient: FHIRResource? {
-        otherResources
-            .first { resource in
-                guard case let .r4(resource) = resource.versionedResource,
-                      resource is ModelsR4.Patient else {
-                    return false
-                }
-                
-                return true
-            }
-    }
-    
+
     @MainActor private var llmConditions: [FHIRResource] {
         conditions
             .filter { resource in
