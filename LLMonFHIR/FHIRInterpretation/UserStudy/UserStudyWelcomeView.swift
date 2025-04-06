@@ -183,30 +183,45 @@ extension [SurveyTask] {
         "Much better"
     ]
 
+    private static let balancedEaseScale = [
+        "Very difficult",
+        "Somewhat difficult",
+        "Neither easy nor difficult",
+        "Somewhat easy",
+        "Very easy"
+    ]
+
+    private static let frequencyOptions = [
+        "Always",
+        "Often",
+        "Sometimes",
+        "Never"
+    ]
+
     /// Default set of survey tasks used in the user study
     static let defaultTasks: [SurveyTask] = [
         .init(id: 1, questions: [
             .init(
                 text: "How clear and understandable was the summary provided by the app?",
-                type: .likertScale(responseOptions: clarityScale)
+                type: .scale(responseOptions: clarityScale)
             )
         ]),
         .init(id: 2, questions: [
             .init(
                 text: "How effective is this feature for interpreting and evaluating your medical information?",
-                type: .likertScale(responseOptions: effectivenessScale)
+                type: .scale(responseOptions: effectivenessScale)
             )
         ]),
         .init(id: 3, questions: [
             .init(
                 text: "How effective are these recommendations in helping you make decisions about your health?",
-                type: .likertScale(responseOptions: effectivenessScale)
+                type: .scale(responseOptions: effectivenessScale)
             )
         ]),
         .init(id: 4, questions: [
             .init(
                 text: "How effective was the LLM in helping to answer your health question?",
-                type: .likertScale(responseOptions: effectivenessScale),
+                type: .scale(responseOptions: effectivenessScale),
                 isOptional: true
             ),
             .init(
@@ -218,7 +233,7 @@ extension [SurveyTask] {
         .init(id: 5, questions: [
             .init(
                 text: "Compared to other sources of health information (e.g., websites, doctors), how do you rate the LLM's responses?",
-                type: .likertScale(responseOptions: comparisonScale)
+                type: .scale(responseOptions: comparisonScale)
             ),
             .init(
                 text: "What were the most and least useful features of the LLM? Do you have any suggestions that you would like to share?",
@@ -233,6 +248,25 @@ extension [SurveyTask] {
             .init(
                 text: "On a scale of 0-10, how likely are you to recommend this tool to a friend or colleague?",
                 type: .netPromoterScore(range: 0...10)
+            )
+        ]),
+        .init(id: 6, questions: [
+            .init(
+                text: "How easy would it be to access or obtain information about your medical condition?",
+                type: .scale(responseOptions: balancedEaseScale)
+            ),
+            .init(
+                // swiftlint:disable:next line_length
+                text: "How frequently do you anticipate having problems learning about your medical condition because of difficulty understanding written information?",
+                type: .scale(responseOptions: frequencyOptions)
+            ),
+            .init(
+                text: "How confident would you be in filling out medical forms by yourself?",
+                type: .scale(responseOptions: frequencyOptions)
+            ),
+            .init(
+                text: "How often do you think you would have someone help you read hospital materials?",
+                type: .scale(responseOptions: frequencyOptions)
             )
         ])
     ]

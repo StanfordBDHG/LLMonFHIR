@@ -13,14 +13,14 @@ import Foundation
 
 /// Represents a user's response to a survey question
 enum Answer: Equatable {
-    case likertScale(Int)
+    case scale(Int)
     case freeText(String)
     case netPromoterScore(Int)
     case unanswered
 
     var rawValue: String {
         switch self {
-        case .likertScale(let value):
+        case .scale(let value):
             "\(value)"
         case .freeText(let value):
             "\(value)"
@@ -35,13 +35,13 @@ enum Answer: Equatable {
 
 /// Defines the type of question and its validation rules
 enum QuestionType {
-    case likertScale(responseOptions: [String])
+    case scale(responseOptions: [String])
     case freeText
     case netPromoterScore(range: ClosedRange<Int>)
 
     var range: ClosedRange<Int>? {
         switch self {
-        case .likertScale(let responseOptions):
+        case .scale(let responseOptions):
             return 1...(responseOptions.count)
         case .netPromoterScore(let range):
             return range
@@ -127,7 +127,7 @@ struct Question {
 
     private func validateAnswer(_ answer: Answer) throws {
         switch (type, answer) {
-        case let (.likertScale(responseOptions), .likertScale(value)):
+        case let (.scale(responseOptions), .scale(value)):
             guard let validRange = type.range else {
                 throw SurveyError.invalidRange(expected: 1...responseOptions.count)
             }
