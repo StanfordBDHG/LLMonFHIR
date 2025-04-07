@@ -14,8 +14,8 @@ import SwiftUI
 /// Manages the state of answers for different types of survey questions
 @MainActor
 final class SurveyAnswerState: ObservableObject {
-    /// Stores answers for Likert scale questions, keyed by question index
-    @Published private(set) var likertScaleAnswers: [Int: Int] = [:]
+    /// Stores answers for scale questions, keyed by question index
+    @Published private(set) var scaleAnswers: [Int: Int] = [:]
 
     /// Stores answers for free text questions, keyed by question index
     @Published private(set) var freeTextAnswers: [Int: String] = [:]
@@ -29,8 +29,8 @@ final class SurveyAnswerState: ObservableObject {
     func getAnswers(for questions: [Question]) -> [Answer] {
         questions.enumerated().map { index, question in
             switch question.type {
-            case .likertScale:
-                return likertScaleAnswers[index].map { .likertScale($0) } ?? .unanswered
+            case .scale:
+                return scaleAnswers[index].map { .scale($0) } ?? .unanswered
             case .freeText:
                 return freeTextAnswers[index].map { .freeText($0) } ?? .unanswered
             case .netPromoterScore:
@@ -51,8 +51,8 @@ final class SurveyAnswerState: ObservableObject {
         }
 
         switch type {
-        case .likertScale:
-            return likertScaleAnswers[questionIndex] != nil
+        case .scale:
+            return scaleAnswers[questionIndex] != nil
         case .freeText:
             return freeTextAnswers[questionIndex]?.isEmpty == false
         case .netPromoterScore:
@@ -60,12 +60,12 @@ final class SurveyAnswerState: ObservableObject {
         }
     }
 
-    /// Updates the answer for a Likert scale question
+    /// Updates the answer for a scale question
     /// - Parameters:
     ///   - value: The selected value
     ///   - index: The question index
-    func updateLikertScale(value: Int, at index: Int) {
-        likertScaleAnswers[index] = value
+    func updateScale(value: Int, at index: Int) {
+        scaleAnswers[index] = value
     }
 
     /// Updates the answer for a free text question
@@ -112,8 +112,8 @@ struct QuestionSectionView: View {
 
     @ViewBuilder private var questionContent: some View {
         switch question.type {
-        case .likertScale(let responseOptions):
-            LikertScaleQuestionView(
+        case .scale(let responseOptions):
+            ScaleQuestionView(
                 index: index,
                 responseOptions: responseOptions,
                 answerState: answerState
@@ -176,8 +176,8 @@ struct RadioSelectionView: View {
 }
 
 
-/// A view for collecting Likert scale responses
-struct LikertScaleQuestionView: View {
+/// A view for collecting scale responses
+struct ScaleQuestionView: View {
     /// The index of this question
     let index: Int
 
@@ -195,7 +195,7 @@ struct LikertScaleQuestionView: View {
     var body: some View {
         RadioSelectionView(
             range: range,
-            selectedValue: answerState.likertScaleAnswers[index],
+            selectedValue: answerState.scaleAnswers[index],
             displayText: { value in
                 guard value > 0 && value <= responseOptions.count else {
                     return ""
@@ -203,7 +203,7 @@ struct LikertScaleQuestionView: View {
                 return responseOptions[value - 1]
             },
             onSelect: { value in
-                answerState.updateLikertScale(value: value, at: index)
+                answerState.updateScale(value: value, at: index)
             }
         )
     }
