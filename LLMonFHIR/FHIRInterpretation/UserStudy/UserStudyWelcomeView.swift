@@ -46,7 +46,9 @@ struct UserStudyWelcomeView: View {
                     }
                 }
                 .task {
-                    openAITokenSaver.token = UserStudyPlistConfiguration.shared.apiKey ?? ""
+                    if openAITokenSaver.token.isEmpty {
+                        openAITokenSaver.token = UserStudyPlistConfiguration.shared.apiKey ?? ""
+                    }
                     await standard.loadHealthKitResources()
                     fhirInterpretationModule.updateSchemas()
                 }
