@@ -12,14 +12,41 @@ import SwiftUI
 
 
 struct UserStudyWelcomeView: View {
+    @AppStorage(StorageKeys.resourceLimit) private var resourceLimit = StorageKeys.currentResourceCountLimit
+
     @Environment(LLMonFHIRStandard.self) private var standard
     @Environment(FHIRInterpretationModule.self) private var fhirInterpretationModule
     @Environment(FHIRMultipleResourceInterpreter.self) private var interpreter
     @Environment(FHIRResourceSummary.self) var resourceSummary
     @Environment(LLMOpenAITokenSaver.self) private var openAITokenSaver
-    
+
     @State private var isPresentingSettings = false
     @State private var isPresentingStudy = false
+
+
+    private let dateFormatter: DateFormatter = {
+        let formatter = DateFormatter()
+        formatter.dateStyle = .medium
+        formatter.timeStyle = .none
+        return formatter
+    }()
+
+    private var earliestRecordDateFormatted: String {
+        // Find the earliest (oldest) FHIR resource from a limited set of recent resources
+        // This approach gives us the "oldest record among recent records".
+        let earliestLoadedFHIRResource = interpreter.fhirStore.llmRelevantResources
+            // Find all the valid dates except the patient's birthday.
+            .filter { $0.resourceType != "Patient" && $0.date != nil }
+            .sorted(by: { ($0.date ?? .distantPast) > ($1.date ?? .distantPast) })
+            .prefix(min(resourceLimit, interpreter.fhirStore.llmRelevantResources.count))
+            .min(by: { ($0.date ?? .distantFuture) < ($1.date ?? .distantFuture) })
+
+        guard let date = earliestLoadedFHIRResource?.date else {
+            return "No data available"
+        }
+
+        return dateFormatter.string(from: date)
+    }
 
 
     var body: some View {
@@ -104,13 +131,22 @@ struct UserStudyWelcomeView: View {
             .padding(.horizontal)
     }
 
+    private var recordsStartDateView: some View {
+        Text("Records since: \(earliestRecordDateFormatted)")
+            .font(.caption)
+            .foregroundColor(.secondary)
+            .fontWeight(.medium)
+    }
+
     private var bottomSection: some View {
-        VStack(spacing: 16) {
+        VStack(spacing: 12) {
             startStudyButton
                 .padding(.horizontal, 32)
+            recordsStartDateView
+                .padding(.bottom, 16)
             approvalBadge
         }
-        .padding(.bottom, 32)
+        .padding(.bottom, 24)
     }
 
     private var startStudyButton: some View {
