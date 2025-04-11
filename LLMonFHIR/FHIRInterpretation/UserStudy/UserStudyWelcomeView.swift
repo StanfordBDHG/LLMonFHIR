@@ -7,6 +7,7 @@
 //
 
 import SpeziAccessGuard
+import SpeziFHIR
 import SpeziLLMOpenAI
 import SwiftUI
 
@@ -22,6 +23,7 @@ struct UserStudyWelcomeView: View {
 
     @State private var isPresentingSettings = false
     @State private var isPresentingStudy = false
+    @State private var isPresentingEarliestHealthRecords = false
 
 
     private let dateFormatter: DateFormatter = {
@@ -31,17 +33,12 @@ struct UserStudyWelcomeView: View {
         return formatter
     }()
 
-    private var earliestRecordDateFormatted: String {
-        // Find the earliest (oldest) FHIR resource from a limited set of recent resources
-        // This approach gives us the "oldest record among recent records".
-        let earliestLoadedFHIRResource = interpreter.fhirStore.llmRelevantResources
-            // Find all the valid dates except the patient's birthday.
-            .filter { $0.resourceType != "Patient" && $0.date != nil }
-            .sorted(by: { ($0.date ?? .distantPast) > ($1.date ?? .distantPast) })
-            .prefix(min(resourceLimit, interpreter.fhirStore.llmRelevantResources.count))
-            .min(by: { ($0.date ?? .distantFuture) < ($1.date ?? .distantFuture) })
+    private var earliestDates: [String: Date] {
+        interpreter.fhirStore.earliestDates(limit: resourceLimit)
+    }
 
-        guard let date = earliestLoadedFHIRResource?.date else {
+    private var earliestRecordDateFormatted: String {
+        guard let date = earliestDates.values.min() else {
             return "No data available"
         }
 
@@ -71,6 +68,13 @@ struct UserStudyWelcomeView: View {
                             resourceSummary: resourceSummary
                         )
                     }
+                }
+                .sheet(isPresented: $isPresentingEarliestHealthRecords) {
+                    EarliestHealthRecordsView(
+                        dataSource: earliestDates,
+                        dateFormatter: dateFormatter
+                    )
+                    .presentationDetents([.medium, .large])
                 }
                 .task {
                     if openAITokenSaver.token.isEmpty {
@@ -132,14 +136,19 @@ struct UserStudyWelcomeView: View {
     }
 
     private var recordsStartDateView: some View {
-        Text("Records since: \(earliestRecordDateFormatted)")
-            .font(.caption)
-            .foregroundColor(.secondary)
-            .fontWeight(.medium)
+        Button {
+            isPresentingEarliestHealthRecords = true
+        } label: {
+            Text("Records since: \(earliestRecordDateFormatted)")
+                .font(.caption)
+                .foregroundColor(.secondary)
+                .fontWeight(.medium)
+                .underline()
+        }
     }
 
     private var bottomSection: some View {
-        VStack(spacing: 12) {
+        VStack(spacing: 16) {
             startStudyButton
                 .padding(.horizontal, 32)
             recordsStartDateView
