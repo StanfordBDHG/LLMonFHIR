@@ -113,6 +113,28 @@ extension FHIRStore {
         
         return relevantResources.map { $0.functionCallIdentifier }
     }
+
+    /// Returns a dictionary mapping FHIR resource types to their earliest dates.
+    /// These FHIR resources are a limited subset of `llmRelevantResources`, excluding Patient resources, sorted by most recent date, and capped at `limit`.
+    @MainActor
+    public func earliestDates(limit: Int) -> [String: Date] {
+        let recentFHIRResources = llmRelevantResources
+            .filter { $0.resourceType != "Patient" && $0.date != nil }
+            .sorted(by: { ($0.date ?? .distantPast) > ($1.date ?? .distantPast) })
+            .prefix(min(limit, llmRelevantResources.count))
+
+        let resourcesByType = Dictionary(
+            grouping: recentFHIRResources,
+            by: { $0.resourceType }
+        )
+
+        return resourcesByType
+            .compactMapValues { resources in
+                resources
+                    .min(by: { ($0.date ?? .distantFuture) < ($1.date ?? .distantFuture) })?
+                    .date
+            }
+    }
 }
 
 
