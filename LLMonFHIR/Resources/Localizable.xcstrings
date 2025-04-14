@@ -1,6 +1,9 @@
 {
   "sourceLanguage" : "en",
   "strings" : {
+    "\n%@" : {
+
+    },
     "%.2f" : {
 
     },
@@ -731,6 +734,9 @@
 
     },
     "Documents" : {
+
+    },
+    "Done" : {
 
     },
     "Download the LLM model to generate summaries of FHIR resources." : {
@@ -1572,6 +1578,20 @@
     },
     "Random" : {
 
+    },
+    "Records since" : {
+
+    },
+    "Records Since Disclaimer" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The dates shown represent the earliest records available for each category. However, not all records after these dates may be included, and only records with valid dates are shown. Due to technical limitations, some valid records may not appear. This timeline provides a general overview of when your health data begins, but is not a comprehensive index of all available records."
+          }
+        }
+      }
     },
     "Records since: %@" : {
 
