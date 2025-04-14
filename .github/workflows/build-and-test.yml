@@ -21,6 +21,7 @@ jobs:
       artifactname: LLMonFHIR.xcresult
       runsonlabels: '["macOS", "self-hosted"]'
       fastlanelane: test
+      scheme: LLMonFHIR
   uploadcoveragereport:
     name: Upload Coverage Report
     needs: buildandtest
