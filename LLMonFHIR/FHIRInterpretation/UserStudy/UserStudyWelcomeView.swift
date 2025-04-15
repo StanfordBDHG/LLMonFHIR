@@ -7,19 +7,43 @@
 //
 
 import SpeziAccessGuard
+import SpeziFHIR
 import SpeziLLMOpenAI
 import SwiftUI
 
 
 struct UserStudyWelcomeView: View {
+    @AppStorage(StorageKeys.resourceLimit) private var resourceLimit = StorageKeys.currentResourceCountLimit
+
     @Environment(LLMonFHIRStandard.self) private var standard
     @Environment(FHIRInterpretationModule.self) private var fhirInterpretationModule
     @Environment(FHIRMultipleResourceInterpreter.self) private var interpreter
     @Environment(FHIRResourceSummary.self) var resourceSummary
     @Environment(LLMOpenAITokenSaver.self) private var openAITokenSaver
-    
+
     @State private var isPresentingSettings = false
     @State private var isPresentingStudy = false
+    @State private var isPresentingEarliestHealthRecords = false
+
+
+    private let dateFormatter: DateFormatter = {
+        let formatter = DateFormatter()
+        formatter.dateStyle = .medium
+        formatter.timeStyle = .none
+        return formatter
+    }()
+
+    private var earliestDates: [String: Date] {
+        interpreter.fhirStore.earliestDates(limit: resourceLimit)
+    }
+
+    private var earliestRecordDateFormatted: String {
+        guard let date = earliestDates.values.min() else {
+            return "No data available"
+        }
+
+        return dateFormatter.string(from: date)
+    }
 
 
     var body: some View {
@@ -44,6 +68,13 @@ struct UserStudyWelcomeView: View {
                             resourceSummary: resourceSummary
                         )
                     }
+                }
+                .sheet(isPresented: $isPresentingEarliestHealthRecords) {
+                    EarliestHealthRecordsView(
+                        dataSource: earliestDates,
+                        dateFormatter: dateFormatter
+                    )
+                    .presentationDetents([.medium, .large])
                 }
                 .task {
                     if openAITokenSaver.token.isEmpty {
@@ -104,13 +135,27 @@ struct UserStudyWelcomeView: View {
             .padding(.horizontal)
     }
 
+    private var recordsStartDateView: some View {
+        Button {
+            isPresentingEarliestHealthRecords = true
+        } label: {
+            Text("Records since: \(earliestRecordDateFormatted)")
+                .font(.caption)
+                .foregroundColor(.secondary)
+                .fontWeight(.medium)
+                .underline()
+        }
+    }
+
     private var bottomSection: some View {
         VStack(spacing: 16) {
             startStudyButton
                 .padding(.horizontal, 32)
+            recordsStartDateView
+                .padding(.bottom, 16)
             approvalBadge
         }
-        .padding(.bottom, 32)
+        .padding(.bottom, 24)
     }
 
     private var startStudyButton: some View {
