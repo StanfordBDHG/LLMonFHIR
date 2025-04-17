@@ -17,6 +17,8 @@ enum FeatureFlags {
     static let showOnboarding = CommandLine.arguments.contains("--showOnboarding")
     /// Sets the application in test mode
     static let testMode = CommandLine.arguments.contains("--testMode")
+    /// Export the raw JSON for all FHIR resources in the export for the user study
+    static let exportRawJSONFHIRResources = CommandLine.arguments.contains("--exportRawJSONFHIRResources")
     /// Sets the application in user study mode
     static var isUserStudyEnabled: Bool {
         CommandLine.arguments.contains("--userStudy")
