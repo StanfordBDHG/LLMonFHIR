@@ -328,7 +328,7 @@ final class UserStudyChatViewModel {
             }
 
         return FHIRResources(
-            llmRelevantResources: llmRelevantResources,
+            llmRelevantResources: FeatureFlags.exportRawJSONFHIRResources ? llmRelevantResources : [],
             allResources: allResources
         )
     }

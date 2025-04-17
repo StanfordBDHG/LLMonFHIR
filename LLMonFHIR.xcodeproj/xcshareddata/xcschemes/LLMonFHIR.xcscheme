@@ -82,6 +82,10 @@
             isEnabled = "NO">
          </CommandLineArgument>
          <CommandLineArgument
+            argument = "--exportRawJSONFHIRResources"
+            isEnabled = "NO">
+         </CommandLineArgument>
+         <CommandLineArgument
             argument = "--skipOnboarding"
             isEnabled = "NO">
          </CommandLineArgument>
