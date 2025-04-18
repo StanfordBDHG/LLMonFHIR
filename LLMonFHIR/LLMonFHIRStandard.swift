@@ -16,7 +16,7 @@ import SwiftUI
 @MainActor
 @Observable
 class FHIRResourceWaitingState {
-    var isWaiting = true
+    var isWaiting = false
 }
 
 actor LLMonFHIRStandard: Standard, HealthKitConstraint, EnvironmentAccessible {
@@ -28,6 +28,7 @@ actor LLMonFHIRStandard: Standard, HealthKitConstraint, EnvironmentAccessible {
     @MainActor let waitingState = FHIRResourceWaitingState()
 
     private var samples: [HKSample] = []
+    private var isCurrentlyWaiting = false
     private var waitTask: Task<Void, Error>?
 
     func add(sample: HKSample) async {
@@ -40,9 +41,14 @@ actor LLMonFHIRStandard: Standard, HealthKitConstraint, EnvironmentAccessible {
 
             waitTask = Task {
                 if !Task.isCancelled {
-                    await MainActor.run {
-                        waitingState.isWaiting = true
+                    if !isCurrentlyWaiting {
+                        isCurrentlyWaiting = true
+
+                        await MainActor.run {
+                            waitingState.isWaiting = true
+                        }
                     }
+
                     await waitForResourceInactivityTimeout(10.0)
                 }
             }
@@ -71,8 +77,12 @@ actor LLMonFHIRStandard: Standard, HealthKitConstraint, EnvironmentAccessible {
         try? await Task.sleep(for: .seconds(timeoutInterval))
 
         if !Task.isCancelled {
-            await MainActor.run {
-                waitingState.isWaiting = false
+            if isCurrentlyWaiting {
+                isCurrentlyWaiting = false
+
+                await MainActor.run {
+                    waitingState.isWaiting = false
+                }
             }
         }
     }
