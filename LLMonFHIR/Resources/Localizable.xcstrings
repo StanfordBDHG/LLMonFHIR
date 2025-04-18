@@ -1344,6 +1344,9 @@
         }
       }
     },
+    "Loading Resources" : {
+
+    },
     "Medications" : {
       "localizations" : {
         "de" : {
