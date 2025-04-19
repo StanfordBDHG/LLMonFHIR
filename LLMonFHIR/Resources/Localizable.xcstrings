@@ -25,7 +25,11 @@
     "Cancel" : {
 
     },
+    "Chat with all Resources" : {
+
+    },
     "CHAT_WITH_ALL_RESOURCES" : {
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -1343,6 +1347,9 @@
           }
         }
       }
+    },
+    "Loading Resources" : {
+
     },
     "Medications" : {
       "localizations" : {

@@ -145,6 +145,7 @@ struct UserStudyWelcomeView: View {
                 .fontWeight(.medium)
                 .underline()
         }
+        .opacity(standard.waitingState.isWaiting ? 0 : 1)
     }
 
     private var bottomSection: some View {
@@ -163,15 +164,23 @@ struct UserStudyWelcomeView: View {
             interpreter.startNewConversation()
             isPresentingStudy = true
         } label: {
-            Text("Start Session")
-                .font(.headline)
-                .fontWeight(.semibold)
-                .foregroundColor(.white)
-                .frame(maxWidth: .infinity)
-                .frame(height: 56)
-                .background(Color.accent)
-                .cornerRadius(16)
+            HStack(spacing: 8) {
+                if standard.waitingState.isWaiting {
+                    ProgressView()
+                        .progressViewStyle(CircularProgressViewStyle(tint: .white))
+                }
+
+                Text(standard.waitingState.isWaiting ? "Loading Resources" : "Start Session")
+            }
+            .font(.headline)
+            .fontWeight(.semibold)
+            .foregroundColor(.white)
+            .frame(maxWidth: .infinity)
+            .frame(height: 56)
+            .background(Color.accent.opacity(standard.waitingState.isWaiting ? 0.5 : 1))
+            .cornerRadius(16)
         }
+        .disabled(standard.waitingState.isWaiting)
     }
 
     private var approvalBadge: some View {
