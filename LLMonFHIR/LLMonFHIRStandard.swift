@@ -16,7 +16,7 @@ import SwiftUI
 @MainActor
 @Observable
 class FHIRResourceWaitingState {
-    var isWaiting = false
+    var isWaiting = true
 }
 
 actor LLMonFHIRStandard: Standard, HealthKitConstraint, EnvironmentAccessible {
@@ -28,30 +28,28 @@ actor LLMonFHIRStandard: Standard, HealthKitConstraint, EnvironmentAccessible {
     @MainActor let waitingState = FHIRResourceWaitingState()
 
     private var samples: [HKSample] = []
-    private var isCurrentlyWaiting = false
     private var waitTask: Task<Void, Error>?
 
     func add(sample: HKSample) async {
         samples.append(sample)
         if await useHealthKitResources {
             waitTask?.cancel()
-
-            await fhirStore.add(sample: sample, loadHealthKitAttachements: true)
-            await fhirInterpretationModule.updateSchemas()
-
             waitTask = Task {
+                await MainActor.run {
+                    waitingState.isWaiting = true
+                }
+                
+                try? await Task.sleep(for: .seconds(10))
+                
                 if !Task.isCancelled {
-                    if !isCurrentlyWaiting {
-                        isCurrentlyWaiting = true
-
-                        await MainActor.run {
-                            waitingState.isWaiting = true
-                        }
+                    await MainActor.run {
+                        waitingState.isWaiting = false
                     }
-
-                    await waitForResourceInactivityTimeout(10.0)
+                    await fhirInterpretationModule.updateSchemas()
                 }
             }
+            
+            await fhirStore.add(sample: sample, loadHealthKitAttachements: true)
         }
     }
 
@@ -71,19 +69,5 @@ actor LLMonFHIRStandard: Standard, HealthKitConstraint, EnvironmentAccessible {
         }
 
         useHealthKitResources = true
-    }
-
-    private func waitForResourceInactivityTimeout(_ timeoutInterval: TimeInterval) async {
-        try? await Task.sleep(for: .seconds(timeoutInterval))
-
-        if !Task.isCancelled {
-            if isCurrentlyWaiting {
-                isCurrentlyWaiting = false
-
-                await MainActor.run {
-                    waitingState.isWaiting = false
-                }
-            }
-        }
     }
 }

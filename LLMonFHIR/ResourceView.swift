@@ -12,6 +12,7 @@ import SwiftUI
 
 
 struct ResourceView: View {
+    @Environment(LLMonFHIRStandard.self) private var standard
     @Environment(FHIRStore.self) private var fhirStore
     @Binding var showMultipleResourcesChat: Bool
     
@@ -28,12 +29,19 @@ struct ResourceView: View {
                     showMultipleResourcesChat.toggle()
                 },
                 label: {
-                    Text("CHAT_WITH_ALL_RESOURCES")
+                    HStack(spacing: 8) {
+                        if standard.waitingState.isWaiting {
+                            ProgressView()
+                                .progressViewStyle(.circular)
+                        }
+                        Text(standard.waitingState.isWaiting ? "Loading Resources" : "Chat with all Resources")
+                    }
                         .frame(maxWidth: .infinity, minHeight: 38)
                 }
             )
-            .buttonStyle(.borderedProminent)
-            .padding(-20)
+                .buttonStyle(.borderedProminent)
+                .padding(-20)
+                .disabled(standard.waitingState.isWaiting)
         }
         .task {
             if FeatureFlags.testMode {
