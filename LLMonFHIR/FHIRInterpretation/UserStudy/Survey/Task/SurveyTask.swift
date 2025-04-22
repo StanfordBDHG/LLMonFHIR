@@ -13,6 +13,9 @@ struct SurveyTask: Identifiable {
     /// Unique identifier for the task
     let id: Int
 
+    // TODO: Add comment
+    let instruction: String?
+
     /// The questions contained in this task
     private(set) var questions: [TaskQuestion]
 

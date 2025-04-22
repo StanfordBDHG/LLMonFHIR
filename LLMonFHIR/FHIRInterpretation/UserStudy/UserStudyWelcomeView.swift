@@ -256,74 +256,99 @@ extension [SurveyTask] {
 
     /// Default set of survey tasks used in the user study
     static let defaultTasks: [SurveyTask] = [
-        .init(id: 1, questions: [
-            .init(
-                text: "How clear and understandable was the summary provided by the app?",
-                type: .scale(responseOptions: clarityScale)
-            )
-        ]),
-        .init(id: 2, questions: [
-            .init(
-                text: "How effective is this feature for interpreting and evaluating your medical information?",
-                type: .scale(responseOptions: effectivenessScale)
-            )
-        ]),
-        .init(id: 3, questions: [
-            .init(
-                text: "How effective are these recommendations in helping you make decisions about your health?",
-                type: .scale(responseOptions: effectivenessScale)
-            )
-        ]),
-        .init(id: 4, questions: [
-            .init(
-                text: "How effective was the LLM in helping to answer your health question?",
-                type: .scale(responseOptions: effectivenessScale),
-                isOptional: true
-            ),
-            .init(
-                text: "What surprised you about the LLMs answer, either positively or negatively?",
-                type: .freeText,
-                isOptional: true
-            )
-        ]),
-        .init(id: 5, questions: [
-            .init(
-                text: "Compared to other sources of health information (e.g., websites, doctors), how do you rate the LLM's responses?",
-                type: .scale(responseOptions: comparisonScale)
-            ),
-            .init(
-                text: "What were the most and least useful features of the LLM? Do you have any suggestions that you would like to share?",
-                type: .freeText,
-                isOptional: true
-            ),
-            .init(
-                text: "How has the LLM impacted your ability to manage your health?",
-                type: .freeText,
-                isOptional: true
-            ),
-            .init(
-                text: "On a scale of 0-10, how likely are you to recommend this tool to a friend or colleague?",
-                type: .netPromoterScore(range: 0...10)
-            )
-        ]),
-        .init(id: 6, questions: [
-            .init(
-                text: "How easy would it be to access or obtain information about your medical condition?",
-                type: .scale(responseOptions: balancedEaseScale)
-            ),
-            .init(
-                // swiftlint:disable:next line_length
-                text: "How frequently do you anticipate having problems learning about your medical condition because of difficulty understanding written information?",
-                type: .scale(responseOptions: frequencyOptions)
-            ),
-            .init(
-                text: "How confident would you be in filling out medical forms by yourself?",
-                type: .scale(responseOptions: frequencyOptions)
-            ),
-            .init(
-                text: "How often do you think you would have someone help you read hospital materials?",
-                type: .scale(responseOptions: frequencyOptions)
-            )
-        ])
+        .init(
+            id: 1,
+            // swiftlint:disable:next line_length
+            instruction: "LLMonFHIR app will have a “health summary” automatically generated on the home screen. Please review this before answering any questions.",
+            questions: [
+                .init(
+                    text: "How clear and understandable was the summary provided by the app?",
+                    type: .scale(responseOptions: clarityScale)
+                )
+            ]
+        ),
+        .init(
+            id: 2,
+            instruction: "Ask a clarifying question about the most recent diagnosis from your last medical visit.",
+            questions: [
+                .init(
+                    text: "How effective is this feature for interpreting and evaluating your medical information?",
+                    type: .scale(responseOptions: effectivenessScale)
+                )
+            ]
+        ),
+        .init(
+            id: 3,
+            instruction: "Ask the app for a personalized health recommendation. Feel free to ask about any health concerns.",
+            questions: [
+                .init(
+                    text: "How effective are these recommendations in helping you make decisions about your health?",
+                    type: .scale(responseOptions: effectivenessScale)
+                )
+            ]
+        ),
+        .init(
+            id: 4,
+            instruction: "Before we end our session, feel free to ask the app any medical questions you might have related to your health.",
+            questions: [
+                .init(
+                    text: "How effective was the LLM in helping to answer your health question?",
+                    type: .scale(responseOptions: effectivenessScale),
+                    isOptional: true
+                ),
+                .init(
+                    text: "What surprised you about the LLMs answer, either positively or negatively?",
+                    type: .freeText,
+                    isOptional: true
+                )
+            ]
+        ),
+        .init(
+            id: 5,
+            instruction: "Please answer these final survey questions.",
+            questions: [
+                .init(
+                    text: "Compared to other sources of health information (e.g., websites, doctors), how do you rate the LLM's responses?",
+                    type: .scale(responseOptions: comparisonScale)
+                ),
+                .init(
+                    text: "What were the most and least useful features of the LLM? Do you have any suggestions that you would like to share?",
+                    type: .freeText,
+                    isOptional: true
+                ),
+                .init(
+                    text: "How has the LLM impacted your ability to manage your health?",
+                    type: .freeText,
+                    isOptional: true
+                ),
+                .init(
+                    text: "On a scale of 0-10, how likely are you to recommend this tool to a friend or colleague?",
+                    type: .netPromoterScore(range: 0...10)
+                )
+            ]
+        ),
+        .init(
+            id: 6,
+            instruction: nil,
+            questions: [
+                .init(
+                    text: "How easy would it be to access or obtain information about your medical condition?",
+                    type: .scale(responseOptions: balancedEaseScale)
+                ),
+                .init(
+                    // swiftlint:disable:next line_length
+                    text: "How frequently do you anticipate having problems learning about your medical condition because of difficulty understanding written information?",
+                    type: .scale(responseOptions: frequencyOptions)
+                ),
+                .init(
+                    text: "How confident would you be in filling out medical forms by yourself?",
+                    type: .scale(responseOptions: frequencyOptions)
+                ),
+                .init(
+                    text: "How often do you think you would have someone help you read hospital materials?",
+                    type: .scale(responseOptions: frequencyOptions)
+                )
+            ]
+        )
     ]
 }
