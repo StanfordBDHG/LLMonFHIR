@@ -75,7 +75,7 @@ struct UserStudyChatView: View {
 
     @ViewBuilder
     private func surveySheet() -> some View {
-        if let task = viewModel.getCurrentTask() {
+        if let task = viewModel.currentTask {
             SurveyView(
                 task: task,
                 isPresented: $viewModel.isSurveyViewPresented

@@ -68,6 +68,11 @@ final class UserStudyChatViewModel {
         }
     }
 
+    /// Returns the current task if one is active
+    var currentTask: SurveyTask? {
+        survey.tasks.first { $0.id == currentTaskNumber }
+    }
+
     /// Direct access to the current LLM session for observing state changes
     var llmSession: LLMSession {
         interpreter.llmSession
@@ -198,13 +203,6 @@ final class UserStudyChatViewModel {
         isSurveyStarted = true
         currentTaskNumber = 1
         taskStartTimes[currentTaskNumber] = Date()
-    }
-
-    /// Returns the current task if one is active
-    ///
-    /// - Returns: The current survey task, if available
-    func getCurrentTask() -> SurveyTask? {
-        survey.tasks.first { $0.id == currentTaskNumber }
     }
 
     /// Generates a temporary file URL containing the study report
