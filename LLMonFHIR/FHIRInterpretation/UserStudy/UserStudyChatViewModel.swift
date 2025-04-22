@@ -167,7 +167,7 @@ final class UserStudyChatViewModel {
     ///
     /// - Parameter answers: Array of answers provided by the user
     /// - Throws: An error if the submission fails
-    func submitSurveyAnswers(_ answers: [Answer]) throws {
+    func submitSurveyAnswers(_ answers: [TaskQuestionAnswer]) throws {
         taskEndTimes[currentTaskNumber] = Date()
 
         for (index, answer) in answers.enumerated() {
