@@ -58,6 +58,8 @@ final class UserStudyChatViewModel {
     /// Controls the visibility of the sharing sheet for exporting the study report
     var isSharingSheetPresented = false
 
+    var isTaskIntructionAlertPresented: Bool = false
+
     private let survey: Survey
     private let interpreter: FHIRMultipleResourceInterpreter
     private let resourceSummary: FHIRResourceSummary
@@ -203,6 +205,7 @@ final class UserStudyChatViewModel {
         isSurveyStarted = true
         currentTaskNumber = 1
         taskStartTimes[currentTaskNumber] = Date()
+        isTaskIntructionAlertPresented = true
     }
 
     /// Generates a temporary file URL containing the study report
@@ -224,6 +227,7 @@ final class UserStudyChatViewModel {
         if currentTaskNumber < survey.tasks.count {
             currentTaskNumber += 1
             taskStartTimes[currentTaskNumber] = Date()
+            isTaskIntructionAlertPresented = true
         } else {
             navigationState = .completed
             studyReport = generateStudyReport()

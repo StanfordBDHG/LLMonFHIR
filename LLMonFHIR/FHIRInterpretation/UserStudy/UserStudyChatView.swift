@@ -32,6 +32,20 @@ struct UserStudyChatView: View {
                     isPresented: $viewModel.isSurveyViewPresented,
                     content: surveySheet
                 )
+                .alert(
+                    "Instruction",
+                    isPresented: $viewModel.isTaskIntructionAlertPresented,
+                    actions: {
+                        Button("Ok", role: .cancel) {
+                            viewModel.isTaskIntructionAlertPresented = false
+                        }
+                    },
+                    message: {
+                        if let currentTask = viewModel.currentTask, let instruction = currentTask.instruction {
+                            Text(instruction)
+                        }
+                    }
+                )
                 .navigationBarTitleDisplayMode(.inline)
         }
     }
