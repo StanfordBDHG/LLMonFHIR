@@ -37,7 +37,7 @@ final class FHIRMultipleResourceInterpreter {
     private var llmSchema: any LLMSchema
     let fhirStore: FHIRStore
 
-    private var currentGenerationTask: Task<Void, Never>?
+    private var currentGenerationTask: Task<LLMContextEntity?, Never>?
 
     /// The current LLM session managing the conversation context with the language model.
     ///
@@ -97,15 +97,14 @@ final class FHIRMultipleResourceInterpreter {
 
     /// Generates an assistant response based on the current conversation context.
     ///
-    /// The generated response will be automatically appended to the conversation context
-    /// and will be observable through the `llmSession` property. Use the `shouldGenerateResponse`
-    /// property to determine if this method should be called.
-    func generateAssistantResponse() {
+    /// - Returns: The last `LLMContextEntity` representing the completed assistant response,
+    ///   or `nil` if generation was cancelled or encountered an error.
+    func generateAssistantResponse() async -> LLMContextEntity? {
         currentGenerationTask?.cancel()
 
         currentGenerationTask = Task { [weak self] in
             guard let self else {
-                return
+                return nil
             }
 
             defer {
@@ -118,20 +117,28 @@ final class FHIRMultipleResourceInterpreter {
                 let stream = try await llmSession.generate()
 
                 for try await token in stream {
-                    if Task.isCancelled {
-                        Self.logger.debug("Response generation was cancelled")
-                        break
-                    }
+                    try Task.checkCancellation()
                     llmSession.context.append(assistantOutput: token)
                 }
 
-                try localStorage.store(llmSession.context, for: .init(FHIRMultipleResourceInterpreterConstants.context))
+                try Task.checkCancellation()
 
+                llmSession.context.completeAssistantStreaming()
+
+                try localStorage.store(llmSession.context, for: .init(FHIRMultipleResourceInterpreterConstants.context))
                 Self.logger.debug("Successfully stored updated conversation context")
+
+                return llmSession.context.last
+            } catch is CancellationError {
+                Self.logger.error("Response generation was cancelled")
+                return nil
             } catch {
                 Self.logger.error("Error during response generation: \(error.localizedDescription)")
+                return nil
             }
         }
+
+        return await currentGenerationTask?.value
     }
 
     /// Updates the LLM schema used by the interpreter.

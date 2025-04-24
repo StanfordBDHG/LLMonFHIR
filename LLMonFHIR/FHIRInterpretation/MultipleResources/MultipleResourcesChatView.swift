@@ -44,7 +44,12 @@ struct MultipleResourcesChatView: View {
             .speechToolbarButton(muted: !$textToSpeech)
             .viewStateAlert(state: viewModel.llmSession.state)
             .onChange(of: viewModel.llmSession.context, initial: true) {
-                viewModel.generateAssistantResponse()
+                Task {
+                    guard let response = await viewModel.generateAssistantResponse() else {
+                        return
+                    }
+                    print("Assistant Response:", response)
+                }
             }
     }
 

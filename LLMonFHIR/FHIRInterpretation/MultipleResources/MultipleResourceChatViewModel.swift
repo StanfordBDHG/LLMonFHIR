@@ -98,10 +98,10 @@ final class MultipleResourcesChatViewModel {
     }
 
     /// Generates an assistant response  for the current context
-    func generateAssistantResponse() {
+    func generateAssistantResponse() async -> LLMContextEntity? {
         guard shouldGenerateResponse else {
-            return
+            return nil
         }
-        interpreter.generateAssistantResponse()
+        return await interpreter.generateAssistantResponse()
     }
 }

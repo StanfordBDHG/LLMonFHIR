@@ -147,11 +147,11 @@ final class UserStudyChatViewModel {
     ///
     /// This method checks if a response is needed and if so, delegates
     /// to the interpreter to generate the actual response.
-    func generateAssistantResponse() {
+    func generateAssistantResponse() async -> LLMContextEntity? {
         guard shouldGenerateResponse else {
-            return
+            return nil
         }
-        interpreter.generateAssistantResponse()
+        return await interpreter.generateAssistantResponse()
     }
 
     /// Cancels any ongoing operations and dismisses the current view
