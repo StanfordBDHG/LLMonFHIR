@@ -60,6 +60,8 @@ final class UserStudyChatViewModel {
 
     var isTaskIntructionAlertPresented: Bool = false
 
+    var numberOfAssistantMessagesPerTask: [Int: [String]] = [:]
+
     private let survey: Survey
     private let interpreter: FHIRMultipleResourceInterpreter
     private let resourceSummary: FHIRResourceSummary
@@ -206,6 +208,7 @@ final class UserStudyChatViewModel {
         currentTaskNumber = 1
         taskStartTimes[currentTaskNumber] = Date()
         isTaskIntructionAlertPresented = true
+        numberOfAssistantMessagesPerTask[currentTaskNumber] = []
     }
 
     /// Generates a temporary file URL containing the study report
@@ -228,6 +231,7 @@ final class UserStudyChatViewModel {
             currentTaskNumber += 1
             taskStartTimes[currentTaskNumber] = Date()
             isTaskIntructionAlertPresented = true
+            numberOfAssistantMessagesPerTask[currentTaskNumber] = []
         } else {
             navigationState = .completed
             studyReport = generateStudyReport()

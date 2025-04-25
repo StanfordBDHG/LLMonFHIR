@@ -64,7 +64,12 @@ struct UserStudyChatView: View {
                     guard let response = await viewModel.generateAssistantResponse() else {
                         return
                     }
-                    print("Assistant Response:", response)
+
+                    guard let currentTaskIndex = viewModel.currentTask?.id else {
+                        return
+                    }
+
+                    viewModel.numberOfAssistantMessagesPerTask[currentTaskIndex]?.append(response.content)
                 }
             }
     }
