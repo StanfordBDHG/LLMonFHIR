@@ -60,7 +60,7 @@ final class UserStudyChatViewModel {
 
     var isTaskIntructionAlertPresented: Bool = false
 
-    var numberOfAssistantMessagesPerTask: [Int: [String]] = [:]
+    var assistantMessagesByTask = LimitedCollectionDictionary<Int, String>()
 
     private let survey: Survey
     private let interpreter: FHIRMultipleResourceInterpreter
@@ -110,6 +110,15 @@ final class UserStudyChatViewModel {
         )
     }
 
+    var isAssistantMessageLimitReached: Bool {
+        if let taskMessages = assistantMessagesByTask.collections[currentTaskNumber],
+           let limit = assistantMessagesByTask.capacityLimits[currentTaskNumber] {
+            return taskMessages.count >= limit
+        }
+        return false
+    }
+
+
     private var shouldGenerateResponse: Bool {
         if llmSession.state == .generating || isProcessing {
             return false
@@ -144,6 +153,23 @@ final class UserStudyChatViewModel {
         self.survey = survey
         self.interpreter = interpreter
         self.resourceSummary = resourceSummary
+
+        for task in survey.tasks {
+            do {
+                switch task.id {
+                case 1:
+                    try assistantMessagesByTask.setCapacityLimit(1, forKey: task.id)
+                case 2:
+                    try assistantMessagesByTask.setCapacityLimit(2, forKey: task.id)
+                case 3:
+                    try assistantMessagesByTask.setCapacityLimit(2, forKey: task.id)
+                default:
+                    return
+                }
+            } catch {
+                print("Error configuring message limit for task \(task.id): \(error)")
+            }
+        }
     }
 
 
@@ -155,7 +181,14 @@ final class UserStudyChatViewModel {
         guard shouldGenerateResponse else {
             return nil
         }
-        return await interpreter.generateAssistantResponse()
+
+        guard let response = await interpreter.generateAssistantResponse() else {
+            return nil
+        }
+
+        try? assistantMessagesByTask.append(response.id.uuidString, forKey: currentTaskNumber)
+
+        return response
     }
 
     /// Cancels any ongoing operations and dismisses the current view
@@ -208,7 +241,6 @@ final class UserStudyChatViewModel {
         currentTaskNumber = 1
         taskStartTimes[currentTaskNumber] = Date()
         isTaskIntructionAlertPresented = true
-        numberOfAssistantMessagesPerTask[currentTaskNumber] = []
     }
 
     /// Generates a temporary file URL containing the study report
@@ -231,7 +263,6 @@ final class UserStudyChatViewModel {
             currentTaskNumber += 1
             taskStartTimes[currentTaskNumber] = Date()
             isTaskIntructionAlertPresented = true
-            numberOfAssistantMessagesPerTask[currentTaskNumber] = []
         } else {
             navigationState = .completed
             studyReport = generateStudyReport()

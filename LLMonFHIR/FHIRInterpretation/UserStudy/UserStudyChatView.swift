@@ -54,7 +54,7 @@ struct UserStudyChatView: View {
     @ViewBuilder private var chatContent: some View {
         ChatView(
             viewModel.chatBinding,
-            disableInput: viewModel.isProcessing,
+            disableInput: viewModel.isProcessing || viewModel.isAssistantMessageLimitReached,
             speechToText: false,
             messagePendingAnimation: .manual(shouldDisplay: viewModel.showTypingIndicator)
         )
@@ -64,12 +64,6 @@ struct UserStudyChatView: View {
                     guard let response = await viewModel.generateAssistantResponse() else {
                         return
                     }
-
-                    guard let currentTaskIndex = viewModel.currentTask?.id else {
-                        return
-                    }
-
-                    viewModel.numberOfAssistantMessagesPerTask[currentTaskIndex]?.append(response.content)
                 }
             }
     }
