@@ -42,9 +42,6 @@ final class UserStudyChatViewModel {  // swiftlint:disable:this type_body_length
     /// The current navigation state of the study
     var navigationState: NavigationState { _navigationState }
 
-    /// Indicates whether the survey portion has been started
-    var isSurveyStarted: Bool { _isSurveyStarted }
-
     /// The generated study report JSON, available when the study is completed
     var studyReport: String? { _studyReport }
 
@@ -92,7 +89,6 @@ final class UserStudyChatViewModel {  // swiftlint:disable:this type_body_length
     }
 
     private var _navigationState: NavigationState = .introduction
-    private var _isSurveyStarted = false
     private var _studyReport: String?
     private var _isSurveyViewPresented = false
     private var _isDismissDialogPresented = false
@@ -108,8 +104,6 @@ final class UserStudyChatViewModel {  // swiftlint:disable:this type_body_length
     private var taskStartTimes: [Int: Date] = [:]
     private var taskEndTimes: [Int: Date] = [:]
     private var assistantMessagesByTask = LimitedCollectionDictionary<Int, String>()
-
-    // MARK: - Computed Properties
 
     /// Provides a binding to the chat messages for use in SwiftUI views
     ///
@@ -227,8 +221,6 @@ final class UserStudyChatViewModel {  // swiftlint:disable:this type_body_length
         dismiss()
     }
 
-    // MARK: - Survey Methods
-
     /// Handles the submission of survey answers for the current task
     ///
     /// This method processes the user's answers and advances to the next task
@@ -254,7 +246,6 @@ final class UserStudyChatViewModel {  // swiftlint:disable:this type_body_length
     func resetStudy() {
         survey.resetAllAnswers()
         _currentTaskNumber = 0
-        _isSurveyStarted = false
         updateNavigationState()
     }
 
@@ -262,10 +253,6 @@ final class UserStudyChatViewModel {  // swiftlint:disable:this type_body_length
     ///
     /// This method initializes the survey process if it hasn't already been started.
     func startSurvey() {
-        if _isSurveyStarted {
-            return
-        }
-        _isSurveyStarted = true
         _currentTaskNumber = 1
         taskStartTimes[_currentTaskNumber] = Date()
         _isTaskIntructionAlertPresented = true
@@ -285,8 +272,6 @@ final class UserStudyChatViewModel {  // swiftlint:disable:this type_body_length
         try? studyReport.write(to: reportURL, atomically: true, encoding: .utf8)
         return reportURL
     }
-
-    // MARK: - Private Methods
 
     private func advanceToNextTask() {
         if _currentTaskNumber < survey.tasks.count {
