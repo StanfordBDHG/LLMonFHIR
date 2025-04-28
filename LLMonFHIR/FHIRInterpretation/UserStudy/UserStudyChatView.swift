@@ -15,9 +15,10 @@ struct UserStudyChatView: View {
 
 
     var body: some View {
-        NavigationStack {
+        NavigationStack { // swiftlint:disable:this closure_body_length
             chatContent
                 .navigationTitle(viewModel.navigationState.title)
+                .navigationBarTitleDisplayMode(.inline)
                 .toolbar {
                     UserStudyChatToolbar(
                         viewModel: viewModel,
@@ -27,17 +28,22 @@ struct UserStudyChatView: View {
                         }
                     )
                 }
-                .onAppear(perform: handleAppear)
                 .sheet(
-                    isPresented: $viewModel.isSurveyViewPresented,
+                    isPresented: makeBinding(
+                        get: { viewModel.isSurveyViewPresented },
+                        set: { viewModel.setSurveyViewPresented($0) }
+                    ),
                     content: surveySheet
                 )
                 .alert(
                     "Instruction",
-                    isPresented: $viewModel.isTaskIntructionAlertPresented,
+                    isPresented: makeBinding(
+                        get: { viewModel.isTaskIntructionAlertPresented },
+                        set: { if !$0 { viewModel.dismissTaskInstructionAlert() } }
+                    ),
                     actions: {
                         Button("Ok", role: .cancel) {
-                            viewModel.isTaskIntructionAlertPresented = false
+                            viewModel.dismissTaskInstructionAlert()
                         }
                     },
                     message: {
@@ -46,7 +52,12 @@ struct UserStudyChatView: View {
                         }
                     }
                 )
-                .navigationBarTitleDisplayMode(.inline)
+                .onAppear(perform: viewModel.startSurvey)
+                .onChange(of: viewModel.llmSession.context, initial: true) {
+                    Task {
+                        _ = await viewModel.generateAssistantResponse()
+                    }
+                }
         }
     }
 
@@ -59,13 +70,6 @@ struct UserStudyChatView: View {
             messagePendingAnimation: .manual(shouldDisplay: viewModel.showTypingIndicator)
         )
             .viewStateAlert(state: viewModel.llmSession.state)
-            .onChange(of: viewModel.llmSession.context, initial: true) {
-                Task {
-                    guard let response = await viewModel.generateAssistantResponse() else {
-                        return
-                    }
-                }
-            }
     }
 
 
@@ -96,7 +100,10 @@ struct UserStudyChatView: View {
         if let task = viewModel.currentTask {
             SurveyView(
                 task: task,
-                isPresented: $viewModel.isSurveyViewPresented
+                isPresented: makeBinding(
+                    get: { viewModel.isSurveyViewPresented },
+                    set: { viewModel.setSurveyViewPresented($0) }
+                )
             ) { answers in
                 do {
                     try viewModel.submitSurveyAnswers(answers)
@@ -107,8 +114,14 @@ struct UserStudyChatView: View {
             .presentationDetents([.medium, .large])
         }
     }
+}
 
-    private func handleAppear() {
-        viewModel.startSurvey()
-    }
+func makeBinding<T>(
+    get: @escaping () -> T,
+    set: @escaping (T) -> Void
+) -> Binding<T> {
+    Binding(
+        get: get,
+        set: set
+    )
 }
