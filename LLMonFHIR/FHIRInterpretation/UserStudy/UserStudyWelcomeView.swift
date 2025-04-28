@@ -259,7 +259,7 @@ extension [SurveyTask] {
         .init(
             id: 1,
             // swiftlint:disable:next line_length
-            instruction: "LLMonFHIR app will have a “health summary” automatically generated on the home screen. Please review this before answering any questions.",
+            instruction: "LLMonFHIR app will have a health summary automatically generated on the home screen. Please review this before answering any questions.",
             questions: [
                 .init(
                     text: "How clear and understandable was the summary provided by the app?",
