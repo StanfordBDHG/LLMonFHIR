@@ -65,7 +65,11 @@ struct SurveyView: View {
             }
             .navigationTitle("Task \(task.id)")
             .navigationBarTitleDisplayMode(.automatic)
-            .navigationBarItems(trailing: cancelButton)
+            .toolbar {
+                ToolbarItem(placement: .confirmationAction) {
+                    doneButton
+                }
+            }
         }
     }
     
@@ -92,8 +96,8 @@ struct SurveyView: View {
             .listRowBackground(Color.clear)
     }
 
-    private var cancelButton: some View {
-        Button("Cancel") {
+    private var doneButton: some View {
+        Button("Done") {
             isPresented = false
         }
     }

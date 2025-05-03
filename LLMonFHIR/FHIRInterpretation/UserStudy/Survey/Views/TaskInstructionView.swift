@@ -14,29 +14,31 @@ struct TaskInstructionView: View {
 
     var body: some View {
         NavigationView {
-            Form {
-                Section {
+            ZStack {
+                Color(UIColor.systemGroupedBackground)
+                    .ignoresSafeArea()
+                
+                VStack {
                     if let instruction = task.instruction {
                         Text(instruction)
+                            .padding()
+                            .frame(maxWidth: .infinity, alignment: .leading)
+                            .background(Color(UIColor.secondarySystemGroupedBackground))
+                            .cornerRadius(10)
+                            .padding()
                     }
-                }
-
-                Section {
-                    Button {
-                        isPresented = false
-                    } label: {
-                        Text("OK")
-                            .frame(maxWidth: .infinity)
-                            .padding(4)
-                    }
-                    .padding(.horizontal, -16)
-                    .buttonStyle(.borderedProminent)
-                    .listRowBackground(Color.clear)
+                    Spacer()
                 }
             }
-            .listSectionSpacing(.compact)
             .navigationTitle("Task \(task.id)")
-            .navigationBarTitleDisplayMode(.large)
+            .navigationBarTitleDisplayMode(.inline)
+            .toolbar {
+                ToolbarItem(placement: .confirmationAction) {
+                    Button("Done") {
+                        isPresented = false
+                    }
+                }
+            }
         }
     }
 }
