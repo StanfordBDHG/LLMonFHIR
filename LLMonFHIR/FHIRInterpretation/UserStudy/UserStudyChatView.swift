@@ -111,7 +111,7 @@ struct UserStudyChatView: View {
                     print("Error submitting answers: \(error)")
                 }
             }
-            .presentationDetents([.medium, .large])
+            .presentationDetents([.large])
         }
     }
 }
