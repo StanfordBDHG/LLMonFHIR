@@ -8,10 +8,13 @@
 
 import Foundation
 
+
 /// Error when too many elements are added
 enum LimitedCollectionError: Error {
     case capacityExceeded(maximum: Int)
 }
+
+// periphery:ignore - These are fundamental APIs for collection handling, even if not all are used in every context.
 
 /// A collection with a maximum capacity that throws an error when full
 struct LimitedCollection<Element> {

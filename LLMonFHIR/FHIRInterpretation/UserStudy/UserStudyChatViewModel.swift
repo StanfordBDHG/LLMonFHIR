@@ -42,17 +42,11 @@ final class UserStudyChatViewModel {  // swiftlint:disable:this type_body_length
     /// The current navigation state of the study
     var navigationState: NavigationState { _navigationState }
 
-    /// The generated study report JSON, available when the study is completed
-    var studyReport: String? { _studyReport }
-
     /// Controls the visibility of the survey view
     var isSurveyViewPresented: Bool { _isSurveyViewPresented }
 
     /// Controls the visibility of the dismiss confirmation dialog
     var isDismissDialogPresented: Bool { _isDismissDialogPresented }
-
-    /// Controls the visibility of the sharing sheet for exporting the study report
-    var isSharingSheetPresented: Bool { _isSharingSheetPresented }
 
     /// Controls the visibility of the task instruction alert
     var isTaskIntructionAlertPresented: Bool {

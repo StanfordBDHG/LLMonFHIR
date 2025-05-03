@@ -13,8 +13,9 @@ import Foundation
 enum LimitedCollectionDictionaryError: Error {
     case keyNotConfigured(key: AnyHashable)
     case capacityExceeded(key: AnyHashable, maximum: Int)
-    case internalError(description: String)
 }
+
+// periphery:ignore - These are fundamental APIs for collection handling, even if not all are used in every context.
 
 /// A dictionary where each key maps to a collection with a maximum capacity.
 ///
@@ -70,13 +71,6 @@ struct LimitedCollectionDictionary<Key: Hashable, Element> {
         } catch LimitedCollectionError.capacityExceeded(let maximum) {
             throw LimitedCollectionDictionaryError.capacityExceeded(key: key, maximum: maximum)
         }
-    }
-
-    /// Retrieves all elements for a given key
-    /// - Parameter key: The key to retrieve elements for
-    /// - Returns: Array of elements if the key exists, nil otherwise
-    func elements(forKey key: Key) -> [Element]? {
-        return collections[key]?.all
     }
 
     /// Removes all elements for a key
