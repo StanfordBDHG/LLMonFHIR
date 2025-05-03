@@ -22,7 +22,7 @@ struct UserStudyChatView: View {
                 .toolbar {
                     UserStudyChatToolbar(
                         viewModel: viewModel,
-                        isInputDisabled: viewModel.isProcessing || !viewModel.isAssistantMessageLimitReached,
+                        isInputDisabled: viewModel.shouldDisableToolbarInput,
                         onDismiss: {
                             viewModel.handleDismiss(dismiss: dismiss)
                         }
@@ -65,7 +65,7 @@ struct UserStudyChatView: View {
     @ViewBuilder private var chatContent: some View {
         ChatView(
             viewModel.chatBinding,
-            disableInput: viewModel.isProcessing || viewModel.isAssistantMessageLimitReached,
+            disableInput: viewModel.shouldDisableChatInput,
             speechToText: false,
             messagePendingAnimation: .manual(shouldDisplay: viewModel.showTypingIndicator)
         )

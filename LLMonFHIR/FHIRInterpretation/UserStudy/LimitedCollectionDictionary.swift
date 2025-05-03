@@ -14,24 +14,31 @@ enum LimitedCollectionDictionaryError: Error {
     case internalError(description: String)
 }
 
+/// Represents minimum and maximum capacity limits
+struct CapacityRange {
+    let minimum: Int
+    let maximum: Int
+}
+
 /// A dictionary where each key maps to a collection with a maximum capacity.
 ///
 /// This allows setting different capacity limits for different keys.
 /// When the limit is reached for a key, adding more elements will throw an error.
 struct LimitedCollectionDictionary<Key: Hashable, Element> {
-    private(set) var capacityLimits: [Key: Int] = [:]
+    private(set) var capacityRanges: [Key: CapacityRange] = [:]
     private(set) var collections: [Key: LimitedCollection<Element>] = [:]
 
-    /// Sets the maximum number of elements allowed for a key
+    /// Sets the minimum and maximum number of elements allowed for a key
     /// - Parameters:
-    ///   - limit: Maximum number of elements
+    ///   - minimum: Minimum number of elements required
+    ///   - maximum: Maximum number of elements allowed
     ///   - key: The key to configure
     /// - Throws: Error if the collection cannot be updated
-    mutating func setCapacityLimit(_ limit: Int, forKey key: Key) throws {
-        capacityLimits[key] = limit
+    mutating func setCapacityRange(minimum: Int, maximum: Int, forKey key: Key) throws {
+        capacityRanges[key] = CapacityRange(minimum: minimum, maximum: maximum)
 
         if let existingCollection = collections[key] {
-            var newCollection = LimitedCollection<Element>(capacity: limit)
+            var newCollection = LimitedCollection<Element>(capacity: maximum)
             try newCollection.append(contentsOf: existingCollection.all)
             collections[key] = newCollection
         }
@@ -40,7 +47,7 @@ struct LimitedCollectionDictionary<Key: Hashable, Element> {
     /// Removes capacity restrictions for a key
     /// - Parameter key: The key to make unlimited
     mutating func setUnlimitedCapacity(forKey key: Key) {
-        capacityLimits.removeValue(forKey: key)
+        capacityRanges.removeValue(forKey: key)
         collections.removeValue(forKey: key)
     }
 
@@ -54,11 +61,11 @@ struct LimitedCollectionDictionary<Key: Hashable, Element> {
             let limit = getCapacityLimit(forKey: key)
             collections[key] = LimitedCollection<Element>(capacity: limit)
         }
-        
+
         guard var collection = collections[key] else {
             throw LimitedCollectionDictionaryError.internalError(description: "Failed to access collection for key \(key)")
         }
-        
+
         do {
             try collection.append(element)
             collections[key] = collection
@@ -73,14 +80,38 @@ struct LimitedCollectionDictionary<Key: Hashable, Element> {
         collections.removeValue(forKey: key)
     }
 
+    /// Check if the minimum requirement is met for a key
+    /// - Parameter key: The key to check
+    /// - Returns: True if the minimum is met or no minimum is set
+    func isMinReached(forKey key: Key) -> Bool {
+        guard let range = capacityRanges[key],
+              let collection = collections[key] else {
+            return false
+        }
+
+        return collection.count >= range.minimum
+    }
+
+    /// Check if the maximumun requirement is met for a key
+    /// - Parameter key: The key to check
+    /// - Returns: True if the maximumun is met or no minimum is set
+    func isMaxReached(forKey key: Key) -> Bool {
+        guard let range = capacityRanges[key],
+              let collection = collections[key] else {
+            return false
+        }
+
+        return collection.count >= range.maximum
+    }
+
     /// Determines the capacity limit for a key based on configuration
     /// - Parameter key: Key to check
     /// - Returns: Specific limit or Int.max for unlimited
     private func getCapacityLimit(forKey key: Key) -> Int {
-        if let limit = capacityLimits[key] {
-            return limit
+        if let range = capacityRanges[key] {
+            return range.maximum
         }
 
         return Int.max
     }
-} 
+}

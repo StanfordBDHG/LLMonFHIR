@@ -79,13 +79,50 @@ final class UserStudyChatViewModel {  // swiftlint:disable:this type_body_length
         return role == .user || role == .system
     }
 
-    /// Indicates whether the maximum number of assistant messages has been reached for the current task
-    var isAssistantMessageLimitReached: Bool {
-        if let taskMessages = assistantMessagesByTask.collections[_currentTaskNumber],
-           let limit = assistantMessagesByTask.capacityLimits[_currentTaskNumber] {
-            return taskMessages.count >= limit
+    var shouldDisableChatInput: Bool {
+        // Always disable during processing
+        if isProcessing {
+            return true
         }
+
+        // Disable when the maximum number of messages is reached
+        if isMaxAssistantMessagesReached {
+            return true
+        }
+
+        // Enable when the minimum is not yet met or still under the maximum allowed
         return false
+    }
+
+    var shouldDisableToolbarInput: Bool {
+        // Always disable during processing
+        if isProcessing {
+            return true
+        }
+
+        // Disable if the minimum number of messages is not met
+        if !isMinAssistantMessagesReached {
+            return true
+        }
+
+        // Enable when the minimum number of messages is met (regardless of maximum)
+        return false
+    }
+
+    /// Provides a binding to the chat messages for use in SwiftUI views
+    ///
+    /// This binding allows the ChatView component to both display messages
+    /// and add new user messages to the conversation. It also adds survey
+    /// report data when the survey is completed.
+    var chatBinding: Binding<Chat> {
+        Binding(
+            get: { [weak self] in
+                self?.interpreter.llmSession.context.chat ?? []
+            },
+            set: { [weak self] newChat in
+                self?.interpreter.llmSession.context.chat = newChat
+            }
+        )
     }
 
     private var _navigationState: NavigationState = .introduction
@@ -105,22 +142,6 @@ final class UserStudyChatViewModel {  // swiftlint:disable:this type_body_length
     private var taskEndTimes: [Int: Date] = [:]
     private var assistantMessagesByTask = LimitedCollectionDictionary<Int, String>()
 
-    /// Provides a binding to the chat messages for use in SwiftUI views
-    ///
-    /// This binding allows the ChatView component to both display messages
-    /// and add new user messages to the conversation. It also adds survey
-    /// report data when the survey is completed.
-    var chatBinding: Binding<Chat> {
-        Binding(
-            get: { [weak self] in
-                self?.interpreter.llmSession.context.chat ?? []
-            },
-            set: { [weak self] newChat in
-                self?.interpreter.llmSession.context.chat = newChat
-            }
-        )
-    }
-
     private var shouldGenerateResponse: Bool {
         if llmSession.state == .generating || isProcessing {
             return false
@@ -133,6 +154,14 @@ final class UserStudyChatViewModel {  // swiftlint:disable:this type_body_length
         let noAssistantMessages = !interpreter.llmSession.context.contains(where: { $0.role == .assistant() })
 
         return (lastMessageIsUser || noAssistantMessages)
+    }
+
+    private var isMaxAssistantMessagesReached: Bool {
+        assistantMessagesByTask.isMaxReached(forKey: _currentTaskNumber)
+    }
+
+    private var isMinAssistantMessagesReached: Bool {
+        assistantMessagesByTask.isMinReached(forKey: _currentTaskNumber)
     }
 
 
@@ -152,26 +181,6 @@ final class UserStudyChatViewModel {  // swiftlint:disable:this type_body_length
         self.resourceSummary = resourceSummary
 
         configureMessageLimits()
-    }
-
-
-    private func configureMessageLimits() {
-        for task in survey.tasks {
-            do {
-                switch task.id {
-                case 1:
-                    try assistantMessagesByTask.setCapacityLimit(1, forKey: task.id)
-                case 2:
-                    try assistantMessagesByTask.setCapacityLimit(2, forKey: task.id)
-                case 3:
-                    try assistantMessagesByTask.setCapacityLimit(2, forKey: task.id)
-                default:
-                    return
-                }
-            } catch {
-                print("Error configuring message limit for task \(task.id): \(error)")
-            }
-        }
     }
 
     /// Shows or hides the survey view
@@ -271,6 +280,29 @@ final class UserStudyChatViewModel {  // swiftlint:disable:this type_body_length
         let reportURL = tempDir.appendingPathComponent("survey_report_\(studyID.lowercased()).txt")
         try? studyReport.write(to: reportURL, atomically: true, encoding: .utf8)
         return reportURL
+    }
+
+    private func configureMessageLimits() {
+        for task in survey.tasks {
+            do {
+                switch task.id {
+                case 1:
+                    try assistantMessagesByTask.setCapacityRange(minimum: 1, maximum: 1, forKey: task.id)
+                case 2:
+                    try assistantMessagesByTask.setCapacityRange(minimum: 1, maximum: 1, forKey: task.id)
+                case 3:
+                    try assistantMessagesByTask.setCapacityRange(minimum: 1, maximum: 1, forKey: task.id)
+                case 4:
+                    try assistantMessagesByTask.setCapacityRange(minimum: 1, maximum: 1, forKey: task.id)
+                case 5:
+                    try assistantMessagesByTask.setCapacityRange(minimum: 1, maximum: 1, forKey: task.id)
+                default:
+                    return
+                }
+            } catch {
+                print("Error configuring message limit for task \(task.id): \(error)")
+            }
+        }
     }
 
     private func advanceToNextTask() {
