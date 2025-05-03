@@ -198,9 +198,9 @@ final class UserStudyChatViewModel {  // swiftlint:disable:this type_body_length
         _isSharingSheetPresented = isPresented
     }
 
-    /// Dismisses the task instruction alert
-    func dismissTaskInstructionAlert() {
-        _isTaskIntructionAlertPresented = false
+    /// Shows or hides the task instruction sheet
+    func setTaskInstructionSheetPresented(_ isPresented: Bool) {
+        _isTaskIntructionAlertPresented = isPresented
     }
 
     /// Generates an assistant response if appropriate for the current context

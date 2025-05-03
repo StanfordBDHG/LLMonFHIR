@@ -15,7 +15,7 @@ struct UserStudyChatView: View {
 
 
     var body: some View {
-        NavigationStack {
+        NavigationStack { // swiftlint:disable:this closure_body_length
             chatContent
                 .navigationTitle(viewModel.navigationState.title)
                 .navigationBarTitleDisplayMode(.inline)
@@ -28,6 +28,16 @@ struct UserStudyChatView: View {
                         }
                     )
                 }
+                .toolbar {
+                    ToolbarItem(placement: .topBarTrailing) {
+                        Button {
+                            viewModel.setTaskInstructionSheetPresented(true)
+                        } label: {
+                            Image(systemName: "info.circle")
+                                .accessibilityHidden(true)
+                        }
+                    }
+                }
                 .sheet(
                     isPresented: makeBinding(
                         get: { viewModel.isSurveyViewPresented },
@@ -38,7 +48,7 @@ struct UserStudyChatView: View {
                 .sheet(
                     isPresented: makeBinding(
                         get: { viewModel.isTaskIntructionAlertPresented },
-                        set: { if !$0 { viewModel.dismissTaskInstructionAlert() } }
+                        set: { viewModel.setTaskInstructionSheetPresented($0) }
                     ),
                     content: taskInstructionSheet
                 )
@@ -112,7 +122,7 @@ struct UserStudyChatView: View {
                 task: currentTask,
                 isPresented: makeBinding(
                     get: { viewModel.isTaskIntructionAlertPresented },
-                    set: { if !$0 { viewModel.dismissTaskInstructionAlert() } }
+                    set: { viewModel.setTaskInstructionSheetPresented($0) }
                 )
             )
             .presentationDetents([.fraction(1 / 3)])
