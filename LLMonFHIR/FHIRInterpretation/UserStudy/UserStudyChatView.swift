@@ -36,6 +36,7 @@ struct UserStudyChatView: View {
                             Image(systemName: "info.circle")
                                 .accessibilityHidden(true)
                         }
+                        .disabled(viewModel.isTaskIntructionButtonDisabled)
                     }
                 }
                 .sheet(

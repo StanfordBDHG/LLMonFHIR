@@ -13,7 +13,7 @@ struct SurveyTask: Identifiable {
     /// Unique identifier for the task
     let id: Int
 
-    // TODO: Add comment
+    /// Optional instructions displayed to the user
     let instruction: String?
 
     /// The questions contained in this task

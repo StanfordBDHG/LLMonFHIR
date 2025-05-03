@@ -55,7 +55,17 @@ final class UserStudyChatViewModel {  // swiftlint:disable:this type_body_length
     var isSharingSheetPresented: Bool { _isSharingSheetPresented }
 
     /// Controls the visibility of the task instruction alert
-    var isTaskIntructionAlertPresented: Bool { _isTaskIntructionAlertPresented }
+    var isTaskIntructionAlertPresented: Bool {
+        guard isTaskIntructionButtonDisabled else {
+            return _isTaskIntructionAlertPresented
+        }
+
+        return false
+    }
+
+    var isTaskIntructionButtonDisabled: Bool {
+        survey.tasks.first(where: { $0.id == _currentTaskNumber })?.instruction == nil
+    }
 
     /// Returns the current task if one is active
     var currentTask: SurveyTask? {
@@ -85,13 +95,13 @@ final class UserStudyChatViewModel {  // swiftlint:disable:this type_body_length
             return true
         }
 
-        // Disable when the maximum number of messages is reached
-        if isMaxAssistantMessagesReached {
-            return true
+        // If no capacity range is configured for this task, enable chat input
+        if !hasConfiguredCapacityForCurrentTask {
+            return false
         }
 
-        // Enable when the minimum is not yet met or still under the maximum allowed
-        return false
+        // Disable when the maximum number of messages is reached
+        return isMaxAssistantMessagesReached
     }
 
     var shouldDisableToolbarInput: Bool {
@@ -100,13 +110,13 @@ final class UserStudyChatViewModel {  // swiftlint:disable:this type_body_length
             return true
         }
 
-        // Disable if the minimum number of messages is not met
-        if !isMinAssistantMessagesReached {
-            return true
+        // If no capacity range is configured for this task, enable toolbar
+        if !hasConfiguredCapacityForCurrentTask {
+            return false
         }
 
-        // Enable when the minimum number of messages is met (regardless of maximum)
-        return false
+        // Disable if the minimum number of messages is not met
+        return !isMinAssistantMessagesReached
     }
 
     /// Provides a binding to the chat messages for use in SwiftUI views
@@ -162,6 +172,10 @@ final class UserStudyChatViewModel {  // swiftlint:disable:this type_body_length
 
     private var isMinAssistantMessagesReached: Bool {
         assistantMessagesByTask.isMinReached(forKey: _currentTaskNumber)
+    }
+
+    private var hasConfiguredCapacityForCurrentTask: Bool {
+        assistantMessagesByTask.hasConfiguredCapacity(forKey: _currentTaskNumber)
     }
 
 
@@ -294,8 +308,6 @@ final class UserStudyChatViewModel {  // swiftlint:disable:this type_body_length
                     try assistantMessagesByTask.setCapacityRange(minimum: 1, maximum: 1, forKey: task.id)
                 case 4:
                     try assistantMessagesByTask.setCapacityRange(minimum: 1, maximum: 1, forKey: task.id)
-                case 5:
-                    try assistantMessagesByTask.setCapacityRange(minimum: 1, maximum: 1, forKey: task.id)
                 default:
                     return
                 }
@@ -306,7 +318,7 @@ final class UserStudyChatViewModel {  // swiftlint:disable:this type_body_length
     }
 
     private func advanceToNextTask() {
-        if _currentTaskNumber < survey.tasks.count {
+        if _currentTaskNumber <= survey.tasks.count {
             _currentTaskNumber += 1
             taskStartTimes[_currentTaskNumber] = Date()
             _isTaskIntructionAlertPresented = true

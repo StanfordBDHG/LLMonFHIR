@@ -6,6 +6,8 @@
 // SPDX-License-Identifier: MIT
 //
 
+import Foundation
+
 
 /// Errors that can occur when using a LimitedCollectionDictionary
 enum LimitedCollectionDictionaryError: Error {
@@ -14,18 +16,12 @@ enum LimitedCollectionDictionaryError: Error {
     case internalError(description: String)
 }
 
-/// Represents minimum and maximum capacity limits
-struct CapacityRange {
-    let minimum: Int
-    let maximum: Int
-}
-
 /// A dictionary where each key maps to a collection with a maximum capacity.
 ///
 /// This allows setting different capacity limits for different keys.
 /// When the limit is reached for a key, adding more elements will throw an error.
 struct LimitedCollectionDictionary<Key: Hashable, Element> {
-    private(set) var capacityRanges: [Key: CapacityRange] = [:]
+    private(set) var capacityRanges: [Key: ClosedRange<Int>] = [:]
     private(set) var collections: [Key: LimitedCollection<Element>] = [:]
 
     /// Sets the minimum and maximum number of elements allowed for a key
@@ -35,7 +31,10 @@ struct LimitedCollectionDictionary<Key: Hashable, Element> {
     ///   - key: The key to configure
     /// - Throws: Error if the collection cannot be updated
     mutating func setCapacityRange(minimum: Int, maximum: Int, forKey key: Key) throws {
-        capacityRanges[key] = CapacityRange(minimum: minimum, maximum: maximum)
+        precondition(minimum >= 0, "Minimum capacity cannot be negative")
+        precondition(maximum >= minimum, "Maximum capacity must be >= minimum")
+
+        capacityRanges[key] = minimum...maximum
 
         if let existingCollection = collections[key] {
             var newCollection = LimitedCollection<Element>(capacity: maximum)
@@ -57,13 +56,12 @@ struct LimitedCollectionDictionary<Key: Hashable, Element> {
     ///   - key: Target key
     /// - Throws: Error if capacity is exceeded or collection cannot be accessed
     mutating func append(_ element: Element, forKey key: Key) throws {
-        if collections[key] == nil {
-            let limit = getCapacityLimit(forKey: key)
+        if collections[key] == nil, let limit = capacityRanges[key]?.upperBound {
             collections[key] = LimitedCollection<Element>(capacity: limit)
         }
 
         guard var collection = collections[key] else {
-            throw LimitedCollectionDictionaryError.internalError(description: "Failed to access collection for key \(key)")
+            throw LimitedCollectionDictionaryError.keyNotConfigured(key: key)
         }
 
         do {
@@ -72,6 +70,13 @@ struct LimitedCollectionDictionary<Key: Hashable, Element> {
         } catch LimitedCollectionError.capacityExceeded(let maximum) {
             throw LimitedCollectionDictionaryError.capacityExceeded(key: key, maximum: maximum)
         }
+    }
+
+    /// Retrieves all elements for a given key
+    /// - Parameter key: The key to retrieve elements for
+    /// - Returns: Array of elements if the key exists, nil otherwise
+    func elements(forKey key: Key) -> [Element]? {
+        return collections[key]?.all
     }
 
     /// Removes all elements for a key
@@ -84,34 +89,40 @@ struct LimitedCollectionDictionary<Key: Hashable, Element> {
     /// - Parameter key: The key to check
     /// - Returns: True if the minimum is met or no minimum is set
     func isMinReached(forKey key: Key) -> Bool {
-        guard let range = capacityRanges[key],
-              let collection = collections[key] else {
+        guard let range = capacityRanges[key] else {
+            return true
+        }
+
+        if range.lowerBound == 0 {
+            return true
+        }
+
+        guard let collection = collections[key] else {
             return false
         }
 
-        return collection.count >= range.minimum
+        return collection.count >= range.lowerBound
     }
 
-    /// Check if the maximumun requirement is met for a key
+    /// Check if the maximum requirement is met for a key
     /// - Parameter key: The key to check
-    /// - Returns: True if the maximumun is met or no minimum is set
+    /// - Returns: True if the maximum is met or no minimum is set
     func isMaxReached(forKey key: Key) -> Bool {
-        guard let range = capacityRanges[key],
-              let collection = collections[key] else {
+        guard let range = capacityRanges[key] else {
+            return true
+        }
+
+        guard let collection = collections[key] else {
             return false
         }
 
-        return collection.count >= range.maximum
+        return collection.count >= range.upperBound
     }
 
-    /// Determines the capacity limit for a key based on configuration
-    /// - Parameter key: Key to check
-    /// - Returns: Specific limit or Int.max for unlimited
-    private func getCapacityLimit(forKey key: Key) -> Int {
-        if let range = capacityRanges[key] {
-            return range.maximum
-        }
-
-        return Int.max
+    /// Checks if a capacity range has been configured for a specific key
+    /// - Parameter key: The key to check
+    /// - Returns: True if a capacity range exists for the key
+    func hasConfiguredCapacity(forKey key: Key) -> Bool {
+        capacityRanges[key] != nil
     }
 }
