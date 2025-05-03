@@ -1267,9 +1267,6 @@
         }
       }
     },
-    "Instruction" : {
-
-    },
     "Interpretation Prompt" : {
       "comment" : "Title of the interpretation prompt.\nTitle of the multiple resources interpretation prompt.",
       "localizations" : {
@@ -1438,7 +1435,7 @@
     "Official Stanford Logo. Block S with Tree." : {
 
     },
-    "Ok" : {
+    "OK" : {
 
     },
     "OPEN_AI_KEY_SAVE_ACTION" : {

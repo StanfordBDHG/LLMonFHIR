@@ -15,7 +15,7 @@ struct UserStudyChatView: View {
 
 
     var body: some View {
-        NavigationStack { // swiftlint:disable:this closure_body_length
+        NavigationStack {
             chatContent
                 .navigationTitle(viewModel.navigationState.title)
                 .navigationBarTitleDisplayMode(.inline)
@@ -35,22 +35,12 @@ struct UserStudyChatView: View {
                     ),
                     content: surveySheet
                 )
-                .alert(
-                    "Instruction",
+                .sheet(
                     isPresented: makeBinding(
                         get: { viewModel.isTaskIntructionAlertPresented },
                         set: { if !$0 { viewModel.dismissTaskInstructionAlert() } }
                     ),
-                    actions: {
-                        Button("Ok", role: .cancel) {
-                            viewModel.dismissTaskInstructionAlert()
-                        }
-                    },
-                    message: {
-                        if let currentTask = viewModel.currentTask, let instruction = currentTask.instruction {
-                            Text(instruction)
-                        }
-                    }
+                    content: taskInstructionSheet
                 )
                 .onAppear(perform: viewModel.startSurvey)
                 .onChange(of: viewModel.llmSession.context, initial: true) {
@@ -112,6 +102,20 @@ struct UserStudyChatView: View {
                 }
             }
             .presentationDetents([.large])
+        }
+    }
+
+    @ViewBuilder
+    private func taskInstructionSheet() -> some View {
+        if let currentTask = viewModel.currentTask {
+            TaskInstructionView(
+                task: currentTask,
+                isPresented: makeBinding(
+                    get: { viewModel.isTaskIntructionAlertPresented },
+                    set: { if !$0 { viewModel.dismissTaskInstructionAlert() } }
+                )
+            )
+            .presentationDetents([.medium])
         }
     }
 }
