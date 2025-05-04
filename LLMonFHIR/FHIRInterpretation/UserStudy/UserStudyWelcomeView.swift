@@ -206,7 +206,7 @@ struct UserStudyWelcomeView: View {
 }
 
 
-extension AccessGuardConfiguration.Identifier {
+extension AccessGuardIdentifier {
     /// A unique identifier for user study access control.
     /// Used to protect and manage access to user study related features and views.
     static var userStudyIndentifier: Self {
