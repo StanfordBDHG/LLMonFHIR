@@ -968,7 +968,7 @@
 			repositoryURL = "https://github.com/StanfordSpezi/SpeziAccessGuard";
 			requirement = {
 				kind = upToNextMinorVersion;
-				minimumVersion = 0.3.3;
+				minimumVersion = 0.4.0;
 			};
 		};
 		C0FA07222D3932FB002485FF /* XCRemoteSwiftPackageReference "SpeziLLM" */ = {
