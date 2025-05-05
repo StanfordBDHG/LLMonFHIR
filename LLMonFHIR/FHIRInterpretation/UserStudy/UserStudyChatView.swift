@@ -15,24 +15,50 @@ struct UserStudyChatView: View {
 
 
     var body: some View {
-        NavigationStack {
+        NavigationStack { // swiftlint:disable:this closure_body_length
             chatContent
                 .navigationTitle(viewModel.navigationState.title)
+                .navigationBarTitleDisplayMode(.inline)
                 .toolbar {
                     UserStudyChatToolbar(
                         viewModel: viewModel,
-                        isInputDisabled: viewModel.isProcessing,
+                        isInputDisabled: viewModel.shouldDisableToolbarInput,
                         onDismiss: {
                             viewModel.handleDismiss(dismiss: dismiss)
                         }
                     )
                 }
-                .onAppear(perform: handleAppear)
+                .toolbar {
+                    ToolbarItem(placement: .topBarTrailing) {
+                        Button {
+                            viewModel.setTaskInstructionSheetPresented(true)
+                        } label: {
+                            Image(systemName: "info.circle")
+                                .accessibilityHidden(true)
+                        }
+                        .disabled(viewModel.isTaskIntructionButtonDisabled)
+                    }
+                }
                 .sheet(
-                    isPresented: $viewModel.isSurveyViewPresented,
+                    isPresented: makeBinding(
+                        get: { viewModel.isSurveyViewPresented },
+                        set: { viewModel.setSurveyViewPresented($0) }
+                    ),
                     content: surveySheet
                 )
-                .navigationBarTitleDisplayMode(.inline)
+                .sheet(
+                    isPresented: makeBinding(
+                        get: { viewModel.isTaskIntructionAlertPresented },
+                        set: { viewModel.setTaskInstructionSheetPresented($0) }
+                    ),
+                    content: taskInstructionSheet
+                )
+                .onAppear(perform: viewModel.startSurvey)
+                .onChange(of: viewModel.llmSession.context, initial: true) {
+                    Task {
+                        _ = await viewModel.generateAssistantResponse()
+                    }
+                }
         }
     }
 
@@ -40,14 +66,11 @@ struct UserStudyChatView: View {
     @ViewBuilder private var chatContent: some View {
         ChatView(
             viewModel.chatBinding,
-            disableInput: viewModel.isProcessing,
+            disableInput: viewModel.shouldDisableChatInput,
             speechToText: false,
             messagePendingAnimation: .manual(shouldDisplay: viewModel.showTypingIndicator)
         )
             .viewStateAlert(state: viewModel.llmSession.state)
-            .onChange(of: viewModel.llmSession.context, initial: true) {
-                viewModel.generateAssistantResponse()
-            }
     }
 
 
@@ -75,10 +98,13 @@ struct UserStudyChatView: View {
 
     @ViewBuilder
     private func surveySheet() -> some View {
-        if let task = viewModel.getCurrentTask() {
+        if let task = viewModel.currentTask {
             SurveyView(
                 task: task,
-                isPresented: $viewModel.isSurveyViewPresented
+                isPresented: makeBinding(
+                    get: { viewModel.isSurveyViewPresented },
+                    set: { viewModel.setSurveyViewPresented($0) }
+                )
             ) { answers in
                 do {
                     try viewModel.submitSurveyAnswers(answers)
@@ -86,11 +112,32 @@ struct UserStudyChatView: View {
                     print("Error submitting answers: \(error)")
                 }
             }
-            .presentationDetents([.medium, .large])
+            .presentationDetents([.large])
         }
     }
 
-    private func handleAppear() {
-        viewModel.startSurvey()
+    @ViewBuilder
+    private func taskInstructionSheet() -> some View {
+        if let currentTask = viewModel.currentTask {
+            TaskInstructionView(
+                task: currentTask,
+                isPresented: makeBinding(
+                    get: { viewModel.isTaskIntructionAlertPresented },
+                    set: { viewModel.setTaskInstructionSheetPresented($0) }
+                )
+            )
+            .presentationDetents([.fraction(1 / 3)])
+            .interactiveDismissDisabled()
+        }
     }
+}
+
+func makeBinding<T>(
+    get: @escaping () -> T,
+    set: @escaping (T) -> Void
+) -> Binding<T> {
+    Binding(
+        get: get,
+        set: set
+    )
 }

@@ -18,8 +18,7 @@ import SwiftUI
 /// LLM operations and persistence to the underlying interpreter.
 @MainActor
 @Observable
-final class UserStudyChatViewModel {
-    // MARK: - Navigation State
+final class UserStudyChatViewModel {  // swiftlint:disable:this type_body_length
 
     /// The current state of the survey navigation
     enum NavigationState: Equatable {
@@ -41,31 +40,30 @@ final class UserStudyChatViewModel {
     }
 
     /// The current navigation state of the study
-    private(set) var navigationState: NavigationState = .introduction
-
-    /// Indicates whether the survey portion has been started
-    private(set) var isSurveyStarted = false
-
-    /// The generated study report JSON, available when the study is completed
-    private(set) var studyReport: String?
+    var navigationState: NavigationState { _navigationState }
 
     /// Controls the visibility of the survey view
-    var isSurveyViewPresented = false
+    var isSurveyViewPresented: Bool { _isSurveyViewPresented }
 
     /// Controls the visibility of the dismiss confirmation dialog
-    var isDismissDialogPresented = false
+    var isDismissDialogPresented: Bool { _isDismissDialogPresented }
 
-    /// Controls the visibility of the sharing sheet for exporting the study report
-    var isSharingSheetPresented = false
-
-    private let survey: Survey
-    private let interpreter: FHIRMultipleResourceInterpreter
-    private let resourceSummary: FHIRResourceSummary
-
-    private var currentTaskNumber: Int = 0 {
-        didSet {
-            updateNavigationState()
+    /// Controls the visibility of the task instruction alert
+    var isTaskIntructionAlertPresented: Bool {
+        guard isTaskIntructionButtonDisabled else {
+            return _isTaskIntructionAlertPresented
         }
+
+        return false
+    }
+
+    var isTaskIntructionButtonDisabled: Bool {
+        survey.tasks.first(where: { $0.id == _currentTaskNumber })?.instruction == nil
+    }
+
+    /// Returns the current task if one is active
+    var currentTask: SurveyTask? {
+        survey.tasks.first { $0.id == _currentTaskNumber }
     }
 
     /// Direct access to the current LLM session for observing state changes
@@ -85,6 +83,36 @@ final class UserStudyChatViewModel {
         return role == .user || role == .system
     }
 
+    var shouldDisableChatInput: Bool {
+        // Always disable during processing
+        if isProcessing {
+            return true
+        }
+
+        // If no capacity range is configured for this task, enable chat input
+        if !hasConfiguredCapacityForCurrentTask {
+            return false
+        }
+
+        // Disable when the maximum number of messages is reached
+        return isMaxAssistantMessagesReached
+    }
+
+    var shouldDisableToolbarInput: Bool {
+        // Always disable during processing
+        if isProcessing {
+            return true
+        }
+
+        // If no capacity range is configured for this task, enable toolbar
+        if !hasConfiguredCapacityForCurrentTask {
+            return false
+        }
+
+        // Disable if the minimum number of messages is not met
+        return !isMinAssistantMessagesReached
+    }
+
     /// Provides a binding to the chat messages for use in SwiftUI views
     ///
     /// This binding allows the ChatView component to both display messages
@@ -101,6 +129,23 @@ final class UserStudyChatViewModel {
         )
     }
 
+    private var _navigationState: NavigationState = .introduction
+    private var _studyReport: String?
+    private var _isSurveyViewPresented = false
+    private var _isDismissDialogPresented = false
+    private var _isSharingSheetPresented = false
+    private var _isTaskIntructionAlertPresented = false
+    private var _currentTaskNumber: Int = 0
+
+    private let survey: Survey
+    private let interpreter: FHIRMultipleResourceInterpreter
+    private let resourceSummary: FHIRResourceSummary
+    private let studyStartTime = Date()
+    private let studyID = UUID().uuidString
+    private var taskStartTimes: [Int: Date] = [:]
+    private var taskEndTimes: [Int: Date] = [:]
+    private var assistantMessagesByTask = LimitedCollectionDictionary<Int, String>()
+
     private var shouldGenerateResponse: Bool {
         if llmSession.state == .generating || isProcessing {
             return false
@@ -115,11 +160,18 @@ final class UserStudyChatViewModel {
         return (lastMessageIsUser || noAssistantMessages)
     }
 
-    private let studyStartTime = Date()
-    private let studyID = UUID().uuidString
-    private var taskStartTimes: [Int: Date] = [:]
-    private var taskEndTimes: [Int: Date] = [:]
-    private var resourceAccessTimes: [String: Date] = [:]
+    private var isMaxAssistantMessagesReached: Bool {
+        assistantMessagesByTask.isMaxReached(forKey: _currentTaskNumber)
+    }
+
+    private var isMinAssistantMessagesReached: Bool {
+        assistantMessagesByTask.isMinReached(forKey: _currentTaskNumber)
+    }
+
+    private var hasConfiguredCapacityForCurrentTask: Bool {
+        assistantMessagesByTask.hasConfiguredCapacity(forKey: _currentTaskNumber)
+    }
+
 
     /// Creates a new view model for managing a user study chat session
     ///
@@ -135,18 +187,46 @@ final class UserStudyChatViewModel {
         self.survey = survey
         self.interpreter = interpreter
         self.resourceSummary = resourceSummary
+
+        configureMessageLimits()
     }
 
+    /// Shows or hides the survey view
+    func setSurveyViewPresented(_ isPresented: Bool) {
+        _isSurveyViewPresented = isPresented
+    }
+
+    /// Shows or hides the dismiss dialog
+    func setDismissDialogPresented(_ isPresented: Bool) {
+        _isDismissDialogPresented = isPresented
+    }
+
+    /// Shows or hides the sharing sheet
+    func setSharingSheetPresented(_ isPresented: Bool) {
+        _isSharingSheetPresented = isPresented
+    }
+
+    /// Shows or hides the task instruction sheet
+    func setTaskInstructionSheetPresented(_ isPresented: Bool) {
+        _isTaskIntructionAlertPresented = isPresented
+    }
 
     /// Generates an assistant response if appropriate for the current context
     ///
     /// This method checks if a response is needed and if so, delegates
     /// to the interpreter to generate the actual response.
-    func generateAssistantResponse() {
+    func generateAssistantResponse() async -> LLMContextEntity? {
         guard shouldGenerateResponse else {
-            return
+            return nil
         }
-        interpreter.generateAssistantResponse()
+
+        guard let response = await interpreter.generateAssistantResponse() else {
+            return nil
+        }
+
+        try? assistantMessagesByTask.append(response.id.uuidString, forKey: _currentTaskNumber)
+
+        return response
     }
 
     /// Cancels any ongoing operations and dismisses the current view
@@ -158,8 +238,6 @@ final class UserStudyChatViewModel {
         dismiss()
     }
 
-    // MARK: - Survey Methods
-
     /// Handles the submission of survey answers for the current task
     ///
     /// This method processes the user's answers and advances to the next task
@@ -167,14 +245,15 @@ final class UserStudyChatViewModel {
     ///
     /// - Parameter answers: Array of answers provided by the user
     /// - Throws: An error if the submission fails
-    func submitSurveyAnswers(_ answers: [Answer]) throws {
-        taskEndTimes[currentTaskNumber] = Date()
+    func submitSurveyAnswers(_ answers: [TaskQuestionAnswer]) throws {
+        taskEndTimes[_currentTaskNumber] = Date()
 
         for (index, answer) in answers.enumerated() {
-            try survey.submitAnswer(answer, forTaskId: currentTaskNumber, questionIndex: index)
+            try survey.submitAnswer(answer, forTaskId: _currentTaskNumber, questionIndex: index)
         }
 
         advanceToNextTask()
+        setSurveyViewPresented(false)
     }
 
     /// Resets the study to its initial state
@@ -183,8 +262,7 @@ final class UserStudyChatViewModel {
     /// bringing the study back to its starting point.
     func resetStudy() {
         survey.resetAllAnswers()
-        currentTaskNumber = 0
-        isSurveyStarted = false
+        _currentTaskNumber = 0
         updateNavigationState()
     }
 
@@ -192,19 +270,10 @@ final class UserStudyChatViewModel {
     ///
     /// This method initializes the survey process if it hasn't already been started.
     func startSurvey() {
-        if isSurveyStarted {
-            return
-        }
-        isSurveyStarted = true
-        currentTaskNumber = 1
-        taskStartTimes[currentTaskNumber] = Date()
-    }
-
-    /// Returns the current task if one is active
-    ///
-    /// - Returns: The current survey task, if available
-    func getCurrentTask() -> SurveyTask? {
-        survey.tasks.first { $0.id == currentTaskNumber }
+        _currentTaskNumber = 1
+        taskStartTimes[_currentTaskNumber] = Date()
+        _isTaskIntructionAlertPresented = true
+        updateNavigationState()
     }
 
     /// Generates a temporary file URL containing the study report
@@ -221,22 +290,44 @@ final class UserStudyChatViewModel {
         return reportURL
     }
 
-
-    private func advanceToNextTask() {
-        if currentTaskNumber < survey.tasks.count {
-            currentTaskNumber += 1
-            taskStartTimes[currentTaskNumber] = Date()
-        } else {
-            navigationState = .completed
-            studyReport = generateStudyReport()
+    private func configureMessageLimits() {
+        for task in survey.tasks {
+            do {
+                switch task.id {
+                case 1:
+                    try assistantMessagesByTask.setCapacityRange(minimum: 1, maximum: 1, forKey: task.id)
+                case 2:
+                    try assistantMessagesByTask.setCapacityRange(minimum: 1, maximum: 1, forKey: task.id)
+                case 3:
+                    try assistantMessagesByTask.setCapacityRange(minimum: 1, maximum: 1, forKey: task.id)
+                case 4:
+                    try assistantMessagesByTask.setCapacityRange(minimum: 1, maximum: 1, forKey: task.id)
+                default:
+                    return
+                }
+            } catch {
+                print("Error configuring message limit for task \(task.id): \(error)")
+            }
         }
     }
 
+    private func advanceToNextTask() {
+        if _currentTaskNumber <= survey.tasks.count {
+            _currentTaskNumber += 1
+            taskStartTimes[_currentTaskNumber] = Date()
+            _isTaskIntructionAlertPresented = true
+        } else {
+            _navigationState = .completed
+            _studyReport = generateStudyReport()
+        }
+        updateNavigationState()
+    }
+
     private func updateNavigationState() {
-        navigationState = currentTaskNumber == 0
+        _navigationState = _currentTaskNumber == 0
             ? .introduction
-            : currentTaskNumber <= survey.tasks.count
-                ? .task(number: currentTaskNumber, total: survey.tasks.count)
+            : _currentTaskNumber <= survey.tasks.count
+                ? .task(number: _currentTaskNumber, total: survey.tasks.count)
                 : .completed
     }
 
@@ -286,7 +377,7 @@ final class UserStudyChatViewModel {
             guard let taskStartTime = taskStartTimes[taskNumber], let taskEndTime = taskEndTimes[taskNumber] else {
                 return nil
             }
-            
+
             let surveyTask = TimelineEvent.SurveyTask(
                 taskNumber: taskNumber,
                 startedAt: taskStartTime,
@@ -300,12 +391,12 @@ final class UserStudyChatViewModel {
                     )
                 }
             )
-            
+
             return TimelineEvent.surveyTask(surveyTask)
         }
-        
+
         timeline.append(contentsOf: surveyTasks)
-        
+
         return timeline.sorted { $0.timestamp < $1.timestamp }
     }
 
