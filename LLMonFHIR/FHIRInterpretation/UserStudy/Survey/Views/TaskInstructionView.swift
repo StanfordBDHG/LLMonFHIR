@@ -11,25 +11,24 @@ import SwiftUI
 struct TaskInstructionView: View {
     let task: SurveyTask
     @Binding var isPresented: Bool
+    @State private var sheetHeight: CGFloat = .zero
 
     var body: some View {
-        NavigationView {
-            ZStack {
-                Color(UIColor.systemGroupedBackground)
-                    .ignoresSafeArea()
-                
-                VStack {
-                    if let instruction = task.instruction {
-                        Text(instruction)
-                            .padding()
-                            .frame(maxWidth: .infinity, alignment: .leading)
-                            .background(Color(UIColor.secondarySystemGroupedBackground))
-                            .cornerRadius(10)
-                            .padding()
-                    }
-                    Spacer()
+        NavigationStack {
+            ScrollView {
+                if let instruction = task.instruction {
+                    Text(instruction)
+                        .padding()
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                        .background(Color(UIColor.secondarySystemGroupedBackground))
+                        .cornerRadius(10)
+                        .padding()
+                        .onHeightChange {
+                            sheetHeight = $0 + 100
+                        }
                 }
             }
+            .background(Color(UIColor.systemGroupedBackground))
             .navigationTitle("Task \(task.id)")
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
@@ -40,5 +39,23 @@ struct TaskInstructionView: View {
                 }
             }
         }
+        .presentationDetents(sheetHeight == .zero ? [.medium] : [.height(sheetHeight)])
+        .interactiveDismissDisabled()
+    }
+}
+
+extension View {
+    func onHeightChange(completion: @escaping (CGFloat) -> Void) -> some View {
+        background(
+            GeometryReader { geometry in
+                Color.clear
+                    .onAppear {
+                        completion(geometry.size.height)
+                    }
+                    .onChange(of: geometry.size.height) { _, newHeight in
+                        completion(newHeight)
+                    }
+            }
+        )
     }
 }

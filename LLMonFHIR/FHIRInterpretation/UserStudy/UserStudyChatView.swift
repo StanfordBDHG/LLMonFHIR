@@ -126,8 +126,6 @@ struct UserStudyChatView: View {
                     set: { viewModel.setTaskInstructionSheetPresented($0) }
                 )
             )
-            .presentationDetents([.fraction(1 / 3)])
-            .interactiveDismissDisabled()
         }
     }
 }
