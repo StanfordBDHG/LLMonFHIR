@@ -45,10 +45,7 @@ struct MultipleResourcesChatView: View {
             .viewStateAlert(state: viewModel.llmSession.state)
             .onChange(of: viewModel.llmSession.context, initial: true) {
                 Task {
-                    guard let response = await viewModel.generateAssistantResponse() else {
-                        return
-                    }
-                    print("Assistant Response:", response)
+                    _ = await viewModel.generateAssistantResponse()
                 }
             }
     }
