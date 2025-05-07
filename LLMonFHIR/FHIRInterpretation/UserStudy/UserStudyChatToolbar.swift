@@ -25,13 +25,18 @@ struct UserStudyChatToolbar: ToolbarContent {
 
     private var dismissButton: some ToolbarContent {
         ToolbarItem(placement: .cancellationAction) {
-            Button(action: { viewModel.isDismissDialogPresented = true }) {
+            Button {
+                viewModel.setDismissDialogPresented(true)
+            } label: {
                 Image(systemName: "xmark")
                     .accessibilityLabel("Dismiss")
             }
             .confirmationDialog(
                 "Going back will reset your chat history.",
-                isPresented: $viewModel.isDismissDialogPresented,
+                isPresented: makeBinding(
+                    get: { viewModel.isDismissDialogPresented },
+                    set: { viewModel.setDismissDialogPresented($0) }
+                ),
                 titleVisibility: .visible,
                 actions: {
                     Button("Yes", role: .destructive, action: onDismiss)
@@ -48,7 +53,7 @@ struct UserStudyChatToolbar: ToolbarContent {
         ToolbarItem(placement: .primaryAction) {
             if viewModel.navigationState != .completed {
                 Button {
-                    viewModel.isSurveyViewPresented = true
+                    viewModel.setSurveyViewPresented(true)
                 } label: {
                     Image(systemName: "arrow.forward.circle")
                         .accessibilityLabel("Next Task")
@@ -62,7 +67,7 @@ struct UserStudyChatToolbar: ToolbarContent {
         ToolbarItem(placement: .topBarTrailing) {
             if viewModel.navigationState == .completed, let studyReportFile = viewModel.generateStudyReportFile() {
                 Button {
-                    viewModel.isSharingSheetPresented = true
+                    viewModel.setSharingSheetPresented(true)
                 } label: {
                     ShareLink(item: studyReportFile) {
                         Image(systemName: "square.and.arrow.up")

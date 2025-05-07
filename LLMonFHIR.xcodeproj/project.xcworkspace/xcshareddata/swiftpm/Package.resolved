@@ -105,8 +105,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/StanfordSpezi/SpeziAccessGuard",
       "state" : {
-        "revision" : "57452376df183a70194774aa755a57866775447c",
-        "version" : "0.3.3"
+        "revision" : "c4203562fb95f2da0e18c4960fa9fd9f5c6d2708",
+        "version" : "0.4.1"
       }
     },
     {
@@ -123,8 +123,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/StanfordSpezi/SpeziFHIR",
       "state" : {
-        "revision" : "d5622db006da1c6d460e47074371222d653213fc",
-        "version" : "0.7.6"
+        "revision" : "053f100577cb0ad1edd57b26f7235a5b1608a727",
+        "version" : "0.7.7"
       }
     },
     {
