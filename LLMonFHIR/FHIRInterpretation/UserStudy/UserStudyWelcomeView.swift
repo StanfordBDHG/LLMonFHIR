@@ -305,7 +305,7 @@ extension [SurveyTask] {
         ),
         .init(
             id: 5,
-            instruction: "Please answer these final survey questions.",
+            instruction: "Please feel free to ask any other questions you have. When you're done, please complete the next task.",
             questions: [
                 .init(
                     text: "Compared to other sources of health information (e.g., websites, doctors), how do you rate the LLM's responses?",
@@ -329,7 +329,7 @@ extension [SurveyTask] {
         ),
         .init(
             id: 6,
-            instruction: nil,
+            instruction: "Please hit the arrow at the top of your screen to complete the final task.",
             questions: [
                 .init(
                     text: "How easy would it be to access or obtain information about your medical condition?",
