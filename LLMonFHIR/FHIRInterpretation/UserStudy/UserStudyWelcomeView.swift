@@ -230,6 +230,14 @@ extension [SurveyTask] {
         "Somewhat ineffective",
         "Very ineffective"
     ]
+    
+    private static let confidentnessScale = [
+        "Very confident",
+        "Somewhat confident",
+        "Neither confident nor unconfident",
+        "Somewhat unconfident",
+        "Very unconfident"
+    ]
 
     private static let comparisonScale = [
         "Significantly better",
@@ -343,7 +351,7 @@ extension [SurveyTask] {
                 ),
                 .init(
                     text: "How confident would you be in filling out medical forms by yourself?",
-                    type: .scale(responseOptions: frequencyOptions)
+                    type: .scale(responseOptions: confidentnessScale)
                 ),
                 .init(
                     text: "How often do you think you would have someone help you read hospital materials?",
