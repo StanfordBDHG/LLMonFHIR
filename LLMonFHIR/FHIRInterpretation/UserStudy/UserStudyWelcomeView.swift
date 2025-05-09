@@ -216,41 +216,42 @@ extension AccessGuardIdentifier {
 
 extension [SurveyTask] {
     private static let clarityScale = [
-        "Extremely unclear",
-        "Pretty unclear",
-        "Neutral",
-        "Pretty clear",
-        "Extremely clear"
+        "Very clear",
+        "Somewhat clear",
+        "Neither clear nor unclear",
+        "Somewhat unclear",
+        "Very unclear"
     ]
 
     private static let effectivenessScale = [
-        "Extremely ineffective",
-        "Pretty ineffective",
-        "Neutral",
-        "Pretty effective",
-        "Extremely effective"
+        "Very effective",
+        "Somewhat effective",
+        "Neither clear nor unclear",
+        "Somewhat ineffective",
+        "Very ineffective"
     ]
 
     private static let comparisonScale = [
-        "Much worse",
-        "A little bit worse",
-        "Neutral",
-        "A little bit better",
-        "Much better"
+        "Significantly better",
+        "Slightly better",
+        "No change",
+        "Slightly worse",
+        "Significantly worse"
     ]
 
     private static let balancedEaseScale = [
-        "Very difficult",
-        "Somewhat difficult",
-        "Neither easy nor difficult",
+        "Very easy",
         "Somewhat easy",
-        "Very easy"
+        "Neither easy nor difficult",
+        "Somewhat difficult",
+        "Very difficult"
     ]
 
     private static let frequencyOptions = [
         "Always",
         "Often",
         "Sometimes",
+        "Rarely",
         "Never"
     ]
 
@@ -297,7 +298,7 @@ extension [SurveyTask] {
                     isOptional: true
                 ),
                 .init(
-                    text: "What surprised you about the LLMs answer, either positively or negatively?",
+                    text: "What surprised you about the LLM's answer, either positively or negatively?",
                     type: .freeText,
                     isOptional: true
                 )
@@ -312,7 +313,7 @@ extension [SurveyTask] {
                     type: .scale(responseOptions: comparisonScale)
                 ),
                 .init(
-                    text: "What were the most and least useful features of the LLM? Do you have any suggestions that you would like to share?",
+                    text: "What were the most and least useful features of the LLM? Do you have any suggestions to share?",
                     type: .freeText,
                     isOptional: true
                 ),
