@@ -9,6 +9,45 @@
 import SwiftUI
 
 
+private struct PulsatingEffect: ViewModifier {
+    let isEnabled: Bool
+    @State private var scale: CGFloat = 1.0
+
+
+    func body(content: Content) -> some View {
+        content
+            .scaleEffect(scale)
+            .onChange(of: isEnabled) { _, newValue in
+                if newValue {
+                    startPulsing()
+                } else {
+                    stopPulsing()
+                }
+            }
+            .onAppear {
+                if isEnabled {
+                    startPulsing()
+                }
+            }
+    }
+
+
+    private func startPulsing() {
+        withAnimation(
+            .easeInOut(duration: 1.0)
+            .repeatForever(autoreverses: true)
+        ) {
+            scale = 1.2
+        }
+    }
+
+    private func stopPulsing() {
+        withAnimation {
+            scale = 1.0
+        }
+    }
+}
+
 struct UserStudyChatToolbar: ToolbarContent {
     @State private(set) var viewModel: UserStudyChatViewModel
 
@@ -57,6 +96,7 @@ struct UserStudyChatToolbar: ToolbarContent {
                 } label: {
                     Image(systemName: "arrow.forward.circle")
                         .accessibilityLabel("Next Task")
+                        .modifier(PulsatingEffect(isEnabled: !isInputDisabled))
                 }
                 .disabled(isInputDisabled)
             }
