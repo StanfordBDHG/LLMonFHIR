@@ -69,5 +69,9 @@ actor LLMonFHIRStandard: Standard, HealthKitConstraint, EnvironmentAccessible {
         }
 
         useHealthKitResources = true
+
+        if await fhirStore.allResources.isEmpty {
+            waitingState.isWaiting = false
+        }
     }
 }
