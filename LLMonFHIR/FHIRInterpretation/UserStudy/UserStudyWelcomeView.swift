@@ -80,7 +80,7 @@ struct UserStudyWelcomeView: View {
                     if openAITokenSaver.token.isEmpty {
                         openAITokenSaver.token = UserStudyPlistConfiguration.shared.apiKey ?? ""
                     }
-                    await standard.loadHealthKitResources()
+                    await standard.loadHealthKitRecordsIntoFHIRStore()
                     fhirInterpretationModule.updateSchemas()
                 }
         }

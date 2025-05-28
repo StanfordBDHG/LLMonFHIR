@@ -12,6 +12,7 @@ import SwiftUI
 
 
 struct HealthKitPermissions: View {
+    @Environment(LLMonFHIRStandard.self) private var standard
     @Environment(HealthKit.self) var healthKitDataSource: HealthKit?
     @Environment(OnboardingNavigationPath.self) private var onboardingNavigationPath
     @State var healthKitProcessing = false
@@ -46,6 +47,9 @@ struct HealthKitPermissions: View {
                                 try await _Concurrency.Task.sleep(for: .seconds(5))
                             } else {
                                 try await healthKitDataSource?.askForAuthorization()
+                                Task {
+                                    await standard.fetchRecordsFromHealthKit()
+                                }
                             }
                         } catch {
                             print("Could not request HealthKit permissions.")
