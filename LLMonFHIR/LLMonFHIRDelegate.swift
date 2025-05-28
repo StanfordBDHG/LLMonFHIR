@@ -41,25 +41,7 @@ class LLMonFHIRDelegate: SpeziAppDelegate {
     
     private var healthKit: HealthKit {
         HealthKit {
-            CollectSamples(
-                [
-                    HKClinicalType(.allergyRecord),
-                    HKClinicalType(.clinicalNoteRecord),
-                    HKClinicalType(.conditionRecord),
-                    HKClinicalType(.coverageRecord),
-                    HKClinicalType(.immunizationRecord),
-                    HKClinicalType(.labResultRecord),
-                    HKClinicalType(.medicationRecord),
-                    HKClinicalType(.procedureRecord),
-                    HKClinicalType(.vitalSignRecord)
-                ],
-                predicate: HKQuery.predicateForSamples(
-                    withStart: Date.distantPast,
-                    end: nil,
-                    options: .strictEndDate
-                ),
-                deliverySetting: .anchorQuery(saveAnchor: false)
-            )
+            RequestReadAccess(other: LLMonFHIRStandard.recordTypes)
         }
     }
 }

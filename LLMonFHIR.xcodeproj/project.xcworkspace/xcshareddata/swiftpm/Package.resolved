@@ -24,8 +24,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/apple/FHIRModels",
       "state" : {
-        "revision" : "ee8b55c245e92389e05b0a56ad2b84d37c1985e5",
-        "version" : "0.6.1"
+        "revision" : "b7fcf26b818704f489719f8cdd9e270aaab37823",
+        "version" : "0.7.0"
       }
     },
     {
@@ -42,8 +42,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/StanfordBDHG/HealthKitOnFHIR.git",
       "state" : {
-        "revision" : "c898c0bace660ecae37fc682d629f7883f92e700",
-        "version" : "0.2.13"
+        "revision" : "fb63d33cd119f87794536f3dc39ee4e31a40e211",
+        "version" : "1.0.0"
       }
     },
     {
@@ -123,8 +123,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/StanfordSpezi/SpeziFHIR",
       "state" : {
-        "revision" : "053f100577cb0ad1edd57b26f7235a5b1608a727",
-        "version" : "0.7.7"
+        "branch" : "lukas/update-deps",
+        "revision" : "12996476dae246ec4e08a789ba8f0849e9df019b"
       }
     },
     {
@@ -132,8 +132,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/StanfordSpezi/SpeziFoundation",
       "state" : {
-        "revision" : "78f3d912a82f951564d7e133867cf01351f53062",
-        "version" : "2.1.1"
+        "revision" : "5ff5164e9d3001185d4fa00a97b92b053f363dbe",
+        "version" : "2.1.6"
       }
     },
     {
@@ -141,8 +141,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/StanfordSpezi/SpeziHealthKit.git",
       "state" : {
-        "revision" : "fbdec78fcb2f90d6338f1968e21dd11fbee65070",
-        "version" : "0.6.0"
+        "revision" : "9d7f54852d40da9376a5189b124ad30c76d9d78d",
+        "version" : "1.1.3"
       }
     },
     {
@@ -321,8 +321,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/StanfordBDHG/XCTestExtensions.git",
       "state" : {
-        "revision" : "f54334604408ed3fe52887e46d6be85e83ec2da0",
-        "version" : "0.4.13"
+        "revision" : "3b44aad358897cf85139b46f32902cd60d9e5cb4",
+        "version" : "1.2.1"
       }
     },
     {
@@ -330,8 +330,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/StanfordBDHG/XCTHealthKit.git",
       "state" : {
-        "revision" : "6e9344a2d632b801d94fe3bbd1d891817e032103",
-        "version" : "0.3.5"
+        "revision" : "550a6f5feb05d8b08a4f4a1c512701f4622bd2d4",
+        "version" : "1.1.2"
       }
     },
     {
