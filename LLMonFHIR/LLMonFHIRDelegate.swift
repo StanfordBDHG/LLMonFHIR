@@ -24,12 +24,17 @@ class LLMonFHIRDelegate: SpeziAppDelegate {
                 healthKit
             }
             LLMRunner {
-                LLMOpenAIPlatform(configuration: .init(concurrentStreams: 100))
+                LLMOpenAIPlatform(
+                    configuration: .init(
+                        authToken: .keychain(tag: .openAIKey, username: LLMonFHIRConstants.credentialsUsername),
+                        concurrentStreams: 100
+                    )
+                )
             }
             FHIRInterpretationModule()
             AccessGuardModule {
                 FixedAccessGuard(
-                    .userStudyIndentifier,
+                    .userStudyIdentifier,
                     code: "0218",
                     codeOptions: .fourDigitNumeric,
                     timeout: .hours(1)

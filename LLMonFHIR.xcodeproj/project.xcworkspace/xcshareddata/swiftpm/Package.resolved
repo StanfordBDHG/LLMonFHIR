@@ -150,8 +150,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/StanfordSpezi/SpeziLLM",
       "state" : {
-        "revision" : "61b664bf019032634a6eeacff89afa1ea7d545fd",
-        "version" : "0.10.1"
+        "branch" : "feat/custom-cloud-endpoint",
+        "revision" : "a2a00db243db3008a22bb9924ceecfa34ccb55ed"
       }
     },
     {

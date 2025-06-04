@@ -111,7 +111,7 @@ struct InspectResourceView: View {
             do {
                 try await fhirResourceSummary.summarize(resource: resource, forceReload: forceReload)
                 loadingSummary = .idle
-            } catch let error as LLMError {
+            } catch let error as any LLMError {
                 loadingSummary = .error(error)
             } catch {
                 loadingSummary = .error(LLMDefaultError.unknown(error))
@@ -126,7 +126,7 @@ struct InspectResourceView: View {
             do {
                 try await fhirResourceInterpreter.interpret(resource: resource, forceReload: forceReload)
                 interpreting = .idle
-            } catch let error as LLMError {
+            } catch let error as any LLMError {
                 interpreting = .error(error)
             } catch {
                 interpreting = .error(LLMDefaultError.unknown(error))

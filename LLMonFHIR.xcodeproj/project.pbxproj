@@ -978,8 +978,8 @@
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/StanfordSpezi/SpeziLLM";
 			requirement = {
-				kind = upToNextMinorVersion;
-				minimumVersion = 0.10.0;
+				branch = "feat/custom-cloud-endpoint";
+				kind = branch;
 			};
 		};
 		C0FA07242D39357B002485FF /* XCRemoteSwiftPackageReference "SpeziFHIR" */ = {
