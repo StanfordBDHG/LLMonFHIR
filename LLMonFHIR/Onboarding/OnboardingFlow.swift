@@ -20,10 +20,10 @@ struct OnboardingFlow: View {
     private var healthKitAuthorization: Bool {
         // As HealthKit not available in preview simulator
         if ProcessInfo.processInfo.isPreviewSimulator {
-            return false
+            false
+        } else {
+            healthKit?.isFullyAuthorized ?? false
         }
-        
-        return healthKit?.authorized ?? false
     }
     
     
@@ -38,8 +38,8 @@ struct OnboardingFlow: View {
                 HealthKitPermissions()
             }
         }
-            .navigationBarTitleDisplayMode(.inline)
-            .interactiveDismissDisabled(!completedOnboardingFlow)
+        .navigationBarTitleDisplayMode(.inline)
+        .interactiveDismissDisabled(!completedOnboardingFlow)
     }
 }
 

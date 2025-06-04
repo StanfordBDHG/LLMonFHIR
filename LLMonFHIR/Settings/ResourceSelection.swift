@@ -23,19 +23,16 @@ struct ResourceSelection: View {
     
     
     @MainActor private var useHealthKitResources: Binding<Bool> {
-        Binding(
-            get: {
-                if !HKHealthStore.isHealthDataAvailable() {
-                    showBundleSelection = true
-                    return false
-                }
-                return standard.useHealthKitResources
-            },
-            set: { newValue in
-                showBundleSelection = !newValue
-                standard.useHealthKitResources = newValue
+        Binding {
+            if !HKHealthStore.isHealthDataAvailable() {
+                showBundleSelection = true
+                return false
             }
-        )
+            return standard.useHealthKitResources
+        } set: { newValue in
+            showBundleSelection = !newValue
+            standard.useHealthKitResources = newValue
+        }
     }
     
     var body: some View {
@@ -92,7 +89,7 @@ struct ResourceSelection: View {
     private func changeHealthKitResourcesSelection() {
         if useHealthKitResources.wrappedValue {
             _Concurrency.Task {
-                await standard.loadHealthKitResources()
+                await standard.loadHealthKitRecordsIntoFHIRStore()
             }
         } else {
             guard let firstMockPatient = bundles.first else {
