@@ -24,12 +24,18 @@ class LLMonFHIRDelegate: SpeziAppDelegate {
                 healthKit
             }
             LLMRunner {
-                LLMOpenAIPlatform(configuration: .init(concurrentStreams: 100))
+                LLMOpenAIPlatform(
+                    configuration: .init(
+                        authToken: .keychain(tag: .openAIKey, username: LLMonFHIRConstants.credentialsUsername),
+                        concurrentStreams: 100,
+                        retryPolicy: .attempts(3)  // Automatically perform up to 3 retries on retryable OpenAI API status codes
+                    )
+                )
             }
             FHIRInterpretationModule()
             AccessGuardModule {
                 FixedAccessGuard(
-                    .userStudyIndentifier,
+                    .userStudyIdentifier,
                     code: "0218",
                     codeOptions: .fourDigitNumeric,
                     timeout: .hours(1)
