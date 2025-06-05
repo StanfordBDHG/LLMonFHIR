@@ -34,7 +34,7 @@ extension UserStudyChatViewModel {
             case .processingSystemPrompts:
                 return "Processing system prompts..."
             case let .processingFunctionCalls(_, current, total):
-                return "Processing function calls (\(current)/\(total))..."
+                return "Processing data (\(current)/\(total))..."
             case .generatingResponse:
                 return "Generating response..."
             case .completed:
