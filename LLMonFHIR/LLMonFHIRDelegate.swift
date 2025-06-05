@@ -27,7 +27,8 @@ class LLMonFHIRDelegate: SpeziAppDelegate {
                 LLMOpenAIPlatform(
                     configuration: .init(
                         authToken: .keychain(tag: .openAIKey, username: LLMonFHIRConstants.credentialsUsername),
-                        concurrentStreams: 100
+                        concurrentStreams: 100,
+                        retryPolicy: .attempts(3)  // Automatically perform up to 3 retries on retryable OpenAI API status codes
                     )
                 )
             }
