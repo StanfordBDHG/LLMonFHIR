@@ -73,10 +73,12 @@ struct UserStudyChatView: View {
                     ProgressView(value: viewModel.processingState.progress, total: 100)
                         .progressViewStyle(.linear)
                         .tint(.accentColor)
+                        .animation(.easeInOut(duration: 0.3), value: viewModel.processingState.progress)
 
                     Text(viewModel.processingState.statusDescription)
                         .font(.caption)
                         .foregroundStyle(.secondary)
+                        .animation(.easeInOut(duration: 0.3), value: viewModel.processingState.statusDescription)
                 }
                     .padding(.horizontal)
                     .padding(.vertical, 8)
@@ -92,6 +94,7 @@ struct UserStudyChatView: View {
             )
             .viewStateAlert(state: viewModel.llmSession.state)
         }
+        .animation(.easeInOut(duration: 0.4), value: viewModel.isProcessing)
     }
 
     /// Creates a new user study chat view
