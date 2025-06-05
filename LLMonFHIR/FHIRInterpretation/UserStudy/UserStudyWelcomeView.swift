@@ -6,8 +6,10 @@
 // SPDX-License-Identifier: MIT
 //
 
+import os.log
 import SpeziAccessGuard
 import SpeziFHIR
+import SpeziKeychainStorage
 import SpeziLLMOpenAI
 import SwiftUI
 
@@ -19,7 +21,8 @@ struct UserStudyWelcomeView: View {
     @Environment(FHIRInterpretationModule.self) private var fhirInterpretationModule
     @Environment(FHIRMultipleResourceInterpreter.self) private var interpreter
     @Environment(FHIRResourceSummary.self) var resourceSummary
-    @Environment(LLMOpenAITokenSaver.self) private var openAITokenSaver
+    @Environment(KeychainStorage.self) private var keychainStorage
+    @Environment(LLMOpenAIPlatform.self) private var platform
 
     @State private var isPresentingSettings = false
     @State private var isPresentingStudy = false
@@ -56,12 +59,12 @@ struct UserStudyWelcomeView: View {
                     settingsButton
                 }
                 .sheet(isPresented: $isPresentingSettings) {
-                    AccessGuarded(.userStudyIndentifier) {
+                    AccessGuarded(.userStudyIdentifier) {
                         SettingsView()
                     }
                 }
                 .fullScreenCover(isPresented: $isPresentingStudy) {
-                    AccessGuarded(.userStudyIndentifier) {
+                    AccessGuarded(.userStudyIdentifier) {
                         UserStudyChatView(
                             survey: Survey(.defaultTasks),
                             interpreter: interpreter,
@@ -76,13 +79,13 @@ struct UserStudyWelcomeView: View {
                     )
                     .presentationDetents([.medium, .large])
                 }
-                .task {
-                    if openAITokenSaver.token.isEmpty {
-                        openAITokenSaver.token = UserStudyPlistConfiguration.shared.apiKey ?? ""
+                    .task {
+                        // Persists OpenAI token of the user study in the keychain, if no other token exists already
+                        self.persistUserStudyOpenApiToken()
+
+                        await standard.loadHealthKitRecordsIntoFHIRStore()
+                        fhirInterpretationModule.updateSchemas()
                     }
-                    await standard.loadHealthKitRecordsIntoFHIRStore()
-                    fhirInterpretationModule.updateSchemas()
-                }
         }
     }
 
@@ -203,14 +206,41 @@ struct UserStudyWelcomeView: View {
             }
         }
     }
+
+    /// Persists the OpenAI token of the user study in the keychain, if no other token already exists.
+    private func persistUserStudyOpenApiToken() {
+        guard case let .keychain(tag, username) = self.platform.configuration.authToken else {
+            fatalError("LLMonFHIR relies on an auth token stored in Keychain. Please check your `LLMOpenAIPlatform` configuration.")
+        }
+
+        do {
+            let existingToken = try keychainStorage.retrieveCredentials(
+                withUsername: username,
+                for: tag
+            )?.password
+
+            if existingToken?.isEmpty ?? true {
+                try keychainStorage.store(
+                    Credentials(
+                        username: username,
+                        password: UserStudyPlistConfiguration.shared.apiKey ?? ""
+                    ),
+                    for: tag
+                )
+            }
+        } catch {
+            Logger(subsystem: "edu.stanford.llmonfhir", category: "UserStudyWelcomeView")
+                .warning("Could not access keychain to read or store OpenAI API key: \(error)")
+        }
+    }
 }
 
 
 extension AccessGuardIdentifier {
     /// A unique identifier for user study access control.
     /// Used to protect and manage access to user study related features and views.
-    static var userStudyIndentifier: Self {
-        .init("UserStudyIndentifier")
+    static var userStudyIdentifier: Self {
+        .init("UserStudyIdentifier")
     }
 }
 
