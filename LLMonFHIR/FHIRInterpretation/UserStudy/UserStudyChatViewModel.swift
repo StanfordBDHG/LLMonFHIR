@@ -129,6 +129,8 @@ final class UserStudyChatViewModel {  // swiftlint:disable:this type_body_length
         )
     }
 
+    private(set) var processingState: ProcessingState = .processingSystemPrompts
+
     private var _navigationState: NavigationState = .introduction
     private var _studyReport: String?
     private var _isSurveyViewPresented = false
@@ -136,6 +138,9 @@ final class UserStudyChatViewModel {  // swiftlint:disable:this type_body_length
     private var _isSharingSheetPresented = false
     private var _isTaskIntructionAlertPresented = false
     private var _currentTaskNumber: Int = 0
+
+    private var _functionCallCount = 0
+    private var _completedFunctionCalls = 0
 
     private let survey: Survey
     private let interpreter: FHIRMultipleResourceInterpreter
@@ -211,6 +216,39 @@ final class UserStudyChatViewModel {  // swiftlint:disable:this type_body_length
         _isTaskIntructionAlertPresented = isPresented
     }
 
+    func updateProcessingState() {
+        guard let lastMessage = llmSession.context.last else {
+            return
+        }
+
+        switch lastMessage.role {
+        case .system:
+            processingState = .processingSystemPrompts
+        case .assistant(let toolCalls):
+            if !toolCalls.isEmpty {
+                _functionCallCount += toolCalls.count
+                processingState = .processingFunctionCalls(
+                    progress: 0,
+                    currentCall: _completedFunctionCalls,
+                    totalCalls: _functionCallCount
+                )
+            } else {
+                processingState = .generatingResponse
+            }
+        case .tool:
+            _completedFunctionCalls += 1
+            _functionCallCount = max(_functionCallCount, _completedFunctionCalls)
+            let progress = Double(_completedFunctionCalls) / Double(_functionCallCount)
+            processingState = .processingFunctionCalls(
+                progress: progress,
+                currentCall: _completedFunctionCalls,
+                totalCalls: _functionCallCount
+            )
+        case .user:
+            break
+        }
+    }
+
     /// Generates an assistant response if appropriate for the current context
     ///
     /// This method checks if a response is needed and if so, delegates
@@ -220,11 +258,16 @@ final class UserStudyChatViewModel {  // swiftlint:disable:this type_body_length
             return nil
         }
 
+        _functionCallCount = 0
+        _completedFunctionCalls = 0
+
         guard let response = await interpreter.generateAssistantResponse() else {
             return nil
         }
 
         try? assistantMessagesByTask.append(response.id.uuidString, forKey: _currentTaskNumber)
+
+        processingState = .completed
 
         return response
     }
