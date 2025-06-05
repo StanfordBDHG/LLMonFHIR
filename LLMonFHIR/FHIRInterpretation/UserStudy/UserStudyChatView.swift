@@ -78,10 +78,10 @@ struct UserStudyChatView: View {
                         .font(.caption)
                         .foregroundStyle(.secondary)
                 }
-                .padding(.horizontal)
-                .padding(.vertical, 8)
-                .background(.ultraThinMaterial)
-                .padding(.bottom, 8)
+                    .padding(.horizontal)
+                    .padding(.vertical, 8)
+                    .background(.ultraThinMaterial)
+                    .padding(.bottom, 8)
             }
 
             ChatView(
