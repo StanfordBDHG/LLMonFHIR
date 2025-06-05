@@ -16,7 +16,7 @@ struct UserStudyChatView: View {
 
     var body: some View {
         NavigationStack { // swiftlint:disable:this closure_body_length
-            chatContent
+            chatView
                 .navigationTitle(viewModel.navigationState.title)
                 .navigationBarTitleDisplayMode(.inline)
                 .toolbar {
@@ -56,6 +56,9 @@ struct UserStudyChatView: View {
                 .onAppear(perform: viewModel.startSurvey)
                 .onChange(of: viewModel.llmSession.context, initial: true) {
                     Task {
+                        if viewModel.isProcessing {
+                            viewModel.updateProcessingState()
+                        }
                         _ = await viewModel.generateAssistantResponse()
                     }
                 }
@@ -63,16 +66,36 @@ struct UserStudyChatView: View {
     }
 
 
-    @ViewBuilder private var chatContent: some View {
-        ChatView(
-            viewModel.chatBinding,
-            disableInput: viewModel.shouldDisableChatInput,
-            speechToText: false,
-            messagePendingAnimation: .manual(shouldDisplay: viewModel.showTypingIndicator)
-        )
-            .viewStateAlert(state: viewModel.llmSession.state)
-    }
+    @ViewBuilder private var chatView: some View {
+        VStack {
+            if viewModel.isProcessing {
+                VStack(spacing: 8) {
+                    ProgressView(value: viewModel.processingState.progress, total: 100)
+                        .progressViewStyle(.linear)
+                        .tint(.accentColor)
+                        .animation(.easeInOut(duration: 0.3), value: viewModel.processingState.progress)
 
+                    Text(viewModel.processingState.statusDescription)
+                        .font(.caption)
+                        .foregroundStyle(.secondary)
+                        .animation(.easeInOut(duration: 0.3), value: viewModel.processingState.statusDescription)
+                }
+                    .padding(.horizontal)
+                    .padding(.vertical, 8)
+                    .background(.ultraThinMaterial)
+                    .padding(.bottom, 8)
+            }
+
+            ChatView(
+                viewModel.chatBinding,
+                disableInput: viewModel.shouldDisableChatInput,
+                speechToText: false,
+                messagePendingAnimation: .manual(shouldDisplay: viewModel.showTypingIndicator)
+            )
+            .viewStateAlert(state: viewModel.llmSession.state)
+        }
+        .animation(.easeInOut(duration: 0.4), value: viewModel.isProcessing)
+    }
 
     /// Creates a new user study chat view
     ///
