@@ -228,7 +228,6 @@ final class UserStudyChatViewModel {  // swiftlint:disable:this type_body_length
             if !toolCalls.isEmpty {
                 _functionCallCount += toolCalls.count
                 processingState = .processingFunctionCalls(
-                    progress: 0,
                     currentCall: _completedFunctionCalls,
                     totalCalls: _functionCallCount
                 )
@@ -238,9 +237,7 @@ final class UserStudyChatViewModel {  // swiftlint:disable:this type_body_length
         case .tool:
             _completedFunctionCalls += 1
             _functionCallCount = max(_functionCallCount, _completedFunctionCalls)
-            let progress = Double(_completedFunctionCalls) / Double(_functionCallCount)
             processingState = .processingFunctionCalls(
-                progress: progress,
                 currentCall: _completedFunctionCalls,
                 totalCalls: _functionCallCount
             )
@@ -260,6 +257,8 @@ final class UserStudyChatViewModel {  // swiftlint:disable:this type_body_length
 
         _functionCallCount = 0
         _completedFunctionCalls = 0
+
+        processingState = .processingSystemPrompts
 
         guard let response = await interpreter.generateAssistantResponse() else {
             return nil

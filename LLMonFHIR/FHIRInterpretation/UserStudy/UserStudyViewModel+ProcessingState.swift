@@ -12,7 +12,7 @@ import Foundation
 extension UserStudyChatViewModel {
     enum ProcessingState: Equatable {
         case processingSystemPrompts
-        case processingFunctionCalls(progress: Double, currentCall: Int, totalCalls: Int)
+        case processingFunctionCalls(currentCall: Int, totalCalls: Int)
         case generatingResponse
         case completed
 
@@ -20,8 +20,9 @@ extension UserStudyChatViewModel {
             switch self {
             case .processingSystemPrompts:
                 return 0
-            case .processingFunctionCalls(let progress, _, _):
-                return 20 + progress * 70
+            case let .processingFunctionCalls(current, total):
+                let functionCallProgress = total > 0 ? Double(current) / Double(total) : 0
+                return 20 + functionCallProgress * 70
             case .generatingResponse:
                 return 90
             case .completed:
@@ -33,7 +34,7 @@ extension UserStudyChatViewModel {
             switch self {
             case .processingSystemPrompts:
                 return "Interpreting message..."
-            case let .processingFunctionCalls(_, current, total):
+            case let .processingFunctionCalls(current, total):
                 return "Processing data (\(current)/\(total))..."
             case .generatingResponse:
                 return "Generating response..."
