@@ -79,8 +79,7 @@ final class UserStudyChatViewModel {  // swiftlint:disable:this type_body_length
 
     /// Determines whether to display a typing indicator in the chat interface.
     var showTypingIndicator: Bool {
-        let role = llmSession.context.last?.role
-        return role == .user || role == .system
+        processingState.isProcessing
     }
 
     var shouldDisableChatInput: Bool {

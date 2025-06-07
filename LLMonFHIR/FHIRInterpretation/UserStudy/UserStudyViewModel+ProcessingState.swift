@@ -42,5 +42,14 @@ extension UserStudyChatViewModel {
                 return "Processing completed"
             }
         }
+
+        var isProcessing: Bool {
+            switch self {
+            case .processingSystemPrompts, .processingFunctionCalls:
+                return true
+            case .generatingResponse, .completed:
+                return false
+            }
+        }
     }
 }
