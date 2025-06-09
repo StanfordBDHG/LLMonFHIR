@@ -53,6 +53,7 @@ struct UserStudyChatView: View {
                     ),
                     content: taskInstructionSheet
                 )
+                .viewStateAlert(state: viewModel.llmSession.state)
                 .onAppear(perform: viewModel.startSurvey)
                 .onChange(of: viewModel.llmSession.context, initial: true) {
                     Task {
@@ -60,6 +61,19 @@ struct UserStudyChatView: View {
                             viewModel.updateProcessingState()
                         }
                         _ = await viewModel.generateAssistantResponse()
+                        
+                        // Alerts and sheets can not be displayed at the same time.
+                        if case let .error(error) = viewModel.llmSession.state {
+                            // We have to first dismiss all sheets.
+                            viewModel.setSurveyViewPresented(false)
+                            viewModel.setTaskInstructionSheetPresented(false)
+                            // Wait for animation to complete
+                            try await Task.sleep(for: .seconds(1))
+                            // Re-set the error state.
+                            viewModel.llmSession.state = .generating
+                            try await Task.sleep(for: .seconds(0.5))
+                            viewModel.llmSession.state = .error(error: error)
+                        }
                     }
                 }
         }
@@ -92,9 +106,8 @@ struct UserStudyChatView: View {
                 speechToText: false,
                 messagePendingAnimation: .manual(shouldDisplay: viewModel.showTypingIndicator)
             )
-            .viewStateAlert(state: viewModel.llmSession.state)
         }
-        .animation(.easeInOut(duration: 0.4), value: viewModel.isProcessing)
+            .animation(.easeInOut(duration: 0.4), value: viewModel.isProcessing)
     }
 
     /// Creates a new user study chat view

@@ -6,6 +6,7 @@
 // SPDX-License-Identifier: MIT
 //
 
+import os
 import Spezi
 import SpeziFHIR
 import SpeziFHIRHealthKit
@@ -45,9 +46,21 @@ actor LLMonFHIRStandard: Standard, HealthKitConstraint, EnvironmentAccessible {
     }
     
     private func initialSetup() async {
-        if healthKit.isFullyAuthorized {
-            await fetchRecordsFromHealthKit()
+        let logger = Logger(subsystem: "edu.stanford.bdhg.llmonfhir", category: "LLMonFHIRStandard")
+        
+        // Waiting until the HealthKit module loads all authorization requirements.
+        let loadingStartDate = Date.now
+        while healthKit.configurationState != .completed && abs(loadingStartDate.distance(to: .now)) < 0.5 {
+            logger.debug("Loading HealthKit Module ...")
+            try? await Task.sleep(for: .seconds(0.02))
         }
+        
+        guard healthKit.isFullyAuthorized else {
+            logger.error("HealthKit permissions not yet provided.")
+            return
+        }
+        
+        await fetchRecordsFromHealthKit()
     }
     
     @MainActor
