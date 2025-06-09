@@ -215,7 +215,26 @@ final class UserStudyChatViewModel {  // swiftlint:disable:this type_body_length
         _isTaskIntructionAlertPresented = isPresented
     }
 
-    func updateProcessingState() {
+    func updateProcessingState() async {
+        // Alerts and sheets can not be displayed at the same time.
+        if case let .error(error) = llmSession.state {
+            if isSurveyViewPresented || isTaskIntructionAlertPresented {
+                // We have to first dismiss all sheets.
+                setSurveyViewPresented(false)
+                setTaskInstructionSheetPresented(false)
+                // Wait for animation to complete
+                try? await Task.sleep(for: .seconds(1))
+                // Re-set the error state.
+                llmSession.state = .generating
+                try? await Task.sleep(for: .seconds(0.5))
+                llmSession.state = .error(error: error)
+            }
+            
+            processingState = .error
+            
+            return
+        }
+        
         guard let lastMessage = llmSession.context.last else {
             return
         }

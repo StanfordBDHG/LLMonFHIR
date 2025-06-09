@@ -15,6 +15,7 @@ extension UserStudyChatViewModel {
         case processingFunctionCalls(currentCall: Int, totalCalls: Int)
         case generatingResponse
         case completed
+        case error
 
         var progress: Double {
             switch self {
@@ -27,6 +28,8 @@ extension UserStudyChatViewModel {
                 return 90
             case .completed:
                 return 100
+            case .error:
+                return 0
             }
         }
 
@@ -40,6 +43,8 @@ extension UserStudyChatViewModel {
                 return "Generating response..."
             case .completed:
                 return "Processing completed"
+            case .error:
+                return "Encountered an error"
             }
         }
 
@@ -47,7 +52,7 @@ extension UserStudyChatViewModel {
             switch self {
             case .processingSystemPrompts, .processingFunctionCalls:
                 return true
-            case .generatingResponse, .completed:
+            case .generatingResponse, .completed, .error:
                 return false
             }
         }
