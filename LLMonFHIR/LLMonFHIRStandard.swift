@@ -49,6 +49,7 @@ actor LLMonFHIRStandard: Standard, HealthKitConstraint, EnvironmentAccessible {
         let logger = Logger(subsystem: "edu.stanford.bdhg.llmonfhir", category: "LLMonFHIRStandard")
         
         // Waiting until the HealthKit module loads all authorization requirements.
+        // Issue tracked in https://github.com/StanfordSpezi/SpeziHealthKit/issues/57.
         let loadingStartDate = Date.now
         while healthKit.configurationState != .completed && abs(loadingStartDate.distance(to: .now)) < 0.5 {
             logger.debug("Loading HealthKit Module ...")
