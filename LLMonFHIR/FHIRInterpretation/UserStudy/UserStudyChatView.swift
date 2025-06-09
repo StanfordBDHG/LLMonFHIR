@@ -53,13 +53,15 @@ struct UserStudyChatView: View {
                     ),
                     content: taskInstructionSheet
                 )
+                .viewStateAlert(state: viewModel.llmSession.state)
                 .onAppear(perform: viewModel.startSurvey)
                 .onChange(of: viewModel.llmSession.context, initial: true) {
                     Task {
                         if viewModel.isProcessing {
-                            viewModel.updateProcessingState()
+                            await viewModel.updateProcessingState()
                         }
                         _ = await viewModel.generateAssistantResponse()
+                        await viewModel.updateProcessingState()
                     }
                 }
         }
@@ -92,9 +94,8 @@ struct UserStudyChatView: View {
                 speechToText: false,
                 messagePendingAnimation: .manual(shouldDisplay: viewModel.showTypingIndicator)
             )
-            .viewStateAlert(state: viewModel.llmSession.state)
         }
-        .animation(.easeInOut(duration: 0.4), value: viewModel.isProcessing)
+            .animation(.easeInOut(duration: 0.4), value: viewModel.isProcessing)
     }
 
     /// Creates a new user study chat view

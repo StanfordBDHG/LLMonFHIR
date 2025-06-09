@@ -29,7 +29,7 @@ struct MultipleResourcesChatView: View {
                 .navigationTitle(viewModel.navigationTitle)
                 .toolbar { toolbarContent }
         }
-        .interactiveDismissDisabled()
+            .interactiveDismissDisabled()
     }
 
 

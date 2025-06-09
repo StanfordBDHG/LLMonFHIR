@@ -37,7 +37,7 @@ struct UserStudyPlistConfiguration {
         guard let url = Bundle.main.url(forResource: "UserStudyConfig", withExtension: "plist") else {
             throw ConfigurationError.missingFile
         }
-
+        
         let data = try Data(contentsOf: url)
         let dict = try PropertyListSerialization.propertyList(from: data, format: nil) as? [String: Any]
         guard let plist = dict,
@@ -46,7 +46,11 @@ struct UserStudyPlistConfiguration {
         else {
             throw ConfigurationError.invalidFormat
         }
-
+        
+        guard !apiKey.isEmpty, apiKey != "OPENAI_API_VALUE" else {
+            return UserStudyPlistConfiguration(apiKey: nil, isUserStudyEnabled: isUserStudyEnabled)
+        }
+        
         return UserStudyPlistConfiguration(apiKey: apiKey, isUserStudyEnabled: isUserStudyEnabled)
     }
 }
