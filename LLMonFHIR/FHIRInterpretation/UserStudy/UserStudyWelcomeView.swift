@@ -212,25 +212,24 @@ struct UserStudyWelcomeView: View {
         guard case let .keychain(tag, username) = self.platform.configuration.authToken else {
             fatalError("LLMonFHIR relies on an auth token stored in Keychain. Please check your `LLMOpenAIPlatform` configuration.")
         }
-
+        
+        let logger = Logger(subsystem: "edu.stanford.llmonfhir", category: "UserStudyWelcomeView")
+        
+        guard let apiKey = UserStudyPlistConfiguration.shared.apiKey else {
+            logger.warning("No OpenAI API key found in UserStudyPlistConfiguration.shared.apiKey")
+            return
+        }
+        
         do {
-            let existingToken = try keychainStorage.retrieveCredentials(
-                withUsername: username,
+            try keychainStorage.store(
+                Credentials(
+                    username: username,
+                    password: apiKey
+                ),
                 for: tag
-            )?.password
-
-            if existingToken?.isEmpty ?? true {
-                try keychainStorage.store(
-                    Credentials(
-                        username: username,
-                        password: UserStudyPlistConfiguration.shared.apiKey ?? ""
-                    ),
-                    for: tag
-                )
-            }
+            )
         } catch {
-            Logger(subsystem: "edu.stanford.llmonfhir", category: "UserStudyWelcomeView")
-                .warning("Could not access keychain to read or store OpenAI API key: \(error)")
+            logger.warning("Could not access keychain to read or store OpenAI API key: \(error)")
         }
     }
 }
