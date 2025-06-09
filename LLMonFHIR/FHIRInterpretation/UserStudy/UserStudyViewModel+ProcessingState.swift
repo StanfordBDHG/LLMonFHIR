@@ -20,7 +20,7 @@ extension UserStudyChatViewModel {
         var progress: Double {
             switch self {
             case .processingSystemPrompts:
-                return 0
+                return 10
             case let .processingFunctionCalls(current, total):
                 let functionCallProgress = total > 0 ? Double(current) / Double(total) : 0
                 return 20 + functionCallProgress * 70
