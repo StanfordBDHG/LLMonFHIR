@@ -130,19 +130,19 @@ struct UserStudyWelcomeView: View {
 
     private var studyDescription: some View {
         // swiftlint:disable:next line_length
-        Text("A team member will be with you soon. During this study, you’ll complete a survey about your experiences navigating the healthcare system and have the opportunity to ask the chat questions about your health.")
+        Text("During this study, you’ll complete a survey about your experiences navigating the healthcare system and have the opportunity to ask the chat questions about your health.")
             .font(.body)
             .multilineTextAlignment(.center)
             .foregroundColor(.secondary)
             .fixedSize(horizontal: false, vertical: true)
-            .padding(.horizontal)
+            .padding(.horizontal, 32)
     }
 
     private var recordsStartDateView: some View {
         Button {
             isPresentingEarliestHealthRecords = true
         } label: {
-            Text("Records since: \(earliestRecordDateFormatted)")
+            Text("Health records since: \(earliestRecordDateFormatted)")
                 .font(.caption)
                 .foregroundColor(.secondary)
                 .fontWeight(.medium)
@@ -155,8 +155,10 @@ struct UserStudyWelcomeView: View {
         VStack(spacing: 16) {
             startStudyButton
                 .padding(.horizontal, 32)
-            recordsStartDateView
-                .padding(.bottom, 16)
+            if standard.hasEmptyHealthRecords {
+                recordsStartDateView
+                    .padding(.bottom, 16)
+            }
             approvalBadge
         }
         .padding(.bottom, 24)
@@ -173,7 +175,7 @@ struct UserStudyWelcomeView: View {
                         .progressViewStyle(CircularProgressViewStyle(tint: .white))
                 }
 
-                Text(standard.waitingState.isWaiting ? "Loading Resources" : "Start Session")
+                Text(standard.waitingState.isWaiting ? "Loading Health Records" : "Start Session")
             }
             .font(.headline)
             .fontWeight(.semibold)
