@@ -35,6 +35,8 @@ actor LLMonFHIRStandard: Standard, HealthKitConstraint, EnvironmentAccessible {
 
     @MainActor let waitingState = FHIRResourceWaitingState()
 
+    @MainActor var hasEmptyHealthRecords: Bool = false
+
     private var samples: [HKSample] = []
     private var waitTask: Task<Void, Error>?
     
@@ -73,6 +75,7 @@ actor LLMonFHIRStandard: Standard, HealthKitConstraint, EnvironmentAccessible {
         useHealthKitResources = true
         if await fhirStore.allResources.isEmpty {
             waitingState.isWaiting = false
+            hasEmptyHealthRecords = true
         }
     }
     
