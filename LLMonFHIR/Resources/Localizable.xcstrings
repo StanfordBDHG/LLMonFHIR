@@ -1056,6 +1056,27 @@
     "Going back will reset your chat history." : {
 
     },
+    "HEALTH_RECORDS_SINCE" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Health Records Since"
+          }
+        }
+      }
+    },
+    "HEALTH_RECORDS_SINCE_DISCLAIMER" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The dates shown represent the earliest records available for each category. However, not all records after these dates may be included, and only records with valid dates are shown. Due to technical limitations, some valid records may not appear. This timeline provides a general overview of when your health data begins, but is not a comprehensive index of all available records."
+          }
+        }
+      }
+    },
     "HEALTH_RECORDS_SINCE: %@" : {
       "localizations" : {
         "en" : {
@@ -1537,20 +1558,6 @@
     },
     "Random" : {
 
-    },
-    "Records since" : {
-
-    },
-    "Records Since Disclaimer" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "The dates shown represent the earliest records available for each category. However, not all records after these dates may be included, and only records with valid dates are shown. Due to technical limitations, some valid records may not appear. This timeline provides a general overview of when your health data begins, but is not a comprehensive index of all available records."
-          }
-        }
-      }
     },
     "Reset Chat" : {
       "localizations" : {
