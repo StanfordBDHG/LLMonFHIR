@@ -10,13 +10,7 @@
     "%lld" : {
 
     },
-    "A team member will be with you soon. During this study, you’ll complete a survey about your experiences navigating the healthcare system and have the opportunity to ask the chat questions about your health." : {
-
-    },
     "Allergies" : {
-
-    },
-    "Approved by Stanford IRB" : {
 
     },
     "Balanced" : {
@@ -24,41 +18,6 @@
     },
     "Chat with all Resources" : {
 
-    },
-    "CHAT_WITH_ALL_RESOURCES" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Mit allen Ressourcen chatten"
-          }
-        },
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Chat with all resources"
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Chat con todos los recursos"
-          }
-        },
-        "fr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Discuter avec toutes les ressources"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "与所有资源交谈"
-          }
-        }
-      }
     },
     "Checkmark" : {
 
@@ -257,31 +216,31 @@
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "LLM on FHIR dient ausschließlich allgemeinen Informationszwecken und ersetzt nicht die fachliche Beratung, Diagnose oder Behandlung durch medizinisches Fachpersonal."
+            "value" : "LLM on FHIR wird ausschließlich zu allgemeinen Informationszwecken bereitgestellt und ist nicht dazu bestimmt, professionelle medizinische Beratung, Diagnosen oder Behandlungen zu ersetzen."
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "LLM on FHIR is provided for general informational purposes only and is not intended as a substitute for professional medical advice, diagnosis, or treatment."
+            "value" : "LLM on FHIR is provided for general informational purposes only and is not intended to substitute professional medical advice, diagnosis, or treatment."
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "LLM en FHIR se proporciona únicamente con fines informativos generales y no pretende ser un sustituto de asesoramiento médico profesional, diagnóstico o tratamiento."
+            "value" : "LLM en FHIR se proporciona únicamente con fines informativos generales y no está destinado a sustituir el asesoramiento, diagnóstico o tratamiento médico profesional."
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "LLM sur FHIR est fourni uniquement à des fins informatives générales et ne doit pas être considéré comme un substitut à des conseils médicaux professionnels, à un diagnostic ou à un traitement."
+            "value" : "LLM sur FHIR est fourni uniquement à des fins informatives générales et n’est pas destiné à remplacer les conseils, diagnostics ou traitements médicaux professionnels."
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "LLM on FHIR仅供一般信息目的，并不旨在替代专业医疗建议、诊断或治疗。"
+            "value" : "LLM on FHIR 仅用于一般信息目的，并无意替代专业的医疗建议、诊断或治疗。"
           }
         }
       }
@@ -529,31 +488,31 @@
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Beachten Sie, dass Ihre Gesundheitsdaten zur Verarbeitung an OpenAI gesendet werden. Bitte überprüfen und lesen Sie sorgfältig die Datenschutzrichtlinien und Einstellungen der OpenAI-API."
+            "value" : "Denken Sie daran, dass Ihre Gesundheitsakten zur Verarbeitung an OpenAI gesendet werden. Bitte prüfen und lesen Sie sorgfältig die Datenverwendungsrichtlinien und Einstellungen der OpenAI-API."
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Remember that your health data will be sent to OpenAI for processing. Please inspect and carefully read the OpenAI API data usage policies and settings."
+            "value" : "Remember that your health records will be sent to OpenAI for processing. Please inspect and carefully read the OpenAI API data usage policies and settings."
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Recuerde que sus datos de salud se enviarán a OpenAI para su procesamiento. Por favor, inspeccione y lea cuidadosamente las políticas y configuraciones de uso de datos de la API de OpenAI."
+            "value" : "Recuerde que sus registros de salud se enviarán a OpenAI para su procesamiento. Por favor, revise y lea cuidadosamente las políticas y configuraciones de uso de datos de la API de OpenAI."
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Rappelez-vous que vos données de santé seront envoyées à OpenAI pour traitement. Veuillez inspecter et lire attentivement les politiques et les paramètres d'utilisation des données de l'API OpenAI."
+            "value" : "Rappelez-vous que vos dossiers de santé seront envoyés à OpenAI pour traitement. Veuillez examiner et lire attentivement les politiques et les paramètres d'utilisation des données de l'API OpenAI."
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "请注意，您的健康数据将被发送给OpenAI进行处理。请仔细阅读OpenAI API的数据使用政策和设置。"
+            "value" : "请注意，您的健康记录将被发送给 OpenAI 进行处理。请仔细查阅并阅读 OpenAI API 的数据使用政策和设置。"
           }
         }
       }
@@ -631,31 +590,31 @@
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "LLM on FHIR ist eine experimentelle iOS-App, mit der Benutzer mit in der Apple Health gespeicherten Gesundheitsdaten interagieren können, indem sie OpenAI-Modelle verwenden."
+            "value" : "LLM on FHIR ist eine experimentelle iOS-App, die es Benutzern ermöglicht, mit ihren in Apple Health gespeicherten Gesundheitsakten unter Verwendung von OpenAI-Modellen zu interagieren."
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "LLM on FHIR is an experimental iOS app that allows users to interact with health data stored in Apple Health using OpenAI models."
+            "value" : "LLM on FHIR is an experimental iOS app that enables users to interact with their health records stored in Apple Health using OpenAI models."
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "LLM en FHIR es una aplicación experimental para iOS que permite a los usuarios interactuar con datos de salud almacenados en Apple Health utilizando modelos de OpenAI."
+            "value" : "LLM en FHIR es una aplicación experimental para iOS que permite a los usuarios interactuar con sus registros de salud almacenados en Apple Health utilizando modelos de OpenAI."
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "LLM sur FHIR est une application expérimentale pour iOS qui permet aux utilisateurs d'interagir avec des données de santé stockées dans Apple Health à l'aide de modèles OpenAI."
+            "value" : "LLM sur FHIR est une application expérimentale pour iOS qui permet aux utilisateurs d’interagir avec leurs dossiers de santé stockés dans Apple Health en utilisant des modèles OpenAI."
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "LLM on FHIR是一款实验性iOS应用程序，允许用户使用OpenAI模型与存储在Apple Health中的健康数据进行交互。"
+            "value" : "LLM on FHIR是一款实验性iOS应用程序，允许用户使用OpenAI模型与存储在Apple Health中的健康记录进行交互。"
           }
         }
       }
@@ -1097,6 +1056,37 @@
     "Going back will reset your chat history." : {
 
     },
+    "HEALTH_RECORDS_SINCE" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Health Records Since"
+          }
+        }
+      }
+    },
+    "HEALTH_RECORDS_SINCE_DISCLAIMER" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The dates shown represent the earliest records available for each category. However, not all records after these dates may be included, and only records with valid dates are shown. Due to technical limitations, some valid records may not appear. This timeline provides a general overview of when your health data begins, but is not a comprehensive index of all available records."
+          }
+        }
+      }
+    },
+    "HEALTH_RECORDS_SINCE: %@" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Health records since: %@"
+          }
+        }
+      }
+    },
     "HEALTHKIT_PERMISSIONS_BUTTON" : {
       "localizations" : {
         "de" : {
@@ -1311,42 +1301,28 @@
       },
       "shouldTranslate" : false
     },
-    "LLM on FHIR" : {
+    "LLM_ON_FHIR" : {
       "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "LLM on FHIR"
-          }
-        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "LLM on FHIR"
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "LLM sobre FHIR"
-          }
-        },
-        "fr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "LLM sur FHIR"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "关于 FHIR 的法律硕士"
           }
         }
       }
     },
     "Loading Resources" : {
 
+    },
+    "LOADING_HEALTH_RECORDS" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Loading Health Records"
+          }
+        }
+      }
     },
     "Medications" : {
       "localizations" : {
@@ -1581,23 +1557,6 @@
       }
     },
     "Random" : {
-
-    },
-    "Records since" : {
-
-    },
-    "Records Since Disclaimer" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "The dates shown represent the earliest records available for each category. However, not all records after these dates may be included, and only records with valid dates are shown. Due to technical limitations, some valid records may not appear. This timeline provides a general overview of when your health data begins, but is not a comprehensive index of all available records."
-          }
-        }
-      }
-    },
-    "Records since: %@" : {
 
     },
     "Reset Chat" : {
@@ -2178,8 +2137,15 @@
     "Share Survey Results" : {
 
     },
-    "Start Session" : {
-
+    "START_SESSION" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Start Session"
+          }
+        }
+      }
     },
     "Submit" : {
 
@@ -2381,9 +2347,6 @@
         }
       }
     },
-    "User Study" : {
-
-    },
     "User Study Navigation Title" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -2406,39 +2369,76 @@
         }
       }
     },
-    "Welcome" : {
-
+    "USER_STUDY_APPROVAL_BADGE_TEXT" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Approved by Stanford IRB"
+          }
+        }
+      }
+    },
+    "USER_STUDY_WECOME" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Welcome"
+          }
+        }
+      }
+    },
+    "USER_STUDY_WELCOME_DESCRIPTION" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "During this study, you’ll complete a survey about your experiences navigating the healthcare system and have the opportunity to ask the chat questions about your health."
+          }
+        }
+      }
+    },
+    "USER_STUDY_WELCOME_TITLE" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "User Study"
+          }
+        }
+      }
     },
     "WELCOME_AREA1_DESCRIPTION" : {
       "localizations" : {
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Gesundheitsdaten werden über die FHIR-Patientendaten-API Ihres Anbieters über die Apple Health App bereitgestellt."
+            "value" : "Gesundheitsakten werden über Ihre FHIR-Patientendaten-API in der Apple Health App bereitgestellt."
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Health data is provided using your provides FHIR patient data API using the Apple Health app."
+            "value" : "Health records are provided using your FHIR patient data API via the Apple Health app."
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Los datos de salud se proporcionan mediante su API de datos de paciente FHIR utilizando la aplicación Apple Health."
+            "value" : "Los registros de salud se proporcionan mediante su API de datos de paciente FHIR a través de la aplicación Apple Health."
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Les données de santé sont fournies via votre API de données de patient FHIR utilisant l'application Apple Health."
+            "value" : "Les dossiers de santé sont fournis via votre API de données patient FHIR via l’application Apple Health."
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "使用苹果健康应用程序的FHIR患者数据API提供健康数据。"
+            "value" : "通过苹果健康应用程序，使用您的FHIR患者数据API提供健康记录。"
           }
         }
       }
@@ -2448,31 +2448,31 @@
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Ihre Gesundheitsdaten überprüfen"
+            "value" : "Überprüfen"
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Inspect Your Health Data"
+            "value" : "Inspect"
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Inspeccionar sus Datos de Salud"
+            "value" : "Revisar"
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Inspecter Vos Données de Santé"
+            "value" : "Vérifier"
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "检视您的健康数据"
+            "value" : "检视"
           }
         }
       }
@@ -2482,31 +2482,31 @@
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "LLM on FHIR ermöglicht es Ihnen, Ihre klinischen Daten zusammenzufassen und zu interpretieren."
+            "value" : "LLM on FHIR erlaubt es Ihnen, Ihre Gesundheitsakten zusammenzufassen und zu interpretieren."
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "LLM on FHIR allows you to summarize and interpret your clinical data."
+            "value" : "LLM on FHIR allows you to summarize and interpret your health records."
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "LLM en FHIR le permite resumir e interpretar sus datos clínicos."
+            "value" : "LLM en FHIR le permite resumir e interpretar sus registros de salud."
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "LLM sur FHIR vous permet de résumer et d'interpréter vos données cliniques."
+            "value" : "LLM sur FHIR vous permet de résumer et d’interpréter vos dossiers de santé."
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "LLM on FHIR允许您总结和解释您的临床数据。"
+            "value" : "LLM on FHIR 允许您总结和解释您的健康记录。"
           }
         }
       }
@@ -2516,31 +2516,31 @@
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Ihre Daten zusammenfassen und interpretieren"
+            "value" : "Zusammenfassen & Interpretieren"
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Summarize & Interpret Your Data"
+            "value" : "Summarize & Interpret"
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Resumir e Interpretar sus Datos"
+            "value" : "Resumir e Interpretar"
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Résumer et Interpréter Vos Données"
+            "value" : "Résumer & Interpréter"
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "总结和解释您的数据"
+            "value" : "总结与解释"
           }
         }
       }
@@ -2550,31 +2550,31 @@
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Verwenden Sie die Chat-Funktion, um Nachfragen zu stellen und weitere Informationen zu Ihren klinischen Aufzeichnungen zu erhalten."
+            "value" : "Verwenden Sie die Chat-Funktion, um Folgefragen zu stellen und mehr Informationen zu Ihren Gesundheitsakten zu erhalten."
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Use the chat functionality to ask follow up questions and get more information about your clinical records."
+            "value" : "Use the chat functionality to ask follow up questions and get more information about your health records."
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Utilice la funcionalidad de chat para hacer preguntas de seguimiento y obtener más información sobre sus registros clínicos."
+            "value" : "Utilice la funcionalidad de chat para hacer preguntas de seguimiento y obtener más información sobre sus registros de salud."
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Utilisez la fonctionnalité de chat pour poser des questions de suivi et obtenir plus d'informations sur vos dossiers cliniques."
+            "value" : "Utilisez la fonctionnalité de chat pour poser des questions de suivi et obtenir plus d'informations sur vos dossiers de santé."
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "使用聊天功能询问后续问题并获取更多有关您的临床记录的信息。"
+            "value" : "使用聊天功能提出后续问题 并获取更多有关您的健康记录的信息。"
           }
         }
       }
@@ -2584,31 +2584,31 @@
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Mehr über Ihre Daten erfahren"
+            "value" : "Mehr erfahren"
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Learn More About Your Data"
+            "value" : "Learn More"
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Aprender más sobre sus Datos"
+            "value" : "Aprender más"
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "En savoir plus sur Vos Données"
+            "value" : "En savoir plus"
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "了解更多关于您的数据"
+            "value" : "了解更多"
           }
         }
       }

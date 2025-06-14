@@ -20,7 +20,7 @@ struct EarliestHealthRecordsView: View {
     var body: some View {
         NavigationView {
             List {
-                Section(footer: Text("\n\(Text("Records Since Disclaimer"))")) {
+                Section(footer: Text("\n\(Text("HEALTH_RECORDS_SINCE_DISCLAIMER"))")) {
                     ForEach(dataSource.keys.sorted(), id: \.self) { resourceType in
                         if let date = dataSource[resourceType] {
                             HStack {
@@ -38,7 +38,7 @@ struct EarliestHealthRecordsView: View {
                     }
                 }
             }
-            .navigationTitle("Records since")
+            .navigationTitle("HEALTH_RECORDS_SINCE")
             .navigationBarItems(trailing: doneButton)
         }
     }
