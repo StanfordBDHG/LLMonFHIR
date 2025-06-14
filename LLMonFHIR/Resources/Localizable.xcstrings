@@ -13,49 +13,11 @@
     "Allergies" : {
 
     },
-    "Approved by Stanford IRB" : {
-
-    },
     "Balanced" : {
 
     },
     "Chat with all Resources" : {
 
-    },
-    "CHAT_WITH_ALL_RESOURCES" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Mit allen Ressourcen chatten"
-          }
-        },
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Chat with all resources"
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Chat con todos los recursos"
-          }
-        },
-        "fr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Discuter avec toutes les ressources"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "与所有资源交谈"
-          }
-        }
-      }
     },
     "Checkmark" : {
 
@@ -740,9 +702,6 @@
     "Download the LLM model to generate summaries of FHIR resources." : {
 
     },
-    "During this study, you’ll complete a survey about your experiences navigating the healthcare system and have the opportunity to ask the chat questions about your health." : {
-
-    },
     "Enable Usability Study" : {
 
     },
@@ -1097,8 +1056,15 @@
     "Going back will reset your chat history." : {
 
     },
-    "Health records since: %@" : {
-
+    "HEALTH_RECORDS_SINCE: %@" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Health records since: %@"
+          }
+        }
+      }
     },
     "HEALTHKIT_PERMISSIONS_BUTTON" : {
       "localizations" : {
@@ -1236,9 +1202,6 @@
         }
       }
     },
-    "Heath Records Since" : {
-
-    },
     "Higher values (0.8+) increase randomness and creativity. Lower values (0.2-) make responses more focused and deterministic." : {
 
     },
@@ -1317,45 +1280,28 @@
       },
       "shouldTranslate" : false
     },
-    "LLM on FHIR" : {
+    "LLM_ON_FHIR" : {
       "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "LLM on FHIR"
-          }
-        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "LLM on FHIR"
           }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "LLM sobre FHIR"
-          }
-        },
-        "fr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "LLM sur FHIR"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "关于 FHIR 的法律硕士"
-          }
         }
       }
     },
-    "Loading Health Records" : {
-
-    },
     "Loading Resources" : {
 
+    },
+    "LOADING_HEALTH_RECORDS" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Loading Health Records"
+          }
+        }
+      }
     },
     "Medications" : {
       "localizations" : {
@@ -1590,6 +1536,9 @@
       }
     },
     "Random" : {
+
+    },
+    "Records since" : {
 
     },
     "Records Since Disclaimer" : {
@@ -2181,8 +2130,15 @@
     "Share Survey Results" : {
 
     },
-    "Start Session" : {
-
+    "START_SESSION" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Start Session"
+          }
+        }
+      }
     },
     "Submit" : {
 
@@ -2384,9 +2340,6 @@
         }
       }
     },
-    "User Study" : {
-
-    },
     "User Study Navigation Title" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -2409,8 +2362,45 @@
         }
       }
     },
-    "Welcome" : {
-
+    "USER_STUDY_APPROVAL_BADGE_TEXT" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Approved by Stanford IRB"
+          }
+        }
+      }
+    },
+    "USER_STUDY_WECOME" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Welcome"
+          }
+        }
+      }
+    },
+    "USER_STUDY_WELCOME_DESCRIPTION" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "During this study, you’ll complete a survey about your experiences navigating the healthcare system and have the opportunity to ask the chat questions about your health."
+          }
+        }
+      }
+    },
+    "USER_STUDY_WELCOME_TITLE" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "User Study"
+          }
+        }
+      }
     },
     "WELCOME_AREA1_DESCRIPTION" : {
       "localizations" : {
