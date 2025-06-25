@@ -43,7 +43,6 @@ actor LLMonFHIRStandard: Standard, HealthKitConstraint, EnvironmentAccessible {
     @MainActor private(set) var waitingState = FHIRResourceWaitingState()
     @FHIRProcessingActor private var waitTask: Task<Void, Error>?
     
-    private var samples: [HKSample] = []
     
     @MainActor
     func configure() {
