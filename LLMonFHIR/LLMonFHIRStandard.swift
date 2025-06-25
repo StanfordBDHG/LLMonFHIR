@@ -74,6 +74,9 @@ actor LLMonFHIRStandard: Standard, HealthKitConstraint, EnvironmentAccessible {
     
     func fetchRecordsFromHealthKit() async {
         guard await useHealthKitResources else {
+            await MainActor.run {
+                waitingState.isWaiting = false
+            }
             return
         }
         
@@ -82,6 +85,7 @@ actor LLMonFHIRStandard: Standard, HealthKitConstraint, EnvironmentAccessible {
         await MainActor.run {
             waitingState.isWaiting = true
         }
+        await triggerWaitingTask()
         
         let healthKit = self.healthKit
         await withTaskGroup { taskGroup in
@@ -119,7 +123,7 @@ actor LLMonFHIRStandard: Standard, HealthKitConstraint, EnvironmentAccessible {
     private func triggerWaitingTask() async {
         waitTask?.cancel()
         waitTask = Task {
-            try? await Task.sleep(for: .seconds(15))
+            try? await Task.sleep(for: .seconds(10))
             
             if !Task.isCancelled {
                 await MainActor.run {
