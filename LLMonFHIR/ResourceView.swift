@@ -47,10 +47,6 @@ struct ResourceView: View {
             if FeatureFlags.testMode {
                 await fhirStore.loadTestingResources()
             }
-
-            if fhirStore.allResources.isEmpty {
-                standard.waitingState.isWaiting = false
-            }
         }
     }
 }
