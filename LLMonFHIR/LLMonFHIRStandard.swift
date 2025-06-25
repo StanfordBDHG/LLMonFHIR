@@ -14,6 +14,13 @@ import SpeziHealthKit
 import SwiftUI
 
 
+@globalActor
+private actor FHIRProcessingActor: GlobalActor {
+    typealias ActorType = FHIRProcessingActor
+    
+    static let shared = FHIRProcessingActor()
+}
+
 @MainActor
 @Observable
 class FHIRResourceWaitingState {
@@ -31,12 +38,11 @@ actor LLMonFHIRStandard: Standard, HealthKitConstraint, EnvironmentAccessible {
     @Dependency(HealthKit.self) private var healthKit
     @Dependency(FHIRInterpretationModule.self) private var fhirInterpretationModule
     
+    @AppStorage(StorageKeys.resourceLimit) private var resourceLimit = StorageKeys.currentResourceCountLimit
     @MainActor var useHealthKitResources = true
-
-    @MainActor let waitingState = FHIRResourceWaitingState()
-
-    private var samples: [HKSample] = []
-    private var waitTask: Task<Void, Error>?
+    @MainActor private(set) var waitingState = FHIRResourceWaitingState()
+    @FHIRProcessingActor private var waitTask: Task<Void, Error>?
+    
     
     @MainActor
     func configure() {
@@ -64,56 +70,68 @@ actor LLMonFHIRStandard: Standard, HealthKitConstraint, EnvironmentAccessible {
         await fetchRecordsFromHealthKit()
     }
     
-    @MainActor
-    func loadHealthKitRecordsIntoFHIRStore() async {
-        await fhirStore.removeAllResources()
-        for sample in await samples {
-            await fhirStore.add(sample: sample)
-        }
-        useHealthKitResources = true
-        if await fhirStore.allResources.isEmpty {
-            waitingState.isWaiting = false
-        }
-    }
     
-    
-    @MainActor
     func fetchRecordsFromHealthKit() async {
-        let healthKit = await self.healthKit
-        let records = await withTaskGroup(of: [HKClinicalRecord].self) { taskGroup in
+        guard await useHealthKitResources else {
+            await MainActor.run {
+                waitingState.isWaiting = false
+            }
+            return
+        }
+        
+        await fhirStore.removeAllResources()
+        
+        await MainActor.run {
+            waitingState.isWaiting = true
+        }
+        await triggerWaitingTask()
+        
+        let healthKit = self.healthKit
+        await withTaskGroup { taskGroup in
             for recordType in Self.recordTypes {
-                taskGroup.addTask {
-                    (try? await healthKit.query(recordType, timeRange: .ever)) ?? []
-                }
-            }
-            return await taskGroup.reduce(into: []) { $0.append(contentsOf: $1) }
-        }
-        await add(records: records)
-    }
-    
-    
-    private func add(records: [HKClinicalRecord]) async {
-        self.samples.append(contentsOf: records.lazy.map { $0 as HKSample })
-        if await useHealthKitResources {
-            waitTask?.cancel()
-            waitTask = Task {
-                await MainActor.run {
-                    waitingState.isWaiting = true
-                }
-                try? await Task.sleep(for: .seconds(10))
-                if !Task.isCancelled {
-                    await MainActor.run {
-                        waitingState.isWaiting = false
+                taskGroup.addTask { [self] in
+                    let records = try? await healthKit.query(
+                        recordType,
+                        timeRange: .ever,
+                        limit: self.resourceLimit,
+                        sortedBy: [SortDescriptor(\.startDate, order: .reverse)]
+                    )
+                    
+                    guard let records else {
+                        return
                     }
-                    await fhirInterpretationModule.updateSchemas()
+                    
+                    await addRecords(records)
                 }
-            }
-            for sample in samples {
-                await fhirStore.add(sample: sample, loadHealthKitAttachements: true)
             }
         }
     }
     
+    private func addRecords(_ records: [HKClinicalRecord]) async {
+        await withTaskGroup { sampleTaskGroup in
+            for newHealthKitSample in records {
+                sampleTaskGroup.addTask { [self] in
+                    await triggerWaitingTask()
+                    await fhirStore.add(sample: newHealthKitSample, loadHealthKitAttachements: true)
+                }
+            }
+        }
+    }
+    
+    @FHIRProcessingActor
+    private func triggerWaitingTask() async {
+        waitTask?.cancel()
+        waitTask = Task {
+            try? await Task.sleep(for: .seconds(10))
+            
+            if !Task.isCancelled {
+                await MainActor.run {
+                    waitingState.isWaiting = false
+                }
+                await fhirInterpretationModule.updateSchemas()
+            }
+        }
+    }
     
     // HealthKitConstraint
     

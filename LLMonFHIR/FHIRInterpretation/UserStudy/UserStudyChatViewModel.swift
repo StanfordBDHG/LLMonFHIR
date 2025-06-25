@@ -355,13 +355,13 @@ final class UserStudyChatViewModel {  // swiftlint:disable:this type_body_length
             do {
                 switch task.id {
                 case 1:
-                    try assistantMessagesByTask.setCapacityRange(minimum: 1, maximum: 1, forKey: task.id)
+                    try assistantMessagesByTask.setCapacityRange(minimum: 1, maximum: 5, forKey: task.id)
                 case 2:
-                    try assistantMessagesByTask.setCapacityRange(minimum: 1, maximum: 1, forKey: task.id)
+                    try assistantMessagesByTask.setCapacityRange(minimum: 1, maximum: 5, forKey: task.id)
                 case 3:
-                    try assistantMessagesByTask.setCapacityRange(minimum: 1, maximum: 1, forKey: task.id)
+                    try assistantMessagesByTask.setCapacityRange(minimum: 1, maximum: 5, forKey: task.id)
                 case 4:
-                    try assistantMessagesByTask.setCapacityRange(minimum: 1, maximum: 1, forKey: task.id)
+                    try assistantMessagesByTask.setCapacityRange(minimum: 1, maximum: 5, forKey: task.id)
                 default:
                     return
                 }

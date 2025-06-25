@@ -83,7 +83,7 @@ struct UserStudyWelcomeView: View {
                         // Persists OpenAI token of the user study in the keychain, if no other token exists already
                         self.persistUserStudyOpenApiToken()
 
-                        await standard.loadHealthKitRecordsIntoFHIRStore()
+                        await standard.fetchRecordsFromHealthKit()
                         fhirInterpretationModule.updateSchemas()
                     }
         }
