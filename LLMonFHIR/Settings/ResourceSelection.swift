@@ -89,7 +89,7 @@ struct ResourceSelection: View {
     private func changeHealthKitResourcesSelection() {
         if useHealthKitResources.wrappedValue {
             _Concurrency.Task {
-                await standard.loadHealthKitRecordsIntoFHIRStore()
+                await standard.fetchRecordsFromHealthKit()
             }
         } else {
             guard let firstMockPatient = bundles.first else {
