@@ -35,7 +35,6 @@ jobs:
       name: CodeQL
       uses: StanfordBDHG/.github/.github/workflows/xcodebuild-or-fastlane.yml@v2
       with:
-        xcodeversion: '16.2'
         codeql: true
         fastlanelane: codeql
       permissions:
