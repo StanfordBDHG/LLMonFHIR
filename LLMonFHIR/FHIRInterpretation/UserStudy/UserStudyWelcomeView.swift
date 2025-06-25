@@ -40,9 +40,9 @@ struct UserStudyWelcomeView: View {
         interpreter.fhirStore.earliestDates(limit: resourceLimit)
     }
 
-    private var earliestRecordDateFormatted: String {
+    private var earliestRecordDateFormatted: String? {
         guard let date = earliestDates.values.min() else {
-            return "No data available"
+            return nil
         }
 
         return dateFormatter.string(from: date)
@@ -53,7 +53,7 @@ struct UserStudyWelcomeView: View {
         NavigationStack {
             mainContent
                 .background(Color(.systemBackground))
-                .navigationTitle("Welcome")
+                .navigationTitle("USER_STUDY_WECOME")
                 .navigationBarTitleDisplayMode(.inline)
                 .toolbar {
                     settingsButton
@@ -118,37 +118,39 @@ struct UserStudyWelcomeView: View {
 
     private var studyTitle: some View {
         VStack(spacing: 8) {
-            Text("User Study")
+            Text("USER_STUDY_WELCOME_TITLE")
                 .font(.title)
                 .fontWeight(.bold)
                 .foregroundColor(.primary)
-            Text("LLM on FHIR")
+            Text("LLM_ON_FHIR")
                 .font(.title2)
                 .foregroundColor(.secondary)
         }
     }
 
     private var studyDescription: some View {
-        // swiftlint:disable:next line_length
-        Text("A team member will be with you soon. During this study, you’ll complete a survey about your experiences navigating the healthcare system and have the opportunity to ask the chat questions about your health.")
+        Text("USER_STUDY_WELCOME_DESCRIPTION")
             .font(.body)
             .multilineTextAlignment(.center)
             .foregroundColor(.secondary)
             .fixedSize(horizontal: false, vertical: true)
-            .padding(.horizontal)
+            .padding(.horizontal, 32)
     }
 
-    private var recordsStartDateView: some View {
-        Button {
-            isPresentingEarliestHealthRecords = true
-        } label: {
-            Text("Records since: \(earliestRecordDateFormatted)")
-                .font(.caption)
-                .foregroundColor(.secondary)
-                .fontWeight(.medium)
-                .underline()
+    @ViewBuilder private var recordsStartDateView: some View {
+        if let earliestRecordDateFormatted {
+            Button {
+                isPresentingEarliestHealthRecords = true
+            } label: {
+                Text("HEALTH_RECORDS_SINCE: \(earliestRecordDateFormatted)")
+                    .font(.caption)
+                    .foregroundColor(.secondary)
+                    .fontWeight(.medium)
+                    .underline()
+            }
+            .opacity(standard.waitingState.isWaiting ? 0 : 1)
+            .padding(.bottom, 16)
         }
-        .opacity(standard.waitingState.isWaiting ? 0 : 1)
     }
 
     private var bottomSection: some View {
@@ -156,7 +158,6 @@ struct UserStudyWelcomeView: View {
             startStudyButton
                 .padding(.horizontal, 32)
             recordsStartDateView
-                .padding(.bottom, 16)
             approvalBadge
         }
         .padding(.bottom, 24)
@@ -173,7 +174,7 @@ struct UserStudyWelcomeView: View {
                         .progressViewStyle(CircularProgressViewStyle(tint: .white))
                 }
 
-                Text(standard.waitingState.isWaiting ? "Loading Resources" : "Start Session")
+                Text(standard.waitingState.isWaiting ? "LOADING_HEALTH_RECORDS" : "START_SESSION")
             }
             .font(.headline)
             .fontWeight(.semibold)
@@ -191,7 +192,7 @@ struct UserStudyWelcomeView: View {
             Image(systemName: "checkmark.seal.fill")
                 .foregroundColor(.secondary)
                 .accessibilityLabel(Text("Checkmark"))
-            Text("Approved by Stanford IRB")
+            Text("USER_STUDY_APPROVAL_BADGE_TEXT")
                 .font(.caption)
                 .fontWeight(.medium)
                 .foregroundColor(.secondary)
