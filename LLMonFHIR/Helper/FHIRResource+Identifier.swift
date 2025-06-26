@@ -19,8 +19,9 @@ extension FHIRResource {
     
     
     var functionCallIdentifier: String {
-        resourceType.filter { !$0.isWhitespace }
-            + displayName.filter { !$0.isWhitespace }
+        resourceType.filter { $0.isLetter || $0.isWholeNumber }
+            + "-"
+            + displayName.filter { $0.isLetter || $0.isWholeNumber }.prefix(75)
             + "-"
             + (date.map { FHIRResource.functionCallIdentifierDateFormatter.string(from: $0) } ?? "")
     }
