@@ -13,6 +13,22 @@ on:
     branches:
       - main
   workflow_dispatch:
+  workflow_call:
+    inputs:
+      fastlane_lane:
+        description: 'Fastlane lane to run (e.g., beta, userstudy)'
+        required: false
+        default: 'beta'
+        type: string
+      googleserviceinfoplistpath:
+        description: 'Path to Google Service Info plist file'
+        required: false
+        default: ''
+        type: string
+
+concurrency:
+  group: deployment
+  cancel-in-progress: false
 
 jobs:
   buildandtest:
@@ -32,5 +48,6 @@ jobs:
     with:
       runsonlabels: '["macOS", "self-hosted"]'
       setupsigning: true
-      fastlanelane: beta
+      fastlanelane: ${{ inputs.fastlane_lane || 'beta' }}
+      googleserviceinfoplistpath: ${{ inputs.googleserviceinfoplistpath || '' }}
     secrets: inherit
