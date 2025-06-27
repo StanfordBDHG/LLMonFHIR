@@ -57,7 +57,7 @@ actor LLMonFHIRStandard: Standard, HealthKitConstraint, EnvironmentAccessible {
         // Waiting until the HealthKit module loads all authorization requirements.
         // Issue tracked in https://github.com/StanfordSpezi/SpeziHealthKit/issues/57.
         let loadingStartDate = Date.now
-        while healthKit.configurationState != .completed && abs(loadingStartDate.distance(to: .now)) < 0.5 {
+        while healthKit.configurationState != .completed && abs(loadingStartDate.distance(to: .now)) < 2.0 {
             logger.debug("Loading HealthKit Module ...")
             try? await Task.sleep(for: .seconds(0.02))
         }
@@ -122,7 +122,7 @@ actor LLMonFHIRStandard: Standard, HealthKitConstraint, EnvironmentAccessible {
     private func triggerWaitingTask() async {
         waitTask?.cancel()
         waitTask = Task {
-            try? await Task.sleep(for: .seconds(10))
+            try? await Task.sleep(for: .seconds(15))
             
             if !Task.isCancelled {
                 await MainActor.run {

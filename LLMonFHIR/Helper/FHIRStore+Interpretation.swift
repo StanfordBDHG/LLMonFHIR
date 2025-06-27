@@ -111,7 +111,7 @@ extension FHIRStore {
                 $0.date ?? .distantPast < $1.date ?? .distantPast
             }
         
-        return relevantResources.map { $0.functionCallIdentifier }
+        return Array(relevantResources.lazy.map { $0.functionCallIdentifier }.uniqued())
     }
 
     /// Returns a dictionary mapping FHIR resource types to their earliest dates.
