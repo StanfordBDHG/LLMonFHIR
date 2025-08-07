@@ -112,20 +112,6 @@ final class UserStudyChatViewModel: MultipleResourcesChatViewModel {  // swiftli
     private var taskEndTimes: [Int: Date] = [:]
     private var assistantMessagesByTask = LimitedCollectionDictionary<Int, String>()
 
-    private var shouldGenerateResponse: Bool {
-        if llmSession.state == .generating || isProcessing {
-            return false
-        }
-
-        // Check if the last message is from a user (needs a response)
-        let lastMessageIsUser = interpreter.llmSession.context.last?.role == .user
-
-        // Check if there are no assistant messages yet (initial prompt needs a response)
-        let noAssistantMessages = !interpreter.llmSession.context.contains(where: { $0.role == .assistant() })
-
-        return (lastMessageIsUser || noAssistantMessages)
-    }
-
     private var isMaxAssistantMessagesReached: Bool {
         assistantMessagesByTask.isMaxReached(forKey: _currentTaskNumber)
     }
@@ -204,8 +190,8 @@ final class UserStudyChatViewModel: MultipleResourcesChatViewModel {  // swiftli
     ///
     /// This method checks if a response is needed and if so, delegates
     /// to the interpreter to generate the actual response.
-    override func generateAssistantResponse() async -> LLMContextEntity? {
-        guard let response = await super.generateAssistantResponse() else {
+    func generateAssistantResponse() async -> LLMContextEntity? {
+        guard let response = await super.generateAssistantResponse(preProcessingStateUpdate: updateProcessingState) else {
             return nil
         }
         

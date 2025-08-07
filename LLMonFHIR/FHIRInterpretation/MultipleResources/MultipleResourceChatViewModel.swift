@@ -21,26 +21,26 @@ import SwiftUI
 class MultipleResourcesChatViewModel {
     let interpreter: FHIRMultipleResourceInterpreter
     var processingState: ProcessingState = .processingSystemPrompts
-
+    
     /// Direct access to the current LLM session for observing state changes
     var llmSession: LLMSession {
         interpreter.llmSession
     }
-
+    
     /// Indicates if the LLM is currently processing or generating a response
     /// This property directly reflects the LLM session's state
     var isProcessing: Bool {
         llmSession.state.representation == .processing
     }
-
+    
     /// Determines whether to display a typing indicator in the chat interface.
     var showTypingIndicator: Bool {
         processingState.isProcessing
     }
-
+    
     /// The title displayed in the navigation bar
     let navigationTitle: String
-
+    
     /// Provides a binding to the chat messages for use in SwiftUI views
     ///
     /// This binding allows the ChatView component to both display messages
@@ -55,22 +55,22 @@ class MultipleResourcesChatViewModel {
             }
         )
     }
-
+    
     private var shouldGenerateResponse: Bool {
         if llmSession.state == .generating || isProcessing {
             return false
         }
-
+        
         // Check if the last message is from a user (needs a response)
         let lastMessageIsUser = interpreter.llmSession.context.last?.role == .user
-
+        
         // Check if there are no assistant messages yet (initial prompt needs a response)
         let noAssistantMessages = !interpreter.llmSession.context.contains(where: { $0.role == .assistant() })
-
+        
         // Generate if last message is from user or if there are no assistant messages yet
         return (lastMessageIsUser || noAssistantMessages)
     }
-
+    
     /// Creates a view model with the specified interpreter and settings.
     ///
     /// - Parameters:
@@ -80,7 +80,7 @@ class MultipleResourcesChatViewModel {
         self.interpreter = interpreter
         self.navigationTitle = navigationTitle
     }
-
+    
     /// Starts a new conversation by clearing all user and assistant messages
     ///
     /// This preserves system messages but removes all conversation history,
@@ -88,7 +88,7 @@ class MultipleResourcesChatViewModel {
     func startNewConversation() {
         interpreter.startNewConversation()
     }
-
+    
     /// Cancels any ongoing operations and dismisses the current view
     ///
     /// - Parameter dismiss: The dismiss action from the environment to close the view
@@ -96,9 +96,10 @@ class MultipleResourcesChatViewModel {
         interpreter.cancel()
         dismiss()
     }
-
+    
     /// Generates an assistant response  for the current context    
-    func generateAssistantResponse() async -> LLMContextEntity? {
+    func generateAssistantResponse(preProcessingStateUpdate: @escaping () async -> Void = {}) async -> LLMContextEntity? {
+        await preProcessingStateUpdate()
         processingState = await processingState.calculateNewProcessingState(basedOn: llmSession)
         
         guard shouldGenerateResponse else {
@@ -111,6 +112,7 @@ class MultipleResourcesChatViewModel {
             return nil
         }
         
+        await preProcessingStateUpdate()
         processingState = await processingState.calculateNewProcessingState(basedOn: llmSession)
 
         return response
