@@ -35,14 +35,17 @@ struct ResourceView: View {
     }
     
     private var chatWithAllResourcesButton: some View {
-        if #available(iOS 26.0, *) {
-            AnyView(_chatWithAllResourcesButton.buttonStyle(.glassProminent))
-        } else {
-            AnyView(
+        Group {
+            if #available(iOS 26.0, *) {
+                _chatWithAllResourcesButton
+                #if swift(>=6.2)
+                    .buttonStyle(.glassProminent)
+                #endif
+            } else {
                 _chatWithAllResourcesButton
                     .buttonStyle(.borderedProminent)
                     .padding(-8)
-            )
+            }
         }
     }
     

@@ -164,10 +164,16 @@ struct UserStudyWelcomeView: View {
     }
 
     private var startStudyButton: some View {
-        if #available(iOS 26.0, *) {
-            AnyView(erasing: _startStudyButton.buttonStyle(.glassProminent))
-        } else {
-            AnyView(erasing: _startStudyButton.buttonStyle(.borderedProminent))
+        Group {
+            if #available(iOS 26.0, *) {
+                _startStudyButton
+                #if swift(>=6.2)
+                    .buttonStyle(.glassProminent)
+                #endif
+            } else {
+                _startStudyButton
+                    .buttonStyle(.borderedProminent)
+            }
         }
     }
     
