@@ -19,8 +19,8 @@ import SwiftUI
 @MainActor
 @Observable
 class MultipleResourcesChatViewModel {
-    private let interpreter: FHIRMultipleResourceInterpreter
-    private(set) var processingState: ProcessingState = .processingSystemPrompts
+    let interpreter: FHIRMultipleResourceInterpreter
+    var processingState: ProcessingState = .processingSystemPrompts
 
     /// Direct access to the current LLM session for observing state changes
     var llmSession: LLMSession {
@@ -46,14 +46,14 @@ class MultipleResourcesChatViewModel {
     /// This binding allows the ChatView component to both display messages
     /// and add new user messages to the conversation.
     var chatBinding: Binding<Chat> {
-       Binding(
-           get: { [weak self] in
-               self?.interpreter.llmSession.context.chat ?? []
-           },
-           set: { [weak self] newChat in
-               self?.interpreter.llmSession.context.chat = newChat
-           }
-       )
+        Binding(
+            get: { [weak self] in
+                self?.interpreter.llmSession.context.chat ?? []
+            },
+            set: { [weak self] newChat in
+                self?.interpreter.llmSession.context.chat = newChat
+            }
+        )
     }
 
     private var shouldGenerateResponse: Bool {

@@ -18,7 +18,7 @@ import SwiftUI
 /// LLM operations and persistence to the underlying interpreter.
 @MainActor
 @Observable
-final class UserStudyChatViewModel {  // swiftlint:disable:this type_body_length
+final class UserStudyChatViewModel: MultipleResourcesChatViewModel {  // swiftlint:disable:this type_body_length
 
     /// The current state of the survey navigation
     enum NavigationState: Equatable {
@@ -66,22 +66,6 @@ final class UserStudyChatViewModel {  // swiftlint:disable:this type_body_length
         survey.tasks.first { $0.id == _currentTaskNumber }
     }
 
-    /// Direct access to the current LLM session for observing state changes
-    var llmSession: LLMSession {
-        interpreter.llmSession
-    }
-
-    /// Indicates if the LLM is currently processing or generating a response
-    /// This property directly reflects the LLM session's state
-    var isProcessing: Bool {
-        llmSession.state.representation == .processing
-    }
-
-    /// Determines whether to display a typing indicator in the chat interface.
-    var showTypingIndicator: Bool {
-        processingState.isProcessing
-    }
-
     var shouldDisableChatInput: Bool {
         // Always disable during processing
         if isProcessing {
@@ -112,24 +96,6 @@ final class UserStudyChatViewModel {  // swiftlint:disable:this type_body_length
         return !isMinAssistantMessagesReached
     }
 
-    /// Provides a binding to the chat messages for use in SwiftUI views
-    ///
-    /// This binding allows the ChatView component to both display messages
-    /// and add new user messages to the conversation. It also adds survey
-    /// report data when the survey is completed.
-    var chatBinding: Binding<Chat> {
-        Binding(
-            get: { [weak self] in
-                self?.interpreter.llmSession.context.chat ?? []
-            },
-            set: { [weak self] newChat in
-                self?.interpreter.llmSession.context.chat = newChat
-            }
-        )
-    }
-
-    private(set) var processingState: ProcessingState = .processingSystemPrompts
-
     private var _navigationState: NavigationState = .introduction
     private var _studyReport: String?
     private var _isSurveyViewPresented = false
@@ -139,7 +105,6 @@ final class UserStudyChatViewModel {  // swiftlint:disable:this type_body_length
     private var _currentTaskNumber: Int = 0
 
     private let survey: Survey
-    private let interpreter: FHIRMultipleResourceInterpreter
     private let resourceSummary: FHIRResourceSummary
     private let studyStartTime = Date()
     private let studyID = UUID().uuidString
@@ -186,9 +151,10 @@ final class UserStudyChatViewModel {  // swiftlint:disable:this type_body_length
         resourceSummary: FHIRResourceSummary
     ) {
         self.survey = survey
-        self.interpreter = interpreter
         self.resourceSummary = resourceSummary
 
+        super.init(interpreter: interpreter, navigationTitle: "")
+        
         configureMessageLimits()
     }
 
@@ -238,23 +204,13 @@ final class UserStudyChatViewModel {  // swiftlint:disable:this type_body_length
     ///
     /// This method checks if a response is needed and if so, delegates
     /// to the interpreter to generate the actual response.
-    func generateAssistantResponse() async -> LLMContextEntity? {
-        await updateProcessingState()
+    override func generateAssistantResponse() async -> LLMContextEntity? {
+        guard let response = await super.generateAssistantResponse() else {
+            return nil
+        }
         
-        guard shouldGenerateResponse else {
-            return nil
-        }
-
-        processingState = .processingSystemPrompts
-
-        guard let response = await interpreter.generateAssistantResponse() else {
-            return nil
-        }
-
         try? assistantMessagesByTask.append(response.id.uuidString, forKey: _currentTaskNumber)
         
-        await updateProcessingState()
-
         return response
     }
 
