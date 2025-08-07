@@ -18,8 +18,9 @@ import SwiftUI
 /// LLM operations and persistence to the underlying interpreter.
 @MainActor
 @Observable
-final class MultipleResourcesChatViewModel {
+class MultipleResourcesChatViewModel {
     private let interpreter: FHIRMultipleResourceInterpreter
+    private(set) var processingState: ProcessingState = .processingSystemPrompts
 
     /// Direct access to the current LLM session for observing state changes
     var llmSession: LLMSession {
@@ -34,8 +35,7 @@ final class MultipleResourcesChatViewModel {
 
     /// Determines whether to display a typing indicator in the chat interface.
     var showTypingIndicator: Bool {
-        let role = llmSession.context.last?.role
-        return role == .user || role == .system
+        processingState.isProcessing
     }
 
     /// The title displayed in the navigation bar
@@ -97,11 +97,22 @@ final class MultipleResourcesChatViewModel {
         dismiss()
     }
 
-    /// Generates an assistant response  for the current context
+    /// Generates an assistant response  for the current context    
     func generateAssistantResponse() async -> LLMContextEntity? {
+        await processingState = processingState.calculateNewProcessingState(basedOn: llmSession)
+        
         guard shouldGenerateResponse else {
             return nil
         }
-        return await interpreter.generateAssistantResponse()
+
+        processingState = .processingSystemPrompts
+
+        guard let response = await interpreter.generateAssistantResponse() else {
+            return nil
+        }
+        
+        await processingState = processingState.calculateNewProcessingState(basedOn: llmSession)
+
+        return response
     }
 }

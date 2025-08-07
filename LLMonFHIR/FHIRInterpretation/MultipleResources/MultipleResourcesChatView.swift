@@ -34,20 +34,39 @@ struct MultipleResourcesChatView: View {
 
 
     @ViewBuilder private var chatView: some View {
-        ChatView(
-            viewModel.chatBinding,
-            disableInput: viewModel.isProcessing,
-            exportFormat: .text,
-            messagePendingAnimation: .manual(shouldDisplay: viewModel.showTypingIndicator)
-        )
-            .speak(viewModel.llmSession.context.chat, muted: !textToSpeech)
-            .speechToolbarButton(muted: !$textToSpeech)
-            .viewStateAlert(state: viewModel.llmSession.state)
-            .onChange(of: viewModel.llmSession.context, initial: true) {
-                Task {
-                    _ = await viewModel.generateAssistantResponse()
+        VStack {
+            if viewModel.isProcessing {
+                VStack(spacing: 8) {
+                    ProgressView(value: viewModel.processingState.progress, total: 100)
+                        .progressViewStyle(.linear)
+                        .tint(.accentColor)
+                        .animation(.easeInOut(duration: 0.3), value: viewModel.processingState.progress)
+                    
+                    Text(viewModel.processingState.statusDescription)
+                        .font(.caption)
+                        .foregroundStyle(.secondary)
+                        .animation(.easeInOut(duration: 0.3), value: viewModel.processingState.statusDescription)
                 }
+                    .padding(.horizontal)
+                    .padding(.vertical, 8)
+                    .background(.ultraThinMaterial)
+                    .padding(.bottom, 8)
             }
+            ChatView(
+                viewModel.chatBinding,
+                disableInput: viewModel.isProcessing,
+                exportFormat: .text,
+                messagePendingAnimation: .manual(shouldDisplay: viewModel.showTypingIndicator)
+            )
+                .speak(viewModel.llmSession.context.chat, muted: !textToSpeech)
+                .speechToolbarButton(muted: !$textToSpeech)
+                .viewStateAlert(state: viewModel.llmSession.state)
+                .onChange(of: viewModel.llmSession.context, initial: true) {
+                    Task {
+                        _ = await viewModel.generateAssistantResponse()
+                    }
+                }
+        }
     }
 
     @MainActor @ToolbarContentBuilder private var toolbarContent: some ToolbarContent {

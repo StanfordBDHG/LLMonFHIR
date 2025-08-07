@@ -138,9 +138,6 @@ final class UserStudyChatViewModel {  // swiftlint:disable:this type_body_length
     private var _isTaskIntructionAlertPresented = false
     private var _currentTaskNumber: Int = 0
 
-    private var _functionCallCount = 0
-    private var _completedFunctionCalls = 0
-
     private let survey: Survey
     private let interpreter: FHIRMultipleResourceInterpreter
     private let resourceSummary: FHIRResourceSummary
@@ -231,37 +228,10 @@ final class UserStudyChatViewModel {  // swiftlint:disable:this type_body_length
             }
             
             processingState = .error
-            
             return
         }
         
-        guard let lastMessage = llmSession.context.last else {
-            return
-        }
-
-        switch lastMessage.role {
-        case .system:
-            processingState = .processingSystemPrompts
-        case .assistant(let toolCalls):
-            if !toolCalls.isEmpty {
-                _functionCallCount += toolCalls.count
-                processingState = .processingFunctionCalls(
-                    currentCall: _completedFunctionCalls,
-                    totalCalls: _functionCallCount
-                )
-            } else {
-                processingState = .generatingResponse
-            }
-        case .tool:
-            _completedFunctionCalls += 1
-            _functionCallCount = max(_functionCallCount, _completedFunctionCalls)
-            processingState = .processingFunctionCalls(
-                currentCall: _completedFunctionCalls,
-                totalCalls: _functionCallCount
-            )
-        case .user:
-            break
-        }
+        await processingState = processingState.calculateNewProcessingState(basedOn: llmSession)
     }
 
     /// Generates an assistant response if appropriate for the current context
@@ -269,12 +239,11 @@ final class UserStudyChatViewModel {  // swiftlint:disable:this type_body_length
     /// This method checks if a response is needed and if so, delegates
     /// to the interpreter to generate the actual response.
     func generateAssistantResponse() async -> LLMContextEntity? {
+        await updateProcessingState()
+        
         guard shouldGenerateResponse else {
             return nil
         }
-
-        _functionCallCount = 0
-        _completedFunctionCalls = 0
 
         processingState = .processingSystemPrompts
 
@@ -283,8 +252,8 @@ final class UserStudyChatViewModel {  // swiftlint:disable:this type_body_length
         }
 
         try? assistantMessagesByTask.append(response.id.uuidString, forKey: _currentTaskNumber)
-
-        processingState = .completed
+        
+        await updateProcessingState()
 
         return response
     }

@@ -57,11 +57,7 @@ struct UserStudyChatView: View {
                 .onAppear(perform: viewModel.startSurvey)
                 .onChange(of: viewModel.llmSession.context, initial: true) {
                     Task {
-                        if viewModel.isProcessing {
-                            await viewModel.updateProcessingState()
-                        }
                         _ = await viewModel.generateAssistantResponse()
-                        await viewModel.updateProcessingState()
                     }
                 }
         }
