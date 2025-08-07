@@ -34,20 +34,24 @@ struct MultipleResourcesChatView: View {
 
 
     @ViewBuilder private var chatView: some View {
-        ChatView(
-            viewModel.chatBinding,
-            disableInput: viewModel.isProcessing,
-            exportFormat: .text,
-            messagePendingAnimation: .manual(shouldDisplay: viewModel.showTypingIndicator)
-        )
-            .speak(viewModel.llmSession.context.chat, muted: !textToSpeech)
-            .speechToolbarButton(muted: !$textToSpeech)
-            .viewStateAlert(state: viewModel.llmSession.state)
-            .onChange(of: viewModel.llmSession.context, initial: true) {
-                Task {
-                    _ = await viewModel.generateAssistantResponse()
+        VStack {
+            MultipleResourcesChatViewProcessingView(viewModel: viewModel)
+            ChatView(
+                viewModel.chatBinding,
+                disableInput: viewModel.isProcessing,
+                exportFormat: .text,
+                messagePendingAnimation: .manual(shouldDisplay: viewModel.showTypingIndicator)
+            )
+                .speak(viewModel.llmSession.context.chat, muted: !textToSpeech)
+                .speechToolbarButton(muted: !$textToSpeech)
+                .viewStateAlert(state: viewModel.llmSession.state)
+                .onChange(of: viewModel.llmSession.context, initial: true) {
+                    Task {
+                        _ = await viewModel.generateAssistantResponse()
+                    }
                 }
-            }
+        }
+            .animation(.easeInOut(duration: 0.4), value: viewModel.isProcessing)
     }
 
     @MainActor @ToolbarContentBuilder private var toolbarContent: some ToolbarContent {

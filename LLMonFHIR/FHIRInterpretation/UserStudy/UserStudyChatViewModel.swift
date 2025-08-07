@@ -18,7 +18,7 @@ import SwiftUI
 /// LLM operations and persistence to the underlying interpreter.
 @MainActor
 @Observable
-final class UserStudyChatViewModel {  // swiftlint:disable:this type_body_length
+final class UserStudyChatViewModel: MultipleResourcesChatViewModel {  // swiftlint:disable:this type_body_length
 
     /// The current state of the survey navigation
     enum NavigationState: Equatable {
@@ -66,22 +66,6 @@ final class UserStudyChatViewModel {  // swiftlint:disable:this type_body_length
         survey.tasks.first { $0.id == _currentTaskNumber }
     }
 
-    /// Direct access to the current LLM session for observing state changes
-    var llmSession: LLMSession {
-        interpreter.llmSession
-    }
-
-    /// Indicates if the LLM is currently processing or generating a response
-    /// This property directly reflects the LLM session's state
-    var isProcessing: Bool {
-        llmSession.state.representation == .processing
-    }
-
-    /// Determines whether to display a typing indicator in the chat interface.
-    var showTypingIndicator: Bool {
-        processingState.isProcessing
-    }
-
     var shouldDisableChatInput: Bool {
         // Always disable during processing
         if isProcessing {
@@ -112,24 +96,6 @@ final class UserStudyChatViewModel {  // swiftlint:disable:this type_body_length
         return !isMinAssistantMessagesReached
     }
 
-    /// Provides a binding to the chat messages for use in SwiftUI views
-    ///
-    /// This binding allows the ChatView component to both display messages
-    /// and add new user messages to the conversation. It also adds survey
-    /// report data when the survey is completed.
-    var chatBinding: Binding<Chat> {
-        Binding(
-            get: { [weak self] in
-                self?.interpreter.llmSession.context.chat ?? []
-            },
-            set: { [weak self] newChat in
-                self?.interpreter.llmSession.context.chat = newChat
-            }
-        )
-    }
-
-    private(set) var processingState: ProcessingState = .processingSystemPrompts
-
     private var _navigationState: NavigationState = .introduction
     private var _studyReport: String?
     private var _isSurveyViewPresented = false
@@ -138,31 +104,13 @@ final class UserStudyChatViewModel {  // swiftlint:disable:this type_body_length
     private var _isTaskIntructionAlertPresented = false
     private var _currentTaskNumber: Int = 0
 
-    private var _functionCallCount = 0
-    private var _completedFunctionCalls = 0
-
     private let survey: Survey
-    private let interpreter: FHIRMultipleResourceInterpreter
     private let resourceSummary: FHIRResourceSummary
     private let studyStartTime = Date()
     private let studyID = UUID().uuidString
     private var taskStartTimes: [Int: Date] = [:]
     private var taskEndTimes: [Int: Date] = [:]
     private var assistantMessagesByTask = LimitedCollectionDictionary<Int, String>()
-
-    private var shouldGenerateResponse: Bool {
-        if llmSession.state == .generating || isProcessing {
-            return false
-        }
-
-        // Check if the last message is from a user (needs a response)
-        let lastMessageIsUser = interpreter.llmSession.context.last?.role == .user
-
-        // Check if there are no assistant messages yet (initial prompt needs a response)
-        let noAssistantMessages = !interpreter.llmSession.context.contains(where: { $0.role == .assistant() })
-
-        return (lastMessageIsUser || noAssistantMessages)
-    }
 
     private var isMaxAssistantMessagesReached: Bool {
         assistantMessagesByTask.isMaxReached(forKey: _currentTaskNumber)
@@ -189,9 +137,10 @@ final class UserStudyChatViewModel {  // swiftlint:disable:this type_body_length
         resourceSummary: FHIRResourceSummary
     ) {
         self.survey = survey
-        self.interpreter = interpreter
         self.resourceSummary = resourceSummary
 
+        super.init(interpreter: interpreter, navigationTitle: "")
+        
         configureMessageLimits()
     }
 
@@ -231,37 +180,10 @@ final class UserStudyChatViewModel {  // swiftlint:disable:this type_body_length
             }
             
             processingState = .error
-            
             return
         }
         
-        guard let lastMessage = llmSession.context.last else {
-            return
-        }
-
-        switch lastMessage.role {
-        case .system:
-            processingState = .processingSystemPrompts
-        case .assistant(let toolCalls):
-            if !toolCalls.isEmpty {
-                _functionCallCount += toolCalls.count
-                processingState = .processingFunctionCalls(
-                    currentCall: _completedFunctionCalls,
-                    totalCalls: _functionCallCount
-                )
-            } else {
-                processingState = .generatingResponse
-            }
-        case .tool:
-            _completedFunctionCalls += 1
-            _functionCallCount = max(_functionCallCount, _completedFunctionCalls)
-            processingState = .processingFunctionCalls(
-                currentCall: _completedFunctionCalls,
-                totalCalls: _functionCallCount
-            )
-        case .user:
-            break
-        }
+        processingState = await processingState.calculateNewProcessingState(basedOn: llmSession)
     }
 
     /// Generates an assistant response if appropriate for the current context
@@ -269,23 +191,12 @@ final class UserStudyChatViewModel {  // swiftlint:disable:this type_body_length
     /// This method checks if a response is needed and if so, delegates
     /// to the interpreter to generate the actual response.
     func generateAssistantResponse() async -> LLMContextEntity? {
-        guard shouldGenerateResponse else {
+        guard let response = await super.generateAssistantResponse(preProcessingStateUpdate: updateProcessingState) else {
             return nil
         }
-
-        _functionCallCount = 0
-        _completedFunctionCalls = 0
-
-        processingState = .processingSystemPrompts
-
-        guard let response = await interpreter.generateAssistantResponse() else {
-            return nil
-        }
-
+        
         try? assistantMessagesByTask.append(response.id.uuidString, forKey: _currentTaskNumber)
-
-        processingState = .completed
-
+        
         return response
     }
 

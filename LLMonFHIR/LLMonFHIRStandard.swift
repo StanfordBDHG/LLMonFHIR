@@ -42,6 +42,7 @@ actor LLMonFHIRStandard: Standard, HealthKitConstraint, EnvironmentAccessible {
     @MainActor var useHealthKitResources = true
     @MainActor private(set) var waitingState = FHIRResourceWaitingState()
     @FHIRProcessingActor private var waitTask: Task<Void, Error>?
+    private let logger = Logger(subsystem: "edu.stanford.bdhg.llmonfhir", category: "LLMonFHIRStandard")
     
     
     @MainActor
@@ -52,8 +53,6 @@ actor LLMonFHIRStandard: Standard, HealthKitConstraint, EnvironmentAccessible {
     }
     
     private func initialSetup() async {
-        let logger = Logger(subsystem: "edu.stanford.bdhg.llmonfhir", category: "LLMonFHIRStandard")
-        
         // Waiting until the HealthKit module loads all authorization requirements.
         // Issue tracked in https://github.com/StanfordSpezi/SpeziHealthKit/issues/57.
         let loadingStartDate = Date.now
@@ -112,7 +111,11 @@ actor LLMonFHIRStandard: Standard, HealthKitConstraint, EnvironmentAccessible {
             for newHealthKitSample in records {
                 sampleTaskGroup.addTask { [self] in
                     await triggerWaitingTask()
-                    await fhirStore.add(sample: newHealthKitSample, loadHealthKitAttachements: true)
+                    do {
+                        try await fhirStore.add(sample: newHealthKitSample, loadHealthKitAttachements: true)
+                    } catch {
+                        logger.error("Could not transform sample \(newHealthKitSample.id) to FHIR resource: \(error)")
+                    }
                 }
             }
         }
