@@ -14,21 +14,34 @@ struct MultipleResourcesChatViewProcessingView: View {
     
     var body: some View {
         if viewModel.isProcessing {
-            VStack(spacing: 8) {
-                ProgressView(value: viewModel.processingState.progress, total: 100)
-                    .progressViewStyle(.linear)
-                    .tint(.accentColor)
-                    .animation(.easeInOut(duration: 0.3), value: viewModel.processingState.progress)
-                
-                Text(viewModel.processingState.statusDescription)
-                    .font(.caption)
-                    .foregroundStyle(.secondary)
-                    .animation(.easeInOut(duration: 0.3), value: viewModel.processingState.statusDescription)
+            Group {
+                if #available(iOS 26.0, *) {
+                    content
+                        .padding(.top, 6)
+                        .glassEffect()
+                        .padding(.horizontal)
+                } else {
+                    content
+                        .background(.ultraThinMaterial)
+                }
             }
-                .padding(.horizontal)
-                .padding(.vertical, 8)
-                .background(.ultraThinMaterial)
                 .padding(.bottom, 8)
         }
+    }
+    
+    private var content: some View {
+        VStack(spacing: 8) {
+            ProgressView(value: viewModel.processingState.progress, total: 100)
+                .progressViewStyle(.linear)
+                .tint(.accentColor)
+                .animation(.easeInOut(duration: 0.3), value: viewModel.processingState.progress)
+            
+            Text(viewModel.processingState.statusDescription)
+                .font(.caption)
+                .foregroundStyle(.secondary)
+                .animation(.easeInOut(duration: 0.3), value: viewModel.processingState.statusDescription)
+        }
+            .padding(.horizontal)
+            .padding(.vertical, 4)
     }
 }

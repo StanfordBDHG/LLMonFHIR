@@ -45,8 +45,11 @@ struct EarliestHealthRecordsView: View {
 
 
     private var doneButton: some View {
-        Button("Done") {
+        Button {
             dismiss()
+        } label: {
+            Label("Dismiss", systemImage: "xmark")
+                .accessibilityLabel("Dismiss")
         }
     }
 }

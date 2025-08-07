@@ -33,8 +33,11 @@ struct TaskInstructionView: View {
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .confirmationAction) {
-                    Button("Done") {
+                    Button {
                         isPresented = false
+                    } label: {
+                        Label("Dismiss", systemImage: "xmark")
+                            .accessibilityLabel("Dismiss")
                     }
                 }
             }

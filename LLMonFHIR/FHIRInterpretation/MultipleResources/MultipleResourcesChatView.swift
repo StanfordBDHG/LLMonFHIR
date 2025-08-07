@@ -56,8 +56,11 @@ struct MultipleResourcesChatView: View {
 
     @MainActor @ToolbarContentBuilder private var toolbarContent: some ToolbarContent {
         ToolbarItem(placement: .cancellationAction) {
-            Button("Close") {
+            Button {
                 viewModel.dismiss(dismiss)
+            } label: {
+                Label("Dismiss", systemImage: "xmark")
+                    .accessibilityLabel("Dismiss")
             }
         }
         ToolbarItem(placement: .primaryAction) {

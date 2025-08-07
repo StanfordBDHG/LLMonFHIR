@@ -164,6 +164,14 @@ struct UserStudyWelcomeView: View {
     }
 
     private var startStudyButton: some View {
+        if #available(iOS 26.0, *) {
+            AnyView(erasing: _startStudyButton.buttonStyle(.glassProminent))
+        } else {
+            AnyView(erasing: _startStudyButton.buttonStyle(.borderedProminent))
+        }
+    }
+    
+    private var _startStudyButton: some View {
         Button {
             interpreter.startNewConversation()
             isPresentingStudy = true
@@ -172,19 +180,19 @@ struct UserStudyWelcomeView: View {
                 if standard.waitingState.isWaiting {
                     ProgressView()
                         .progressViewStyle(CircularProgressViewStyle(tint: .white))
+                        .controlSize(.regular)
                 }
-
                 Text(standard.waitingState.isWaiting ? "LOADING_HEALTH_RECORDS" : "START_SESSION")
             }
-            .font(.headline)
-            .fontWeight(.semibold)
-            .foregroundColor(.white)
-            .frame(maxWidth: .infinity)
-            .frame(height: 56)
-            .background(Color.accent.opacity(standard.waitingState.isWaiting ? 0.5 : 1))
-            .cornerRadius(16)
+                .font(.headline)
+                .fontWeight(.semibold)
+                .foregroundColor(.white)
+                .frame(maxWidth: .infinity)
         }
-        .disabled(standard.waitingState.isWaiting)
+            .controlSize(.extraLarge)
+            .buttonBorderShape(.capsule)
+            .disabled(standard.waitingState.isWaiting)
+            .animation(.default, value: standard.waitingState.isWaiting)
     }
 
     private var approvalBadge: some View {

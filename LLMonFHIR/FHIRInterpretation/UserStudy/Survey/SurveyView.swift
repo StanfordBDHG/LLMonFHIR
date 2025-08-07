@@ -97,8 +97,11 @@ struct SurveyView: View {
     }
 
     private var doneButton: some View {
-        Button("Done") {
+        Button {
             isPresented = false
+        } label: {
+            Label("Dismiss", systemImage: "xmark")
+                .accessibilityLabel("Dismiss")
         }
     }
 
