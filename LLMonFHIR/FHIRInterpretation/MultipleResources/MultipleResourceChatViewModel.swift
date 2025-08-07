@@ -99,7 +99,7 @@ class MultipleResourcesChatViewModel {
 
     /// Generates an assistant response  for the current context    
     func generateAssistantResponse() async -> LLMContextEntity? {
-        await processingState = processingState.calculateNewProcessingState(basedOn: llmSession)
+        processingState = await processingState.calculateNewProcessingState(basedOn: llmSession)
         
         guard shouldGenerateResponse else {
             return nil
@@ -111,7 +111,7 @@ class MultipleResourcesChatViewModel {
             return nil
         }
         
-        await processingState = processingState.calculateNewProcessingState(basedOn: llmSession)
+        processingState = await processingState.calculateNewProcessingState(basedOn: llmSession)
 
         return response
     }

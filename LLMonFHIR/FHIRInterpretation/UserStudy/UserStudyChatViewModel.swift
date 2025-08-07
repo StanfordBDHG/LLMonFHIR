@@ -197,7 +197,7 @@ final class UserStudyChatViewModel: MultipleResourcesChatViewModel {  // swiftli
             return
         }
         
-        await processingState = processingState.calculateNewProcessingState(basedOn: llmSession)
+        processingState = await processingState.calculateNewProcessingState(basedOn: llmSession)
     }
 
     /// Generates an assistant response if appropriate for the current context
