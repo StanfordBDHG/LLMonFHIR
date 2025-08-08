@@ -13,22 +13,25 @@ struct MultipleResourcesChatViewProcessingView: View {
     let viewModel: MultipleResourcesChatViewModel
     
     var body: some View {
-        if viewModel.isProcessing {
-            Group {
-                if #available(iOS 26.0, *) {
-                    content
-                        .padding(.top, 6)
-                    #if swift(>=6.2)
-                        .glassEffect()
-                    #endif
-                        .padding(.horizontal)
-                } else {
-                    content
-                        .background(.ultraThinMaterial)
+        Group {
+            if viewModel.isProcessing {
+                Group {
+                    if #available(iOS 26.0, *) {
+                        content
+                            .padding(.top, 6)
+                            #if swift(>=6.2)
+                            .glassEffect()
+                            #endif
+                            .padding(.horizontal)
+                    } else {
+                        content
+                            .background(.ultraThinMaterial)
+                    }
                 }
-            }
                 .padding(.bottom, 8)
+            }
         }
+            .animation(.interactiveSpring, value: viewModel.isProcessing)
     }
     
     private var content: some View {

@@ -55,7 +55,7 @@ struct MultipleResourcesChatView: View {
     }
 
     @MainActor @ToolbarContentBuilder private var toolbarContent: some ToolbarContent {
-        ToolbarItem(placement: .cancellationAction) {
+        ToolbarItem {
             Button {
                 viewModel.dismiss(dismiss)
             } label: {

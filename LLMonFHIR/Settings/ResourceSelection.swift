@@ -7,7 +7,7 @@
 //
 
 import HealthKit
-import ModelsR4
+@preconcurrency import ModelsR4
 import SpeziFHIR
 import SpeziFHIRMockPatients
 import SwiftUI

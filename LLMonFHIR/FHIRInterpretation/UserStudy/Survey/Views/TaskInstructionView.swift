@@ -32,7 +32,7 @@ struct TaskInstructionView: View {
             .navigationTitle("Task \(task.id)")
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
-                ToolbarItem(placement: .confirmationAction) {
+                ToolbarItem {
                     Button {
                         isPresented = false
                     } label: {
@@ -43,7 +43,6 @@ struct TaskInstructionView: View {
             }
         }
         .presentationDetents(sheetHeight == .zero ? [.medium] : [.height(sheetHeight)])
-        .interactiveDismissDisabled()
     }
 }
 

@@ -39,7 +39,7 @@ final class FHIRResourceInterpreter: Sendable {
     ///   - forceReload: A boolean value that indicates whether to reload and reprocess the resource.
     /// - Returns: An asynchronous `String` representing the interpretation of the resource.
     @discardableResult
-    func interpret(resource: FHIRResource, forceReload: Bool = false) async throws -> String {
+    func interpret(resource: SendableFHIRResource, forceReload: Bool = false) async throws -> String {
         try await resourceProcessor.process(resource: resource, forceReload: forceReload)
     }
     

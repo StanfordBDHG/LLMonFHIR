@@ -6,9 +6,18 @@
 // SPDX-License-Identifier: MIT
 //
 
-import ModelsR4
+@preconcurrency import ModelsR4
 import SpeziFHIR
 import SwiftUI
+
+
+struct SendableFHIRResource: @unchecked Sendable {
+    let resource: FHIRResource
+    
+    init(resource: FHIRResource) throws {
+        self.resource = try resource.copy()
+    }
+}
 
 
 extension FHIRStore {
@@ -134,6 +143,18 @@ extension FHIRStore {
                     .min(by: { ($0.date ?? .distantFuture) < ($1.date ?? .distantFuture) })?
                     .date
             }
+    }
+    
+    func llmRelevantResources(filteredBy filter: String) async -> [SendableFHIRResource] {
+        await MainActor.run {
+            llmRelevantResources
+                .filter {
+                    $0.functionCallIdentifier.contains(filter)
+                }
+                .compactMap {
+                    try? SendableFHIRResource(resource: $0)
+                }
+        }
     }
 }
 

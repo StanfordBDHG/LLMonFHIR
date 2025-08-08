@@ -50,7 +50,7 @@ struct SettingsView: View {
                     }
                 }
                 .toolbar {
-                    ToolbarItem(placement: .confirmationAction) {
+                    ToolbarItem {
                         Button {
                             dismiss()
                         } label: {

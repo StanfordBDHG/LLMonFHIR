@@ -23,7 +23,7 @@ enum SurveyError: LocalizedError {
     /// Indicates an attempt to access a task that doesn't exist
     case taskNotFound
 
-    var errorDescription: String? {
+    nonisolated var errorDescription: String? {
         switch self {
         case .invalidRange(let range):
             return "Value must be between \(range.lowerBound) and \(range.upperBound)"

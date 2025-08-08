@@ -85,7 +85,7 @@ struct LimitedCollection<Element> {
     }
 }
 
-extension LimitedCollection: Collection {
+extension LimitedCollection: @MainActor Collection {
     typealias Index = Int
 
     var startIndex: Int {

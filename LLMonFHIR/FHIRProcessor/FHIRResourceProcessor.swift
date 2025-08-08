@@ -55,14 +55,14 @@ final class FHIRResourceProcessor<Content: Codable & LosslessStringConvertible>:
     
     
     @discardableResult
-    func process(resource: FHIRResource, forceReload: Bool = false) async throws -> Content {
-        if let result = results[resource.id], !result.description.isEmpty, !forceReload {
+    func process(resource: SendableFHIRResource, forceReload: Bool = false) async throws -> Content {
+        if let result = results[resource.resource.id], !result.description.isEmpty, !forceReload {
             return result
         }
         
         let chatStreamResult: String = try await llmRunner.oneShot(
             with: llmSchema,
-            context: .init(systemMessages: [prompt.prompt(withFHIRResource: resource.jsonDescription)])
+            context: .init(systemMessages: [prompt.prompt(withFHIRResource: resource.resource.jsonDescription)])
         )
         
         guard let content = Content(chatStreamResult) else {
@@ -70,7 +70,7 @@ final class FHIRResourceProcessor<Content: Codable & LosslessStringConvertible>:
         }
         
         lock.withLock {
-            results[resource.id] = content
+            results[resource.resource.id] = content
         }
         
         return content
