@@ -109,7 +109,7 @@ struct InspectResourceView: View {
             
         Task {
             do {
-                try await fhirResourceSummary.summarize(resource: resource, forceReload: forceReload)
+                try await fhirResourceSummary.summarize(resource: SendableFHIRResource(resource: resource), forceReload: forceReload)
                 loadingSummary = .idle
             } catch let error as any LLMError {
                 loadingSummary = .error(error)
@@ -124,7 +124,7 @@ struct InspectResourceView: View {
         
         Task {
             do {
-                try await fhirResourceInterpreter.interpret(resource: resource, forceReload: forceReload)
+                try await fhirResourceInterpreter.interpret(resource: SendableFHIRResource(resource: resource), forceReload: forceReload)
                 interpreting = .idle
             } catch let error as any LLMError {
                 interpreting = .error(error)

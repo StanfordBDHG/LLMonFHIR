@@ -76,8 +76,7 @@ final class FHIRResourceSummary: Sendable {
     ///   - forceReload: A boolean value that indicates whether to reload and reprocess the resource.
     /// - Returns: An asynchronous `String` representing the summarization of the resource.
     @discardableResult
-    func summarize(resource: FHIRResource, forceReload: Bool = false) async throws -> Summary {
-        let resource = try resource.copy()
+    func summarize(resource: SendableFHIRResource, forceReload: Bool = false) async throws -> Summary {
         try? resource.stringifyAttachements()
 
         var retryCount = 0

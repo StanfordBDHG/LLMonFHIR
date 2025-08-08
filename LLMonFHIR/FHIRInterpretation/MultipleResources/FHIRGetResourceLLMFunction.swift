@@ -6,12 +6,14 @@
 // SPDX-License-Identifier: MIT
 //
 
+@preconcurrency import ModelsR4
 import os
 import SpeziFHIR
 import SpeziLLMOpenAI
 
 
-struct FHIRGetResourceLLMFunction: LLMFunction {
+// @unchecked Sendable can be removed once https://github.com/StanfordSpezi/SpeziLLM/pull/118 is merged.
+struct FHIRGetResourceLLMFunction: LLMFunction, @unchecked Sendable {
     static let logger = Logger(subsystem: "edu.stanford.spezi.fhir", category: "SpeziFHIRLLM")
     
     static let name = "get_resources"
@@ -40,7 +42,7 @@ struct FHIRGetResourceLLMFunction: LLMFunction {
     }
     
     
-    private static func filterFittingResources(_ fittingResources: [FHIRResource]) -> [FHIRResource] {
+    private static func filterFittingResources(_ fittingResources: [SendableFHIRResource]) -> [SendableFHIRResource] {
         Self.logger.debug("Overall fitting Resources: \(fittingResources.count)")
         
         var fittingResources = fittingResources
@@ -82,9 +84,7 @@ struct FHIRGetResourceLLMFunction: LLMFunction {
     }
 
     private func processResourceCategory(_ resourceCategory: String) async throws -> [String] {
-        var fittingResources = await fhirStore.llmRelevantResources.filter {
-            $0.functionCallIdentifier.contains(resourceCategory)
-        }
+        var fittingResources = await fhirStore.llmRelevantResources(filteredBy: resourceCategory)
 
         guard !fittingResources.isEmpty else {
             return [
@@ -99,7 +99,7 @@ struct FHIRGetResourceLLMFunction: LLMFunction {
         return try await summarizeFHIRResources(fittingResources, resourceCategory: resourceCategory)
     }
 
-    private func summarizeFHIRResources(_ resources: [FHIRResource], resourceCategory: String) async throws -> [String] {
+    private func summarizeFHIRResources(_ resources: [SendableFHIRResource], resourceCategory: String) async throws -> [String] {
         var summaries: [String] = []
 
         try await withThrowingTaskGroup(of: String.self) { group in
@@ -117,7 +117,7 @@ struct FHIRGetResourceLLMFunction: LLMFunction {
         return summaries
     }
 
-    private func summarizeFHIRResource(_ resource: FHIRResource, resourceCategory: String) async throws -> String {
+    private func summarizeFHIRResource(_ resource: SendableFHIRResource, resourceCategory: String) async throws -> String {
         let summary = try await resourceSummary.summarize(resource: resource)
         Self.logger.debug("Summary of appended FHIR resource category \(resourceCategory): \(summary.description)")
         return String(localized: "This is the summary of the requested \(resourceCategory):\n\n\(summary.description)")

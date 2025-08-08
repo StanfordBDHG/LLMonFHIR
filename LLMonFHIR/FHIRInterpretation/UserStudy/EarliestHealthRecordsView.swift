@@ -39,14 +39,17 @@ struct EarliestHealthRecordsView: View {
                 }
             }
             .navigationTitle("HEALTH_RECORDS_SINCE")
-            .navigationBarItems(trailing: doneButton)
+            .navigationBarItems(trailing: dismissButton)
         }
     }
 
 
-    private var doneButton: some View {
-        Button("Done") {
+    private var dismissButton: some View {
+        Button {
             dismiss()
+        } label: {
+            Label("Dismiss", systemImage: "xmark")
+                .accessibilityLabel("Dismiss")
         }
     }
 }

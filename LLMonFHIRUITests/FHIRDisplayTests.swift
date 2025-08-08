@@ -9,8 +9,9 @@
 import XCTest
 
 
+@MainActor
 final class FHIRDisplayTests: XCTestCase {
-    override func setUpWithError() throws {
+    override func setUp() async throws {
         try super.setUpWithError()
 
         continueAfterFailure = false
@@ -72,7 +73,7 @@ final class FHIRDisplayTests: XCTestCase {
             
             app.buttons["Reset Chat"].testExistanceAndTap()
             
-            XCTAssertTrue(app.buttons["Close"].waitForExistence(timeout: 300))
+            XCTAssertTrue(app.buttons["Dismiss"].waitForExistence(timeout: 300))
             
             for question in questions {
                 app.textViews["Message"].testExistanceAndTap()
@@ -81,10 +82,10 @@ final class FHIRDisplayTests: XCTestCase {
                 
                 try await Task.sleep(for: .seconds(2))
                 
-                XCTAssertTrue(app.buttons["Close"].waitForExistence(timeout: 300))
+                XCTAssertTrue(app.buttons["Dismiss"].waitForExistence(timeout: 300))
             }
             
-            app.buttons["Close"].testExistanceAndTap()
+            app.buttons["Dismiss"].testExistanceAndTap()
             
             try await Task.sleep(for: .seconds(2))
         }

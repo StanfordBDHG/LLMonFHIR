@@ -66,10 +66,11 @@ struct SurveyView: View {
             .navigationTitle("Task \(task.id)")
             .navigationBarTitleDisplayMode(.automatic)
             .toolbar {
-                ToolbarItem(placement: .confirmationAction) {
-                    doneButton
+                ToolbarItem {
+                    dismissButton
                 }
             }
+            .interactiveDismissDisabled()
         }
     }
     
@@ -96,9 +97,12 @@ struct SurveyView: View {
             .listRowBackground(Color.clear)
     }
 
-    private var doneButton: some View {
-        Button("Done") {
+    private var dismissButton: some View {
+        Button {
             isPresented = false
+        } label: {
+            Label("Dismiss", systemImage: "xmark")
+                .accessibilityLabel("Dismiss")
         }
     }
 

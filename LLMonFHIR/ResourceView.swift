@@ -24,29 +24,51 @@ struct ResourceView: View {
                 FHIRResourcesInstructionsView()
             }
         ) {
-            Button(
-                action: {
-                    showMultipleResourcesChat.toggle()
-                },
-                label: {
-                    HStack(spacing: 8) {
-                        if standard.waitingState.isWaiting {
-                            ProgressView()
-                                .progressViewStyle(.circular)
-                        }
-                        Text(standard.waitingState.isWaiting ? "Loading Resources" : "Chat with all Resources")
-                    }
-                        .frame(maxWidth: .infinity, minHeight: 38)
-                }
-            )
-                .buttonStyle(.borderedProminent)
-                .padding(-20)
-                .disabled(standard.waitingState.isWaiting)
+            chatWithAllResourcesButton
+                .padding(-18)
         }
-        .task {
-            if FeatureFlags.testMode {
-                await fhirStore.loadTestingResources()
+            .task {
+                if FeatureFlags.testMode {
+                    await fhirStore.loadTestingResources()
+                }
+            }
+    }
+    
+    private var chatWithAllResourcesButton: some View {
+        Group {
+            if #available(iOS 26.0, *) {
+                _chatWithAllResourcesButton
+                #if swift(>=6.2)
+                    .buttonStyle(.glassProminent)
+                #endif
+            } else {
+                _chatWithAllResourcesButton
+                    .buttonStyle(.borderedProminent)
+                    .padding(-8)
             }
         }
+    }
+    
+    private var _chatWithAllResourcesButton: some View {
+        Button {
+            showMultipleResourcesChat.toggle()
+        } label: {
+            HStack(spacing: 8) {
+                if standard.waitingState.isWaiting {
+                    ProgressView()
+                        .progressViewStyle(CircularProgressViewStyle(tint: .white))
+                        .controlSize(.regular)
+                }
+                Text(standard.waitingState.isWaiting ? "Loading Resources" : "Chat with all Resources")
+            }
+                .font(.headline)
+                .fontWeight(.semibold)
+                .foregroundColor(.white)
+                .frame(maxWidth: .infinity)
+        }
+            .controlSize(.extraLarge)
+            .buttonBorderShape(.capsule)
+            .disabled(standard.waitingState.isWaiting)
+            .animation(.default, value: standard.waitingState.isWaiting)
     }
 }

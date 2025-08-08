@@ -50,9 +50,12 @@ struct SettingsView: View {
                     }
                 }
                 .toolbar {
-                    ToolbarItem(placement: .confirmationAction) {
-                        Button("SETTINGS_DONE") {
+                    ToolbarItem {
+                        Button {
                             dismiss()
+                        } label: {
+                            Label("Dismiss", systemImage: "xmark")
+                                .accessibilityLabel("Dismiss")
                         }
                     }
                 }

@@ -9,8 +9,9 @@
 import Foundation
 
 
+// AnyHashable is Sendable in Swift 6.2, unchecked can be removed at that point.
 /// Errors that can occur when using a LimitedCollectionDictionary
-enum LimitedCollectionDictionaryError: Error {
+enum LimitedCollectionDictionaryError: @unchecked Sendable, Error {
     case keyNotConfigured(key: AnyHashable)
     case capacityExceeded(key: AnyHashable, maximum: Int)
 }

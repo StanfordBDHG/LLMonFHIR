@@ -91,16 +91,28 @@ struct UserStudyChatToolbar: ToolbarContent {
     private var continueButton: some ToolbarContent {
         ToolbarItem(placement: .primaryAction) {
             if viewModel.navigationState != .completed {
-                Button {
-                    viewModel.setSurveyViewPresented(true)
-                } label: {
-                    Image(systemName: "arrow.forward.circle")
-                        .accessibilityLabel("Next Task")
-                        .modifier(PulsatingEffect(isEnabled: !isInputDisabled))
+                if #available(iOS 26.0, *) {
+                    _continueButton
+                    #if swift(>=6.2)
+                        .if(!isInputDisabled) { $0.buttonStyle(.glassProminent) }
+                        .animation(.interactiveSpring, value: isInputDisabled)
+                    #endif
+                } else {
+                    _continueButton
                 }
-                .disabled(isInputDisabled)
             }
         }
+    }
+    
+    private var _continueButton: some View {
+        Button {
+            viewModel.setSurveyViewPresented(true)
+        } label: {
+            Label("Next Task", systemImage: "arrow.forward.circle")
+                .accessibilityLabel("Next Task")
+                .modifier(PulsatingEffect(isEnabled: !isInputDisabled))
+        }
+            .disabled(isInputDisabled)
     }
 
     private var shareButton: some ToolbarContent {

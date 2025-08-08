@@ -65,7 +65,7 @@ struct FHIRResourceSummaryView: View {
             Task {
                 viewState = .processing
                 do {
-                    try await fhirResourceSummary.summarize(resource: resource)
+                    try await fhirResourceSummary.summarize(resource: SendableFHIRResource(resource: resource))
                     viewState = .idle
                 } catch {
                     viewState = .error(

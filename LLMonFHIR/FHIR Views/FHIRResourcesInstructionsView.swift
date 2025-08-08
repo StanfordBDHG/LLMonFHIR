@@ -31,20 +31,17 @@ struct FHIRResourcesInstructionsView: View {
             VStack(alignment: .center) {
                 HStack {
                     Spacer()
-                    Button(
-                        action: {
-                            withAnimation {
-                                onboardingInstructions = false
-                            }
-                        },
-                        label: {
-                            Image(systemName: "xmark")
-                                .accessibilityLabel(Text("DISMISS_ONBOARDING_HINT"))
-                                .foregroundColor(.secondary)
-                        }
-                    )
+                    if #available(iOS 26.0, *) {
+                        dismissButton
+                        #if swift(>=6.2)
+                            .buttonStyle(.glass)
+                        #endif
+                    } else {
+                        dismissButton
+                    }
                 }
                     .padding(.horizontal, -8)
+                    .padding(.bottom, -32)
                 Image(systemName: "hand.wave.fill")
                     .accessibilityHidden(true)
                     .font(.system(size: 75))
@@ -57,5 +54,18 @@ struct FHIRResourcesInstructionsView: View {
         } else {
             EmptyView()
         }
+    }
+    
+    private var dismissButton: some View {
+        Button {
+            withAnimation {
+                onboardingInstructions = false
+            }
+        } label: {
+            Image(systemName: "xmark")
+                .accessibilityLabel("Dismiss onboarding hint")
+        }
+            .buttonBorderShape(.circle)
+            .foregroundColor(.secondary)
     }
 }
