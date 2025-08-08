@@ -13,7 +13,7 @@ enum FHIRResourceProcessorError: LocalizedError {
     case notParsableAsAString
     
     
-    nonisolated var errorDescription: String? {
+    var errorDescription: String? {
         switch self {
         case .notParsableAsAString:
             String(
