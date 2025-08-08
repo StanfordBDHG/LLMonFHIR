@@ -53,13 +53,4 @@ struct SendableFHIRResource: @unchecked Sendable {
             try _resource.stringifyAttachements()
         }
     }
-    
-    /// Computationally very expensive primitive sendable mechanism for `FHIRResource`s, providing a copy of the resource at each request of the `resource` property.
-    ///
-    /// - Warning: The creation of a copy is computationally very expensive, only use `SendableFHIRResource` when needing to pass a `FHIRResource` across concurrency boundaries.
-    func resource() throws -> FHIRResource {
-        try readWriteLock.withReadLock {
-            try _resource.copy()
-        }
-    }
 }

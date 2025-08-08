@@ -24,12 +24,11 @@ final class FHIRResourceProcessor<Content: Codable & LosslessStringConvertible>:
     private let llmRunner: LLMRunner
     private let storageKey: String
     private let prompt: FHIRPrompt
-    private let lock = RWLock()
     
     private let resultsLock = RWLock()
     private(set) var results: Results = [:] {
         didSet {
-            lock.withReadLock {
+            resultsLock.withReadLock {
                 try? localStorage.store(results, for: .init(storageKey))
             }
         }
@@ -84,7 +83,7 @@ final class FHIRResourceProcessor<Content: Codable & LosslessStringConvertible>:
             throw FHIRResourceProcessorError.notParsableAsAString
         }
         
-        lock.withWriteLock {
+        resultsLock.withWriteLock {
             results[resource.id] = content
         }
         
