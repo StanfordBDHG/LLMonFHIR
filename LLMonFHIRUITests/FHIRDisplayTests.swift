@@ -9,8 +9,9 @@
 import XCTest
 
 
+@MainActor
 final class FHIRDisplayTests: XCTestCase {
-    override func setUpWithError() throws {
+    override func setUp() async throws {
         try super.setUpWithError()
 
         continueAfterFailure = false

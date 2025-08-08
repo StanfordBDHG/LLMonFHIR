@@ -11,8 +11,9 @@ import XCTestExtensions
 import XCTHealthKit
 
 
+@MainActor
 class OnboardingTests: XCTestCase {
-    override func setUpWithError() throws {
+    override func setUp() async throws {
         try super.setUpWithError()
         
         continueAfterFailure = false

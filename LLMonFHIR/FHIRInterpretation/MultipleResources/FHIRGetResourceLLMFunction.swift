@@ -12,6 +12,7 @@ import SpeziFHIR
 import SpeziLLMOpenAI
 
 
+// @unchecked Sendable can be removed once https://github.com/StanfordSpezi/SpeziLLM/pull/118 is merged.
 struct FHIRGetResourceLLMFunction: LLMFunction, @unchecked Sendable {
     static let logger = Logger(subsystem: "edu.stanford.spezi.fhir", category: "SpeziFHIRLLM")
     
@@ -47,10 +48,10 @@ struct FHIRGetResourceLLMFunction: LLMFunction, @unchecked Sendable {
         var fittingResources = fittingResources
         
         if fittingResources.count > 64 {
-            fittingResources = fittingResources.lazy.sorted(by: { $0.resource.date ?? .distantPast < $1.resource.date ?? .distantPast }).suffix(64)
+            fittingResources = fittingResources.lazy.sorted(by: { $0.date ?? .distantPast < $1.date ?? .distantPast }).suffix(64)
             Self.logger.debug(
                 """
-                Reduced to the following 64 resources: \(fittingResources.map { $0.resource.functionCallIdentifier }.joined(separator: ","))
+                Reduced to the following 64 resources: \(fittingResources.map { $0.functionCallIdentifier }.joined(separator: ","))
                 """
             )
         }

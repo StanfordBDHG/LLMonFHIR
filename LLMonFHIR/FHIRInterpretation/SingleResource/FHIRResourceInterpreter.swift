@@ -55,7 +55,7 @@ final class FHIRResourceInterpreter: Sendable {
     ///
     /// - Parameters:
     ///    - schema: The to-be-used `LLMSchema`.
-    func changeLLMSchema<Schema: LLMSchema>(to schema: Schema) {
+    func changeLLMSchema<Schema: LLMSchema & Sendable>(to schema: Schema) {
         self.resourceProcessor.llmSchema = schema
     }
 }
