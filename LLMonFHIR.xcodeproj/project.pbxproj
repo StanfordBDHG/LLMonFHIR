@@ -21,6 +21,7 @@
 		44E18E8E2CEBEC9500829A26 /* SpeziLLMLocalDownload in Frameworks */ = {isa = PBXBuildFile; productRef = 44E18E8D2CEBEC9500829A26 /* SpeziLLMLocalDownload */; };
 		44E18E902CEBEC9500829A26 /* SpeziLLMOpenAI in Frameworks */ = {isa = PBXBuildFile; productRef = 44E18E8F2CEBEC9500829A26 /* SpeziLLMOpenAI */; };
 		44E18E932CEBF29200829A26 /* SpeziLocalStorage in Frameworks */ = {isa = PBXBuildFile; productRef = 44E18E922CEBF29200829A26 /* SpeziLocalStorage */; };
+		65D074CB2E535E5400821C04 /* SpeziViews in Frameworks */ = {isa = PBXBuildFile; productRef = 65D074CA2E535E5400821C04 /* SpeziViews */; };
 		9710D3562B84151F00E0A20F /* SpeziChat in Frameworks */ = {isa = PBXBuildFile; productRef = 9710D3552B84151F00E0A20F /* SpeziChat */; };
 		9733FC572B60E5FB0024F12C /* SpeziFHIR in Frameworks */ = {isa = PBXBuildFile; productRef = 9733FC562B60E5FB0024F12C /* SpeziFHIR */; };
 		9733FC592B60E5FB0024F12C /* SpeziFHIRHealthKit in Frameworks */ = {isa = PBXBuildFile; productRef = 9733FC582B60E5FB0024F12C /* SpeziFHIRHealthKit */; };
@@ -109,6 +110,7 @@
 				97EAB5E42B7A010A00A0B036 /* SpeziFHIRMockPatients in Frameworks */,
 				44E18E902CEBEC9500829A26 /* SpeziLLMOpenAI in Frameworks */,
 				9733FC5D2B60E5FB0024F12C /* SpeziFHIRMockPatients in Frameworks */,
+				65D074CB2E535E5400821C04 /* SpeziViews in Frameworks */,
 				C0FA072A2D39357B002485FF /* SpeziFHIRMockPatients in Frameworks */,
 				97EAB5DE2B7A010A00A0B036 /* SpeziFHIR in Frameworks */,
 				2FE5DC8129EDD91D004B9AB4 /* SpeziOnboarding in Frameworks */,
@@ -217,6 +219,7 @@
 				C0FA07272D39357B002485FF /* SpeziFHIRHealthKit */,
 				C0FA07292D39357B002485FF /* SpeziFHIRMockPatients */,
 				C01EADB62D686A3000B559E9 /* SpeziAccessGuard */,
+				65D074CA2E535E5400821C04 /* SpeziViews */,
 			);
 			productName = LLMonFHIR;
 			productReference = 653A254D283387FE005D4D48 /* LLMonFHIR.app */;
@@ -319,6 +322,7 @@
 				C0FA07242D39357B002485FF /* XCRemoteSwiftPackageReference "SpeziFHIR" */,
 				C01EADB52D686A3000B559E9 /* XCRemoteSwiftPackageReference "SpeziAccessGuard" */,
 				65A965162D7D21C400F42471 /* XCRemoteSwiftPackageReference "SwiftLint" */,
+				65D074C92E535E5400821C04 /* XCRemoteSwiftPackageReference "SpeziViews" */,
 			);
 			productRefGroup = 653A254E283387FE005D4D48 /* Products */;
 			projectDirPath = "";
@@ -880,7 +884,7 @@
 /* Begin XCRemoteSwiftPackageReference section */
 		2F49B7742980407B00BCB272 /* XCRemoteSwiftPackageReference "Spezi" */ = {
 			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/StanfordSpezi/Spezi";
+			repositoryURL = "https://github.com/StanfordSpezi/Spezi.git";
 			requirement = {
 				kind = upToNextMajorVersion;
 				minimumVersion = 1.9.1;
@@ -888,7 +892,7 @@
 		};
 		2FD8E8282A1AADDA00357F4E /* XCRemoteSwiftPackageReference "FHIRModels" */ = {
 			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/apple/FHIRModels";
+			repositoryURL = "https://github.com/apple/FHIRModels.git";
 			requirement = {
 				kind = upToNextMajorVersion;
 				minimumVersion = 0.7.0;
@@ -936,7 +940,7 @@
 		};
 		44E18E912CEBF26800829A26 /* XCRemoteSwiftPackageReference "SpeziStorage" */ = {
 			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/StanfordSpezi/SpeziStorage";
+			repositoryURL = "https://github.com/StanfordSpezi/SpeziStorage.git";
 			requirement = {
 				kind = upToNextMajorVersion;
 				minimumVersion = 2.1.1;
@@ -944,7 +948,7 @@
 		};
 		44E18EE82CED09C800829A26 /* XCRemoteSwiftPackageReference "SpeziChat" */ = {
 			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/StanfordSpezi/SpeziChat";
+			repositoryURL = "https://github.com/StanfordSpezi/SpeziChat.git";
 			requirement = {
 				kind = upToNextMinorVersion;
 				minimumVersion = 0.2.4;
@@ -952,7 +956,7 @@
 		};
 		44E18EE92CED09DA00829A26 /* XCRemoteSwiftPackageReference "SpeziSpeech" */ = {
 			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/StanfordSpezi/SpeziSpeech";
+			repositoryURL = "https://github.com/StanfordSpezi/SpeziSpeech.git";
 			requirement = {
 				kind = upToNextMajorVersion;
 				minimumVersion = 1.1.2;
@@ -960,15 +964,23 @@
 		};
 		65A965162D7D21C400F42471 /* XCRemoteSwiftPackageReference "SwiftLint" */ = {
 			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/realm/SwiftLint";
+			repositoryURL = "https://github.com/realm/SwiftLint.git";
 			requirement = {
 				kind = upToNextMajorVersion;
 				minimumVersion = 0.59.1;
 			};
 		};
+		65D074C92E535E5400821C04 /* XCRemoteSwiftPackageReference "SpeziViews" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/StanfordSpezi/SpeziViews.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.12.1;
+			};
+		};
 		C01EADB52D686A3000B559E9 /* XCRemoteSwiftPackageReference "SpeziAccessGuard" */ = {
 			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/StanfordSpezi/SpeziAccessGuard";
+			repositoryURL = "https://github.com/StanfordSpezi/SpeziAccessGuard.git";
 			requirement = {
 				kind = upToNextMinorVersion;
 				minimumVersion = 0.4.1;
@@ -976,7 +988,7 @@
 		};
 		C0FA07222D3932FB002485FF /* XCRemoteSwiftPackageReference "SpeziLLM" */ = {
 			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/StanfordSpezi/SpeziLLM";
+			repositoryURL = "https://github.com/StanfordSpezi/SpeziLLM.git";
 			requirement = {
 				kind = upToNextMinorVersion;
 				minimumVersion = 0.11.0;
@@ -984,7 +996,7 @@
 		};
 		C0FA07242D39357B002485FF /* XCRemoteSwiftPackageReference "SpeziFHIR" */ = {
 			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/StanfordSpezi/SpeziFHIR";
+			repositoryURL = "https://github.com/StanfordSpezi/SpeziFHIR.git";
 			requirement = {
 				kind = upToNextMinorVersion;
 				minimumVersion = 0.8.0;
@@ -1062,6 +1074,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 65A965162D7D21C400F42471 /* XCRemoteSwiftPackageReference "SwiftLint" */;
 			productName = "plugin:SwiftLintBuildToolPlugin";
+		};
+		65D074CA2E535E5400821C04 /* SpeziViews */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 65D074C92E535E5400821C04 /* XCRemoteSwiftPackageReference "SpeziViews" */;
+			productName = SpeziViews;
 		};
 		9710D3552B84151F00E0A20F /* SpeziChat */ = {
 			isa = XCSwiftPackageProductDependency;
