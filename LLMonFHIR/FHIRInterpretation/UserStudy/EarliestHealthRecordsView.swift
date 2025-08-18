@@ -7,12 +7,11 @@
 //
 
 import Foundation
+import SpeziViews
 import SwiftUI
 
 
 struct EarliestHealthRecordsView: View {
-    @Environment(\.dismiss) private var dismiss
-
     let dataSource: [String: Date]
     let dateFormatter: DateFormatter
 
@@ -39,17 +38,11 @@ struct EarliestHealthRecordsView: View {
                 }
             }
             .navigationTitle("HEALTH_RECORDS_SINCE")
-            .navigationBarItems(trailing: dismissButton)
-        }
-    }
-
-
-    private var dismissButton: some View {
-        Button {
-            dismiss()
-        } label: {
-            Label("Dismiss", systemImage: "xmark")
-                .accessibilityLabel("Dismiss")
+            .toolbar {
+                ToolbarItem {
+                    DismissButton()
+                }
+            }
         }
     }
 }
