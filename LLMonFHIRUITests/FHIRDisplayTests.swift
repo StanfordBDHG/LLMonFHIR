@@ -10,7 +10,7 @@ import XCTest
 
 
 @MainActor
-final class FHIRDisplayTests: XCTestCase {
+final class FHIRDisplayTests: XCTestCase, Sendable {
     override func setUp() async throws {
         try await super.setUp()
 

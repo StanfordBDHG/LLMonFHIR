@@ -12,7 +12,7 @@ import XCTHealthKit
 
 
 @MainActor
-class OnboardingTests: XCTestCase {
+class OnboardingTests: XCTestCase, Sendable {
     override func setUp() async throws {
         try await super.setUp()
         
