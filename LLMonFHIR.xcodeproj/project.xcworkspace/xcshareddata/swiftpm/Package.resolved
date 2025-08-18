@@ -51,8 +51,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/johnmai-dev/Jinja",
       "state" : {
-        "revision" : "e5fc2c9e04c4f6807e524292763e43be8c35a84c",
-        "version" : "1.2.2"
+        "revision" : "bb238dd96fbe4c18014f3107c00edd6edb15428e",
+        "version" : "1.2.4"
       }
     },
     {
@@ -132,17 +132,17 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/StanfordSpezi/SpeziFHIR",
       "state" : {
-        "revision" : "803463e7551e9a9386fcdb821da7f895ee8fdf70",
-        "version" : "0.8.0"
+        "revision" : "2b78bdf88d32a7fb00a22a68923469d9cc8974fd",
+        "version" : "0.8.1"
       }
     },
     {
       "identity" : "spezifoundation",
       "kind" : "remoteSourceControl",
-      "location" : "https://github.com/StanfordSpezi/SpeziFoundation",
+      "location" : "https://github.com/StanfordSpezi/SpeziFoundation.git",
       "state" : {
-        "revision" : "759e28cd36338d83900eef3a0839fd9edecf616d",
-        "version" : "2.2.0"
+        "revision" : "89f3334e685ddad1bbf2e8b33fa0820620aec6c1",
+        "version" : "2.2.1"
       }
     },
     {
@@ -195,8 +195,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/StanfordSpezi/SpeziViews",
       "state" : {
-        "revision" : "dc9403578fea702525b462448a00cd917634a8a1",
-        "version" : "1.12.0"
+        "revision" : "9a7cd323ae6023a57bdf57af644538e723902f67",
+        "version" : "1.12.1"
       }
     },
     {
@@ -348,8 +348,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/StanfordBDHG/XCTestExtensions.git",
       "state" : {
-        "revision" : "3b44aad358897cf85139b46f32902cd60d9e5cb4",
-        "version" : "1.2.1"
+        "revision" : "5f4b9670acfac68ed55a2d6462d716a2bcdc2261",
+        "version" : "1.2.2"
       }
     },
     {

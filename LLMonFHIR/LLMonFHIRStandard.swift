@@ -36,7 +36,7 @@ actor LLMonFHIRStandard: Standard, HealthKitConstraint, EnvironmentAccessible {
     
     @Dependency(FHIRStore.self) private var fhirStore
     @Dependency(HealthKit.self) private var healthKit
-    @Dependency(FHIRInterpretationModule.self) private var fhirInterpretationModule
+    @MainActor @Dependency(FHIRInterpretationModule.self) private var fhirInterpretationModule
     
     @AppStorage(StorageKeys.resourceLimit) private var resourceLimit = StorageKeys.currentResourceCountLimit
     @MainActor var useHealthKitResources = true
@@ -131,9 +131,14 @@ actor LLMonFHIRStandard: Standard, HealthKitConstraint, EnvironmentAccessible {
                 await MainActor.run {
                     waitingState.isWaiting = false
                 }
-                await fhirInterpretationModule.updateSchemas()
+                await updateSchemas()
             }
         }
+    }
+    
+    @MainActor
+    private func updateSchemas() async {
+        self.fhirInterpretationModule.updateSchemas()
     }
     
     // HealthKitConstraint

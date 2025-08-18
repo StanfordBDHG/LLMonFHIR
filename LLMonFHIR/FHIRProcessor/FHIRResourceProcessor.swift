@@ -9,12 +9,13 @@
 import Foundation
 import SpeziChat
 import SpeziFHIR
+import SpeziFoundation
 import SpeziLLM
 import SpeziLLMOpenAI
 import SpeziLocalStorage
 
 
-// Unchecked `Sendable` conformance is fine as storage is guarded by `NSLock`.
+// Unchecked `Sendable` conformance is fine as mutable storage (results & _llmSchema) is guarded by the `RWLock`.
 final class FHIRResourceProcessor<Content: Codable & LosslessStringConvertible>: @unchecked Sendable {
     typealias Results = [FHIRResource.ID: Content]
     
@@ -23,16 +24,29 @@ final class FHIRResourceProcessor<Content: Codable & LosslessStringConvertible>:
     private let llmRunner: LLMRunner
     private let storageKey: String
     private let prompt: FHIRPrompt
-    private let lock = NSLock()
-    var llmSchema: any LLMSchema
     
-    
-    var results: Results = [:] {
+    private let resultsLock = RWLock()
+    private(set) var results: Results = [:] {
         didSet {
-            do {
-                try localStorage.store(results, for: .init(storageKey))
-            } catch {
-                print(error)
+            resultsLock.withReadLock {
+                try? localStorage.store(results, for: .init(storageKey))
+            }
+        }
+    }
+    
+    private let llmSchemaLock = RWLock()
+    private var _llmSchema: any LLMSchema
+    
+    
+    var llmSchema: any LLMSchema {
+        get {
+            llmSchemaLock.withReadLock {
+                _llmSchema
+            }
+        }
+        set {
+            llmSchemaLock.withWriteLock {
+                _llmSchema = newValue
             }
         }
     }
@@ -47,7 +61,7 @@ final class FHIRResourceProcessor<Content: Codable & LosslessStringConvertible>:
     ) {
         self.localStorage = localStorage
         self.llmRunner = llmRunner
-        self.llmSchema = llmSchema
+        self._llmSchema = llmSchema
         self.storageKey = storageKey
         self.prompt = prompt
         self.results = (try? localStorage.load(.init(storageKey))) ?? [:]
@@ -55,7 +69,7 @@ final class FHIRResourceProcessor<Content: Codable & LosslessStringConvertible>:
     
     
     @discardableResult
-    func process(resource: FHIRResource, forceReload: Bool = false) async throws -> Content {
+    func process(resource: SendableFHIRResource, forceReload: Bool = false) async throws -> Content {
         if let result = results[resource.id], !result.description.isEmpty, !forceReload {
             return result
         }
@@ -69,7 +83,7 @@ final class FHIRResourceProcessor<Content: Codable & LosslessStringConvertible>:
             throw FHIRResourceProcessorError.notParsableAsAString
         }
         
-        lock.withLock {
+        resultsLock.withWriteLock {
             results[resource.id] = content
         }
         

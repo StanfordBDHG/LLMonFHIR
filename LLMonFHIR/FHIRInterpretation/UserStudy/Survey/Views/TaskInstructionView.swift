@@ -32,15 +32,17 @@ struct TaskInstructionView: View {
             .navigationTitle("Task \(task.id)")
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
-                ToolbarItem(placement: .confirmationAction) {
-                    Button("Done") {
+                ToolbarItem {
+                    Button {
                         isPresented = false
+                    } label: {
+                        Label("Dismiss", systemImage: "xmark")
+                            .accessibilityLabel("Dismiss")
                     }
                 }
             }
         }
         .presentationDetents(sheetHeight == .zero ? [.medium] : [.height(sheetHeight)])
-        .interactiveDismissDisabled()
     }
 }
 

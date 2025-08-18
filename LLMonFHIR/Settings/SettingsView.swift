@@ -8,6 +8,7 @@
 
 import SpeziLLMLocalDownload
 import SpeziLLMOpenAI
+import SpeziViews
 import SwiftUI
 
 
@@ -24,7 +25,6 @@ struct SettingsView: View {
     }
     
     @State private var path = NavigationPath()
-    @Environment(\.dismiss) private var dismiss
     @Environment(FHIRInterpretationModule.self) var fhirInterpretationModule
     
     @AppStorage(StorageKeys.enableTextToSpeech) private var enableTextToSpeech = StorageKeys.currentEnableTextToSpeech
@@ -50,10 +50,8 @@ struct SettingsView: View {
                     }
                 }
                 .toolbar {
-                    ToolbarItem(placement: .confirmationAction) {
-                        Button("SETTINGS_DONE") {
-                            dismiss()
-                        }
+                    ToolbarItem {
+                        DismissButton()
                     }
                 }
         }

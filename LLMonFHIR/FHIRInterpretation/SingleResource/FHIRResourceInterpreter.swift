@@ -39,7 +39,7 @@ final class FHIRResourceInterpreter: Sendable {
     ///   - forceReload: A boolean value that indicates whether to reload and reprocess the resource.
     /// - Returns: An asynchronous `String` representing the interpretation of the resource.
     @discardableResult
-    func interpret(resource: FHIRResource, forceReload: Bool = false) async throws -> String {
+    func interpret(resource: SendableFHIRResource, forceReload: Bool = false) async throws -> String {
         try await resourceProcessor.process(resource: resource, forceReload: forceReload)
     }
     
@@ -55,7 +55,7 @@ final class FHIRResourceInterpreter: Sendable {
     ///
     /// - Parameters:
     ///    - schema: The to-be-used `LLMSchema`.
-    func changeLLMSchema<Schema: LLMSchema>(to schema: Schema) {
+    func changeLLMSchema<Schema: LLMSchema & Sendable>(to schema: Schema) {
         self.resourceProcessor.llmSchema = schema
     }
 }
