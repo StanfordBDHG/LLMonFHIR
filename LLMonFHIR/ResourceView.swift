@@ -56,14 +56,13 @@ struct ResourceView: View {
             HStack(spacing: 8) {
                 if standard.waitingState.isWaiting {
                     ProgressView()
-                        .progressViewStyle(CircularProgressViewStyle(tint: .white))
+                        .progressViewStyle(CircularProgressViewStyle())
                         .controlSize(.regular)
                 }
                 Text(standard.waitingState.isWaiting ? "Loading Resources" : "Chat with all Resources")
             }
                 .font(.headline)
                 .fontWeight(.semibold)
-                .foregroundColor(.white)
                 .frame(maxWidth: .infinity)
         }
             .controlSize(.extraLarge)
