@@ -169,9 +169,15 @@ struct UserStudyWelcomeView: View {
                 _startStudyButton
                 #if swift(>=6.2)
                     .buttonStyle(.glassProminent)
+                #else
+                    .background(Color.accent.opacity(standard.waitingState.isWaiting ? 0.5 : 1))
+                    .cornerRadius(16)
+                    .buttonStyle(.borderedProminent)
                 #endif
             } else {
                 _startStudyButton
+                    .background(Color.accent.opacity(standard.waitingState.isWaiting ? 0.5 : 1))
+                    .cornerRadius(16)
                     .buttonStyle(.borderedProminent)
             }
         }
