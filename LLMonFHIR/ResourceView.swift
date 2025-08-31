@@ -40,6 +40,9 @@ struct ResourceView: View {
                 _chatWithAllResourcesButton
                 #if swift(>=6.2)
                     .buttonStyle(.glassProminent)
+                #else
+                    .buttonStyle(.borderedProminent)
+                    .padding(-8)
                 #endif
             } else {
                 _chatWithAllResourcesButton

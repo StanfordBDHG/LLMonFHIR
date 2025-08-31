@@ -37,6 +37,7 @@ struct RadioSelectionView: View {
                         .overlay {
                             if selectedValue == value {
                                 Image(systemName: "circle.fill")
+                                    .accessibilityHidden(true)
                                     .font(.system(size: 8))
                                     .foregroundStyle(.accent)
                             }
