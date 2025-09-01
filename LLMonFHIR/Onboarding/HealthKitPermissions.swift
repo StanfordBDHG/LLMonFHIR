@@ -8,13 +8,14 @@
 
 import SpeziHealthKit
 import SpeziOnboarding
+import SpeziViews
 import SwiftUI
 
 
 struct HealthKitPermissions: View {
     @Environment(LLMonFHIRStandard.self) private var standard
     @Environment(HealthKit.self) var healthKitDataSource: HealthKit?
-    @Environment(OnboardingNavigationPath.self) private var onboardingNavigationPath
+    @Environment(ManagedNavigationStack.Path.self) private var managedNavigationStackPath
     @State var healthKitProcessing = false
     
     
@@ -54,7 +55,7 @@ struct HealthKitPermissions: View {
                         } catch {
                             print("Could not request HealthKit permissions.")
                         }
-                        onboardingNavigationPath.nextStep()
+                        managedNavigationStackPath.nextStep()
                         healthKitProcessing = false
                     }
                 )

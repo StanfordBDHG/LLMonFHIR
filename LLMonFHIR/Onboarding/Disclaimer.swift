@@ -7,11 +7,12 @@
 //
 
 import SpeziOnboarding
+import SpeziViews
 import SwiftUI
 
 
 struct Disclaimer: View {
-    @Environment(OnboardingNavigationPath.self) private var onboardingNavigationPath
+    @Environment(ManagedNavigationStack.Path.self) private var managedNavigationStackPath
     
     
     var body: some View {
@@ -42,7 +43,7 @@ struct Disclaimer: View {
             ],
             actionText: "DISCLAIMER_BUTTON",
             action: {
-                onboardingNavigationPath.nextStep()
+                managedNavigationStackPath.nextStep()
             }
         )
     }

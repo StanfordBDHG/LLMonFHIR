@@ -7,11 +7,12 @@
 //
 
 import SpeziOnboarding
+import SpeziViews
 import SwiftUI
 
 
 struct Welcome: View {
-    @Environment(OnboardingNavigationPath.self) private var onboardingNavigationPath
+    @Environment(ManagedNavigationStack.Path.self) private var managedNavigationStackPath
     
     
     var body: some View {
@@ -46,7 +47,7 @@ struct Welcome: View {
             ],
             actionText: "WELCOME_BUTTON",
             action: {
-                onboardingNavigationPath.nextStep()
+                managedNavigationStackPath.nextStep()
             }
         )
     }
