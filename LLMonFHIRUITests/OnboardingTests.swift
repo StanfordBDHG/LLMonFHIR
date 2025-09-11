@@ -20,7 +20,7 @@ class OnboardingTests: XCTestCase, Sendable {
         
         let app = XCUIApplication()
         app.launchArguments = ["--showOnboarding"]
-        // app.deleteAndLaunch(withSpringboardAppName: "LLMonFHIR")
+        app.deleteAndLaunch(withSpringboardAppName: "LLMonFHIR")
     }
     
     
