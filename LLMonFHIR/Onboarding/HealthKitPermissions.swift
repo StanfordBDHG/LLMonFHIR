@@ -8,19 +8,20 @@
 
 import SpeziHealthKit
 import SpeziOnboarding
+import SpeziViews
 import SwiftUI
 
 
 struct HealthKitPermissions: View {
     @Environment(LLMonFHIRStandard.self) private var standard
     @Environment(HealthKit.self) var healthKitDataSource: HealthKit?
-    @Environment(OnboardingNavigationPath.self) private var onboardingNavigationPath
+    @Environment(ManagedNavigationStack.Path.self) private var managedNavigationStackPath
     @State var healthKitProcessing = false
     
     
     var body: some View {
         OnboardingView(
-            contentView: {
+            content: {
                 VStack {
                     OnboardingTitleView(
                         title: "HEALTHKIT_PERMISSIONS_TITLE",
@@ -36,7 +37,8 @@ struct HealthKitPermissions: View {
                         .padding(.vertical, 16)
                     Spacer()
                 }
-            }, actionView: {
+            },
+            footer: {
                 OnboardingActionsView(
                     "HEALTHKIT_PERMISSIONS_BUTTON",
                     action: {
@@ -54,7 +56,7 @@ struct HealthKitPermissions: View {
                         } catch {
                             print("Could not request HealthKit permissions.")
                         }
-                        onboardingNavigationPath.nextStep()
+                        managedNavigationStackPath.nextStep()
                         healthKitProcessing = false
                     }
                 )

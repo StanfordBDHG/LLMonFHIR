@@ -1,5 +1,5 @@
 {
-  "originHash" : "065a78a0fbd76259f6e2dfbe31b9495b32f90d0df81787c26e41278e93557c5c",
+  "originHash" : "896afe11f1554ec871438cbc29c4934f7f14d8a84834d6316ee864d87112e9b0",
   "pins" : [
     {
       "identity" : "collectionconcurrencykit",
@@ -51,8 +51,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/johnmai-dev/Jinja",
       "state" : {
-        "revision" : "bb238dd96fbe4c18014f3107c00edd6edb15428e",
-        "version" : "1.2.4"
+        "revision" : "5c0a87846dfd36ca6621795ad2f09fdaab82b739",
+        "version" : "1.3.0"
       }
     },
     {
@@ -60,8 +60,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/ml-explore/mlx-swift",
       "state" : {
-        "revision" : "b990c58153af70eb0914bca7dd74401d341fa9ae",
-        "version" : "0.21.3"
+        "revision" : "96c0f69cf15f38abd6248bb71fca908171dab1d8",
+        "version" : "0.25.6"
       }
     },
     {
@@ -69,8 +69,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/ml-explore/mlx-swift-examples",
       "state" : {
-        "revision" : "6ef303b84ec69e2e1e1da68f2059e99ee1dcef4d",
-        "version" : "2.21.2"
+        "revision" : "42b0d21a607b97c3b99d1e20626b7d9b14827b81",
+        "version" : "2.25.5"
       }
     },
     {
@@ -87,8 +87,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/mattpolzin/OpenAPIKit",
       "state" : {
-        "revision" : "259f7b1c8729702646934da6b55daa19e2763060",
-        "version" : "3.6.0"
+        "revision" : "65d3bd28ad1f9497bfd4011fc2cac4acb49805b2",
+        "version" : "3.7.1"
       }
     },
     {
@@ -103,10 +103,10 @@
     {
       "identity" : "spezi",
       "kind" : "remoteSourceControl",
-      "location" : "https://github.com/StanfordSpezi/Spezi",
+      "location" : "https://github.com/StanfordSpezi/Spezi.git",
       "state" : {
-        "revision" : "6bed41a437cba200a8ce0182e6a30dc787bbc836",
-        "version" : "1.9.1"
+        "revision" : "aea262c1bba638494c3ce9a749e834aafd10ba63",
+        "version" : "1.9.2"
       }
     },
     {
@@ -141,8 +141,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/StanfordSpezi/SpeziFoundation.git",
       "state" : {
-        "revision" : "89f3334e685ddad1bbf2e8b33fa0820620aec6c1",
-        "version" : "2.2.1"
+        "revision" : "eaf89f70c255f21cafabdca5c731fa15f618432b",
+        "version" : "2.4.1"
       }
     },
     {
@@ -150,8 +150,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/StanfordSpezi/SpeziHealthKit.git",
       "state" : {
-        "revision" : "4fab93e2ba8b62ddc45f50a61043d7df376243ba",
-        "version" : "1.2.3"
+        "revision" : "e5e740029ac72b7c74dfffa845589d24c40ece86",
+        "version" : "1.2.5"
       }
     },
     {
@@ -159,8 +159,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/StanfordSpezi/SpeziLLM",
       "state" : {
-        "revision" : "ca2165eb3228684c0b606c2aa67a6c0d4d1472ba",
-        "version" : "0.11.0"
+        "revision" : "b5c04af5b537d5f53c6fda4dc2edf372088547c8",
+        "version" : "0.12.0"
       }
     },
     {
@@ -168,8 +168,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/StanfordSpezi/SpeziOnboarding.git",
       "state" : {
-        "revision" : "a3d7bc15e6803b2205eb8dca010a48b1a40215be",
-        "version" : "1.2.2"
+        "revision" : "4ff1cd66b576de589f80497aed160b8d61e97e1f",
+        "version" : "2.0.2"
       }
     },
     {
@@ -193,10 +193,10 @@
     {
       "identity" : "speziviews",
       "kind" : "remoteSourceControl",
-      "location" : "https://github.com/StanfordSpezi/SpeziViews",
+      "location" : "https://github.com/StanfordSpezi/SpeziViews.git",
       "state" : {
-        "revision" : "9a7cd323ae6023a57bdf57af644538e723902f67",
-        "version" : "1.12.1"
+        "revision" : "8c12a94fcd118128db87736b849e71dbca7d1a46",
+        "version" : "1.12.2"
       }
     },
     {
@@ -213,8 +213,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/apple/swift-argument-parser.git",
       "state" : {
-        "revision" : "309a47b2b1d9b5e991f36961c983ecec72275be3",
-        "version" : "1.6.1"
+        "revision" : "0fbc8848e389af3bb55c182bc19ca9d5dc2f255b",
+        "version" : "1.4.0"
       }
     },
     {
@@ -265,10 +265,10 @@
     {
       "identity" : "swift-numerics",
       "kind" : "remoteSourceControl",
-      "location" : "https://github.com/apple/swift-numerics",
+      "location" : "https://github.com/apple/swift-numerics.git",
       "state" : {
-        "revision" : "e0ec0f5f3af6f3e4d5e7a19d2af26b481acb6ba8",
-        "version" : "1.0.3"
+        "revision" : "bbadd4b853a33fd78c4ae977d17bb2af15eb3f2a",
+        "version" : "1.1.0"
       }
     },
     {
@@ -312,14 +312,14 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/huggingface/swift-transformers",
       "state" : {
-        "revision" : "8a83416cc00ab07a5de9991e6ad817a9b8588d20",
-        "version" : "0.1.15"
+        "revision" : "f000aa7aec0e78acd0211685e4094e1fca84cd8b",
+        "version" : "0.1.24"
       }
     },
     {
       "identity" : "swiftlint",
       "kind" : "remoteSourceControl",
-      "location" : "https://github.com/realm/SwiftLint",
+      "location" : "https://github.com/realm/SwiftLint.git",
       "state" : {
         "revision" : "625792423014cc49b0a1e5a1a5c0d6b8b3de10f9",
         "version" : "0.59.1"
@@ -357,8 +357,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/StanfordBDHG/XCTHealthKit.git",
       "state" : {
-        "revision" : "44eb3d734741294ee6c4fbf734cc5cd6f51f02a5",
-        "version" : "1.1.4"
+        "revision" : "907d85095d2129e8ccb2cb2d1e5542df5f6ba0ad",
+        "version" : "1.1.5"
       }
     },
     {
@@ -366,8 +366,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/StanfordBDHG/XCTRuntimeAssertions.git",
       "state" : {
-        "revision" : "d3394b8c432f4e3d30cdf14cb5892695e923b06d",
-        "version" : "2.1.0"
+        "revision" : "ba5753f59905b80fd98d0da0f552f4e5d5c0488e",
+        "version" : "2.2.0"
       }
     },
     {

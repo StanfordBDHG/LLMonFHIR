@@ -887,7 +887,7 @@
 			repositoryURL = "https://github.com/StanfordSpezi/Spezi.git";
 			requirement = {
 				kind = upToNextMajorVersion;
-				minimumVersion = 1.9.1;
+				minimumVersion = 1.9.2;
 			};
 		};
 		2FD8E8282A1AADDA00357F4E /* XCRemoteSwiftPackageReference "FHIRModels" */ = {
@@ -911,7 +911,7 @@
 			repositoryURL = "https://github.com/StanfordSpezi/SpeziHealthKit.git";
 			requirement = {
 				kind = upToNextMajorVersion;
-				minimumVersion = 1.2.3;
+				minimumVersion = 1.2.5;
 			};
 		};
 		2FE5DC7F29EDD91D004B9AB4 /* XCRemoteSwiftPackageReference "SpeziOnboarding" */ = {
@@ -919,7 +919,7 @@
 			repositoryURL = "https://github.com/StanfordSpezi/SpeziOnboarding.git";
 			requirement = {
 				kind = upToNextMajorVersion;
-				minimumVersion = 1.2.2;
+				minimumVersion = 2.0.2;
 			};
 		};
 		2FE5DC9729EDD9D9004B9AB4 /* XCRemoteSwiftPackageReference "XCTestExtensions" */ = {
@@ -927,7 +927,7 @@
 			repositoryURL = "https://github.com/StanfordBDHG/XCTestExtensions.git";
 			requirement = {
 				kind = upToNextMinorVersion;
-				minimumVersion = 1.2.1;
+				minimumVersion = 1.2.2;
 			};
 		};
 		2FE5DC9A29EDD9EF004B9AB4 /* XCRemoteSwiftPackageReference "XCTHealthKit" */ = {
@@ -935,7 +935,7 @@
 			repositoryURL = "https://github.com/StanfordBDHG/XCTHealthKit.git";
 			requirement = {
 				kind = upToNextMajorVersion;
-				minimumVersion = 1.1.4;
+				minimumVersion = 1.1.5;
 			};
 		};
 		44E18E912CEBF26800829A26 /* XCRemoteSwiftPackageReference "SpeziStorage" */ = {
@@ -975,7 +975,7 @@
 			repositoryURL = "https://github.com/StanfordSpezi/SpeziViews.git";
 			requirement = {
 				kind = upToNextMajorVersion;
-				minimumVersion = 1.12.1;
+				minimumVersion = 1.12.2;
 			};
 		};
 		C01EADB52D686A3000B559E9 /* XCRemoteSwiftPackageReference "SpeziAccessGuard" */ = {
@@ -991,7 +991,7 @@
 			repositoryURL = "https://github.com/StanfordSpezi/SpeziLLM.git";
 			requirement = {
 				kind = upToNextMinorVersion;
-				minimumVersion = 0.11.0;
+				minimumVersion = 0.12.0;
 			};
 		};
 		C0FA07242D39357B002485FF /* XCRemoteSwiftPackageReference "SpeziFHIR" */ = {
@@ -999,7 +999,7 @@
 			repositoryURL = "https://github.com/StanfordSpezi/SpeziFHIR.git";
 			requirement = {
 				kind = upToNextMinorVersion;
-				minimumVersion = 0.8.0;
+				minimumVersion = 0.8.1;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */

@@ -7,17 +7,17 @@
 //
 
 import SpeziLLMOpenAI
-import SpeziOnboarding
+import SpeziViews
 import SwiftUI
 
 
 struct OpenAIAPIKey: View {
-    @Environment(OnboardingNavigationPath.self) private var onboardingNavigationPath
+    @Environment(ManagedNavigationStack.Path.self) private var managedNavigationStackPath
     
     
     var body: some View {
         LLMOpenAIAPITokenOnboardingStep {
-            onboardingNavigationPath.nextStep()
+            managedNavigationStackPath.nextStep()
         }
     }
 }

@@ -20,7 +20,7 @@ platform :ios do
       skip_build: true,
       derived_data_path: ".derivedData",
       code_coverage: true,
-      devices: ["iPhone 16 Pro"],
+      devices: ["iPhone 17 Pro"],
       disable_slide_to_type: false,
       concurrent_workers: 1,
       max_concurrent_simulators: 1,

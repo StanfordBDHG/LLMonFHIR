@@ -7,18 +7,19 @@
 //
 
 import SpeziOnboarding
+import SpeziViews
 import SwiftUI
 
 
 struct Disclaimer: View {
-    @Environment(OnboardingNavigationPath.self) private var onboardingNavigationPath
+    @Environment(ManagedNavigationStack.Path.self) private var managedNavigationStackPath
     
     
     var body: some View {
         SequentialOnboardingView(
             title: "DISCLAIMER_TITLE",
             subtitle: "DISCLAIMER_SUBTITLE",
-            content: [
+            steps: [
                 .init(
                     title: "DISCLAIMER_AREA1_TITLE",
                     description: "DISCLAIMER_AREA1_DESCRIPTION"
@@ -42,7 +43,7 @@ struct Disclaimer: View {
             ],
             actionText: "DISCLAIMER_BUTTON",
             action: {
-                onboardingNavigationPath.nextStep()
+                managedNavigationStackPath.nextStep()
             }
         )
     }
