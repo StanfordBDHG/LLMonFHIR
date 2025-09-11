@@ -21,7 +21,7 @@ struct HealthKitPermissions: View {
     
     var body: some View {
         OnboardingView(
-            contentView: {
+            content: {
                 VStack {
                     OnboardingTitleView(
                         title: "HEALTHKIT_PERMISSIONS_TITLE",
@@ -37,7 +37,8 @@ struct HealthKitPermissions: View {
                         .padding(.vertical, 16)
                     Spacer()
                 }
-            }, actionView: {
+            },
+            footer: {
                 OnboardingActionsView(
                     "HEALTHKIT_PERMISSIONS_BUTTON",
                     action: {

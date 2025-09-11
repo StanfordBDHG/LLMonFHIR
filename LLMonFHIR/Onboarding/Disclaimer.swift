@@ -19,7 +19,7 @@ struct Disclaimer: View {
         SequentialOnboardingView(
             title: "DISCLAIMER_TITLE",
             subtitle: "DISCLAIMER_SUBTITLE",
-            content: [
+            steps: [
                 .init(
                     title: "DISCLAIMER_AREA1_TITLE",
                     description: "DISCLAIMER_AREA1_DESCRIPTION"
