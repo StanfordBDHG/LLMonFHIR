@@ -95,8 +95,6 @@ jobs:
     runs-on: ubuntu-latest
     environment: ${{ needs.determineenvironment.outputs.environment }}
     outputs:
-      appidentifier: ${{ vars.APP_IDENTIFIER }}
-      provisioningProfileName: ${{ vars.PROVISIONING_PROFILE_NAME }}
       version: ${{ steps.script.outputs.version }}
     steps:
       - name: Checkout code
@@ -109,8 +107,6 @@ jobs:
       - id: script
         run: |
           echo "Injecting Environment Variables In Deployment Workflow ..."
-          echo "appidentifier: ${{ vars.APP_IDENTIFIER }}"
-          echo "provisioningProfileName: ${{ vars.PROVISIONING_PROFILE_NAME }}"
           if [[ -z "${{ inputs.version }}" ]]; then
             LATEST_VERSION="${{ steps.get-latest-tag.outputs.tag }}"
             LATEST_VERSION="${LATEST_VERSION#v}"
@@ -145,5 +141,5 @@ jobs:
       environment: ${{ needs.determineenvironment.outputs.environment }}
       googleserviceinfoplistpath: 'LLMonFHIR/Supporting Files/UserStudyConfig.plist'
       setupsigning: true
-      fastlanelane: deploy environment:"${{ needs.determineenvironment.outputs.environment }}" appidentifier:"${{ needs.vars.outputs.appidentifier }}" provisioningProfile:"${{ needs.vars.outputs.provisioningProfileName }}" versionname:"${{ needs.vars.outputs.version }}" releasenotes:"${{ inputs.releasenotes }}" ${{ inputs.buildnumber && format('buildnumber:"{0}"', inputs.buildnumber) || '' }}
+      fastlanelane: deploy environment:"${{ needs.determineenvironment.outputs.environment }}" versionname:"${{ needs.vars.outputs.version }}" releasenotes:"${{ inputs.releasenotes }}" ${{ inputs.buildnumber && format('buildnumber:"{0}"', inputs.buildnumber) || '' }}
     secrets: inherit
