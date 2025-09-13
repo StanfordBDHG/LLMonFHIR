@@ -1,0 +1,39 @@
+#
+# This source file is part of the Stanford LLM on FHIR project
+#
+# SPDX-FileCopyrightText: 2024 Stanford University
+#
+# SPDX-License-Identifier: MIT
+#
+
+name: Release
+
+on:
+  release:
+    types: [published]
+
+concurrency:
+  group: userstudy
+  cancel-in-progress: false
+
+jobs:
+  formatreleasenotes:
+    name: Format Release Notes
+    uses: StanfordBDHG/.github/.github/workflows/format-release-notes.yml@v2
+    with:
+      release-tag: ${{ github.event.release.tag_name }}
+      repository: ${{ github.repository }}
+  build-and-test:
+    name: Build and Test
+    uses: ./.github/workflows/deployment.yml
+    needs: formatreleasenotes
+    permissions:
+      contents: read
+      checks: write
+      actions: read
+      security-events: write
+    secrets: inherit
+    with:
+      environment: userstudy
+      version: ${{ github.event.release.tag_name }}
+      releasenotes: ${{ needs.formatreleasenotes.outputs.releasenotes }}
