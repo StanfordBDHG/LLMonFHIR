@@ -1,3 +1,13 @@
+<!--
+
+This source file is part of the Stanford LLM on FHIR project
+
+SPDX-FileCopyrightText: 2023 Stanford University
+
+SPDX-License-Identifier: MIT
+
+-->
+
 # LLMonFHIR Fog Node Setup
 
 This README explains how to spin up a simple Fog Node for LLMonFHIR using Docker on Linux or macOS. If the Fog Node mode is picked during the LLMonFHIR setup, LLMonFHIR sends LLM requests to a node on your local network instead of running on‑device or using a cloud provider.
