@@ -79,6 +79,15 @@ You can learn more about the Spezi standards-based software architecture in the 
 You can build and run the application using [Xcode](https://developer.apple.com/xcode/) by opening up the **LLMonFHIR.xcodeproj**.
 
 
+## Network-local privacy-focused Fog LLM Mode
+
+LLMonFHIR can run LLM inference for resource summarization and interpretation on nearby machines in your local network, called fog nodes, instead of only on-device or in the cloud.
+The app discovers a fog node via mDNS, connects to it, and streams model responses back while dispatching inference tasks.
+This setup provides low latency, strong performance, and improved privacy, since models run on your own hardware inside your own network.
+
+For instructions on running a minimal Docker-based fog node on Linux or macOS, see [FogNode/README.md](FogNode/README.md).
+
+
 ## Contributors & License
 
 This project is based on [Spezi](https://github.com/StanfordSpezi/Spezi) framework and builds on top of the [Stanford Spezi Template Application](https://github.com/StanfordSpezi/SpeziTemplateApplication) provided using the MIT license.

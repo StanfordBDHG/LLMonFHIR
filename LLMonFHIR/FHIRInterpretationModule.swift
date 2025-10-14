@@ -9,6 +9,8 @@
 import Spezi
 import SpeziFHIR
 import SpeziLLM
+import SpeziLLMFog
+import SpeziLLMLocal
 import SpeziLLMOpenAI
 import SpeziLocalStorage
 import SwiftUI
@@ -24,15 +26,26 @@ class FHIRInterpretationModule: Module, DefaultInitializable, EnvironmentAccessi
     @Model private var resourceInterpreter: FHIRResourceInterpreter
     @Model private var multipleResourceInterpreter: FHIRMultipleResourceInterpreter
     
+    @AppStorage(StorageKeys.llmSource) private var llmSource = StorageKeys.Defaults.llmSource
+    @AppStorage(StorageKeys.fogModel) private var fogModel = StorageKeys.Defaults.fogModel
     
-    @MainActor var simpleOpenAISchema: LLMOpenAISchema {
-        let openAIModelType = StorageKeys.currentOpenAIModel
-        let temperature = StorageKeys.currentOpenAIModelTemperature
-        
-        return LLMOpenAISchema(
-            parameters: .init(modelType: openAIModelType.rawValue, systemPrompts: []),
-            modelParameters: .init(temperature: temperature)
-        )
+    
+    @MainActor var singleResourceLLMSchema: any LLMSchema {
+        switch self.llmSource {
+        case .openai:
+            LLMOpenAISchema(
+                parameters: .init(modelType: StorageKeys.currentOpenAIModel.rawValue, systemPrompts: []),
+                modelParameters: .init(temperature: StorageKeys.currentOpenAIModelTemperature)
+            )
+        case .fog:
+            LLMFogSchema(
+                parameters: .init(modelType: fogModel)
+            )
+        case .local:
+            LLMLocalSchema(
+                model: .llama3_2_3B_4bit // always use the Llama 3.2 3B model as we can guarantee that it runs well on modern devices
+            )
+        }
     }
     
     @MainActor var multipleResourceInterpreterOpenAISchema: LLMOpenAISchema {
@@ -57,19 +70,19 @@ class FHIRInterpretationModule: Module, DefaultInitializable, EnvironmentAccessi
     
     
     func configure() {
-        resourceSummary = FHIRResourceSummary(
+        self.resourceSummary = FHIRResourceSummary(
             localStorage: localStorage,
             llmRunner: llmRunner,
-            llmSchema: simpleOpenAISchema
+            llmSchema: singleResourceLLMSchema
         )
         
-        resourceInterpreter = FHIRResourceInterpreter(
+        self.resourceInterpreter = FHIRResourceInterpreter(
             localStorage: localStorage,
             llmRunner: llmRunner,
-            llmSchema: simpleOpenAISchema
+            llmSchema: singleResourceLLMSchema
         )
         
-        multipleResourceInterpreter = FHIRMultipleResourceInterpreter(
+        self.multipleResourceInterpreter = FHIRMultipleResourceInterpreter(
             localStorage: localStorage,
             llmRunner: llmRunner,
             llmSchema: multipleResourceInterpreterOpenAISchema,
@@ -77,14 +90,14 @@ class FHIRInterpretationModule: Module, DefaultInitializable, EnvironmentAccessi
         )
         
         // Double-check that we load the right configurations.
-        updateSchemas()
+        self.updateSchemas()
     }
     
     
     @MainActor
     func updateSchemas() {
-        resourceSummary.changeLLMSchema(to: simpleOpenAISchema)
-        resourceInterpreter.changeLLMSchema(to: simpleOpenAISchema)
-        multipleResourceInterpreter.changeLLMSchema(to: multipleResourceInterpreterOpenAISchema)
+        self.resourceSummary.changeLLMSchema(to: self.singleResourceLLMSchema)
+        self.resourceInterpreter.changeLLMSchema(to: self.singleResourceLLMSchema)
+        self.multipleResourceInterpreter.changeLLMSchema(to: self.multipleResourceInterpreterOpenAISchema)
     }
 }

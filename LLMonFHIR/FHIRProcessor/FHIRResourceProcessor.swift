@@ -28,9 +28,7 @@ final class FHIRResourceProcessor<Content: Codable & LosslessStringConvertible>:
     private let resultsLock = RWLock()
     private(set) var results: Results = [:] {
         didSet {
-            resultsLock.withReadLock {
-                try? localStorage.store(results, for: .init(storageKey))
-            }
+            try? localStorage.store(results, for: .init(storageKey))
         }
     }
     

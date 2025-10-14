@@ -10,6 +10,9 @@
     "%lld" : {
 
     },
+    "A fog node must be configured in your local network. Please consult the LLMonFHIR docs for setup instructions." : {
+
+    },
     "Allergies" : {
 
     },
@@ -20,6 +23,9 @@
 
     },
     "Checkmark" : {
+
+    },
+    "Computation is performed on so-called fog nodes, running directly inside your own network." : {
 
     },
     "Conditions" : {
@@ -637,9 +643,6 @@
     "Documents" : {
 
     },
-    "Download the LLM model to generate summaries of FHIR resources." : {
-
-    },
     "Enable Usability Study" : {
 
     },
@@ -980,6 +983,26 @@
     "Focused" : {
 
     },
+    "FOG_LLM_LABEL" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Fog-based LLM"
+          }
+        }
+      }
+    },
+    "FOG_MODEL_SAVE_ACTION" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Save fog model selection"
+          }
+        }
+      }
+    },
     "FUNCTION_DESCRIPTION %@" : {
       "localizations" : {
         "en" : {
@@ -1239,12 +1262,68 @@
       },
       "shouldTranslate" : false
     },
+    "LLAMA3_DOWNLOAD_DESCRIPTION" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The Llama3.2 3B model will be downloaded. Model size is around 3GB."
+          }
+        }
+      }
+    },
+    "LLM Fog Mode" : {
+
+    },
+    "LLM summary and interpretation inference happens directly within your network - nothing is sent to remote servers." : {
+
+    },
     "LLM_ON_FHIR" : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "LLM on FHIR"
+          }
+        }
+      }
+    },
+    "LLM_SOURCE_PICKER_LABEL" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Choose an LLM source for single FHIR resource processing"
+          }
+        }
+      }
+    },
+    "LLM_SOURCE_SELECTION_BUTTON" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Save Choice"
+          }
+        }
+      }
+    },
+    "LLM_SOURCE_SELECTION_SUBTITLE" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Besides the OpenAI model used for chat across all FHIR resources, you can choose a dedicated LLM for single-resource summarization and interpretation, either on-device, OpenAI-hosted, or running on a local fog node (setup required)"
+          }
+        }
+      }
+    },
+    "LLM_SOURCE_SELECTION_TITLE" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "LLM Source for Single FHIR Resource"
           }
         }
       }
@@ -1258,6 +1337,19 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Loading Health Records"
+          }
+        }
+      }
+    },
+    "Local Fog Nodes" : {
+
+    },
+    "LOCAL_LLM_LABEL" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "On-device LLM"
           }
         }
       }
@@ -1414,6 +1506,16 @@
         }
       }
     },
+    "OPENAI_LLM_LABEL" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Remote OpenAI LLM"
+          }
+        }
+      }
+    },
     "Other Resources" : {
       "localizations" : {
         "de" : {
@@ -1464,6 +1566,9 @@
       }
     },
     "Please quit and reopen the app for the changes to take effect." : {
+
+    },
+    "Private by Design" : {
 
     },
     "Procedures" : {
@@ -1661,6 +1766,9 @@
         }
       }
     },
+    "Run LLMs locally. Keep data inside your network." : {
+
+    },
     "Save Prompt" : {
       "localizations" : {
         "de" : {
@@ -1729,36 +1837,22 @@
         }
       }
     },
-    "SETTINGS_OPENAI" : {
+    "SETTINGS_LLM" : {
       "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "OpenAI-Einstellungen"
-          }
-        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "OpenAI Settings"
+            "value" : "LLM Settings"
           }
-        },
-        "es" : {
+        }
+      }
+    },
+    "SETTINGS_LLM_SOURCE" : {
+      "localizations" : {
+        "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Configuración de OpenAI"
-          }
-        },
-        "fr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Paramètres d'OpenAI"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "OpenAI设置"
+            "value" : "Select Execution Type for Single FHIR Resources"
           }
         }
       }
@@ -2055,7 +2149,13 @@
         }
       }
     },
+    "Setup Required" : {
+
+    },
     "Share Survey Results" : {
+
+    },
+    "Start Client Setup" : {
 
     },
     "START_SESSION" : {

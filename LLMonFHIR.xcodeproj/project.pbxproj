@@ -59,6 +59,10 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		10D1799D2E849FE1009E7DFC /* spezillmfog.service */ = {isa = PBXFileReference; lastKnownFileType = text; path = spezillmfog.service; sourceTree = "<group>"; };
+		10D1799F2E849FE1009E7DFC /* Dockerfile */ = {isa = PBXFileReference; lastKnownFileType = text; path = Dockerfile; sourceTree = "<group>"; };
+		10D179A12E849FE1009E7DFC /* docker-compose.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = "docker-compose.yml"; sourceTree = "<group>"; };
+		10D179A22E849FE1009E7DFC /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		2FC94CD4298B0A1D009C8209 /* LLMonFHIR.xctestplan */ = {isa = PBXFileReference; lastKnownFileType = text; path = LLMonFHIR.xctestplan; sourceTree = "<group>"; };
 		653A254D283387FE005D4D48 /* LLMonFHIR.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LLMonFHIR.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		653A255D28338800005D4D48 /* LLMonFHIRTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = LLMonFHIRTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -139,9 +143,37 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		10D1799E2E849FE1009E7DFC /* services */ = {
+			isa = PBXGroup;
+			children = (
+				10D1799D2E849FE1009E7DFC /* spezillmfog.service */,
+			);
+			path = services;
+			sourceTree = "<group>";
+		};
+		10D179A02E849FE1009E7DFC /* avahi */ = {
+			isa = PBXGroup;
+			children = (
+				10D1799E2E849FE1009E7DFC /* services */,
+				10D1799F2E849FE1009E7DFC /* Dockerfile */,
+			);
+			path = avahi;
+			sourceTree = "<group>";
+		};
+		10D179A32E849FE1009E7DFC /* FogNode */ = {
+			isa = PBXGroup;
+			children = (
+				10D179A02E849FE1009E7DFC /* avahi */,
+				10D179A12E849FE1009E7DFC /* docker-compose.yml */,
+				10D179A22E849FE1009E7DFC /* README.md */,
+			);
+			path = FogNode;
+			sourceTree = "<group>";
+		};
 		653A2544283387FE005D4D48 = {
 			isa = PBXGroup;
 			children = (
+				10D179A32E849FE1009E7DFC /* FogNode */,
 				97B76BCD2B195D650019D706 /* CONTRIBUTORS.md */,
 				2FC94CD4298B0A1D009C8209 /* LLMonFHIR.xctestplan */,
 				65397DF32D8159A90067F1BE /* LLMonFHIR */,
@@ -487,6 +519,7 @@
 				INFOPLIST_KEY_NSHealthClinicalHealthRecordsShareUsageDescription = "The Spezi LLMonFHIR uses the health data to demonstrate the capabilities of LLMs to explain medical concepts based on patient data provided by FHIR APIs.";
 				INFOPLIST_KEY_NSHealthShareUsageDescription = "The Spezi LLMonFHIR uses the health data to demonstrate the capabilities of LLMs to explain medical concepts based on patient data provided by FHIR APIs.";
 				INFOPLIST_KEY_NSHealthUpdateUsageDescription = "The Spezi LLMonFHIR uses the step count to demonstrate Spezi's integration with HealthKit.";
+				INFOPLIST_KEY_NSLocalNetworkUsageDescription = "LLMonFHIR uses local network access to discover nearby fog nodes.";
 				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "This message should never appear. Please adjust this when you start using location information. We have to put this in here as ResearchKit has the possibility to use it and not putting it here returns an error on AppStore Connect.";
 				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "This message should never appear. Please adjust this when you start using location information. We have to put this in here as ResearchKit has the possibility to use it and not putting it here returns an error on AppStore Connect.";
 				INFOPLIST_KEY_NSMicrophoneUsageDescription = "This message should never appear. Please adjust this when you start using microphone information. We have to put this in here as ResearchKit has the possibility to use it and not putting it here returns an error on AppStore Connect.";
@@ -694,6 +727,7 @@
 				INFOPLIST_KEY_NSHealthClinicalHealthRecordsShareUsageDescription = "The Spezi LLMonFHIR uses the health data to demonstrate the capabilities of LLMs to explain medical concepts based on patient data provided by FHIR APIs.";
 				INFOPLIST_KEY_NSHealthShareUsageDescription = "The Spezi LLMonFHIR uses the health data to demonstrate the capabilities of LLMs to explain medical concepts based on patient data provided by FHIR APIs.";
 				INFOPLIST_KEY_NSHealthUpdateUsageDescription = "The Spezi LLMonFHIR uses the step count to demonstrate Spezi's integration with HealthKit.";
+				INFOPLIST_KEY_NSLocalNetworkUsageDescription = "LLMonFHIR uses local network access to discover nearby fog nodes.";
 				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "This message should never appear. Please adjust this when you start using location information. We have to put this in here as ResearchKit has the possibility to use it and not putting it here returns an error on AppStore Connect.";
 				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "This message should never appear. Please adjust this when you start using location information. We have to put this in here as ResearchKit has the possibility to use it and not putting it here returns an error on AppStore Connect.";
 				INFOPLIST_KEY_NSMicrophoneUsageDescription = "This message should never appear. Please adjust this when you start using microphone information. We have to put this in here as ResearchKit has the possibility to use it and not putting it here returns an error on AppStore Connect.";
@@ -742,6 +776,7 @@
 				INFOPLIST_KEY_NSHealthClinicalHealthRecordsShareUsageDescription = "The Spezi LLMonFHIR uses the health data to demonstrate the capabilities of LLMs to explain medical concepts based on patient data provided by FHIR APIs.";
 				INFOPLIST_KEY_NSHealthShareUsageDescription = "The Spezi LLMonFHIR uses the health data to demonstrate the capabilities of LLMs to explain medical concepts based on patient data provided by FHIR APIs.";
 				INFOPLIST_KEY_NSHealthUpdateUsageDescription = "The Spezi LLMonFHIR uses the step count to demonstrate Spezi's integration with HealthKit.";
+				INFOPLIST_KEY_NSLocalNetworkUsageDescription = "LLMonFHIR uses local network access to discover nearby fog nodes.";
 				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "This message should never appear. Please adjust this when you start using location information. We have to put this in here as ResearchKit has the possibility to use it and not putting it here returns an error on AppStore Connect.";
 				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "This message should never appear. Please adjust this when you start using location information. We have to put this in here as ResearchKit has the possibility to use it and not putting it here returns an error on AppStore Connect.";
 				INFOPLIST_KEY_NSMicrophoneUsageDescription = "This message should never appear. Please adjust this when you start using microphone information. We have to put this in here as ResearchKit has the possibility to use it and not putting it here returns an error on AppStore Connect.";
@@ -991,7 +1026,7 @@
 			repositoryURL = "https://github.com/StanfordSpezi/SpeziLLM.git";
 			requirement = {
 				kind = upToNextMinorVersion;
-				minimumVersion = 0.12.0;
+				minimumVersion = 0.12.1;
 			};
 		};
 		C0FA07242D39357B002485FF /* XCRemoteSwiftPackageReference "SpeziFHIR" */ = {

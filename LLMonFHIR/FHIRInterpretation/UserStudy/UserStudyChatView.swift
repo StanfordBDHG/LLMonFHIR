@@ -12,8 +12,8 @@ import SwiftUI
 struct UserStudyChatView: View {
     @Environment(\.dismiss) private var dismiss
     @State private var viewModel: UserStudyChatViewModel
-
-
+    
+    
     var body: some View {
         NavigationStack { // swiftlint:disable:this closure_body_length
             chatView
@@ -62,8 +62,8 @@ struct UserStudyChatView: View {
                 }
         }
     }
-
-
+    
+    
     @ViewBuilder private var chatView: some View {
         VStack {
             MultipleResourcesChatViewProcessingView(viewModel: viewModel)
@@ -74,9 +74,9 @@ struct UserStudyChatView: View {
                 messagePendingAnimation: .manual(shouldDisplay: viewModel.showTypingIndicator)
             )
         }
-            .animation(.easeInOut(duration: 0.4), value: viewModel.isProcessing)
+        .animation(.easeInOut(duration: 0.4), value: viewModel.isProcessing)
     }
-
+    
     /// Creates a new user study chat view
     ///
     /// This initializer sets up a view for conducting a structured study with
@@ -97,8 +97,8 @@ struct UserStudyChatView: View {
             resourceSummary: resourceSummary
         )
     }
-
-
+    
+    
     @ViewBuilder
     private func surveySheet() -> some View {
         if let task = viewModel.currentTask {
@@ -118,7 +118,7 @@ struct UserStudyChatView: View {
             .presentationDetents([.large])
         }
     }
-
+    
     @ViewBuilder
     private func taskInstructionSheet() -> some View {
         if let currentTask = viewModel.currentTask {
@@ -134,8 +134,8 @@ struct UserStudyChatView: View {
 }
 
 func makeBinding<T>(
-    get: @escaping () -> T,
-    set: @escaping (T) -> Void
+    get: @escaping @MainActor () -> T,
+    set: @escaping @MainActor (T) -> Void
 ) -> Binding<T> {
     Binding(
         get: get,

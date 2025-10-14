@@ -12,6 +12,7 @@ import SpeziAccessGuard
 import SpeziFHIR
 import SpeziHealthKit
 import SpeziLLM
+import SpeziLLMFog
 import SpeziLLMLocal
 import SpeziLLMOpenAI
 import SwiftUI
@@ -31,6 +32,8 @@ class LLMonFHIRDelegate: SpeziAppDelegate {
                         retryPolicy: .attempts(3)  // Automatically perform up to 3 retries on retryable OpenAI API status codes
                     )
                 )
+                LLMFogPlatform(configuration: .init(host: "spezillmfog.local", connectionType: .http, authToken: .none))
+                LLMLocalPlatform()
             }
             FHIRInterpretationModule()
             AccessGuardModule {

@@ -64,6 +64,12 @@ extension XCUIApplication {
         
         XCTAssertTrue(buttons["Next"].waitForExistence(timeout: 2))
         buttons["Next"].tap()
+        
+        XCTAssertTrue(buttons["Save Model Selection"].waitForExistence(timeout: 2))
+        buttons["Save Model Selection"].tap()
+        
+        XCTAssertTrue(buttons["Save Choice"].waitForExistence(timeout: 2))
+        buttons["Save Choice"].tap()
     }
     
     private func navigateOnboardingFlowHealthKitAccess() throws {

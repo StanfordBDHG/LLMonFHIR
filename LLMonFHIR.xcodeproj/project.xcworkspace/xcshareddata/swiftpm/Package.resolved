@@ -51,8 +51,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/ml-explore/mlx-swift-examples",
       "state" : {
-        "revision" : "42b0d21a607b97c3b99d1e20626b7d9b14827b81",
-        "version" : "2.25.5"
+        "revision" : "dddb0b3871390dd9dea8e7ff2c347cf7e74cec9d",
+        "version" : "2.25.7"
       }
     },
     {
@@ -96,8 +96,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/StanfordSpezi/SpeziChat",
       "state" : {
-        "revision" : "021ec65df13c02176d43737b8587a41cd520a510",
-        "version" : "0.2.4"
+        "revision" : "d696d882f2722d22669e6d50254e87a124ef6643",
+        "version" : "0.2.5"
       }
     },
     {
@@ -130,10 +130,10 @@
     {
       "identity" : "spezillm",
       "kind" : "remoteSourceControl",
-      "location" : "https://github.com/StanfordSpezi/SpeziLLM",
+      "location" : "https://github.com/StanfordSpezi/SpeziLLM.git",
       "state" : {
-        "revision" : "b5c04af5b537d5f53c6fda4dc2edf372088547c8",
-        "version" : "0.12.0"
+        "revision" : "aad90784c5660572df75cbdb2d090412312b2307",
+        "version" : "0.12.1"
       }
     },
     {
