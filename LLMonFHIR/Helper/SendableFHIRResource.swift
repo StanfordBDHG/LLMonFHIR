@@ -48,9 +48,9 @@ struct SendableFHIRResource: @unchecked Sendable {
     }
     
     
-    func stringifyAttachements() throws {
+    func stringifyAttachments() throws {
         try readWriteLock.withWriteLock {
-            try _resource.stringifyAttachements()
+            try _resource.stringifyAttachments()
         }
     }
 }
