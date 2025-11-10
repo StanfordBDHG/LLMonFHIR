@@ -112,7 +112,7 @@ actor LLMonFHIRStandard: Standard, HealthKitConstraint, EnvironmentAccessible {
                 sampleTaskGroup.addTask { [self] in
                     await triggerWaitingTask()
                     do {
-                        try await fhirStore.add(sample: newHealthKitSample, loadHealthKitAttachments: true)
+                        try await fhirStore.add(newHealthKitSample, loadHealthKitAttachments: true)
                     } catch {
                         logger.error("Could not transform sample \(newHealthKitSample.id) to FHIR resource: \(error)")
                     }
@@ -137,8 +137,8 @@ actor LLMonFHIRStandard: Standard, HealthKitConstraint, EnvironmentAccessible {
     }
     
     @MainActor
-    private func updateSchemas() async {
-        self.fhirInterpretationModule.updateSchemas()
+    private func updateSchemas() {
+        fhirInterpretationModule.updateSchemas()
     }
     
     // HealthKitConstraint

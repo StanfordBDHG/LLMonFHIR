@@ -1,5 +1,5 @@
 {
-  "originHash" : "cc208816f7fada8f3adf8a21b7f58d79beefc28dc5dee67064f2cdb3ad919e1b",
+  "originHash" : "5d13f010ae5c10726edbe358aae0a29cf46e012f7715ad665b0271fdf594e544",
   "pins" : [
     {
       "identity" : "fhirmodels",
@@ -103,10 +103,9 @@
     {
       "identity" : "spezifhir",
       "kind" : "remoteSourceControl",
-      "location" : "https://github.com/StanfordSpezi/SpeziFHIR",
+      "location" : "https://github.com/StanfordSpezi/SpeziFHIR.git",
       "state" : {
-        "revision" : "2b78bdf88d32a7fb00a22a68923469d9cc8974fd",
-        "version" : "0.8.1"
+        "revision" : "37bf513acea17d3f1b31ea500510975fe46d2301"
       }
     },
     {

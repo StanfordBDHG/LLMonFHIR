@@ -6,6 +6,7 @@
 // SPDX-License-Identifier: MIT
 //
 
+import SpeziViews
 import SwiftUI
 
 
@@ -51,10 +52,12 @@ struct SurveyView: View {
     @Binding var isPresented: Bool
 
     /// Callback to invoke when the survey is submitted
-    let onSubmit: ([TaskQuestionAnswer]) -> Void
+    let onSubmit: ([TaskQuestionAnswer]) async -> Void
 
     /// The state object managing all answers
     @State private var answerState = SurveyAnswerState()
+    
+    @State private var viewState: ViewState = .idle
 
 
     var body: some View {
@@ -86,7 +89,7 @@ struct SurveyView: View {
     }
 
     private var submitButtonSection: some View {
-        Button(action: handleSubmit) {
+        AsyncButton(state: $viewState, action: handleSubmit) {
             Text("Submit")
                 .frame(maxWidth: .infinity)
                 .padding(4)
@@ -117,9 +120,9 @@ struct SurveyView: View {
         }
     }
 
-    private func handleSubmit() {
+    private func handleSubmit() async {
         let answers = answerState.getAnswers(for: task.questions)
-        onSubmit(answers)
+        await onSubmit(answers)
         isPresented = false
     }
 }

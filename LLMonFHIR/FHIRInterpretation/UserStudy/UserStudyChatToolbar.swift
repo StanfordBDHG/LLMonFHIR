@@ -49,7 +49,7 @@ private struct PulsatingEffect: ViewModifier {
 }
 
 struct UserStudyChatToolbar: ToolbarContent {
-    @State private(set) var viewModel: UserStudyChatViewModel
+    var viewModel: UserStudyChatViewModel
 
     let isInputDisabled: Bool
     let onDismiss: () -> Void
@@ -72,7 +72,7 @@ struct UserStudyChatToolbar: ToolbarContent {
             }
             .confirmationDialog(
                 "Going back will reset your chat history.",
-                isPresented: makeBinding(
+                isPresented: Binding<Bool>(
                     get: { viewModel.isDismissDialogPresented },
                     set: { viewModel.setDismissDialogPresented($0) }
                 ),
@@ -117,15 +117,26 @@ struct UserStudyChatToolbar: ToolbarContent {
 
     private var shareButton: some ToolbarContent {
         ToolbarItem(placement: .topBarTrailing) {
-            if viewModel.navigationState == .completed, let studyReportFile = viewModel.generateStudyReportFile() {
-                Button {
-                    viewModel.setSharingSheetPresented(true)
-                } label: {
-                    ShareLink(item: studyReportFile) {
-                        Image(systemName: "square.and.arrow.up")
-                            .accessibilityLabel("Share Survey Results")
-                    }
-                }
+            if viewModel.navigationState == .completed {
+                ShareLink(item: viewModel, preview: SharePreview("Report"))
+                    .accessibilityLabel("Share Survey Results")
+            }
+        }
+    }
+}
+
+
+extension UserStudyChatViewModel: Transferable {
+    private enum ShareError: Error {
+        case unableToGenerate
+    }
+    
+    nonisolated static var transferRepresentation: some TransferRepresentation {
+        FileRepresentation(exportedContentType: .plainText) { viewModel in
+            if let url = await viewModel.generateStudyReportFile() {
+                return SentTransferredFile(url)
+            } else {
+                throw ShareError.unableToGenerate
             }
         }
     }

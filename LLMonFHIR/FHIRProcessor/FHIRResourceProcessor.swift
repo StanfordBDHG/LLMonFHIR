@@ -9,48 +9,27 @@
 import Foundation
 import SpeziChat
 import SpeziFHIR
-import SpeziFoundation
 import SpeziLLM
 import SpeziLLMOpenAI
 import SpeziLocalStorage
 
 
 // Unchecked `Sendable` conformance is fine as mutable storage (results & _llmSchema) is guarded by the `RWLock`.
-final class FHIRResourceProcessor<Content: Codable & LosslessStringConvertible>: @unchecked Sendable {
+actor FHIRResourceProcessor<Content: Codable & LosslessStringConvertible> {
     typealias Results = [FHIRResource.ID: Content]
-    
     
     private let localStorage: LocalStorage
     private let llmRunner: LLMRunner
     private let storageKey: String
     private let prompt: FHIRPrompt
     
-    private let resultsLock = RWLock()
     private(set) var results: Results = [:] {
         didSet {
-            resultsLock.withReadLock {
-                try? localStorage.store(results, for: .init(storageKey))
-            }
+            try? localStorage.store(results, for: .init(storageKey))
         }
     }
     
-    private let llmSchemaLock = RWLock()
-    private var _llmSchema: any LLMSchema
-    
-    
-    var llmSchema: any LLMSchema {
-        get {
-            llmSchemaLock.withReadLock {
-                _llmSchema
-            }
-        }
-        set {
-            llmSchemaLock.withWriteLock {
-                _llmSchema = newValue
-            }
-        }
-    }
-    
+    private(set) var llmSchema: any LLMSchema
     
     init(
         localStorage: LocalStorage,
@@ -61,32 +40,30 @@ final class FHIRResourceProcessor<Content: Codable & LosslessStringConvertible>:
     ) {
         self.localStorage = localStorage
         self.llmRunner = llmRunner
-        self._llmSchema = llmSchema
+        self.llmSchema = llmSchema
         self.storageKey = storageKey
         self.prompt = prompt
         self.results = (try? localStorage.load(.init(storageKey))) ?? [:]
     }
     
     
+    func changeSchems(to schema: any LLMSchema) {
+        self.llmSchema = schema
+    }
+    
     @discardableResult
     func process(resource: SendableFHIRResource, forceReload: Bool = false) async throws -> Content {
         if let result = results[resource.id], !result.description.isEmpty, !forceReload {
             return result
         }
-        
         let chatStreamResult: String = try await llmRunner.oneShot(
             with: llmSchema,
             context: .init(systemMessages: [prompt.prompt(withFHIRResource: resource.jsonDescription)])
         )
-        
         guard let content = Content(chatStreamResult) else {
             throw FHIRResourceProcessorError.notParsableAsAString
         }
-        
-        resultsLock.withWriteLock {
-            results[resource.id] = content
-        }
-        
+        results[resource.id] = content
         return content
     }
 }

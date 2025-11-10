@@ -17,6 +17,8 @@ struct InspectResourceView: View {
     
     @State var interpreting: ViewState = .idle
     @State var loadingSummary: ViewState = .idle
+    @State private var summary: FHIRResourceSummary.Summary?
+    @State private var interpretation: String?
     
     var resource: FHIRResource
     
@@ -40,7 +42,7 @@ struct InspectResourceView: View {
                     ProgressView()
                     Spacer()
                 }
-            } else if let summary = fhirResourceSummary.cachedSummary(forResource: resource) {
+            } else if let summary {
                 VStack {
                     HStack(spacing: 0) {
                         Text(summary.title)
@@ -66,11 +68,14 @@ struct InspectResourceView: View {
                 }
             }
         }
+        .task {
+            summary = await fhirResourceSummary.cachedSummary(forResource: resource)
+        }
     }
     
     @ViewBuilder private var interpretationSection: some View {
         Section("FHIR_RESOURCES_INTERPRETATION_SECTION") {
-            if let interpretation = fhirResourceInterpreter.cachedInterpretation(forResource: resource), !interpretation.isEmpty {
+            if let interpretation, !interpretation.isEmpty {
                 Text(interpretation)
                     .multilineTextAlignment(.leading)
                     .contextMenu {
@@ -92,6 +97,9 @@ struct InspectResourceView: View {
                     }
                 }
             }
+        }
+        .task {
+            interpretation = await fhirResourceInterpreter.cachedInterpretation(forResource: resource)
         }
     }
     

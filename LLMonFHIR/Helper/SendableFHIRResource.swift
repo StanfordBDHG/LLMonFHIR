@@ -18,7 +18,7 @@ struct SendableFHIRResource: @unchecked Sendable {
     private let readWriteLock = RWLock()
     
     
-    var id: String {
+    var id: FHIRResource.ID {
         readWriteLock.withReadLock {
             _resource.id
         }
