@@ -14,7 +14,6 @@ import SpeziLLMOpenAI
 import SpeziLocalStorage
 
 
-// Unchecked `Sendable` conformance is fine as mutable storage (results & _llmSchema) is guarded by the `RWLock`.
 actor FHIRResourceProcessor<Content: Codable & LosslessStringConvertible> {
     typealias Results = [FHIRResource.ID: Content]
     
