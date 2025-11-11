@@ -137,8 +137,8 @@ actor LLMonFHIRStandard: Standard, HealthKitConstraint, EnvironmentAccessible {
     }
     
     @MainActor
-    private func updateSchemas() {
-        fhirInterpretationModule.updateSchemas()
+    private func updateSchemas() async {
+        await fhirInterpretationModule.updateSchemas()
     }
     
     // HealthKitConstraint

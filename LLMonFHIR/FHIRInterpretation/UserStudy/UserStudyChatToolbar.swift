@@ -6,6 +6,7 @@
 // SPDX-License-Identifier: MIT
 //
 
+import SpeziViews
 import SwiftUI
 
 
@@ -114,30 +115,35 @@ struct UserStudyChatToolbar: ToolbarContent {
         }
             .disabled(isInputDisabled)
     }
-
+    
     private var shareButton: some ToolbarContent {
-        ToolbarItem(placement: .topBarTrailing) {
+        ToolbarItemGroup(placement: .topBarTrailing) {
             if viewModel.navigationState == .completed {
-                ShareLink(item: viewModel, preview: SharePreview("Report"))
-                    .accessibilityLabel("Share Survey Results")
+                ShareButton(viewModel: viewModel)
             }
         }
     }
 }
 
 
-extension UserStudyChatViewModel: Transferable {
-    private enum ShareError: Error {
-        case unableToGenerate
-    }
-    
-    nonisolated static var transferRepresentation: some TransferRepresentation {
-        FileRepresentation(exportedContentType: .plainText) { viewModel in
-            if let url = await viewModel.generateStudyReportFile() {
-                return SentTransferredFile(url)
-            } else {
-                throw ShareError.unableToGenerate
+extension UserStudyChatToolbar {
+    private struct ShareButton: View {
+        var viewModel: UserStudyChatViewModel
+        @State private var viewState: ViewState = .idle
+        @State private var reportUrl: ShareSheetInput?
+        
+        var body: some View {
+            // NOTE that this is intentionally a custom Button with a `shareSheet` modifier, instead of a `ShareLink`,
+            // the reason being that, for some reason, sharing via the ShareLink takes like 5 seconds to bring up the sheet
+            // (with no indication on the view that it is active), while the custom approach here is way faster,
+            // and also somehow gets us a significantly nicer-looking share sheet...
+            AsyncButton(state: $viewState) {
+                reportUrl = await viewModel.generateStudyReportFile().map { .init($0) }
+            } label: {
+                Image(systemName: "square.and.arrow.up")
+                    .accessibilityLabel("Share Survey Results")
             }
+            .shareSheet(item: $reportUrl)
         }
     }
 }

@@ -71,7 +71,9 @@ struct SettingsView: View {
                 Text("Resource Limit \(resourceLimit)")
             } onEditingChanged: { complete in
                 if complete {
-                    fhirInterpretationModule.updateSchemas()
+                    Task {
+                        await fhirInterpretationModule.updateSchemas()
+                    }
                 }
             }
         }
@@ -126,7 +128,7 @@ struct SettingsView: View {
         switch destination {
         case .openAIKey:
             LLMOpenAIAPITokenOnboardingStep(actionText: "OPEN_AI_KEY_SAVE_ACTION") {
-                fhirInterpretationModule.updateSchemas()
+                await fhirInterpretationModule.updateSchemas()
                 path.removeLast()
             }
         case .openAIModel:
@@ -135,8 +137,10 @@ struct SettingsView: View {
                 models: [.gpt4o, .gpt4_turbo, .gpt3_5_turbo]
             ) { chosenModelType in
                 openAIModel = chosenModelType
-                fhirInterpretationModule.updateSchemas()
-                path.removeLast()
+                Task {
+                    await fhirInterpretationModule.updateSchemas()
+                    path.removeLast()
+                }
             }
         case .openAIModelParameters:
             OpenAIModelParametersView()
@@ -144,17 +148,17 @@ struct SettingsView: View {
             ResourceSelection()
         case .promptSummary:
             FHIRPromptSettingsView(promptType: .summary) {
-                fhirInterpretationModule.updateSchemas()
+                await fhirInterpretationModule.updateSchemas()
                 path.removeLast()
             }
         case .promptInterpretation:
             FHIRPromptSettingsView(promptType: .interpretation) {
-                fhirInterpretationModule.updateSchemas()
+                await fhirInterpretationModule.updateSchemas()
                 path.removeLast()
             }
         case .promptMultipleResourceInterpretation:
             FHIRPromptSettingsView(promptType: .interpretMultipleResources) {
-                fhirInterpretationModule.updateSchemas()
+                await fhirInterpretationModule.updateSchemas()
                 path.removeLast()
             }
         case .downloadLocalLLM:
@@ -162,7 +166,7 @@ struct SettingsView: View {
                 model: .custom(id: "mlx-community/OpenHermes-2.5-Mistral-7B-4bit-mlx"),
                 downloadDescription: "Download the LLM model to generate summaries of FHIR resources."
             ) {
-                fhirInterpretationModule.updateSchemas()
+                await fhirInterpretationModule.updateSchemas()
                 path.removeLast()
             }
                 .interactiveDismissDisabled()

@@ -243,11 +243,6 @@ final class UserStudyChatViewModel: MultipleResourcesChatViewModel {  // swiftli
     ///
     /// - Returns: The URL of the generated report file, or nil if generation fails
     func generateStudyReportFile() async -> URL? {
-        let startTS = CACurrentMediaTime()
-        defer {
-            let endTS = CACurrentMediaTime()
-            print("REPORT GEN TOOK \(endTS - startTS) sec!")
-        }
         guard let studyReport = await generateStudyReport() else {
             return nil
         }

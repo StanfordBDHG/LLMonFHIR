@@ -83,14 +83,12 @@ final class FHIRMultipleResourceInterpreter {
     func startNewConversation() {
         let newLLMSession = llmRunner(with: llmSchema)
         newLLMSession.context = createInterpretationContext()
-
         do {
             try localStorage.delete(.init(FHIRMultipleResourceInterpreterConstants.context))
             Self.logger.debug("Deleted previous conversation context from storage")
         } catch {
             Self.logger.error("Failed to delete conversation context: \(error)")
         }
-
         llmSession = newLLMSession
         Self.logger.debug("Created new LLM session with fresh context")
     }
@@ -101,33 +99,24 @@ final class FHIRMultipleResourceInterpreter {
     ///   or `nil` if generation was cancelled or encountered an error.
     func generateAssistantResponse() async -> LLMContextEntity? {
         currentGenerationTask?.cancel()
-
         currentGenerationTask = Task { [weak self] in
             guard let self else {
                 return nil
             }
-
             defer {
                 currentGenerationTask = nil
             }
-
             Self.logger.debug("The Multiple Resource Interpreter has access to \(self.fhirStore.llmRelevantResources.count) resources.")
-
             do {
                 let stream = try await llmSession.generate()
-
                 for try await token in stream {
                     try Task.checkCancellation()
                     llmSession.context.append(assistantOutput: token)
                 }
-
                 try Task.checkCancellation()
-
                 llmSession.context.completeAssistantStreaming()
-
                 try localStorage.store(llmSession.context, for: .init(FHIRMultipleResourceInterpreterConstants.context))
                 Self.logger.debug("Successfully stored updated conversation context")
-
                 return llmSession.context.last
             } catch is CancellationError {
                 Self.logger.error("Response generation was cancelled")
@@ -137,7 +126,6 @@ final class FHIRMultipleResourceInterpreter {
                 return nil
             }
         }
-
         return await currentGenerationTask?.value
     }
 
@@ -155,13 +143,9 @@ final class FHIRMultipleResourceInterpreter {
     func changeLLMSchema<Schema: LLMSchema>(to newSchema: Schema) {
         Self.logger.debug("Updating LLM schema")
         self.llmSchema = newSchema
-
         let newSession = llmRunner(with: llmSchema)
-
         Self.logger.debug("Setting up new conversation with updated schema")
-
         newSession.context = createInterpretationContext()
-
         llmSession = newSession
     }
 

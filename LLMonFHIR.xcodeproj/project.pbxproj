@@ -21,7 +21,7 @@
 		44E18E8E2CEBEC9500829A26 /* SpeziLLMLocalDownload in Frameworks */ = {isa = PBXBuildFile; productRef = 44E18E8D2CEBEC9500829A26 /* SpeziLLMLocalDownload */; };
 		44E18E902CEBEC9500829A26 /* SpeziLLMOpenAI in Frameworks */ = {isa = PBXBuildFile; productRef = 44E18E8F2CEBEC9500829A26 /* SpeziLLMOpenAI */; };
 		44E18E932CEBF29200829A26 /* SpeziLocalStorage in Frameworks */ = {isa = PBXBuildFile; productRef = 44E18E922CEBF29200829A26 /* SpeziLocalStorage */; };
-		65D074CB2E535E5400821C04 /* SpeziViews in Frameworks */ = {isa = PBXBuildFile; productRef = 65D074CA2E535E5400821C04 /* SpeziViews */; };
+		8023F0D02EC3AE2D002AB7EA /* SpeziViews in Frameworks */ = {isa = PBXBuildFile; productRef = 8023F0CF2EC3AE2D002AB7EA /* SpeziViews */; };
 		806DF5BA2EC234AD00A8243C /* SpeziFHIR in Frameworks */ = {isa = PBXBuildFile; productRef = 806DF5B92EC234AD00A8243C /* SpeziFHIR */; };
 		806DF5BC2EC234AD00A8243C /* SpeziFHIRHealthKit in Frameworks */ = {isa = PBXBuildFile; productRef = 806DF5BB2EC234AD00A8243C /* SpeziFHIRHealthKit */; };
 		806DF5BE2EC234AD00A8243C /* SpeziFHIRMockPatients in Frameworks */ = {isa = PBXBuildFile; productRef = 806DF5BD2EC234AD00A8243C /* SpeziFHIRMockPatients */; };
@@ -116,9 +116,9 @@
 				97EAB5E42B7A010A00A0B036 /* SpeziFHIRMockPatients in Frameworks */,
 				44E18E902CEBEC9500829A26 /* SpeziLLMOpenAI in Frameworks */,
 				9733FC5D2B60E5FB0024F12C /* SpeziFHIRMockPatients in Frameworks */,
-				65D074CB2E535E5400821C04 /* SpeziViews in Frameworks */,
 				97EAB5DE2B7A010A00A0B036 /* SpeziFHIR in Frameworks */,
 				806DF5BE2EC234AD00A8243C /* SpeziFHIRMockPatients in Frameworks */,
+				8023F0D02EC3AE2D002AB7EA /* SpeziViews in Frameworks */,
 				2FE5DC8129EDD91D004B9AB4 /* SpeziOnboarding in Frameworks */,
 				C01EADB72D686A3000B559E9 /* SpeziAccessGuard in Frameworks */,
 				97BC1F2F2B7F390100438263 /* SpeziFHIRMockPatients in Frameworks */,
@@ -222,13 +222,13 @@
 				44E18E8F2CEBEC9500829A26 /* SpeziLLMOpenAI */,
 				44E18E922CEBF29200829A26 /* SpeziLocalStorage */,
 				C01EADB62D686A3000B559E9 /* SpeziAccessGuard */,
-				65D074CA2E535E5400821C04 /* SpeziViews */,
 				806DF5B92EC234AD00A8243C /* SpeziFHIR */,
 				806DF5BB2EC234AD00A8243C /* SpeziFHIRHealthKit */,
 				806DF5BD2EC234AD00A8243C /* SpeziFHIRMockPatients */,
 				806DF6752EC29DD600A8243C /* SpeziFHIR */,
 				806DF6772EC29DD600A8243C /* SpeziFHIRHealthKit */,
 				806DF6792EC29DD600A8243C /* SpeziFHIRMockPatients */,
+				8023F0CF2EC3AE2D002AB7EA /* SpeziViews */,
 			);
 			productName = LLMonFHIR;
 			productReference = 653A254D283387FE005D4D48 /* LLMonFHIR.app */;
@@ -329,9 +329,9 @@
 				44E18EE92CED09DA00829A26 /* XCRemoteSwiftPackageReference "SpeziSpeech" */,
 				C0FA07222D3932FB002485FF /* XCRemoteSwiftPackageReference "SpeziLLM" */,
 				C01EADB52D686A3000B559E9 /* XCRemoteSwiftPackageReference "SpeziAccessGuard" */,
-				65D074C92E535E5400821C04 /* XCRemoteSwiftPackageReference "SpeziViews" */,
 				658E102D2E74A1380038C003 /* XCRemoteSwiftPackageReference "SwiftLintPlugins" */,
 				806DF6742EC29DD600A8243C /* XCRemoteSwiftPackageReference "SpeziFHIR" */,
+				8023F0CA2EC3AE2D002AB7EA /* XCRemoteSwiftPackageReference "SpeziViews" */,
 			);
 			productRefGroup = 653A254E283387FE005D4D48 /* Products */;
 			projectDirPath = "";
@@ -506,6 +506,7 @@
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
+				IPHONEOS_DEPLOYMENT_TARGET = 17;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -713,6 +714,7 @@
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
+				IPHONEOS_DEPLOYMENT_TARGET = 17;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -761,6 +763,7 @@
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
+				IPHONEOS_DEPLOYMENT_TARGET = 17;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -979,12 +982,12 @@
 				minimumVersion = 0.61.0;
 			};
 		};
-		65D074C92E535E5400821C04 /* XCRemoteSwiftPackageReference "SpeziViews" */ = {
+		8023F0CA2EC3AE2D002AB7EA /* XCRemoteSwiftPackageReference "SpeziViews" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/StanfordSpezi/SpeziViews.git";
 			requirement = {
 				kind = upToNextMajorVersion;
-				minimumVersion = 1.12.2;
+				minimumVersion = 1.12.7;
 			};
 		};
 		806DF6742EC29DD600A8243C /* XCRemoteSwiftPackageReference "SpeziFHIR" */ = {
@@ -1084,9 +1087,9 @@
 			package = 658E102D2E74A1380038C003 /* XCRemoteSwiftPackageReference "SwiftLintPlugins" */;
 			productName = "plugin:SwiftLintBuildToolPlugin";
 		};
-		65D074CA2E535E5400821C04 /* SpeziViews */ = {
+		8023F0CF2EC3AE2D002AB7EA /* SpeziViews */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 65D074C92E535E5400821C04 /* XCRemoteSwiftPackageReference "SpeziViews" */;
+			package = 8023F0CA2EC3AE2D002AB7EA /* XCRemoteSwiftPackageReference "SpeziViews" */;
 			productName = SpeziViews;
 		};
 		806DF5B92EC234AD00A8243C /* SpeziFHIR */ = {
