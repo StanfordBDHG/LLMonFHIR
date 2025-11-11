@@ -994,8 +994,8 @@
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/StanfordSpezi/SpeziFHIR.git";
 			requirement = {
-				kind = revision;
-				revision = 37bf513acea17d3f1b31ea500510975fe46d2301;
+				kind = upToNextMinorVersion;
+				minimumVersion = 0.9.0;
 			};
 		};
 		C01EADB52D686A3000B559E9 /* XCRemoteSwiftPackageReference "SpeziAccessGuard" */ = {
