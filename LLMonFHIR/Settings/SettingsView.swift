@@ -6,44 +6,26 @@
 // SPDX-License-Identifier: MIT
 //
 
+import SpeziLLMLocalDownload
 import SpeziLLMOpenAI
 import SpeziViews
 import SwiftUI
 
 
 struct SettingsView: View {
-    struct NavigationButton: View {
-        let titleKey: LocalizedStringKey
-        let action: @MainActor () -> Void
-        
-        var body: some View {
-            Button {
-                self.action()
-            } label: {
-                HStack {
-                    Text(self.titleKey)
-                    Spacer()
-                    Image(systemName: "chevron.right")
-                        .foregroundColor(.gray)
-                        .accessibilityHidden(true)
-                }
-                .frame(maxWidth: .infinity, alignment: .leading)
-                .contentShape(Rectangle())
-            }
-            .buttonStyle(.plain)
-        }
-        
-        init(_ titleKey: LocalizedStringKey, action: @escaping @MainActor () -> Void) {
-            self.titleKey = titleKey
-            self.action = action
-        }
+    private enum SettingsDestinations {
+        case openAIKey
+        case openAIModel
+        case openAIModelParameters
+        case llmSourceSelection
+        case resourceSelection
+        case promptSummary
+        case promptInterpretation
+        case promptMultipleResourceInterpretation
     }
     
-    @State private var path = ManagedNavigationStack.Path()
-    @State private var didComplete = false
-    
+    @State private var path = NavigationPath()
     @Environment(FHIRInterpretationModule.self) var fhirInterpretationModule
-    @Environment(\.dismiss) private var dismiss
     
     @AppStorage(StorageKeys.enableTextToSpeech) private var enableTextToSpeech = StorageKeys.currentEnableTextToSpeech
     @AppStorage(StorageKeys.resourceLimit) private var resourceLimit = StorageKeys.currentResourceCountLimit
@@ -52,7 +34,7 @@ struct SettingsView: View {
     
     
     var body: some View {
-        ManagedNavigationStack(didComplete: self.$didComplete, path: self.path) {
+        NavigationStack(path: $path) {
             List {
                 llmSettings
                 speechSettings
@@ -61,21 +43,20 @@ struct SettingsView: View {
                 promptsSettings
                 usabilityStudySettings
             }
-            .navigationTitle("SETTINGS_TITLE")
-            .toolbar {
-                ToolbarItem {
-                    DismissButton()
+                .navigationTitle("SETTINGS_TITLE")
+                .navigationDestination(for: SettingsDestinations.self) { destination in
+                    Group {
+                        settingsDestinationView(destination)
+                    }
                 }
-            }
-        }
-        .onChange(of: self.didComplete) { _, newValue in
-            if newValue {
-                self.fhirInterpretationModule.updateSchemas()
-                self.dismiss()
-            }
+                .toolbar {
+                    ToolbarItem {
+                        DismissButton()
+                    }
+                }
         }
     }
-    
+
     private var speechSettings: some View {
         Section("SETTINGS_SPEECH") {
             Toggle(isOn: $enableTextToSpeech) {
@@ -90,7 +71,9 @@ struct SettingsView: View {
                 Text("Resource Limit \(resourceLimit)")
             } onEditingChanged: { complete in
                 if complete {
-                    self.fhirInterpretationModule.updateSchemas()
+                    Task {
+                        await fhirInterpretationModule.updateSchemas()
+                    }
                 }
             }
         }
@@ -98,77 +81,39 @@ struct SettingsView: View {
     
     private var resourcesSettings: some View {
         Section("Resource Selection") {
-            NavigationButton("Resource Selection") {
-                self.path.append(
-                    customView: ResourceSelection()
-                )
+            NavigationLink(value: SettingsDestinations.resourceSelection) {
+                Text("Resource Selection")
             }
         }
     }
     
     private var llmSettings: some View {
         Section("SETTINGS_LLM") {
-            // OpenAI settings are always present for the multiple resource chat
-            NavigationButton("SETTINGS_OPENAI_KEY") {
-                self.path.append(
-                    customView: LLMOpenAIAPITokenOnboardingStep(actionText: "OPEN_AI_KEY_SAVE_ACTION") {
-                        self.fhirInterpretationModule.updateSchemas()
-                        self.path.removeLast()
-                    }
-                )
+            NavigationLink(value: SettingsDestinations.openAIKey) {
+                Text("SETTINGS_OPENAI_KEY")
             }
-            NavigationButton("SETTINGS_OPENAI_MODEL") {
-                self.path.append(
-                    customView: LLMOpenAIModelOnboardingStep(
-                        actionText: "OPEN_AI_MODEL_SAVE_ACTION",
-                        models: [.gpt5, .gpt4o, .gpt4_turbo, .gpt3_5_turbo]
-                    ) { chosenModelType in
-                        self.openAIModel = chosenModelType
-                        self.fhirInterpretationModule.updateSchemas()
-                        self.path.removeLast()
-                    }
-                )
+            NavigationLink(value: SettingsDestinations.openAIModel) {
+                Text("SETTINGS_OPENAI_MODEL")
             }
-            NavigationButton("SETTINGS_OPENAI_MODEL_PARAMETERS") {
-                self.path.append(
-                    customView: OpenAIModelParametersView()
-                )
+            NavigationLink(value: SettingsDestinations.openAIModelParameters) {
+                Text("SETTINGS_OPENAI_MODEL_PARAMETERS")
             }
-            
-            // Ability to change models for the single resource summary / interpretation
-            NavigationButton("SETTINGS_LLM_SOURCE") {
-                self.path.append(
-                    customView: LLMSourceSelection()
-                )
+            NavigationLink(value: SettingsDestinations.llmSourceSelection) {
+                Text("SETTINGS_LLM_SOURCE")
             }
         }
     }
-    
+
     private var promptsSettings: some View {
         Section("SETTINGS_PROMPTS") {
-            NavigationButton("SETTINGS_PROMPTS_SUMMARY") {
-                self.path.append(
-                    customView: FHIRPromptSettingsView(promptType: .summary) {
-                        self.fhirInterpretationModule.updateSchemas()
-                        self.path.removeLast()
-                    }
-                )
+            NavigationLink(value: SettingsDestinations.promptSummary) {
+                Text("SETTINGS_PROMPTS_SUMMARY")
             }
-            NavigationButton("SETTINGS_PROMPTS_INTERPRETATION") {
-                self.path.append(
-                    customView: FHIRPromptSettingsView(promptType: .interpretation) {
-                        self.fhirInterpretationModule.updateSchemas()
-                        self.path.removeLast()
-                    }
-                )
+            NavigationLink(value: SettingsDestinations.promptInterpretation) {
+                Text("SETTINGS_PROMPTS_INTERPRETATION")
             }
-            NavigationButton("SETTINGS_PROMPTS_INTERPRETATION_MULTIPLE_RESOURCES") {
-                self.path.append(
-                    customView: FHIRPromptSettingsView(promptType: .interpretMultipleResources) {
-                        self.fhirInterpretationModule.updateSchemas()
-                        self.path.removeLast()
-                    }
-                )
+            NavigationLink(value: SettingsDestinations.promptMultipleResourceInterpretation) {
+                Text("SETTINGS_PROMPTS_INTERPRETATION_MULTIPLE_RESOURCES")
             }
         }
     }
@@ -177,6 +122,49 @@ struct SettingsView: View {
         Section("Usability Study Settings") {
             Toggle(isOn: $enableUsabilityStudy) {
                 Text("Enable Usability Study")
+            }
+        }
+    }
+    
+    @ViewBuilder
+    private func settingsDestinationView(_ destination: SettingsDestinations) -> some View {
+        switch destination {
+        case .openAIKey:
+            LLMOpenAIAPITokenOnboardingStep(actionText: "OPEN_AI_KEY_SAVE_ACTION") {
+                await fhirInterpretationModule.updateSchemas()
+                path.removeLast()
+            }
+        case .openAIModel:
+            LLMOpenAIModelOnboardingStep(
+                actionText: "OPEN_AI_MODEL_SAVE_ACTION",
+                models: [.gpt4o, .gpt4_turbo, .gpt3_5_turbo]
+            ) { chosenModelType in
+                openAIModel = chosenModelType
+                Task {
+                    await fhirInterpretationModule.updateSchemas()
+                    path.removeLast()
+                }
+            }
+        case .openAIModelParameters:
+            OpenAIModelParametersView()
+        case .llmSourceSelection:
+            LLMSourceSelection()
+        case .resourceSelection:
+            ResourceSelection()
+        case .promptSummary:
+            FHIRPromptSettingsView(promptType: .summary) {
+                await fhirInterpretationModule.updateSchemas()
+                path.removeLast()
+            }
+        case .promptInterpretation:
+            FHIRPromptSettingsView(promptType: .interpretation) {
+                await fhirInterpretationModule.updateSchemas()
+                path.removeLast()
+            }
+        case .promptMultipleResourceInterpretation:
+            FHIRPromptSettingsView(promptType: .interpretMultipleResources) {
+                await fhirInterpretationModule.updateSchemas()
+                path.removeLast()
             }
         }
     }

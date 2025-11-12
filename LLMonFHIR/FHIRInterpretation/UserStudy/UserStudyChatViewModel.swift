@@ -100,7 +100,6 @@ final class UserStudyChatViewModel: MultipleResourcesChatViewModel {  // swiftli
     private var _studyReport: String?
     private var _isSurveyViewPresented = false
     private var _isDismissDialogPresented = false
-    private var _isSharingSheetPresented = false
     private var _isTaskIntructionAlertPresented = false
     private var _currentTaskNumber: Int = 0
 
@@ -153,12 +152,7 @@ final class UserStudyChatViewModel: MultipleResourcesChatViewModel {  // swiftli
     func setDismissDialogPresented(_ isPresented: Bool) {
         _isDismissDialogPresented = isPresented
     }
-
-    /// Shows or hides the sharing sheet
-    func setSharingSheetPresented(_ isPresented: Bool) {
-        _isSharingSheetPresented = isPresented
-    }
-
+    
     /// Shows or hides the task instruction sheet
     func setTaskInstructionSheetPresented(_ isPresented: Bool) {
         _isTaskIntructionAlertPresented = isPresented
@@ -216,14 +210,12 @@ final class UserStudyChatViewModel: MultipleResourcesChatViewModel {  // swiftli
     ///
     /// - Parameter answers: Array of answers provided by the user
     /// - Throws: An error if the submission fails
-    func submitSurveyAnswers(_ answers: [TaskQuestionAnswer]) throws {
+    func submitSurveyAnswers(_ answers: [TaskQuestionAnswer]) async throws {
         taskEndTimes[_currentTaskNumber] = Date()
-
         for (index, answer) in answers.enumerated() {
             try survey.submitAnswer(answer, forTaskId: _currentTaskNumber, questionIndex: index)
         }
-
-        advanceToNextTask()
+        await advanceToNextTask()
         setSurveyViewPresented(false)
     }
 
@@ -250,11 +242,10 @@ final class UserStudyChatViewModel: MultipleResourcesChatViewModel {  // swiftli
     /// Generates a temporary file URL containing the study report
     ///
     /// - Returns: The URL of the generated report file, or nil if generation fails
-    func generateStudyReportFile() -> URL? {
-        guard let studyReport = generateStudyReport() else {
+    func generateStudyReportFile() async -> URL? {
+        guard let studyReport = await generateStudyReport() else {
             return nil
         }
-
         let tempDir = FileManager.default.temporaryDirectory
         let reportURL = tempDir.appendingPathComponent("survey_report_\(studyID.lowercased()).txt")
         try? studyReport.write(to: reportURL, atomically: true, encoding: .utf8)
@@ -282,14 +273,14 @@ final class UserStudyChatViewModel: MultipleResourcesChatViewModel {  // swiftli
         }
     }
 
-    private func advanceToNextTask() {
+    private func advanceToNextTask() async {
         if _currentTaskNumber <= survey.tasks.count {
             _currentTaskNumber += 1
             taskStartTimes[_currentTaskNumber] = Date()
             _isTaskIntructionAlertPresented = true
         } else {
             _navigationState = .completed
-            _studyReport = generateStudyReport()
+            _studyReport = await generateStudyReport()
         }
         updateNavigationState()
     }
@@ -302,13 +293,12 @@ final class UserStudyChatViewModel: MultipleResourcesChatViewModel {  // swiftli
                 : .completed
     }
 
-    private func generateStudyReport() -> String? {
+    private func generateStudyReport() async -> String? {
         let report = UserStudyReport(
             metadata: generateMetadata(),
-            fhirResources: getFHIRResources(),
+            fhirResources: await getFHIRResources(),
             timeline: generateTimeline()
         )
-
         do {
             let encoder = JSONEncoder()
             encoder.dateEncodingStrategy = .iso8601
@@ -332,7 +322,6 @@ final class UserStudyChatViewModel: MultipleResourcesChatViewModel {  // swiftli
 
     private func generateTimeline() -> [TimelineEvent] {
         var timeline: [TimelineEvent] = []
-
         let chatMessages = interpreter.llmSession.context.chat.map { message in
             TimelineEvent.chatMessage(TimelineEvent.ChatMessage(
                 timestamp: message.date,
@@ -340,15 +329,12 @@ final class UserStudyChatViewModel: MultipleResourcesChatViewModel {  // swiftli
                 content: message.content
             ))
         }
-
         timeline.append(contentsOf: chatMessages)
-
         let surveyTasks = survey.tasks.compactMap { task -> TimelineEvent? in
             let taskNumber = task.id
             guard let taskStartTime = taskStartTimes[taskNumber], let taskEndTime = taskEndTimes[taskNumber] else {
                 return nil
             }
-
             let surveyTask = TimelineEvent.SurveyTask(
                 taskNumber: taskNumber,
                 startedAt: taskStartTime,
@@ -365,30 +351,25 @@ final class UserStudyChatViewModel: MultipleResourcesChatViewModel {  // swiftli
 
             return TimelineEvent.surveyTask(surveyTask)
         }
-
         timeline.append(contentsOf: surveyTasks)
-
         return timeline.sorted { $0.timestamp < $1.timestamp }
     }
 
-    private func getFHIRResources() -> FHIRResources {
+    private func getFHIRResources() async -> FHIRResources {
         let llmRelevantResources = interpreter.fhirStore.llmRelevantResources
             .map { resource in
                 FullFHIRResource(resource.versionedResource)
             }
-
-        let allResources = interpreter.fhirStore.allResources
-            .map { resource in
-                let summary = resourceSummary.cachedSummary(forResource: resource)
-                return PartialFHIRResource(
-                    id: resource.id,
-                    resourceType: resource.resourceType,
-                    displayName: resource.displayName,
-                    dateDescription: resource.date?.description,
-                    summary: summary?.description
-                )
-            }
-
+        let allResources = await interpreter.fhirStore.allResources.mapAsync { resource in
+            let summary = await resourceSummary.cachedSummary(forResource: resource)
+            return PartialFHIRResource(
+                id: resource.id,
+                resourceType: resource.resourceType,
+                displayName: resource.displayName,
+                dateDescription: resource.date?.description,
+                summary: summary?.description
+            )
+        }
         return FHIRResources(
             llmRelevantResources: FeatureFlags.exportRawJSONFHIRResources ? llmRelevantResources : [],
             allResources: allResources
@@ -405,5 +386,17 @@ extension ChatEntity.Role {
         case .assistantToolResponse: "assistant_tool_response"
         case .hidden(let type): "hidden_\(type.name)"
         }
+    }
+}
+
+
+extension Sequence {
+    func mapAsync<Result, E>(_ transform: (Element) async throws(E) -> Result) async throws(E) -> [Result] {
+        var results: [Result] = []
+        results.reserveCapacity(underestimatedCount)
+        for element in self {
+            results.append(try await transform(element))
+        }
+        return results
     }
 }

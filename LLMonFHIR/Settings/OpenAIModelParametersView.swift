@@ -38,7 +38,9 @@ struct OpenAIModelParametersView: View {
                 Slider(value: $temperature, in: 0...2, step: 0.05)
                     .tint(temperatureColor)
                     .onChange(of: temperature) {
-                        fhirInterpretationModule.updateSchemas()
+                        Task {
+                            await fhirInterpretationModule.updateSchemas()
+                        }
                     }
 
                 temperatureLabels

@@ -6,6 +6,7 @@
 // SPDX-License-Identifier: MIT
 //
 
+import SpeziViews
 import SwiftUI
 
 
@@ -49,7 +50,7 @@ private struct PulsatingEffect: ViewModifier {
 }
 
 struct UserStudyChatToolbar: ToolbarContent {
-    @State private(set) var viewModel: UserStudyChatViewModel
+    var viewModel: UserStudyChatViewModel
 
     let isInputDisabled: Bool
     let onDismiss: () -> Void
@@ -72,7 +73,7 @@ struct UserStudyChatToolbar: ToolbarContent {
             }
             .confirmationDialog(
                 "Going back will reset your chat history.",
-                isPresented: makeBinding(
+                isPresented: Binding<Bool>(
                     get: { viewModel.isDismissDialogPresented },
                     set: { viewModel.setDismissDialogPresented($0) }
                 ),
@@ -114,19 +115,35 @@ struct UserStudyChatToolbar: ToolbarContent {
         }
             .disabled(isInputDisabled)
     }
-
+    
     private var shareButton: some ToolbarContent {
-        ToolbarItem(placement: .topBarTrailing) {
-            if viewModel.navigationState == .completed, let studyReportFile = viewModel.generateStudyReportFile() {
-                Button {
-                    viewModel.setSharingSheetPresented(true)
-                } label: {
-                    ShareLink(item: studyReportFile) {
-                        Image(systemName: "square.and.arrow.up")
-                            .accessibilityLabel("Share Survey Results")
-                    }
-                }
+        ToolbarItemGroup(placement: .topBarTrailing) {
+            if viewModel.navigationState == .completed {
+                ShareButton(viewModel: viewModel)
             }
+        }
+    }
+}
+
+
+extension UserStudyChatToolbar {
+    private struct ShareButton: View {
+        var viewModel: UserStudyChatViewModel
+        @State private var viewState: ViewState = .idle
+        @State private var reportUrl: ShareSheetInput?
+        
+        var body: some View {
+            // NOTE that this is intentionally a custom Button with a `shareSheet` modifier, instead of a `ShareLink`,
+            // the reason being that, for some reason, sharing via the ShareLink takes like 5 seconds to bring up the sheet
+            // (with no indication on the view that it is active), while the custom approach here is way faster,
+            // and also somehow gets us a significantly nicer-looking share sheet...
+            AsyncButton(state: $viewState) {
+                reportUrl = await viewModel.generateStudyReportFile().map { .init($0) }
+            } label: {
+                Image(systemName: "square.and.arrow.up")
+                    .accessibilityLabel("Share Survey Results")
+            }
+            .shareSheet(item: $reportUrl)
         }
     }
 }

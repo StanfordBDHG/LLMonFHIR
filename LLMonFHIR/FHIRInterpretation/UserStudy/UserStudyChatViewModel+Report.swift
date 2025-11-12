@@ -54,7 +54,7 @@ extension UserStudyChatViewModel {
 
     /// A partial representation of an FHIR resource.
     struct PartialFHIRResource: Encodable {
-        let id: String
+        let id: FHIRResource.ID
         let resourceType: String
         let displayName: String
         let dateDescription: String?

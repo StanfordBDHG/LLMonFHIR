@@ -90,14 +90,16 @@ class FHIRInterpretationModule: Module, DefaultInitializable, EnvironmentAccessi
         )
         
         // Double-check that we load the right configurations.
-        self.updateSchemas()
+        Task {
+            await updateSchemas()
+        }
     }
     
     
     @MainActor
-    func updateSchemas() {
-        self.resourceSummary.changeLLMSchema(to: self.singleResourceLLMSchema)
-        self.resourceInterpreter.changeLLMSchema(to: self.singleResourceLLMSchema)
-        self.multipleResourceInterpreter.changeLLMSchema(to: self.multipleResourceInterpreterOpenAISchema)
+    func updateSchemas() async {
+        await resourceSummary.changeLLMSchema(to: singleResourceLLMSchema)
+        await resourceInterpreter.changeLLMSchema(to: singleResourceLLMSchema)
+        multipleResourceInterpreter.changeLLMSchema(to: multipleResourceInterpreterOpenAISchema)
     }
 }
