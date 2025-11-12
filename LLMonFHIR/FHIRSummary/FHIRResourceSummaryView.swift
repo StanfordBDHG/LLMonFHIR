@@ -15,13 +15,13 @@ import SwiftUI
 struct FHIRResourceSummaryView: View {
     @Environment(FHIRResourceSummary.self) private var fhirResourceSummary
     
-    @State private var viewState: ViewState = .idle
     private let resource: FHIRResource
-    
+    @State private var viewState: ViewState = .idle
+    @State private var summary: FHIRResourceSummary.Summary?
     
     var body: some View {
-        Group {
-            if let summary = fhirResourceSummary.cachedSummary(forResource: resource) {
+        VStack {
+            if let summary {
                 VStack(alignment: .leading, spacing: 0) {
                     Text(summary.title)
                     if let date = resource.date {
@@ -56,7 +56,10 @@ struct FHIRResourceSummaryView: View {
                     }
             }
         }
-            .viewStateAlert(state: $viewState)
+        .viewStateAlert(state: $viewState)
+        .task {
+            summary = await fhirResourceSummary.cachedSummary(forResource: resource)
+        }
     }
     
     

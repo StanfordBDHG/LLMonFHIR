@@ -40,14 +40,14 @@ struct UserStudyChatView: View {
                     }
                 }
                 .sheet(
-                    isPresented: makeBinding(
+                    isPresented: Binding<Bool>(
                         get: { viewModel.isSurveyViewPresented },
                         set: { viewModel.setSurveyViewPresented($0) }
                     ),
                     content: surveySheet
                 )
                 .sheet(
-                    isPresented: makeBinding(
+                    isPresented: Binding<Bool>(
                         get: { viewModel.isTaskIntructionAlertPresented },
                         set: { viewModel.setTaskInstructionSheetPresented($0) }
                     ),
@@ -104,13 +104,13 @@ struct UserStudyChatView: View {
         if let task = viewModel.currentTask {
             SurveyView(
                 task: task,
-                isPresented: makeBinding(
+                isPresented: Binding<Bool>(
                     get: { viewModel.isSurveyViewPresented },
                     set: { viewModel.setSurveyViewPresented($0) }
                 )
             ) { answers in
                 do {
-                    try viewModel.submitSurveyAnswers(answers)
+                    try await viewModel.submitSurveyAnswers(answers)
                 } catch {
                     print("Error submitting answers: \(error)")
                 }
@@ -124,21 +124,11 @@ struct UserStudyChatView: View {
         if let currentTask = viewModel.currentTask {
             TaskInstructionView(
                 task: currentTask,
-                isPresented: makeBinding(
+                isPresented: Binding<Bool>(
                     get: { viewModel.isTaskIntructionAlertPresented },
                     set: { viewModel.setTaskInstructionSheetPresented($0) }
                 )
             )
         }
     }
-}
-
-func makeBinding<T>(
-    get: @escaping () -> T,
-    set: @escaping (T) -> Void
-) -> Binding<T> {
-    Binding(
-        get: get,
-        set: set
-    )
 }

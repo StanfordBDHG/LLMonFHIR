@@ -6,6 +6,7 @@
 // SPDX-License-Identifier: MIT
 //
 
+import SpeziViews
 import SwiftUI
 
 
@@ -14,9 +15,9 @@ import SwiftUI
 /// Allows users to edit and save a prompt associated with a specific ``FHIRPrompt`` type, including where to insert FHIR resources dynamically in the prompt.
 struct FHIRPromptSettingsView: View {
     private let promptType: FHIRPrompt
-    private let onSave: () -> Void
+    private let onSave: () async -> Void
     @State private var prompt: String = ""
-    
+    @State private var viewState: ViewState = .idle
     
     var body: some View {
         VStack(spacing: 16) {
@@ -27,28 +28,24 @@ struct FHIRPromptSettingsView: View {
             Text("Place \(FHIRPrompt.fhirResourcePlaceholder) at the position in the prompt where the FHIR resource should be inserted. Optionally place \(FHIRPrompt.localePlaceholder) where you would like to insert the current locale.")
                 .multilineTextAlignment(.leading)
                 .font(.caption)
-            Button(
-                action: {
-                    promptType.save(prompt: prompt)
-                    onSave()
-                },
-                label: {
-                    Text("Save Prompt")
-                        .frame(maxWidth: .infinity, minHeight: 40)
-                }
-            )
+            AsyncButton(state: $viewState) {
+                promptType.save(prompt: prompt)
+                await onSave()
+            } label: {
+                Text("Save Prompt")
+                    .frame(maxWidth: .infinity, minHeight: 40)
+            }
             .buttonStyle(.borderedProminent)
         }
-            .padding()
-            .navigationTitle(promptType.localizedDescription)
+        .padding()
+        .navigationTitle(promptType.localizedDescription)
     }
-    
     
     /// Initializes a new `PromptSettingsView` with the specified ``FHIRPrompt`` and a save action.
     /// - Parameters:
     ///   - promptType: The ``FHIRPrompt`` instance whose settings are being modified. It holds the information about the specific prompt being edited.
     ///   - onSave: A closure to be called when the user saves the prompt. This allows for custom actions, like dismissing the view.
-    init(promptType: FHIRPrompt, onSave: @escaping () -> Void) {
+    init(promptType: FHIRPrompt, onSave: @escaping () async -> Void) {
         self.promptType = promptType
         self.onSave = onSave
         self._prompt = State(initialValue: promptType.prompt)

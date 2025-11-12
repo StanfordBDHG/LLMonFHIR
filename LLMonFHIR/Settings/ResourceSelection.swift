@@ -62,14 +62,16 @@ struct ResourceSelection: View {
                 }
             }
         }
-            .task {
-                showBundleSelection = !standard.useHealthKitResources || !HKHealthStore.isHealthDataAvailable()
-                self.bundles = await mockPatients
+        .task {
+            showBundleSelection = !standard.useHealthKitResources || !HKHealthStore.isHealthDataAvailable()
+            self.bundles = await mockPatients
+        }
+        .onDisappear {
+            _Concurrency.Task {
+                await fhirInterpretationModule.updateSchemas()
             }
-            .onDisappear {
-                fhirInterpretationModule.updateSchemas()
-            }
-            .navigationTitle(Text("Resource Settings"))
+        }
+        .navigationTitle(Text("Resource Settings"))
     }
     
     private var mockPatients: [ModelsR4.Bundle] {

@@ -77,7 +77,7 @@ final class FHIRResourceSummary: Sendable {
     /// - Returns: An asynchronous `String` representing the summarization of the resource.
     @discardableResult
     func summarize(resource: SendableFHIRResource, forceReload: Bool = false) async throws -> Summary {
-        try? resource.stringifyAttachements()
+        try? resource.stringifyAttachments()
 
         var retryCount = 0
         var summary: Summary?
@@ -104,16 +104,16 @@ final class FHIRResourceSummary: Sendable {
     ///
     /// - Parameter resource: The resource where the cached summary should be loaded from.
     /// - Returns: The cached summary. Returns `nil` if the resource is not present.
-    func cachedSummary(forResource resource: FHIRResource) -> Summary? {
-        resourceProcessor.results[resource.id]
+    func cachedSummary(forResource resource: FHIRResource) async -> Summary? {
+        await resourceProcessor.results[resource.id]
     }
     
     /// Adjust the LLM schema used by the ``FHIRResourceSummary``.
     ///
     /// - Parameters:
     ///    - schema: The to-be-used `LLMSchema`.
-    func changeLLMSchema<Schema: LLMSchema>(to schema: Schema) {
-        self.resourceProcessor.llmSchema = schema
+    func changeLLMSchema<Schema: LLMSchema>(to schema: Schema) async {
+        await resourceProcessor.changeSchems(to: schema)
     }
 }
 

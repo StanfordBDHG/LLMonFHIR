@@ -47,16 +47,16 @@ final class FHIRResourceInterpreter: Sendable {
     ///
     /// - Parameter resource: The resource where the cached interpretation should be loaded from.
     /// - Returns: The cached interpretation. Returns `nil` if the resource is not present.
-    func cachedInterpretation(forResource resource: FHIRResource) -> String? {
-        resourceProcessor.results[resource.id]
+    func cachedInterpretation(forResource resource: FHIRResource) async -> String? {
+        await resourceProcessor.results[resource.id]
     }
     
     /// Adjust the LLM schema used by the ``FHIRResourceInterpreter``.
     ///
     /// - Parameters:
     ///    - schema: The to-be-used `LLMSchema`.
-    func changeLLMSchema<Schema: LLMSchema & Sendable>(to schema: Schema) {
-        self.resourceProcessor.llmSchema = schema
+    func changeLLMSchema<Schema: LLMSchema & Sendable>(to schema: Schema) async {
+        await resourceProcessor.changeSchems(to: schema)
     }
 }
 

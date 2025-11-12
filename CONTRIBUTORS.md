@@ -17,3 +17,4 @@ LLM on FHIR Contributors
 * [Adrit Rao](https://github.com/AdritRao)
 * [Joan Disho](https://github.com/jdisho)
 * [Leon Nissen](https://github.com/LeonNissen)
+* [Lukas Kollmer](https://github.com/lukaskollmer)
