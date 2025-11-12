@@ -1,0 +1,8 @@
+[project]
+name = "decrypt-study-report"
+version = "0.1.0"
+description = "Decrypts encrypted study reports from the LLMonFHIR app"
+requires-python = ">=3.14"
+dependencies = [
+    "cryptography>=46.0.3",
+]

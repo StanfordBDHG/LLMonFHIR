@@ -138,7 +138,7 @@ extension UserStudyChatToolbar {
             // (with no indication on the view that it is active), while the custom approach here is way faster,
             // and also somehow gets us a significantly nicer-looking share sheet...
             AsyncButton(state: $viewState) {
-                reportUrl = await viewModel.generateStudyReportFile().map { .init($0) }
+                reportUrl = try await viewModel.generateStudyReportFile().map { .init($0) }
             } label: {
                 Image(systemName: "square.and.arrow.up")
                     .accessibilityLabel("Share Survey Results")

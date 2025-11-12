@@ -79,6 +79,27 @@ You can learn more about the Spezi standards-based software architecture in the 
 You can build and run the application using [Xcode](https://developer.apple.com/xcode/) by opening up the **LLMonFHIR.xcodeproj**.
 
 
+### Study Report File Encryption
+
+The report files generated form the usability study are optionally encrypted, using the public key located at `LLMonFHIR/Supporting Files/public_key.pem`.
+
+You can generate a public/private key pair using the following commands:
+```bash
+# generate private key
+openssl genpkey -algorithm X25519 -out private_key.pem
+
+# extract public key
+openssl pkey -in private_key.pem -pubout -out public_key.pem
+```
+
+Place the contents of `public_key.pem` in the app's Supporting Files directory.
+
+In order to decrypt a report file created by the app, you can use the python tool in `tools/decrypt-study-report`:
+```bash
+uv run main.py -k private_key.pem <input file>
+```
+
+
 ## Network-local privacy-focused Fog LLM Mode
 
 LLMonFHIR can run LLM inference for resource summarization and interpretation on nearby machines in your local network, called fog nodes, instead of only on-device or in the cloud.

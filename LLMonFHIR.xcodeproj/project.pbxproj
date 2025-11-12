@@ -70,6 +70,7 @@
 		653A254D283387FE005D4D48 /* LLMonFHIR.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LLMonFHIR.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		653A255D28338800005D4D48 /* LLMonFHIRTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = LLMonFHIRTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		653A256728338800005D4D48 /* LLMonFHIRUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = LLMonFHIRUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		80154A3D2EC52A61005DAD1B /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		97B76BCD2B195D650019D706 /* CONTRIBUTORS.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = CONTRIBUTORS.md; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -181,6 +182,7 @@
 			children = (
 				10D179A32E849FE1009E7DFC /* FogNode */,
 				97B76BCD2B195D650019D706 /* CONTRIBUTORS.md */,
+				80154A3D2EC52A61005DAD1B /* README.md */,
 				2FC94CD4298B0A1D009C8209 /* LLMonFHIR.xctestplan */,
 				65397DF32D8159A90067F1BE /* LLMonFHIR */,
 				65397E252D8159AC0067F1BE /* LLMonFHIRTests */,
