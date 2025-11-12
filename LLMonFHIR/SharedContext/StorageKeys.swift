@@ -7,16 +7,19 @@
 //
 
 import Foundation
+import SpeziLLMFog
 import SpeziLLMOpenAI
 
 
 /// Constants shared across the Spezi Template Application to access storage information including the `AppStorage` and `SceneStorage`
 enum StorageKeys {
-    private enum Defaults {
+    enum Defaults {
         fileprivate static let enableTextToSpeech = false
         fileprivate static let resourceLimit = 250
         fileprivate static let openAIModel: LLMOpenAIParameters.ModelType = .gpt4o
         fileprivate static let openAIModelTemperature = 0.0
+        static let llmSource = LLMSource.openai
+        static let fogModel = LLMFogParameters.FogModelType.llama3_1_8B
     }
     
     
@@ -24,7 +27,7 @@ enum StorageKeys {
         guard UserDefaults().object(forKey: StorageKeys.enableTextToSpeech) != nil else {
             return StorageKeys.Defaults.enableTextToSpeech
         }
-                                                         
+        
         return UserDefaults().bool(forKey: StorageKeys.enableTextToSpeech)
     }
     
@@ -32,7 +35,7 @@ enum StorageKeys {
         guard UserDefaults().object(forKey: StorageKeys.resourceLimit) != nil else {
             return StorageKeys.Defaults.resourceLimit
         }
-                                                         
+        
         return max(0, UserDefaults().integer(forKey: StorageKeys.resourceLimit))
     }
     
@@ -41,7 +44,7 @@ enum StorageKeys {
               let model = LLMOpenAIParameters.ModelType(rawValue: openAIModelMultipleInterpretation) else {
             return StorageKeys.Defaults.openAIModel
         }
-                                                         
+        
         return model
     }
     
@@ -57,6 +60,8 @@ enum StorageKeys {
     // MARK: - Onboarding
     /// A `Bool` flag indicating of the onboarding was completed.
     static let onboardingFlowComplete = "onboardingFlow.complete"
+    /// An `LLMSource` flag indicating the source of the model (local vs. fog vs. OpenAI)
+    static let llmSource = "onboardingFlow.llmsource"
     
     
     // MARK: - Home
@@ -78,4 +83,9 @@ enum StorageKeys {
     static let openAIModel = "settings.openAIModel.multipleResourceInterpretation"
     /// Model temperature
     static let openAIModelTemperature = "settings.openAIModel.temperature"
+    /// Identifier for selecting a fog model.
+    ///
+    /// The value should correspond to the registered model name available on the fog node.
+    /// LLMonFHIR uses this name to resolve and load the correct model.
+    static let fogModel = "settings.fogModel"
 }

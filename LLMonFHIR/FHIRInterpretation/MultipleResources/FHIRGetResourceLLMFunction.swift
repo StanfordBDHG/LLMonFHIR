@@ -12,8 +12,7 @@ import SpeziFHIR
 import SpeziLLMOpenAI
 
 
-// @unchecked Sendable can be removed once https://github.com/StanfordSpezi/SpeziLLM/pull/118 is merged.
-struct FHIRGetResourceLLMFunction: LLMFunction, @unchecked Sendable {
+struct FHIRGetResourceLLMFunction: LLMFunction {
     static let logger = Logger(subsystem: "edu.stanford.spezi.fhir", category: "SpeziFHIRLLM")
     
     static let name = "get_resources"
@@ -24,7 +23,7 @@ struct FHIRGetResourceLLMFunction: LLMFunction, @unchecked Sendable {
     
     
     @Parameter var resourceCategories: [String]
-
+    
     
     @MainActor
     init(
@@ -64,28 +63,28 @@ struct FHIRGetResourceLLMFunction: LLMFunction, @unchecked Sendable {
         let allResourceResults = try await processResourceCategories(resourceCategories)
         return allResourceResults.joined(separator: "\n\n")
     }
-
+    
     private func processResourceCategories(_ resourceCategories: [String]) async throws -> [String] {
         var functionOutput: [String] = []
-
+        
         try await withThrowingTaskGroup(of: [String].self) { group in
             for resourceCategory in resourceCategories {
                 group.addTask {
                     try await self.processResourceCategory(resourceCategory)
                 }
             }
-
+            
             for try await result in group {
                 functionOutput.append(contentsOf: result)
             }
         }
-
+        
         return functionOutput
     }
-
+    
     private func processResourceCategory(_ resourceCategory: String) async throws -> [String] {
         var fittingResources = await fhirStore.llmRelevantResources(filteredBy: resourceCategory)
-
+        
         guard !fittingResources.isEmpty else {
             return [
                 String(
@@ -93,30 +92,30 @@ struct FHIRGetResourceLLMFunction: LLMFunction, @unchecked Sendable {
                 )
             ]
         }
-
+        
         fittingResources = Self.filterFittingResources(fittingResources)
-
+        
         return try await summarizeFHIRResources(fittingResources, resourceCategory: resourceCategory)
     }
-
+    
     private func summarizeFHIRResources(_ resources: [SendableFHIRResource], resourceCategory: String) async throws -> [String] {
         var summaries: [String] = []
-
+        
         try await withThrowingTaskGroup(of: String.self) { group in
             for resource in resources {
                 group.addTask {
                     try await self.summarizeFHIRResource(resource, resourceCategory: resourceCategory)
                 }
             }
-
+            
             for try await summary in group {
                 summaries.append(summary)
             }
         }
-
+        
         return summaries
     }
-
+    
     private func summarizeFHIRResource(_ resource: SendableFHIRResource, resourceCategory: String) async throws -> String {
         let summary = try await resourceSummary.summarize(resource: resource)
         Self.logger.debug("Summary of appended FHIR resource category \(resourceCategory): \(summary.description)")

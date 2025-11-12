@@ -32,7 +32,10 @@ struct OnboardingFlow: View {
             Welcome()
             Disclaimer()
             if !FeatureFlags.isUserStudyEnabled {
+                // Always show OpenAI model onboarding for chat-based interaction.
                 OpenAIAPIKey()
+                // Presents the onboarding flow for the respective local, fog, or cloud LLM.
+                LLMSourceSelection()
             }
             if HKHealthStore.isHealthDataAvailable() && !healthKitAuthorization {
                 HealthKitPermissions()
