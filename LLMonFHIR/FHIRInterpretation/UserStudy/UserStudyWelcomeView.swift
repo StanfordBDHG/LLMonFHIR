@@ -235,7 +235,7 @@ struct UserStudyWelcomeView: View {
         
         let logger = Logger(subsystem: "edu.stanford.llmonfhir", category: "UserStudyWelcomeView")
         
-        guard let apiKey = UserStudyPlistConfiguration.shared.apiKey else {
+        guard let apiKey = UserStudyConfig.shared.apiKey else {
             logger.warning("No OpenAI API key found in UserStudyPlistConfiguration.shared.apiKey")
             return
         }

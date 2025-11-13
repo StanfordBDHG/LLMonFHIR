@@ -2,9 +2,11 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-    <key>IS_USER_STUDY_ENABLED</key>
-    <false/>
-    <key>OPENAI_API_KEY</key>
-    <string>OPENAI_API_VALUE</string>
+	<key>ENCRYPTION_KEY</key>
+	<data></data>
+	<key>IS_USER_STUDY_ENABLED</key>
+	<false/>
+	<key>OPENAI_API_KEY</key>
+	<string>OPENAI_API_VALUE</string>
 </dict>
 </plist>

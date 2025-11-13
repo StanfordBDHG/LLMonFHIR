@@ -81,7 +81,7 @@ You can build and run the application using [Xcode](https://developer.apple.com/
 
 ### Study Report File Encryption
 
-The report files generated form the usability study are optionally encrypted, using the public key located at `LLMonFHIR/Supporting Files/public_key.pem`.
+The report files generated form the usability study are optionally encrypted, using the public key stored in `UserStudyConfig.plist.
 
 You can generate a public/private key pair using the following commands:
 ```bash
@@ -92,7 +92,10 @@ openssl genpkey -algorithm X25519 -out private_key.pem
 openssl pkey -in private_key.pem -pubout -out public_key.pem
 ```
 
-Place the contents of `public_key.pem` in the app's Supporting Files directory.
+Run the following command to place your public key in the user study config file:
+```bash
+plutil -replace ENCRYPTION_KEY -data (cat public_key.pem | base64) LLMonFHIR/Supporting\ Files/UserStudyConfig.plist
+```
 
 In order to decrypt a report file created by the app, you can use the python tool in `tools/decrypt-study-report`:
 ```bash

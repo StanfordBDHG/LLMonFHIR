@@ -92,7 +92,7 @@ wheels = [
 ]
 
 [[package]]
-name = "decryptllmonfhirstudyreport"
+name = "decrypt-study-report"
 version = "0.1.0"
 source = { virtual = "." }
 dependencies = [

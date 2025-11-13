@@ -11,15 +11,22 @@ import Foundation
 
 
 extension Curve25519.KeyAgreement.PublicKey {
-    static let llmOnFhirFileEncryptionPublicKey: Self = {
-        guard let url = Bundle.main.url(forResource: "public_key", withExtension: "pem"),
-              let data = try? Data(contentsOf: url).split(separator: Unicode.UTF8.CodeUnit(ascii: "\n"))[1],
-              let decodedKey = Data(base64Encoded: data),
-              let key = try? Self(rawRepresentation: decodedKey.suffix(32)) else {
-            fatalError("Unable to decode public key")
+    init(pemFileContents: Data) throws {
+        let possiblePrefix = Data("-----BEGIN PUBLIC KEY-----\n".utf8)
+        let possibleSuffix = Data("\n-----END PUBLIC KEY-----\n".utf8)
+        var data = pemFileContents[...]
+        if data.starts(with: possiblePrefix) && data.ends(with: possibleSuffix) {
+            data = data.dropFirst(possiblePrefix.count).dropLast(possibleSuffix.count)
+            guard let decoded = Data(base64Encoded: Data(data)) else {
+                throw NSError(domain: "edu.stanford.LLMonFHIR", code: 0, userInfo: [
+                    NSLocalizedDescriptionKey: "Unable to parse key"
+                ])
+            }
+            data = decoded[...]
         }
-        return key
-    }()
+        data = data.suffix(32)
+        try self.init(rawRepresentation: data)
+    }
 }
 
 

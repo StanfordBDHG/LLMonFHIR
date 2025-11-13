@@ -22,7 +22,7 @@ enum FeatureFlags {
     /// Sets the application in user study mode
     static var isUserStudyEnabled: Bool {
         CommandLine.arguments.contains("--userStudy")
-            || UserStudyPlistConfiguration.shared.isUserStudyEnabled == true
+            || UserStudyConfig.shared.isUserStudyEnabled == true
             || UserDefaults.standard.bool(forKey: StorageKeys.isUsabilityStudyEnabled)
     }
 }

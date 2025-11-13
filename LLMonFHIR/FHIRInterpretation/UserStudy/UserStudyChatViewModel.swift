@@ -247,7 +247,15 @@ final class UserStudyChatViewModel: MultipleResourcesChatViewModel {  // swiftli
             return nil
         }
         if encrypt {
-            studyReport = try studyReport.encrypted(using: .llmOnFhirFileEncryptionPublicKey)
+            guard let key = UserStudyConfig.shared.encryptionKey else {
+                // we intentionally fail if asked to encrypt and no key exists, instead of returning an unencrypted file,
+                // since the `encrypt` flag being set to true indicates that the resulting file will be shared via a potentially
+                // insecure channel.
+                throw NSError(domain: "edu.stanford.LLMonFHIR", code: 0, userInfo: [
+                    NSLocalizedDescriptionKey: "Asked to encrypt report file, but no encryption key found"
+                ])
+            }
+            studyReport = try studyReport.encrypted(using: key)
         }
         let tempDir = FileManager.default.temporaryDirectory
         let reportURL = tempDir.appendingPathComponent("survey_report_\(studyID.lowercased()).txt")
