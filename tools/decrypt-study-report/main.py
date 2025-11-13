@@ -1,3 +1,11 @@
+#
+# This source file is part of the Stanford LLM on FHIR project
+#
+# SPDX-FileCopyrightText: 2025 Stanford University
+#
+# SPDX-License-Identifier: MIT
+#
+
 import argparse
 from cryptography.hazmat.primitives.asymmetric import x25519
 from cryptography.hazmat.primitives.ciphers.aead import AESGCM
