@@ -14,18 +14,17 @@ extension Curve25519.KeyAgreement.PublicKey {
     init(pemFileContents: Data) throws {
         let possiblePrefix = Data("-----BEGIN PUBLIC KEY-----\n".utf8)
         let possibleSuffix = Data("\n-----END PUBLIC KEY-----\n".utf8)
-        var data = pemFileContents[...]
+        var data = pemFileContents
         if data.starts(with: possiblePrefix) && data.ends(with: possibleSuffix) {
-            data = data.dropFirst(possiblePrefix.count).dropLast(possibleSuffix.count)
-            guard let decoded = Data(base64Encoded: Data(data)) else {
+            guard let decoded = Data(base64Encoded: Data(data.dropFirst(possiblePrefix.count).dropLast(possibleSuffix.count))) else {
+                // unreachable if the correct file was injected into the plist
                 throw NSError(domain: "edu.stanford.LLMonFHIR", code: 0, userInfo: [
                     NSLocalizedDescriptionKey: "Unable to parse key"
                 ])
             }
-            data = decoded[...]
+            data = decoded
         }
-        data = data.suffix(32)
-        try self.init(rawRepresentation: data)
+        try self.init(rawRepresentation: data.suffix(32))
     }
 }
 
