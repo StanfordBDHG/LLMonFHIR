@@ -242,19 +242,11 @@ final class UserStudyChatViewModel: MultipleResourcesChatViewModel {  // swiftli
     /// Generates a temporary file URL containing the study report
     ///
     /// - Returns: The URL of the generated report file, or nil if generation fails
-    func generateStudyReportFile(encrypt: Bool = false) async throws -> URL? {
+    func generateStudyReportFile() async throws -> URL? {
         guard var studyReport = await generateStudyReport()?.data(using: .utf8) else {
             return nil
         }
-        if encrypt {
-            guard let key = UserStudyConfig.shared.encryptionKey else {
-                // we intentionally fail if asked to encrypt and no key exists, instead of returning an unencrypted file,
-                // since the `encrypt` flag being set to true indicates that the resulting file will be shared via a potentially
-                // insecure channel.
-                throw NSError(domain: "edu.stanford.LLMonFHIR", code: 0, userInfo: [
-                    NSLocalizedDescriptionKey: "Asked to encrypt report file, but no encryption key found"
-                ])
-            }
+        if let key = UserStudyConfig.shared.encryptionKey {
             studyReport = try studyReport.encrypted(using: key)
         }
         let tempDir = FileManager.default.temporaryDirectory
