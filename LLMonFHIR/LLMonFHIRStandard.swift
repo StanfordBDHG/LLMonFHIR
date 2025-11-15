@@ -6,8 +6,9 @@
 // SPDX-License-Identifier: MIT
 //
 
-import os
+import OSLog
 import Spezi
+import SpeziAccessGuard
 import SpeziFHIR
 import SpeziFHIRHealthKit
 import SpeziHealthKit
@@ -17,7 +18,6 @@ import SwiftUI
 @globalActor
 private actor FHIRProcessingActor: GlobalActor {
     typealias ActorType = FHIRProcessingActor
-    
     static let shared = FHIRProcessingActor()
 }
 
