@@ -44,7 +44,6 @@ struct UserStudyWelcomeView: View {
         guard let date = earliestDates.values.min() else {
             return nil
         }
-
         return dateFormatter.string(from: date)
     }
 
@@ -255,13 +254,12 @@ struct UserStudyWelcomeView: View {
 }
 
 
-extension AccessGuardIdentifier {
+extension AccessGuardIdentifier where AccessGuard == CodeAccessGuard {
     /// A unique identifier for user study access control.
     /// Used to protect and manage access to user study related features and views.
-    static var userStudyIdentifier: Self {
-        .init("UserStudyIdentifier")
-    }
+    static let userStudyIdentifier: Self = .passcode("UserStudyIdentifier")
 }
+
 
 extension [SurveyTask] {
     private static let clarityScale = [

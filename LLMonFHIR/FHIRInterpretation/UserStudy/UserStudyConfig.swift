@@ -15,9 +15,12 @@ struct UserStudyConfig {
     ///
     /// Will be nil if the configuration file is missing or invalid.
     let apiKey: String?
-
+    
     /// Indicates whether the user study features are enabled.
     let isUserStudyEnabled: Bool
+    
+    /// The passcodes that can be used to enable the user study.
+    let userStudyPasscodes: Set<String>
     
     /// The public key to use when encrypting a report file.
     ///
@@ -35,6 +38,7 @@ extension UserStudyConfig {
     init() {
         apiKey = nil
         isUserStudyEnabled = false
+        userStudyPasscodes = []
         encryptionKey = nil
     }
     
@@ -51,12 +55,14 @@ extension UserStudyConfig: Decodable {
         case apiKey = "OPENAI_API_KEY"
         case isUserStudyEnabled = "IS_USER_STUDY_ENABLED"
         case encryptionKey = "ENCRYPTION_KEY"
+        case userStudyPasscodes = "USER_STUDY_PASSCODES"
     }
     
     init(from decoder: any Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         apiKey = try container.decodeIfPresent(String.self, forKey: .apiKey)
         isUserStudyEnabled = try container.decode(Bool.self, forKey: .isUserStudyEnabled)
+        userStudyPasscodes = try container.decode(Set<String>.self, forKey: .userStudyPasscodes)
         encryptionKey = try container.decodeIfPresent(Data.self, forKey: .encryptionKey).flatMap { $0.isEmpty ? nil : try .init(pemFileContents: $0) }
     }
 }

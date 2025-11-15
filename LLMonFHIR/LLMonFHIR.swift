@@ -7,7 +7,6 @@
 //
 
 import Spezi
-import SpeziAccessGuard
 import SwiftUI
 
 
@@ -15,7 +14,6 @@ import SwiftUI
 struct LLMonFHIR: App {
     @UIApplicationDelegateAdaptor(LLMonFHIRDelegate.self) var appDelegate
     @AppStorage(StorageKeys.onboardingFlowComplete) private var completedOnboardingFlow = false
-
 
     var body: some Scene {
         WindowGroup {
