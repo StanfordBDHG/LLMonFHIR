@@ -18,6 +18,11 @@ final class UserStudyCodes: Module, Sendable {
     private let allValidCodes = UserStudyConfig.shared.userStudyPasscodes
     
     func validate(_ code: String) -> CodeAccessGuard.ValidationResult {
+        if allValidCodes.isEmpty && UserStudyConfig.shared.isUserStudyEnabled {
+            // if the plist didn't inject any codes into the app, but the study is supposed to be enabled,
+            // we simply accept all keys
+            return .valid
+        }
         guard allValidCodes.contains(code) else {
             return .invalid
         }
