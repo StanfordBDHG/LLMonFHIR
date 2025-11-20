@@ -78,7 +78,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/StanfordSpezi/SpeziAccessGuard.git",
       "state" : {
-        "revision" : "be6ef22e56dbddb287de1c59dd83f23aa1a78e56"
+        "revision" : "92f87aaf0ba6ebfe08bf9739bd572a9d1528181d",
+        "version" : "0.5.0"
       }
     },
     {
