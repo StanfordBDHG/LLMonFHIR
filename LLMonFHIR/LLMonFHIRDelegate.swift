@@ -37,9 +37,9 @@ class LLMonFHIRDelegate: SpeziAppDelegate {
                 LLMLocalPlatform()
             }
             FHIRInterpretationModule()
-            AccessGuardModule {
+            AccessGuards {
                 CodeAccessGuard(
-                    .userStudyIdentifier,
+                    .userStudy,
                     timeout: .hours(1),
                     message: "Enter one of 10 codes to start the user study",
                     format: .numeric(4)

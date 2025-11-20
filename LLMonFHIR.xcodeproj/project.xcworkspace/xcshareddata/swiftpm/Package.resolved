@@ -1,5 +1,5 @@
 {
-  "originHash" : "2944e4e831d3933074281e71cd6a91f2ac92ba304471e4c3f6c5ee5635033a48",
+  "originHash" : "cc208816f7fada8f3adf8a21b7f58d79beefc28dc5dee67064f2cdb3ad919e1b",
   "pins" : [
     {
       "identity" : "fhirmodels",
@@ -78,7 +78,7 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/StanfordSpezi/SpeziAccessGuard.git",
       "state" : {
-        "revision" : "65828b96ffe7de9994b251f63684dfdd428903c2"
+        "revision" : "be6ef22e56dbddb287de1c59dd83f23aa1a78e56"
       }
     },
     {

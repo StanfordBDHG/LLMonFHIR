@@ -58,12 +58,12 @@ struct UserStudyWelcomeView: View {
                     settingsButton
                 }
                 .sheet(isPresented: $isPresentingSettings) {
-                    AccessGuarded(.userStudyIdentifier) {
+                    AccessGuarded(.userStudy) {
                         SettingsView()
                     }
                 }
                 .fullScreenCover(isPresented: $isPresentingStudy) {
-                    AccessGuarded(.userStudyIdentifier) {
+                    AccessGuarded(.userStudy) {
                         UserStudyChatView(
                             survey: Survey(.defaultTasks),
                             interpreter: interpreter,
@@ -257,7 +257,7 @@ struct UserStudyWelcomeView: View {
 extension AccessGuardIdentifier where AccessGuard == CodeAccessGuard {
     /// A unique identifier for user study access control.
     /// Used to protect and manage access to user study related features and views.
-    static let userStudyIdentifier: Self = .passcode("UserStudyIdentifier")
+    static let userStudy: Self = .passcode("UserStudyIdentifier")
 }
 
 
