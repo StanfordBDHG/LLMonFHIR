@@ -44,7 +44,6 @@ struct UserStudyWelcomeView: View {
         guard let date = earliestDates.values.min() else {
             return nil
         }
-
         return dateFormatter.string(from: date)
     }
 
@@ -59,12 +58,12 @@ struct UserStudyWelcomeView: View {
                     settingsButton
                 }
                 .sheet(isPresented: $isPresentingSettings) {
-                    AccessGuarded(.userStudyIdentifier) {
+                    AccessGuarded(.userStudy) {
                         SettingsView()
                     }
                 }
                 .fullScreenCover(isPresented: $isPresentingStudy) {
-                    AccessGuarded(.userStudyIdentifier) {
+                    AccessGuarded(.userStudy) {
                         UserStudyChatView(
                             survey: Survey(.defaultTasks),
                             interpreter: interpreter,
@@ -235,7 +234,7 @@ struct UserStudyWelcomeView: View {
         
         let logger = Logger(subsystem: "edu.stanford.llmonfhir", category: "UserStudyWelcomeView")
         
-        guard let apiKey = UserStudyPlistConfiguration.shared.apiKey else {
+        guard let apiKey = UserStudyConfig.shared.apiKey else {
             logger.warning("No OpenAI API key found in UserStudyPlistConfiguration.shared.apiKey")
             return
         }
@@ -255,13 +254,12 @@ struct UserStudyWelcomeView: View {
 }
 
 
-extension AccessGuardIdentifier {
+extension AccessGuardIdentifier where AccessGuard == CodeAccessGuard {
     /// A unique identifier for user study access control.
     /// Used to protect and manage access to user study related features and views.
-    static var userStudyIdentifier: Self {
-        .init("UserStudyIdentifier")
-    }
+    static let userStudy: Self = .passcode("UserStudyIdentifier")
 }
+
 
 extension [SurveyTask] {
     private static let clarityScale = [

@@ -2,9 +2,26 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-    <key>IS_USER_STUDY_ENABLED</key>
-    <false/>
-    <key>OPENAI_API_KEY</key>
-    <string>OPENAI_API_VALUE</string>
+	<key>ENCRYPTION_KEY</key>
+	<data></data>
+	<key>IS_USER_STUDY_ENABLED</key>
+	<false/>
+	<key>USER_STUDY_REPORT_EMAIL</key>
+	<string></string>
+	<key>OPENAI_API_KEY</key>
+	<string>OPENAI_API_VALUE</string>
+	<key>USER_STUDY_PASSCODES</key>
+	<array>
+		<string>0000</string>
+		<string>1111</string>
+		<string>2222</string>
+		<string>3333</string>
+		<string>4444</string>
+		<string>5555</string>
+		<string>6666</string>
+		<string>7777</string>
+		<string>8888</string>
+		<string>9999</string>
+	</array>
 </dict>
 </plist>

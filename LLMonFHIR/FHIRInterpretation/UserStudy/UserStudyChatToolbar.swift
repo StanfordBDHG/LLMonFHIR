@@ -91,29 +91,26 @@ struct UserStudyChatToolbar: ToolbarContent {
 
     private var continueButton: some ToolbarContent {
         ToolbarItem(placement: .primaryAction) {
+            let button = Button {
+                viewModel.setSurveyViewPresented(true)
+            } label: {
+                Label("Next Task", systemImage: "arrow.forward.circle")
+                    .accessibilityLabel("Next Task")
+                    .modifier(PulsatingEffect(isEnabled: !isInputDisabled))
+            }
+            .disabled(isInputDisabled)
             if viewModel.navigationState != .completed {
                 if #available(iOS 26.0, *) {
-                    _continueButton
+                    button
                     #if swift(>=6.2)
                         .if(!isInputDisabled) { $0.buttonStyle(.glassProminent) }
                         .animation(.interactiveSpring, value: isInputDisabled)
                     #endif
                 } else {
-                    _continueButton
+                    button
                 }
             }
         }
-    }
-    
-    private var _continueButton: some View {
-        Button {
-            viewModel.setSurveyViewPresented(true)
-        } label: {
-            Label("Next Task", systemImage: "arrow.forward.circle")
-                .accessibilityLabel("Next Task")
-                .modifier(PulsatingEffect(isEnabled: !isInputDisabled))
-        }
-            .disabled(isInputDisabled)
     }
     
     private var shareButton: some ToolbarContent {
@@ -130,7 +127,7 @@ extension UserStudyChatToolbar {
     private struct ShareButton: View {
         var viewModel: UserStudyChatViewModel
         @State private var viewState: ViewState = .idle
-        @State private var reportUrl: ShareSheetInput?
+        @State private var reportUrl: URL?
         
         var body: some View {
             // NOTE that this is intentionally a custom Button with a `shareSheet` modifier, instead of a `ShareLink`,
@@ -138,12 +135,46 @@ extension UserStudyChatToolbar {
             // (with no indication on the view that it is active), while the custom approach here is way faster,
             // and also somehow gets us a significantly nicer-looking share sheet...
             AsyncButton(state: $viewState) {
-                reportUrl = await viewModel.generateStudyReportFile().map { .init($0) }
+                reportUrl = try await viewModel.generateStudyReportFile()
             } label: {
                 Image(systemName: "square.and.arrow.up")
                     .accessibilityLabel("Share Survey Results")
             }
-            .shareSheet(item: $reportUrl)
+            .studyReportShareSheet(url: $reportUrl)
+        }
+    }
+}
+
+
+extension View {
+    @ViewBuilder
+    fileprivate func studyReportShareSheet(
+        url urlBinding: Binding<URL?>
+    ) -> some View {
+        let config = UserStudyConfig.shared
+        if EmailSheet.isAvailable, let recipient = config.reportEmail, !recipient.isEmpty {
+            self.sheet(item: urlBinding, id: \.self) { url in
+                EmailSheet(message: EmailSheet.Message(
+                    recipient: recipient,
+                    subject: "LLMonFHIR usabiity study result",
+                    body: """
+                        The attached file contains your\(config.encryptionKey != nil ? " encrypyed" : "") results of the usability study.
+                        
+                        Please send the email to our team at \(recipient).
+                        
+                        Thank you for helping us improve the LLMonFHIR app!
+                        """,
+                    attachments: [url]
+                )) { _ in
+                    urlBinding.wrappedValue = nil
+                }
+            }
+        } else {
+            self.shareSheet(item: Binding<ShareSheetInput?> {
+                urlBinding.wrappedValue.map { ShareSheetInput($0) }
+            } set: { newValue in
+                urlBinding.wrappedValue = newValue == nil ? nil : urlBinding.wrappedValue
+            })
         }
     }
 }

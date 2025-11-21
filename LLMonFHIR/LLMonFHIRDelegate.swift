@@ -24,10 +24,11 @@ class LLMonFHIRDelegate: SpeziAppDelegate {
             if HKHealthStore.isHealthDataAvailable() {
                 healthKit
             }
+            let userStudyCodes = UserStudyCodes()
             LLMRunner {
                 LLMOpenAIPlatform(
                     configuration: .init(
-                        authToken: .keychain(tag: .openAIKey, username: LLMonFHIRConstants.credentialsUsername),
+                        authToken: .keychain(tag: .openAIKey, username: "LLMonFHIR_OpenAI_Token"),
                         concurrentStreams: 100,
                         retryPolicy: .attempts(3)  // Automatically perform up to 3 retries on retryable OpenAI API status codes
                     )
@@ -36,14 +37,17 @@ class LLMonFHIRDelegate: SpeziAppDelegate {
                 LLMLocalPlatform()
             }
             FHIRInterpretationModule()
-            AccessGuardModule {
-                FixedAccessGuard(
-                    .userStudyIdentifier,
-                    code: "0218",
-                    codeOptions: .fourDigitNumeric,
-                    timeout: .hours(1)
-                )
+            AccessGuards {
+                CodeAccessGuard(
+                    .userStudy,
+                    timeout: .hours(1),
+                    message: "Enter one of 10 codes to start the user study",
+                    format: .numeric(4)
+                ) { code in
+                    await userStudyCodes.validate(code)
+                }
             }
+            userStudyCodes
         }
     }
     

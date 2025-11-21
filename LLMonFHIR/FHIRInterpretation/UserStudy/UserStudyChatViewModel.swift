@@ -242,13 +242,16 @@ final class UserStudyChatViewModel: MultipleResourcesChatViewModel {  // swiftli
     /// Generates a temporary file URL containing the study report
     ///
     /// - Returns: The URL of the generated report file, or nil if generation fails
-    func generateStudyReportFile() async -> URL? {
-        guard let studyReport = await generateStudyReport() else {
+    func generateStudyReportFile() async throws -> URL? {
+        guard var studyReport = await generateStudyReport()?.data(using: .utf8) else {
             return nil
+        }
+        if let key = UserStudyConfig.shared.encryptionKey {
+            studyReport = try studyReport.encrypted(using: key)
         }
         let tempDir = FileManager.default.temporaryDirectory
         let reportURL = tempDir.appendingPathComponent("survey_report_\(studyID.lowercased()).txt")
-        try? studyReport.write(to: reportURL, atomically: true, encoding: .utf8)
+        try studyReport.write(to: reportURL)
         return reportURL
     }
 
