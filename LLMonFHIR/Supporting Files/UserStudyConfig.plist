@@ -6,6 +6,8 @@
 	<data></data>
 	<key>IS_USER_STUDY_ENABLED</key>
 	<false/>
+	<key>USER_STUDY_REPORT_EMAIL</key>
+	<string></string>
 	<key>OPENAI_API_KEY</key>
 	<string>OPENAI_API_VALUE</string>
 	<key>USER_STUDY_PASSCODES</key>

@@ -15,10 +15,10 @@ import SpeziLocalStorage
 final class UserStudyCodes: Module, Sendable {
     @Dependency(LocalStorage.self) private var localStorage
     
-    private let allValidCodes = UserStudyConfig.shared.userStudyPasscodes
+    private let allValidCodes = UserStudyConfig.shared.passcodes
     
     func validate(_ code: String) -> CodeAccessGuard.ValidationResult {
-        if allValidCodes.isEmpty && UserStudyConfig.shared.isUserStudyEnabled {
+        if allValidCodes.isEmpty && UserStudyConfig.shared.isEnabled {
             // if the plist didn't inject any codes into the app, but the study is supposed to be enabled,
             // we simply accept all keys
             return .valid
