@@ -975,7 +975,7 @@
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/StanfordBDHG/XCTestExtensions.git";
 			requirement = {
-				kind = upToNextMinorVersion;
+				kind = upToNextMajorVersion;
 				minimumVersion = 1.2.2;
 			};
 		};
@@ -1048,7 +1048,7 @@
 			repositoryURL = "https://github.com/StanfordSpezi/SpeziLLM.git";
 			requirement = {
 				kind = upToNextMinorVersion;
-				minimumVersion = 0.12.1;
+				minimumVersion = 0.12.3;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */
