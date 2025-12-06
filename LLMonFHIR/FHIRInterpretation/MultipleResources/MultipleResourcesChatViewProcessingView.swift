@@ -19,9 +19,7 @@ struct MultipleResourcesChatViewProcessingView: View {
                     if #available(iOS 26.0, *) {
                         content
                             .padding(.top, 6)
-                            #if swift(>=6.2)
                             .glassEffect()
-                            #endif
                             .padding(.horizontal)
                     } else {
                         content

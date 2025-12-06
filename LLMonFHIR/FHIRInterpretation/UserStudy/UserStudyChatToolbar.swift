@@ -102,10 +102,8 @@ struct UserStudyChatToolbar: ToolbarContent {
             if viewModel.navigationState != .completed {
                 if #available(iOS 26.0, *) {
                     button
-                    #if swift(>=6.2)
                         .if(!isInputDisabled) { $0.buttonStyle(.glassProminent) }
                         .animation(.interactiveSpring, value: isInputDisabled)
-                    #endif
                 } else {
                     button
                 }
