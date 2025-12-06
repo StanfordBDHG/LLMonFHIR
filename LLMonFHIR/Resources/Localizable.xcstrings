@@ -16,6 +16,9 @@
     "Allergies" : {
 
     },
+    "Authorize Health Access" : {
+
+    },
     "Balanced" : {
 
     },
@@ -673,9 +676,6 @@
           }
         }
       }
-    },
-    "Enter one of 10 codes to start the user study" : {
-
     },
     "FHIR_RESOURCES_EMPTY_SEARCH_MESSAGE" : {
       "localizations" : {
@@ -2223,7 +2223,7 @@
       },
       "shouldTranslate" : false
     },
-    "Task %lld" : {
+    "Task %@" : {
 
     },
     "Temperature" : {
@@ -2414,6 +2414,7 @@
       }
     },
     "USER_STUDY_WELCOME_DESCRIPTION" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -2424,6 +2425,7 @@
       }
     },
     "USER_STUDY_WELCOME_TITLE" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {

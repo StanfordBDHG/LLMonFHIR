@@ -12,14 +12,14 @@ import SwiftUI
 
 
 struct FogDiscoveryAuthView: View {
-    @Environment(ManagedNavigationStack.Path.self) private var onboardingNavigationPath
+    @Environment(ManagedNavigationStack.Path.self) private var path
     
     
     var body: some View {
         LLMFogDiscoveryAuthorizationView {
-            self.onboardingNavigationPath.append(
-                customView: FogResourceSelectionView()
-            )
+            path.append {
+                FogResourceSelectionView()
+            }
         }
     }
 }

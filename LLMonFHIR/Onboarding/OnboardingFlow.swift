@@ -34,6 +34,7 @@ struct OnboardingFlow: View {
             if !FeatureFlags.isUserStudyEnabled {
                 // Always show OpenAI model onboarding for chat-based interaction.
                 OpenAIAPIKey()
+                OpenAIModelSelection()
                 // Presents the onboarding flow for the respective local, fog, or cloud LLM.
                 LLMSourceSelection()
             }

@@ -33,9 +33,7 @@ struct FHIRResourcesInstructionsView: View {
                     Spacer()
                     if #available(iOS 26.0, *) {
                         dismissButton
-                        #if swift(>=6.2)
                             .buttonStyle(.glass)
-                        #endif
                     } else {
                         dismissButton
                     }

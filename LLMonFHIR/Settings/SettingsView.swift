@@ -104,9 +104,9 @@ struct SettingsView: View {
     private var resourcesSettings: some View {
         Section("Resource Selection") {
             NavigationButton("Resource Selection") {
-                self.path.append(
-                    customView: ResourceSelection()
-                )
+                path.append {
+                    ResourceSelection()
+                }
             }
         }
     }
@@ -115,18 +115,19 @@ struct SettingsView: View {
         Section("SETTINGS_LLM") {
             // OpenAI settings are always present for the multiple resource chat
             NavigationButton("SETTINGS_OPENAI_KEY") {
-                path.append(
-                    customView: LLMOpenAIAPITokenOnboardingStep(actionText: "OPEN_AI_KEY_SAVE_ACTION") {
+                path.append {
+                    LLMOpenAIAPITokenOnboardingStep(actionText: "OPEN_AI_KEY_SAVE_ACTION") {
                         await fhirInterpretationModule.updateSchemas()
                         path.removeLast()
                     }
-                )
+                }
             }
             NavigationButton("SETTINGS_OPENAI_MODEL") {
-                path.append(
-                    customView: LLMOpenAIModelOnboardingStep(
+                path.append {
+                    LLMOpenAIModelOnboardingStep(
                         actionText: "OPEN_AI_MODEL_SAVE_ACTION",
-                        models: [.gpt5, .gpt4o, .gpt4_turbo, .gpt3_5_turbo]
+                        models: OpenAIModelSelection.supportedModels,
+                        initial: openAIModel
                     ) { chosenModelType in
                         openAIModel = chosenModelType
                         Task {
@@ -134,18 +135,18 @@ struct SettingsView: View {
                             path.removeLast()
                         }
                     }
-                )
+                }
             }
             NavigationButton("SETTINGS_OPENAI_MODEL_PARAMETERS") {
-                path.append(
-                    customView: OpenAIModelParametersView()
-                )
+                path.append {
+                    OpenAIModelParametersView()
+                }
             }
             // Ability to change models for the single resource summary / interpretation
             NavigationButton("SETTINGS_LLM_SOURCE") {
-                path.append(
-                    customView: LLMSourceSelection()
-                )
+                path.append {
+                    LLMSourceSelection()
+                }
             }
         }
     }
@@ -153,28 +154,28 @@ struct SettingsView: View {
     private var promptsSettings: some View {
         Section("SETTINGS_PROMPTS") {
             NavigationButton("SETTINGS_PROMPTS_SUMMARY") {
-                path.append(
-                    customView: FHIRPromptSettingsView(promptType: .summary) {
+                path.append {
+                    FHIRPromptSettingsView(promptType: .summary) {
                         await fhirInterpretationModule.updateSchemas()
                         path.removeLast()
                     }
-                )
+                }
             }
             NavigationButton("SETTINGS_PROMPTS_INTERPRETATION") {
-                path.append(
-                    customView: FHIRPromptSettingsView(promptType: .interpretation) {
+                path.append {
+                    FHIRPromptSettingsView(promptType: .interpretation) {
                         await fhirInterpretationModule.updateSchemas()
                         path.removeLast()
                     }
-                )
+                }
             }
             NavigationButton("SETTINGS_PROMPTS_INTERPRETATION_MULTIPLE_RESOURCES") {
-                path.append(
-                    customView: FHIRPromptSettingsView(promptType: .interpretMultipleResources) {
+                path.append {
+                    FHIRPromptSettingsView(promptType: .interpretMultipleResources) {
                         await fhirInterpretationModule.updateSchemas()
                         path.removeLast()
                     }
-                )
+                }
             }
         }
     }

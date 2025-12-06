@@ -30,7 +30,7 @@ struct LLMonFHIR: App {
         if !completedOnboardingFlow {
             EmptyView()
         } else if FeatureFlags.isUserStudyEnabled {
-            UserStudyWelcomeView()
+            SurveyHomeView(surveyId: "edu.stanford.LLMonFHIR.userStudy")
         } else {
             HomeView()
         }

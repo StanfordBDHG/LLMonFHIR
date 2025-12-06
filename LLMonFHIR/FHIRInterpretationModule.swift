@@ -17,7 +17,7 @@ import SwiftUI
 
 
 // periphery:ignore - Properties are used through dependency injection and @Model configuration in `configure()`
-class FHIRInterpretationModule: Module, DefaultInitializable, EnvironmentAccessible {
+final class FHIRInterpretationModule: Module, DefaultInitializable, EnvironmentAccessible {
     @Dependency(LocalStorage.self) private var localStorage
     @Dependency(LLMRunner.self) private var llmRunner
     @Dependency(FHIRStore.self) private var fhirStore
