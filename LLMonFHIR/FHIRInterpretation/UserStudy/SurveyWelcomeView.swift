@@ -7,7 +7,6 @@
 //
 
 import os.log
-import SpeziAccessGuard
 import SpeziFHIR
 import SpeziKeychainStorage
 import SpeziLLMOpenAI
@@ -60,18 +59,14 @@ struct SurveyWelcomeView: View {
                     settingsButton
                 }
                 .sheet(isPresented: $isPresentingSettings) {
-//                    AccessGuarded(.userStudy) {
-                        SettingsView()
-//                    }
+                    SettingsView()
                 }
                 .fullScreenCover(isPresented: $isPresentingStudy) {
-//                    AccessGuarded(.userStudy) {
-                        UserStudyChatView(
-                            survey: survey,
-                            interpreter: interpreter,
-                            resourceSummary: resourceSummary
-                        )
-//                    }
+                    UserStudyChatView(
+                        survey: survey,
+                        interpreter: interpreter,
+                        resourceSummary: resourceSummary
+                    )
                 }
                 .sheet(isPresented: $isPresentingEarliestHealthRecords) {
                     EarliestHealthRecordsView(
@@ -240,11 +235,4 @@ struct SurveyWelcomeView: View {
             logger.warning("Could not access keychain to read or store OpenAI API key: \(error)")
         }
     }
-}
-
-
-extension AccessGuardIdentifier where AccessGuard == CodeAccessGuard {
-    /// A unique identifier for user study access control.
-    /// Used to protect and manage access to user study related features and views.
-    static let userStudy: Self = .passcode("UserStudyIdentifier")
 }

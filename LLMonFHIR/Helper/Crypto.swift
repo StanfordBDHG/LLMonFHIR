@@ -23,17 +23,16 @@ extension Curve25519.KeyAgreement.PublicKey: @retroactive Hashable {
 
 extension Curve25519.KeyAgreement.PublicKey {
     var pemFileContents: Data {
-        // 1. The standard ASN.1 header for X25519 (OID: 1.3.101.110)
+        // The standard ASN.1 header for X25519 (OID: 1.3.101.110)
         // Structure: Sequence(42) { Sequence(5) { OID(3) }, BitString(33) { Unused(0) + Key(32) } }
-        let x25519Header: [UInt8] = [
+        var data = Data([ // start off with the x25519Header
             0x30, 0x2A, // Sequence of 42 bytes
             0x30, 0x05, // Sequence of 5 bytes (Algorithm Identifier)
             0x06, 0x03, 0x2B, 0x65, 0x6E, // OID: 1.3.101.110 (X25519)
             0x03, 0x21, 0x00 // Bit String of 33 bytes (0 unused bits)
-        ]
-        var keyData = Data(x25519Header)
-        keyData.append(self.rawRepresentation)
-        let base64 = keyData.base64EncodedString(options: .lineLength64Characters)
+        ])
+        data.append(self.rawRepresentation)
+        let base64 = data.base64EncodedString(options: .lineLength64Characters)
         return Data("-----BEGIN PUBLIC KEY-----\n\(base64)\n-----END PUBLIC KEY-----\n".utf8)
     }
     

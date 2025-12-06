@@ -8,7 +8,6 @@
 
 import OSLog
 import Spezi
-import SpeziAccessGuard
 import SpeziFHIR
 import SpeziFHIRHealthKit
 import SpeziHealthKit
@@ -37,7 +36,6 @@ actor LLMonFHIRStandard: Standard, HealthKitConstraint, EnvironmentAccessible {
     @MainActor var useHealthKitResources = true
     
     @MainActor @Dependency private var waitingState = FHIRResourceWaitingState()
-    @FHIRProcessingActor private var waitTask: Task<Void, Error>?
     
     private let logger = Logger(subsystem: "edu.stanford.bdhg.llmonfhir", category: "LLMonFHIRStandard")
     

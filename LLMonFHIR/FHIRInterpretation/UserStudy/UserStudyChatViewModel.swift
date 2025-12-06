@@ -6,8 +6,6 @@
 // SPDX-License-Identifier: MIT
 //
 
-// swiftlint:disable all
-
 import SpeziChat
 import SpeziLLM
 import SwiftUI

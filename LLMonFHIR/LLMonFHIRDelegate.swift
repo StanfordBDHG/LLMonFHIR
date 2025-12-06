@@ -8,7 +8,6 @@
 
 import HealthKit
 import Spezi
-import SpeziAccessGuard
 import SpeziFHIR
 import SpeziHealthKit
 import SpeziLLM
@@ -24,7 +23,6 @@ class LLMonFHIRDelegate: SpeziAppDelegate {
             if HKHealthStore.isHealthDataAvailable() {
                 healthKit
             }
-//            let userStudyCodes = UserStudyCodes()
             LLMRunner {
                 LLMOpenAIPlatform(
                     configuration: .init(
@@ -37,18 +35,6 @@ class LLMonFHIRDelegate: SpeziAppDelegate {
                 LLMLocalPlatform()
             }
             FHIRInterpretationModule()
-            AccessGuards {
-                CodeAccessGuard(
-                    .userStudy,
-                    timeout: .hours(1),
-                    message: "Enter one of 10 codes to start the user study",
-                    format: .numeric(4)
-                ) { code in
-                    //await userStudyCodes.validate(code)
-                    .valid
-                }
-            }
-//            userStudyCodes
         }
     }
     

@@ -677,9 +677,6 @@
         }
       }
     },
-    "Enter one of 10 codes to start the user study" : {
-
-    },
     "FHIR_RESOURCES_EMPTY_SEARCH_MESSAGE" : {
       "localizations" : {
         "de" : {
