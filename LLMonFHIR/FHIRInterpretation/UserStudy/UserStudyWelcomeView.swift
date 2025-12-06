@@ -23,6 +23,7 @@ struct UserStudyWelcomeView: View {
     @Environment(FHIRResourceSummary.self) var resourceSummary
     @Environment(KeychainStorage.self) private var keychainStorage
     @Environment(LLMOpenAIPlatform.self) private var platform
+    @WaitingState private var waitingState
 
     @State private var isPresentingSettings = false
     @State private var isPresentingStudy = false
@@ -146,7 +147,7 @@ struct UserStudyWelcomeView: View {
                     .fontWeight(.medium)
                     .underline()
             }
-            .opacity(standard.waitingState.isWaiting ? 0 : 1)
+            .opacity(waitingState.isWaiting ? 0 : 1)
             .padding(.bottom, 16)
         }
     }
@@ -168,7 +169,7 @@ struct UserStudyWelcomeView: View {
                     .buttonStyle(.glassProminent)
             } else {
                 _startStudyButton
-                    .background(Color.accent.opacity(standard.waitingState.isWaiting ? 0.5 : 1))
+                    .background(Color.accent.opacity(waitingState.isWaiting ? 0.5 : 1))
                     .cornerRadius(16)
                     .buttonStyle(.borderedProminent)
             }
@@ -181,12 +182,12 @@ struct UserStudyWelcomeView: View {
             isPresentingStudy = true
         } label: {
             HStack(spacing: 8) {
-                if standard.waitingState.isWaiting {
+                if waitingState.isWaiting {
                     ProgressView()
                         .progressViewStyle(CircularProgressViewStyle(tint: .white))
                         .controlSize(.regular)
                 }
-                Text(standard.waitingState.isWaiting ? "LOADING_HEALTH_RECORDS" : "START_SESSION")
+                Text(waitingState.isWaiting ? "LOADING_HEALTH_RECORDS" : "START_SESSION")
             }
                 .font(.headline)
                 .fontWeight(.semibold)
@@ -195,8 +196,8 @@ struct UserStudyWelcomeView: View {
         }
             .controlSize(.extraLarge)
             .buttonBorderShape(.capsule)
-            .disabled(standard.waitingState.isWaiting)
-            .animation(.default, value: standard.waitingState.isWaiting)
+            .disabled(waitingState.isWaiting)
+            .animation(.default, value: waitingState.isWaiting)
     }
 
     private var approvalBadge: some View {
