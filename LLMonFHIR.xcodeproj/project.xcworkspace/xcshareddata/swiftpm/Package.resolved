@@ -1,5 +1,5 @@
 {
-  "originHash" : "cc208816f7fada8f3adf8a21b7f58d79beefc28dc5dee67064f2cdb3ad919e1b",
+  "originHash" : "32b10a536957aafcf6f23dd5856da99a181ee81ea60ca35d3e47c364c141bb62",
   "pins" : [
     {
       "identity" : "fhirmodels",
@@ -85,7 +85,7 @@
     {
       "identity" : "spezichat",
       "kind" : "remoteSourceControl",
-      "location" : "https://github.com/StanfordSpezi/SpeziChat",
+      "location" : "https://github.com/StanfordSpezi/SpeziChat.git",
       "state" : {
         "revision" : "d696d882f2722d22669e6d50254e87a124ef6643",
         "version" : "0.2.5"
@@ -123,8 +123,7 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/StanfordSpezi/SpeziLLM.git",
       "state" : {
-        "revision" : "aff3d77b10398bddf6814f97411884a74ab68531",
-        "version" : "0.12.3"
+        "revision" : "2dd490a3bf2acb6676419a3411d708865eaa1666"
       }
     },
     {
@@ -159,8 +158,7 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/StanfordSpezi/SpeziViews.git",
       "state" : {
-        "revision" : "91be5dfe4dbedbe2b10bee491c98cbefc5ac95fd",
-        "version" : "1.12.8"
+        "revision" : "60461e1e0370036d489661977df56583cda1826a"
       }
     },
     {

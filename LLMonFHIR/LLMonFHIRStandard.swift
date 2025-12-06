@@ -101,18 +101,18 @@ actor LLMonFHIRStandard: Standard, HealthKitConstraint, EnvironmentAccessible {
     }
     
     private func addRecords(_ records: [HKClinicalRecord]) async {
-        await withTaskGroup { sampleTaskGroup in
-            for newHealthKitSample in records {
-                sampleTaskGroup.addTask { [self] in
+        await withTaskGroup { taskGroup in
+            for record in records {
+                taskGroup.addTask { [self] in
                     do {
-                        try await fhirStore.add(newHealthKitSample, loadHealthKitAttachments: true)
+                        try await fhirStore.add(record, loadHealthKitAttachments: true)
                     } catch {
-                        logger.error("Could not transform sample \(newHealthKitSample.id) to FHIR resource: \(error)")
+                        logger.error("Could not transform sample \(record.id) to FHIR resource: \(error)")
                     }
-                    await updateSchemas()
                 }
             }
         }
+        await updateSchemas()
     }
     
     @MainActor
