@@ -1035,8 +1035,8 @@
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/StanfordSpezi/SpeziViews.git";
 			requirement = {
-				kind = revision;
-				revision = 60461e1e0370036d489661977df56583cda1826a;
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.12.9;
 			};
 		};
 		805368DB2EC92DE30037E73E /* XCRemoteSwiftPackageReference "SpeziAccessGuard" */ = {
@@ -1059,8 +1059,8 @@
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/StanfordSpezi/SpeziLLM.git";
 			requirement = {
-				kind = revision;
-				revision = 2dd490a3bf2acb6676419a3411d708865eaa1666;
+				kind = upToNextMinorVersion;
+				minimumVersion = 0.13.1;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */

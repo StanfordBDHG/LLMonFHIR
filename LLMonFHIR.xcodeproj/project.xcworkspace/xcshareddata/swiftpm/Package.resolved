@@ -1,5 +1,5 @@
 {
-  "originHash" : "32b10a536957aafcf6f23dd5856da99a181ee81ea60ca35d3e47c364c141bb62",
+  "originHash" : "cc208816f7fada8f3adf8a21b7f58d79beefc28dc5dee67064f2cdb3ad919e1b",
   "pins" : [
     {
       "identity" : "fhirmodels",
@@ -123,7 +123,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/StanfordSpezi/SpeziLLM.git",
       "state" : {
-        "revision" : "2dd490a3bf2acb6676419a3411d708865eaa1666"
+        "revision" : "f06c8db429be005b9e12603c36deb6a3a9265369",
+        "version" : "0.13.1"
       }
     },
     {
@@ -158,7 +159,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/StanfordSpezi/SpeziViews.git",
       "state" : {
-        "revision" : "60461e1e0370036d489661977df56583cda1826a"
+        "revision" : "bf7cc7830a4b81bed381fba7f5d96c5d2050fb09",
+        "version" : "1.12.9"
       }
     },
     {
