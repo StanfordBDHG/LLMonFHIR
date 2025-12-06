@@ -2,26 +2,217 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>ENCRYPTION_KEY</key>
-	<data></data>
-	<key>IS_USER_STUDY_ENABLED</key>
-	<false/>
-	<key>USER_STUDY_REPORT_EMAIL</key>
-	<string></string>
-	<key>OPENAI_API_KEY</key>
-	<string>OPENAI_API_VALUE</string>
-	<key>USER_STUDY_PASSCODES</key>
+	<key>studies</key>
 	<array>
-		<string>0000</string>
-		<string>1111</string>
-		<string>2222</string>
-		<string>3333</string>
-		<string>4444</string>
-		<string>5555</string>
-		<string>6666</string>
-		<string>7777</string>
-		<string>8888</string>
-		<string>9999</string>
+		<dict>
+			<key>explainer</key>
+			<string>During this study, you’ll complete a survey about your experiences navigating the healthcare system and have the opportunity to ask the chat questions about your health.</string>
+			<key>id</key>
+			<string>edu.stanford.LLMonFHIR.userStudy</string>
+			<key>openai_api_key</key>
+			<string>sk-123</string>
+			<key>encryption_key</key>
+			<data></data>
+			<key>report_email</key>
+			<string>digitalhealthresearch@stanford.edu</string>
+			<key>title</key>
+			<string>LLMonFHIR User Study</string>
+			<key>tasks</key>
+			<array>
+				<dict>
+					<key>assistantMessagesLimit</key>
+					<string>1;5</string>
+					<key>id</key>
+					<string>Welcome</string>
+					<key>instructions</key>
+					<string>LLMonFHIR app will have a health summary automatically generated on the home screen. Please review this before answering any questions.</string>
+					<key>questions</key>
+					<array>
+						<dict>
+							<key>answer</key>
+							<string>unanswered</string>
+							<key>isOptional</key>
+							<false/>
+							<key>text</key>
+							<string>How clear and understandable was the summary provided by the app?</string>
+							<key>type</key>
+							<string>scale(&lt;clarity&gt;)</string>
+						</dict>
+					</array>
+				</dict>
+				<dict>
+					<key>assistantMessagesLimit</key>
+					<string>1;5</string>
+					<key>id</key>
+					<string>2</string>
+					<key>instructions</key>
+					<string>Ask a clarifying question about the most recent diagnosis from your last medical visit.</string>
+					<key>questions</key>
+					<array>
+						<dict>
+							<key>answer</key>
+							<string>unanswered</string>
+							<key>isOptional</key>
+							<false/>
+							<key>text</key>
+							<string>How effective is this feature for interpreting and evaluating your medical information?</string>
+							<key>type</key>
+							<string>scale(&lt;effectiveness&gt;)</string>
+						</dict>
+					</array>
+				</dict>
+				<dict>
+					<key>assistantMessagesLimit</key>
+					<string>1;5</string>
+					<key>id</key>
+					<string>3</string>
+					<key>instructions</key>
+					<string>Ask the app for a personalized health recommendation. Feel free to ask about any health concerns.</string>
+					<key>questions</key>
+					<array>
+						<dict>
+							<key>answer</key>
+							<string>unanswered</string>
+							<key>isOptional</key>
+							<false/>
+							<key>text</key>
+							<string>How effective are these recommendations in helping you make decisions about your health?</string>
+							<key>type</key>
+							<string>scale(&lt;effectiveness&gt;)</string>
+						</dict>
+					</array>
+				</dict>
+				<dict>
+					<key>assistantMessagesLimit</key>
+					<string>1;5</string>
+					<key>id</key>
+					<string>4</string>
+					<key>instructions</key>
+					<string>Before we end our session, feel free to ask the app any medical questions you might have related to your health.</string>
+					<key>questions</key>
+					<array>
+						<dict>
+							<key>answer</key>
+							<string>unanswered</string>
+							<key>isOptional</key>
+							<true/>
+							<key>text</key>
+							<string>How effective was the LLM in helping to answer your health question?</string>
+							<key>type</key>
+							<string>scale(&lt;effectiveness&gt;)</string>
+						</dict>
+						<dict>
+							<key>answer</key>
+							<string>unanswered</string>
+							<key>isOptional</key>
+							<true/>
+							<key>text</key>
+							<string>What surprised you about the LLM&apos;s answer, either positively or negatively?</string>
+							<key>type</key>
+							<string>text</string>
+						</dict>
+					</array>
+				</dict>
+				<dict>
+					<key>id</key>
+					<string>5</string>
+					<key>instructions</key>
+					<string>Please feel free to ask any other questions you have. When you&apos;re done, please complete the next task.</string>
+					<key>questions</key>
+					<array>
+						<dict>
+							<key>answer</key>
+							<string>unanswered</string>
+							<key>isOptional</key>
+							<false/>
+							<key>text</key>
+							<string>Compared to other sources of health information (e.g., websites, doctors), how do you rate the LLM&apos;s responses?</string>
+							<key>type</key>
+							<string>scale(&lt;comparison&gt;)</string>
+						</dict>
+						<dict>
+							<key>answer</key>
+							<string>unanswered</string>
+							<key>isOptional</key>
+							<true/>
+							<key>text</key>
+							<string>What were the most and least useful features of the LLM? Do you have any suggestions to share?</string>
+							<key>type</key>
+							<string>text</string>
+						</dict>
+						<dict>
+							<key>answer</key>
+							<string>unanswered</string>
+							<key>isOptional</key>
+							<true/>
+							<key>text</key>
+							<string>How has the LLM impacted your ability to manage your health?</string>
+							<key>type</key>
+							<string>text</string>
+						</dict>
+						<dict>
+							<key>answer</key>
+							<string>unanswered</string>
+							<key>isOptional</key>
+							<false/>
+							<key>text</key>
+							<string>On a scale of 0-10, how likely are you to recommend this tool to a friend or colleague?</string>
+							<key>type</key>
+							<string>NPS(0;10)</string>
+						</dict>
+					</array>
+				</dict>
+				<dict>
+					<key>id</key>
+					<string>6</string>
+					<key>instructions</key>
+					<string>Please hit the arrow at the top of your screen to complete the final task.</string>
+					<key>questions</key>
+					<array>
+						<dict>
+							<key>answer</key>
+							<string>unanswered</string>
+							<key>isOptional</key>
+							<false/>
+							<key>text</key>
+							<string>How easy would it be to access or obtain information about your medical condition?</string>
+							<key>type</key>
+							<string>scale(&lt;balancedEase&gt;)</string>
+						</dict>
+						<dict>
+							<key>answer</key>
+							<string>unanswered</string>
+							<key>isOptional</key>
+							<false/>
+							<key>text</key>
+							<string>How frequently do you anticipate having problems learning about your medical condition because of difficulty understanding written information?</string>
+							<key>type</key>
+							<string>scale(&lt;frequencyOptions&gt;)</string>
+						</dict>
+						<dict>
+							<key>answer</key>
+							<string>unanswered</string>
+							<key>isOptional</key>
+							<false/>
+							<key>text</key>
+							<string>How confident would you be in filling out medical forms by yourself?</string>
+							<key>type</key>
+							<string>scale(&lt;confidentness&gt;)</string>
+						</dict>
+						<dict>
+							<key>answer</key>
+							<string>unanswered</string>
+							<key>isOptional</key>
+							<false/>
+							<key>text</key>
+							<string>How often do you think you would have someone help you read hospital materials?</string>
+							<key>type</key>
+							<string>scale(&lt;frequencyOptions&gt;)</string>
+						</dict>
+					</array>
+				</dict>
+			</array>
+		</dict>
 	</array>
 </dict>
 </plist>

@@ -24,7 +24,7 @@ class LLMonFHIRDelegate: SpeziAppDelegate {
             if HKHealthStore.isHealthDataAvailable() {
                 healthKit
             }
-            let userStudyCodes = UserStudyCodes()
+//            let userStudyCodes = UserStudyCodes()
             LLMRunner {
                 LLMOpenAIPlatform(
                     configuration: .init(
@@ -44,10 +44,11 @@ class LLMonFHIRDelegate: SpeziAppDelegate {
                     message: "Enter one of 10 codes to start the user study",
                     format: .numeric(4)
                 ) { code in
-                    await userStudyCodes.validate(code)
+                    //await userStudyCodes.validate(code)
+                    .valid
                 }
             }
-            userStudyCodes
+//            userStudyCodes
         }
     }
     

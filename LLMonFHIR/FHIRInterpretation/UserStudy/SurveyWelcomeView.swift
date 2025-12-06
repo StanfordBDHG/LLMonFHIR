@@ -14,7 +14,7 @@ import SpeziLLMOpenAI
 import SwiftUI
 
 
-struct UserStudyWelcomeView: View {
+struct SurveyWelcomeView: View {
     @AppStorage(StorageKeys.resourceLimit) private var resourceLimit = StorageKeys.currentResourceCountLimit
 
     @Environment(LLMonFHIRStandard.self) private var standard
@@ -25,6 +25,7 @@ struct UserStudyWelcomeView: View {
     @Environment(LLMOpenAIPlatform.self) private var platform
     @WaitingState private var waitingState
 
+    var survey: Survey
     @State private var isPresentingSettings = false
     @State private var isPresentingStudy = false
     @State private var isPresentingEarliestHealthRecords = false
@@ -59,18 +60,18 @@ struct UserStudyWelcomeView: View {
                     settingsButton
                 }
                 .sheet(isPresented: $isPresentingSettings) {
-                    AccessGuarded(.userStudy) {
+//                    AccessGuarded(.userStudy) {
                         SettingsView()
-                    }
+//                    }
                 }
                 .fullScreenCover(isPresented: $isPresentingStudy) {
-                    AccessGuarded(.userStudy) {
+//                    AccessGuarded(.userStudy) {
                         UserStudyChatView(
-                            survey: Survey(.defaultTasks),
+                            survey: survey,
                             interpreter: interpreter,
                             resourceSummary: resourceSummary
                         )
-                    }
+//                    }
                 }
                 .sheet(isPresented: $isPresentingEarliestHealthRecords) {
                     EarliestHealthRecordsView(
@@ -117,7 +118,7 @@ struct UserStudyWelcomeView: View {
 
     private var studyTitle: some View {
         VStack(spacing: 8) {
-            Text("USER_STUDY_WELCOME_TITLE")
+            Text(survey.title)
                 .font(.title)
                 .fontWeight(.bold)
                 .foregroundColor(.primary)
@@ -128,7 +129,7 @@ struct UserStudyWelcomeView: View {
     }
 
     private var studyDescription: some View {
-        Text("USER_STUDY_WELCOME_DESCRIPTION")
+        Text(survey.explainer)
             .font(.body)
             .multilineTextAlignment(.center)
             .foregroundColor(.secondary)
@@ -226,19 +227,12 @@ struct UserStudyWelcomeView: View {
         guard case let .keychain(tag, username) = self.platform.configuration.authToken else {
             fatalError("LLMonFHIR relies on an auth token stored in Keychain. Please check your `LLMOpenAIPlatform` configuration.")
         }
-        
         let logger = Logger(subsystem: "edu.stanford.llmonfhir", category: "UserStudyWelcomeView")
-        
-        guard let apiKey = UserStudyConfig.shared.apiKey else {
-            logger.warning("No OpenAI API key found in UserStudyPlistConfiguration.shared.apiKey")
-            return
-        }
-        
         do {
             try keychainStorage.store(
                 Credentials(
                     username: username,
-                    password: apiKey
+                    password: survey.openAIAPIKey
                 ),
                 for: tag
             )
@@ -253,153 +247,4 @@ extension AccessGuardIdentifier where AccessGuard == CodeAccessGuard {
     /// A unique identifier for user study access control.
     /// Used to protect and manage access to user study related features and views.
     static let userStudy: Self = .passcode("UserStudyIdentifier")
-}
-
-
-extension [SurveyTask] {
-    private static let clarityScale = [
-        "Very clear",
-        "Somewhat clear",
-        "Neither clear nor unclear",
-        "Somewhat unclear",
-        "Very unclear"
-    ]
-
-    private static let effectivenessScale = [
-        "Very effective",
-        "Somewhat effective",
-        "Neither clear nor unclear",
-        "Somewhat ineffective",
-        "Very ineffective"
-    ]
-    
-    private static let confidentnessScale = [
-        "Very confident",
-        "Somewhat confident",
-        "Neither confident nor unconfident",
-        "Somewhat unconfident",
-        "Very unconfident"
-    ]
-
-    private static let comparisonScale = [
-        "Significantly better",
-        "Slightly better",
-        "No change",
-        "Slightly worse",
-        "Significantly worse"
-    ]
-
-    private static let balancedEaseScale = [
-        "Very easy",
-        "Somewhat easy",
-        "Neither easy nor difficult",
-        "Somewhat difficult",
-        "Very difficult"
-    ]
-
-    private static let frequencyOptions = [
-        "Always",
-        "Often",
-        "Sometimes",
-        "Rarely",
-        "Never"
-    ]
-
-    /// Default set of survey tasks used in the user study
-    static let defaultTasks: [SurveyTask] = [
-        .init(
-            id: 1,
-            // swiftlint:disable:next line_length
-            instruction: "LLMonFHIR app will have a health summary automatically generated on the home screen. Please review this before answering any questions.",
-            questions: [
-                .init(
-                    text: "How clear and understandable was the summary provided by the app?",
-                    type: .scale(responseOptions: clarityScale)
-                )
-            ]
-        ),
-        .init(
-            id: 2,
-            instruction: "Ask a clarifying question about the most recent diagnosis from your last medical visit.",
-            questions: [
-                .init(
-                    text: "How effective is this feature for interpreting and evaluating your medical information?",
-                    type: .scale(responseOptions: effectivenessScale)
-                )
-            ]
-        ),
-        .init(
-            id: 3,
-            instruction: "Ask the app for a personalized health recommendation. Feel free to ask about any health concerns.",
-            questions: [
-                .init(
-                    text: "How effective are these recommendations in helping you make decisions about your health?",
-                    type: .scale(responseOptions: effectivenessScale)
-                )
-            ]
-        ),
-        .init(
-            id: 4,
-            instruction: "Before we end our session, feel free to ask the app any medical questions you might have related to your health.",
-            questions: [
-                .init(
-                    text: "How effective was the LLM in helping to answer your health question?",
-                    type: .scale(responseOptions: effectivenessScale),
-                    isOptional: true
-                ),
-                .init(
-                    text: "What surprised you about the LLM's answer, either positively or negatively?",
-                    type: .freeText,
-                    isOptional: true
-                )
-            ]
-        ),
-        .init(
-            id: 5,
-            instruction: "Please feel free to ask any other questions you have. When you're done, please complete the next task.",
-            questions: [
-                .init(
-                    text: "Compared to other sources of health information (e.g., websites, doctors), how do you rate the LLM's responses?",
-                    type: .scale(responseOptions: comparisonScale)
-                ),
-                .init(
-                    text: "What were the most and least useful features of the LLM? Do you have any suggestions to share?",
-                    type: .freeText,
-                    isOptional: true
-                ),
-                .init(
-                    text: "How has the LLM impacted your ability to manage your health?",
-                    type: .freeText,
-                    isOptional: true
-                ),
-                .init(
-                    text: "On a scale of 0-10, how likely are you to recommend this tool to a friend or colleague?",
-                    type: .netPromoterScore(range: 0...10)
-                )
-            ]
-        ),
-        .init(
-            id: 6,
-            instruction: "Please hit the arrow at the top of your screen to complete the final task.",
-            questions: [
-                .init(
-                    text: "How easy would it be to access or obtain information about your medical condition?",
-                    type: .scale(responseOptions: balancedEaseScale)
-                ),
-                .init(
-                    // swiftlint:disable:next line_length
-                    text: "How frequently do you anticipate having problems learning about your medical condition because of difficulty understanding written information?",
-                    type: .scale(responseOptions: frequencyOptions)
-                ),
-                .init(
-                    text: "How confident would you be in filling out medical forms by yourself?",
-                    type: .scale(responseOptions: confidentnessScale)
-                ),
-                .init(
-                    text: "How often do you think you would have someone help you read hospital materials?",
-                    type: .scale(responseOptions: frequencyOptions)
-                )
-            ]
-        )
-    ]
 }

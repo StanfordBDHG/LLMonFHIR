@@ -49,19 +49,18 @@ private struct PulsatingEffect: ViewModifier {
     }
 }
 
+
 struct UserStudyChatToolbar: ToolbarContent {
     var viewModel: UserStudyChatViewModel
 
     let isInputDisabled: Bool
     let onDismiss: () -> Void
 
-
     var body: some ToolbarContent {
         dismissButton
         continueButton
         shareButton
     }
-
 
     private var dismissButton: some ToolbarContent {
         ToolbarItem(placement: .cancellationAction) {
@@ -138,7 +137,7 @@ extension UserStudyChatToolbar {
                 Image(systemName: "square.and.arrow.up")
                     .accessibilityLabel("Share Survey Results")
             }
-            .studyReportShareSheet(url: $reportUrl)
+            .studyReportShareSheet(url: $reportUrl, for: viewModel.survey)
         }
     }
 }
@@ -147,16 +146,16 @@ extension UserStudyChatToolbar {
 extension View {
     @ViewBuilder
     fileprivate func studyReportShareSheet(
-        url urlBinding: Binding<URL?>
+        url urlBinding: Binding<URL?>,
+        for survey: Survey
     ) -> some View {
-        let config = UserStudyConfig.shared
-        if EmailSheet.isAvailable, let recipient = config.reportEmail, !recipient.isEmpty {
+        if EmailSheet.isAvailable, let recipient = survey.reportEmail, !recipient.isEmpty {
             self.sheet(item: urlBinding, id: \.self) { url in
                 EmailSheet(message: EmailSheet.Message(
                     recipient: recipient,
                     subject: "LLMonFHIR usabiity study result",
                     body: """
-                        The attached file contains your\(config.encryptionKey != nil ? " encrypyed" : "") results of the usability study.
+                        The attached file contains your\(survey.encryptionKey != nil ? " encrypyed" : "") results of the usability study.
                         
                         Please send the email to our team at \(recipient).
                         

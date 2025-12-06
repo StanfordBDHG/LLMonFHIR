@@ -2226,7 +2226,7 @@
       },
       "shouldTranslate" : false
     },
-    "Task %lld" : {
+    "Task %@" : {
 
     },
     "Temperature" : {
@@ -2417,6 +2417,7 @@
       }
     },
     "USER_STUDY_WELCOME_DESCRIPTION" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -2427,6 +2428,7 @@
       }
     },
     "USER_STUDY_WELCOME_TITLE" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {

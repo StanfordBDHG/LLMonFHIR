@@ -103,11 +103,9 @@ struct LimitedCollectionDictionary<Key: Hashable & Sendable, Element> {
         guard let range = capacityRanges[key] else {
             return true
         }
-
         guard let collection = collections[key] else {
             return false
         }
-
         return collection.count >= range.upperBound
     }
 
