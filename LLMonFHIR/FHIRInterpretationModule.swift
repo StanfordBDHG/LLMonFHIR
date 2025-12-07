@@ -33,6 +33,7 @@ final class FHIRInterpretationModule: Module, DefaultInitializable, EnvironmentA
     @LocalPreference(.fogModel) private var fogModel
     @LocalPreference(.resourceLimit) private var resourceLimit
     
+    private var updateModelsTask: Task<Void, any Error>?
     
     @MainActor var singleResourceLLMSchema: any LLMSchema {
         switch self.llmSource {
@@ -96,10 +97,28 @@ final class FHIRInterpretationModule: Module, DefaultInitializable, EnvironmentA
     }
     
     
+    /// Updates the schema used by the interpretation module.
+    ///
+    /// By default, this function will delay the actual schema updating, in order to be able to coalesce multiple calls into just one update.
+    ///
+    /// - parameter forceImmediateUpdate: Set this to `true` to disable the delay and instead update the schema immediately.
     @MainActor
-    func updateSchemas() async {
-        await resourceSummary.changeLLMSchema(to: singleResourceLLMSchema)
-        await resourceInterpreter.changeLLMSchema(to: singleResourceLLMSchema)
-        multipleResourceInterpreter.changeLLMSchema(to: multipleResourceInterpreterOpenAISchema)
+    func updateSchemas(forceImmediateUpdate: Bool = false) async {
+        updateModelsTask?.cancel()
+        let imp = { [self] in
+            await resourceSummary.changeLLMSchema(to: singleResourceLLMSchema)
+            await resourceInterpreter.changeLLMSchema(to: singleResourceLLMSchema)
+            multipleResourceInterpreter.changeLLMSchema(to: multipleResourceInterpreterOpenAISchema)
+        }
+        if forceImmediateUpdate {
+            await imp()
+        } else {
+            updateModelsTask = Task {
+                try? await Task.sleep(for: .seconds(2))
+                if !Task.isCancelled {
+                    await imp()
+                }
+            }
+        }
     }
 }

@@ -105,7 +105,6 @@ actor LLMonFHIRStandard: Standard, HealthKitConstraint, EnvironmentAccessible {
                 }
             }
         }
-        await updateSchemas()
     }
     
     @MainActor

@@ -140,7 +140,7 @@ final class FHIRMultipleResourceInterpreter {
     ///
     /// After calling this method, any new responses will be generated using the new schema,
     /// but the conversation will start fresh with only system messages.
-    func changeLLMSchema<Schema: LLMSchema>(to newSchema: Schema) {
+    func changeLLMSchema(to newSchema: some LLMSchema) {
         Self.logger.debug("Updating LLM schema")
         self.llmSchema = newSchema
         let newSession = llmRunner(with: llmSchema)

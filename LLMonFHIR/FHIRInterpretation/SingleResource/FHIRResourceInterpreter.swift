@@ -55,8 +55,8 @@ final class FHIRResourceInterpreter: Sendable {
     ///
     /// - Parameters:
     ///    - schema: The to-be-used `LLMSchema`.
-    func changeLLMSchema<Schema: LLMSchema & Sendable>(to schema: Schema) async {
-        await resourceProcessor.changeSchems(to: schema)
+    func changeLLMSchema(to schema: some LLMSchema & Sendable) async {
+        await resourceProcessor.changeSchema(to: schema)
     }
 }
 
