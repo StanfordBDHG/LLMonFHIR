@@ -36,7 +36,7 @@
 							<key>text</key>
 							<string>How clear and understandable was the summary provided by the app?</string>
 							<key>type</key>
-							<string>scale(&lt;clarity&gt;)</string>
+							<string>scale(&lt;clarityScale&gt;)</string>
 						</dict>
 					</array>
 				</dict>
@@ -57,7 +57,7 @@
 							<key>text</key>
 							<string>How effective is this feature for interpreting and evaluating your medical information?</string>
 							<key>type</key>
-							<string>scale(&lt;effectiveness&gt;)</string>
+							<string>scale(&lt;effectivenessScale&gt;)</string>
 						</dict>
 					</array>
 				</dict>
@@ -78,7 +78,7 @@
 							<key>text</key>
 							<string>How effective are these recommendations in helping you make decisions about your health?</string>
 							<key>type</key>
-							<string>scale(&lt;effectiveness&gt;)</string>
+							<string>scale(&lt;effectivenessScale&gt;)</string>
 						</dict>
 					</array>
 				</dict>
@@ -99,7 +99,7 @@
 							<key>text</key>
 							<string>How effective was the LLM in helping to answer your health question?</string>
 							<key>type</key>
-							<string>scale(&lt;effectiveness&gt;)</string>
+							<string>scale(&lt;effectivenessScale&gt;)</string>
 						</dict>
 						<dict>
 							<key>answer</key>
@@ -128,7 +128,7 @@
 							<key>text</key>
 							<string>Compared to other sources of health information (e.g., websites, doctors), how do you rate the LLM&apos;s responses?</string>
 							<key>type</key>
-							<string>scale(&lt;comparison&gt;)</string>
+							<string>scale(&lt;comparisonScale&gt;)</string>
 						</dict>
 						<dict>
 							<key>answer</key>
@@ -177,7 +177,7 @@
 							<key>text</key>
 							<string>How easy would it be to access or obtain information about your medical condition?</string>
 							<key>type</key>
-							<string>scale(&lt;balancedEase&gt;)</string>
+							<string>scale(&lt;balancedEaseScale&gt;)</string>
 						</dict>
 						<dict>
 							<key>answer</key>
@@ -197,7 +197,7 @@
 							<key>text</key>
 							<string>How confident would you be in filling out medical forms by yourself?</string>
 							<key>type</key>
-							<string>scale(&lt;confidentness&gt;)</string>
+							<string>scale(&lt;confidentnessScale&gt;)</string>
 						</dict>
 						<dict>
 							<key>answer</key>
