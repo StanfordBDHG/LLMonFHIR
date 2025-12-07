@@ -46,7 +46,7 @@ extension TaskQuestionType.AnswerOptions: Codable {
     }
     
     init(stringValue string: some StringProtocol) {
-        if let preset = Self.presets["<\(string)>"] {
+        if string.first == "<", string.last == ">", let preset = Self.presets[String(string.dropFirst().dropLast())] {
             self = preset
         } else {
             self.init(string.split(separator: ";").map { $0.trimmingWhitespace() })
@@ -68,11 +68,11 @@ extension TaskQuestionType.AnswerOptions: Codable {
 
 extension TaskQuestionType.AnswerOptions {
     static let presets: [String: Self] = [
-        "clarity": clarityScale,
-        "effectiveness": effectivenessScale,
-        "confidentness": confidentnessScale,
-        "comparison": comparisonScale,
-        "balancedEase": balancedEaseScale,
+        "clarityScale": clarityScale,
+        "effectivenessScale": effectivenessScale,
+        "confidentnessScale": confidentnessScale,
+        "comparisonScale": comparisonScale,
+        "balancedEaseScale": balancedEaseScale,
         "frequencyOptions": frequencyOptions
     ]
     

@@ -101,7 +101,7 @@ struct UserStudyChatView: View {
     
     @ViewBuilder
     private func surveySheet() -> some View {
-        if let task = viewModel.currentTask, let taskIdx = viewModel.currentTaskIdx {
+        if let task = viewModel.currentTask, let taskIdx = viewModel.userDisplayableCurrentTaskIdx {
             SurveyView(
                 task: task,
                 taskIdx: taskIdx,
@@ -122,7 +122,7 @@ struct UserStudyChatView: View {
     
     @ViewBuilder
     private func taskInstructionSheet() -> some View {
-        if let task = viewModel.currentTask, let taskIdx = viewModel.currentTaskIdx {
+        if let task = viewModel.currentTask, let taskIdx = viewModel.userDisplayableCurrentTaskIdx {
             TaskInstructionView(
                 task: task,
                 taskIdx: taskIdx,
