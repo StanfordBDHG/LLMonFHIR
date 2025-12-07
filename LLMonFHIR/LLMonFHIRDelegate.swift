@@ -17,7 +17,7 @@ import SpeziLLMOpenAI
 import SwiftUI
 
 
-class LLMonFHIRDelegate: SpeziAppDelegate {
+final class LLMonFHIRDelegate: SpeziAppDelegate {
     override var configuration: Configuration {
         Configuration(standard: LLMonFHIRStandard()) {
             if HKHealthStore.isHealthDataAvailable() {
@@ -42,6 +42,9 @@ class LLMonFHIRDelegate: SpeziAppDelegate {
     private var healthKit: HealthKit {
         HealthKit {
             RequestReadAccess(other: LLMonFHIRStandard.recordTypes)
+            for type in LLMonFHIRStandard.recordTypes {
+                CollectSample(type, start: .manual, continueInBackground: false, timeRange: .newSamples)
+            }
         }
     }
 }

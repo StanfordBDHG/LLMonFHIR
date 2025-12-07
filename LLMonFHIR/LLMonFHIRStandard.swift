@@ -50,13 +50,7 @@ actor LLMonFHIRStandard: Standard, HealthKitConstraint, EnvironmentAccessible {
     }
     
     private func initialSetup() async {
-        // Waiting until the HealthKit module loads all authorization requirements.
-        // Issue tracked in https://github.com/StanfordSpezi/SpeziHealthKit/issues/57
-        let loadingStartDate = Date.now
-        while healthKit.configurationState != .completed && abs(loadingStartDate.distance(to: .now)) < 0.5 {
-            logger.debug("Loading HealthKit Module ...")
-            try? await Task.sleep(for: .seconds(0.02))
-        }
+        await healthKit.waitForConfigurationDone()
         guard healthKit.isFullyAuthorized else {
             logger.error("HealthKit permissions not yet provided.")
             return
@@ -122,10 +116,17 @@ actor LLMonFHIRStandard: Standard, HealthKitConstraint, EnvironmentAccessible {
     // HealthKitConstraint
     
     func handleNewSamples<Sample>(_ addedSamples: some Collection<Sample>, ofType sampleType: SampleType<Sample>) async {
-        // unused
+        for sample in addedSamples {
+            guard let sample = sample as? HKClinicalRecord else {
+                continue
+            }
+            try? await fhirStore.add(sample)
+        }
     }
     
     func handleDeletedObjects<Sample>(_ deletedObjects: some Collection<HKDeletedObject>, ofType sampleType: SampleType<Sample>) async {
-        // unused
+        for object in deletedObjects {
+            await fhirStore.remove(object)
+        }
     }
 }
