@@ -2220,7 +2220,7 @@
       },
       "shouldTranslate" : false
     },
-    "Task %@" : {
+    "Task %lld" : {
 
     },
     "Temperature" : {

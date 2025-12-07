@@ -58,6 +58,10 @@ final class UserStudyChatViewModel: MultipleResourcesChatViewModel {  // swiftli
     var currentTask: SurveyTask? {
         survey.tasks.first { $0.id == currentTaskId }
     }
+    
+    var currentTaskIdx: Int? {
+        survey.tasks.firstIndex { $0.id == currentTaskId }
+    }
 
     var shouldDisableChatInput: Bool {
         // Always disable during processing

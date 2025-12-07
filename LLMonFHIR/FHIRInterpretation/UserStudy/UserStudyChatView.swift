@@ -101,9 +101,10 @@ struct UserStudyChatView: View {
     
     @ViewBuilder
     private func surveySheet() -> some View {
-        if let task = viewModel.currentTask {
+        if let task = viewModel.currentTask, let taskIdx = viewModel.currentTaskIdx {
             SurveyView(
                 task: task,
+                taskIdx: taskIdx,
                 isPresented: Binding<Bool>(
                     get: { viewModel.isSurveyViewPresented },
                     set: { viewModel.setSurveyViewPresented($0) }
@@ -121,9 +122,10 @@ struct UserStudyChatView: View {
     
     @ViewBuilder
     private func taskInstructionSheet() -> some View {
-        if let currentTask = viewModel.currentTask {
+        if let task = viewModel.currentTask, let taskIdx = viewModel.currentTaskIdx {
             TaskInstructionView(
-                task: currentTask,
+                task: task,
+                taskIdx: taskIdx,
                 isPresented: Binding<Bool>(
                     get: { viewModel.isTaskIntructionAlertPresented },
                     set: { viewModel.setTaskInstructionSheetPresented($0) }
