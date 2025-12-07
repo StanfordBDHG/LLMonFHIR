@@ -10,7 +10,7 @@
 			<key>id</key>
 			<string>edu.stanford.LLMonFHIR.usabilityStudy</string>
 			<key>openai_api_key</key>
-			<string>sk-123</string>
+			<string></string>
 			<key>encryption_key</key>
 			<data></data>
 			<key>report_email</key>

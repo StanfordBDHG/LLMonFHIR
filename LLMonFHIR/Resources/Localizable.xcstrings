@@ -2407,28 +2407,6 @@
         }
       }
     },
-    "USER_STUDY_WELCOME_DESCRIPTION" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "During this study, you’ll complete a survey about your experiences navigating the healthcare system and have the opportunity to ask the chat questions about your health."
-          }
-        }
-      }
-    },
-    "USER_STUDY_WELCOME_TITLE" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "User Study"
-          }
-        }
-      }
-    },
     "WELCOME_AREA1_DESCRIPTION" : {
       "localizations" : {
         "de" : {
