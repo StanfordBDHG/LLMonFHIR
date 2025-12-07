@@ -76,7 +76,6 @@ actor LLMonFHIRStandard: Standard, HealthKitConstraint, EnvironmentAccessible {
         await withTaskGroup { taskGroup in
             for recordType in Self.recordTypes {
                 taskGroup.addTask { @concurrent [self] in
-                    dispatchPrecondition(condition: .notOnQueue(.main))
                     let records = try? await healthKit.query(
                         recordType,
                         timeRange: .ever,
@@ -91,6 +90,7 @@ actor LLMonFHIRStandard: Standard, HealthKitConstraint, EnvironmentAccessible {
             }
         }
         await updateSchemas()
+        await healthKit.triggerDataSourceCollection()
     }
     
     private func addRecords(_ records: [HKClinicalRecord]) async {

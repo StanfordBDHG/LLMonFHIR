@@ -1,5 +1,5 @@
 {
-  "originHash" : "a07a0724c35bc14438a22003bd86ee0311670b94f9a3ea7c4cca406a2a76d3af",
+  "originHash" : "cc208816f7fada8f3adf8a21b7f58d79beefc28dc5dee67064f2cdb3ad919e1b",
   "pins" : [
     {
       "identity" : "fhirmodels",
@@ -114,8 +114,7 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/StanfordSpezi/SpeziHealthKit.git",
       "state" : {
-        "revision" : "cbf84b6d6222a3b392ef18315179a62cc3177207",
-        "version" : "1.3.1"
+        "revision" : "ee6d91ed78c66e47684bee8c9f45eb845df1c2f7"
       }
     },
     {
