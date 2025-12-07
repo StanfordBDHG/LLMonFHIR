@@ -6,11 +6,12 @@
 // SPDX-License-Identifier: MIT
 //
 
+import SpeziViews
 import SwiftUI
 
 
 private struct LLMonFHIRTestingSetup: ViewModifier {
-    @AppStorage(StorageKeys.onboardingFlowComplete) var completedOnboardingFlow = false
+    @LocalPreference(.onboardingFlowComplete) var completedOnboardingFlow
     
     
     func body(content: Content) -> some View {

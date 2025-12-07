@@ -15,7 +15,7 @@ import SwiftUI
 /// Displays an multi-step onboarding flow for the Spezi LLMonFHIR.
 struct OnboardingFlow: View {
     @Environment(HealthKit.self) private var healthKit: HealthKit?
-    @AppStorage(StorageKeys.onboardingFlowComplete) var completedOnboardingFlow = false
+    @LocalPreference(.onboardingFlowComplete) var completedOnboardingFlow
     
     private var healthKitAuthorization: Bool {
         // As HealthKit not available in preview simulator
@@ -31,7 +31,7 @@ struct OnboardingFlow: View {
         ManagedNavigationStack(didComplete: $completedOnboardingFlow) {
             Welcome()
             Disclaimer()
-            if !FeatureFlags.isUserStudyEnabled {
+            if FeatureFlags.enabledUserStudyId == nil {
                 // Always show OpenAI model onboarding for chat-based interaction.
                 OpenAIAPIKey()
                 OpenAIModelSelection()

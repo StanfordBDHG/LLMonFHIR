@@ -20,7 +20,7 @@ struct MultipleResourcesChatView: View {
 
     @State private var viewModel: MultipleResourcesChatViewModel
 
-    @AppStorage(StorageKeys.enableTextToSpeech) private var textToSpeech = StorageKeys.currentEnableTextToSpeech
+    @LocalPreference(.enableTextToSpeech) private var textToSpeech
 
 
     var body: some View {

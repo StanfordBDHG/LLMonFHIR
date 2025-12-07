@@ -9,83 +9,54 @@
 import Foundation
 import SpeziLLMFog
 import SpeziLLMOpenAI
+import SpeziViews
 
 
-/// Constants shared across the Spezi Template Application to access storage information including the `AppStorage` and `SceneStorage`
-enum StorageKeys {
-    enum Defaults {
-        fileprivate static let enableTextToSpeech = false
-        fileprivate static let resourceLimit = 250
-        fileprivate static let openAIModel: LLMOpenAIParameters.ModelType = .gpt4o
-        fileprivate static let openAIModelTemperature = 0.0
-        static let llmSource = LLMSource.openai
-        static let fogModel = LLMFogParameters.FogModelType.llama3_1_8B
-    }
-    
-    
-    static var currentEnableTextToSpeech: Bool {
-        guard UserDefaults().object(forKey: StorageKeys.enableTextToSpeech) != nil else {
-            return StorageKeys.Defaults.enableTextToSpeech
-        }
-        
-        return UserDefaults().bool(forKey: StorageKeys.enableTextToSpeech)
-    }
-    
-    static var currentResourceCountLimit: Int {
-        guard UserDefaults().object(forKey: StorageKeys.resourceLimit) != nil else {
-            return StorageKeys.Defaults.resourceLimit
-        }
-        
-        return max(0, UserDefaults().integer(forKey: StorageKeys.resourceLimit))
-    }
-    
-    static var currentOpenAIModel: LLMOpenAIParameters.ModelType {
-        guard let openAIModelMultipleInterpretation = UserDefaults().string(forKey: StorageKeys.openAIModel),
-              let model = LLMOpenAIParameters.ModelType(rawValue: openAIModelMultipleInterpretation) else {
-            return StorageKeys.Defaults.openAIModel
-        }
-        
-        return model
-    }
-    
-    static var currentOpenAIModelTemperature: Double {
-        guard UserDefaults().object(forKey: StorageKeys.openAIModelTemperature) != nil else {
-            return StorageKeys.Defaults.openAIModelTemperature
-        }
-        
-        return max(0.0, UserDefaults().double(forKey: StorageKeys.openAIModelTemperature))
-    }
-    
-    
+extension LocalPreferenceKey {
     // MARK: - Onboarding
     /// A `Bool` flag indicating of the onboarding was completed.
-    static let onboardingFlowComplete = "onboardingFlow.complete"
+    static var onboardingFlowComplete: LocalPreferenceKey<Bool> {
+        .make("onboardingFlow.complete", default: false)
+    }
     /// An `LLMSource` flag indicating the source of the model (local vs. fog vs. OpenAI)
-    static let llmSource = "onboardingFlow.llmsource"
+    static var llmSource: LocalPreferenceKey<LLMSource> {
+        .make("onboardingFlow.llmsource", default: .openai)
+    }
     
     
     // MARK: - Home
     /// Show the onboarding instructions
-    static let onboardingInstructions = "resources.onboardingInstructions"
-    
-    
-    // MARK: - Usability Study
-    /// Show the onboarding instructions
-    static let isUsabilityStudyEnabled = "study.isUsabilityStudyEnabled"
+    static var onboardingInstructions: LocalPreferenceKey<Bool> {
+        .make("resources.onboardingInstructions", default: true)
+    }
     
     
     // MARK: - Settings
     /// Indicates if the messages should be spoken
-    static let enableTextToSpeech = "settings.enableTextToSpeech"
+    static var enableTextToSpeech: LocalPreferenceKey<Bool> {
+        .make("settings.enableTextToSpeech", default: false)
+    }
+    
     /// Indicates the limit of resources that should be included in the all resources query
-    static let resourceLimit = "settings.resourceLimit"
+    static var resourceLimit: LocalPreferenceKey<Int> {
+        .make("settings.resourceLimit", default: 250)
+    }
+    
     /// Indicates the chosen OpenAI GPT model for multiple resource interpretation
-    static let openAIModel = "settings.openAIModel.multipleResourceInterpretation"
+    static var openAIModel: LocalPreferenceKey<LLMOpenAIParameters.ModelType> {
+        .make("settings.openAIModel.multipleResourceInterpretation", default: .gpt4o)
+    }
+    
     /// Model temperature
-    static let openAIModelTemperature = "settings.openAIModel.temperature"
+    static var openAIModelTemperature: LocalPreferenceKey<Double> {
+        .make("settings.openAIModel.temperature", default: 0)
+    }
+    
     /// Identifier for selecting a fog model.
     ///
     /// The value should correspond to the registered model name available on the fog node.
     /// LLMonFHIR uses this name to resolve and load the correct model.
-    static let fogModel = "settings.fogModel"
+    static var fogModel: LocalPreferenceKey<LLMFogParameters.FogModelType> {
+        .make("settings.fogModel", default: .llama3_1_8B)
+    }
 }

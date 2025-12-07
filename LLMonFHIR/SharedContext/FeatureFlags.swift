@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import SpeziFoundation
 
 
 /// A collection of feature flags for the PAWS app.
@@ -19,10 +20,11 @@ enum FeatureFlags {
     static let testMode = CommandLine.arguments.contains("--testMode")
     /// Export the raw JSON for all FHIR resources in the export for the user study
     static let exportRawJSONFHIRResources = CommandLine.arguments.contains("--exportRawJSONFHIRResources")
-    /// Sets the application in user study mode
-    static var isUserStudyEnabled: Bool {
-        CommandLine.arguments.contains("--userStudy")
-//            || UserStudyConfig.shared.isEnabled == true
-            || UserDefaults.standard.bool(forKey: StorageKeys.isUsabilityStudyEnabled)
+    
+    /// The identifier of a user study the app should be launched into.
+    static var enabledUserStudyId: String? {
+        CommandLine.arguments.firstIndex(of: "--study").flatMap {
+            CommandLine.arguments[safe: $0 + 1]
+        }
     }
 }

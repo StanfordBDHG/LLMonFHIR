@@ -8,7 +8,7 @@
 			<key>explainer</key>
 			<string>During this study, you’ll complete a survey about your experiences navigating the healthcare system and have the opportunity to ask the chat questions about your health.</string>
 			<key>id</key>
-			<string>edu.stanford.LLMonFHIR.userStudy</string>
+			<string>edu.stanford.LLMonFHIR.usabilityStudy</string>
 			<key>openai_api_key</key>
 			<string>sk-123</string>
 			<key>encryption_key</key>

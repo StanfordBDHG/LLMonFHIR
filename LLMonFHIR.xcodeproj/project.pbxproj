@@ -21,7 +21,7 @@
 		44E18E8E2CEBEC9500829A26 /* SpeziLLMLocalDownload in Frameworks */ = {isa = PBXBuildFile; productRef = 44E18E8D2CEBEC9500829A26 /* SpeziLLMLocalDownload */; };
 		44E18E902CEBEC9500829A26 /* SpeziLLMOpenAI in Frameworks */ = {isa = PBXBuildFile; productRef = 44E18E8F2CEBEC9500829A26 /* SpeziLLMOpenAI */; };
 		44E18E932CEBF29200829A26 /* SpeziLocalStorage in Frameworks */ = {isa = PBXBuildFile; productRef = 44E18E922CEBF29200829A26 /* SpeziLocalStorage */; };
-		8023F0D02EC3AE2D002AB7EA /* SpeziViews in Frameworks */ = {isa = PBXBuildFile; productRef = 8023F0CF2EC3AE2D002AB7EA /* SpeziViews */; };
+		801761AC2EE5CC2400383DB3 /* SpeziViews in Frameworks */ = {isa = PBXBuildFile; productRef = 801761AB2EE5CC2400383DB3 /* SpeziViews */; };
 		805368DD2EC92DE30037E73E /* SpeziAccessGuard in Frameworks */ = {isa = PBXBuildFile; productRef = 805368DC2EC92DE30037E73E /* SpeziAccessGuard */; };
 		806DF5BA2EC234AD00A8243C /* SpeziFHIR in Frameworks */ = {isa = PBXBuildFile; productRef = 806DF5B92EC234AD00A8243C /* SpeziFHIR */; };
 		806DF5BC2EC234AD00A8243C /* SpeziFHIRHealthKit in Frameworks */ = {isa = PBXBuildFile; productRef = 806DF5BB2EC234AD00A8243C /* SpeziFHIRHealthKit */; };
@@ -102,6 +102,7 @@
 			files = (
 				808B31BB2EE49BD600DFBCC7 /* SpeziLLMLocal in Frameworks */,
 				44E18E932CEBF29200829A26 /* SpeziLocalStorage in Frameworks */,
+				801761AC2EE5CC2400383DB3 /* SpeziViews in Frameworks */,
 				44E18E882CEBEC9500829A26 /* SpeziLLM in Frameworks */,
 				806DF5BC2EC234AD00A8243C /* SpeziFHIRHealthKit in Frameworks */,
 				44E18E8E2CEBEC9500829A26 /* SpeziLLMLocalDownload in Frameworks */,
@@ -133,7 +134,6 @@
 				9733FC5D2B60E5FB0024F12C /* SpeziFHIRMockPatients in Frameworks */,
 				97EAB5DE2B7A010A00A0B036 /* SpeziFHIR in Frameworks */,
 				806DF5BE2EC234AD00A8243C /* SpeziFHIRMockPatients in Frameworks */,
-				8023F0D02EC3AE2D002AB7EA /* SpeziViews in Frameworks */,
 				2FE5DC8129EDD91D004B9AB4 /* SpeziOnboarding in Frameworks */,
 				97BC1F2F2B7F390100438263 /* SpeziFHIRMockPatients in Frameworks */,
 				808B31BF2EE49BD600DFBCC7 /* SpeziLLMOpenAI in Frameworks */,
@@ -271,13 +271,13 @@
 				806DF6752EC29DD600A8243C /* SpeziFHIR */,
 				806DF6772EC29DD600A8243C /* SpeziFHIRHealthKit */,
 				806DF6792EC29DD600A8243C /* SpeziFHIRMockPatients */,
-				8023F0CF2EC3AE2D002AB7EA /* SpeziViews */,
 				805368DC2EC92DE30037E73E /* SpeziAccessGuard */,
 				808B31B62EE49BD600DFBCC7 /* SpeziLLM */,
 				808B31B82EE49BD600DFBCC7 /* SpeziLLMFog */,
 				808B31BA2EE49BD600DFBCC7 /* SpeziLLMLocal */,
 				808B31BC2EE49BD600DFBCC7 /* SpeziLLMLocalDownload */,
 				808B31BE2EE49BD600DFBCC7 /* SpeziLLMOpenAI */,
+				801761AB2EE5CC2400383DB3 /* SpeziViews */,
 			);
 			productName = LLMonFHIR;
 			productReference = 653A254D283387FE005D4D48 /* LLMonFHIR.app */;
@@ -378,9 +378,9 @@
 				44E18EE92CED09DA00829A26 /* XCRemoteSwiftPackageReference "SpeziSpeech" */,
 				658E102D2E74A1380038C003 /* XCRemoteSwiftPackageReference "SwiftLintPlugins" */,
 				806DF6742EC29DD600A8243C /* XCRemoteSwiftPackageReference "SpeziFHIR" */,
-				8023F0CA2EC3AE2D002AB7EA /* XCRemoteSwiftPackageReference "SpeziViews" */,
 				805368DB2EC92DE30037E73E /* XCRemoteSwiftPackageReference "SpeziAccessGuard" */,
 				808B31B52EE49BD600DFBCC7 /* XCRemoteSwiftPackageReference "SpeziLLM" */,
+				801761A62EE5CC2400383DB3 /* XCRemoteSwiftPackageReference "SpeziViews" */,
 			);
 			productRefGroup = 653A254E283387FE005D4D48 /* Products */;
 			projectDirPath = "";
@@ -1031,12 +1031,12 @@
 				minimumVersion = 0.61.0;
 			};
 		};
-		8023F0CA2EC3AE2D002AB7EA /* XCRemoteSwiftPackageReference "SpeziViews" */ = {
+		801761A62EE5CC2400383DB3 /* XCRemoteSwiftPackageReference "SpeziViews" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/StanfordSpezi/SpeziViews.git";
 			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 1.12.9;
+				kind = revision;
+				revision = 9656304452a8cdf56fcffa3925fbf5162a69270b;
 			};
 		};
 		805368DB2EC92DE30037E73E /* XCRemoteSwiftPackageReference "SpeziAccessGuard" */ = {
@@ -1136,9 +1136,9 @@
 			package = 658E102D2E74A1380038C003 /* XCRemoteSwiftPackageReference "SwiftLintPlugins" */;
 			productName = "plugin:SwiftLintBuildToolPlugin";
 		};
-		8023F0CF2EC3AE2D002AB7EA /* SpeziViews */ = {
+		801761AB2EE5CC2400383DB3 /* SpeziViews */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 8023F0CA2EC3AE2D002AB7EA /* XCRemoteSwiftPackageReference "SpeziViews" */;
+			package = 801761A62EE5CC2400383DB3 /* XCRemoteSwiftPackageReference "SpeziViews" */;
 			productName = SpeziViews;
 		};
 		805368DC2EC92DE30037E73E /* SpeziAccessGuard */ = {

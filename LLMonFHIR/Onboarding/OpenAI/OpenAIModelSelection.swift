@@ -24,7 +24,7 @@ struct OpenAIModelSelection: View {
     ]
     
     @Environment(ManagedNavigationStack.Path.self) private var path
-    @AppStorage(StorageKeys.openAIModel) private var model = LLMOpenAIParameters.ModelType.gpt5
+    @LocalPreference(.openAIModel) private var model
     
     
     var body: some View {

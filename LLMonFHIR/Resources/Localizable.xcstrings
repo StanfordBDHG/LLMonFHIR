@@ -646,9 +646,6 @@
     "Documents" : {
 
     },
-    "Enable Usability Study" : {
-
-    },
     "Encounters" : {
       "localizations" : {
         "de" : {
@@ -2333,9 +2330,6 @@
     },
     "Unable to parse result of the LLM prompt." : {
       "comment" : "Error thrown if the result can not be parsed in the underlying type."
-    },
-    "Usability Study Settings" : {
-
     },
     "Use HealthKit Resources" : {
       "localizations" : {

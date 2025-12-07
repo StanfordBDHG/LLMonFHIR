@@ -13,7 +13,7 @@ import SwiftUI
 
 struct LLMSourceSelection: View {
     @Environment(ManagedNavigationStack.Path.self) private var path
-    @AppStorage(StorageKeys.llmSource) private var llmSource = StorageKeys.Defaults.llmSource
+    @LocalPreference(.llmSource) private var llmSource
 
     
     var body: some View {

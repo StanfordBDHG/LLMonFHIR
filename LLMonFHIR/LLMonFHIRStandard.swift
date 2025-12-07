@@ -11,6 +11,7 @@ import Spezi
 import SpeziFHIR
 import SpeziFHIRHealthKit
 import SpeziHealthKit
+import SpeziViews
 import SwiftUI
 
 
@@ -32,7 +33,7 @@ actor LLMonFHIRStandard: Standard, HealthKitConstraint, EnvironmentAccessible {
     @Dependency(HealthKit.self) private var healthKit
     @MainActor @Dependency(FHIRInterpretationModule.self) private var fhirInterpretationModule
     
-    @AppStorage(StorageKeys.resourceLimit) private var resourceLimit = StorageKeys.currentResourceCountLimit
+    @LocalPreference(.resourceLimit) private var resourceLimit
     @MainActor var useHealthKitResources = true
     
     @MainActor @Dependency private var waitingState = FHIRResourceWaitingState()

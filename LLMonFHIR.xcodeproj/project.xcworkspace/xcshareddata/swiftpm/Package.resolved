@@ -1,5 +1,5 @@
 {
-  "originHash" : "cc208816f7fada8f3adf8a21b7f58d79beefc28dc5dee67064f2cdb3ad919e1b",
+  "originHash" : "a07a0724c35bc14438a22003bd86ee0311670b94f9a3ea7c4cca406a2a76d3af",
   "pins" : [
     {
       "identity" : "fhirmodels",
@@ -159,8 +159,7 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/StanfordSpezi/SpeziViews.git",
       "state" : {
-        "revision" : "bf7cc7830a4b81bed381fba7f5d96c5d2050fb09",
-        "version" : "1.12.9"
+        "revision" : "9656304452a8cdf56fcffa3925fbf5162a69270b"
       }
     },
     {

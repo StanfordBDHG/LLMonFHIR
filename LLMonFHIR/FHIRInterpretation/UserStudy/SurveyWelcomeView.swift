@@ -10,11 +10,12 @@ import os.log
 import SpeziFHIR
 import SpeziKeychainStorage
 import SpeziLLMOpenAI
+import SpeziViews
 import SwiftUI
 
 
 struct SurveyWelcomeView: View {
-    @AppStorage(StorageKeys.resourceLimit) private var resourceLimit = StorageKeys.currentResourceCountLimit
+    @LocalPreference(.resourceLimit) private var resourceLimit
 
     @Environment(LLMonFHIRStandard.self) private var standard
     @Environment(FHIRInterpretationModule.self) private var fhirInterpretationModule

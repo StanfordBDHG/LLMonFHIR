@@ -13,6 +13,7 @@ import SpeziLLMFog
 import SpeziLLMLocal
 import SpeziLLMOpenAI
 import SpeziLocalStorage
+import SpeziViews
 import SwiftUI
 
 
@@ -26,16 +27,19 @@ final class FHIRInterpretationModule: Module, DefaultInitializable, EnvironmentA
     @Model private var resourceInterpreter: FHIRResourceInterpreter
     @Model private var multipleResourceInterpreter: FHIRMultipleResourceInterpreter
     
-    @AppStorage(StorageKeys.llmSource) private var llmSource = StorageKeys.Defaults.llmSource
-    @AppStorage(StorageKeys.fogModel) private var fogModel = StorageKeys.Defaults.fogModel
+    @LocalPreference(.llmSource) private var llmSource
+    @LocalPreference(.openAIModel) private var openAIModel
+    @LocalPreference(.openAIModelTemperature) private var openAIModelTemperature
+    @LocalPreference(.fogModel) private var fogModel
+    @LocalPreference(.resourceLimit) private var resourceLimit
     
     
     @MainActor var singleResourceLLMSchema: any LLMSchema {
         switch self.llmSource {
         case .openai:
             LLMOpenAISchema(
-                parameters: .init(modelType: StorageKeys.currentOpenAIModel.rawValue, systemPrompts: []),
-                modelParameters: .init(temperature: StorageKeys.currentOpenAIModelTemperature)
+                parameters: .init(modelType: openAIModel.rawValue, systemPrompts: []),
+                modelParameters: .init(temperature: openAIModelTemperature)
             )
         case .fog:
             LLMFogSchema(
@@ -49,13 +53,9 @@ final class FHIRInterpretationModule: Module, DefaultInitializable, EnvironmentA
     }
     
     @MainActor var multipleResourceInterpreterOpenAISchema: LLMOpenAISchema {
-        let openAIModelType = StorageKeys.currentOpenAIModel
-        let temperature = StorageKeys.currentOpenAIModelTemperature
-        let resourceLimit = StorageKeys.currentResourceCountLimit
-        
-        return LLMOpenAISchema(
-            parameters: .init(modelType: openAIModelType.rawValue, systemPrompts: []),
-            modelParameters: .init(temperature: temperature)
+        LLMOpenAISchema(
+            parameters: .init(modelType: openAIModel.rawValue, systemPrompts: []),
+            modelParameters: .init(temperature: openAIModelTemperature)
         ) {
             FHIRGetResourceLLMFunction(
                 fhirStore: self.fhirStore,

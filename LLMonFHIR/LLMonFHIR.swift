@@ -7,13 +7,14 @@
 //
 
 import Spezi
+import SpeziViews
 import SwiftUI
 
 
 @main
 struct LLMonFHIR: App {
     @UIApplicationDelegateAdaptor(LLMonFHIRDelegate.self) var appDelegate
-    @AppStorage(StorageKeys.onboardingFlowComplete) private var completedOnboardingFlow = false
+    @LocalPreference(.onboardingFlowComplete) private var completedOnboardingFlow
 
     var body: some Scene {
         WindowGroup {
@@ -29,8 +30,8 @@ struct LLMonFHIR: App {
     @ViewBuilder private var contentView: some View {
         if !completedOnboardingFlow {
             EmptyView()
-        } else if FeatureFlags.isUserStudyEnabled {
-            SurveyHomeView(surveyId: "edu.stanford.LLMonFHIR.userStudy")
+        } else if let studyId = FeatureFlags.enabledUserStudyId {
+            SurveyHomeView(surveyId: studyId)
         } else {
             HomeView()
         }
