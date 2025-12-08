@@ -11,24 +11,7 @@ import SpeziFoundation
 import SwiftUI
 
 
-struct CreateEnrollmentQRCodeButton: View {
-    @State private var isPresented = false
-    
-    var body: some View {
-        Button {
-            isPresented = true
-        } label: {
-            Image(systemName: "qrcode.viewfinder")
-                .accessibilityLabel("Scan code to enroll in study")
-        }
-        .fullScreenCover(isPresented: $isPresented) {
-            CreateEnrollmentQRCodeView()
-        }
-    }
-}
-
-
-private struct CreateEnrollmentQRCodeView: View {
+struct CreateEnrollmentQRCodeSheet: View {
     @State private var studyId: Survey.ID?
     @State private var enableExpirationTimestamp = true
     @State private var expirationDate = Calendar.current.startOfNextDay(for: .now) - 30

@@ -51,11 +51,7 @@ struct Welcome: View {
         )
         .toolbar {
             ToolbarItem(placement: .topBarTrailing) {
-                if ProcessInfo.processInfo.isiOSAppOnMac {
-                    CreateEnrollmentQRCodeButton()
-                } else {
-                    ScanStudyQRCodeButton()
-                }
+                StudyQRCodeButton()
             }
         }
     }

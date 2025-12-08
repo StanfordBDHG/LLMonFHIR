@@ -35,7 +35,7 @@ struct HomeView: View {
 
     @ToolbarContentBuilder private var toolbarContent: some ToolbarContent {
         ToolbarItem(placement: .topBarLeading) {
-            ScanStudyQRCodeButton()
+            StudyQRCodeButton()
         }
         ToolbarItem(placement: .topBarTrailing) {
             Button {

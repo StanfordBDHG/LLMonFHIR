@@ -6,11 +6,24 @@
 // SPDX-License-Identifier: MIT
 //
 
+// swiftlint:disable file_types_order
+
 import Foundation
 import SwiftUI
 
 
-struct ScanStudyQRCodeButton: View {
+struct StudyQRCodeButton: View {
+    var body: some View {
+        if ProcessInfo.processInfo.isiOSAppOnMac {
+            CreateQRCodeButton()
+        } else {
+            ScanQRCodeButton()
+        }
+    }
+}
+
+
+private struct ScanQRCodeButton: View {
     @Environment(CurrentStudyManager.self) private var studyManager
     
     @State private var showQRCodeScanner = false
@@ -31,6 +44,23 @@ struct ScanStudyQRCodeButton: View {
                 print("Failed to start study: \(error)")
                 return .continueScanning
             }
+        }
+    }
+}
+
+
+private struct CreateQRCodeButton: View {
+    @State private var isPresented = false
+    
+    var body: some View {
+        Button {
+            isPresented = true
+        } label: {
+            Image(systemName: "qrcode.viewfinder")
+                .accessibilityLabel("Scan code to enroll in study")
+        }
+        .fullScreenCover(isPresented: $isPresented) {
+            CreateEnrollmentQRCodeSheet()
         }
     }
 }
