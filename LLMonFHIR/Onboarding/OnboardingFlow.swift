@@ -12,7 +12,7 @@ import SpeziViews
 import SwiftUI
 
 
-/// Displays an multi-step onboarding flow for the Spezi LLMonFHIR.
+/// Displays an multi-step onboarding flow for LLMonFHIR.
 struct OnboardingFlow: View {
     @Environment(HealthKit.self) private var healthKit: HealthKit?
     @LocalPreference(.onboardingFlowComplete) var completedOnboardingFlow

@@ -13,7 +13,6 @@ import SwiftUI
 private struct LLMonFHIRTestingSetup: ViewModifier {
     @LocalPreference(.onboardingFlowComplete) var completedOnboardingFlow
     
-    
     func body(content: Content) -> some View {
         content
             .task {

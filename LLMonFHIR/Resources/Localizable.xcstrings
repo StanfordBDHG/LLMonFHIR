@@ -4,6 +4,9 @@
     "\n%@" : {
 
     },
+    "–" : {
+
+    },
     "%.2f" : {
 
     },
@@ -14,6 +17,9 @@
 
     },
     "Allergies" : {
+
+    },
+    "Allow in Settings" : {
 
     },
     "Authorize Health Access" : {
@@ -58,6 +64,9 @@
           }
         }
       }
+    },
+    "Correction Level" : {
+
     },
     "Could not create FHIR Summary" : {
       "localizations" : {
@@ -126,6 +135,9 @@
           }
         }
       }
+    },
+    "Create Study Enrollment QR Code" : {
+
     },
     "Creative" : {
 
@@ -674,6 +686,12 @@
         }
       }
     },
+    "Expiration Date" : {
+
+    },
+    "Expires" : {
+
+    },
     "FHIR_RESOURCES_EMPTY_SEARCH_MESSAGE" : {
       "localizations" : {
         "de" : {
@@ -1184,7 +1202,13 @@
         }
       }
     },
+    "High" : {
+
+    },
     "Higher values (0.8+) increase randomness and creativity. Lower values (0.2-) make responses more focused and deterministic." : {
+
+    },
+    "Highest" : {
 
     },
     "Immunizations" : {
@@ -1354,6 +1378,9 @@
         }
       }
     },
+    "Low" : {
+
+    },
     "Medications" : {
       "localizations" : {
         "de" : {
@@ -1382,6 +1409,9 @@
         }
       }
     },
+    "Medium" : {
+
+    },
     "Multiple Resource Interpretation Prompt Content" : {
       "comment" : "Content of the multiple resources interpretation prompt.",
       "localizations" : {
@@ -1405,6 +1435,9 @@
       }
     },
     "No" : {
+
+    },
+    "No Image" : {
 
     },
     "Observations" : {
@@ -1515,6 +1548,9 @@
           }
         }
       }
+    },
+    "Other" : {
+
     },
     "Other Resources" : {
       "localizations" : {
@@ -1802,6 +1838,12 @@
           }
         }
       }
+    },
+    "Scan code to enroll in study" : {
+
+    },
+    "Scan QR Code" : {
+
     },
     "SETTINGS" : {
       "localizations" : {
@@ -2168,6 +2210,9 @@
         }
       }
     },
+    "Study" : {
+
+    },
     "Submit" : {
 
     },
@@ -2327,6 +2372,9 @@
           }
         }
       }
+    },
+    "Unable to access Camera" : {
+
     },
     "Unable to parse result of the LLM prompt." : {
       "comment" : "Error thrown if the result can not be parsed in the underlying type."
@@ -2714,6 +2762,9 @@
       }
     },
     "Yes" : {
+
+    },
+    "You must allow LLMonFHIR to access the camera in order to be able to scan a QR code" : {
 
     },
     "Your Health Records" : {

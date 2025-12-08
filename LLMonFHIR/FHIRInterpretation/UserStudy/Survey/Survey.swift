@@ -13,7 +13,7 @@ import Foundation
 
 
 /// Manages a collection of survey tasks and their responses
-final class Survey {
+final class Survey: Identifiable {
     /// The survey's unique identifier.
     let id: String
     /// The survey's title.
@@ -86,17 +86,20 @@ extension Survey {
         let studies: [Survey]
     }
     
-    static func withId(_ id: String) -> Survey? {
+    static func allKnownStudies() -> [Survey] {
         guard let url = Bundle.main.url(forResource: "UserStudyConfig", withExtension: "plist") else {
-            return nil
+            return []
         }
         do {
             let data = try Data(contentsOf: url)
-            let allSurveys = try PropertyListDecoder().decode(PlistWrapper.self, from: data).studies
-            return allSurveys.first { $0.id == id }
+            return try PropertyListDecoder().decode(PlistWrapper.self, from: data).studies
         } catch {
-            return nil
+            return []
         }
+    }
+    
+    static func withId(_ id: String) -> Survey? {
+        allKnownStudies().first { $0.id == id }
     }
 }
 
