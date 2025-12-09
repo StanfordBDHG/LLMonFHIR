@@ -686,9 +686,6 @@
         }
       }
     },
-    "Expiration Date" : {
-
-    },
     "Expires" : {
 
     },
@@ -2213,6 +2210,16 @@
     "Study" : {
 
     },
+    "STUDY_QR_CODE_GEN_EXPIRATION_FOOTER" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Expiring codes are only valid for a short period of time.\n\nThe best validity duration depends on the specific use case, if the code is scanned live off the screen it should be as low as possible.\nThe app auto-generates a new, valid code every few seconds."
+          }
+        }
+      }
+    },
     "Submit" : {
 
     },
@@ -2454,6 +2461,9 @@
           }
         }
       }
+    },
+    "Valid for" : {
+
     },
     "WELCOME_AREA1_DESCRIPTION" : {
       "localizations" : {
