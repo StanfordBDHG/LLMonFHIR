@@ -43,9 +43,9 @@ struct ResourceSelection: View {
                         Text("Use HealthKit Resources")
                     }
                 }
-                    .onChange(of: useHealthKitResources.wrappedValue, initial: true) {
-                        changeHealthKitResourcesSelection()
-                    }
+                .onChange(of: useHealthKitResources.wrappedValue, initial: true) {
+                    changeHealthKitResourcesSelection()
+                }
             }
             if showBundleSelection {
                 Section {
@@ -97,7 +97,6 @@ struct ResourceSelection: View {
             guard let firstMockPatient = bundles.first else {
                 return
             }
-            
             store.removeAllResources()
             _Concurrency.Task {
                 await store.load(bundle: firstMockPatient)

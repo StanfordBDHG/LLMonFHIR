@@ -7,12 +7,13 @@
 //
 
 import SpeziFHIR
+import SpeziViews
 import SwiftUI
 
 
 struct FHIRResourcesInstructionsView: View {
     @Environment(FHIRStore.self) private var fhirStore
-    @AppStorage(StorageKeys.onboardingInstructions) private var onboardingInstructions = true
+    @LocalPreference(.onboardingInstructions) private var onboardingInstructions
     
     
     var body: some View {
@@ -33,9 +34,7 @@ struct FHIRResourcesInstructionsView: View {
                     Spacer()
                     if #available(iOS 26.0, *) {
                         dismissButton
-                        #if swift(>=6.2)
                             .buttonStyle(.glass)
-                        #endif
                     } else {
                         dismissButton
                     }

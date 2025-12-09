@@ -94,7 +94,7 @@
             isEnabled = "NO">
          </CommandLineArgument>
          <CommandLineArgument
-            argument = "--userStudy"
+            argument = "--study edu.stanford.LLMonFHIR.usabilityStudy"
             isEnabled = "NO">
          </CommandLineArgument>
       </CommandLineArguments>

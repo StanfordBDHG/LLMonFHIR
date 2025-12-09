@@ -6,12 +6,12 @@
 // SPDX-License-Identifier: MIT
 //
 
-
+import SpeziViews
 import SwiftUI
 
 
 struct OpenAIModelParametersView: View {
-    @AppStorage(StorageKeys.openAIModelTemperature) private var temperature = StorageKeys.currentOpenAIModelTemperature
+    @LocalPreference(.openAIModelTemperature) private var temperature
     @Environment(FHIRInterpretationModule.self) var fhirInterpretationModule
 
 

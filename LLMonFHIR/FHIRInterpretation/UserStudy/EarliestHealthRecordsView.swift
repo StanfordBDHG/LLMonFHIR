@@ -15,9 +15,8 @@ struct EarliestHealthRecordsView: View {
     let dataSource: [String: Date]
     let dateFormatter: DateFormatter
 
-
     var body: some View {
-        NavigationView {
+        NavigationStack {
             List {
                 Section(footer: Text("\n\(Text("HEALTH_RECORDS_SINCE_DISCLAIMER"))")) {
                     ForEach(dataSource.keys.sorted(), id: \.self) { resourceType in

@@ -4,6 +4,9 @@
     "\n%@" : {
 
     },
+    "–" : {
+
+    },
     "%.2f" : {
 
     },
@@ -14,6 +17,12 @@
 
     },
     "Allergies" : {
+
+    },
+    "Allow in Settings" : {
+
+    },
+    "Authorize Health Access" : {
 
     },
     "Balanced" : {
@@ -55,6 +64,9 @@
           }
         }
       }
+    },
+    "Correction Level" : {
+
     },
     "Could not create FHIR Summary" : {
       "localizations" : {
@@ -123,6 +135,9 @@
           }
         }
       }
+    },
+    "Create Study Enrollment QR Code" : {
+
     },
     "Creative" : {
 
@@ -643,9 +658,6 @@
     "Documents" : {
 
     },
-    "Enable Usability Study" : {
-
-    },
     "Encounters" : {
       "localizations" : {
         "de" : {
@@ -674,7 +686,7 @@
         }
       }
     },
-    "Enter one of 10 codes to start the user study" : {
+    "Expires" : {
 
     },
     "FHIR_RESOURCES_EMPTY_SEARCH_MESSAGE" : {
@@ -1187,7 +1199,13 @@
         }
       }
     },
+    "High" : {
+
+    },
     "Higher values (0.8+) increase randomness and creativity. Lower values (0.2-) make responses more focused and deterministic." : {
+
+    },
+    "Highest" : {
 
     },
     "Immunizations" : {
@@ -1357,6 +1375,9 @@
         }
       }
     },
+    "Low" : {
+
+    },
     "Medications" : {
       "localizations" : {
         "de" : {
@@ -1384,6 +1405,9 @@
           }
         }
       }
+    },
+    "Medium" : {
+
     },
     "Multiple Resource Interpretation Prompt Content" : {
       "comment" : "Content of the multiple resources interpretation prompt.",
@@ -1518,6 +1542,9 @@
           }
         }
       }
+    },
+    "Other" : {
+
     },
     "Other Resources" : {
       "localizations" : {
@@ -1805,6 +1832,15 @@
           }
         }
       }
+    },
+    "Scan code to enroll in study" : {
+
+    },
+    "Scan QR Code" : {
+
+    },
+    "Select a study on the right." : {
+
     },
     "SETTINGS" : {
       "localizations" : {
@@ -2171,6 +2207,19 @@
         }
       }
     },
+    "Study" : {
+
+    },
+    "STUDY_QR_CODE_GEN_EXPIRATION_FOOTER" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Expiring codes are only valid for a short period of time.\n\nThe best validity duration depends on the specific use case, if the code is scanned live off the screen it should be as low as possible.\nThe app auto-generates a new, valid code every few seconds."
+          }
+        }
+      }
+    },
     "Submit" : {
 
     },
@@ -2331,11 +2380,11 @@
         }
       }
     },
+    "Unable to access Camera" : {
+
+    },
     "Unable to parse result of the LLM prompt." : {
       "comment" : "Error thrown if the result can not be parsed in the underlying type."
-    },
-    "Usability Study Settings" : {
-
     },
     "Use HealthKit Resources" : {
       "localizations" : {
@@ -2413,25 +2462,8 @@
         }
       }
     },
-    "USER_STUDY_WELCOME_DESCRIPTION" : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "During this study, you’ll complete a survey about your experiences navigating the healthcare system and have the opportunity to ask the chat questions about your health."
-          }
-        }
-      }
-    },
-    "USER_STUDY_WELCOME_TITLE" : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "User Study"
-          }
-        }
-      }
+    "Valid for" : {
+
     },
     "WELCOME_AREA1_DESCRIPTION" : {
       "localizations" : {
@@ -2740,6 +2772,9 @@
       }
     },
     "Yes" : {
+
+    },
+    "You must allow LLMonFHIR to access the camera in order to be able to scan a QR code" : {
 
     },
     "Your Health Records" : {

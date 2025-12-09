@@ -10,7 +10,32 @@ import CryptoKit
 import Foundation
 
 
+extension Curve25519.KeyAgreement.PublicKey: @retroactive Hashable {
+    public static func == (lhs: Self, rhs: Self) -> Bool {
+        lhs.rawRepresentation == rhs.rawRepresentation
+    }
+    
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(rawRepresentation)
+    }
+}
+
+
 extension Curve25519.KeyAgreement.PublicKey {
+    var pemFileContents: Data {
+        // The standard ASN.1 header for X25519 (OID: 1.3.101.110)
+        // Structure: Sequence(42) { Sequence(5) { OID(3) }, BitString(33) { Unused(0) + Key(32) } }
+        var data = Data([ // start off with the x25519Header
+            0x30, 0x2A, // Sequence of 42 bytes
+            0x30, 0x05, // Sequence of 5 bytes (Algorithm Identifier)
+            0x06, 0x03, 0x2B, 0x65, 0x6E, // OID: 1.3.101.110 (X25519)
+            0x03, 0x21, 0x00 // Bit String of 33 bytes (0 unused bits)
+        ])
+        data.append(self.rawRepresentation)
+        let base64 = data.base64EncodedString(options: .lineLength64Characters)
+        return Data("-----BEGIN PUBLIC KEY-----\n\(base64)\n-----END PUBLIC KEY-----\n".utf8)
+    }
+    
     init(pemFileContents: Data) throws {
         let possiblePrefix = Data("-----BEGIN PUBLIC KEY-----\n".utf8)
         let possibleSuffix = Data("\n-----END PUBLIC KEY-----\n".utf8)
