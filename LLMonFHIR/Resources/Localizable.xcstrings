@@ -1434,9 +1434,6 @@
     "No" : {
 
     },
-    "No Image" : {
-
-    },
     "Observations" : {
       "localizations" : {
         "de" : {
@@ -1840,6 +1837,9 @@
 
     },
     "Scan QR Code" : {
+
+    },
+    "Select a study on the right." : {
 
     },
     "SETTINGS" : {
