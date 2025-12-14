@@ -49,11 +49,6 @@ struct Welcome: View {
                 managedNavigationStackPath.nextStep()
             }
         )
-        .toolbar {
-            ToolbarItem(placement: .topBarTrailing) {
-                StudyQRCodeButton()
-            }
-        }
     }
 }
 

@@ -1,5 +1,5 @@
 {
-  "originHash" : "cc208816f7fada8f3adf8a21b7f58d79beefc28dc5dee67064f2cdb3ad919e1b",
+  "originHash" : "8f4a04a4c45906b3cd9052026d1d7f74076458a3108266ac9127f77124ca333c",
   "pins" : [
     {
       "identity" : "fhirmodels",
@@ -131,8 +131,7 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/StanfordSpezi/SpeziOnboarding.git",
       "state" : {
-        "revision" : "13851755c753c3294c058043099ea0d3e63cc746",
-        "version" : "2.0.3"
+        "revision" : "8a3b65f2605da46447b03a48f7cce2a50c4a6fe9"
       }
     },
     {

@@ -137,7 +137,7 @@ extension UserStudyChatToolbar {
                 Image(systemName: "square.and.arrow.up")
                     .accessibilityLabel("Share Survey Results")
             }
-            .studyReportShareSheet(url: $reportUrl, for: viewModel.survey)
+            .studyReportShareSheet(url: $reportUrl, for: viewModel.study)
         }
     }
 }
@@ -147,15 +147,15 @@ extension View {
     @ViewBuilder
     fileprivate func studyReportShareSheet(
         url urlBinding: Binding<URL?>,
-        for survey: Survey
+        for study: Study
     ) -> some View {
-        if EmailSheet.isAvailable, let recipient = survey.reportEmail, !recipient.isEmpty {
+        if EmailSheet.isAvailable, let recipient = study.reportEmail, !recipient.isEmpty {
             self.sheet(item: urlBinding, id: \.self) { url in
                 EmailSheet(message: EmailSheet.Message(
                     recipient: recipient,
                     subject: "LLMonFHIR usabiity study result",
                     body: """
-                        The attached file contains your\(survey.encryptionKey != nil ? " encrypyed" : "") results of the usability study.
+                        The attached file contains your\(study.encryptionKey != nil ? " encrypyed" : "") results of the usability study.
                         
                         Please send the email to our team at \(recipient).
                         

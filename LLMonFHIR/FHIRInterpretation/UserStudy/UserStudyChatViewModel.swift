@@ -51,16 +51,16 @@ final class UserStudyChatViewModel: MultipleResourcesChatViewModel {  // swiftli
     private(set) var isTaskIntructionAlertPresented = false
 
     var isTaskIntructionButtonDisabled: Bool {
-        survey.tasks.first { $0.id == currentTaskId }?.instructions == nil
+        study.tasks.first { $0.id == currentTaskId }?.instructions == nil
     }
 
     /// Returns the current task if one is active
     var currentTask: SurveyTask? {
-        survey.tasks.first { $0.id == currentTaskId }
+        study.tasks.first { $0.id == currentTaskId }
     }
     
     var userDisplayableCurrentTaskIdx: Int? {
-        survey.tasks.firstIndex { $0.id == currentTaskId }.map { $0 + 1 }
+        study.tasks.firstIndex { $0.id == currentTaskId }.map { $0 + 1 }
     }
 
     var shouldDisableChatInput: Bool {
@@ -102,7 +102,7 @@ final class UserStudyChatViewModel: MultipleResourcesChatViewModel {  // swiftli
         }
     }
 
-    let survey: Survey
+    let study: Study
     private let resourceSummary: FHIRResourceSummary
     private let studyStartTime = Date()
     private var taskStartTimes: [SurveyTask.ID: Date] = [:]
@@ -129,15 +129,13 @@ final class UserStudyChatViewModel: MultipleResourcesChatViewModel {  // swiftli
     ///   - interpreter: The FHIR interpreter to use for chat functionality
     ///   - resourceSummary: The FHIR resource summary provider for generating summaries of FHIR resources
     init(
-        survey: Survey,
+        study: Study,
         interpreter: FHIRMultipleResourceInterpreter,
         resourceSummary: FHIRResourceSummary
     ) {
-        self.survey = survey
+        self.study = study
         self.resourceSummary = resourceSummary
-
         super.init(interpreter: interpreter, navigationTitle: "")
-        
         configureMessageLimits()
     }
 
@@ -214,7 +212,7 @@ final class UserStudyChatViewModel: MultipleResourcesChatViewModel {  // swiftli
         }
         taskEndTimes[currentTaskId] = Date()
         for (index, answer) in answers.enumerated() {
-            try survey.submitAnswer(answer, forTaskId: currentTaskId, questionIndex: index)
+            try study.submitAnswer(answer, forTaskId: currentTaskId, questionIndex: index)
         }
         await advanceToNextTask()
         setSurveyViewPresented(false)
@@ -225,7 +223,7 @@ final class UserStudyChatViewModel: MultipleResourcesChatViewModel {  // swiftli
     /// This method clears all survey answers and resets the navigation state,
     /// bringing the study back to its starting point.
     func resetStudy() {
-        survey.resetAllAnswers()
+        study.resetAllAnswers()
         taskStartTimes.removeAll()
         taskEndTimes.removeAll()
         navigationState = .introduction
@@ -235,10 +233,10 @@ final class UserStudyChatViewModel: MultipleResourcesChatViewModel {  // swiftli
     ///
     /// This method initializes the survey process if it hasn't already been started.
     func startSurvey() {
-        guard let taskId = survey.tasks.first?.id else {
+        guard let taskId = study.tasks.first?.id else {
             return
         }
-        navigationState = .task(taskId, total: survey.tasks.count)
+        navigationState = .task(taskId, total: study.tasks.count)
         taskStartTimes[taskId] = Date()
         isTaskIntructionAlertPresented = true
     }
@@ -250,17 +248,17 @@ final class UserStudyChatViewModel: MultipleResourcesChatViewModel {  // swiftli
         guard var studyReport = await generateStudyReport()?.data(using: .utf8) else {
             return nil
         }
-        if let key = survey.encryptionKey {
+        if let key = study.encryptionKey {
             studyReport = try studyReport.encrypted(using: key)
         }
         let tempDir = FileManager.default.temporaryDirectory
-        let reportURL = tempDir.appendingPathComponent("survey_report_\(survey.id.lowercased()).txt")
+        let reportURL = tempDir.appendingPathComponent("survey_report_\(study.id.lowercased()).txt")
         try studyReport.write(to: reportURL)
         return reportURL
     }
 
     private func configureMessageLimits() {
-        for task in survey.tasks {
+        for task in study.tasks {
             guard let limits = task.assistantMessagesLimit else {
                 assistantMessagesByTask.setUnlimitedCapacity(forKey: task.id)
                 continue
@@ -274,11 +272,11 @@ final class UserStudyChatViewModel: MultipleResourcesChatViewModel {  // swiftli
     }
 
     private func advanceToNextTask() async {
-        guard let currentTaskIdx = survey.tasks.firstIndex(where: { $0.id == currentTaskId }) else {
+        guard let currentTaskIdx = study.tasks.firstIndex(where: { $0.id == currentTaskId }) else {
             return
         }
-        if let nextTask = survey.tasks[safe: survey.tasks.index(after: currentTaskIdx)] {
-            navigationState = .task(nextTask.id, total: survey.tasks.count)
+        if let nextTask = study.tasks[safe: study.tasks.index(after: currentTaskIdx)] {
+            navigationState = .task(nextTask.id, total: study.tasks.count)
             taskStartTimes[nextTask.id] = Date()
             isTaskIntructionAlertPresented = true
         } else {
@@ -308,7 +306,7 @@ final class UserStudyChatViewModel: MultipleResourcesChatViewModel {  // swiftli
 
     private func generateMetadata() -> Metadata {
         Metadata(
-            studyID: survey.id,
+            studyID: study.id,
             startTime: studyStartTime,
             endTime: Date()
         )
@@ -324,7 +322,7 @@ final class UserStudyChatViewModel: MultipleResourcesChatViewModel {  // swiftli
             ))
         }
         timeline.append(contentsOf: chatMessages)
-        let surveyTasks = survey.tasks.compactMap { task -> TimelineEvent? in
+        let surveyTasks = study.tasks.compactMap { task -> TimelineEvent? in
             guard let taskStartTime = taskStartTimes[task.id], let taskEndTime = taskEndTimes[task.id] else {
                 return nil
             }

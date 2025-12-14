@@ -12,7 +12,6 @@
 		2FD8E82C2A1AADDA00357F4E /* ModelsR4 in Frameworks */ = {isa = PBXBuildFile; productRef = 2FD8E82B2A1AADDA00357F4E /* ModelsR4 */; };
 		2FD8E8312A1AB00D00357F4E /* HealthKitOnFHIR in Frameworks */ = {isa = PBXBuildFile; productRef = 2FD8E8302A1AB00D00357F4E /* HealthKitOnFHIR */; };
 		2FE5DC7229EDD8D3004B9AB4 /* SpeziHealthKit in Frameworks */ = {isa = PBXBuildFile; productRef = 2FE5DC7129EDD8D3004B9AB4 /* SpeziHealthKit */; };
-		2FE5DC8129EDD91D004B9AB4 /* SpeziOnboarding in Frameworks */ = {isa = PBXBuildFile; productRef = 2FE5DC8029EDD91D004B9AB4 /* SpeziOnboarding */; };
 		2FE5DC9929EDD9D9004B9AB4 /* XCTestExtensions in Frameworks */ = {isa = PBXBuildFile; productRef = 2FE5DC9829EDD9D9004B9AB4 /* XCTestExtensions */; };
 		2FE5DC9C29EDD9EF004B9AB4 /* XCTHealthKit in Frameworks */ = {isa = PBXBuildFile; productRef = 2FE5DC9B29EDD9EF004B9AB4 /* XCTHealthKit */; };
 		44E18E882CEBEC9500829A26 /* SpeziLLM in Frameworks */ = {isa = PBXBuildFile; productRef = 44E18E872CEBEC9500829A26 /* SpeziLLM */; };
@@ -21,6 +20,7 @@
 		44E18E8E2CEBEC9500829A26 /* SpeziLLMLocalDownload in Frameworks */ = {isa = PBXBuildFile; productRef = 44E18E8D2CEBEC9500829A26 /* SpeziLLMLocalDownload */; };
 		44E18E902CEBEC9500829A26 /* SpeziLLMOpenAI in Frameworks */ = {isa = PBXBuildFile; productRef = 44E18E8F2CEBEC9500829A26 /* SpeziLLMOpenAI */; };
 		44E18E932CEBF29200829A26 /* SpeziLocalStorage in Frameworks */ = {isa = PBXBuildFile; productRef = 44E18E922CEBF29200829A26 /* SpeziLocalStorage */; };
+		8004693A2EEF472400585753 /* SpeziOnboarding in Frameworks */ = {isa = PBXBuildFile; productRef = 800469392EEF472400585753 /* SpeziOnboarding */; };
 		801761AC2EE5CC2400383DB3 /* SpeziViews in Frameworks */ = {isa = PBXBuildFile; productRef = 801761AB2EE5CC2400383DB3 /* SpeziViews */; };
 		805368DD2EC92DE30037E73E /* SpeziAccessGuard in Frameworks */ = {isa = PBXBuildFile; productRef = 805368DC2EC92DE30037E73E /* SpeziAccessGuard */; };
 		806DF5BA2EC234AD00A8243C /* SpeziFHIR in Frameworks */ = {isa = PBXBuildFile; productRef = 806DF5B92EC234AD00A8243C /* SpeziFHIR */; };
@@ -123,6 +123,7 @@
 				97BECCD42B8C68C10017E47D /* SpeziFHIRHealthKit in Frameworks */,
 				9710D3562B84151F00E0A20F /* SpeziChat in Frameworks */,
 				97BC1F272B7F390100438263 /* SpeziFHIR in Frameworks */,
+				8004693A2EEF472400585753 /* SpeziOnboarding in Frameworks */,
 				2F49B7762980407C00BCB272 /* Spezi in Frameworks */,
 				808B31B92EE49BD600DFBCC7 /* SpeziLLMFog in Frameworks */,
 				97BECCD22B8C68C10017E47D /* SpeziFHIR in Frameworks */,
@@ -134,7 +135,6 @@
 				9733FC5D2B60E5FB0024F12C /* SpeziFHIRMockPatients in Frameworks */,
 				97EAB5DE2B7A010A00A0B036 /* SpeziFHIR in Frameworks */,
 				806DF5BE2EC234AD00A8243C /* SpeziFHIRMockPatients in Frameworks */,
-				2FE5DC8129EDD91D004B9AB4 /* SpeziOnboarding in Frameworks */,
 				97BC1F2F2B7F390100438263 /* SpeziFHIRMockPatients in Frameworks */,
 				808B31BF2EE49BD600DFBCC7 /* SpeziLLMOpenAI in Frameworks */,
 				9733FC572B60E5FB0024F12C /* SpeziFHIR in Frameworks */,
@@ -242,7 +242,6 @@
 			packageProductDependencies = (
 				2F49B7752980407B00BCB272 /* Spezi */,
 				2FE5DC7129EDD8D3004B9AB4 /* SpeziHealthKit */,
-				2FE5DC8029EDD91D004B9AB4 /* SpeziOnboarding */,
 				2FD8E8292A1AADDA00357F4E /* ModelsDSTU2 */,
 				2FD8E82B2A1AADDA00357F4E /* ModelsR4 */,
 				2FD8E8302A1AB00D00357F4E /* HealthKitOnFHIR */,
@@ -278,6 +277,7 @@
 				808B31BC2EE49BD600DFBCC7 /* SpeziLLMLocalDownload */,
 				808B31BE2EE49BD600DFBCC7 /* SpeziLLMOpenAI */,
 				801761AB2EE5CC2400383DB3 /* SpeziViews */,
+				800469392EEF472400585753 /* SpeziOnboarding */,
 			);
 			productName = LLMonFHIR;
 			productReference = 653A254D283387FE005D4D48 /* LLMonFHIR.app */;
@@ -368,7 +368,6 @@
 			packageReferences = (
 				2F49B7742980407B00BCB272 /* XCRemoteSwiftPackageReference "Spezi" */,
 				2FE5DC7029EDD8D3004B9AB4 /* XCRemoteSwiftPackageReference "SpeziHealthKit" */,
-				2FE5DC7F29EDD91D004B9AB4 /* XCRemoteSwiftPackageReference "SpeziOnboarding" */,
 				2FE5DC9729EDD9D9004B9AB4 /* XCRemoteSwiftPackageReference "XCTestExtensions" */,
 				2FE5DC9A29EDD9EF004B9AB4 /* XCRemoteSwiftPackageReference "XCTHealthKit" */,
 				2FD8E8282A1AADDA00357F4E /* XCRemoteSwiftPackageReference "FHIRModels" */,
@@ -381,6 +380,7 @@
 				805368DB2EC92DE30037E73E /* XCRemoteSwiftPackageReference "SpeziAccessGuard" */,
 				808B31B52EE49BD600DFBCC7 /* XCRemoteSwiftPackageReference "SpeziLLM" */,
 				801761A62EE5CC2400383DB3 /* XCRemoteSwiftPackageReference "SpeziViews" */,
+				800469382EEF472400585753 /* XCRemoteSwiftPackageReference "SpeziOnboarding" */,
 			);
 			productRefGroup = 653A254E283387FE005D4D48 /* Products */;
 			projectDirPath = "";
@@ -978,14 +978,6 @@
 				revision = 38bd68e87c261fc7970890e38fdd6bd69d23f4e8;
 			};
 		};
-		2FE5DC7F29EDD91D004B9AB4 /* XCRemoteSwiftPackageReference "SpeziOnboarding" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/StanfordSpezi/SpeziOnboarding.git";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 2.0.2;
-			};
-		};
 		2FE5DC9729EDD9D9004B9AB4 /* XCRemoteSwiftPackageReference "XCTestExtensions" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/StanfordBDHG/XCTestExtensions.git";
@@ -1032,6 +1024,14 @@
 			requirement = {
 				kind = upToNextMajorVersion;
 				minimumVersion = 0.61.0;
+			};
+		};
+		800469382EEF472400585753 /* XCRemoteSwiftPackageReference "SpeziOnboarding" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/StanfordSpezi/SpeziOnboarding.git";
+			requirement = {
+				kind = revision;
+				revision = 8a3b65f2605da46447b03a48f7cce2a50c4a6fe9;
 			};
 		};
 		801761A62EE5CC2400383DB3 /* XCRemoteSwiftPackageReference "SpeziViews" */ = {
@@ -1094,11 +1094,6 @@
 			package = 2FE5DC7029EDD8D3004B9AB4 /* XCRemoteSwiftPackageReference "SpeziHealthKit" */;
 			productName = SpeziHealthKit;
 		};
-		2FE5DC8029EDD91D004B9AB4 /* SpeziOnboarding */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 2FE5DC7F29EDD91D004B9AB4 /* XCRemoteSwiftPackageReference "SpeziOnboarding" */;
-			productName = SpeziOnboarding;
-		};
 		2FE5DC9829EDD9D9004B9AB4 /* XCTestExtensions */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 2FE5DC9729EDD9D9004B9AB4 /* XCRemoteSwiftPackageReference "XCTestExtensions" */;
@@ -1138,6 +1133,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 658E102D2E74A1380038C003 /* XCRemoteSwiftPackageReference "SwiftLintPlugins" */;
 			productName = "plugin:SwiftLintBuildToolPlugin";
+		};
+		800469392EEF472400585753 /* SpeziOnboarding */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 800469382EEF472400585753 /* XCRemoteSwiftPackageReference "SpeziOnboarding" */;
+			productName = SpeziOnboarding;
 		};
 		801761AB2EE5CC2400383DB3 /* SpeziViews */ = {
 			isa = XCSwiftPackageProductDependency;

@@ -7,6 +7,7 @@
 //
 
 import Spezi
+import SpeziAccessGuard
 import SpeziHealthKit
 import SpeziLLM
 import SpeziLLMFog
@@ -17,8 +18,14 @@ import SpeziLLMOpenAI
 final class LLMonFHIRDelegate: SpeziAppDelegate {
     override var configuration: Configuration {
         Configuration(standard: LLMonFHIRStandard()) {
-            if HKHealthStore.isHealthDataAvailable() {
-                healthKit
+            HealthKit {
+                RequestReadAccess(other: LLMonFHIRStandard.recordTypes)
+                for type in LLMonFHIRStandard.recordTypes {
+                    CollectSamples(type, start: .manual, continueInBackground: false, timeRange: .newSamples)
+                }
+            }
+            AccessGuards {
+                CodeAccessGuard(.userStudy, fixed: "1234")
             }
             LLMRunner {
                 LLMOpenAIPlatform(
@@ -32,17 +39,6 @@ final class LLMonFHIRDelegate: SpeziAppDelegate {
                 LLMLocalPlatform()
             }
             FHIRInterpretationModule()
-            CurrentStudyManager()
-        }
-    }
-    
-    
-    private var healthKit: HealthKit {
-        HealthKit {
-            RequestReadAccess(other: LLMonFHIRStandard.recordTypes)
-            for type in LLMonFHIRStandard.recordTypes {
-                CollectSamples(type, start: .manual, continueInBackground: false, timeRange: .newSamples)
-            }
         }
     }
 }

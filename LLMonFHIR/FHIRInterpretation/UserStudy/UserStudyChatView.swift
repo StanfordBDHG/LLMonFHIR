@@ -87,12 +87,12 @@ struct UserStudyChatView: View {
     ///   - interpreter: The FHIR interpreter to use for chat functionality
     ///   - resourceSummary: The FHIR resource summary provider for generating summaries of FHIR resources
     init(
-        survey: Survey,
+        study: Study,
         interpreter: FHIRMultipleResourceInterpreter,
         resourceSummary: FHIRResourceSummary
     ) {
         viewModel = UserStudyChatViewModel(
-            survey: survey,
+            study: study,
             interpreter: interpreter,
             resourceSummary: resourceSummary
         )

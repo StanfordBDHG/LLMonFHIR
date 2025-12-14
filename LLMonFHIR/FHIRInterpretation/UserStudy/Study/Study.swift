@@ -12,8 +12,12 @@ import CryptoKit
 import Foundation
 
 
+@available(*, deprecated, renamed: "Study")
+typealias Survey = Study
+
+
 /// Manages a collection of survey tasks and their responses
-final class Survey: Identifiable {
+final class Study: Identifiable {
     /// The survey's unique identifier.
     let id: String
     /// The survey's title.
@@ -54,7 +58,7 @@ final class Survey: Identifiable {
 }
 
 
-extension Survey {
+extension Study {
     /// Submits an answer for a specific question in a specific task
     /// - Parameters:
     ///   - answer: The answer to submit
@@ -81,32 +85,9 @@ extension Survey {
 }
 
 
-extension Survey {
-    private struct PlistWrapper: Codable {
-        let studies: [Survey]
-    }
-    
-    static func allKnownStudies() -> [Survey] {
-        guard let url = Bundle.main.url(forResource: "UserStudyConfig", withExtension: "plist") else {
-            return []
-        }
-        do {
-            let data = try Data(contentsOf: url)
-            return try PropertyListDecoder().decode(PlistWrapper.self, from: data).studies
-        } catch {
-            return []
-        }
-    }
-    
-    static func withId(_ id: String) -> Survey? {
-        allKnownStudies().first { $0.id == id }
-    }
-}
-
-
 // MARK: Survey + Codable
 
-extension Survey: Codable {
+extension Study: Codable {
     private enum CodingKeys: String, CodingKey {
         case id = "id"
         case title = "title"

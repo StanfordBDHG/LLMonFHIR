@@ -10,8 +10,8 @@ import SwiftUI
 
 struct HomeView: View {
     @Environment(FHIRMultipleResourceInterpreter.self) var interpreter
-    @State private var showSettings = false
     @State private var showMultipleResourcesChat = false
+    @State private var study: Study?
 
     var body: some View {
         NavigationStack {
@@ -21,29 +21,29 @@ struct HomeView: View {
             .toolbar {
                 toolbarContent
             }
-            .sheet(isPresented: $showSettings) {
-                SettingsView()
-            }
             .sheet(isPresented: $showMultipleResourcesChat) {
                 MultipleResourcesChatView(
                     interpreter: interpreter,
                     navigationTitle: "LLM on FHIR"
                 )
             }
+            .fullScreenCover(item: $study) { study in
+                StudyHomeView(study: study)
+            }
         }
     }
 
     @ToolbarContentBuilder private var toolbarContent: some ToolbarContent {
         ToolbarItem(placement: .topBarLeading) {
-            StudyQRCodeButton()
+            StudyQRCodeButton { study in
+                guard self.study == nil else {
+                    return
+                }
+                self.study = study
+            }
         }
         ToolbarItem(placement: .topBarTrailing) {
-            Button {
-                showSettings = true
-            } label: {
-                Image(systemName: "gear")
-                    .accessibilityLabel(Text("SETTINGS"))
-            }
+            SettingsButton(hideBehindAccessGuard: false)
         }
     }
 }

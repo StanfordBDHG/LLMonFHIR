@@ -13,19 +13,20 @@ import SwiftUI
 
 
 struct StudyQRCodeButton: View {
+    let didScan: @MainActor (Study) -> Void
+    
     var body: some View {
         if ProcessInfo.processInfo.isiOSAppOnMac {
             CreateQRCodeButton()
         } else {
-            ScanQRCodeButton()
+            ScanQRCodeButton(didScan: didScan)
         }
     }
 }
 
 
 private struct ScanQRCodeButton: View {
-    @Environment(CurrentStudyManager.self) private var studyManager
-    
+    let didScan: @MainActor (Study) -> Void
     @State private var showQRCodeScanner = false
     
     var body: some View {
@@ -37,7 +38,7 @@ private struct ScanQRCodeButton: View {
         }
         .qrCodeScanningSheet(isPresented: $showQRCodeScanner) { payload in
             do {
-                try studyManager.handleQRCode(payload: payload)
+                didScan(try StudyQRCodeHandler.processQRCode(payload: payload))
                 showQRCodeScanner = false
                 return .stopScanning
             } catch {

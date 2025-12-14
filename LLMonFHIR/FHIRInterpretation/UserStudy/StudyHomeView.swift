@@ -14,65 +14,60 @@ import SpeziViews
 import SwiftUI
 
 
-struct SurveyWelcomeView: View {
+struct StudyHomeView: View {
     @LocalPreference(.resourceLimit) private var resourceLimit
-
     @Environment(LLMonFHIRStandard.self) private var standard
     @Environment(FHIRInterpretationModule.self) private var fhirInterpretationModule
     @Environment(FHIRMultipleResourceInterpreter.self) private var interpreter
-    @Environment(FHIRResourceSummary.self) var resourceSummary
+    @Environment(FHIRResourceSummary.self) private var resourceSummary
     @Environment(KeychainStorage.self) private var keychainStorage
     @Environment(LLMOpenAIPlatform.self) private var platform
     @WaitingState private var waitingState
-
-    var survey: Survey
-    @State private var isPresentingSettings = false
-    @State private var isPresentingStudy = false
+    
+    @State private var study: Study?
+    @State private var studyBeingPresented: Study?
     @State private var isPresentingEarliestHealthRecords = false
-
-
-    private let dateFormatter: DateFormatter = {
-        let formatter = DateFormatter()
-        formatter.dateStyle = .medium
-        formatter.timeStyle = .none
-        return formatter
-    }()
-
+    @State private var isPresentingQRCodeScanner = false
+    
     private var earliestDates: [String: Date] {
         interpreter.fhirStore.earliestDates(limit: resourceLimit)
     }
-
-    private var earliestRecordDateFormatted: String? {
-        guard let date = earliestDates.values.min() else {
-            return nil
-        }
-        return dateFormatter.string(from: date)
+    private var oldestHealthRecordTimestamp: Date? {
+        earliestDates.values.min()
     }
-
-
+    
     var body: some View {
-        NavigationStack {
+        NavigationStack { // swiftlint:disable:this closure_body_length
             mainContent
                 .background(Color(.systemBackground))
                 .navigationTitle("USER_STUDY_WECOME")
                 .navigationBarTitleDisplayMode(.inline)
                 .toolbar {
-                    settingsButton
+                    SettingsButton(hideBehindAccessGuard: true)
                 }
-                .sheet(isPresented: $isPresentingSettings) {
-                    SettingsView()
+                .qrCodeScanningSheet(isPresented: $isPresentingQRCodeScanner) { payload in
+                    guard study == nil else {
+                        return .stopScanning
+                    }
+                    do {
+                        study = try StudyQRCodeHandler.processQRCode(payload: payload)
+                        isPresentingQRCodeScanner = false
+                        return .stopScanning
+                    } catch {
+                        print("Failed to start study: \(error)")
+                        return .continueScanning
+                    }
                 }
-                .fullScreenCover(isPresented: $isPresentingStudy) {
+                .fullScreenCover(item: $studyBeingPresented) { study in
                     UserStudyChatView(
-                        survey: survey,
+                        study: study,
                         interpreter: interpreter,
                         resourceSummary: resourceSummary
                     )
                 }
                 .sheet(isPresented: $isPresentingEarliestHealthRecords) {
                     EarliestHealthRecordsView(
-                        dataSource: earliestDates,
-                        dateFormatter: dateFormatter
+                        dataSource: earliestDates
                     )
                     .presentationDetents([.medium, .large])
                 }
@@ -100,7 +95,7 @@ struct SurveyWelcomeView: View {
             .resizable()
             .scaledToFill()
             .frame(width: 100, height: 100)
-            .accessibilityLabel(Text("Official Stanford Logo. Block S with Tree."))
+            .accessibilityLabel(Text("Stanford Logo"))
     }
 
     private var studyInformation: some View {
@@ -112,19 +107,29 @@ struct SurveyWelcomeView: View {
     }
 
     private var studyTitle: some View {
-        VStack(spacing: 8) {
-            Text(survey.title)
+        let (title, subtitle) = { () -> (LocalizedStringResource, LocalizedStringResource?) in
+            if let study {
+                ("\(study.title)", "LLM_ON_FHIR")
+            } else {
+                ("LLM_ON_FHIR", nil)
+            }
+        }()
+        return VStack(spacing: 8) {
+            Text(title)
                 .font(.title)
                 .fontWeight(.bold)
                 .foregroundColor(.primary)
-            Text("LLM_ON_FHIR")
-                .font(.title2)
-                .foregroundColor(.secondary)
+            if let subtitle {
+                Text(subtitle)
+                    .font(.title2)
+                    .foregroundColor(.secondary)
+            }
         }
     }
 
     private var studyDescription: some View {
-        Text(survey.explainer)
+        let text: LocalizedStringResource = (study?.explainer).map { "\($0)" } ?? "Scan a QR Code to Participate in a Study"
+        return Text(text)
             .font(.body)
             .multilineTextAlignment(.center)
             .foregroundColor(.secondary)
@@ -133,11 +138,11 @@ struct SurveyWelcomeView: View {
     }
 
     @ViewBuilder private var recordsStartDateView: some View {
-        if let earliestRecordDateFormatted {
+        if let oldestHealthRecordTimestamp {
             Button {
                 isPresentingEarliestHealthRecords = true
             } label: {
-                Text("HEALTH_RECORDS_SINCE: \(earliestRecordDateFormatted)")
+                Text("HEALTH_RECORDS_SINCE: \(oldestHealthRecordTimestamp, format: .llmOnFhirOldestHealthSample)")
                     .font(.caption)
                     .foregroundColor(.secondary)
                     .fontWeight(.medium)
@@ -150,50 +155,41 @@ struct SurveyWelcomeView: View {
 
     private var bottomSection: some View {
         VStack(spacing: 16) {
-            startStudyButton
+            primaryActionButton
                 .padding(.horizontal, 32)
+                .transforming { view in
+                    if #available(iOS 26, *) {
+                        view.buttonStyle(.glassProminent)
+                    } else {
+                        view
+                            .background(Color.accent.opacity(waitingState.isWaiting ? 0.5 : 1))
+                            .cornerRadius(16)
+                            .buttonStyle(.borderedProminent)
+                    }
+                }
             recordsStartDateView
             approvalBadge
         }
         .padding(.bottom, 24)
     }
-
-    private var startStudyButton: some View {
-        Group {
-            if #available(iOS 26.0, *) {
-                _startStudyButton
-                    .buttonStyle(.glassProminent)
-            } else {
-                _startStudyButton
-                    .background(Color.accent.opacity(waitingState.isWaiting ? 0.5 : 1))
-                    .cornerRadius(16)
-                    .buttonStyle(.borderedProminent)
-            }
-        }
-    }
     
-    private var _startStudyButton: some View {
-        Button {
-            interpreter.startNewConversation()
-            isPresentingStudy = true
-        } label: {
-            HStack(spacing: 8) {
-                if waitingState.isWaiting {
-                    ProgressView()
-                        .progressViewStyle(CircularProgressViewStyle(tint: .white))
-                        .controlSize(.regular)
-                }
-                Text(waitingState.isWaiting ? "LOADING_HEALTH_RECORDS" : "START_SESSION")
+    private var primaryActionButton: some View {
+        PrimaryActionButton {
+            if let study {
+                interpreter.startNewConversation()
+                studyBeingPresented = study
+            } else {
+                isPresentingQRCodeScanner = true
             }
-                .font(.headline)
-                .fontWeight(.semibold)
-                .foregroundColor(.white)
-                .frame(maxWidth: .infinity)
+        } label: {
+            if waitingState.isWaiting {
+                Text("LOADING_HEALTH_RECORDS")
+            } else if study != nil {
+                Text("START_SESSION")
+            } else {
+                Label("Scan QR Code", systemImage: "qrcode.viewfinder")
+            }
         }
-            .controlSize(.extraLarge)
-            .buttonBorderShape(.capsule)
-            .disabled(waitingState.isWaiting)
-            .animation(.default, value: waitingState.isWaiting)
     }
 
     private var approvalBadge: some View {
@@ -207,18 +203,16 @@ struct SurveyWelcomeView: View {
                 .foregroundColor(.secondary)
         }
     }
-
-    private var settingsButton: some ToolbarContent {
-        ToolbarItem(placement: .primaryAction) {
-            Button(action: { isPresentingSettings.toggle() }) {
-                Image(systemName: "gear")
-                    .accessibilityLabel(Text("SETTINGS"))
-            }
-        }
+    
+    init(study: Study?) {
+        _study = .init(initialValue: study)
     }
-
+    
     /// Persists the OpenAI token of the user study in the keychain, if no other token already exists.
     private func persistUserStudyOpenApiToken() {
+        guard let study else {
+            return
+        }
         guard case let .keychain(tag, username) = self.platform.configuration.authToken else {
             fatalError("LLMonFHIR relies on an auth token stored in Keychain. Please check your `LLMOpenAIPlatform` configuration.")
         }
@@ -227,7 +221,7 @@ struct SurveyWelcomeView: View {
             try keychainStorage.store(
                 Credentials(
                     username: username,
-                    password: survey.openAIAPIKey
+                    password: study.openAIAPIKey
                 ),
                 for: tag
             )

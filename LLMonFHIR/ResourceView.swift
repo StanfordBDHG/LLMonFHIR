@@ -21,20 +21,17 @@ struct ResourceView: View {
     @WaitingState private var waitingState
     
     var body: some View {
-        FHIRResourcesView(
-            navigationTitle: "Your Health Records",
-            contentView: {
-                FHIRResourcesInstructionsView()
-            }
-        ) {
+        FHIRResourcesView("Your Health Records") {
+            FHIRResourcesInstructionsView()
+        } action: {
             chatWithAllResourcesButton
                 .padding(-18)
         }
-            .task {
-                if FeatureFlags.testMode {
-                    await fhirStore.loadTestingResources()
-                }
+        .task {
+            if LLMonFHIR.mode == .test {
+                await fhirStore.loadTestingResources()
             }
+        }
     }
     
     private var chatWithAllResourcesButton: some View {
@@ -74,7 +71,7 @@ extension ResourceView {
         @State private var viewState: ViewState = .idle // only used for the alert, not for the processing state
         
         private var config: Config {
-            if FeatureFlags.testMode || healthKit.isFullyAuthorized {
+            if LLMonFHIR.mode == .test || healthKit.isFullyAuthorized {
                 .chatWithResources
             } else {
                 .authorizeHealthKit
@@ -82,7 +79,7 @@ extension ResourceView {
         }
         
         var body: some View {
-            Button {
+            PrimaryActionButton(text) {
                 switch config {
                 case .chatWithResources:
                     chatWithResourcesAction()
@@ -98,25 +95,7 @@ extension ResourceView {
                         }
                     }
                 }
-            } label: {
-                HStack(spacing: 8) {
-                    if waitingState.isWaiting {
-                        ProgressView()
-                            .progressViewStyle(CircularProgressViewStyle(tint: .white))
-                            .controlSize(.regular)
-                    }
-                    Text(text)
-                        .foregroundStyle(foregroundColor)
-                }
-                .font(.headline)
-                .fontWeight(.semibold)
-                .foregroundColor(.white)
-                .frame(maxWidth: .infinity)
             }
-            .controlSize(.extraLarge)
-            .buttonBorderShape(.capsule)
-            .disabled(waitingState.isWaiting || viewState.isError)
-            .animation(.default, value: waitingState.isWaiting || viewState.isError)
             .viewStateAlert(state: $viewState)
         }
         

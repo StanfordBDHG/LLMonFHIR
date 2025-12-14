@@ -11,35 +11,16 @@ import Spezi
 import SpeziFoundation
 
 
-@MainActor
-@Observable
-final class CurrentStudyManager: Module, EnvironmentAccessible, Sendable {
+enum StudyQRCodeHandler {
     enum StudyActivationError: Error {
         case failedParsingQRCodePayload(any Error)
         case expiredTimestamp
-        /// Another study is already active
-        case alreadyActive
         /// Unable to find a study for the specified id
         case unknownStudy
     }
     
-    @ObservationIgnored @Application(\.logger) private var logger
     
-    private(set) var currentSurvey: Survey?
-    
-    
-    func configure() {
-        if let studyId = FeatureFlags.enabledUserStudyId {
-            do {
-                try startStudy(withId: studyId)
-            } catch {
-                logger.error("Unable to start feature-flag-triggered study '\(studyId)'")
-            }
-        }
-    }
-    
-    
-    func handleQRCode(payload payloadString: String) throws(StudyActivationError) {
+    static func processQRCode(payload payloadString: String) throws(StudyActivationError) -> Study {
         let payload: QRCodePayload
         do {
             payload = try QRCodePayload(qrCodePayload: payloadString)
@@ -49,23 +30,20 @@ final class CurrentStudyManager: Module, EnvironmentAccessible, Sendable {
         if let expirationTimestamp = payload.expires, expirationTimestamp < .now {
             throw .expiredTimestamp
         }
-        try startStudy(withId: payload.studyId)
+        return try startStudy(withId: payload.studyId)
     }
     
     
-    func startStudy(withId studyId: String) throws(StudyActivationError) {
-        guard currentSurvey == nil || currentSurvey?.id == studyId else {
-            throw .alreadyActive
-        }
-        guard let study = Survey.withId(studyId) else {
+    private static func startStudy(withId studyId: String) throws(StudyActivationError) -> Study {
+        guard let study = AppConfigFile.current().studies.first(where: { $0.id == studyId }) else {
             throw .unknownStudy
         }
-        currentSurvey = study
+        return study
     }
 }
 
 
-extension CurrentStudyManager {
+extension StudyQRCodeHandler {
     struct QRCodePayload: Codable {
         enum CodingKeys: String, CodingKey {
             case studyId = "id"

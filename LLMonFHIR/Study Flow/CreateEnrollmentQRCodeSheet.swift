@@ -13,7 +13,7 @@ import SwiftUI
 
 struct CreateEnrollmentQRCodeSheet: View {
     private struct CodeGenerationOptions: Equatable {
-        var studyId: Survey.ID?
+        var studyId: Study.ID?
         var expires = true
         var validDuration: Duration = .seconds(5)
         var correctionLevel: QRCodeGenerator.CorrectionLevel = .high
@@ -75,10 +75,10 @@ struct CreateEnrollmentQRCodeSheet: View {
             Section {
                 Picker("Study", selection: $options.studyId) {
                     Text("–")
-                        .tag(Survey.ID?.none)
+                        .tag(Study.ID?.none)
                         .selectionDisabled()
                     Divider()
-                    ForEach(Survey.allKnownStudies()) { study in
+                    ForEach(AppConfigFile.current().studies) { study in
                         Text(study.title)
                             .tag(study.id)
                     }
@@ -118,7 +118,7 @@ struct CreateEnrollmentQRCodeSheet: View {
             qrCode = nil
             return
         }
-        let payload = CurrentStudyManager.QRCodePayload(
+        let payload = StudyQRCodeHandler.QRCodePayload(
             studyId: studyId,
             expires: options.expires ? .now + options.validDuration.timeInterval : nil
         )

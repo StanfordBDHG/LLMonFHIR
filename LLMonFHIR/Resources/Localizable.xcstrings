@@ -10,6 +10,9 @@
     "%.2f" : {
 
     },
+    "%@" : {
+
+    },
     "%lld" : {
 
     },
@@ -1170,31 +1173,31 @@
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Zugriff auf HealthKit"
+            "value" : "Zugriff auf Health"
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "HealthKit Access"
+            "value" : "Health Access"
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Acceso a HealthKit"
+            "value" : "Acceso a Health"
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Accès à HealthKit"
+            "value" : "Accès à Health"
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "HealthKit访问权限"
+            "value" : "Health访问权限"
           }
         }
       }
@@ -1434,6 +1437,9 @@
     "No" : {
 
     },
+    "No Resources Found" : {
+
+    },
     "Observations" : {
       "localizations" : {
         "de" : {
@@ -1461,9 +1467,6 @@
           }
         }
       }
-    },
-    "Official Stanford Logo. Block S with Tree." : {
-
     },
     "OPEN_AI_KEY_SAVE_ACTION" : {
       "localizations" : {
@@ -1833,6 +1836,9 @@
         }
       }
     },
+    "Scan a QR Code to Participate in a Study" : {
+
+    },
     "Scan code to enroll in study" : {
 
     },
@@ -2194,6 +2200,9 @@
     "Share Survey Results" : {
 
     },
+    "Stanford Logo" : {
+
+    },
     "Start Client Setup" : {
 
     },
@@ -2346,7 +2355,11 @@
         }
       }
     },
+    "Total number of resources across all types: %lld" : {
+
+    },
     "Total Number of Resources: %lld" : {
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -2391,31 +2404,31 @@
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Nutze HealthKit Daten"
+            "value" : "Nutze Health Daten"
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Use HealthKit Resources"
+            "value" : "Use Health Resources"
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Utilizar los recursos de HealthKit"
+            "value" : "Utilizar los recursos de Health"
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Utiliser les ressources de HealthKit"
+            "value" : "Utiliser les ressources de Health"
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "使用 HealthKit 资源"
+            "value" : "使用 Health 资源"
           }
         }
       }

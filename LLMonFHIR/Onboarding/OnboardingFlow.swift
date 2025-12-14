@@ -31,7 +31,10 @@ struct OnboardingFlow: View {
         ManagedNavigationStack(didComplete: $completedOnboardingFlow) {
             Welcome()
             Disclaimer()
-            if FeatureFlags.enabledUserStudyId == nil {
+            switch LLMonFHIR.mode {
+            case .study:
+                let _ = () // swiftlint:disable:this redundant_discardable_let
+            case .standalone, .test:
                 // Always show OpenAI model onboarding for chat-based interaction.
                 OpenAIAPIKey()
                 OpenAIModelSelection()
