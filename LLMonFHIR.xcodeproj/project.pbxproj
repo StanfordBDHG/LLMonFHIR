@@ -1030,8 +1030,8 @@
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/StanfordSpezi/SpeziOnboarding.git";
 			requirement = {
-				kind = revision;
-				revision = 8a3b65f2605da46447b03a48f7cce2a50c4a6fe9;
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.0.4;
 			};
 		};
 		801761A62EE5CC2400383DB3 /* XCRemoteSwiftPackageReference "SpeziViews" */ = {
