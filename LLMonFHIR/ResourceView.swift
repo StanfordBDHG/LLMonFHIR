@@ -8,42 +8,37 @@
 
 import SpeziFHIR
 import SpeziFHIRMockPatients
+import SpeziHealthKit
+import SpeziViews
 import SwiftUI
 
 
 struct ResourceView: View {
     @Environment(LLMonFHIRStandard.self) private var standard
     @Environment(FHIRStore.self) private var fhirStore
+    @Environment(HealthKit.self) private var healthKit
     @Binding var showMultipleResourcesChat: Bool
-    
+    @WaitingState private var waitingState
     
     var body: some View {
-        FHIRResourcesView(
-            navigationTitle: "Your Health Records",
-            contentView: {
-                FHIRResourcesInstructionsView()
-            }
-        ) {
+        FHIRResourcesView("Your Health Records") {
+            FHIRResourcesInstructionsView()
+        } action: {
             chatWithAllResourcesButton
                 .padding(-18)
         }
-            .task {
-                if FeatureFlags.testMode {
-                    await fhirStore.loadTestingResources()
-                }
+        .task {
+            if LLMonFHIR.mode == .test {
+                await fhirStore.loadTestingResources()
             }
+        }
     }
     
     private var chatWithAllResourcesButton: some View {
         Group {
             if #available(iOS 26.0, *) {
                 _chatWithAllResourcesButton
-                #if swift(>=6.2)
                     .buttonStyle(.glassProminent)
-                #else
-                    .buttonStyle(.borderedProminent)
-                    .padding(-8)
-                #endif
             } else {
                 _chatWithAllResourcesButton
                     .buttonStyle(.borderedProminent)
@@ -53,25 +48,82 @@ struct ResourceView: View {
     }
     
     private var _chatWithAllResourcesButton: some View {
-        Button {
-            showMultipleResourcesChat.toggle()
-        } label: {
-            HStack(spacing: 8) {
-                if standard.waitingState.isWaiting {
-                    ProgressView()
-                        .progressViewStyle(CircularProgressViewStyle(tint: .white))
-                        .controlSize(.regular)
-                }
-                Text(standard.waitingState.isWaiting ? "Loading Resources" : "Chat with all Resources")
-            }
-                .font(.headline)
-                .fontWeight(.semibold)
-                .foregroundColor(.white)
-                .frame(maxWidth: .infinity)
+        MainActionButton {
+            showMultipleResourcesChat = true
         }
-            .controlSize(.extraLarge)
-            .buttonBorderShape(.capsule)
-            .disabled(standard.waitingState.isWaiting)
-            .animation(.default, value: standard.waitingState.isWaiting)
+    }
+}
+
+
+extension ResourceView {
+    private struct MainActionButton: View {
+        private enum Config {
+            case chatWithResources
+            case authorizeHealthKit
+        }
+        
+        @Environment(\.colorScheme) private var colorScheme
+        @Environment(LLMonFHIRStandard.self) private var standard
+        @Environment(HealthKit.self) private var healthKit
+        @WaitingState private var waitingState
+        
+        let chatWithResourcesAction: @MainActor () -> Void
+        @State private var viewState: ViewState = .idle // only used for the alert, not for the processing state
+        
+        private var config: Config {
+            if LLMonFHIR.mode == .test || healthKit.isFullyAuthorized {
+                .chatWithResources
+            } else {
+                .authorizeHealthKit
+            }
+        }
+        
+        var body: some View {
+            PrimaryActionButton(text) {
+                switch config {
+                case .chatWithResources:
+                    chatWithResourcesAction()
+                case .authorizeHealthKit:
+                    Task {
+                        do {
+                            try await waitingState.run {
+                                try await healthKit.askForAuthorization()
+                                await standard.fetchRecordsFromHealthKit()
+                            }
+                        } catch {
+                            viewState = .error(AnyLocalizedError(error: error))
+                        }
+                    }
+                }
+            }
+            .viewStateAlert(state: $viewState)
+        }
+        
+        private var text: LocalizedStringResource {
+            switch (config, waitingState.isWaiting) {
+            case (.chatWithResources, false):
+                "Chat with all Resources"
+            case (.chatWithResources, true):
+                "Loading Resources"
+            case (.authorizeHealthKit, _):
+                "Authorize Health Access"
+            }
+        }
+        
+        private var foregroundColor: Color {
+            waitingState.isWaiting ? .black : .white
+        }
+    }
+}
+
+
+extension ViewState {
+    var isError: Bool {
+        switch self {
+        case .error:
+            true
+        case .idle, .processing:
+            false
+        }
     }
 }

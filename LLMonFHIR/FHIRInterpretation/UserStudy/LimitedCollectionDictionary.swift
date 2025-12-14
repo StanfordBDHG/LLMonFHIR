@@ -9,11 +9,10 @@
 import Foundation
 
 
-// AnyHashable is Sendable in Swift 6.2, unchecked can be removed at that point.
 /// Errors that can occur when using a LimitedCollectionDictionary
-enum LimitedCollectionDictionaryError: @unchecked Sendable, Error {
-    case keyNotConfigured(key: AnyHashable)
-    case capacityExceeded(key: AnyHashable, maximum: Int)
+enum LimitedCollectionDictionaryError: Sendable, Error {
+    case keyNotConfigured(key: any Hashable & Sendable)
+    case capacityExceeded(key: any Hashable & Sendable, maximum: Int)
 }
 
 // periphery:ignore - These are fundamental APIs for collection handling, even if not all are used in every context.
@@ -22,7 +21,7 @@ enum LimitedCollectionDictionaryError: @unchecked Sendable, Error {
 ///
 /// This allows setting different capacity limits for different keys.
 /// When the limit is reached for a key, adding more elements will throw an error.
-struct LimitedCollectionDictionary<Key: Hashable, Element> {
+struct LimitedCollectionDictionary<Key: Hashable & Sendable, Element> {
     private(set) var capacityRanges: [Key: ClosedRange<Int>] = [:]
     private(set) var collections: [Key: LimitedCollection<Element>] = [:]
 
@@ -61,11 +60,9 @@ struct LimitedCollectionDictionary<Key: Hashable, Element> {
         if collections[key] == nil, let limit = capacityRanges[key]?.upperBound {
             collections[key] = LimitedCollection<Element>(capacity: limit)
         }
-
         guard var collection = collections[key] else {
             throw LimitedCollectionDictionaryError.keyNotConfigured(key: key)
         }
-
         do {
             try collection.append(element)
             collections[key] = collection
@@ -106,11 +103,9 @@ struct LimitedCollectionDictionary<Key: Hashable, Element> {
         guard let range = capacityRanges[key] else {
             return true
         }
-
         guard let collection = collections[key] else {
             return false
         }
-
         return collection.count >= range.upperBound
     }
 

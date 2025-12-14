@@ -12,8 +12,7 @@ import SwiftUI
 
 
 struct Disclaimer: View {
-    @Environment(ManagedNavigationStack.Path.self) private var managedNavigationStackPath
-    
+    @Environment(ManagedNavigationStack.Path.self) private var path
     
     var body: some View {
         SequentialOnboardingView(
@@ -43,7 +42,7 @@ struct Disclaimer: View {
             ],
             actionText: "DISCLAIMER_BUTTON",
             action: {
-                managedNavigationStackPath.nextStep()
+                path.nextStep()
             }
         )
     }

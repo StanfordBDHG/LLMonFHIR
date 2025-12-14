@@ -46,7 +46,7 @@ actor FHIRResourceProcessor<Content: Codable & LosslessStringConvertible> {
     }
     
     
-    func changeSchems(to schema: any LLMSchema) {
+    func changeSchema(to schema: any LLMSchema) {
         self.llmSchema = schema
     }
     

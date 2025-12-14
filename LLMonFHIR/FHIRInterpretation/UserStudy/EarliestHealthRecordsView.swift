@@ -13,11 +13,9 @@ import SwiftUI
 
 struct EarliestHealthRecordsView: View {
     let dataSource: [String: Date]
-    let dateFormatter: DateFormatter
-
 
     var body: some View {
-        NavigationView {
+        NavigationStack {
             List {
                 Section(footer: Text("\n\(Text("HEALTH_RECORDS_SINCE_DISCLAIMER"))")) {
                     ForEach(dataSource.keys.sorted(), id: \.self) { resourceType in
@@ -28,7 +26,7 @@ struct EarliestHealthRecordsView: View {
 
                                 Spacer()
 
-                                Text(dateFormatter.string(from: date))
+                                Text(date, format: .llmOnFhirOldestHealthSample)
                                     .font(.subheadline)
                                     .foregroundColor(.secondary)
                             }
@@ -44,5 +42,12 @@ struct EarliestHealthRecordsView: View {
                 }
             }
         }
+    }
+}
+
+
+extension FormatStyle where Self == Date.FormatStyle {
+    static var llmOnFhirOldestHealthSample: Date.FormatStyle {
+        Self(date: .abbreviated, time: .omitted)
     }
 }

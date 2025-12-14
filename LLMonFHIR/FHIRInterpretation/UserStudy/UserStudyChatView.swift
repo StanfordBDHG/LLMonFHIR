@@ -87,12 +87,12 @@ struct UserStudyChatView: View {
     ///   - interpreter: The FHIR interpreter to use for chat functionality
     ///   - resourceSummary: The FHIR resource summary provider for generating summaries of FHIR resources
     init(
-        survey: Survey,
+        study: Study,
         interpreter: FHIRMultipleResourceInterpreter,
         resourceSummary: FHIRResourceSummary
     ) {
         viewModel = UserStudyChatViewModel(
-            survey: survey,
+            study: study,
             interpreter: interpreter,
             resourceSummary: resourceSummary
         )
@@ -101,9 +101,10 @@ struct UserStudyChatView: View {
     
     @ViewBuilder
     private func surveySheet() -> some View {
-        if let task = viewModel.currentTask {
+        if let task = viewModel.currentTask, let taskIdx = viewModel.userDisplayableCurrentTaskIdx {
             SurveyView(
                 task: task,
+                taskIdx: taskIdx,
                 isPresented: Binding<Bool>(
                     get: { viewModel.isSurveyViewPresented },
                     set: { viewModel.setSurveyViewPresented($0) }
@@ -121,9 +122,10 @@ struct UserStudyChatView: View {
     
     @ViewBuilder
     private func taskInstructionSheet() -> some View {
-        if let currentTask = viewModel.currentTask {
+        if let task = viewModel.currentTask, let taskIdx = viewModel.userDisplayableCurrentTaskIdx {
             TaskInstructionView(
-                task: currentTask,
+                task: task,
+                taskIdx: taskIdx,
                 isPresented: Binding<Bool>(
                     get: { viewModel.isTaskIntructionAlertPresented },
                     set: { viewModel.setTaskInstructionSheetPresented($0) }
