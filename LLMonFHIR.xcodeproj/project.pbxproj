@@ -975,7 +975,7 @@
 			repositoryURL = "https://github.com/StanfordSpezi/SpeziHealthKit.git";
 			requirement = {
 				kind = revision;
-				revision = ee6d91ed78c66e47684bee8c9f45eb845df1c2f7;
+				revision = 38bd68e87c261fc7970890e38fdd6bd69d23f4e8;
 			};
 		};
 		2FE5DC7F29EDD91D004B9AB4 /* XCRemoteSwiftPackageReference "SpeziOnboarding" */ = {
@@ -1039,7 +1039,7 @@
 			repositoryURL = "https://github.com/StanfordSpezi/SpeziViews.git";
 			requirement = {
 				kind = revision;
-				revision = 9656304452a8cdf56fcffa3925fbf5162a69270b;
+				revision = adda879bdc2f2c12b41109d86af3a37dba80436b;
 			};
 		};
 		805368DB2EC92DE30037E73E /* XCRemoteSwiftPackageReference "SpeziAccessGuard" */ = {

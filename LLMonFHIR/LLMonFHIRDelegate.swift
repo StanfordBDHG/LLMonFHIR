@@ -6,15 +6,12 @@
 // SPDX-License-Identifier: MIT
 //
 
-import HealthKit
 import Spezi
-import SpeziFHIR
 import SpeziHealthKit
 import SpeziLLM
 import SpeziLLMFog
 import SpeziLLMLocal
 import SpeziLLMOpenAI
-import SwiftUI
 
 
 final class LLMonFHIRDelegate: SpeziAppDelegate {
@@ -44,7 +41,7 @@ final class LLMonFHIRDelegate: SpeziAppDelegate {
         HealthKit {
             RequestReadAccess(other: LLMonFHIRStandard.recordTypes)
             for type in LLMonFHIRStandard.recordTypes {
-                CollectSample(type, start: .manual, continueInBackground: false, timeRange: .newSamples)
+                CollectSamples(type, start: .manual, continueInBackground: false, timeRange: .newSamples)
             }
         }
     }
