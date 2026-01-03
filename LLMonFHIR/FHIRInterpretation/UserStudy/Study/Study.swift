@@ -12,10 +12,6 @@ import CryptoKit
 import Foundation
 
 
-@available(*, deprecated, renamed: "Study")
-typealias Survey = Study
-
-
 /// Manages a collection of survey tasks and their responses
 final class Study: Identifiable {
     /// The survey's unique identifier.
@@ -24,6 +20,10 @@ final class Study: Identifiable {
     let title: String
     /// A brief explainer detailing what the survey does.
     let explainer: String
+    /// Passcode "used" to unlock the Settings sheet within the app.
+    ///
+    /// Set this value to `nil` to disable the lock and always have the settings directly accessible.
+    let settingsUnlockCode: String?
     /// The OpenAI API key that should be used when answering this survey.
     let openAIAPIKey: String
     /// The email address to which the report file should be sent.
@@ -42,6 +42,7 @@ final class Study: Identifiable {
         id: String,
         title: String,
         explainer: String,
+        settingsUnlockCode: String?,
         openAIAPIKey: String,
         reportEmail: String?,
         encryptionKey: Curve25519.KeyAgreement.PublicKey?,
@@ -50,6 +51,7 @@ final class Study: Identifiable {
         self.id = id
         self.title = title
         self.explainer = explainer
+        self.settingsUnlockCode = settingsUnlockCode
         self.openAIAPIKey = openAIAPIKey
         self.reportEmail = reportEmail
         self.encryptionKey = encryptionKey
@@ -93,6 +95,7 @@ extension Study: Codable {
         case title = "title"
         case explainer = "explainer"
         case tasks = "tasks"
+        case settingsUnlockCode = "settings_code"
         case openAIAPIKey = "openai_api_key"
         case reportEmail = "report_email"
         case encryptionKey = "encryption_key"
@@ -104,6 +107,7 @@ extension Study: Codable {
             id: try container.decode(String.self, forKey: .id),
             title: try container.decode(String.self, forKey: .title),
             explainer: try container.decode(String.self, forKey: .explainer),
+            settingsUnlockCode: try container.decodeIfPresent(String.self, forKey: .settingsUnlockCode),
             openAIAPIKey: try container.decode(String.self, forKey: .openAIAPIKey),
             reportEmail: try container.decodeIfPresent(String.self, forKey: .reportEmail),
             encryptionKey: try container.decodeIfPresent(Data.self, forKey: .encryptionKey)
@@ -117,6 +121,7 @@ extension Study: Codable {
         try container.encode(id, forKey: .id)
         try container.encode(title, forKey: .title)
         try container.encode(explainer, forKey: .explainer)
+        try container.encodeIfPresent(settingsUnlockCode, forKey: .settingsUnlockCode)
         try container.encode(openAIAPIKey, forKey: .openAIAPIKey)
         try container.encodeIfPresent(reportEmail, forKey: .reportEmail)
         try container.encodeIfPresent(encryptionKey?.pemFileContents, forKey: .encryptionKey)

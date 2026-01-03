@@ -8,9 +8,9 @@
 
 import os.log
 import SpeziFHIR
+import SpeziFoundation
 import SpeziKeychainStorage
 import SpeziLLMOpenAI
-import SpeziViews
 import SwiftUI
 
 
@@ -43,7 +43,7 @@ struct StudyHomeView: View {
                 .navigationTitle("USER_STUDY_WECOME")
                 .navigationBarTitleDisplayMode(.inline)
                 .toolbar {
-                    SettingsButton(hideBehindAccessGuard: true)
+                    SettingsButton()
                 }
                 .qrCodeScanningSheet(isPresented: $isPresentingQRCodeScanner) { payload in
                     guard study == nil else {

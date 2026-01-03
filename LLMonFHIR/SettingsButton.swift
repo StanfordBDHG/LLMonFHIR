@@ -12,7 +12,7 @@ import SwiftUI
 
 
 struct SettingsButton: View {
-    let hideBehindAccessGuard: Bool
+    @Environment(AppState.self) private var appState
     @State private var isPresentingSheet = false
     
     var body: some View {
@@ -23,8 +23,8 @@ struct SettingsButton: View {
                 .accessibilityLabel(Text("SETTINGS"))
         }
         .sheet(isPresented: $isPresentingSheet) {
-            if hideBehindAccessGuard {
-                AccessGuarded(.userStudy) {
+            if appState.currentStudy?.settingsUnlockCode != nil {
+                AccessGuarded(.userStudySettings) {
                     SettingsView()
                 }
             } else {
@@ -37,5 +37,5 @@ struct SettingsButton: View {
 extension AccessGuardIdentifier where AccessGuard == CodeAccessGuard {
     /// A unique identifier for user study access control.
     /// Used to protect and manage access to user study related features and views.
-    static let userStudy: Self = .passcode("UserStudySettingsGuard")
+    static let userStudySettings: Self = .passcode("UserStudySettingsGuard")
 }

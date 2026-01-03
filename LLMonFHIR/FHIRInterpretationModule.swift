@@ -8,12 +8,12 @@
 
 import Spezi
 import SpeziFHIR
+import SpeziFoundation
 import SpeziLLM
 import SpeziLLMFog
 import SpeziLLMLocal
 import SpeziLLMOpenAI
 import SpeziLocalStorage
-import SpeziViews
 import SwiftUI
 
 

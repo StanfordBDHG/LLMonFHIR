@@ -18,14 +18,13 @@ import SpeziLLMOpenAI
 final class LLMonFHIRDelegate: SpeziAppDelegate {
     override var configuration: Configuration {
         Configuration(standard: LLMonFHIRStandard()) {
+            let appState = AppState()
+            appState
             HealthKit {
                 RequestReadAccess(other: LLMonFHIRStandard.recordTypes)
                 for type in LLMonFHIRStandard.recordTypes {
                     CollectSamples(type, start: .manual, continueInBackground: false, timeRange: .newSamples)
                 }
-            }
-            AccessGuards {
-                CodeAccessGuard(.userStudy, fixed: "1234")
             }
             LLMRunner {
                 LLMOpenAIPlatform(
@@ -39,6 +38,15 @@ final class LLMonFHIRDelegate: SpeziAppDelegate {
                 LLMLocalPlatform()
             }
             FHIRInterpretationModule()
+            AccessGuards {
+                CodeAccessGuard(.userStudySettings, message: "Enter Code to Access Settings", format: .numeric(4)) { @MainActor code in
+                    if let expected = appState.currentStudy?.settingsUnlockCode {
+                        code == expected ? .valid : .invalid
+                    } else {
+                        .valid
+                    }
+                }
+            }
         }
     }
 }

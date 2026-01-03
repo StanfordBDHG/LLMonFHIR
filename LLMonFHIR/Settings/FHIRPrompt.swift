@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import SpeziFoundation
 
 
 /// Handle dynamic, localized LLM prompts for FHIR resources.
@@ -17,15 +18,15 @@ struct FHIRPrompt: Hashable, Sendable {
     static let localePlaceholder = "{{LOCALE}}"
     
     /// The key used for storing and retrieving the prompt.
-    let storageKey: String
+    private let storageKey: LocalPreferenceKey<String?>
     /// A human-readable description of the prompt, localized as needed.
     let localizedDescription: String
     /// The default prompt text to be used if no custom prompt is set.
-    let defaultPrompt: String
+    private let defaultPrompt: String
     
     /// The current prompt, either from UserDefaults or the default, appended with a localized message that adapts to the user's language settings.
     var prompt: String {
-        UserDefaults.standard.string(forKey: storageKey) ?? defaultPrompt
+        LocalPreferencesStore.standard[storageKey] ?? defaultPrompt
     }
     
     
@@ -38,7 +39,7 @@ struct FHIRPrompt: Hashable, Sendable {
         localizedDescription: String,
         defaultPrompt: String
     ) {
-        self.storageKey = storageKey
+        self.storageKey = .init(.init(storageKey))
         self.localizedDescription = localizedDescription
         self.defaultPrompt = defaultPrompt
     }
@@ -47,7 +48,7 @@ struct FHIRPrompt: Hashable, Sendable {
     /// Saves a new version of the prompt.
     /// - Parameter prompt: The new prompt.
     func save(prompt: String) {
-        UserDefaults.standard.set(prompt, forKey: storageKey)
+        LocalPreferencesStore.standard[storageKey] = prompt
     }
     
     func hash(into hasher: inout Hasher) {

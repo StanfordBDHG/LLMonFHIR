@@ -1,5 +1,5 @@
 {
-  "originHash" : "cc208816f7fada8f3adf8a21b7f58d79beefc28dc5dee67064f2cdb3ad919e1b",
+  "originHash" : "8cd45f3e51599c796bac1282763d0b2b40d3bfb5a981d94ae30939255cf540c5",
   "pins" : [
     {
       "identity" : "fhirmodels",
@@ -105,8 +105,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/StanfordSpezi/SpeziFoundation.git",
       "state" : {
-        "revision" : "ede71dced14ef585059a4cdecfc608a14f9f804b",
-        "version" : "2.5.3"
+        "revision" : "7b1d3f4db9922f0b58f5e02064356e5f7cb77dfd",
+        "version" : "2.6.0"
       }
     },
     {
@@ -114,7 +114,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/StanfordSpezi/SpeziHealthKit.git",
       "state" : {
-        "revision" : "38bd68e87c261fc7970890e38fdd6bd69d23f4e8"
+        "revision" : "a2b902164ffa9990e418f38b635f7867a4e453a1",
+        "version" : "1.3.2"
       }
     },
     {
@@ -158,7 +159,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/StanfordSpezi/SpeziViews.git",
       "state" : {
-        "revision" : "adda879bdc2f2c12b41109d86af3a37dba80436b"
+        "revision" : "bf7cc7830a4b81bed381fba7f5d96c5d2050fb09",
+        "version" : "1.12.9"
       }
     },
     {

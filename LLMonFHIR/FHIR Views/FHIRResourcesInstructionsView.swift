@@ -7,6 +7,7 @@
 //
 
 import SpeziFHIR
+import SpeziFoundation
 import SpeziViews
 import SwiftUI
 
@@ -14,7 +15,6 @@ import SwiftUI
 struct FHIRResourcesInstructionsView: View {
     @Environment(FHIRStore.self) private var fhirStore
     @LocalPreference(.onboardingInstructions) private var onboardingInstructions
-    
     
     var body: some View {
         if fhirStore.allResources.isEmpty {
@@ -39,8 +39,8 @@ struct FHIRResourcesInstructionsView: View {
                         dismissButton
                     }
                 }
-                    .padding(.horizontal, -8)
-                    .padding(.bottom, -32)
+                .padding(.horizontal, -8)
+                .padding(.bottom, -32)
                 Image(systemName: "hand.wave.fill")
                     .accessibilityHidden(true)
                     .font(.system(size: 75))
@@ -64,7 +64,7 @@ struct FHIRResourcesInstructionsView: View {
             Image(systemName: "xmark")
                 .accessibilityLabel("Dismiss onboarding hint")
         }
-            .buttonBorderShape(.circle)
-            .foregroundColor(.secondary)
+        .buttonBorderShape(.circle)
+        .foregroundColor(.secondary)
     }
 }

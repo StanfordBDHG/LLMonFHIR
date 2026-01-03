@@ -10,16 +10,10 @@ import OSLog
 import Spezi
 import SpeziFHIR
 import SpeziFHIRHealthKit
+import SpeziFoundation
 import SpeziHealthKit
 import SpeziViews
 import SwiftUI
-
-
-@globalActor
-private actor FHIRProcessingActor: GlobalActor {
-    typealias ActorType = FHIRProcessingActor
-    static let shared = FHIRProcessingActor()
-}
 
 
 actor LLMonFHIRStandard: Standard, HealthKitConstraint, EnvironmentAccessible {
@@ -29,6 +23,8 @@ actor LLMonFHIRStandard: Standard, HealthKitConstraint, EnvironmentAccessible {
         .medicationRecord, .procedureRecord, .vitalSignRecord
     ]
     
+    private let logger = Logger(subsystem: "edu.stanford.bdhg.llmonfhir", category: "LLMonFHIRStandard")
+    
     @Dependency(FHIRStore.self) private var fhirStore
     @Dependency(HealthKit.self) private var healthKit
     @MainActor @Dependency(FHIRInterpretationModule.self) private var fhirInterpretationModule
@@ -37,8 +33,6 @@ actor LLMonFHIRStandard: Standard, HealthKitConstraint, EnvironmentAccessible {
     @MainActor var useHealthKitResources = true
     
     @MainActor @Dependency private var waitingState = FHIRResourceWaitingState()
-    
-    private let logger = Logger(subsystem: "edu.stanford.bdhg.llmonfhir", category: "LLMonFHIRStandard")
     
     @MainActor
     func configure() {

@@ -7,9 +7,9 @@
 //
 
 import Foundation
+import SpeziFoundation
 import SpeziLLMFog
 import SpeziLLMOpenAI
-import SpeziViews
 
 
 extension LocalPreferenceKeys {

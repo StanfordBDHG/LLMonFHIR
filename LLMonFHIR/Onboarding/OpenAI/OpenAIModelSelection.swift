@@ -6,6 +6,7 @@
 // SPDX-License-Identifier: MIT
 //
 
+import SpeziFoundation
 import SpeziLLMOpenAI
 import SpeziViews
 import SwiftUI
@@ -25,7 +26,6 @@ struct OpenAIModelSelection: View {
     
     @Environment(ManagedNavigationStack.Path.self) private var path
     @LocalPreference(.openAIModel) private var model
-    
     
     var body: some View {
         LLMOpenAIModelOnboardingStep(

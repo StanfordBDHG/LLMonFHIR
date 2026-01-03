@@ -6,6 +6,7 @@
 // SPDX-License-Identifier: MIT
 //
 
+import Spezi
 import SwiftUI
 
 struct HomeView: View {
@@ -43,7 +44,7 @@ struct HomeView: View {
             }
         }
         ToolbarItem(placement: .topBarTrailing) {
-            SettingsButton(hideBehindAccessGuard: false)
+            SettingsButton()
         }
     }
 }
