@@ -18,7 +18,7 @@ import SwiftUI
 /// LLM operations and persistence to the underlying interpreter.
 @MainActor
 @Observable
-class MultipleResourcesChatViewModel {
+class MultipleResourcesChatViewModel: Sendable {
     let interpreter: FHIRMultipleResourceInterpreter
     var processingState: ProcessingState = .processingSystemPrompts
     

@@ -15,6 +15,7 @@ struct UserStudyChatView: View {
     
     
     var body: some View {
+        @Bindable var viewModel = viewModel
         NavigationStack { // swiftlint:disable:this closure_body_length
             chatView
                 .navigationTitle(viewModel.navigationState.title)
@@ -31,7 +32,7 @@ struct UserStudyChatView: View {
                 .toolbar {
                     ToolbarItem(placement: .topBarTrailing) {
                         Button {
-                            viewModel.setTaskInstructionSheetPresented(true)
+                            viewModel.isTaskInstructionsSheetPresented = true
                         } label: {
                             Image(systemName: "info.circle")
                                 .accessibilityHidden(true)
@@ -39,20 +40,12 @@ struct UserStudyChatView: View {
                         .disabled(viewModel.isTaskIntructionButtonDisabled)
                     }
                 }
-                .sheet(
-                    isPresented: Binding<Bool>(
-                        get: { viewModel.isSurveyViewPresented },
-                        set: { viewModel.setSurveyViewPresented($0) }
-                    ),
-                    content: surveySheet
-                )
-                .sheet(
-                    isPresented: Binding<Bool>(
-                        get: { viewModel.isTaskIntructionAlertPresented },
-                        set: { viewModel.setTaskInstructionSheetPresented($0) }
-                    ),
-                    content: taskInstructionSheet
-                )
+                .sheet(isPresented: $viewModel.isSurveyViewPresented) {
+                    surveySheet()
+                }
+                .sheet(isPresented: $viewModel.isTaskInstructionsSheetPresented) {
+                    taskInstructionSheet()
+                }
                 .viewStateAlert(state: viewModel.llmSession.state)
                 .onAppear(perform: viewModel.startSurvey)
                 .onChange(of: viewModel.llmSession.context, initial: true) {
@@ -101,14 +94,12 @@ struct UserStudyChatView: View {
     
     @ViewBuilder
     private func surveySheet() -> some View {
+        @Bindable var viewModel = viewModel
         if let task = viewModel.currentTask, let taskIdx = viewModel.userDisplayableCurrentTaskIdx {
             SurveyView(
                 task: task,
                 taskIdx: taskIdx,
-                isPresented: Binding<Bool>(
-                    get: { viewModel.isSurveyViewPresented },
-                    set: { viewModel.setSurveyViewPresented($0) }
-                )
+                isPresented: $viewModel.isSurveyViewPresented
             ) { answers in
                 do {
                     try await viewModel.submitSurveyAnswers(answers)
@@ -126,10 +117,7 @@ struct UserStudyChatView: View {
             TaskInstructionView(
                 task: task,
                 taskIdx: taskIdx,
-                isPresented: Binding<Bool>(
-                    get: { viewModel.isTaskIntructionAlertPresented },
-                    set: { viewModel.setTaskInstructionSheetPresented($0) }
-                )
+                isPresented: $viewModel.isTaskInstructionsSheetPresented
             )
         }
     }

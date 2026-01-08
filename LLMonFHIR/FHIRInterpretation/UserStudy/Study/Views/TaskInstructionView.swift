@@ -31,7 +31,7 @@ struct TaskInstructionView: View {
                 }
             }
             .background(Color(UIColor.systemGroupedBackground))
-            .navigationTitle("Task \(taskIdx)")
+            .navigationTitle("Task \(taskIdx + 1)")
             .transforming {
                 if #available(iOS 26, *), let title = task.title {
                     $0.navigationSubtitle(title)

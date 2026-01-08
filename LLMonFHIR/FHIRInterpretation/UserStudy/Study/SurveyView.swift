@@ -69,7 +69,7 @@ struct SurveyView: View {
                 questionSections
                 submitButtonSection
             }
-            .navigationTitle("Task \(taskIdx)")
+            .navigationTitle("Task \(taskIdx + 1)")
             .navigationBarTitleDisplayMode(.automatic)
             .toolbar {
                 ToolbarItem {

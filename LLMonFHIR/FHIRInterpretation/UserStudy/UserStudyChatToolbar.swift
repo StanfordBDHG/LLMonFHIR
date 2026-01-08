@@ -62,20 +62,18 @@ struct UserStudyChatToolbar: ToolbarContent {
         shareButton
     }
 
-    private var dismissButton: some ToolbarContent {
+    @ToolbarContentBuilder private var dismissButton: some ToolbarContent {
+        @Bindable var viewModel = viewModel
         ToolbarItem(placement: .cancellationAction) {
             Button {
-                viewModel.setDismissDialogPresented(true)
+                viewModel.isDismissDialogPresented = true
             } label: {
                 Image(systemName: "xmark")
                     .accessibilityLabel("Dismiss")
             }
             .confirmationDialog(
                 "Going back will reset your chat history.",
-                isPresented: Binding<Bool>(
-                    get: { viewModel.isDismissDialogPresented },
-                    set: { viewModel.setDismissDialogPresented($0) }
-                ),
+                isPresented: $viewModel.isDismissDialogPresented,
                 titleVisibility: .visible,
                 actions: {
                     Button("Yes", role: .destructive, action: onDismiss)
@@ -91,7 +89,7 @@ struct UserStudyChatToolbar: ToolbarContent {
     private var continueButton: some ToolbarContent {
         ToolbarItem(placement: .primaryAction) {
             let button = Button {
-                viewModel.setSurveyViewPresented(true)
+                viewModel.isSurveyViewPresented = true
             } label: {
                 Label("Next Task", systemImage: "arrow.forward.circle")
                     .accessibilityLabel("Next Task")
