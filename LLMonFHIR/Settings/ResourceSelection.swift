@@ -14,6 +14,9 @@ import SwiftUI
 
 
 struct ResourceSelection: View {
+    private static var cachedNICUTestPatients: [Int: ModelsR4.Bundle] = [:]
+    
+    
     @Environment(LLMonFHIRStandard.self) private var standard
     @Environment(FHIRInterpretationModule.self) var fhirInterpretationModule
     @Environment(FHIRStore.self) private var store
@@ -64,7 +67,7 @@ struct ResourceSelection: View {
         }
         .task {
             showBundleSelection = !standard.useHealthKitResources || !HKHealthStore.isHealthDataAvailable()
-            self.bundles = await mockPatients
+            self.bundles = mockPatients
         }
         .onDisappear {
             _Concurrency.Task {
@@ -75,16 +78,7 @@ struct ResourceSelection: View {
     }
     
     private var mockPatients: [ModelsR4.Bundle] {
-        get async {
-            await [
-                .allen322Ferry570,
-                .beatris270Bogan287,
-                .edythe31Morar593,
-                .gonzalo160Duenas839,
-                .jacklyn830Veum823,
-                .milton509Ortiz186
-            ]
-        }
+        (1...10).map(loadNICUTestPatient(withid:))
     }
     
     
@@ -102,6 +96,26 @@ struct ResourceSelection: View {
             _Concurrency.Task {
                 await store.load(bundle: firstMockPatient)
             }
+        }
+    }
+    
+    private func loadNICUTestPatient(withid id: Int) -> ModelsR4.Bundle {
+        if let cachedNICUTestPatient = Self.cachedNICUTestPatients[id] {
+            return cachedNICUTestPatient
+        }
+        
+        let name = "NICU_Synthetic_Patient_\(id)"
+        guard let resourceURL = Foundation.Bundle.main.url(forResource: name, withExtension: "json") else {
+            fatalError("Could not find the resource \"\(name)\".json in the SpeziFHIRMockPatients Resources folder.")
+        }
+        
+        do {
+            let data = try Data(contentsOf: resourceURL)
+            let nicuTestPatient = try JSONDecoder().decode(Bundle.self, from: data)
+            Self.cachedNICUTestPatients[id] = nicuTestPatient
+            return nicuTestPatient
+        } catch {
+            fatalError("Could not decode the FHIR bundle named \"\(name).json\": \(error)")
         }
     }
 }

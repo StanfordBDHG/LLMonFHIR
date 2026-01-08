@@ -1,0 +1,1705 @@
+{
+  "resourceType": "Bundle",
+  "type": "transaction",
+  "entry": [
+    {
+      "fullUrl": "urn:uuid:405e74aa-0b66-43a5-a351-52fd04e46a39",
+      "resource": {
+        "resourceType": "Patient",
+        "id": "405e74aa-0b66-43a5-a351-52fd04e46a39",
+        "meta": {
+          "profile": [
+            "http://hl7.org/fhir/us/core/StructureDefinition/us-core-patient"
+          ]
+        },
+        "text": {
+          "status": "generated",
+          "div": "<div xmlns=\"http://www.w3.org/1999/xhtml\">Synthetic NICU patient #2</div>"
+        },
+        "extension": [
+          {
+            "url": "http://hl7.org/fhir/us/core/StructureDefinition/us-core-race",
+            "extension": [
+              {
+                "url": "ombCategory",
+                "valueCoding": {
+                  "system": "urn:oid:2.16.840.1.113883.6.238",
+                  "code": "2106-3",
+                  "display": "White"
+                }
+              },
+              {
+                "url": "text",
+                "valueString": "White"
+              }
+            ]
+          },
+          {
+            "url": "http://hl7.org/fhir/us/core/StructureDefinition/us-core-ethnicity",
+            "extension": [
+              {
+                "url": "ombCategory",
+                "valueCoding": {
+                  "system": "urn:oid:2.16.840.1.113883.6.238",
+                  "code": "2186-5",
+                  "display": "Not Hispanic or Latino"
+                }
+              },
+              {
+                "url": "text",
+                "valueString": "Not Hispanic or Latino"
+              }
+            ]
+          },
+          {
+            "url": "http://hl7.org/fhir/StructureDefinition/patient-mothersMaidenName",
+            "valueString": "Smith127"
+          },
+          {
+            "url": "http://hl7.org/fhir/us/core/StructureDefinition/us-core-birthsex",
+            "valueCode": "M"
+          },
+          {
+            "url": "http://hl7.org/fhir/StructureDefinition/patient-birthPlace",
+            "valueAddress": {
+              "city": "Miami",
+              "state": "MA",
+              "country": "US"
+            }
+          }
+        ],
+        "identifier": [
+          {
+            "system": "https://github.com/synthetichealth/synthea",
+            "value": "405e74aa-0b66-43a5-a351-52fd04e46a39"
+          },
+          {
+            "type": {
+              "coding": [
+                {
+                  "system": "http://terminology.hl7.org/CodeSystem/v2-0203",
+                  "code": "MR",
+                  "display": "Medical Record Number"
+                }
+              ],
+              "text": "Medical Record Number"
+            },
+            "system": "http://hospital.smarthealthit.org",
+            "value": "12251064"
+          },
+          {
+            "type": {
+              "coding": [
+                {
+                  "system": "http://terminology.hl7.org/CodeSystem/v2-0203",
+                  "code": "SS",
+                  "display": "Social Security Number"
+                }
+              ],
+              "text": "Social Security Number"
+            },
+            "system": "http://hl7.org/fhir/sid/us-ssn",
+            "value": "999-40-3791"
+          }
+        ],
+        "name": [
+          {
+            "use": "official",
+            "family": "Patel433",
+            "given": [
+              "Sofia829"
+            ]
+          }
+        ],
+        "gender": "male",
+        "birthDate": "2024-02-02",
+        "address": [
+          {
+            "line": [
+              "497 Maple Dr"
+            ],
+            "city": "Miami",
+            "state": "MA",
+            "postalCode": "93574",
+            "country": "US"
+          }
+        ],
+        "communication": [
+          {
+            "language": {
+              "coding": [
+                {
+                  "system": "urn:ietf:bcp:47",
+                  "code": "vi",
+                  "display": "Vietnamese"
+                }
+              ],
+              "text": "Vietnamese"
+            }
+          }
+        ]
+      },
+      "request": {
+        "method": "POST",
+        "url": "Patient"
+      }
+    },
+    {
+      "fullUrl": "urn:uuid:645515f1-830b-436c-9122-9dc5ad2d52d5",
+      "resource": {
+        "resourceType": "Organization",
+        "id": "645515f1-830b-436c-9122-9dc5ad2d52d5",
+        "identifier": [
+          {
+            "system": "https://github.com/synthetichealth/synthea",
+            "value": "645515f1-830b-436c-9122-9dc5ad2d52d5"
+          }
+        ],
+        "name": "SYNTHETIC CHILDREN'S HOSPITAL"
+      },
+      "request": {
+        "method": "POST",
+        "url": "Organization"
+      }
+    },
+    {
+      "fullUrl": "urn:uuid:b3e8098b-2606-4658-a9b1-ae1ee4245afc",
+      "resource": {
+        "resourceType": "Location",
+        "id": "b3e8098b-2606-4658-a9b1-ae1ee4245afc",
+        "identifier": [
+          {
+            "system": "https://github.com/synthetichealth/synthea",
+            "value": "b3e8098b-2606-4658-a9b1-ae1ee4245afc"
+          }
+        ],
+        "name": "NICU - SYNTHETIC CHILDREN'S HOSPITAL",
+        "mode": "instance",
+        "type": [
+          {
+            "coding": [
+              {
+                "system": "http://terminology.hl7.org/CodeSystem/v3-RoleCode",
+                "code": "HOSP",
+                "display": "Hospital"
+              }
+            ]
+          }
+        ]
+      },
+      "request": {
+        "method": "POST",
+        "url": "Location"
+      }
+    },
+    {
+      "fullUrl": "urn:uuid:236704a2-d81a-4fdc-8d20-109c83663a1d",
+      "resource": {
+        "resourceType": "Practitioner",
+        "id": "236704a2-d81a-4fdc-8d20-109c83663a1d",
+        "identifier": [
+          {
+            "system": "http://hl7.org/fhir/sid/us-npi",
+            "value": "9999999456"
+          }
+        ],
+        "name": [
+          {
+            "family": "Clinician453",
+            "given": [
+              "Taylor582"
+            ],
+            "prefix": [
+              "Dr."
+            ]
+          }
+        ]
+      },
+      "request": {
+        "method": "POST",
+        "url": "Practitioner"
+      }
+    },
+    {
+      "fullUrl": "urn:uuid:19361c18-40e8-48b8-83e3-081a64fd2030",
+      "resource": {
+        "resourceType": "Encounter",
+        "id": "19361c18-40e8-48b8-83e3-081a64fd2030",
+        "meta": {
+          "profile": [
+            "http://hl7.org/fhir/us/core/StructureDefinition/us-core-encounter"
+          ]
+        },
+        "identifier": [
+          {
+            "use": "official",
+            "system": "https://github.com/synthetichealth/synthea",
+            "value": "19361c18-40e8-48b8-83e3-081a64fd2030"
+          }
+        ],
+        "status": "finished",
+        "class": {
+          "system": "http://terminology.hl7.org/CodeSystem/v3-ActCode",
+          "code": "IMP",
+          "display": "inpatient encounter"
+        },
+        "type": [
+          {
+            "coding": [
+              {
+                "system": "http://snomed.info/sct",
+                "code": "32485007",
+                "display": "Hospital admission (procedure)"
+              }
+            ],
+            "text": "NICU admission"
+          }
+        ],
+        "subject": {
+          "reference": "urn:uuid:405e74aa-0b66-43a5-a351-52fd04e46a39",
+          "display": "Sofia829 Patel433"
+        },
+        "participant": [
+          {
+            "type": [
+              {
+                "coding": [
+                  {
+                    "system": "http://terminology.hl7.org/CodeSystem/v3-ParticipationType",
+                    "code": "PPRF",
+                    "display": "primary performer"
+                  }
+                ],
+                "text": "primary performer"
+              }
+            ],
+            "period": {
+              "start": "2024-02-02T20:15:00-08:00",
+              "end": "2024-03-29T04:15:00-08:00"
+            },
+            "individual": {
+              "reference": "urn:uuid:236704a2-d81a-4fdc-8d20-109c83663a1d",
+              "display": "Dr. Taylor582 Clinician453"
+            }
+          }
+        ],
+        "period": {
+          "start": "2024-02-02T20:15:00-08:00",
+          "end": "2024-03-29T04:15:00-08:00"
+        },
+        "location": [
+          {
+            "location": {
+              "reference": "urn:uuid:b3e8098b-2606-4658-a9b1-ae1ee4245afc",
+              "display": "NICU - SYNTHETIC CHILDREN'S HOSPITAL"
+            }
+          }
+        ],
+        "serviceProvider": {
+          "reference": "urn:uuid:645515f1-830b-436c-9122-9dc5ad2d52d5",
+          "display": "SYNTHETIC CHILDREN'S HOSPITAL"
+        }
+      },
+      "request": {
+        "method": "POST",
+        "url": "Encounter"
+      }
+    },
+    {
+      "fullUrl": "urn:uuid:9db416d2-06a9-4078-8d6d-bbf33a93d700",
+      "resource": {
+        "resourceType": "Condition",
+        "id": "9db416d2-06a9-4078-8d6d-bbf33a93d700",
+        "meta": {
+          "profile": [
+            "http://hl7.org/fhir/us/core/StructureDefinition/us-core-condition"
+          ]
+        },
+        "clinicalStatus": {
+          "coding": [
+            {
+              "system": "http://terminology.hl7.org/CodeSystem/condition-clinical",
+              "code": "active"
+            }
+          ]
+        },
+        "verificationStatus": {
+          "coding": [
+            {
+              "system": "http://terminology.hl7.org/CodeSystem/condition-ver-status",
+              "code": "confirmed"
+            }
+          ]
+        },
+        "category": [
+          {
+            "coding": [
+              {
+                "system": "http://terminology.hl7.org/CodeSystem/condition-category",
+                "code": "encounter-diagnosis",
+                "display": "Encounter Diagnosis"
+              }
+            ]
+          }
+        ],
+        "code": {
+          "coding": [
+            {
+              "system": "http://snomed.info/sct",
+              "code": "302866003",
+              "display": "Hypoglycemia of newborn"
+            }
+          ],
+          "text": "Hypoglycemia of newborn"
+        },
+        "subject": {
+          "reference": "urn:uuid:405e74aa-0b66-43a5-a351-52fd04e46a39"
+        },
+        "encounter": {
+          "reference": "urn:uuid:19361c18-40e8-48b8-83e3-081a64fd2030"
+        },
+        "onsetDateTime": "2024-02-03T12:15:00-08:00",
+        "recordedDate": "2024-02-03T09:15:00-08:00"
+      },
+      "request": {
+        "method": "POST",
+        "url": "Condition"
+      }
+    },
+    {
+      "fullUrl": "urn:uuid:3f8dbf8d-1f0c-4007-ad51-b87a7817ed5b",
+      "resource": {
+        "resourceType": "Condition",
+        "id": "3f8dbf8d-1f0c-4007-ad51-b87a7817ed5b",
+        "meta": {
+          "profile": [
+            "http://hl7.org/fhir/us/core/StructureDefinition/us-core-condition"
+          ]
+        },
+        "clinicalStatus": {
+          "coding": [
+            {
+              "system": "http://terminology.hl7.org/CodeSystem/condition-clinical",
+              "code": "active"
+            }
+          ]
+        },
+        "verificationStatus": {
+          "coding": [
+            {
+              "system": "http://terminology.hl7.org/CodeSystem/condition-ver-status",
+              "code": "confirmed"
+            }
+          ]
+        },
+        "category": [
+          {
+            "coding": [
+              {
+                "system": "http://terminology.hl7.org/CodeSystem/condition-category",
+                "code": "encounter-diagnosis",
+                "display": "Encounter Diagnosis"
+              }
+            ]
+          }
+        ],
+        "code": {
+          "coding": [
+            {
+              "system": "http://snomed.info/sct",
+              "code": "155362002",
+              "display": "Bronchopulmonary dysplasia"
+            }
+          ],
+          "text": "Bronchopulmonary dysplasia"
+        },
+        "subject": {
+          "reference": "urn:uuid:405e74aa-0b66-43a5-a351-52fd04e46a39"
+        },
+        "encounter": {
+          "reference": "urn:uuid:19361c18-40e8-48b8-83e3-081a64fd2030"
+        },
+        "onsetDateTime": "2024-02-03T09:15:00-08:00",
+        "recordedDate": "2024-02-03T15:15:00-08:00"
+      },
+      "request": {
+        "method": "POST",
+        "url": "Condition"
+      }
+    },
+    {
+      "fullUrl": "urn:uuid:7c164695-ef1c-46af-80be-c89794bf8bb2",
+      "resource": {
+        "resourceType": "Condition",
+        "id": "7c164695-ef1c-46af-80be-c89794bf8bb2",
+        "meta": {
+          "profile": [
+            "http://hl7.org/fhir/us/core/StructureDefinition/us-core-condition"
+          ]
+        },
+        "clinicalStatus": {
+          "coding": [
+            {
+              "system": "http://terminology.hl7.org/CodeSystem/condition-clinical",
+              "code": "active"
+            }
+          ]
+        },
+        "verificationStatus": {
+          "coding": [
+            {
+              "system": "http://terminology.hl7.org/CodeSystem/condition-ver-status",
+              "code": "confirmed"
+            }
+          ]
+        },
+        "category": [
+          {
+            "coding": [
+              {
+                "system": "http://terminology.hl7.org/CodeSystem/condition-category",
+                "code": "encounter-diagnosis",
+                "display": "Encounter Diagnosis"
+              }
+            ]
+          }
+        ],
+        "code": {
+          "coding": [
+            {
+              "system": "http://snomed.info/sct",
+              "code": "413839001",
+              "display": "Prematurity, <32 weeks"
+            }
+          ],
+          "text": "Prematurity, <32 weeks"
+        },
+        "subject": {
+          "reference": "urn:uuid:405e74aa-0b66-43a5-a351-52fd04e46a39"
+        },
+        "encounter": {
+          "reference": "urn:uuid:19361c18-40e8-48b8-83e3-081a64fd2030"
+        },
+        "onsetDateTime": "2024-02-02T20:15:00-08:00",
+        "recordedDate": "2024-02-03T17:15:00-08:00"
+      },
+      "request": {
+        "method": "POST",
+        "url": "Condition"
+      }
+    },
+    {
+      "fullUrl": "urn:uuid:10c2678d-9d5f-4ee1-92f2-8f51b40e4811",
+      "resource": {
+        "resourceType": "Procedure",
+        "id": "10c2678d-9d5f-4ee1-92f2-8f51b40e4811",
+        "meta": {
+          "profile": [
+            "http://hl7.org/fhir/us/core/StructureDefinition/us-core-procedure"
+          ]
+        },
+        "status": "completed",
+        "code": {
+          "coding": [
+            {
+              "system": "http://snomed.info/sct",
+              "code": "115681004",
+              "display": "Phototherapy"
+            }
+          ],
+          "text": "Phototherapy"
+        },
+        "subject": {
+          "reference": "urn:uuid:405e74aa-0b66-43a5-a351-52fd04e46a39"
+        },
+        "encounter": {
+          "reference": "urn:uuid:19361c18-40e8-48b8-83e3-081a64fd2030"
+        },
+        "performedPeriod": {
+          "start": "2024-02-05T20:15:00-08:00",
+          "end": "2024-02-06T02:15:00-08:00"
+        }
+      },
+      "request": {
+        "method": "POST",
+        "url": "Procedure"
+      }
+    },
+    {
+      "fullUrl": "urn:uuid:b1feefa1-499c-475d-8512-cfce2aed438f",
+      "resource": {
+        "resourceType": "Procedure",
+        "id": "b1feefa1-499c-475d-8512-cfce2aed438f",
+        "meta": {
+          "profile": [
+            "http://hl7.org/fhir/us/core/StructureDefinition/us-core-procedure"
+          ]
+        },
+        "status": "completed",
+        "code": {
+          "coding": [
+            {
+              "system": "http://snomed.info/sct",
+              "code": "16310003",
+              "display": "Head ultrasound"
+            }
+          ],
+          "text": "Head ultrasound"
+        },
+        "subject": {
+          "reference": "urn:uuid:405e74aa-0b66-43a5-a351-52fd04e46a39"
+        },
+        "encounter": {
+          "reference": "urn:uuid:19361c18-40e8-48b8-83e3-081a64fd2030"
+        },
+        "performedPeriod": {
+          "start": "2024-02-02T23:15:00-08:00",
+          "end": "2024-02-03T13:15:00-08:00"
+        }
+      },
+      "request": {
+        "method": "POST",
+        "url": "Procedure"
+      }
+    },
+    {
+      "fullUrl": "urn:uuid:3e269f97-c821-4770-96df-43568cd8c283",
+      "resource": {
+        "resourceType": "MedicationRequest",
+        "id": "3e269f97-c821-4770-96df-43568cd8c283",
+        "meta": {
+          "profile": [
+            "http://hl7.org/fhir/us/core/StructureDefinition/us-core-medicationrequest"
+          ]
+        },
+        "status": "completed",
+        "intent": "order",
+        "medicationCodeableConcept": {
+          "coding": [
+            {
+              "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+              "code": "723",
+              "display": "Ampicillin"
+            }
+          ],
+          "text": "Ampicillin"
+        },
+        "subject": {
+          "reference": "urn:uuid:405e74aa-0b66-43a5-a351-52fd04e46a39"
+        },
+        "encounter": {
+          "reference": "urn:uuid:19361c18-40e8-48b8-83e3-081a64fd2030"
+        },
+        "authoredOn": "2024-02-03T04:15:00-08:00",
+        "requester": {
+          "reference": "urn:uuid:236704a2-d81a-4fdc-8d20-109c83663a1d"
+        }
+      },
+      "request": {
+        "method": "POST",
+        "url": "MedicationRequest"
+      }
+    },
+    {
+      "fullUrl": "urn:uuid:ecc3ee1c-6bfa-400e-980b-b9a36d350770",
+      "resource": {
+        "resourceType": "MedicationRequest",
+        "id": "ecc3ee1c-6bfa-400e-980b-b9a36d350770",
+        "meta": {
+          "profile": [
+            "http://hl7.org/fhir/us/core/StructureDefinition/us-core-medicationrequest"
+          ]
+        },
+        "status": "completed",
+        "intent": "order",
+        "medicationCodeableConcept": {
+          "coding": [
+            {
+              "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+              "code": "24827",
+              "display": "Ferrous sulfate"
+            }
+          ],
+          "text": "Ferrous sulfate"
+        },
+        "subject": {
+          "reference": "urn:uuid:405e74aa-0b66-43a5-a351-52fd04e46a39"
+        },
+        "encounter": {
+          "reference": "urn:uuid:19361c18-40e8-48b8-83e3-081a64fd2030"
+        },
+        "authoredOn": "2024-02-03T14:15:00-08:00",
+        "requester": {
+          "reference": "urn:uuid:236704a2-d81a-4fdc-8d20-109c83663a1d"
+        }
+      },
+      "request": {
+        "method": "POST",
+        "url": "MedicationRequest"
+      }
+    },
+    {
+      "fullUrl": "urn:uuid:6ad2ecaf-db9f-4083-87ba-8923d3403c65",
+      "resource": {
+        "resourceType": "MedicationRequest",
+        "id": "6ad2ecaf-db9f-4083-87ba-8923d3403c65",
+        "meta": {
+          "profile": [
+            "http://hl7.org/fhir/us/core/StructureDefinition/us-core-medicationrequest"
+          ]
+        },
+        "status": "completed",
+        "intent": "order",
+        "medicationCodeableConcept": {
+          "coding": [
+            {
+              "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+              "code": "152140",
+              "display": "Caffeine citrate"
+            }
+          ],
+          "text": "Caffeine citrate"
+        },
+        "subject": {
+          "reference": "urn:uuid:405e74aa-0b66-43a5-a351-52fd04e46a39"
+        },
+        "encounter": {
+          "reference": "urn:uuid:19361c18-40e8-48b8-83e3-081a64fd2030"
+        },
+        "authoredOn": "2024-02-03T19:15:00-08:00",
+        "requester": {
+          "reference": "urn:uuid:236704a2-d81a-4fdc-8d20-109c83663a1d"
+        }
+      },
+      "request": {
+        "method": "POST",
+        "url": "MedicationRequest"
+      }
+    },
+    {
+      "fullUrl": "urn:uuid:3300c65c-5fa5-41e9-ae7b-a385fcd02025",
+      "resource": {
+        "resourceType": "MedicationRequest",
+        "id": "3300c65c-5fa5-41e9-ae7b-a385fcd02025",
+        "meta": {
+          "profile": [
+            "http://hl7.org/fhir/us/core/StructureDefinition/us-core-medicationrequest"
+          ]
+        },
+        "status": "completed",
+        "intent": "order",
+        "medicationCodeableConcept": {
+          "coding": [
+            {
+              "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+              "code": "5784",
+              "display": "Indomethacin"
+            }
+          ],
+          "text": "Indomethacin"
+        },
+        "subject": {
+          "reference": "urn:uuid:405e74aa-0b66-43a5-a351-52fd04e46a39"
+        },
+        "encounter": {
+          "reference": "urn:uuid:19361c18-40e8-48b8-83e3-081a64fd2030"
+        },
+        "authoredOn": "2024-02-04T18:15:00-08:00",
+        "requester": {
+          "reference": "urn:uuid:236704a2-d81a-4fdc-8d20-109c83663a1d"
+        }
+      },
+      "request": {
+        "method": "POST",
+        "url": "MedicationRequest"
+      }
+    },
+    {
+      "fullUrl": "urn:uuid:e6d77d7f-4fb1-4fc0-b265-cf9a0116adb2",
+      "resource": {
+        "resourceType": "MedicationRequest",
+        "id": "e6d77d7f-4fb1-4fc0-b265-cf9a0116adb2",
+        "meta": {
+          "profile": [
+            "http://hl7.org/fhir/us/core/StructureDefinition/us-core-medicationrequest"
+          ]
+        },
+        "status": "completed",
+        "intent": "order",
+        "medicationCodeableConcept": {
+          "coding": [
+            {
+              "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+              "code": "4603",
+              "display": "Furosemide"
+            }
+          ],
+          "text": "Furosemide"
+        },
+        "subject": {
+          "reference": "urn:uuid:405e74aa-0b66-43a5-a351-52fd04e46a39"
+        },
+        "encounter": {
+          "reference": "urn:uuid:19361c18-40e8-48b8-83e3-081a64fd2030"
+        },
+        "authoredOn": "2024-02-04T01:15:00-08:00",
+        "requester": {
+          "reference": "urn:uuid:236704a2-d81a-4fdc-8d20-109c83663a1d"
+        }
+      },
+      "request": {
+        "method": "POST",
+        "url": "MedicationRequest"
+      }
+    },
+    {
+      "fullUrl": "urn:uuid:10c3fda3-fdf1-4aa6-9f84-4ba95ade6707",
+      "resource": {
+        "resourceType": "Observation",
+        "id": "10c3fda3-fdf1-4aa6-9f84-4ba95ade6707",
+        "meta": {
+          "profile": [
+            "http://hl7.org/fhir/StructureDefinition/bodyweight"
+          ]
+        },
+        "status": "final",
+        "category": [
+          {
+            "coding": [
+              {
+                "system": "http://terminology.hl7.org/CodeSystem/observation-category",
+                "code": "vital-signs",
+                "display": "Vital Signs"
+              }
+            ]
+          }
+        ],
+        "code": {
+          "coding": [
+            {
+              "system": "http://loinc.org",
+              "code": "29463-7",
+              "display": "Body weight"
+            }
+          ],
+          "text": "Birth weight"
+        },
+        "subject": {
+          "reference": "urn:uuid:405e74aa-0b66-43a5-a351-52fd04e46a39"
+        },
+        "encounter": {
+          "reference": "urn:uuid:19361c18-40e8-48b8-83e3-081a64fd2030"
+        },
+        "effectiveDateTime": "2024-02-02T20:15:00-08:00",
+        "valueQuantity": {
+          "value": 2.52,
+          "unit": "kg",
+          "system": "http://unitsofmeasure.org",
+          "code": "kg"
+        }
+      },
+      "request": {
+        "method": "POST",
+        "url": "Observation"
+      }
+    },
+    {
+      "fullUrl": "urn:uuid:860d6588-9cda-4296-96ec-f5cba60f8cd5",
+      "resource": {
+        "resourceType": "Observation",
+        "id": "860d6588-9cda-4296-96ec-f5cba60f8cd5",
+        "meta": {
+          "profile": [
+            "http://hl7.org/fhir/us/core/StructureDefinition/us-core-observation-lab"
+          ]
+        },
+        "status": "final",
+        "category": [
+          {
+            "coding": [
+              {
+                "system": "http://terminology.hl7.org/CodeSystem/observation-category",
+                "code": "laboratory",
+                "display": "Laboratory"
+              }
+            ]
+          }
+        ],
+        "code": {
+          "coding": [
+            {
+              "system": "http://loinc.org",
+              "code": "1975-2",
+              "display": "Bilirubin.total [Mass/volume] in Serum or Plasma"
+            }
+          ],
+          "text": "Total bilirubin"
+        },
+        "subject": {
+          "reference": "urn:uuid:405e74aa-0b66-43a5-a351-52fd04e46a39"
+        },
+        "encounter": {
+          "reference": "urn:uuid:19361c18-40e8-48b8-83e3-081a64fd2030"
+        },
+        "effectiveDateTime": "2024-02-03T20:15:00-08:00",
+        "valueQuantity": {
+          "value": 14.8,
+          "unit": "mg/dL",
+          "system": "http://unitsofmeasure.org",
+          "code": "mg/dL"
+        }
+      },
+      "request": {
+        "method": "POST",
+        "url": "Observation"
+      }
+    },
+    {
+      "fullUrl": "urn:uuid:b7f17666-5f27-4890-955c-8a197c542f4e",
+      "resource": {
+        "resourceType": "Observation",
+        "id": "b7f17666-5f27-4890-955c-8a197c542f4e",
+        "meta": {
+          "profile": [
+            "http://hl7.org/fhir/us/core/StructureDefinition/us-core-observation-lab"
+          ]
+        },
+        "status": "final",
+        "category": [
+          {
+            "coding": [
+              {
+                "system": "http://terminology.hl7.org/CodeSystem/observation-category",
+                "code": "laboratory",
+                "display": "Laboratory"
+              }
+            ]
+          }
+        ],
+        "code": {
+          "coding": [
+            {
+              "system": "http://loinc.org",
+              "code": "2339-0",
+              "display": "Glucose [Mass/volume] in Blood"
+            }
+          ],
+          "text": "Glucose"
+        },
+        "subject": {
+          "reference": "urn:uuid:405e74aa-0b66-43a5-a351-52fd04e46a39"
+        },
+        "encounter": {
+          "reference": "urn:uuid:19361c18-40e8-48b8-83e3-081a64fd2030"
+        },
+        "effectiveDateTime": "2024-02-03T02:15:00-08:00",
+        "valueQuantity": {
+          "value": 62.0,
+          "unit": "mg/dL",
+          "system": "http://unitsofmeasure.org",
+          "code": "mg/dL"
+        }
+      },
+      "request": {
+        "method": "POST",
+        "url": "Observation"
+      }
+    },
+    {
+      "fullUrl": "urn:uuid:6b6c92cf-94a2-4b3a-afff-2d4cc3eede8c",
+      "resource": {
+        "resourceType": "AllergyIntolerance",
+        "id": "6b6c92cf-94a2-4b3a-afff-2d4cc3eede8c",
+        "meta": {
+          "profile": [
+            "http://hl7.org/fhir/us/core/StructureDefinition/us-core-allergyintolerance"
+          ]
+        },
+        "clinicalStatus": {
+          "coding": [
+            {
+              "system": "http://terminology.hl7.org/CodeSystem/allergyintolerance-clinical",
+              "code": "active"
+            }
+          ]
+        },
+        "verificationStatus": {
+          "coding": [
+            {
+              "system": "http://terminology.hl7.org/CodeSystem/allergyintolerance-verification",
+              "code": "confirmed"
+            }
+          ]
+        },
+        "type": "allergy",
+        "category": [
+          "medication"
+        ],
+        "criticality": "low",
+        "code": {
+          "coding": [
+            {
+              "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+              "code": "1596450",
+              "display": "Gentamicin"
+            }
+          ],
+          "text": "Gentamicin"
+        },
+        "patient": {
+          "reference": "urn:uuid:405e74aa-0b66-43a5-a351-52fd04e46a39"
+        },
+        "recordedDate": "2024-02-04T20:15:00-08:00"
+      },
+      "request": {
+        "method": "POST",
+        "url": "AllergyIntolerance"
+      }
+    },
+    {
+      "fullUrl": "urn:uuid:064cd655-8d84-4cd8-87ad-7984fb37174b",
+      "resource": {
+        "resourceType": "AllergyIntolerance",
+        "id": "064cd655-8d84-4cd8-87ad-7984fb37174b",
+        "meta": {
+          "profile": [
+            "http://hl7.org/fhir/us/core/StructureDefinition/us-core-allergyintolerance"
+          ]
+        },
+        "clinicalStatus": {
+          "coding": [
+            {
+              "system": "http://terminology.hl7.org/CodeSystem/allergyintolerance-clinical",
+              "code": "active"
+            }
+          ]
+        },
+        "verificationStatus": {
+          "coding": [
+            {
+              "system": "http://terminology.hl7.org/CodeSystem/allergyintolerance-verification",
+              "code": "confirmed"
+            }
+          ]
+        },
+        "type": "allergy",
+        "category": [
+          "food"
+        ],
+        "criticality": "low",
+        "code": {
+          "coding": [
+            {
+              "system": "http://snomed.info/sct",
+              "code": "414285001",
+              "display": "Milk protein"
+            }
+          ],
+          "text": "Milk protein"
+        },
+        "patient": {
+          "reference": "urn:uuid:405e74aa-0b66-43a5-a351-52fd04e46a39"
+        },
+        "recordedDate": "2024-02-04T20:15:00-08:00"
+      },
+      "request": {
+        "method": "POST",
+        "url": "AllergyIntolerance"
+      }
+    },
+    {
+      "fullUrl": "urn:uuid:4a9d2d10-7667-485f-8394-283daebc43cb",
+      "resource": {
+        "resourceType": "Immunization",
+        "id": "4a9d2d10-7667-485f-8394-283daebc43cb",
+        "meta": {
+          "profile": [
+            "http://hl7.org/fhir/us/core/StructureDefinition/us-core-immunization"
+          ]
+        },
+        "status": "completed",
+        "vaccineCode": {
+          "coding": [
+            {
+              "system": "http://hl7.org/fhir/sid/cvx",
+              "code": "08",
+              "display": "Hep B, adolescent or pediatric"
+            }
+          ],
+          "text": "Hepatitis B vaccine"
+        },
+        "patient": {
+          "reference": "urn:uuid:405e74aa-0b66-43a5-a351-52fd04e46a39"
+        },
+        "encounter": {
+          "reference": "urn:uuid:19361c18-40e8-48b8-83e3-081a64fd2030"
+        },
+        "occurrenceDateTime": "2024-02-09T20:15:00-08:00",
+        "primarySource": true
+      },
+      "request": {
+        "method": "POST",
+        "url": "Immunization"
+      }
+    },
+    {
+      "fullUrl": "urn:uuid:8ef10917-0992-4905-a662-16e755315617",
+      "resource": {
+        "resourceType": "ImagingStudy",
+        "id": "8ef10917-0992-4905-a662-16e755315617",
+        "status": "available",
+        "subject": {
+          "reference": "urn:uuid:405e74aa-0b66-43a5-a351-52fd04e46a39"
+        },
+        "encounter": {
+          "reference": "urn:uuid:19361c18-40e8-48b8-83e3-081a64fd2030"
+        },
+        "started": "2024-02-03T08:15:00-08:00",
+        "numberOfSeries": 1,
+        "numberOfInstances": 1,
+        "procedureCode": [
+          {
+            "coding": [
+              {
+                "system": "http://snomed.info/sct",
+                "code": "168537006",
+                "display": "Chest X-ray"
+              }
+            ],
+            "text": "Chest X-ray"
+          }
+        ],
+        "series": [
+          {
+            "uid": "1.2.840.113619.805179.1166",
+            "number": 1,
+            "modality": {
+              "system": "http://dicom.nema.org/resources/ontology/DCM",
+              "code": "CR",
+              "display": "Computed Radiography"
+            },
+            "numberOfInstances": 1,
+            "bodySite": {
+              "system": "http://snomed.info/sct",
+              "code": "51185008",
+              "display": "Thorax"
+            },
+            "instance": [
+              {
+                "uid": "1.2.840.113619.947655.3481.1",
+                "sopClass": {
+                  "system": "urn:ietf:rfc:3986",
+                  "code": "urn:oid:1.2.840.10008.5.1.4.1.1.1",
+                  "display": "Computed Radiography Image Storage"
+                },
+                "number": 1
+              }
+            ]
+          }
+        ]
+      },
+      "request": {
+        "method": "POST",
+        "url": "ImagingStudy"
+      }
+    },
+    {
+      "fullUrl": "urn:uuid:8ac9edb9-d8a6-424d-a55c-3abc6d428649",
+      "resource": {
+        "resourceType": "CareTeam",
+        "id": "8ac9edb9-d8a6-424d-a55c-3abc6d428649",
+        "meta": {
+          "profile": [
+            "http://hl7.org/fhir/us/core/StructureDefinition/us-core-careteam"
+          ]
+        },
+        "status": "active",
+        "subject": {
+          "reference": "urn:uuid:405e74aa-0b66-43a5-a351-52fd04e46a39"
+        },
+        "encounter": {
+          "reference": "urn:uuid:19361c18-40e8-48b8-83e3-081a64fd2030"
+        },
+        "period": {
+          "start": "2024-02-02T20:15:00-08:00",
+          "end": "2024-03-29T04:15:00-08:00"
+        },
+        "participant": [
+          {
+            "role": [
+              {
+                "coding": [
+                  {
+                    "system": "http://snomed.info/sct",
+                    "code": "116154003",
+                    "display": "Patient"
+                  }
+                ],
+                "text": "Patient"
+              }
+            ],
+            "member": {
+              "reference": "urn:uuid:405e74aa-0b66-43a5-a351-52fd04e46a39"
+            }
+          },
+          {
+            "role": [
+              {
+                "coding": [
+                  {
+                    "system": "http://snomed.info/sct",
+                    "code": "158965000",
+                    "display": "Medical practitioner"
+                  }
+                ],
+                "text": "Clinician"
+              }
+            ],
+            "member": {
+              "reference": "urn:uuid:236704a2-d81a-4fdc-8d20-109c83663a1d"
+            }
+          },
+          {
+            "role": [
+              {
+                "coding": [
+                  {
+                    "system": "http://snomed.info/sct",
+                    "code": "224891009",
+                    "display": "Healthcare services (qualifier value)"
+                  }
+                ],
+                "text": "Facility"
+              }
+            ],
+            "member": {
+              "reference": "urn:uuid:645515f1-830b-436c-9122-9dc5ad2d52d5"
+            }
+          }
+        ],
+        "managingOrganization": [
+          {
+            "reference": "urn:uuid:645515f1-830b-436c-9122-9dc5ad2d52d5"
+          }
+        ]
+      },
+      "request": {
+        "method": "POST",
+        "url": "CareTeam"
+      }
+    },
+    {
+      "fullUrl": "urn:uuid:8a0a079f-2b36-4aa0-abe4-94514cd60338",
+      "resource": {
+        "resourceType": "CarePlan",
+        "id": "8a0a079f-2b36-4aa0-abe4-94514cd60338",
+        "meta": {
+          "profile": [
+            "http://hl7.org/fhir/us/core/StructureDefinition/us-core-careplan"
+          ]
+        },
+        "status": "active",
+        "intent": "plan",
+        "category": [
+          {
+            "coding": [
+              {
+                "system": "http://hl7.org/fhir/us/core/CodeSystem/careplan-category",
+                "code": "assess-plan"
+              }
+            ],
+            "text": "NICU plan"
+          }
+        ],
+        "subject": {
+          "reference": "urn:uuid:405e74aa-0b66-43a5-a351-52fd04e46a39"
+        },
+        "encounter": {
+          "reference": "urn:uuid:19361c18-40e8-48b8-83e3-081a64fd2030"
+        },
+        "period": {
+          "start": "2024-02-02T20:15:00-08:00",
+          "end": "2024-03-29T04:15:00-08:00"
+        },
+        "careTeam": [
+          {
+            "reference": "urn:uuid:8ac9edb9-d8a6-424d-a55c-3abc6d428649"
+          }
+        ],
+        "activity": [
+          {
+            "detail": {
+              "code": {
+                "text": "Feeding advancement protocol"
+              },
+              "status": "in-progress",
+              "location": {
+                "display": "SYNTHETIC CHILDREN'S HOSPITAL"
+              }
+            }
+          },
+          {
+            "detail": {
+              "code": {
+                "text": "Respiratory support wean as tolerated"
+              },
+              "status": "in-progress",
+              "location": {
+                "display": "SYNTHETIC CHILDREN'S HOSPITAL"
+              }
+            }
+          }
+        ]
+      },
+      "request": {
+        "method": "POST",
+        "url": "CarePlan"
+      }
+    },
+    {
+      "fullUrl": "urn:uuid:30c50103-6bfb-4e79-9a5d-fa4df1868bc0",
+      "resource": {
+        "resourceType": "DiagnosticReport",
+        "id": "30c50103-6bfb-4e79-9a5d-fa4df1868bc0",
+        "meta": {
+          "profile": [
+            "http://hl7.org/fhir/us/core/StructureDefinition/us-core-diagnosticreport-note"
+          ]
+        },
+        "status": "final",
+        "category": [
+          {
+            "coding": [
+              {
+                "system": "http://loinc.org",
+                "code": "18842-5",
+                "display": "Discharge summary"
+              }
+            ]
+          }
+        ],
+        "code": {
+          "coding": [
+            {
+              "system": "http://loinc.org",
+              "code": "18842-5",
+              "display": "Discharge summary"
+            }
+          ],
+          "text": "NICU Discharge Summary"
+        },
+        "subject": {
+          "reference": "urn:uuid:405e74aa-0b66-43a5-a351-52fd04e46a39"
+        },
+        "encounter": {
+          "reference": "urn:uuid:19361c18-40e8-48b8-83e3-081a64fd2030"
+        },
+        "effectiveDateTime": "2024-03-29T04:15:00-08:00",
+        "issued": "2024-03-29T04:15:00-08:00",
+        "performer": [
+          {
+            "reference": "urn:uuid:236704a2-d81a-4fdc-8d20-109c83663a1d"
+          }
+        ],
+        "presentedForm": [
+          {
+            "contentType": "text/plain; charset=utf-8",
+            "data": "MjAyNC0wMy0yOQoKIyBOSUNVIERpc2NoYXJnZSBTdW1tYXJ5CkluZmFudDogU29maWE4MjkgUGF0ZWw0MzMKRE9COiAyMDI0LTAyLTAyICAgU2V4OiBtYWxlCkFkbWlzc2lvbjogMjAyNC0wMi0wMiAgIERpc2NoYXJnZTogMjAyNC0wMy0yOQpIb3NwaXRhbDogU1lOVEhFVElDIENISUxEUkVOJ1MgSE9TUElUQUwKCiMjIERpYWdub3NlcwotIEh5cG9nbHljZW1pYSBvZiBuZXdib3JuCi0gQnJvbmNob3B1bG1vbmFyeSBkeXNwbGFzaWEKLSBQcmVtYXR1cml0eSwgPDMyIHdlZWtzCgojIyBIb3NwaXRhbCBDb3Vyc2UgKGJyaWVmKQotIFJlc3BpcmF0b3J5OiBtYW5hZ2VkIHBlciBOSUNVIHByb3RvY29sOyBlc2NhbGF0aW9uL2RlLWVzY2FsYXRpb24gYXMgY2xpbmljYWxseSBpbmRpY2F0ZWQuCi0gSW5mZWN0aW91czogc2Vwc2lzIGV2YWx1YXRpb24gYW5kIGFudGliaW90aWNzIGFzIGluZGljYXRlZC4KLSBOdXRyaXRpb246IGVudGVyYWwgZmVlZHMgYWR2YW5jZWQgYXMgdG9sZXJhdGVkOyBwYXJlbnRlcmFsIG51dHJpdGlvbiBhcyBuZWVkZWQuCi0gR3Jvd3RoL0RldmVsb3BtZW50OiBtb25pdG9yZWQgd2l0aCByb3V0aW5lIE5JQ1UgYXNzZXNzbWVudHMuCgojIyBNZWRpY2F0aW9ucyBvbiBDb3Vyc2UgKHNlbGVjdGVkKQotIEFtcGljaWxsaW4KLSBGZXJyb3VzIHN1bGZhdGUKLSBDYWZmZWluZSBjaXRyYXRlCi0gSW5kb21ldGhhY2luCi0gRnVyb3NlbWlkZQo="
+          }
+        ]
+      },
+      "request": {
+        "method": "POST",
+        "url": "DiagnosticReport"
+      }
+    },
+    {
+      "fullUrl": "urn:uuid:912ac6b0-adb1-4a64-9e2a-e8a249e81cd2",
+      "resource": {
+        "resourceType": "DocumentReference",
+        "id": "912ac6b0-adb1-4a64-9e2a-e8a249e81cd2",
+        "meta": {
+          "profile": [
+            "http://hl7.org/fhir/us/core/StructureDefinition/us-core-documentreference"
+          ]
+        },
+        "identifier": [
+          {
+            "system": "urn:ietf:rfc:3986",
+            "value": "urn:uuid:30c50103-6bfb-4e79-9a5d-fa4df1868bc0"
+          }
+        ],
+        "status": "current",
+        "type": {
+          "coding": [
+            {
+              "system": "http://loinc.org",
+              "code": "18842-5",
+              "display": "Discharge summary"
+            }
+          ],
+          "text": "NICU Discharge Summary"
+        },
+        "category": [
+          {
+            "coding": [
+              {
+                "system": "http://hl7.org/fhir/us/core/CodeSystem/us-core-documentreference-category",
+                "code": "clinical-note",
+                "display": "Clinical Note"
+              }
+            ]
+          }
+        ],
+        "subject": {
+          "reference": "urn:uuid:405e74aa-0b66-43a5-a351-52fd04e46a39"
+        },
+        "date": "2024-03-29T04:15:00-08:00",
+        "author": [
+          {
+            "reference": "urn:uuid:236704a2-d81a-4fdc-8d20-109c83663a1d"
+          }
+        ],
+        "custodian": {
+          "reference": "urn:uuid:645515f1-830b-436c-9122-9dc5ad2d52d5"
+        },
+        "content": [
+          {
+            "attachment": {
+              "contentType": "text/plain; charset=utf-8",
+              "data": "MjAyNC0wMy0yOQoKIyBOSUNVIERpc2NoYXJnZSBTdW1tYXJ5CkluZmFudDogU29maWE4MjkgUGF0ZWw0MzMKRE9COiAyMDI0LTAyLTAyICAgU2V4OiBtYWxlCkFkbWlzc2lvbjogMjAyNC0wMi0wMiAgIERpc2NoYXJnZTogMjAyNC0wMy0yOQpIb3NwaXRhbDogU1lOVEhFVElDIENISUxEUkVOJ1MgSE9TUElUQUwKCiMjIERpYWdub3NlcwotIEh5cG9nbHljZW1pYSBvZiBuZXdib3JuCi0gQnJvbmNob3B1bG1vbmFyeSBkeXNwbGFzaWEKLSBQcmVtYXR1cml0eSwgPDMyIHdlZWtzCgojIyBIb3NwaXRhbCBDb3Vyc2UgKGJyaWVmKQotIFJlc3BpcmF0b3J5OiBtYW5hZ2VkIHBlciBOSUNVIHByb3RvY29sOyBlc2NhbGF0aW9uL2RlLWVzY2FsYXRpb24gYXMgY2xpbmljYWxseSBpbmRpY2F0ZWQuCi0gSW5mZWN0aW91czogc2Vwc2lzIGV2YWx1YXRpb24gYW5kIGFudGliaW90aWNzIGFzIGluZGljYXRlZC4KLSBOdXRyaXRpb246IGVudGVyYWwgZmVlZHMgYWR2YW5jZWQgYXMgdG9sZXJhdGVkOyBwYXJlbnRlcmFsIG51dHJpdGlvbiBhcyBuZWVkZWQuCi0gR3Jvd3RoL0RldmVsb3BtZW50OiBtb25pdG9yZWQgd2l0aCByb3V0aW5lIE5JQ1UgYXNzZXNzbWVudHMuCgojIyBNZWRpY2F0aW9ucyBvbiBDb3Vyc2UgKHNlbGVjdGVkKQotIEFtcGljaWxsaW4KLSBGZXJyb3VzIHN1bGZhdGUKLSBDYWZmZWluZSBjaXRyYXRlCi0gSW5kb21ldGhhY2luCi0gRnVyb3NlbWlkZQo="
+            },
+            "format": {
+              "system": "http://ihe.net/fhir/ValueSet/IHE.FormatCode.codesystem",
+              "code": "urn:ihe:iti:xds:2017:mimeTypeSufficient",
+              "display": "mimeType Sufficient"
+            }
+          }
+        ],
+        "context": {
+          "encounter": [
+            {
+              "reference": "urn:uuid:19361c18-40e8-48b8-83e3-081a64fd2030"
+            }
+          ],
+          "period": {
+            "start": "2024-02-02T20:15:00-08:00",
+            "end": "2024-03-29T04:15:00-08:00"
+          }
+        }
+      },
+      "request": {
+        "method": "POST",
+        "url": "DocumentReference"
+      }
+    },
+    {
+      "fullUrl": "urn:uuid:d7b5d9cc-70e3-4d4a-801d-9329475fefeb",
+      "resource": {
+        "resourceType": "Claim",
+        "id": "d7b5d9cc-70e3-4d4a-801d-9329475fefeb",
+        "status": "active",
+        "type": {
+          "coding": [
+            {
+              "system": "http://terminology.hl7.org/CodeSystem/claim-type",
+              "code": "institutional"
+            }
+          ]
+        },
+        "use": "claim",
+        "patient": {
+          "reference": "urn:uuid:405e74aa-0b66-43a5-a351-52fd04e46a39",
+          "display": "Sofia829 Patel433"
+        },
+        "billablePeriod": {
+          "start": "2024-02-02T20:15:00-08:00",
+          "end": "2024-03-29T04:15:00-08:00"
+        },
+        "created": "2024-03-29T04:15:00-08:00",
+        "provider": {
+          "reference": "urn:uuid:645515f1-830b-436c-9122-9dc5ad2d52d5",
+          "display": "SYNTHETIC CHILDREN'S HOSPITAL"
+        },
+        "priority": {
+          "coding": [
+            {
+              "system": "http://terminology.hl7.org/CodeSystem/processpriority",
+              "code": "normal"
+            }
+          ]
+        },
+        "facility": {
+          "reference": "urn:uuid:b3e8098b-2606-4658-a9b1-ae1ee4245afc",
+          "display": "NICU - SYNTHETIC CHILDREN'S HOSPITAL"
+        },
+        "diagnosis": [
+          {
+            "sequence": 1,
+            "diagnosisReference": {
+              "reference": "urn:uuid:9db416d2-06a9-4078-8d6d-bbf33a93d700"
+            }
+          }
+        ],
+        "insurance": [
+          {
+            "sequence": 1,
+            "focal": true,
+            "coverage": {
+              "display": "Commercial"
+            }
+          }
+        ],
+        "item": [
+          {
+            "sequence": 1,
+            "productOrService": {
+              "coding": [
+                {
+                  "system": "http://snomed.info/sct",
+                  "code": "32485007",
+                  "display": "Hospital admission (procedure)"
+                }
+              ],
+              "text": "NICU inpatient stay"
+            },
+            "encounter": [
+              {
+                "reference": "urn:uuid:19361c18-40e8-48b8-83e3-081a64fd2030"
+              }
+            ]
+          }
+        ],
+        "total": {
+          "value": 36068.67,
+          "currency": "USD"
+        }
+      },
+      "request": {
+        "method": "POST",
+        "url": "Claim"
+      }
+    },
+    {
+      "fullUrl": "urn:uuid:6c03924e-beee-4a30-9de5-2e50a951cce4",
+      "resource": {
+        "resourceType": "ExplanationOfBenefit",
+        "id": "6c03924e-beee-4a30-9de5-2e50a951cce4",
+        "contained": [
+          {
+            "resourceType": "ServiceRequest",
+            "id": "referral",
+            "status": "completed",
+            "intent": "order",
+            "subject": {
+              "reference": "urn:uuid:405e74aa-0b66-43a5-a351-52fd04e46a39"
+            },
+            "requester": {
+              "reference": "urn:uuid:236704a2-d81a-4fdc-8d20-109c83663a1d"
+            },
+            "performer": [
+              {
+                "reference": "urn:uuid:236704a2-d81a-4fdc-8d20-109c83663a1d"
+              }
+            ]
+          },
+          {
+            "resourceType": "Coverage",
+            "id": "coverage",
+            "status": "active",
+            "type": {
+              "text": "Commercial"
+            },
+            "beneficiary": {
+              "reference": "urn:uuid:405e74aa-0b66-43a5-a351-52fd04e46a39"
+            },
+            "payor": [
+              {
+                "display": "Commercial"
+              }
+            ]
+          }
+        ],
+        "identifier": [
+          {
+            "system": "https://bluebutton.cms.gov/resources/variables/clm_id",
+            "value": "d7b5d9cc-70e3-4d4a-801d-9329475fefeb"
+          },
+          {
+            "system": "https://bluebutton.cms.gov/resources/identifier/claim-group",
+            "value": "99999999999"
+          }
+        ],
+        "status": "active",
+        "type": {
+          "coding": [
+            {
+              "system": "http://terminology.hl7.org/CodeSystem/claim-type",
+              "code": "institutional"
+            }
+          ]
+        },
+        "use": "claim",
+        "patient": {
+          "reference": "urn:uuid:405e74aa-0b66-43a5-a351-52fd04e46a39"
+        },
+        "billablePeriod": {
+          "start": "2024-02-02T20:15:00-08:00",
+          "end": "2024-03-29T04:15:00-08:00"
+        },
+        "created": "2024-03-29T04:15:00-08:00",
+        "insurer": {
+          "display": "Commercial"
+        },
+        "provider": {
+          "reference": "urn:uuid:236704a2-d81a-4fdc-8d20-109c83663a1d"
+        },
+        "referral": {
+          "reference": "#referral"
+        },
+        "facility": {
+          "reference": "urn:uuid:b3e8098b-2606-4658-a9b1-ae1ee4245afc",
+          "display": "NICU - SYNTHETIC CHILDREN'S HOSPITAL"
+        },
+        "claim": {
+          "reference": "urn:uuid:d7b5d9cc-70e3-4d4a-801d-9329475fefeb"
+        },
+        "outcome": "complete",
+        "careTeam": [
+          {
+            "sequence": 1,
+            "provider": {
+              "reference": "urn:uuid:236704a2-d81a-4fdc-8d20-109c83663a1d"
+            },
+            "role": {
+              "coding": [
+                {
+                  "system": "http://terminology.hl7.org/CodeSystem/claimcareteamrole",
+                  "code": "primary",
+                  "display": "Primary Care Practitioner"
+                }
+              ]
+            }
+          }
+        ],
+        "diagnosis": [
+          {
+            "sequence": 1,
+            "diagnosisReference": {
+              "reference": "urn:uuid:9db416d2-06a9-4078-8d6d-bbf33a93d700"
+            },
+            "type": [
+              {
+                "coding": [
+                  {
+                    "system": "http://terminology.hl7.org/CodeSystem/ex-diagnosistype",
+                    "code": "principal"
+                  }
+                ]
+              }
+            ]
+          }
+        ],
+        "insurance": [
+          {
+            "focal": true,
+            "coverage": {
+              "reference": "#coverage",
+              "display": "Commercial"
+            }
+          }
+        ],
+        "item": [
+          {
+            "sequence": 1,
+            "category": {
+              "coding": [
+                {
+                  "system": "https://bluebutton.cms.gov/resources/variables/line_cms_type_srvc_cd",
+                  "code": "1",
+                  "display": "Medical care"
+                }
+              ]
+            },
+            "productOrService": {
+              "text": "NICU inpatient stay"
+            },
+            "servicedPeriod": {
+              "start": "2024-02-02T20:15:00-08:00",
+              "end": "2024-03-29T04:15:00-08:00"
+            },
+            "locationCodeableConcept": {
+              "coding": [
+                {
+                  "system": "http://terminology.hl7.org/CodeSystem/ex-serviceplace",
+                  "code": "21",
+                  "display": "Inpatient Hospital"
+                }
+              ]
+            },
+            "encounter": [
+              {
+                "reference": "urn:uuid:19361c18-40e8-48b8-83e3-081a64fd2030"
+              }
+            ]
+          }
+        ],
+        "total": [
+          {
+            "category": {
+              "coding": [
+                {
+                  "system": "http://terminology.hl7.org/CodeSystem/adjudication",
+                  "code": "submitted",
+                  "display": "Submitted Amount"
+                }
+              ],
+              "text": "Submitted Amount"
+            },
+            "amount": {
+              "value": 36068.67,
+              "currency": "USD"
+            }
+          }
+        ],
+        "payment": {
+          "amount": {
+            "value": 0.0,
+            "currency": "USD"
+          }
+        }
+      },
+      "request": {
+        "method": "POST",
+        "url": "ExplanationOfBenefit"
+      }
+    },
+    {
+      "fullUrl": "urn:uuid:363b921f-acc4-4492-b1aa-f89e6767d7de",
+      "resource": {
+        "resourceType": "Provenance",
+        "id": "363b921f-acc4-4492-b1aa-f89e6767d7de",
+        "recorded": "2024-03-29T04:15:00-08:00",
+        "target": [
+          {
+            "reference": "urn:uuid:405e74aa-0b66-43a5-a351-52fd04e46a39"
+          }
+        ],
+        "agent": [
+          {
+            "type": {
+              "text": "assembler"
+            },
+            "who": {
+              "display": "Synthetic NICU bundle generator"
+            }
+          }
+        ]
+      },
+      "request": {
+        "method": "POST",
+        "url": "Provenance"
+      }
+    }
+  ]
+}
