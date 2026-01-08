@@ -223,7 +223,7 @@ platform :ios do
         distribute_external: true,
         reject_build_waiting_for_review: true,
         groups: [
-          "External Testers"
+          "NICU Testing"
         ],
         submit_beta_review: true,
         notify_external_testers: true,
