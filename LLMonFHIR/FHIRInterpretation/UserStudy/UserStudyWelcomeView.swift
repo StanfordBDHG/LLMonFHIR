@@ -325,30 +325,30 @@ extension [SurveyTask] {
         ),
         .init(
             id: 2,
-            instruction: "Ask a clarifying question about the most recent diagnosis from your last medical visit.",
+            instruction: "Ask a clarifying question about one of the diagnoses received in the summary.",
             questions: [
                 .init(
-                    text: "How effective is this feature for interpreting and evaluating your medical information?",
+                    text: "How effective is this feature for interpreting and evaluating your baby’s medical information?",
                     type: .scale(responseOptions: effectivenessScale)
                 )
             ]
         ),
         .init(
             id: 3,
-            instruction: "Ask the app for a personalized health recommendation. Feel free to ask about any health concerns.",
+            instruction: "Ask a question about feeding your baby, such as timing, amounts, or methods.",
             questions: [
                 .init(
-                    text: "How effective are these recommendations in helping you make decisions about your health?",
+                    text: "How effective was the LLM in helping you understand how to feed your baby?",
                     type: .scale(responseOptions: effectivenessScale)
                 )
             ]
         ),
         .init(
             id: 4,
-            instruction: "Before we end our session, feel free to ask the app any medical questions you might have related to your health.",
+            instruction: "Ask a question about your baby’s follow-up appointments, medications, or technologies.",
             questions: [
                 .init(
-                    text: "How effective was the LLM in helping to answer your health question?",
+                    text: "How effective was this response in helping you understand your baby’s care?",
                     type: .scale(responseOptions: effectivenessScale),
                     isOptional: true
                 ),
@@ -361,48 +361,36 @@ extension [SurveyTask] {
         ),
         .init(
             id: 5,
-            instruction: "Please feel free to ask any other questions you have. When you're done, please complete the next task.",
+            // swiftlint:disable:next line_length
+            instruction: "Please feel free to ask any other questions you have about your child’s discharge or transition to home; for example, vaccinations or sleeping.",
             questions: [
+                .init(
+                    text: "I found the responses easy to understand and at an appropriate reading level.",
+                    type: .scale(responseOptions: balancedEaseScale)
+                ),
+                .init(
+                    text: "Using this tool would help me take better care of my child.",
+                    type: .scale(responseOptions: comparisonScale)
+                ),
                 .init(
                     text: "Compared to other sources of health information (e.g., websites, doctors), how do you rate the LLM's responses?",
                     type: .scale(responseOptions: comparisonScale)
                 ),
                 .init(
-                    text: "What were the most and least useful features of the LLM? Do you have any suggestions to share?",
-                    type: .freeText,
-                    isOptional: true
+                    text: "Learning this tool was easy for me.",
+                    type: .scale(responseOptions: balancedEaseScale)
                 ),
                 .init(
-                    text: "How has the LLM impacted your ability to manage your health?",
-                    type: .freeText,
-                    isOptional: true
+                    text: "I find it easy to get the tool to do what I want it to do.",
+                    type: .scale(responseOptions: balancedEaseScale)
+                ),
+                .init(
+                    text: "My interaction with the tool was clear and understandable.",
+                    type: .scale(responseOptions: clarityScale)
                 ),
                 .init(
                     text: "On a scale of 0-10, how likely are you to recommend this tool to a friend or colleague?",
                     type: .netPromoterScore(range: 0...10)
-                )
-            ]
-        ),
-        .init(
-            id: 6,
-            instruction: "Please hit the arrow at the top of your screen to complete the final task.",
-            questions: [
-                .init(
-                    text: "How easy would it be to access or obtain information about your medical condition?",
-                    type: .scale(responseOptions: balancedEaseScale)
-                ),
-                .init(
-                    // swiftlint:disable:next line_length
-                    text: "How frequently do you anticipate having problems learning about your medical condition because of difficulty understanding written information?",
-                    type: .scale(responseOptions: frequencyOptions)
-                ),
-                .init(
-                    text: "How confident would you be in filling out medical forms by yourself?",
-                    type: .scale(responseOptions: confidentnessScale)
-                ),
-                .init(
-                    text: "How often do you think you would have someone help you read hospital materials?",
-                    type: .scale(responseOptions: frequencyOptions)
                 )
             ]
         )
