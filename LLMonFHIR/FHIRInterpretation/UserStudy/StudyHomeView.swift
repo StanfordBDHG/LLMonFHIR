@@ -9,6 +9,7 @@
 import os.log
 import SpeziFHIR
 import SpeziFoundation
+import SpeziHealthKit
 import SpeziKeychainStorage
 import SpeziLLMOpenAI
 import SwiftUI
@@ -17,6 +18,7 @@ import SwiftUI
 struct StudyHomeView: View {
     @LocalPreference(.resourceLimit) private var resourceLimit
     @Environment(LLMonFHIRStandard.self) private var standard
+    @Environment(HealthKit.self) private var healthKit
     @Environment(FHIRInterpretationModule.self) private var fhirInterpretationModule
     @Environment(FHIRMultipleResourceInterpreter.self) private var interpreter
     @Environment(FHIRResourceSummary.self) private var resourceSummary
@@ -176,6 +178,9 @@ struct StudyHomeView: View {
     private var primaryActionButton: some View {
         PrimaryActionButton {
             if let study {
+                // the HealthKit permissions should already have been granted via the onboarding, but we re-request them here, just in case,
+                // to make sure everything is in a proper state when the study gets launched.
+                try await healthKit.askForAuthorization()
                 fhirInterpretationModule.currentStudy = study
                 await fhirInterpretationModule.updateSchemas(forceImmediateUpdate: true)
                 interpreter.startNewConversation(for: study)
