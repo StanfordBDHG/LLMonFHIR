@@ -18,8 +18,7 @@ import SpeziLLMOpenAI
 final class LLMonFHIRDelegate: SpeziAppDelegate {
     override var configuration: Configuration {
         Configuration(standard: LLMonFHIRStandard()) {
-            let appState = AppState()
-            appState
+            let fhirInterpretationModule = FHIRInterpretationModule()
             HealthKit {
                 RequestReadAccess(other: LLMonFHIRStandard.recordTypes)
                 for type in LLMonFHIRStandard.recordTypes {
@@ -40,7 +39,7 @@ final class LLMonFHIRDelegate: SpeziAppDelegate {
             FHIRInterpretationModule()
             AccessGuards {
                 CodeAccessGuard(.userStudySettings, message: "Enter Code to Access Settings", format: .numeric(4)) { @MainActor code in
-                    if let expected = appState.currentStudy?.settingsUnlockCode {
+                    if let expected = fhirInterpretationModule.currentStudy?.settingsUnlockCode {
                         code == expected ? .valid : .invalid
                     } else {
                         .valid

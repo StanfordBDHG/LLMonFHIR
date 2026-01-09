@@ -12,7 +12,7 @@ import SwiftUI
 
 
 struct SettingsButton: View {
-    @Environment(AppState.self) private var appState
+    @Environment(FHIRInterpretationModule.self) private var fhirInterpretationModule
     @State private var isPresentingSheet = false
     
     var body: some View {
@@ -23,7 +23,7 @@ struct SettingsButton: View {
                 .accessibilityLabel(Text("SETTINGS"))
         }
         .sheet(isPresented: $isPresentingSheet) {
-            if appState.currentStudy?.settingsUnlockCode != nil {
+            if fhirInterpretationModule.currentStudy?.settingsUnlockCode != nil {
                 AccessGuarded(.userStudySettings) {
                     SettingsView()
                 }
