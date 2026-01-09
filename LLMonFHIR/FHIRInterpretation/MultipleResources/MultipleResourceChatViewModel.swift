@@ -85,8 +85,8 @@ class MultipleResourcesChatViewModel: Sendable {
     ///
     /// This preserves system messages but removes all conversation history,
     /// providing the user with a fresh chat while maintaining the interpreter context.
-    func startNewConversation() {
-        interpreter.startNewConversation()
+    func startNewConversation(for study: Study? = nil) {
+        interpreter.startNewConversation(for: study)
     }
     
     /// Cancels any ongoing operations and dismisses the current view

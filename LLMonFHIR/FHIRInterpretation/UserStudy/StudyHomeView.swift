@@ -25,7 +25,6 @@ struct StudyHomeView: View {
     @WaitingState private var waitingState
     
     @State private var study: Study?
-    @State private var studyBeingPresented: Study?
     @State private var isPresentingEarliestHealthRecords = false
     @State private var isPresentingQRCodeScanner = false
     
@@ -37,6 +36,7 @@ struct StudyHomeView: View {
     }
     
     var body: some View {
+        @Bindable var fhirInterpretationModule = fhirInterpretationModule
         NavigationStack { // swiftlint:disable:this closure_body_length
             mainContent
                 .background(Color(.systemBackground))
@@ -58,7 +58,7 @@ struct StudyHomeView: View {
                         return .continueScanning
                     }
                 }
-                .fullScreenCover(item: $studyBeingPresented) { study in
+                .fullScreenCover(item: $fhirInterpretationModule.currentStudy) { study in
                     UserStudyChatView(
                         study: study,
                         interpreter: interpreter,
@@ -176,8 +176,9 @@ struct StudyHomeView: View {
     private var primaryActionButton: some View {
         PrimaryActionButton {
             if let study {
-                interpreter.startNewConversation()
-                studyBeingPresented = study
+                fhirInterpretationModule.currentStudy = study
+                await fhirInterpretationModule.updateSchemas(forceImmediateUpdate: true)
+                interpreter.startNewConversation(for: study)
             } else {
                 isPresentingQRCodeScanner = true
             }

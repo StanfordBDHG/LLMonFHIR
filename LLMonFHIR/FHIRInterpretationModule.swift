@@ -18,7 +18,7 @@ import SwiftUI
 
 
 // periphery:ignore - Properties are used through dependency injection and @Model configuration in `configure()`
-final class FHIRInterpretationModule: Module, DefaultInitializable, EnvironmentAccessible {
+final class FHIRInterpretationModule: Module, EnvironmentAccessible {
     @Dependency(LocalStorage.self) private var localStorage
     @Dependency(LLMRunner.self) private var llmRunner
     @Dependency(FHIRStore.self) private var fhirStore
@@ -32,6 +32,14 @@ final class FHIRInterpretationModule: Module, DefaultInitializable, EnvironmentA
     @LocalPreference(.openAIModelTemperature) private var openAIModelTemperature
     @LocalPreference(.fogModel) private var fogModel
     @LocalPreference(.resourceLimit) private var resourceLimit
+    
+    @MainActor var currentStudy: Study? {
+        didSet {
+            Task {
+                await updateSchemas()
+            }
+        }
+    }
     
     private var updateModelsTask: Task<Void, any Error>?
     
@@ -106,9 +114,10 @@ final class FHIRInterpretationModule: Module, DefaultInitializable, EnvironmentA
     func updateSchemas(forceImmediateUpdate: Bool = false) async {
         updateModelsTask?.cancel()
         let imp = { [self] in
-            await resourceSummary.changeLLMSchema(to: singleResourceLLMSchema)
-            await resourceInterpreter.changeLLMSchema(to: singleResourceLLMSchema)
-            multipleResourceInterpreter.changeLLMSchema(to: multipleResourceInterpreterOpenAISchema)
+            let summarizePrompt = currentStudy?.summarizeSingleResourcePrompt ?? .summarizeSingleFHIRResourceDefaultPrompt
+            await resourceSummary.update(llmSchema: singleResourceLLMSchema, summarizationPrompt: summarizePrompt)
+            await resourceInterpreter.update(llmSchema: singleResourceLLMSchema, summarizationPrompt: summarizePrompt)
+            multipleResourceInterpreter.changeLLMSchema(to: multipleResourceInterpreterOpenAISchema, for: currentStudy)
         }
         if forceImmediateUpdate {
             await imp()

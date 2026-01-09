@@ -73,10 +73,6 @@ final class FHIRResourceSummary: Sendable {
         )
     }
     
-    func updatePrompt(_ newSummarizationPrompt: FHIRPrompt) async {
-        await resourceProcessor.updatePrompt(newSummarizationPrompt)
-    }
-    
     /// Summarizes a given FHIR resource. Returns a human-readable summary.
     ///
     /// - Parameters:
@@ -120,7 +116,7 @@ final class FHIRResourceSummary: Sendable {
     ///
     /// - Parameters:
     ///    - schema: The to-be-used `LLMSchema`.
-    func changeLLMSchema(to schema: some LLMSchema) async {
-        await resourceProcessor.changeSchema(to: schema)
+    func update(llmSchema schema: any LLMSchema, summarizationPrompt: FHIRPrompt) async {
+        await resourceProcessor.update(llmSchema: schema, summarizationPrompt: summarizationPrompt)
     }
 }

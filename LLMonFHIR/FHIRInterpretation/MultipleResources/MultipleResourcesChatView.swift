@@ -62,7 +62,7 @@ struct MultipleResourcesChatView: View {
         }
         ToolbarItem(placement: .primaryAction) {
             Button {
-                viewModel.startNewConversation()
+                viewModel.startNewConversation(for: nil)
             } label: {
                 Image(systemName: "trash")
                     .accessibilityLabel(Text("Reset Chat"))
