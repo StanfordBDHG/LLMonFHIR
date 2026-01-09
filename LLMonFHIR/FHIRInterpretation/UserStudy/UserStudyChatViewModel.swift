@@ -137,6 +137,10 @@ final class UserStudyChatViewModel: MultipleResourcesChatViewModel, Sendable { /
         self.resourceSummary = resourceSummary
         super.init(interpreter: interpreter, navigationTitle: "")
         configureMessageLimits()
+        interpreter.interpretMultipleResourcesPrompt = study.interpretMultipleResourcesPrompt
+        Task {
+            await resourceSummary.updatePrompt(study.summarizeSingleResourcePrompt)
+        }
     }
 
     

@@ -58,16 +58,24 @@ final class FHIRResourceSummary: Sendable {
     ///   - localStorage: Local storage module that needs to be passed to the ``FHIRResourceSummary`` to allow it to cache summaries.
     ///   - llmRunner: OpenAI module that needs to be passed to the ``FHIRResourceSummary`` to allow it to retrieve summaries.
     ///   - llmSchema: LLM schema to use for generating summaries.
-    init(localStorage: LocalStorage, llmRunner: LLMRunner, llmSchema: any LLMSchema) {
+    init(
+        localStorage: LocalStorage,
+        llmRunner: LLMRunner,
+        llmSchema: any LLMSchema,
+        summarizationPrompt: FHIRPrompt = .summarizeSingleFHIRResourceDefaultPrompt
+    ) {
         self.resourceProcessor = FHIRResourceProcessor(
             localStorage: localStorage,
             llmRunner: llmRunner,
             llmSchema: llmSchema,
             storageKey: "FHIRResourceSummary.Summaries",
-            prompt: FHIRPrompt.summary
+            summarizationPrompt: summarizationPrompt
         )
     }
     
+    func updatePrompt(_ newSummarizationPrompt: FHIRPrompt) async {
+        await resourceProcessor.updatePrompt(newSummarizationPrompt)
+    }
     
     /// Summarizes a given FHIR resource. Returns a human-readable summary.
     ///
@@ -78,25 +86,25 @@ final class FHIRResourceSummary: Sendable {
     @discardableResult
     func summarize(resource: SendableFHIRResource, forceReload: Bool = false) async throws -> Summary {
         try? resource.stringifyAttachments()
-
+        
         var retryCount = 0
         var summary: Summary?
-
+        
         repeat {
-            summary = try await resourceProcessor.process(resource: resource, forceReload: forceReload || retryCount > 0)
+            summary = try await resourceProcessor.process(
+                resource: resource,
+                forceReload: forceReload || retryCount > 0
+            )
             retryCount += 1
-
             guard summary == nil else {
                 break
             }
-
             try? await Task.sleep(for: .seconds(0.1))
         } while retryCount < maxRetries
-
+        
         guard let summary = summary else {
             throw SummaryError.summaryFailed("Failed to generate valid summary after \(maxRetries) retries")
         }
-
         return summary
     }
     
@@ -115,24 +123,4 @@ final class FHIRResourceSummary: Sendable {
     func changeLLMSchema(to schema: some LLMSchema) async {
         await resourceProcessor.changeSchema(to: schema)
     }
-}
-
-
-extension FHIRPrompt {
-    /// Prompt used to summarize FHIR resources
-    ///
-    /// This prompt is used by the ``FHIRResourceSummary``.
-    static let summary: FHIRPrompt = {
-        FHIRPrompt(
-            storageKey: "prompt.summary",
-            localizedDescription: String(
-                localized: "SUMMARY_PROMPT",
-                bundle: .main
-            ),
-            defaultPrompt: String(
-                localized: "SUMMARY_PROMPT_CONTENT_OPENAI",
-                bundle: .main
-            )
-        )
-    }()
 }

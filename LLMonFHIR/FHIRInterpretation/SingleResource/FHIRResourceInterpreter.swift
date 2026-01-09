@@ -21,13 +21,18 @@ final class FHIRResourceInterpreter: Sendable {
     /// - Parameters:
     ///   - localStorage: Local storage module that needs to be passed to the ``FHIRResourceInterpreter`` to allow it to cache interpretations.
     ///   - openAIModel: OpenAI module that needs to be passed to the ``FHIRResourceInterpreter`` to allow it to retrieve interpretations.
-    init(localStorage: LocalStorage, llmRunner: LLMRunner, llmSchema: any LLMSchema) {
+    init(
+        localStorage: LocalStorage,
+        llmRunner: LLMRunner,
+        llmSchema: any LLMSchema,
+        summarizationPrompt: FHIRPrompt = .summarizeSingleFHIRResourceDefaultPrompt
+    ) {
         self.resourceProcessor = FHIRResourceProcessor(
             localStorage: localStorage,
             llmRunner: llmRunner,
             llmSchema: llmSchema,
             storageKey: "FHIRResourceInterpreter.Interpretations",
-            prompt: FHIRPrompt.interpretation
+            summarizationPrompt: summarizationPrompt
         )
     }
     
@@ -40,7 +45,10 @@ final class FHIRResourceInterpreter: Sendable {
     /// - Returns: An asynchronous `String` representing the interpretation of the resource.
     @discardableResult
     func interpret(resource: SendableFHIRResource, forceReload: Bool = false) async throws -> String {
-        try await resourceProcessor.process(resource: resource, forceReload: forceReload)
+        try await resourceProcessor.process(
+            resource: resource,
+            forceReload: forceReload
+        )
     }
     
     /// Retrieve the cached interpretation of a given FHIR resource. Returns a human-readable interpretation or `nil` if it is not present.
@@ -58,26 +66,4 @@ final class FHIRResourceInterpreter: Sendable {
     func changeLLMSchema(to schema: some LLMSchema & Sendable) async {
         await resourceProcessor.changeSchema(to: schema)
     }
-}
-
-
-extension FHIRPrompt {
-    /// Prompt used to interpret FHIR resources
-    ///
-    /// This prompt is used by the ``FHIRResourceInterpreter``.
-    static let interpretation: FHIRPrompt = {
-        FHIRPrompt(
-            storageKey: "prompt.interpretation",
-            localizedDescription: String(
-                localized: "Interpretation Prompt",
-                bundle: .main,
-                comment: "Title of the interpretation prompt."
-            ),
-            defaultPrompt: String(
-                localized: "Interpretation Prompt Content",
-                bundle: .main,
-                comment: "Content of the interpretation prompt."
-            )
-        )
-    }()
 }

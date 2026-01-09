@@ -123,32 +123,33 @@ struct SettingsView: View {
         }
     }
 
-    private var promptsSettings: some View {
-        Section("SETTINGS_PROMPTS") {
-            NavigationButton("SETTINGS_PROMPTS_SUMMARY") {
+    @ViewBuilder private var promptsSettings: some View {
+        let buttons = [
+            customizePromptButton(for: .summarizeSingleFHIRResourceDefaultPrompt, label: "SETTINGS_PROMPTS_SUMMARY"),
+            customizePromptButton(for: .interpretSingleFHIRResource, label: "SETTINGS_PROMPTS_INTERPRETATION"),
+            customizePromptButton(for: .interpretMultipleResourcesDefaultPrompt, label: "SETTINGS_PROMPTS_INTERPRETATION_MULTIPLE_RESOURCES")
+        ].compactMap(\.self)
+        if !buttons.isEmpty {
+            Section("SETTINGS_PROMPTS") {
+                ForEach(Array(buttons.indices), id: \.self) { idx in
+                    buttons[idx]
+                }
+            }
+        }
+    }
+    
+    private func customizePromptButton(for promptDefinition: FHIRPrompt, label: LocalizedStringResource) -> (some View)? {
+        if promptDefinition.isCustomizable {
+            NavigationButton(label) {
                 path.append {
-                    FHIRPromptSettingsView(promptType: .summary) {
+                    FHIRPromptCustomizationView(promptDefinition) {
                         await fhirInterpretationModule.updateSchemas()
                         path.removeLast()
                     }
                 }
             }
-            NavigationButton("SETTINGS_PROMPTS_INTERPRETATION") {
-                path.append {
-                    FHIRPromptSettingsView(promptType: .interpretation) {
-                        await fhirInterpretationModule.updateSchemas()
-                        path.removeLast()
-                    }
-                }
-            }
-            NavigationButton("SETTINGS_PROMPTS_INTERPRETATION_MULTIPLE_RESOURCES") {
-                path.append {
-                    FHIRPromptSettingsView(promptType: .interpretMultipleResources) {
-                        await fhirInterpretationModule.updateSchemas()
-                        path.removeLast()
-                    }
-                }
-            }
+        } else {
+            nil
         }
     }
 }

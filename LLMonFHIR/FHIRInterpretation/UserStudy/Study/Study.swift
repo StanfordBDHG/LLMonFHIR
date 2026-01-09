@@ -34,6 +34,9 @@ final class Study: Identifiable {
     /// `nil` if the files should never be encrypted.
     let encryptionKey: Curve25519.KeyAgreement.PublicKey?
     
+    let summarizeSingleResourcePrompt: FHIRPrompt
+    let interpretMultipleResourcesPrompt: FHIRPrompt
+    
     /// The tasks that make up this survey
     private(set) var tasks: [SurveyTask]
     
@@ -46,6 +49,8 @@ final class Study: Identifiable {
         openAIAPIKey: String,
         reportEmail: String?,
         encryptionKey: Curve25519.KeyAgreement.PublicKey?,
+        summarizeSingleResourcePrompt: FHIRPrompt?,
+        interpretMultipleResourcesPrompt: FHIRPrompt?,
         tasks: [SurveyTask]
     ) {
         self.id = id
@@ -55,6 +60,8 @@ final class Study: Identifiable {
         self.openAIAPIKey = openAIAPIKey
         self.reportEmail = reportEmail
         self.encryptionKey = encryptionKey
+        self.summarizeSingleResourcePrompt = summarizeSingleResourcePrompt ?? .summarizeSingleFHIRResourceDefaultPrompt
+        self.interpretMultipleResourcesPrompt = interpretMultipleResourcesPrompt ?? .interpretMultipleResourcesDefaultPrompt
         self.tasks = tasks
     }
 }
@@ -99,6 +106,8 @@ extension Study: Codable {
         case openAIAPIKey = "openai_api_key"
         case reportEmail = "report_email"
         case encryptionKey = "encryption_key"
+        case summarizeSingleResourcePrompt = "prompt_summarize_single_resource"
+        case interpretMultipleResourcesPrompt = "prompt_interpret_multiple_resources"
     }
     
     convenience init(from decoder: any Decoder) throws {
@@ -112,6 +121,10 @@ extension Study: Codable {
             reportEmail: try container.decodeIfPresent(String.self, forKey: .reportEmail),
             encryptionKey: try container.decodeIfPresent(Data.self, forKey: .encryptionKey)
                 .flatMap { $0.isEmpty ? nil : try .init(pemFileContents: $0) },
+            summarizeSingleResourcePrompt: try container.decodeIfPresent(String.self, forKey: .summarizeSingleResourcePrompt)
+                .map { FHIRPrompt(promptText: $0) },
+            interpretMultipleResourcesPrompt: try container.decodeIfPresent(String.self, forKey: .interpretMultipleResourcesPrompt)
+                .map { FHIRPrompt(promptText: $0) },
             tasks: try container.decode([SurveyTask].self, forKey: .tasks)
         )
     }
@@ -125,6 +138,8 @@ extension Study: Codable {
         try container.encode(openAIAPIKey, forKey: .openAIAPIKey)
         try container.encodeIfPresent(reportEmail, forKey: .reportEmail)
         try container.encodeIfPresent(encryptionKey?.pemFileContents, forKey: .encryptionKey)
+        try container.encode(summarizeSingleResourcePrompt.promptText, forKey: .summarizeSingleResourcePrompt)
+        try container.encode(interpretMultipleResourcesPrompt.promptText, forKey: .interpretMultipleResourcesPrompt)
         try container.encode(tasks, forKey: .tasks)
     }
 }
