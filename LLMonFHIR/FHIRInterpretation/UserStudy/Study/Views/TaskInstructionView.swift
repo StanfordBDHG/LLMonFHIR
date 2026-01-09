@@ -10,8 +10,7 @@ import SwiftUI
 
 struct TaskInstructionView: View {
     let task: SurveyTask
-    /// The task's index within its containing survey.
-    let taskIdx: Int
+    let userDisplayableCurrentTaskIdx: Int
     @Binding var isPresented: Bool
     @State private var sheetHeight: CGFloat = .zero
 
@@ -31,7 +30,7 @@ struct TaskInstructionView: View {
                 }
             }
             .background(Color(UIColor.systemGroupedBackground))
-            .navigationTitle("Task \(taskIdx + 1)")
+            .navigationTitle("Task \(userDisplayableCurrentTaskIdx)")
             .transforming {
                 if #available(iOS 26, *), let title = task.title {
                     $0.navigationSubtitle(title)
