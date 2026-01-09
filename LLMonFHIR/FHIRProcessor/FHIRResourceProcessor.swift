@@ -20,7 +20,8 @@ actor FHIRResourceProcessor<Content: Codable & LosslessStringConvertible> {
     private let localStorage: LocalStorage
     private let llmRunner: LLMRunner
     private let storageKey: String
-    private let prompt: FHIRPrompt
+    /// The prompt used to summarize a FHIR resource
+    var summarizationPrompt: FHIRPrompt
     
     private(set) var results: Results = [:] {
         didSet {
@@ -35,19 +36,20 @@ actor FHIRResourceProcessor<Content: Codable & LosslessStringConvertible> {
         llmRunner: LLMRunner,
         llmSchema: any LLMSchema,
         storageKey: String,
-        prompt: FHIRPrompt
+        summarizationPrompt: FHIRPrompt = .summarizeSingleFHIRResourceDefaultPrompt
     ) {
         self.localStorage = localStorage
         self.llmRunner = llmRunner
         self.llmSchema = llmSchema
         self.storageKey = storageKey
-        self.prompt = prompt
+        self.summarizationPrompt = summarizationPrompt
         self.results = (try? localStorage.load(.init(storageKey))) ?? [:]
     }
     
     
-    func changeSchems(to schema: any LLMSchema) {
+    func update(llmSchema schema: any LLMSchema, summarizationPrompt: FHIRPrompt) {
         self.llmSchema = schema
+        self.summarizationPrompt = summarizationPrompt
     }
     
     @discardableResult
@@ -57,7 +59,7 @@ actor FHIRResourceProcessor<Content: Codable & LosslessStringConvertible> {
         }
         let chatStreamResult: String = try await llmRunner.oneShot(
             with: llmSchema,
-            context: .init(systemMessages: [prompt.prompt(withFHIRResource: resource.jsonDescription)])
+            context: .init(systemMessages: [summarizationPrompt.prompt(withFHIRResource: resource.jsonDescription)])
         )
         guard let content = Content(chatStreamResult) else {
             throw FHIRResourceProcessorError.notParsableAsAString

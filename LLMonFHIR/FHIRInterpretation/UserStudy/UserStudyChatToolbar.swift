@@ -49,12 +49,12 @@ private struct PulsatingEffect: ViewModifier {
     }
 }
 
+
 struct UserStudyChatToolbar: ToolbarContent {
     var viewModel: UserStudyChatViewModel
 
     let isInputDisabled: Bool
     let onDismiss: () -> Void
-
 
     var body: some ToolbarContent {
         dismissButton
@@ -62,21 +62,18 @@ struct UserStudyChatToolbar: ToolbarContent {
         shareButton
     }
 
-
-    private var dismissButton: some ToolbarContent {
+    @ToolbarContentBuilder private var dismissButton: some ToolbarContent {
+        @Bindable var viewModel = viewModel
         ToolbarItem(placement: .cancellationAction) {
             Button {
-                viewModel.setDismissDialogPresented(true)
+                viewModel.isDismissDialogPresented = true
             } label: {
                 Image(systemName: "xmark")
                     .accessibilityLabel("Dismiss")
             }
             .confirmationDialog(
                 "Going back will reset your chat history.",
-                isPresented: Binding<Bool>(
-                    get: { viewModel.isDismissDialogPresented },
-                    set: { viewModel.setDismissDialogPresented($0) }
-                ),
+                isPresented: $viewModel.isDismissDialogPresented,
                 titleVisibility: .visible,
                 actions: {
                     Button("Yes", role: .destructive, action: onDismiss)
@@ -92,7 +89,7 @@ struct UserStudyChatToolbar: ToolbarContent {
     private var continueButton: some ToolbarContent {
         ToolbarItem(placement: .primaryAction) {
             let button = Button {
-                viewModel.setSurveyViewPresented(true)
+                viewModel.isSurveyViewPresented = true
             } label: {
                 Label("Next Task", systemImage: "arrow.forward.circle")
                     .accessibilityLabel("Next Task")
@@ -102,10 +99,8 @@ struct UserStudyChatToolbar: ToolbarContent {
             if viewModel.navigationState != .completed {
                 if #available(iOS 26.0, *) {
                     button
-                    #if swift(>=6.2)
                         .if(!isInputDisabled) { $0.buttonStyle(.glassProminent) }
                         .animation(.interactiveSpring, value: isInputDisabled)
-                    #endif
                 } else {
                     button
                 }
@@ -140,7 +135,7 @@ extension UserStudyChatToolbar {
                 Image(systemName: "square.and.arrow.up")
                     .accessibilityLabel("Share Survey Results")
             }
-            .studyReportShareSheet(url: $reportUrl)
+            .studyReportShareSheet(url: $reportUrl, for: viewModel.study)
         }
     }
 }
@@ -149,16 +144,16 @@ extension UserStudyChatToolbar {
 extension View {
     @ViewBuilder
     fileprivate func studyReportShareSheet(
-        url urlBinding: Binding<URL?>
+        url urlBinding: Binding<URL?>,
+        for study: Study
     ) -> some View {
-        let config = UserStudyConfig.shared
-        if EmailSheet.isAvailable, let recipient = config.reportEmail, !recipient.isEmpty {
+        if EmailSheet.isAvailable, let recipient = study.reportEmail, !recipient.isEmpty {
             self.sheet(item: urlBinding, id: \.self) { url in
                 EmailSheet(message: EmailSheet.Message(
                     recipient: recipient,
                     subject: "LLMonFHIR usabiity study result",
                     body: """
-                        The attached file contains your\(config.encryptionKey != nil ? " encrypyed" : "") results of the usability study.
+                        The attached file contains your\(study.encryptionKey != nil ? " encrypyed" : "") results of the usability study.
                         
                         Please send the email to our team at \(recipient).
                         

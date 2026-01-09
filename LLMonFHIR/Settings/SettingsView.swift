@@ -6,6 +6,7 @@
 // SPDX-License-Identifier: MIT
 //
 
+import SpeziFoundation
 import SpeziLLMLocalDownload
 import SpeziLLMOpenAI
 import SpeziViews
@@ -13,69 +14,40 @@ import SwiftUI
 
 
 struct SettingsView: View {
-    struct NavigationButton: View {
-        let titleKey: LocalizedStringKey
-        let action: @MainActor () -> Void
-        
-        var body: some View {
-            Button {
-                self.action()
-            } label: {
-                HStack {
-                    Text(self.titleKey)
-                    Spacer()
-                    Image(systemName: "chevron.right")
-                        .foregroundColor(.gray)
-                        .accessibilityHidden(true)
-                }
-                .frame(maxWidth: .infinity, alignment: .leading)
-                .contentShape(Rectangle())
-            }
-            .buttonStyle(.plain)
-        }
-        
-        init(_ titleKey: LocalizedStringKey, action: @escaping @MainActor () -> Void) {
-            self.titleKey = titleKey
-            self.action = action
-        }
-    }
+    @Environment(\.dismiss) private var dismiss
+    
+    @Environment(FHIRInterpretationModule.self) private var fhirInterpretationModule
+    
+    @LocalPreference(.enableTextToSpeech) private var enableTextToSpeech
+    @LocalPreference(.resourceLimit) private var resourceLimit
+    @LocalPreference(.openAIModel) private var openAIModel
     
     @State private var path = ManagedNavigationStack.Path()
     @State private var didComplete = false
-    @Environment(\.dismiss) private var dismiss
-    
-    @Environment(FHIRInterpretationModule.self) var fhirInterpretationModule
-    
-    @AppStorage(StorageKeys.enableTextToSpeech) private var enableTextToSpeech = StorageKeys.currentEnableTextToSpeech
-    @AppStorage(StorageKeys.resourceLimit) private var resourceLimit = StorageKeys.currentResourceCountLimit
-    @AppStorage(StorageKeys.openAIModel) private var openAIModel = StorageKeys.currentOpenAIModel
-    @AppStorage(StorageKeys.isUsabilityStudyEnabled) private var enableUsabilityStudy = CommandLine.arguments.contains("--userStudy")
-    
     
     var body: some View {
-        ManagedNavigationStack(didComplete: self.$didComplete, path: self.path) {
-            List {
+        ManagedNavigationStack(didComplete: $didComplete, path: path) {
+            Form {
                 llmSettings
                 speechSettings
                 resourcesLimitSettings
                 resourcesSettings
                 promptsSettings
-                usabilityStudySettings
             }
-                .navigationTitle("SETTINGS_TITLE")
-                .toolbar {
-                    ToolbarItem {
-                        DismissButton()
+            .navigationTitle("SETTINGS_TITLE")
+            .toolbar {
+                ToolbarItem {
+                    DismissButton()
+                }
+            }
+            .onChange(of: didComplete) { _, newValue in
+                if newValue {
+                    Task {
+                        await fhirInterpretationModule.updateSchemas()
+                        dismiss()
                     }
                 }
-                .onChange(of: self.didComplete) { _, newValue in
-                    if newValue {
-                        Task {
-                            await fhirInterpretationModule.updateSchemas()
-                            dismiss()
-                        }
-                    }
-                }
+            }
         }
     }
 
@@ -104,9 +76,9 @@ struct SettingsView: View {
     private var resourcesSettings: some View {
         Section("Resource Selection") {
             NavigationButton("Resource Selection") {
-                self.path.append(
-                    customView: ResourceSelection()
-                )
+                path.append {
+                    ResourceSelection()
+                }
             }
         }
     }
@@ -115,18 +87,19 @@ struct SettingsView: View {
         Section("SETTINGS_LLM") {
             // OpenAI settings are always present for the multiple resource chat
             NavigationButton("SETTINGS_OPENAI_KEY") {
-                path.append(
-                    customView: LLMOpenAIAPITokenOnboardingStep(actionText: "OPEN_AI_KEY_SAVE_ACTION") {
+                path.append {
+                    LLMOpenAIAPITokenOnboardingStep(actionText: "OPEN_AI_KEY_SAVE_ACTION") {
                         await fhirInterpretationModule.updateSchemas()
                         path.removeLast()
                     }
-                )
+                }
             }
             NavigationButton("SETTINGS_OPENAI_MODEL") {
-                path.append(
-                    customView: LLMOpenAIModelOnboardingStep(
+                path.append {
+                    LLMOpenAIModelOnboardingStep(
                         actionText: "OPEN_AI_MODEL_SAVE_ACTION",
-                        models: [.gpt5, .gpt4o, .gpt4_turbo, .gpt3_5_turbo]
+                        models: OpenAIModelSelection.supportedModels,
+                        initial: openAIModel
                     ) { chosenModelType in
                         openAIModel = chosenModelType
                         Task {
@@ -134,56 +107,79 @@ struct SettingsView: View {
                             path.removeLast()
                         }
                     }
-                )
+                }
             }
             NavigationButton("SETTINGS_OPENAI_MODEL_PARAMETERS") {
-                path.append(
-                    customView: OpenAIModelParametersView()
-                )
+                path.append {
+                    OpenAIModelParametersView()
+                }
             }
             // Ability to change models for the single resource summary / interpretation
             NavigationButton("SETTINGS_LLM_SOURCE") {
-                path.append(
-                    customView: LLMSourceSelection()
-                )
+                path.append {
+                    LLMSourceSelection()
+                }
             }
         }
     }
 
-    private var promptsSettings: some View {
-        Section("SETTINGS_PROMPTS") {
-            NavigationButton("SETTINGS_PROMPTS_SUMMARY") {
-                path.append(
-                    customView: FHIRPromptSettingsView(promptType: .summary) {
-                        await fhirInterpretationModule.updateSchemas()
-                        path.removeLast()
-                    }
-                )
-            }
-            NavigationButton("SETTINGS_PROMPTS_INTERPRETATION") {
-                path.append(
-                    customView: FHIRPromptSettingsView(promptType: .interpretation) {
-                        await fhirInterpretationModule.updateSchemas()
-                        path.removeLast()
-                    }
-                )
-            }
-            NavigationButton("SETTINGS_PROMPTS_INTERPRETATION_MULTIPLE_RESOURCES") {
-                path.append(
-                    customView: FHIRPromptSettingsView(promptType: .interpretMultipleResources) {
-                        await fhirInterpretationModule.updateSchemas()
-                        path.removeLast()
-                    }
-                )
+    @ViewBuilder private var promptsSettings: some View {
+        let buttons = [
+            customizePromptButton(for: .summarizeSingleFHIRResourceDefaultPrompt, label: "SETTINGS_PROMPTS_SUMMARY"),
+            customizePromptButton(for: .interpretSingleFHIRResource, label: "SETTINGS_PROMPTS_INTERPRETATION"),
+            customizePromptButton(for: .interpretMultipleResourcesDefaultPrompt, label: "SETTINGS_PROMPTS_INTERPRETATION_MULTIPLE_RESOURCES")
+        ].compactMap(\.self)
+        if !buttons.isEmpty {
+            Section("SETTINGS_PROMPTS") {
+                ForEach(Array(buttons.indices), id: \.self) { idx in
+                    buttons[idx]
+                }
             }
         }
     }
     
-    private var usabilityStudySettings: some View {
-        Section("Usability Study Settings") {
-            Toggle(isOn: $enableUsabilityStudy) {
-                Text("Enable Usability Study")
+    private func customizePromptButton(for promptDefinition: FHIRPrompt, label: LocalizedStringResource) -> (some View)? {
+        if promptDefinition.isCustomizable {
+            NavigationButton(label) {
+                path.append {
+                    FHIRPromptCustomizationView(promptDefinition) {
+                        await fhirInterpretationModule.updateSchemas()
+                        path.removeLast()
+                    }
+                }
             }
+        } else {
+            nil
+        }
+    }
+}
+
+
+extension SettingsView {
+    private struct NavigationButton: View {
+        private let title: LocalizedStringResource
+        private let action: @MainActor () -> Void
+        
+        var body: some View {
+            Button {
+                action()
+            } label: {
+                HStack {
+                    Text(title)
+                    Spacer()
+                    Image(systemName: "chevron.right")
+                        .foregroundColor(.gray)
+                        .accessibilityHidden(true)
+                }
+                .frame(maxWidth: .infinity, alignment: .leading)
+                .contentShape(Rectangle())
+            }
+            .buttonStyle(.plain)
+        }
+        
+        init(_ title: LocalizedStringResource, action: @escaping @MainActor () -> Void) {
+            self.title = title
+            self.action = action
         }
     }
 }

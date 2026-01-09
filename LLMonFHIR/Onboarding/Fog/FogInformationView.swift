@@ -12,7 +12,7 @@ import SwiftUI
 
 
 struct FogInformationView: View {
-    @Environment(ManagedNavigationStack.Path.self) private var onboardingNavigationPath
+    @Environment(ManagedNavigationStack.Path.self) private var path
     
     
     var body: some View {
@@ -40,9 +40,9 @@ struct FogInformationView: View {
             ],
             actionText: "Start Client Setup",
             action: {
-                self.onboardingNavigationPath.append(
-                    customView: FogDiscoveryAuthView()
-                )
+                path.append {
+                    FogDiscoveryAuthView()
+                }
             }
         )
     }

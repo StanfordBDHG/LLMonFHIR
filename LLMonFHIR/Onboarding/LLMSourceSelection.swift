@@ -6,14 +6,15 @@
 // SPDX-License-Identifier: MIT
 //
 
+import SpeziFoundation
 import SpeziOnboarding
 import SpeziViews
 import SwiftUI
 
 
 struct LLMSourceSelection: View {
-    @Environment(ManagedNavigationStack.Path.self) private var onboardingNavigationPath
-    @AppStorage(StorageKeys.llmSource) private var llmSource = StorageKeys.Defaults.llmSource
+    @Environment(ManagedNavigationStack.Path.self) private var path
+    @LocalPreference(.llmSource) private var llmSource
 
     
     var body: some View {
@@ -36,11 +37,11 @@ struct LLMSourceSelection: View {
                     switch self.llmSource {
                     case .openai:
                         // OpenAI model info was already collected by previous step, skip the OpenAI key and model selection
-                        self.onboardingNavigationPath.nextStep()
+                        path.nextStep()
                     case .fog:
-                        self.onboardingNavigationPath.append(customView: FogInformationView())
+                        path.append(customView: FogInformationView())
                     case .local:
-                        self.onboardingNavigationPath.append(customView: LLMLocalDownload())
+                        path.append(customView: LLMLocalDownload())
                     }
                 }
             }

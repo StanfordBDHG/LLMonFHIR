@@ -6,35 +6,31 @@
 // SPDX-License-Identifier: MIT
 //
 
-
+import SpeziFoundation
+import SpeziViews
 import SwiftUI
 
 
 struct OpenAIModelParametersView: View {
-    @AppStorage(StorageKeys.openAIModelTemperature) private var temperature = StorageKeys.currentOpenAIModelTemperature
+    @LocalPreference(.openAIModelTemperature) private var temperature
     @Environment(FHIRInterpretationModule.self) var fhirInterpretationModule
-
 
     var body: some View {
         Form {
             temperatureSection
         }
-            .navigationTitle("SETTINGS_OPENAI_MODEL_PARAMETERS")
-            .navigationBarTitleDisplayMode(.inline)
-            .safeAreaInset(edge: .bottom) {
-                footerText
-            }
+        .navigationTitle("SETTINGS_OPENAI_MODEL_PARAMETERS")
+        .navigationBarTitleDisplayMode(.inline)
+        .safeAreaInset(edge: .bottom) {
+            footerText
+        }
     }
 
 
     private var temperatureSection: some View {
-        Section(
-            header: Text("Temperature"),
-            footer: Text("Higher values (0.8+) increase randomness and creativity. Lower values (0.2-) make responses more focused and deterministic.")  // swiftlint:disable:this line_length
-        ) {
+        Section {
             VStack(spacing: 16) {
                 temperatureHeader
-
                 Slider(value: $temperature, in: 0...2, step: 0.05)
                     .tint(temperatureColor)
                     .onChange(of: temperature) {
@@ -42,10 +38,16 @@ struct OpenAIModelParametersView: View {
                             await fhirInterpretationModule.updateSchemas()
                         }
                     }
-
+                
                 temperatureLabels
             }
-                .padding(.vertical, 8)
+            .padding(.vertical, 8)
+        } header: {
+            Text("Temperature")
+        } footer: {
+            Text(
+                "Higher values (0.8+) increase randomness and creativity. Lower values (0.2-) make responses more focused and deterministic."
+            )
         }
     }
 
@@ -93,30 +95,30 @@ struct OpenAIModelParametersView: View {
     private var temperatureDescription: String {
         switch temperature {
         case 0..<0.3:
-            return "Focused"
+            "Focused"
         case 0.3..<0.7:
-            return "Balanced"
+            "Balanced"
         case 0.7..<1.3:
-            return "Creative"
+            "Creative"
         case 1.3...:
-            return "Random"
+            "Random"
         default:
-            return ""
+            ""
         }
     }
 
     private var temperatureColor: Color {
         switch temperature {
         case 0..<0.3:
-            return .blue
+            .blue
         case 0.3..<0.7:
-            return .green
+            .green
         case 0.7..<1.3:
-            return .orange
+            .orange
         case 1.3...:
-            return .red
+            .red
         default:
-            return .gray
+            .gray
         }
     }
 }

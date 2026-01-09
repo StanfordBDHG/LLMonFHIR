@@ -6,43 +6,45 @@
 // SPDX-License-Identifier: MIT
 //
 
+import Spezi
 import SwiftUI
 
 struct HomeView: View {
-    @State private var showSettings = false
-    @State private var showMultipleResourcesChat = false
     @Environment(FHIRMultipleResourceInterpreter.self) var interpreter
-
+    @State private var showMultipleResourcesChat = false
+    @State private var study: Study?
 
     var body: some View {
         NavigationStack {
-            ResourceView(showMultipleResourcesChat: $showMultipleResourcesChat)
-                .toolbar {
-                    toolbarContent
-                }
-                .sheet(isPresented: $showSettings) {
-                    SettingsView()
-                }
-                .sheet(isPresented: $showMultipleResourcesChat) {
-                    MultipleResourcesChatView(
-                        interpreter: interpreter,
-                        navigationTitle: "LLM on FHIR"
-                    )
-                }
+            ResourceView(
+                showMultipleResourcesChat: $showMultipleResourcesChat
+            )
+            .toolbar {
+                toolbarContent
+            }
+            .sheet(isPresented: $showMultipleResourcesChat) {
+                MultipleResourcesChatView(
+                    interpreter: interpreter,
+                    navigationTitle: "LLM on FHIR"
+                )
+            }
+            .fullScreenCover(item: $study) { study in
+                StudyHomeView(study: study)
+            }
         }
     }
 
     @ToolbarContentBuilder private var toolbarContent: some ToolbarContent {
-        ToolbarItem(placement: .primaryAction) {
-            Button(
-                action: {
-                    showSettings.toggle()
-                },
-                label: {
-                    Image(systemName: "gear")
-                        .accessibilityLabel(Text("SETTINGS"))
+        ToolbarItem(placement: .topBarLeading) {
+            StudyQRCodeButton { study in
+                guard self.study == nil else {
+                    return
                 }
-            )
+                self.study = study
+            }
+        }
+        ToolbarItem(placement: .topBarTrailing) {
+            SettingsButton()
         }
     }
 }

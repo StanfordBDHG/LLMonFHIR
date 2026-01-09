@@ -6,25 +6,25 @@
 // SPDX-License-Identifier: MIT
 //
 
-import HealthKit
 import Spezi
 import SpeziAccessGuard
-import SpeziFHIR
 import SpeziHealthKit
 import SpeziLLM
 import SpeziLLMFog
 import SpeziLLMLocal
 import SpeziLLMOpenAI
-import SwiftUI
 
 
-class LLMonFHIRDelegate: SpeziAppDelegate {
+final class LLMonFHIRDelegate: SpeziAppDelegate {
     override var configuration: Configuration {
         Configuration(standard: LLMonFHIRStandard()) {
-            if HKHealthStore.isHealthDataAvailable() {
-                healthKit
+            let fhirInterpretationModule = FHIRInterpretationModule()
+            HealthKit {
+                RequestReadAccess(other: LLMonFHIRStandard.recordTypes)
+                for type in LLMonFHIRStandard.recordTypes {
+                    CollectSamples(type, start: .manual, continueInBackground: false, timeRange: .newSamples)
+                }
             }
-            let userStudyCodes = UserStudyCodes()
             LLMRunner {
                 LLMOpenAIPlatform(
                     configuration: .init(
@@ -38,23 +38,14 @@ class LLMonFHIRDelegate: SpeziAppDelegate {
             }
             FHIRInterpretationModule()
             AccessGuards {
-                CodeAccessGuard(
-                    .userStudy,
-                    timeout: .hours(1),
-                    message: "Enter one of 10 codes to start the user study",
-                    format: .numeric(4)
-                ) { code in
-                    await userStudyCodes.validate(code)
+                CodeAccessGuard(.userStudySettings, message: "Enter Code to Access Settings", format: .numeric(4)) { @MainActor code in
+                    if let expected = fhirInterpretationModule.currentStudy?.settingsUnlockCode {
+                        code == expected ? .valid : .invalid
+                    } else {
+                        .valid
+                    }
                 }
             }
-            userStudyCodes
-        }
-    }
-    
-    
-    private var healthKit: HealthKit {
-        HealthKit {
-            RequestReadAccess(other: LLMonFHIRStandard.recordTypes)
         }
     }
 }

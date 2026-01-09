@@ -12,12 +12,12 @@ import SwiftUI
 
 
 struct OpenAIAPIKey: View {
-    @Environment(ManagedNavigationStack.Path.self) private var onboardingNavigationPath
+    @Environment(ManagedNavigationStack.Path.self) private var path
     
     
     var body: some View {
         LLMOpenAIAPITokenOnboardingStep {
-            onboardingNavigationPath.append(customView: OpenAIModelSelection())
+            path.nextStep()
         }
     }
 }

@@ -47,6 +47,9 @@ final class SurveyAnswerState {
 struct SurveyView: View {
     /// The task containing the questions to display
     let task: SurveyTask
+    
+    /// The task's index within its containing survey
+    let taskIdx: Int
 
     /// Controls whether this view is currently displayed
     @Binding var isPresented: Bool
@@ -61,12 +64,12 @@ struct SurveyView: View {
 
 
     var body: some View {
-        NavigationView {
+        NavigationStack {
             Form {
                 questionSections
                 submitButtonSection
             }
-            .navigationTitle("Task \(task.id)")
+            .navigationTitle("Task \(taskIdx + 1)")
             .navigationBarTitleDisplayMode(.automatic)
             .toolbar {
                 ToolbarItem {

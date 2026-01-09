@@ -4,7 +4,13 @@
     "\n%@" : {
 
     },
+    "–" : {
+
+    },
     "%.2f" : {
+
+    },
+    "%@" : {
 
     },
     "%lld" : {
@@ -14,6 +20,12 @@
 
     },
     "Allergies" : {
+
+    },
+    "Allow in Settings" : {
+
+    },
+    "Authorize Health Access" : {
 
     },
     "Balanced" : {
@@ -55,6 +67,9 @@
           }
         }
       }
+    },
+    "Correction Level" : {
+
     },
     "Could not create FHIR Summary" : {
       "localizations" : {
@@ -123,6 +138,9 @@
           }
         }
       }
+    },
+    "Create Study Enrollment QR Code" : {
+
     },
     "Creative" : {
 
@@ -643,9 +661,6 @@
     "Documents" : {
 
     },
-    "Enable Usability Study" : {
-
-    },
     "Encounters" : {
       "localizations" : {
         "de" : {
@@ -674,7 +689,10 @@
         }
       }
     },
-    "Enter one of 10 codes to start the user study" : {
+    "Enter Code to Access Settings" : {
+
+    },
+    "Expires" : {
 
     },
     "FHIR_RESOURCES_EMPTY_SEARCH_MESSAGE" : {
@@ -1158,36 +1176,42 @@
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Zugriff auf HealthKit"
+            "value" : "Zugriff auf Health"
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "HealthKit Access"
+            "value" : "Health Access"
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Acceso a HealthKit"
+            "value" : "Acceso a Health"
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Accès à HealthKit"
+            "value" : "Accès à Health"
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "HealthKit访问权限"
+            "value" : "Health访问权限"
           }
         }
       }
     },
+    "High" : {
+
+    },
     "Higher values (0.8+) increase randomness and creativity. Lower values (0.2-) make responses more focused and deterministic." : {
+
+    },
+    "Highest" : {
 
     },
     "Immunizations" : {
@@ -1357,6 +1381,9 @@
         }
       }
     },
+    "Low" : {
+
+    },
     "Medications" : {
       "localizations" : {
         "de" : {
@@ -1385,6 +1412,9 @@
         }
       }
     },
+    "Medium" : {
+
+    },
     "Multiple Resource Interpretation Prompt Content" : {
       "comment" : "Content of the multiple resources interpretation prompt.",
       "localizations" : {
@@ -1408,6 +1438,9 @@
       }
     },
     "No" : {
+
+    },
+    "No Resources Found" : {
 
     },
     "Observations" : {
@@ -1437,9 +1470,6 @@
           }
         }
       }
-    },
-    "Official Stanford Logo. Block S with Tree." : {
-
     },
     "OPEN_AI_KEY_SAVE_ACTION" : {
       "localizations" : {
@@ -1518,6 +1548,9 @@
           }
         }
       }
+    },
+    "Other" : {
+
     },
     "Other Resources" : {
       "localizations" : {
@@ -1805,6 +1838,18 @@
           }
         }
       }
+    },
+    "Scan a QR Code to Participate in a Study" : {
+
+    },
+    "Scan code to enroll in study" : {
+
+    },
+    "Scan QR Code" : {
+
+    },
+    "Select a study on the right." : {
+
     },
     "SETTINGS" : {
       "localizations" : {
@@ -2158,6 +2203,9 @@
     "Share Survey Results" : {
 
     },
+    "Stanford Logo" : {
+
+    },
     "Start Client Setup" : {
 
     },
@@ -2167,6 +2215,19 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Start Session"
+          }
+        }
+      }
+    },
+    "Study" : {
+
+    },
+    "STUDY_QR_CODE_GEN_EXPIRATION_FOOTER" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Expiring codes are only valid for a short period of time.\n\nThe best validity duration depends on the specific use case, if the code is scanned live off the screen it should be as low as possible.\nThe app auto-generates a new, valid code every few seconds."
           }
         }
       }
@@ -2297,7 +2358,11 @@
         }
       }
     },
+    "Total number of resources across all types: %lld" : {
+
+    },
     "Total Number of Resources: %lld" : {
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -2331,42 +2396,42 @@
         }
       }
     },
+    "Unable to access Camera" : {
+
+    },
     "Unable to parse result of the LLM prompt." : {
       "comment" : "Error thrown if the result can not be parsed in the underlying type."
-    },
-    "Usability Study Settings" : {
-
     },
     "Use HealthKit Resources" : {
       "localizations" : {
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Nutze HealthKit Daten"
+            "value" : "Nutze Health Daten"
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Use HealthKit Resources"
+            "value" : "Use Health Resources"
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Utilizar los recursos de HealthKit"
+            "value" : "Utilizar los recursos de Health"
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Utiliser les ressources de HealthKit"
+            "value" : "Utiliser les ressources de Health"
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "使用 HealthKit 资源"
+            "value" : "使用 Health 资源"
           }
         }
       }
@@ -2413,25 +2478,8 @@
         }
       }
     },
-    "USER_STUDY_WELCOME_DESCRIPTION" : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "During this study, you’ll complete a survey about your experiences navigating the healthcare system and have the opportunity to ask the chat questions about your health."
-          }
-        }
-      }
-    },
-    "USER_STUDY_WELCOME_TITLE" : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "User Study"
-          }
-        }
-      }
+    "Valid for" : {
+
     },
     "WELCOME_AREA1_DESCRIPTION" : {
       "localizations" : {
@@ -2740,6 +2788,9 @@
       }
     },
     "Yes" : {
+
+    },
+    "You must allow LLMonFHIR to access the camera in order to be able to scan a QR code" : {
 
     },
     "Your Health Records" : {

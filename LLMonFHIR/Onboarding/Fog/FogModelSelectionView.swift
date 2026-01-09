@@ -6,6 +6,7 @@
 // SPDX-License-Identifier: MIT
 //
 
+import SpeziFoundation
 import SpeziLLMFog
 import SpeziViews
 import SwiftUI
@@ -13,7 +14,7 @@ import SwiftUI
 
 struct FogModelSelectionView: View {
     @Environment(ManagedNavigationStack.Path.self) private var onboardingNavigationPath
-    @AppStorage(StorageKeys.fogModel) private var fogModel = LLMFogParameters.FogModelType.llama3_1_8B
+    @LocalPreference(.fogModel) private var fogModel
     
     
     var body: some View {

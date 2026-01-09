@@ -8,6 +8,7 @@
 
 import SpeziChat
 import SpeziFHIR
+import SpeziFoundation
 import SpeziLLM
 import SpeziLLMOpenAI
 import SpeziSpeechSynthesizer
@@ -17,23 +18,19 @@ import SwiftUI
 
 struct MultipleResourcesChatView: View {
     @Environment(\.dismiss) private var dismiss
-
     @State private var viewModel: MultipleResourcesChatViewModel
-
-    @AppStorage(StorageKeys.enableTextToSpeech) private var textToSpeech = StorageKeys.currentEnableTextToSpeech
-
-
+    @LocalPreference(.enableTextToSpeech) private var textToSpeech
+    
     var body: some View {
         NavigationStack {
             chatView
                 .navigationTitle(viewModel.navigationTitle)
                 .toolbar { toolbarContent }
         }
-            .interactiveDismissDisabled()
+        .interactiveDismissDisabled()
     }
-
-
-    @ViewBuilder private var chatView: some View {
+    
+    private var chatView: some View {
         VStack {
             MultipleResourcesChatViewProcessingView(viewModel: viewModel)
             ChatView(
@@ -42,19 +39,19 @@ struct MultipleResourcesChatView: View {
                 exportFormat: .text,
                 messagePendingAnimation: .manual(shouldDisplay: viewModel.showTypingIndicator)
             )
-                .speak(viewModel.llmSession.context.chat, muted: !textToSpeech)
-                .speechToolbarButton(muted: !$textToSpeech)
-                .viewStateAlert(state: viewModel.llmSession.state)
-                .onChange(of: viewModel.llmSession.context, initial: true) {
-                    Task {
-                        _ = await viewModel.generateAssistantResponse()
-                    }
+            .speak(viewModel.llmSession.context.chat, muted: !textToSpeech)
+            .speechToolbarButton(muted: !$textToSpeech)
+            .viewStateAlert(state: viewModel.llmSession.state)
+            .onChange(of: viewModel.llmSession.context, initial: true) {
+                Task {
+                    _ = await viewModel.generateAssistantResponse()
                 }
+            }
         }
-            .animation(.easeInOut(duration: 0.4), value: viewModel.isProcessing)
+        .animation(.easeInOut(duration: 0.4), value: viewModel.isProcessing)
     }
 
-    @MainActor @ToolbarContentBuilder private var toolbarContent: some ToolbarContent {
+    @ToolbarContentBuilder private var toolbarContent: some ToolbarContent {
         ToolbarItem {
             Button {
                 viewModel.dismiss(dismiss)
@@ -64,15 +61,12 @@ struct MultipleResourcesChatView: View {
             }
         }
         ToolbarItem(placement: .primaryAction) {
-            Button(
-                action: {
-                    viewModel.startNewConversation()
-                },
-                label: {
-                    Image(systemName: "trash")
-                        .accessibilityLabel(Text("Reset Chat"))
-                }
-            )
+            Button {
+                viewModel.startNewConversation(for: nil)
+            } label: {
+                Image(systemName: "trash")
+                    .accessibilityLabel(Text("Reset Chat"))
+            }
             .disabled(viewModel.isProcessing)
         }
     }
