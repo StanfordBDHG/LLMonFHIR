@@ -7,12 +7,14 @@
 //
 
 import SpeziChat
+import SpeziLLM
+import SpeziViews
 import SwiftUI
 
 struct UserStudyChatView: View {
     @Environment(\.dismiss) private var dismiss
     @State private var viewModel: UserStudyChatViewModel
-    
+    @State private var viewState: ViewState = .idle
     
     var body: some View {
         @Bindable var viewModel = viewModel
@@ -46,7 +48,21 @@ struct UserStudyChatView: View {
                 .sheet(isPresented: $viewModel.isTaskInstructionsSheetPresented) {
                     taskInstructionSheet()
                 }
-                .viewStateAlert(state: viewModel.llmSession.state)
+                .onChange(of: viewModel.llmSession.state, initial: true) { _, newState in
+                    switch newState {
+                    case .error(let error):
+                        Task {
+                            try await Task.sleep(for: .seconds(0.5))
+                            viewModel.isSurveyViewPresented = false
+                            viewModel.isTaskInstructionsSheetPresented = false
+                            try await Task.sleep(for: .seconds(0.5))
+                            viewState = .error(AnyLocalizedError(error: error))
+                        }
+                    default:
+                        viewState = .idle
+                    }
+                }
+                .viewStateAlert(state: $viewState)
                 .onAppear(perform: viewModel.startSurvey)
                 .onChange(of: viewModel.llmSession.context, initial: true) {
                     Task {
@@ -116,7 +132,7 @@ struct UserStudyChatView: View {
         if let task = viewModel.currentTask, let taskIdx = viewModel.userDisplayableCurrentTaskIdx {
             TaskInstructionView(
                 task: task,
-                taskIdx: taskIdx,
+                userDisplayableCurrentTaskIdx: taskIdx,
                 isPresented: $viewModel.isTaskInstructionsSheetPresented
             )
         }
