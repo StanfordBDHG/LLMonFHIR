@@ -22,7 +22,16 @@ struct ResourceView: View {
     
     var body: some View {
         FHIRResourcesView("Your Health Records") {
-            FHIRResourcesInstructionsView()
+            Section {
+                FHIRResourcesInstructionsView()
+            } footer: {
+                #if targetEnvironment(simulator)
+                if LLMonFHIR.mode == .standalone {
+                    // swiftlint:disable:next line_length
+                    Text(verbatim: "Tip: Launch LLMonFHIR into its study mode by enabling the `--mode study edu.stanford.LLMonFHIR.usabilityStudy` flag in Xcode (via the `⌘ ⇧ ,` shortcut)")
+                }
+                #endif
+            }
         } action: {
             chatWithAllResourcesButton
                 .padding(-18)

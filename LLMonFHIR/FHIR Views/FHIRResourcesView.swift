@@ -31,9 +31,7 @@ struct FHIRResourcesView<Content: View, Action: View>: View {
     
     var body: some View {
         Form {
-            Section {
-                contentView
-            }
+            contentView
             if searchText.isEmpty {
                 Section {
                     actionView

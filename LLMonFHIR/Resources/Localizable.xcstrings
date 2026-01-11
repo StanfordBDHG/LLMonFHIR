@@ -972,31 +972,31 @@
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "\nKeine Gesundheitsaufzeichnungen verfügbar.\n\nBitte befolgen Sie die Anweisungen, um Ihre Gesundheitsaufzeichnungen von Ihrem Anbieter abzurufen: [Apple Support - Gesundheitsaufzeichnungen auf iPhone oder iPod touch anzeigen](https://support.apple.com/en-us/HT208680).\n\nEine Liste der unterstützten Institutionen finden Sie unter [Apple Support - Institutionen, die Gesundheitsaufzeichnungen auf iPhone und iPod touch unterstützen](https://platform.openai.com/account/api-keys).\n\nWenn Sie Ihre Gesundheitsaufzeichnungen in der Apple Health App sehen können, stellen Sie bitte sicher, dass LLM on FHIR Zugriff auf Ihre Gesundheitsaufzeichnungen in der Apple Health App hat. Diese Einstellungen finden Sie im Datenschutzabschnitt Ihres Profils in Apple Health.\n"
+            "value" : "Keine Gesundheitsaufzeichnungen verfügbar.\n\nBitte befolgen Sie die Anweisungen, um Ihre Gesundheitsaufzeichnungen von Ihrem Anbieter abzurufen: [Apple Support - Gesundheitsaufzeichnungen auf iPhone oder iPod touch anzeigen](https://support.apple.com/en-us/HT208680).\n\nEine Liste der unterstützten Institutionen finden Sie unter [Apple Support - Institutionen, die Gesundheitsaufzeichnungen auf iPhone und iPod touch unterstützen](https://platform.openai.com/account/api-keys).\n\nWenn Sie Ihre Gesundheitsaufzeichnungen in der Apple Health App sehen können, stellen Sie bitte sicher, dass LLM on FHIR Zugriff auf Ihre Gesundheitsaufzeichnungen in der Apple Health App hat. Diese Einstellungen finden Sie im Datenschutzabschnitt Ihres Profils in Apple Health."
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "\nNo health records are available.\n\nPlease follow the instructions to connect to retrieve your health records from your provider: [Apple Support - View health records on your iPhone or iPod touch](https://support.apple.com/en-us/HT208680).\n\nYou can find a list of supported institutions at [Apple Support - Institutions that support health records on iPhone and iPod touch](https://platform.openai.com/account/api-keys).\n\nIf you can see your health records in the Apple Health app, please ensure that LLM on FHIR has access to your health records in the Apple Health App. You can find these settings in the privacy section of your profile in Apple Health.\n"
+            "value" : "No health records are available.\n\nPlease follow the instructions to connect to retrieve your health records from your provider: [Apple Support - View health records on your iPhone or iPod touch](https://support.apple.com/en-us/HT208680).\n\nYou can find a list of supported institutions at [Apple Support - Institutions that support health records on iPhone and iPod touch](https://platform.openai.com/account/api-keys).\n\nIf you can see your health records in the Apple Health app, please ensure that LLM on FHIR has access to your health records in the Apple Health App. You can find these settings in the privacy section of your profile in Apple Health."
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "\nNo hay registros de salud disponibles.\n\nPor favor, siga las instrucciones para conectarse y recuperar sus registros de salud de su proveedor: [Soporte de Apple - Ver registros de salud en su iPhone o iPod touch](https://support.apple.com/en-us/HT208680).\n\nPuede encontrar una lista de instituciones compatibles en [Soporte de Apple - Instituciones que admiten registros de salud en iPhone y iPod touch](https://platform.openai.com/account/api-keys).\n\nSi puede ver sus registros de salud en la aplicación Apple Health, asegúrese de que LLM en FHIR tenga acceso a sus registros de salud en la aplicación Apple Health. Puede encontrar estas configuraciones en la sección de privacidad de su perfil en Apple Health.\n"
+            "value" : "No hay registros de salud disponibles.\n\nPor favor, siga las instrucciones para conectarse y recuperar sus registros de salud de su proveedor: [Soporte de Apple - Ver registros de salud en su iPhone o iPod touch](https://support.apple.com/en-us/HT208680).\n\nPuede encontrar una lista de instituciones compatibles en [Soporte de Apple - Instituciones que admiten registros de salud en iPhone y iPod touch](https://platform.openai.com/account/api-keys).\n\nSi puede ver sus registros de salud en la aplicación Apple Health, asegúrese de que LLM en FHIR tenga acceso a sus registros de salud en la aplicación Apple Health. Puede encontrar estas configuraciones en la sección de privacidad de su perfil en Apple Health."
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "\nAucun dossier de santé n'est disponible.\n\nVeuillez suivre les instructions pour vous connecter et récupérer vos dossiers de santé auprès de votre fournisseur : [Support Apple - Afficher les dossiers de santé sur votre iPhone ou iPod touch](https://support.apple.com/fr-fr/HT208680).\n\nVous pouvez trouver une liste d'institutions prises en charge sur [Support Apple - Institutions prenant en charge les dossiers de santé sur iPhone et iPod touch](https://platform.openai.com/account/api-keys).\n\nSi vous pouvez voir vos dossiers de santé dans l'application Apple Health, assurez-vous que LLM sur FHIR a accès à vos dossiers de santé dans l'application Apple Health. Vous pouvez trouver ces paramètres dans la section confidentialité de votre profil dans Apple Health.\n"
+            "value" : "Aucun dossier de santé n'est disponible.\n\nVeuillez suivre les instructions pour vous connecter et récupérer vos dossiers de santé auprès de votre fournisseur : [Support Apple - Afficher les dossiers de santé sur votre iPhone ou iPod touch](https://support.apple.com/fr-fr/HT208680).\n\nVous pouvez trouver une liste d'institutions prises en charge sur [Support Apple - Institutions prenant en charge les dossiers de santé sur iPhone et iPod touch](https://platform.openai.com/account/api-keys).\n\nSi vous pouvez voir vos dossiers de santé dans l'application Apple Health, assurez-vous que LLM sur FHIR a accès à vos dossiers de santé dans l'application Apple Health. Vous pouvez trouver ces paramètres dans la section confidentialité de votre profil dans Apple Health."
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "\n没有可用的健康记录。\n\n请按照以下说明连接并从您的提供者检索健康记录：[Apple支持-在iPhone或iPod touch上查看健康记录](https://support.apple.com/en-us/HT208680)。\n\n您可以在[Apple支持-支持iPhone和iPod touch上的健康记录的机构](https://platform.openai.com/account/api-keys)找到支持的机构列表。\n\n如果您可以在Apple Health应用程序中查看您的健康记录，请确保LLM on FHIR可以访问您在Apple Health应用程序中的健康记录。您可以在Apple Health个人资料的隐私部分找到这些设置。\n"
+            "value" : "没有可用的健康记录。\n\n请按照以下说明连接并从您的提供者检索健康记录：[Apple支持-在iPhone或iPod touch上查看健康记录](https://support.apple.com/en-us/HT208680)。\n\n您可以在[Apple支持-支持iPhone和iPod touch上的健康记录的机构](https://platform.openai.com/account/api-keys)找到支持的机构列表。\n\n如果您可以在Apple Health应用程序中查看您的健康记录，请确保LLM on FHIR可以访问您在Apple Health应用程序中的健康记录。您可以在Apple Health个人资料的隐私部分找到这些设置。"
           }
         }
       }
