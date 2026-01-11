@@ -54,3 +54,14 @@ struct SendableFHIRResource: @unchecked Sendable {
         }
     }
 }
+
+
+extension SendableFHIRResource: Hashable {
+    static func == (lhs: Self, rhs: Self) -> Bool {
+        lhs._resource == rhs._resource
+    }
+    
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(_resource)
+    }
+}

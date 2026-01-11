@@ -98,9 +98,7 @@ struct ResourceSelection: View {
                 return
             }
             store.removeAllResources()
-            _Concurrency.Task {
-                await store.load(bundle: firstMockPatient)
-            }
+            store.load(bundle: firstMockPatient)
         }
     }
 }

@@ -23,7 +23,7 @@ import SwiftUI
 struct FHIRResourcesView<Content: View, Action: View>: View {
     @Environment(FHIRStore.self) private var fhirStore
     @State private var searchText = ""
-    @State private var expandedSections = Set<KeyPath<FHIRStore, [FHIRResource]>>()
+    @State private var expandedSections = Set<KeyPath<FHIRStore, Set<FHIRResource>>>()
     
     private let title: LocalizedStringResource
     private let contentView: Content
@@ -87,9 +87,9 @@ struct FHIRResourcesView<Content: View, Action: View>: View {
 extension FHIRResourcesView {
     private struct ResourcesSectionDefinition: Equatable {
         let title: String
-        let keyPath: KeyPath<FHIRStore, [FHIRResource]>
+        let keyPath: KeyPath<FHIRStore, Set<FHIRResource>>
         
-        init(_ title: LocalizedStringResource, keyPath: KeyPath<FHIRStore, [FHIRResource]>) {
+        init(_ title: LocalizedStringResource, keyPath: KeyPath<FHIRStore, Set<FHIRResource>>) {
             self.title = String(localized: title)
             self.keyPath = keyPath
         }
@@ -105,7 +105,7 @@ extension FHIRResourcesView {
         if defsWithContent.isEmpty {
             Text("No Resources Found")
         } else {
-            ForEach(defsWithContent, id: \.0.keyPath) { (def: ResourcesSectionDefinition, resources: [FHIRResource]) in
+            ForEach(defsWithContent, id: \.0.keyPath) { (def: ResourcesSectionDefinition, resources: Set<FHIRResource>) in
                 let showAll = Binding<Bool> {
                     expandedSections.contains(def.keyPath)
                 } set: { isExpanded in
@@ -132,7 +132,7 @@ extension FHIRResourcesView {
     }
     
 
-    private func filteredResources(for keyPath: KeyPath<FHIRStore, [FHIRResource]>) -> [FHIRResource] {
+    private func filteredResources(for keyPath: KeyPath<FHIRStore, Set<FHIRResource>>) -> Set<FHIRResource> {
         var resources = fhirStore[keyPath: keyPath]
         if !searchText.isEmpty {
             resources = resources.filterByDisplayName(with: searchText)
@@ -141,7 +141,7 @@ extension FHIRResourcesView {
     }
     
     
-    private func sectionHeaderButton(sectionTitle: String, resources: [FHIRResource], showAll: Binding<Bool>) -> some View {
+    private func sectionHeaderButton(sectionTitle: String, resources: Set<FHIRResource>, showAll: Binding<Bool>) -> some View {
         Button {
             withAnimation {
                 showAll.wrappedValue.toggle()
@@ -181,7 +181,7 @@ extension FHIRResourcesView {
     
     
     @ViewBuilder
-    private func resourcesList(resources: [FHIRResource], showAll: Binding<Bool>) -> some View {
+    private func resourcesList(resources: Set<FHIRResource>, showAll: Binding<Bool>) -> some View {
         let sortedResources = resources.sorted { ($0.date ?? .distantPast) > ($1.date ?? .distantPast) }
         let visibleResources = showAll.wrappedValue ? sortedResources : Array(sortedResources.prefix(3))
         ForEach(visibleResources) { resource in
