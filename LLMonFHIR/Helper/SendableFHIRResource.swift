@@ -6,6 +6,8 @@
 // SPDX-License-Identifier: MIT
 //
 
+// periphery:ignore:all - API
+
 import Foundation
 @preconcurrency import ModelsR4
 import SpeziFHIR

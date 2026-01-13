@@ -24,6 +24,7 @@ struct TaskQuestion: Hashable, Sendable {
     private(set) var answer: TaskQuestionAnswer = .unanswered
 
 
+    // periphery:ignore - API
     /// Creates a new survey question
     /// - Parameters:
     ///   - text: The question text to display

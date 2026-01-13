@@ -14,11 +14,8 @@ import SwiftUI
 
 
 struct ResourceView: View {
-    @Environment(LLMonFHIRStandard.self) private var standard
     @Environment(FHIRStore.self) private var fhirStore
-    @Environment(HealthKit.self) private var healthKit
     @Binding var showMultipleResourcesChat: Bool
-    @WaitingState private var waitingState
     
     var body: some View {
         FHIRResourcesView("Your Health Records") {
@@ -43,22 +40,17 @@ struct ResourceView: View {
         }
     }
     
-    private var chatWithAllResourcesButton: some View {
-        Group {
-            if #available(iOS 26.0, *) {
-                _chatWithAllResourcesButton
-                    .buttonStyle(.glassProminent)
-            } else {
-                _chatWithAllResourcesButton
-                    .buttonStyle(.borderedProminent)
-                    .padding(-8)
-            }
-        }
-    }
-    
-    private var _chatWithAllResourcesButton: some View {
-        MainActionButton {
+    @ViewBuilder private var chatWithAllResourcesButton: some View {
+        let button = MainActionButton {
             showMultipleResourcesChat = true
+        }
+        if #available(iOS 26.0, *) {
+            button
+                .buttonStyle(.glassProminent)
+        } else {
+            button
+                .buttonStyle(.borderedProminent)
+                .padding(-8)
         }
     }
 }
@@ -71,7 +63,6 @@ extension ResourceView {
             case authorizeHealthKit
         }
         
-        @Environment(\.colorScheme) private var colorScheme
         @Environment(LLMonFHIRStandard.self) private var standard
         @Environment(HealthKit.self) private var healthKit
         @WaitingState private var waitingState
@@ -117,22 +108,6 @@ extension ResourceView {
             case (.authorizeHealthKit, _):
                 "Authorize Health Access"
             }
-        }
-        
-        private var foregroundColor: Color {
-            waitingState.isWaiting ? .black : .white
-        }
-    }
-}
-
-
-extension ViewState {
-    var isError: Bool {
-        switch self {
-        case .error:
-            true
-        case .idle, .processing:
-            false
         }
     }
 }
