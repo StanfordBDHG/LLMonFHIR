@@ -32,7 +32,7 @@ struct ScaleView: View {
     let index: Int
 
     /// The response options for this question
-    let responseOptions: [String]
+    let responseOptions: TaskQuestionType.AnswerOptions
 
     /// The state object for managing answers
     let answerState: ScaleAnswerState

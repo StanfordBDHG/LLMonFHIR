@@ -83,7 +83,7 @@ extension UserStudyChatViewModel {
         }
 
         struct SurveyTask: Encodable {
-            let taskNumber: Int
+            let taskId: String
             let startedAt: Date
             let completedAt: Date
             let duration: TimeInterval
@@ -98,8 +98,10 @@ extension UserStudyChatViewModel {
 
         var timestamp: Date {
             switch self {
-            case .chatMessage(let message): return message.timestamp
-            case .surveyTask(let task): return task.completedAt
+            case .chatMessage(let message):
+                message.timestamp
+            case .surveyTask(let task):
+                task.completedAt
             }
         }
 

@@ -12,7 +12,6 @@
 		2FD8E82C2A1AADDA00357F4E /* ModelsR4 in Frameworks */ = {isa = PBXBuildFile; productRef = 2FD8E82B2A1AADDA00357F4E /* ModelsR4 */; };
 		2FD8E8312A1AB00D00357F4E /* HealthKitOnFHIR in Frameworks */ = {isa = PBXBuildFile; productRef = 2FD8E8302A1AB00D00357F4E /* HealthKitOnFHIR */; };
 		2FE5DC7229EDD8D3004B9AB4 /* SpeziHealthKit in Frameworks */ = {isa = PBXBuildFile; productRef = 2FE5DC7129EDD8D3004B9AB4 /* SpeziHealthKit */; };
-		2FE5DC8129EDD91D004B9AB4 /* SpeziOnboarding in Frameworks */ = {isa = PBXBuildFile; productRef = 2FE5DC8029EDD91D004B9AB4 /* SpeziOnboarding */; };
 		2FE5DC9929EDD9D9004B9AB4 /* XCTestExtensions in Frameworks */ = {isa = PBXBuildFile; productRef = 2FE5DC9829EDD9D9004B9AB4 /* XCTestExtensions */; };
 		2FE5DC9C29EDD9EF004B9AB4 /* XCTHealthKit in Frameworks */ = {isa = PBXBuildFile; productRef = 2FE5DC9B29EDD9EF004B9AB4 /* XCTHealthKit */; };
 		44E18E882CEBEC9500829A26 /* SpeziLLM in Frameworks */ = {isa = PBXBuildFile; productRef = 44E18E872CEBEC9500829A26 /* SpeziLLM */; };
@@ -21,14 +20,21 @@
 		44E18E8E2CEBEC9500829A26 /* SpeziLLMLocalDownload in Frameworks */ = {isa = PBXBuildFile; productRef = 44E18E8D2CEBEC9500829A26 /* SpeziLLMLocalDownload */; };
 		44E18E902CEBEC9500829A26 /* SpeziLLMOpenAI in Frameworks */ = {isa = PBXBuildFile; productRef = 44E18E8F2CEBEC9500829A26 /* SpeziLLMOpenAI */; };
 		44E18E932CEBF29200829A26 /* SpeziLocalStorage in Frameworks */ = {isa = PBXBuildFile; productRef = 44E18E922CEBF29200829A26 /* SpeziLocalStorage */; };
-		8023F0D02EC3AE2D002AB7EA /* SpeziViews in Frameworks */ = {isa = PBXBuildFile; productRef = 8023F0CF2EC3AE2D002AB7EA /* SpeziViews */; };
+		8004693A2EEF472400585753 /* SpeziOnboarding in Frameworks */ = {isa = PBXBuildFile; productRef = 800469392EEF472400585753 /* SpeziOnboarding */; };
+		801761AC2EE5CC2400383DB3 /* SpeziViews in Frameworks */ = {isa = PBXBuildFile; productRef = 801761AB2EE5CC2400383DB3 /* SpeziViews */; };
 		805368DD2EC92DE30037E73E /* SpeziAccessGuard in Frameworks */ = {isa = PBXBuildFile; productRef = 805368DC2EC92DE30037E73E /* SpeziAccessGuard */; };
 		806DF5BA2EC234AD00A8243C /* SpeziFHIR in Frameworks */ = {isa = PBXBuildFile; productRef = 806DF5B92EC234AD00A8243C /* SpeziFHIR */; };
 		806DF5BC2EC234AD00A8243C /* SpeziFHIRHealthKit in Frameworks */ = {isa = PBXBuildFile; productRef = 806DF5BB2EC234AD00A8243C /* SpeziFHIRHealthKit */; };
 		806DF5BE2EC234AD00A8243C /* SpeziFHIRMockPatients in Frameworks */ = {isa = PBXBuildFile; productRef = 806DF5BD2EC234AD00A8243C /* SpeziFHIRMockPatients */; };
-		806DF6762EC29DD600A8243C /* SpeziFHIR in Frameworks */ = {isa = PBXBuildFile; productRef = 806DF6752EC29DD600A8243C /* SpeziFHIR */; };
-		806DF6782EC29DD600A8243C /* SpeziFHIRHealthKit in Frameworks */ = {isa = PBXBuildFile; productRef = 806DF6772EC29DD600A8243C /* SpeziFHIRHealthKit */; };
-		806DF67A2EC29DD600A8243C /* SpeziFHIRMockPatients in Frameworks */ = {isa = PBXBuildFile; productRef = 806DF6792EC29DD600A8243C /* SpeziFHIRMockPatients */; };
+		808B31B72EE49BD600DFBCC7 /* SpeziLLM in Frameworks */ = {isa = PBXBuildFile; productRef = 808B31B62EE49BD600DFBCC7 /* SpeziLLM */; };
+		808B31B92EE49BD600DFBCC7 /* SpeziLLMFog in Frameworks */ = {isa = PBXBuildFile; productRef = 808B31B82EE49BD600DFBCC7 /* SpeziLLMFog */; };
+		808B31BB2EE49BD600DFBCC7 /* SpeziLLMLocal in Frameworks */ = {isa = PBXBuildFile; productRef = 808B31BA2EE49BD600DFBCC7 /* SpeziLLMLocal */; };
+		808B31BD2EE49BD600DFBCC7 /* SpeziLLMLocalDownload in Frameworks */ = {isa = PBXBuildFile; productRef = 808B31BC2EE49BD600DFBCC7 /* SpeziLLMLocalDownload */; };
+		808B31BF2EE49BD600DFBCC7 /* SpeziLLMOpenAI in Frameworks */ = {isa = PBXBuildFile; productRef = 808B31BE2EE49BD600DFBCC7 /* SpeziLLMOpenAI */; };
+		808EBE722F0976710032D087 /* SpeziFoundation in Frameworks */ = {isa = PBXBuildFile; productRef = 808EBE712F0976710032D087 /* SpeziFoundation */; };
+		80A98FA62F13DA5C00BDD5B7 /* SpeziFHIR in Frameworks */ = {isa = PBXBuildFile; productRef = 80A98FA52F13DA5C00BDD5B7 /* SpeziFHIR */; };
+		80A98FA82F13DA5C00BDD5B7 /* SpeziFHIRHealthKit in Frameworks */ = {isa = PBXBuildFile; productRef = 80A98FA72F13DA5C00BDD5B7 /* SpeziFHIRHealthKit */; };
+		80A98FAA2F13DA5C00BDD5B7 /* SpeziFHIRMockPatients in Frameworks */ = {isa = PBXBuildFile; productRef = 80A98FA92F13DA5C00BDD5B7 /* SpeziFHIRMockPatients */; };
 		9710D3562B84151F00E0A20F /* SpeziChat in Frameworks */ = {isa = PBXBuildFile; productRef = 9710D3552B84151F00E0A20F /* SpeziChat */; };
 		9733FC572B60E5FB0024F12C /* SpeziFHIR in Frameworks */ = {isa = PBXBuildFile; productRef = 9733FC562B60E5FB0024F12C /* SpeziFHIR */; };
 		9733FC592B60E5FB0024F12C /* SpeziFHIRHealthKit in Frameworks */ = {isa = PBXBuildFile; productRef = 9733FC582B60E5FB0024F12C /* SpeziFHIRHealthKit */; };
@@ -95,12 +101,14 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				808B31BB2EE49BD600DFBCC7 /* SpeziLLMLocal in Frameworks */,
 				44E18E932CEBF29200829A26 /* SpeziLocalStorage in Frameworks */,
+				801761AC2EE5CC2400383DB3 /* SpeziViews in Frameworks */,
 				44E18E882CEBEC9500829A26 /* SpeziLLM in Frameworks */,
 				806DF5BC2EC234AD00A8243C /* SpeziFHIRHealthKit in Frameworks */,
 				44E18E8E2CEBEC9500829A26 /* SpeziLLMLocalDownload in Frameworks */,
-				806DF6782EC29DD600A8243C /* SpeziFHIRHealthKit in Frameworks */,
-				806DF6762EC29DD600A8243C /* SpeziFHIR in Frameworks */,
+				808B31BD2EE49BD600DFBCC7 /* SpeziLLMLocalDownload in Frameworks */,
+				808B31B72EE49BD600DFBCC7 /* SpeziLLM in Frameworks */,
 				97EAB5E02B7A010A00A0B036 /* SpeziFHIRHealthKit in Frameworks */,
 				9733FC592B60E5FB0024F12C /* SpeziFHIRHealthKit in Frameworks */,
 				97BC1F2B2B7F390100438263 /* SpeziFHIRHealthKit in Frameworks */,
@@ -108,13 +116,15 @@
 				2FD8E82A2A1AADDA00357F4E /* ModelsDSTU2 in Frameworks */,
 				2FE5DC7229EDD8D3004B9AB4 /* SpeziHealthKit in Frameworks */,
 				806DF5BA2EC234AD00A8243C /* SpeziFHIR in Frameworks */,
-				806DF67A2EC29DD600A8243C /* SpeziFHIRMockPatients in Frameworks */,
 				44E18E8A2CEBEC9500829A26 /* SpeziLLMFog in Frameworks */,
 				97BECCD82B8C68C10017E47D /* SpeziFHIRMockPatients in Frameworks */,
 				97BECCD42B8C68C10017E47D /* SpeziFHIRHealthKit in Frameworks */,
+				80A98FA82F13DA5C00BDD5B7 /* SpeziFHIRHealthKit in Frameworks */,
 				9710D3562B84151F00E0A20F /* SpeziChat in Frameworks */,
 				97BC1F272B7F390100438263 /* SpeziFHIR in Frameworks */,
+				8004693A2EEF472400585753 /* SpeziOnboarding in Frameworks */,
 				2F49B7762980407C00BCB272 /* Spezi in Frameworks */,
+				808B31B92EE49BD600DFBCC7 /* SpeziLLMFog in Frameworks */,
 				97BECCD22B8C68C10017E47D /* SpeziFHIR in Frameworks */,
 				44E18E8C2CEBEC9500829A26 /* SpeziLLMLocal in Frameworks */,
 				2FD8E8312A1AB00D00357F4E /* HealthKitOnFHIR in Frameworks */,
@@ -124,9 +134,11 @@
 				9733FC5D2B60E5FB0024F12C /* SpeziFHIRMockPatients in Frameworks */,
 				97EAB5DE2B7A010A00A0B036 /* SpeziFHIR in Frameworks */,
 				806DF5BE2EC234AD00A8243C /* SpeziFHIRMockPatients in Frameworks */,
-				8023F0D02EC3AE2D002AB7EA /* SpeziViews in Frameworks */,
-				2FE5DC8129EDD91D004B9AB4 /* SpeziOnboarding in Frameworks */,
+				80A98FA62F13DA5C00BDD5B7 /* SpeziFHIR in Frameworks */,
+				80A98FAA2F13DA5C00BDD5B7 /* SpeziFHIRMockPatients in Frameworks */,
 				97BC1F2F2B7F390100438263 /* SpeziFHIRMockPatients in Frameworks */,
+				808EBE722F0976710032D087 /* SpeziFoundation in Frameworks */,
+				808B31BF2EE49BD600DFBCC7 /* SpeziLLMOpenAI in Frameworks */,
 				9733FC572B60E5FB0024F12C /* SpeziFHIR in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -232,7 +244,6 @@
 			packageProductDependencies = (
 				2F49B7752980407B00BCB272 /* Spezi */,
 				2FE5DC7129EDD8D3004B9AB4 /* SpeziHealthKit */,
-				2FE5DC8029EDD91D004B9AB4 /* SpeziOnboarding */,
 				2FD8E8292A1AADDA00357F4E /* ModelsDSTU2 */,
 				2FD8E82B2A1AADDA00357F4E /* ModelsR4 */,
 				2FD8E8302A1AB00D00357F4E /* HealthKitOnFHIR */,
@@ -258,11 +269,18 @@
 				806DF5B92EC234AD00A8243C /* SpeziFHIR */,
 				806DF5BB2EC234AD00A8243C /* SpeziFHIRHealthKit */,
 				806DF5BD2EC234AD00A8243C /* SpeziFHIRMockPatients */,
-				806DF6752EC29DD600A8243C /* SpeziFHIR */,
-				806DF6772EC29DD600A8243C /* SpeziFHIRHealthKit */,
-				806DF6792EC29DD600A8243C /* SpeziFHIRMockPatients */,
-				8023F0CF2EC3AE2D002AB7EA /* SpeziViews */,
 				805368DC2EC92DE30037E73E /* SpeziAccessGuard */,
+				808B31B62EE49BD600DFBCC7 /* SpeziLLM */,
+				808B31B82EE49BD600DFBCC7 /* SpeziLLMFog */,
+				808B31BA2EE49BD600DFBCC7 /* SpeziLLMLocal */,
+				808B31BC2EE49BD600DFBCC7 /* SpeziLLMLocalDownload */,
+				808B31BE2EE49BD600DFBCC7 /* SpeziLLMOpenAI */,
+				801761AB2EE5CC2400383DB3 /* SpeziViews */,
+				800469392EEF472400585753 /* SpeziOnboarding */,
+				808EBE712F0976710032D087 /* SpeziFoundation */,
+				80A98FA52F13DA5C00BDD5B7 /* SpeziFHIR */,
+				80A98FA72F13DA5C00BDD5B7 /* SpeziFHIRHealthKit */,
+				80A98FA92F13DA5C00BDD5B7 /* SpeziFHIRMockPatients */,
 			);
 			productName = LLMonFHIR;
 			productReference = 653A254D283387FE005D4D48 /* LLMonFHIR.app */;
@@ -353,7 +371,6 @@
 			packageReferences = (
 				2F49B7742980407B00BCB272 /* XCRemoteSwiftPackageReference "Spezi" */,
 				2FE5DC7029EDD8D3004B9AB4 /* XCRemoteSwiftPackageReference "SpeziHealthKit" */,
-				2FE5DC7F29EDD91D004B9AB4 /* XCRemoteSwiftPackageReference "SpeziOnboarding" */,
 				2FE5DC9729EDD9D9004B9AB4 /* XCRemoteSwiftPackageReference "XCTestExtensions" */,
 				2FE5DC9A29EDD9EF004B9AB4 /* XCRemoteSwiftPackageReference "XCTHealthKit" */,
 				2FD8E8282A1AADDA00357F4E /* XCRemoteSwiftPackageReference "FHIRModels" */,
@@ -361,11 +378,13 @@
 				44E18E912CEBF26800829A26 /* XCRemoteSwiftPackageReference "SpeziStorage" */,
 				44E18EE82CED09C800829A26 /* XCRemoteSwiftPackageReference "SpeziChat" */,
 				44E18EE92CED09DA00829A26 /* XCRemoteSwiftPackageReference "SpeziSpeech" */,
-				C0FA07222D3932FB002485FF /* XCRemoteSwiftPackageReference "SpeziLLM" */,
 				658E102D2E74A1380038C003 /* XCRemoteSwiftPackageReference "SwiftLintPlugins" */,
-				806DF6742EC29DD600A8243C /* XCRemoteSwiftPackageReference "SpeziFHIR" */,
-				8023F0CA2EC3AE2D002AB7EA /* XCRemoteSwiftPackageReference "SpeziViews" */,
 				805368DB2EC92DE30037E73E /* XCRemoteSwiftPackageReference "SpeziAccessGuard" */,
+				808B31B52EE49BD600DFBCC7 /* XCRemoteSwiftPackageReference "SpeziLLM" */,
+				801761A62EE5CC2400383DB3 /* XCRemoteSwiftPackageReference "SpeziViews" */,
+				800469382EEF472400585753 /* XCRemoteSwiftPackageReference "SpeziOnboarding" */,
+				808EBE702F0976710032D087 /* XCRemoteSwiftPackageReference "SpeziFoundation" */,
+				80A98FA42F13DA5C00BDD5B7 /* XCRemoteSwiftPackageReference "SpeziFHIR" */,
 			);
 			productRefGroup = 653A254E283387FE005D4D48 /* Products */;
 			projectDirPath = "";
@@ -526,10 +545,10 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "LLMonFHIR/Supporting Files/Info.plist";
 				INFOPLIST_KEY_ITSAppUsesNonExemptEncryption = NO;
-				INFOPLIST_KEY_NSCameraUsageDescription = "This message should never appear. Please adjust this when you start using camera information. We have to put this in here as ResearchKit has the possibility to use it and not putting it here returns an error on AppStore Connect.";
-				INFOPLIST_KEY_NSHealthClinicalHealthRecordsShareUsageDescription = "The Spezi LLMonFHIR uses the health data to demonstrate the capabilities of LLMs to explain medical concepts based on patient data provided by FHIR APIs.";
-				INFOPLIST_KEY_NSHealthShareUsageDescription = "The Spezi LLMonFHIR uses the health data to demonstrate the capabilities of LLMs to explain medical concepts based on patient data provided by FHIR APIs.";
-				INFOPLIST_KEY_NSHealthUpdateUsageDescription = "The Spezi LLMonFHIR uses the step count to demonstrate Spezi's integration with HealthKit.";
+				INFOPLIST_KEY_NSCameraUsageDescription = "LLMonFHIR uses the camera to scan study enrollment QR codes.";
+				INFOPLIST_KEY_NSHealthClinicalHealthRecordsShareUsageDescription = "LLMonFHIR uses the health data to demonstrate the capabilities of LLMs to explain medical concepts based on patient data provided by FHIR APIs.";
+				INFOPLIST_KEY_NSHealthShareUsageDescription = "LLMonFHIR uses the health data to demonstrate the capabilities of LLMs to explain medical concepts based on patient data provided by FHIR APIs.";
+				INFOPLIST_KEY_NSHealthUpdateUsageDescription = "LLMonFHIR uses the step count to demonstrate Spezi's integration with HealthKit.";
 				INFOPLIST_KEY_NSLocalNetworkUsageDescription = "LLMonFHIR uses local network access to discover nearby fog nodes.";
 				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "This message should never appear. Please adjust this when you start using location information. We have to put this in here as ResearchKit has the possibility to use it and not putting it here returns an error on AppStore Connect.";
 				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "This message should never appear. Please adjust this when you start using location information. We have to put this in here as ResearchKit has the possibility to use it and not putting it here returns an error on AppStore Connect.";
@@ -541,6 +560,7 @@
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
+				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -734,10 +754,10 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "LLMonFHIR/Supporting Files/Info.plist";
 				INFOPLIST_KEY_ITSAppUsesNonExemptEncryption = NO;
-				INFOPLIST_KEY_NSCameraUsageDescription = "This message should never appear. Please adjust this when you start using camera information. We have to put this in here as ResearchKit has the possibility to use it and not putting it here returns an error on AppStore Connect.";
-				INFOPLIST_KEY_NSHealthClinicalHealthRecordsShareUsageDescription = "The Spezi LLMonFHIR uses the health data to demonstrate the capabilities of LLMs to explain medical concepts based on patient data provided by FHIR APIs.";
-				INFOPLIST_KEY_NSHealthShareUsageDescription = "The Spezi LLMonFHIR uses the health data to demonstrate the capabilities of LLMs to explain medical concepts based on patient data provided by FHIR APIs.";
-				INFOPLIST_KEY_NSHealthUpdateUsageDescription = "The Spezi LLMonFHIR uses the step count to demonstrate Spezi's integration with HealthKit.";
+				INFOPLIST_KEY_NSCameraUsageDescription = "LLMonFHIR uses the camera to scan study enrollment QR codes.";
+				INFOPLIST_KEY_NSHealthClinicalHealthRecordsShareUsageDescription = "LLMonFHIR uses the health data to demonstrate the capabilities of LLMs to explain medical concepts based on patient data provided by FHIR APIs.";
+				INFOPLIST_KEY_NSHealthShareUsageDescription = "LLMonFHIR uses the health data to demonstrate the capabilities of LLMs to explain medical concepts based on patient data provided by FHIR APIs.";
+				INFOPLIST_KEY_NSHealthUpdateUsageDescription = "LLMonFHIR uses the step count to demonstrate Spezi's integration with HealthKit.";
 				INFOPLIST_KEY_NSLocalNetworkUsageDescription = "LLMonFHIR uses local network access to discover nearby fog nodes.";
 				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "This message should never appear. Please adjust this when you start using location information. We have to put this in here as ResearchKit has the possibility to use it and not putting it here returns an error on AppStore Connect.";
 				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "This message should never appear. Please adjust this when you start using location information. We have to put this in here as ResearchKit has the possibility to use it and not putting it here returns an error on AppStore Connect.";
@@ -749,6 +769,7 @@
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
+				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -783,10 +804,10 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "LLMonFHIR/Supporting Files/Info.plist";
 				INFOPLIST_KEY_ITSAppUsesNonExemptEncryption = NO;
-				INFOPLIST_KEY_NSCameraUsageDescription = "This message should never appear. Please adjust this when you start using camera information. We have to put this in here as ResearchKit has the possibility to use it and not putting it here returns an error on AppStore Connect.";
-				INFOPLIST_KEY_NSHealthClinicalHealthRecordsShareUsageDescription = "The Spezi LLMonFHIR uses the health data to demonstrate the capabilities of LLMs to explain medical concepts based on patient data provided by FHIR APIs.";
-				INFOPLIST_KEY_NSHealthShareUsageDescription = "The Spezi LLMonFHIR uses the health data to demonstrate the capabilities of LLMs to explain medical concepts based on patient data provided by FHIR APIs.";
-				INFOPLIST_KEY_NSHealthUpdateUsageDescription = "The Spezi LLMonFHIR uses the step count to demonstrate Spezi's integration with HealthKit.";
+				INFOPLIST_KEY_NSCameraUsageDescription = "LLMonFHIR uses the camera to scan study enrollment QR codes.";
+				INFOPLIST_KEY_NSHealthClinicalHealthRecordsShareUsageDescription = "LLMonFHIR uses the health data to demonstrate the capabilities of LLMs to explain medical concepts based on patient data provided by FHIR APIs.";
+				INFOPLIST_KEY_NSHealthShareUsageDescription = "LLMonFHIR uses the health data to demonstrate the capabilities of LLMs to explain medical concepts based on patient data provided by FHIR APIs.";
+				INFOPLIST_KEY_NSHealthUpdateUsageDescription = "LLMonFHIR uses the step count to demonstrate Spezi's integration with HealthKit.";
 				INFOPLIST_KEY_NSLocalNetworkUsageDescription = "LLMonFHIR uses local network access to discover nearby fog nodes.";
 				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "This message should never appear. Please adjust this when you start using location information. We have to put this in here as ResearchKit has the possibility to use it and not putting it here returns an error on AppStore Connect.";
 				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "This message should never appear. Please adjust this when you start using location information. We have to put this in here as ResearchKit has the possibility to use it and not putting it here returns an error on AppStore Connect.";
@@ -798,6 +819,7 @@
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
+				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -957,15 +979,7 @@
 			repositoryURL = "https://github.com/StanfordSpezi/SpeziHealthKit.git";
 			requirement = {
 				kind = upToNextMajorVersion;
-				minimumVersion = 1.2.5;
-			};
-		};
-		2FE5DC7F29EDD91D004B9AB4 /* XCRemoteSwiftPackageReference "SpeziOnboarding" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/StanfordSpezi/SpeziOnboarding.git";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 2.0.2;
+				minimumVersion = 1.3.2;
 			};
 		};
 		2FE5DC9729EDD9D9004B9AB4 /* XCRemoteSwiftPackageReference "XCTestExtensions" */ = {
@@ -1016,12 +1030,20 @@
 				minimumVersion = 0.61.0;
 			};
 		};
-		8023F0CA2EC3AE2D002AB7EA /* XCRemoteSwiftPackageReference "SpeziViews" */ = {
+		800469382EEF472400585753 /* XCRemoteSwiftPackageReference "SpeziOnboarding" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/StanfordSpezi/SpeziOnboarding.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.0.4;
+			};
+		};
+		801761A62EE5CC2400383DB3 /* XCRemoteSwiftPackageReference "SpeziViews" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/StanfordSpezi/SpeziViews.git";
 			requirement = {
 				kind = upToNextMajorVersion;
-				minimumVersion = 1.12.7;
+				minimumVersion = 1.12.9;
 			};
 		};
 		805368DB2EC92DE30037E73E /* XCRemoteSwiftPackageReference "SpeziAccessGuard" */ = {
@@ -1032,20 +1054,28 @@
 				minimumVersion = 0.5.0;
 			};
 		};
-		806DF6742EC29DD600A8243C /* XCRemoteSwiftPackageReference "SpeziFHIR" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/StanfordSpezi/SpeziFHIR.git";
-			requirement = {
-				kind = upToNextMinorVersion;
-				minimumVersion = 0.9.0;
-			};
-		};
-		C0FA07222D3932FB002485FF /* XCRemoteSwiftPackageReference "SpeziLLM" */ = {
+		808B31B52EE49BD600DFBCC7 /* XCRemoteSwiftPackageReference "SpeziLLM" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/StanfordSpezi/SpeziLLM.git";
 			requirement = {
 				kind = upToNextMinorVersion;
-				minimumVersion = 0.12.3;
+				minimumVersion = 0.13.1;
+			};
+		};
+		808EBE702F0976710032D087 /* XCRemoteSwiftPackageReference "SpeziFoundation" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/StanfordSpezi/SpeziFoundation.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.6.0;
+			};
+		};
+		80A98FA42F13DA5C00BDD5B7 /* XCRemoteSwiftPackageReference "SpeziFHIR" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/StanfordSpezi/SpeziFHIR.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.10.0;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */
@@ -1075,11 +1105,6 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 2FE5DC7029EDD8D3004B9AB4 /* XCRemoteSwiftPackageReference "SpeziHealthKit" */;
 			productName = SpeziHealthKit;
-		};
-		2FE5DC8029EDD91D004B9AB4 /* SpeziOnboarding */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 2FE5DC7F29EDD91D004B9AB4 /* XCRemoteSwiftPackageReference "SpeziOnboarding" */;
-			productName = SpeziOnboarding;
 		};
 		2FE5DC9829EDD9D9004B9AB4 /* XCTestExtensions */ = {
 			isa = XCSwiftPackageProductDependency;
@@ -1121,9 +1146,14 @@
 			package = 658E102D2E74A1380038C003 /* XCRemoteSwiftPackageReference "SwiftLintPlugins" */;
 			productName = "plugin:SwiftLintBuildToolPlugin";
 		};
-		8023F0CF2EC3AE2D002AB7EA /* SpeziViews */ = {
+		800469392EEF472400585753 /* SpeziOnboarding */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 8023F0CA2EC3AE2D002AB7EA /* XCRemoteSwiftPackageReference "SpeziViews" */;
+			package = 800469382EEF472400585753 /* XCRemoteSwiftPackageReference "SpeziOnboarding" */;
+			productName = SpeziOnboarding;
+		};
+		801761AB2EE5CC2400383DB3 /* SpeziViews */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 801761A62EE5CC2400383DB3 /* XCRemoteSwiftPackageReference "SpeziViews" */;
 			productName = SpeziViews;
 		};
 		805368DC2EC92DE30037E73E /* SpeziAccessGuard */ = {
@@ -1143,19 +1173,49 @@
 			isa = XCSwiftPackageProductDependency;
 			productName = SpeziFHIRMockPatients;
 		};
-		806DF6752EC29DD600A8243C /* SpeziFHIR */ = {
+		808B31B62EE49BD600DFBCC7 /* SpeziLLM */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 806DF6742EC29DD600A8243C /* XCRemoteSwiftPackageReference "SpeziFHIR" */;
+			package = 808B31B52EE49BD600DFBCC7 /* XCRemoteSwiftPackageReference "SpeziLLM" */;
+			productName = SpeziLLM;
+		};
+		808B31B82EE49BD600DFBCC7 /* SpeziLLMFog */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 808B31B52EE49BD600DFBCC7 /* XCRemoteSwiftPackageReference "SpeziLLM" */;
+			productName = SpeziLLMFog;
+		};
+		808B31BA2EE49BD600DFBCC7 /* SpeziLLMLocal */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 808B31B52EE49BD600DFBCC7 /* XCRemoteSwiftPackageReference "SpeziLLM" */;
+			productName = SpeziLLMLocal;
+		};
+		808B31BC2EE49BD600DFBCC7 /* SpeziLLMLocalDownload */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 808B31B52EE49BD600DFBCC7 /* XCRemoteSwiftPackageReference "SpeziLLM" */;
+			productName = SpeziLLMLocalDownload;
+		};
+		808B31BE2EE49BD600DFBCC7 /* SpeziLLMOpenAI */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 808B31B52EE49BD600DFBCC7 /* XCRemoteSwiftPackageReference "SpeziLLM" */;
+			productName = SpeziLLMOpenAI;
+		};
+		808EBE712F0976710032D087 /* SpeziFoundation */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 808EBE702F0976710032D087 /* XCRemoteSwiftPackageReference "SpeziFoundation" */;
+			productName = SpeziFoundation;
+		};
+		80A98FA52F13DA5C00BDD5B7 /* SpeziFHIR */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 80A98FA42F13DA5C00BDD5B7 /* XCRemoteSwiftPackageReference "SpeziFHIR" */;
 			productName = SpeziFHIR;
 		};
-		806DF6772EC29DD600A8243C /* SpeziFHIRHealthKit */ = {
+		80A98FA72F13DA5C00BDD5B7 /* SpeziFHIRHealthKit */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 806DF6742EC29DD600A8243C /* XCRemoteSwiftPackageReference "SpeziFHIR" */;
+			package = 80A98FA42F13DA5C00BDD5B7 /* XCRemoteSwiftPackageReference "SpeziFHIR" */;
 			productName = SpeziFHIRHealthKit;
 		};
-		806DF6792EC29DD600A8243C /* SpeziFHIRMockPatients */ = {
+		80A98FA92F13DA5C00BDD5B7 /* SpeziFHIRMockPatients */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 806DF6742EC29DD600A8243C /* XCRemoteSwiftPackageReference "SpeziFHIR" */;
+			package = 80A98FA42F13DA5C00BDD5B7 /* XCRemoteSwiftPackageReference "SpeziFHIR" */;
 			productName = SpeziFHIRMockPatients;
 		};
 		9710D3552B84151F00E0A20F /* SpeziChat */ = {

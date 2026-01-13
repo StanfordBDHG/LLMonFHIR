@@ -78,6 +78,11 @@ You can learn more about the Spezi standards-based software architecture in the 
 
 You can build and run the application using [Xcode](https://developer.apple.com/xcode/) by opening up the **LLMonFHIR.xcodeproj**.
 
+When running LLMonFHIR via Xcode, you can use the `--mode` CLI flag to control the behaviour of the app (configurable via the Run scheme):
+- `--mode standalone` performs a regular launch, where LLMonFHIR can be used with a custom OpenAI API key to use the chat mode;
+- `--mode study <study-id>` launches LLMonFHIR into its study mode, loads the study with the specified id from the UserStudyConfig.plist file, and automatically opens it;
+- `--mode study` launches LLMonFHIR into its study mode, showing a "Scan QR Code" button to select and open a study.
+
 
 ### Study Report File Encryption
 

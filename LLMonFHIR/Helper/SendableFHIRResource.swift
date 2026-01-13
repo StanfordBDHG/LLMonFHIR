@@ -6,6 +6,8 @@
 // SPDX-License-Identifier: MIT
 //
 
+// periphery:ignore:all - API
+
 import Foundation
 @preconcurrency import ModelsR4
 import SpeziFHIR
@@ -52,5 +54,16 @@ struct SendableFHIRResource: @unchecked Sendable {
         try readWriteLock.withWriteLock {
             try _resource.stringifyAttachments()
         }
+    }
+}
+
+
+extension SendableFHIRResource: Hashable {
+    static func == (lhs: Self, rhs: Self) -> Bool {
+        lhs._resource == rhs._resource
+    }
+    
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(_resource)
     }
 }

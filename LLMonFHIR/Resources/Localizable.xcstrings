@@ -4,7 +4,13 @@
     "\n%@" : {
 
     },
+    "–" : {
+
+    },
     "%.2f" : {
+
+    },
+    "%@" : {
 
     },
     "%lld" : {
@@ -14,6 +20,12 @@
 
     },
     "Allergies" : {
+
+    },
+    "Allow in Settings" : {
+
+    },
+    "Authorize Health Access" : {
 
     },
     "Balanced" : {
@@ -55,6 +67,9 @@
           }
         }
       }
+    },
+    "Correction Level" : {
+
     },
     "Could not create FHIR Summary" : {
       "localizations" : {
@@ -123,6 +138,9 @@
           }
         }
       }
+    },
+    "Create Study Enrollment QR Code" : {
+
     },
     "Creative" : {
 
@@ -643,9 +661,6 @@
     "Documents" : {
 
     },
-    "Enable Usability Study" : {
-
-    },
     "Encounters" : {
       "localizations" : {
         "de" : {
@@ -674,7 +689,10 @@
         }
       }
     },
-    "Enter one of 10 codes to start the user study" : {
+    "Enter Code to Access Settings" : {
+
+    },
+    "Expires" : {
 
     },
     "FHIR_RESOURCES_EMPTY_SEARCH_MESSAGE" : {
@@ -954,31 +972,31 @@
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "\nKeine Gesundheitsaufzeichnungen verfügbar.\n\nBitte befolgen Sie die Anweisungen, um Ihre Gesundheitsaufzeichnungen von Ihrem Anbieter abzurufen: [Apple Support - Gesundheitsaufzeichnungen auf iPhone oder iPod touch anzeigen](https://support.apple.com/en-us/HT208680).\n\nEine Liste der unterstützten Institutionen finden Sie unter [Apple Support - Institutionen, die Gesundheitsaufzeichnungen auf iPhone und iPod touch unterstützen](https://platform.openai.com/account/api-keys).\n\nWenn Sie Ihre Gesundheitsaufzeichnungen in der Apple Health App sehen können, stellen Sie bitte sicher, dass LLM on FHIR Zugriff auf Ihre Gesundheitsaufzeichnungen in der Apple Health App hat. Diese Einstellungen finden Sie im Datenschutzabschnitt Ihres Profils in Apple Health.\n"
+            "value" : "Keine Gesundheitsaufzeichnungen verfügbar.\n\nBitte befolgen Sie die Anweisungen, um Ihre Gesundheitsaufzeichnungen von Ihrem Anbieter abzurufen: [Apple Support - Gesundheitsaufzeichnungen auf iPhone oder iPod touch anzeigen](https://support.apple.com/en-us/HT208680).\n\nEine Liste der unterstützten Institutionen finden Sie unter [Apple Support - Institutionen, die Gesundheitsaufzeichnungen auf iPhone und iPod touch unterstützen](https://platform.openai.com/account/api-keys).\n\nWenn Sie Ihre Gesundheitsaufzeichnungen in der Apple Health App sehen können, stellen Sie bitte sicher, dass LLM on FHIR Zugriff auf Ihre Gesundheitsaufzeichnungen in der Apple Health App hat. Diese Einstellungen finden Sie im Datenschutzabschnitt Ihres Profils in Apple Health."
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "\nNo health records are available.\n\nPlease follow the instructions to connect to retrieve your health records from your provider: [Apple Support - View health records on your iPhone or iPod touch](https://support.apple.com/en-us/HT208680).\n\nYou can find a list of supported institutions at [Apple Support - Institutions that support health records on iPhone and iPod touch](https://platform.openai.com/account/api-keys).\n\nIf you can see your health records in the Apple Health app, please ensure that LLM on FHIR has access to your health records in the Apple Health App. You can find these settings in the privacy section of your profile in Apple Health.\n"
+            "value" : "No health records are available.\n\nPlease follow the instructions to connect to retrieve your health records from your provider: [Apple Support - View health records on your iPhone or iPod touch](https://support.apple.com/en-us/HT208680).\n\nYou can find a list of supported institutions at [Apple Support - Institutions that support health records on iPhone and iPod touch](https://platform.openai.com/account/api-keys).\n\nIf you can see your health records in the Apple Health app, please ensure that LLM on FHIR has access to your health records in the Apple Health App. You can find these settings in the privacy section of your profile in Apple Health."
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "\nNo hay registros de salud disponibles.\n\nPor favor, siga las instrucciones para conectarse y recuperar sus registros de salud de su proveedor: [Soporte de Apple - Ver registros de salud en su iPhone o iPod touch](https://support.apple.com/en-us/HT208680).\n\nPuede encontrar una lista de instituciones compatibles en [Soporte de Apple - Instituciones que admiten registros de salud en iPhone y iPod touch](https://platform.openai.com/account/api-keys).\n\nSi puede ver sus registros de salud en la aplicación Apple Health, asegúrese de que LLM en FHIR tenga acceso a sus registros de salud en la aplicación Apple Health. Puede encontrar estas configuraciones en la sección de privacidad de su perfil en Apple Health.\n"
+            "value" : "No hay registros de salud disponibles.\n\nPor favor, siga las instrucciones para conectarse y recuperar sus registros de salud de su proveedor: [Soporte de Apple - Ver registros de salud en su iPhone o iPod touch](https://support.apple.com/en-us/HT208680).\n\nPuede encontrar una lista de instituciones compatibles en [Soporte de Apple - Instituciones que admiten registros de salud en iPhone y iPod touch](https://platform.openai.com/account/api-keys).\n\nSi puede ver sus registros de salud en la aplicación Apple Health, asegúrese de que LLM en FHIR tenga acceso a sus registros de salud en la aplicación Apple Health. Puede encontrar estas configuraciones en la sección de privacidad de su perfil en Apple Health."
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "\nAucun dossier de santé n'est disponible.\n\nVeuillez suivre les instructions pour vous connecter et récupérer vos dossiers de santé auprès de votre fournisseur : [Support Apple - Afficher les dossiers de santé sur votre iPhone ou iPod touch](https://support.apple.com/fr-fr/HT208680).\n\nVous pouvez trouver une liste d'institutions prises en charge sur [Support Apple - Institutions prenant en charge les dossiers de santé sur iPhone et iPod touch](https://platform.openai.com/account/api-keys).\n\nSi vous pouvez voir vos dossiers de santé dans l'application Apple Health, assurez-vous que LLM sur FHIR a accès à vos dossiers de santé dans l'application Apple Health. Vous pouvez trouver ces paramètres dans la section confidentialité de votre profil dans Apple Health.\n"
+            "value" : "Aucun dossier de santé n'est disponible.\n\nVeuillez suivre les instructions pour vous connecter et récupérer vos dossiers de santé auprès de votre fournisseur : [Support Apple - Afficher les dossiers de santé sur votre iPhone ou iPod touch](https://support.apple.com/fr-fr/HT208680).\n\nVous pouvez trouver une liste d'institutions prises en charge sur [Support Apple - Institutions prenant en charge les dossiers de santé sur iPhone et iPod touch](https://platform.openai.com/account/api-keys).\n\nSi vous pouvez voir vos dossiers de santé dans l'application Apple Health, assurez-vous que LLM sur FHIR a accès à vos dossiers de santé dans l'application Apple Health. Vous pouvez trouver ces paramètres dans la section confidentialité de votre profil dans Apple Health."
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "\n没有可用的健康记录。\n\n请按照以下说明连接并从您的提供者检索健康记录：[Apple支持-在iPhone或iPod touch上查看健康记录](https://support.apple.com/en-us/HT208680)。\n\n您可以在[Apple支持-支持iPhone和iPod touch上的健康记录的机构](https://platform.openai.com/account/api-keys)找到支持的机构列表。\n\n如果您可以在Apple Health应用程序中查看您的健康记录，请确保LLM on FHIR可以访问您在Apple Health应用程序中的健康记录。您可以在Apple Health个人资料的隐私部分找到这些设置。\n"
+            "value" : "没有可用的健康记录。\n\n请按照以下说明连接并从您的提供者检索健康记录：[Apple支持-在iPhone或iPod touch上查看健康记录](https://support.apple.com/en-us/HT208680)。\n\n您可以在[Apple支持-支持iPhone和iPod touch上的健康记录的机构](https://platform.openai.com/account/api-keys)找到支持的机构列表。\n\n如果您可以在Apple Health应用程序中查看您的健康记录，请确保LLM on FHIR可以访问您在Apple Health应用程序中的健康记录。您可以在Apple Health个人资料的隐私部分找到这些设置。"
           }
         }
       }
@@ -1158,36 +1176,42 @@
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Zugriff auf HealthKit"
+            "value" : "Zugriff auf Health"
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "HealthKit Access"
+            "value" : "Health Access"
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Acceso a HealthKit"
+            "value" : "Acceso a Health"
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Accès à HealthKit"
+            "value" : "Accès à Health"
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "HealthKit访问权限"
+            "value" : "Health访问权限"
           }
         }
       }
     },
+    "High" : {
+
+    },
     "Higher values (0.8+) increase randomness and creativity. Lower values (0.2-) make responses more focused and deterministic." : {
+
+    },
+    "Highest" : {
 
     },
     "Immunizations" : {
@@ -1357,6 +1381,9 @@
         }
       }
     },
+    "Low" : {
+
+    },
     "Medications" : {
       "localizations" : {
         "de" : {
@@ -1385,6 +1412,9 @@
         }
       }
     },
+    "Medium" : {
+
+    },
     "Multiple Resource Interpretation Prompt Content" : {
       "comment" : "Content of the multiple resources interpretation prompt.",
       "localizations" : {
@@ -1408,6 +1438,9 @@
       }
     },
     "No" : {
+
+    },
+    "No Resources Found" : {
 
     },
     "Observations" : {
@@ -1437,9 +1470,6 @@
           }
         }
       }
-    },
-    "Official Stanford Logo. Block S with Tree." : {
-
     },
     "OPEN_AI_KEY_SAVE_ACTION" : {
       "localizations" : {
@@ -1518,6 +1548,9 @@
           }
         }
       }
+    },
+    "Other" : {
+
     },
     "Other Resources" : {
       "localizations" : {
@@ -1805,6 +1838,18 @@
           }
         }
       }
+    },
+    "Scan a QR Code to Participate in a Study" : {
+
+    },
+    "Scan code to enroll in study" : {
+
+    },
+    "Scan QR Code" : {
+
+    },
+    "Select a study on the right." : {
+
     },
     "SETTINGS" : {
       "localizations" : {
@@ -2158,6 +2203,9 @@
     "Share Survey Results" : {
 
     },
+    "Stanford Logo" : {
+
+    },
     "Start Client Setup" : {
 
     },
@@ -2167,6 +2215,19 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Start Session"
+          }
+        }
+      }
+    },
+    "Study" : {
+
+    },
+    "STUDY_QR_CODE_GEN_EXPIRATION_FOOTER" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Expiring codes are only valid for a short period of time.\n\nThe best validity duration depends on the specific use case, if the code is scanned live off the screen it should be as low as possible.\nThe app auto-generates a new, valid code every few seconds."
           }
         }
       }
@@ -2297,7 +2358,11 @@
         }
       }
     },
+    "Total number of resources across all types: %lld" : {
+
+    },
     "Total Number of Resources: %lld" : {
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -2331,42 +2396,42 @@
         }
       }
     },
+    "Unable to access Camera" : {
+
+    },
     "Unable to parse result of the LLM prompt." : {
       "comment" : "Error thrown if the result can not be parsed in the underlying type."
-    },
-    "Usability Study Settings" : {
-
     },
     "Use HealthKit Resources" : {
       "localizations" : {
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Nutze HealthKit Daten"
+            "value" : "Nutze Health Daten"
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Use HealthKit Resources"
+            "value" : "Use Health Resources"
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Utilizar los recursos de HealthKit"
+            "value" : "Utilizar los recursos de Health"
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Utiliser les ressources de HealthKit"
+            "value" : "Utiliser les ressources de Health"
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "使用 HealthKit 资源"
+            "value" : "使用 Health 资源"
           }
         }
       }
@@ -2413,25 +2478,8 @@
         }
       }
     },
-    "USER_STUDY_WELCOME_DESCRIPTION" : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "During this study, you’ll complete a survey about your experiences navigating the healthcare system and have the opportunity to ask the chat questions about your health."
-          }
-        }
-      }
-    },
-    "USER_STUDY_WELCOME_TITLE" : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "User Study"
-          }
-        }
-      }
+    "Valid for" : {
+
     },
     "WELCOME_AREA1_DESCRIPTION" : {
       "localizations" : {
@@ -2740,6 +2788,9 @@
       }
     },
     "Yes" : {
+
+    },
+    "You must allow LLMonFHIR to access the camera in order to be able to scan a QR code" : {
 
     },
     "Your Health Records" : {

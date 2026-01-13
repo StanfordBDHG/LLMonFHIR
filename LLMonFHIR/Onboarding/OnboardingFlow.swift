@@ -6,16 +6,17 @@
 // SPDX-License-Identifier: MIT
 //
 
+import SpeziFoundation
 import SpeziHealthKit
 import SpeziLLMOpenAI
 import SpeziViews
 import SwiftUI
 
 
-/// Displays an multi-step onboarding flow for the Spezi LLMonFHIR.
+/// Displays an multi-step onboarding flow for LLMonFHIR.
 struct OnboardingFlow: View {
     @Environment(HealthKit.self) private var healthKit: HealthKit?
-    @AppStorage(StorageKeys.onboardingFlowComplete) var completedOnboardingFlow = false
+    @LocalPreference(.onboardingFlowComplete) var completedOnboardingFlow
     
     private var healthKitAuthorization: Bool {
         // As HealthKit not available in preview simulator
@@ -31,9 +32,13 @@ struct OnboardingFlow: View {
         ManagedNavigationStack(didComplete: $completedOnboardingFlow) {
             Welcome()
             Disclaimer()
-            if !FeatureFlags.isUserStudyEnabled {
+            switch LLMonFHIR.mode {
+            case .study:
+                let _ = () // swiftlint:disable:this redundant_discardable_let
+            case .standalone, .test:
                 // Always show OpenAI model onboarding for chat-based interaction.
                 OpenAIAPIKey()
+                OpenAIModelSelection()
                 // Presents the onboarding flow for the respective local, fog, or cloud LLM.
                 LLMSourceSelection()
             }

@@ -6,18 +6,37 @@
 // SPDX-License-Identifier: MIT
 //
 
+// swiftlint:disable function_default_parameter_at_end
+
 import Foundation
 
-/// Represents a group of related questions in a survey
-struct SurveyTask: Identifiable {
-    /// Unique identifier for the task
-    let id: Int
 
+/// Represents a group of related questions in a survey
+struct SurveyTask: Hashable, Identifiable, Sendable {
+    /// Unique identifier for the task
+    let id: String
+    let title: String?
     /// Optional instructions displayed to the user
-    let instruction: String?
+    let instructions: String?
+    
+    let assistantMessagesLimit: ClosedRange<Int>?
 
     /// The questions contained in this task
     private(set) var questions: [TaskQuestion]
+    
+    init(
+        id: String,
+        title: String? = nil,
+        instructions: String?,
+        assistantMessagesLimit: ClosedRange<Int>? = nil,
+        questions: [TaskQuestion]
+    ) {
+        self.id = id
+        self.title = title
+        self.instructions = instructions
+        self.assistantMessagesLimit = assistantMessagesLimit
+        self.questions = questions
+    }
 
     /// Updates the answer for a specific question in this task
     /// - Parameters:

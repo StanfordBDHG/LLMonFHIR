@@ -20,49 +20,43 @@ struct HealthKitPermissions: View {
     
     
     var body: some View {
-        OnboardingView(
-            content: {
-                VStack {
-                    OnboardingTitleView(
-                        title: "HEALTHKIT_PERMISSIONS_TITLE",
-                        subtitle: "HEALTHKIT_PERMISSIONS_SUBTITLE"
-                    )
-                    Spacer()
-                    Image(systemName: "heart.text.square.fill")
-                        .accessibilityHidden(true)
-                        .font(.system(size: 150))
-                        .foregroundColor(.accentColor)
-                    Text("HEALTHKIT_PERMISSIONS_DESCRIPTION")
-                        .multilineTextAlignment(.center)
-                        .padding(.vertical, 16)
-                    Spacer()
-                }
-            },
-            footer: {
-                OnboardingActionsView(
-                    "HEALTHKIT_PERMISSIONS_BUTTON",
-                    action: {
-                        healthKitProcessing = true
-                        do {
-                            // HealthKit is not available in the preview simulator.
-                            if ProcessInfo.processInfo.environment["XCODE_RUNNING_FOR_PREVIEWS"] == "1" {
-                                try await _Concurrency.Task.sleep(for: .seconds(5))
-                            } else {
-                                try await healthKitDataSource?.askForAuthorization()
-                                Task {
-                                    await standard.fetchRecordsFromHealthKit()
-                                }
-                            }
-                        } catch {
-                            print("Could not request HealthKit permissions.")
-                        }
-                        managedNavigationStackPath.nextStep()
-                        healthKitProcessing = false
-                    }
+        OnboardingView {
+            VStack {
+                OnboardingTitleView(
+                    title: "HEALTHKIT_PERMISSIONS_TITLE",
+                    subtitle: "HEALTHKIT_PERMISSIONS_SUBTITLE"
                 )
+                Spacer()
+                Image(systemName: "heart.text.square.fill")
+                    .accessibilityHidden(true)
+                    .font(.system(size: 150))
+                    .foregroundColor(.accentColor)
+                Text("HEALTHKIT_PERMISSIONS_DESCRIPTION")
+                    .multilineTextAlignment(.leading)
+                    .padding(.vertical, 16)
+                Spacer()
             }
-        )
-            .navigationBarBackButtonHidden(healthKitProcessing)
+        } footer: {
+            OnboardingActionsView("HEALTHKIT_PERMISSIONS_BUTTON") {
+                healthKitProcessing = true
+                do {
+                    // HealthKit is not available in the preview simulator.
+                    if ProcessInfo.processInfo.environment["XCODE_RUNNING_FOR_PREVIEWS"] == "1" {
+                        try await _Concurrency.Task.sleep(for: .seconds(5))
+                    } else {
+                        try await healthKitDataSource?.askForAuthorization()
+                        Task {
+                            await standard.fetchRecordsFromHealthKit()
+                        }
+                    }
+                } catch {
+                    print("Could not request HealthKit permissions.")
+                }
+                managedNavigationStackPath.nextStep()
+                healthKitProcessing = false
+            }
+        }
+        .navigationBarBackButtonHidden(healthKitProcessing)
     }
 }
 

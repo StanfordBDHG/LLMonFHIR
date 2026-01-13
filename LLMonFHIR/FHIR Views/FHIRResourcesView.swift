@@ -10,7 +10,7 @@ import SpeziFHIR
 import SwiftUI
 
 
-/// Displays a `List` of all available FHIR resources.
+/// Displays a `Form` of all available FHIR resources.
 ///
 /// The ``FHIRResourcesView`` displays a SwiftUI `List` of all available resources in the `SpeziFHIR` [`FHIRStore`](https://swiftpackageindex.com/stanfordspezi/spezifhir/documentation/spezifhir/fhirstore).
 /// The FHIR resources are displayed in sections, for example conditions, medications etc.
@@ -20,73 +20,49 @@ import SwiftUI
 /// The content and action `View`s are placed within the Swift `List` as a `Section`, enabling proper visual integration with the remainder of the `List`.
 ///
 /// - Warning: Ensure that the `SpeziFHIR` [`FHIRStore`](https://swiftpackageindex.com/stanfordspezi/spezifhir/documentation/spezifhir/fhirstore) is properly set up and accessible within the SwiftUI `Environment`.
-///
-/// ### Usage
-///
-/// The example below showcases a minimal example of using the ``FHIRResourcesView``.
-///
-/// ```swift
-/// struct ResourcesView: View {
-///     var body: some View {
-///         FHIRResourcesView(navigationTitle: "...") {
-///             Button("Some Action") {
-///                 // Action to perform
-///                 // ...
-///             }
-///         }
-///     }
-/// }
-/// ```
-struct FHIRResourcesView<ContentView: View, ActionView: View>: View {
+struct FHIRResourcesView<Content: View, Action: View>: View {
     @Environment(FHIRStore.self) private var fhirStore
     @State private var searchText = ""
-    @State private var showAllItems: [String: Bool] = [:]
-
-    private let navigationTitle: Text
-    private let contentView: ContentView
-    private let actionView: ActionView
+    @State private var expandedSections = Set<KeyPath<FHIRStore, Set<FHIRResource>>>()
     
+    private let title: LocalizedStringResource
+    private let contentView: Content
+    private let actionView: Action
     
     var body: some View {
-        List {
-            Section {
-                contentView
-            }
-            
+        Form {
+            contentView
             if searchText.isEmpty {
                 Section {
                     actionView
                 }
             }
-            
             if fhirStore.allResources.filterByDisplayName(with: searchText).isEmpty {
                 Text("FHIR_RESOURCES_EMPTY_SEARCH_MESSAGE")
             } else {
                 resourcesSection
             }
-            
-            Section { } footer: {
-                Text("Total Number of Resources: \(fhirStore.allResources.count)")
-            }
         }
-            .searchable(text: $searchText)
-            .navigationDestination(for: FHIRResource.self) { resource in
-                InspectResourceView(resource: resource)
-            }
-            .navigationTitle(navigationTitle)
+        .navigationTitle(title)
+        .searchable(text: $searchText)
+        .navigationDestination(for: FHIRResource.self) { resource in
+            InspectResourceView(resource: resource)
+        }
     }
     
     @ViewBuilder private var resourcesSection: some View {
-        section(for: \.allergyIntolerances, sectionName: String(localized: "Allergies"))
-        section(for: \.conditions, sectionName: String(localized: "Conditions"))
-        section(for: \.diagnostics, sectionName: String(localized: "Diagnostics"))
-        section(for: \.documents, sectionName: String(localized: "Documents"))
-        section(for: \.encounters, sectionName: String(localized: "Encounters"))
-        section(for: \.immunizations, sectionName: String(localized: "Immunizations"))
-        section(for: \.medications, sectionName: String(localized: "Medications"))
-        section(for: \.observations, sectionName: String(localized: "Observations"))
-        section(for: \.procedures, sectionName: String(localized: "Procedures"))
-        section(for: \.otherResources, sectionName: String(localized: "Other Resources"))
+        sections(for: [
+            .init("Allergies", keyPath: \.allergyIntolerances),
+            .init("Conditions", keyPath: \.conditions),
+            .init("Diagnostics", keyPath: \.diagnostics),
+            .init("Documents", keyPath: \.documents),
+            .init("Encounters", keyPath: \.encounters),
+            .init("Immunizations", keyPath: \.immunizations),
+            .init("Medications", keyPath: \.medications),
+            .init("Observations", keyPath: \.observations),
+            .init("Procedures", keyPath: \.procedures),
+            .init("Other Resources", keyPath: \.otherResources)
+        ])
     }
     
     
@@ -97,74 +73,82 @@ struct FHIRResourcesView<ContentView: View, ActionView: View>: View {
     ///    - contentView: A custom content `View` that is displayed as the first `Section` of the `List`.
     ///    - actionView: A custom action `View` that is displayed as the second `Section` of the `List`. Only shown if no search `String` is present.
     init(
-        navigationTitle: LocalizedStringResource,
-        @ViewBuilder contentView: () -> ContentView = { EmptyView() },
-        @ViewBuilder _ actionView: () -> ActionView = { EmptyView() }
+        _ title: LocalizedStringResource,
+        @ViewBuilder content: () -> Content = { EmptyView() },
+        @ViewBuilder action: () -> Action = { EmptyView() }
     ) {
-        self.navigationTitle = Text(navigationTitle)
-        self.contentView = contentView()
-        self.actionView = actionView()
+        self.title = title
+        self.contentView = content()
+        self.actionView = action()
     }
-    
-    /// Creates a ``FHIRResourcesView`` displaying a `List` of all available FHIR resources.
-    ///
-    /// - Parameters:
-    ///    - navigationTitle: The title displayed for purposes of navigation.
-    ///    - contentView: A custom content `View` that is displayed as the first `Section` of the `List`.
-    ///    - actionView: A custom action `View` that is displayed as the second `Section` of the `List`. Only shown if no search `String` is present.
-    @_disfavoredOverload
-    init<Title: StringProtocol>(
-        navigationTitle: Title,
-        @ViewBuilder contentView: () -> ContentView = { EmptyView() },
-        @ViewBuilder _ actionView: () -> ActionView = { EmptyView() }
-    ) {
-        self.navigationTitle = Text(verbatim: String(navigationTitle))
-        self.contentView = contentView()
-        self.actionView = actionView()
-    }
-    
-    
-    private func section(for keyPath: KeyPath<FHIRStore, [FHIRResource]>, sectionName: String) -> some View {
-        let resources = filteredResources(for: keyPath)
+}
 
-        guard !resources.isEmpty else {
-            return AnyView(EmptyView())
+
+extension FHIRResourcesView {
+    private struct ResourcesSectionDefinition: Equatable {
+        let title: String
+        let keyPath: KeyPath<FHIRStore, Set<FHIRResource>>
+        
+        init(_ title: LocalizedStringResource, keyPath: KeyPath<FHIRStore, Set<FHIRResource>>) {
+            self.title = String(localized: title)
+            self.keyPath = keyPath
         }
-
-        let showAll = Binding(
-            get: { showAllItems[sectionName, default: false] },
-            set: { showAllItems[sectionName] = $0 }
-        )
-
-        return AnyView(
-            Section {
-                resourcesList(resources: resources, showAll: showAll)
-            } header: {
-                sectionHeaderButton(sectionName: sectionName, resources: resources, showAll: showAll)
-                    .textCase(nil)
-            }
-            .listRowInsets(EdgeInsets(top: 8, leading: 16, bottom: 8, trailing: 16))
-        )
     }
+    
+    
+    @ViewBuilder
+    private func sections(for defs: [ResourcesSectionDefinition]) -> some View {
+        let defsWithContent = defs.compactMap { def in
+            let resources = filteredResources(for: def.keyPath)
+            return !resources.isEmpty ? (def, resources) : nil
+        }
+        if defsWithContent.isEmpty {
+            Text("No Resources Found")
+        } else {
+            ForEach(defsWithContent, id: \.0.keyPath) { (def: ResourcesSectionDefinition, resources: Set<FHIRResource>) in
+                let showAll = Binding<Bool> {
+                    expandedSections.contains(def.keyPath)
+                } set: { isExpanded in
+                    if isExpanded {
+                        expandedSections.insert(def.keyPath)
+                    } else {
+                        expandedSections.remove(def.keyPath)
+                    }
+                }
+                Section {
+                    resourcesList(resources: resources, showAll: showAll)
+                } header: {
+                    sectionHeaderButton(sectionTitle: def.title, resources: resources, showAll: showAll)
+                        .textCase(nil)
+                } footer: {
+                    let isLast = def == defsWithContent.last?.0
+                    if isLast {
+                        Text("Total number of resources across all types: \(fhirStore.allResources.count)")
+                    }
+                }
+                .listRowInsets(EdgeInsets(top: 8, leading: 16, bottom: 8, trailing: 16))
+            }
+        }
+    }
+    
 
-    private func filteredResources(for keyPath: KeyPath<FHIRStore, [FHIRResource]>) -> [FHIRResource] {
+    private func filteredResources(for keyPath: KeyPath<FHIRStore, Set<FHIRResource>>) -> Set<FHIRResource> {
         var resources = fhirStore[keyPath: keyPath]
-
         if !searchText.isEmpty {
             resources = resources.filterByDisplayName(with: searchText)
         }
-
         return resources
     }
-
-    private func sectionHeaderButton(sectionName: String, resources: [FHIRResource], showAll: Binding<Bool>) -> some View {
+    
+    
+    private func sectionHeaderButton(sectionTitle: String, resources: Set<FHIRResource>, showAll: Binding<Bool>) -> some View {
         Button {
             withAnimation {
                 showAll.wrappedValue.toggle()
             }
         } label: {
             HStack {
-                Text(sectionName)
+                Text(sectionTitle)
                     .font(.headline)
                     .foregroundColor(.primary)
 
@@ -189,17 +173,18 @@ struct FHIRResourcesView<ContentView: View, ActionView: View>: View {
                         .foregroundColor(.accentColor)
                 }
             }
-                .contentShape(Rectangle())
-                .padding(.vertical, 6)
+            .contentShape(Rectangle())
+            .padding(.vertical, 6)
         }
-            .buttonStyle(PlainButtonStyle())
+        .buttonStyle(.plain)
     }
-
-    private func resourcesList(resources: [FHIRResource], showAll: Binding<Bool>) -> some View {
-        let sortedResources = resources.sorted(by: { ($0.date ?? .distantPast) > ($1.date ?? .distantPast) })
+    
+    
+    @ViewBuilder
+    private func resourcesList(resources: Set<FHIRResource>, showAll: Binding<Bool>) -> some View {
+        let sortedResources = resources.sorted { ($0.date ?? .distantPast) > ($1.date ?? .distantPast) }
         let visibleResources = showAll.wrappedValue ? sortedResources : Array(sortedResources.prefix(3))
-
-        return ForEach(visibleResources) { resource in
+        ForEach(visibleResources) { resource in
             NavigationLink(value: resource) {
                 FHIRResourceSummaryView(resource: resource)
             }

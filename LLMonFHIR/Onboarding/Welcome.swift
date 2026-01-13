@@ -14,7 +14,6 @@ import SwiftUI
 struct Welcome: View {
     @Environment(ManagedNavigationStack.Path.self) private var managedNavigationStackPath
     
-    
     var body: some View {
         OnboardingView(
             title: "WELCOME_TITLE",

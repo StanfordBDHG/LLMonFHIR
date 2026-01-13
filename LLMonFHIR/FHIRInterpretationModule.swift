@@ -8,6 +8,7 @@
 
 import Spezi
 import SpeziFHIR
+import SpeziFoundation
 import SpeziLLM
 import SpeziLLMFog
 import SpeziLLMLocal
@@ -17,7 +18,7 @@ import SwiftUI
 
 
 // periphery:ignore - Properties are used through dependency injection and @Model configuration in `configure()`
-class FHIRInterpretationModule: Module, DefaultInitializable, EnvironmentAccessible {
+final class FHIRInterpretationModule: Module, EnvironmentAccessible {
     @Dependency(LocalStorage.self) private var localStorage
     @Dependency(LLMRunner.self) private var llmRunner
     @Dependency(FHIRStore.self) private var fhirStore
@@ -26,16 +27,28 @@ class FHIRInterpretationModule: Module, DefaultInitializable, EnvironmentAccessi
     @Model private var resourceInterpreter: FHIRResourceInterpreter
     @Model private var multipleResourceInterpreter: FHIRMultipleResourceInterpreter
     
-    @AppStorage(StorageKeys.llmSource) private var llmSource = StorageKeys.Defaults.llmSource
-    @AppStorage(StorageKeys.fogModel) private var fogModel = StorageKeys.Defaults.fogModel
+    @LocalPreference(.llmSource) private var llmSource
+    @LocalPreference(.openAIModel) private var openAIModel
+    @LocalPreference(.openAIModelTemperature) private var openAIModelTemperature
+    @LocalPreference(.fogModel) private var fogModel
+    @LocalPreference(.resourceLimit) private var resourceLimit
     
+    @MainActor var currentStudy: Study? {
+        didSet {
+            Task {
+                await updateSchemas()
+            }
+        }
+    }
+    
+    private var updateModelsTask: Task<Void, any Error>?
     
     @MainActor var singleResourceLLMSchema: any LLMSchema {
         switch self.llmSource {
         case .openai:
             LLMOpenAISchema(
-                parameters: .init(modelType: StorageKeys.currentOpenAIModel.rawValue, systemPrompts: []),
-                modelParameters: .init(temperature: StorageKeys.currentOpenAIModelTemperature)
+                parameters: .init(modelType: openAIModel.rawValue, systemPrompts: []),
+                modelParameters: .init(temperature: openAIModelTemperature)
             )
         case .fog:
             LLMFogSchema(
@@ -49,13 +62,9 @@ class FHIRInterpretationModule: Module, DefaultInitializable, EnvironmentAccessi
     }
     
     @MainActor var multipleResourceInterpreterOpenAISchema: LLMOpenAISchema {
-        let openAIModelType = StorageKeys.currentOpenAIModel
-        let temperature = StorageKeys.currentOpenAIModelTemperature
-        let resourceLimit = StorageKeys.currentResourceCountLimit
-        
-        return LLMOpenAISchema(
-            parameters: .init(modelType: openAIModelType.rawValue, systemPrompts: []),
-            modelParameters: .init(temperature: temperature)
+        LLMOpenAISchema(
+            parameters: .init(modelType: openAIModel.rawValue, systemPrompts: []),
+            modelParameters: .init(temperature: openAIModelTemperature)
         ) {
             FHIRGetResourceLLMFunction(
                 fhirStore: self.fhirStore,
@@ -96,10 +105,29 @@ class FHIRInterpretationModule: Module, DefaultInitializable, EnvironmentAccessi
     }
     
     
+    /// Updates the schema used by the interpretation module.
+    ///
+    /// By default, this function will delay the actual schema updating, in order to be able to coalesce multiple calls into just one update.
+    ///
+    /// - parameter forceImmediateUpdate: Set this to `true` to disable the delay and instead update the schema immediately.
     @MainActor
-    func updateSchemas() async {
-        await resourceSummary.changeLLMSchema(to: singleResourceLLMSchema)
-        await resourceInterpreter.changeLLMSchema(to: singleResourceLLMSchema)
-        multipleResourceInterpreter.changeLLMSchema(to: multipleResourceInterpreterOpenAISchema)
+    func updateSchemas(forceImmediateUpdate: Bool = false) async {
+        updateModelsTask?.cancel()
+        let imp = { [self] in
+            let summarizePrompt = currentStudy?.summarizeSingleResourcePrompt ?? .summarizeSingleFHIRResourceDefaultPrompt
+            await resourceSummary.update(llmSchema: singleResourceLLMSchema, summarizationPrompt: summarizePrompt)
+            await resourceInterpreter.update(llmSchema: singleResourceLLMSchema, summarizationPrompt: summarizePrompt)
+            multipleResourceInterpreter.changeLLMSchema(to: multipleResourceInterpreterOpenAISchema, for: currentStudy)
+        }
+        if forceImmediateUpdate {
+            await imp()
+        } else {
+            updateModelsTask = Task {
+                try? await Task.sleep(for: .seconds(2))
+                if !Task.isCancelled {
+                    await imp()
+                }
+            }
+        }
     }
 }
