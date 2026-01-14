@@ -101,20 +101,15 @@ class MultipleResourcesChatViewModel: Sendable {
     func generateAssistantResponse(preProcessingStateUpdate: @escaping () async -> Void = {}) async -> LLMContextEntity? {
         await preProcessingStateUpdate()
         processingState = await processingState.calculateNewProcessingState(basedOn: llmSession)
-        
         guard shouldGenerateResponse else {
             return nil
         }
-
         processingState = .processingSystemPrompts
-
         guard let response = await interpreter.generateAssistantResponse() else {
             return nil
         }
-        
         await preProcessingStateUpdate()
         processingState = await processingState.calculateNewProcessingState(basedOn: llmSession)
-
         return response
     }
 }

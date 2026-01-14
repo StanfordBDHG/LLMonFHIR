@@ -37,6 +37,8 @@ final class UserStudyChatViewModel: MultipleResourcesChatViewModel, Sendable { /
             }
         }
     }
+    
+    private let uploader: FirebaseUpload?
 
     /// The current navigation state of the study
     private(set) var navigationState: NavigationState = .introduction
@@ -131,10 +133,12 @@ final class UserStudyChatViewModel: MultipleResourcesChatViewModel, Sendable { /
     init(
         study: Study,
         interpreter: FHIRMultipleResourceInterpreter,
-        resourceSummary: FHIRResourceSummary
+        resourceSummary: FHIRResourceSummary,
+        uploader: FirebaseUpload?
     ) {
         self.study = study
         self.resourceSummary = resourceSummary
+        self.uploader = uploader
         super.init(interpreter: interpreter, navigationTitle: "")
         configureMessageLimits()
     }
@@ -154,11 +158,9 @@ final class UserStudyChatViewModel: MultipleResourcesChatViewModel, Sendable { /
                 try? await Task.sleep(for: .seconds(0.5))
                 llmSession.state = .error(error: error)
             }
-            
             processingState = .error
             return
         }
-        
         processingState = await processingState.calculateNewProcessingState(basedOn: llmSession)
     }
 
@@ -192,7 +194,7 @@ final class UserStudyChatViewModel: MultipleResourcesChatViewModel, Sendable { /
     ///
     /// - Parameter answers: Array of answers provided by the user
     /// - Throws: An error if the submission fails
-    func submitSurveyAnswers(_ answers: [TaskQuestionAnswer]) async throws {
+    func submitSurveyAnswers(_ answers: [TaskQuestionAnswer]) throws {
         guard let currentTaskId else {
             return
         }
@@ -200,7 +202,7 @@ final class UserStudyChatViewModel: MultipleResourcesChatViewModel, Sendable { /
         for (index, answer) in answers.enumerated() {
             try study.submitAnswer(answer, forTaskId: currentTaskId, questionIndex: index)
         }
-        await advanceToNextTask()
+        advanceToNextTask()
         isSurveyViewPresented = false
     }
 
@@ -235,14 +237,14 @@ final class UserStudyChatViewModel: MultipleResourcesChatViewModel, Sendable { /
     ///
     /// - Returns: The URL of the generated report file, or nil if generation fails
     func generateStudyReportFile() async throws -> URL? {
-        guard var studyReport = await generateStudyReport()?.data(using: .utf8) else {
+        guard var studyReport = await generateStudyReport() else {
             return nil
         }
         if let key = study.encryptionKey {
             studyReport = try studyReport.encrypted(using: key)
         }
         let tempDir = FileManager.default.temporaryDirectory
-        let reportURL = tempDir.appendingPathComponent("survey_report_\(study.id.lowercased()).txt")
+        let reportURL = tempDir.appendingPathComponent("survey_report_\(study.id.lowercased()).json")
         try studyReport.write(to: reportURL)
         return reportURL
     }
@@ -261,7 +263,7 @@ final class UserStudyChatViewModel: MultipleResourcesChatViewModel, Sendable { /
         }
     }
 
-    private func advanceToNextTask() async {
+    private func advanceToNextTask() {
         guard let currentTaskIdx = study.tasks.firstIndex(where: { $0.id == currentTaskId }) else {
             return
         }
@@ -276,11 +278,28 @@ final class UserStudyChatViewModel: MultipleResourcesChatViewModel, Sendable { /
             isTaskInstructionsSheetPresented = true
         } else {
             navigationState = .completed
+            Task {
+                await uploadReport()
+            }
+        }
+    }
+    
+    private func uploadReport() async {
+        guard let uploader else {
+            return
+        }
+        do {
+            guard let reportFile = try await generateStudyReportFile() else {
+                return
+            }
+            try await uploader.uploadReport(at: reportFile, for: study)
+        } catch {
+            print("study report upload failed: \(error)")
         }
     }
 
 
-    private func generateStudyReport() async -> String? {
+    private func generateStudyReport() async -> Data? {
         let report = UserStudyReport(
             metadata: generateMetadata(),
             fhirResources: await getFHIRResources(),
@@ -290,9 +309,7 @@ final class UserStudyChatViewModel: MultipleResourcesChatViewModel, Sendable { /
             let encoder = JSONEncoder()
             encoder.dateEncodingStrategy = .iso8601
             encoder.outputFormatting = [.prettyPrinted, .withoutEscapingSlashes]
-            let data = try encoder.encode(report)
-            let string = String(data: data, encoding: .utf8)
-            return string
+            return try encoder.encode(report)
         } catch {
             print("Error generating study report: \(error)")
             return nil

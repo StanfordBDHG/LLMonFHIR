@@ -98,12 +98,14 @@ struct UserStudyChatView: View {
     init(
         study: Study,
         interpreter: FHIRMultipleResourceInterpreter,
-        resourceSummary: FHIRResourceSummary
+        resourceSummary: FHIRResourceSummary,
+        uploader: FirebaseUpload?
     ) {
         viewModel = UserStudyChatViewModel(
             study: study,
             interpreter: interpreter,
-            resourceSummary: resourceSummary
+            resourceSummary: resourceSummary,
+            uploader: uploader
         )
     }
     
@@ -118,7 +120,7 @@ struct UserStudyChatView: View {
                 isPresented: $viewModel.isSurveyViewPresented
             ) { answers in
                 do {
-                    try await viewModel.submitSurveyAnswers(answers)
+                    try viewModel.submitSurveyAnswers(answers)
                 } catch {
                     print("Error submitting answers: \(error)")
                 }

@@ -24,6 +24,7 @@ struct StudyHomeView: View {
     @Environment(FHIRResourceSummary.self) private var resourceSummary
     @Environment(KeychainStorage.self) private var keychainStorage
     @Environment(LLMOpenAIPlatform.self) private var platform
+    @Environment(FirebaseUpload.self) private var uploader: FirebaseUpload?
     @WaitingState private var waitingState
     
     @State private var study: Study?
@@ -64,7 +65,8 @@ struct StudyHomeView: View {
                     UserStudyChatView(
                         study: study,
                         interpreter: interpreter,
-                        resourceSummary: resourceSummary
+                        resourceSummary: resourceSummary,
+                        uploader: uploader
                     )
                 }
                 .sheet(isPresented: $isPresentingEarliestHealthRecords) {

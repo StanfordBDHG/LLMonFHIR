@@ -6,8 +6,17 @@
 // SPDX-License-Identifier: MIT
 //
 
+// swiftlint:disable type_contents_order
+
+import FirebaseCore
 import Spezi
 import SpeziAccessGuard
+import SpeziAccount
+import SpeziFirebaseAccount
+import SpeziFirebaseAccountStorage
+import SpeziFirebaseConfiguration
+import SpeziFirebaseStorage
+import SpeziFoundation
 import SpeziHealthKit
 import SpeziLLM
 import SpeziLLMFog
@@ -18,7 +27,11 @@ import SpeziLLMOpenAI
 final class LLMonFHIRDelegate: SpeziAppDelegate {
     override var configuration: Configuration {
         Configuration(standard: LLMonFHIRStandard()) {
+            if let config = AppConfigFile.current().firebaseConfig {
+                firebaseModules(using: config)
+            }
             let fhirInterpretationModule = FHIRInterpretationModule()
+            fhirInterpretationModule
             HealthKit {
                 RequestReadAccess(other: LLMonFHIRStandard.recordTypes)
                 for type in LLMonFHIRStandard.recordTypes {
@@ -26,17 +39,14 @@ final class LLMonFHIRDelegate: SpeziAppDelegate {
                 }
             }
             LLMRunner {
-                LLMOpenAIPlatform(
-                    configuration: .init(
-                        authToken: .keychain(tag: .openAIKey, username: "LLMonFHIR_OpenAI_Token"),
-                        concurrentStreams: 100,
-                        retryPolicy: .attempts(3)  // Automatically perform up to 3 retries on retryable OpenAI API status codes
-                    )
-                )
+                LLMOpenAIPlatform(configuration: .init(
+                    authToken: .keychain(tag: .openAIKey, username: "LLMonFHIR_OpenAI_Token"),
+                    concurrentStreams: 100,
+                    retryPolicy: .attempts(3)  // Automatically perform up to 3 retries on retryable OpenAI API status codes
+                ))
                 LLMFogPlatform(configuration: .init(host: "spezillmfog.local", connectionType: .http, authToken: .none))
                 LLMLocalPlatform()
             }
-            FHIRInterpretationModule()
             AccessGuards {
                 CodeAccessGuard(.userStudySettings, message: "Enter Code to Access Settings", format: .numeric(4)) { @MainActor code in
                     if let expected = fhirInterpretationModule.currentStudy?.settingsUnlockCode {
@@ -47,5 +57,55 @@ final class LLMonFHIRDelegate: SpeziAppDelegate {
                 }
             }
         }
+    }
+    
+    @ModuleBuilder
+    private func firebaseModules(using config: AppConfigFile.FirebaseConfigDictionary) -> ModuleCollection {
+        ConfigureFirebaseApp(options: FirebaseOptions(config)!) // swiftlint:disable:this force_unwrapping
+        AccountConfiguration(
+            service: FirebaseAccountService(
+                providers: [],
+                emulatorSettings: accountEmulatorSettings
+            ),
+//            storageProvider: FirestoreAccountStorage(
+//                storeIn: <#T##CollectionReference#>,
+//                mapping: <#T##[String : any AccountKey.Type]?#>,
+//                encoder: <#T##Firestore.Encoder#>,
+//                decoder: <#T##Firestore.Decoder#>
+//            ),
+            configuration: []
+        )
+        if FeatureFlags.useFirebaseEmulator {
+            FirebaseStorageConfiguration(emulatorSettings: (host: "localhost", port: 9199))
+        } else {
+            FirebaseStorageConfiguration()
+        }
+        FirebaseUpload()
+    }
+    
+    private var accountEmulatorSettings: (host: String, port: Int)? {
+        if FeatureFlags.useFirebaseEmulator {
+            (host: "localhost", port: 9099)
+        } else {
+            nil
+        }
+    }
+}
+
+
+extension FirebaseOptions {
+    convenience init?(_ config: AppConfigFile.FirebaseConfigDictionary) {
+        let fileManager = FileManager.default
+        let tmpUrl = URL.temporaryDirectory.appendingPathComponent("FirebaseConfig", conformingTo: .propertyList)
+        try? fileManager.removeItem(at: tmpUrl)
+        do {
+            try config.asNSDictionary().write(to: tmpUrl)
+        } catch {
+            return nil
+        }
+        defer {
+            try? fileManager.removeItem(at: tmpUrl)
+        }
+        self.init(contentsOfFile: tmpUrl.absoluteURL.path(percentEncoded: false))
     }
 }
