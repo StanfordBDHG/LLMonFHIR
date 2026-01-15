@@ -42,7 +42,8 @@ final class LLMonFHIRDelegate: SpeziAppDelegate {
                 LLMOpenAIPlatform(configuration: .init(
                     authToken: .keychain(tag: .openAIKey, username: "LLMonFHIR_OpenAI_Token"),
                     concurrentStreams: 100,
-                    retryPolicy: .attempts(3)  // Automatically perform up to 3 retries on retryable OpenAI API status codes
+                    retryPolicy: .attempts(3),  // Automatically perform up to 3 retries on retryable OpenAI API status codes
+                    middlewares: [OpenAIRequestInterceptor(fhirInterpretationModule)]
                 ))
                 LLMFogPlatform(configuration: .init(host: "spezillmfog.local", connectionType: .http, authToken: .none))
                 LLMLocalPlatform()
@@ -67,18 +68,14 @@ final class LLMonFHIRDelegate: SpeziAppDelegate {
                 providers: [],
                 emulatorSettings: accountEmulatorSettings
             ),
-//            storageProvider: FirestoreAccountStorage(
-//                storeIn: <#T##CollectionReference#>,
-//                mapping: <#T##[String : any AccountKey.Type]?#>,
-//                encoder: <#T##Firestore.Encoder#>,
-//                decoder: <#T##Firestore.Decoder#>
-//            ),
             configuration: []
         )
         if FeatureFlags.useFirebaseEmulator {
             FirebaseStorageConfiguration(emulatorSettings: (host: "localhost", port: 9199))
+            FirebaseFunctions(emulatorHost: "localhost", port: 5001)
         } else {
             FirebaseStorageConfiguration()
+            FirebaseFunctions()
         }
         FirebaseUpload()
     }

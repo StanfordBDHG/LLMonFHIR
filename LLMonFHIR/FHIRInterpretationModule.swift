@@ -18,20 +18,20 @@ import SwiftUI
 
 
 // periphery:ignore - Properties are used through dependency injection and @Model configuration in `configure()`
-final class FHIRInterpretationModule: Module, EnvironmentAccessible {
-    @Dependency(LocalStorage.self) private var localStorage
-    @Dependency(LLMRunner.self) private var llmRunner
-    @Dependency(FHIRStore.self) private var fhirStore
+final class FHIRInterpretationModule: Module, EnvironmentAccessible, @unchecked Sendable {
+    @ObservationIgnored @MainActor @Dependency(LocalStorage.self) private var localStorage
+    @ObservationIgnored @MainActor @Dependency(LLMRunner.self) private var llmRunner
+    @ObservationIgnored @MainActor @Dependency(FHIRStore.self) private var fhirStore
     
-    @Model private var resourceSummary: FHIRResourceSummary
-    @Model private var resourceInterpreter: FHIRResourceInterpreter
-    @Model private var multipleResourceInterpreter: FHIRMultipleResourceInterpreter
+    @ObservationIgnored @MainActor @Model private var resourceSummary: FHIRResourceSummary
+    @ObservationIgnored @MainActor @Model private var resourceInterpreter: FHIRResourceInterpreter
+    @ObservationIgnored @MainActor @Model private var multipleResourceInterpreter: FHIRMultipleResourceInterpreter
     
-    @LocalPreference(.llmSource) private var llmSource
-    @LocalPreference(.openAIModel) private var openAIModel
-    @LocalPreference(.openAIModelTemperature) private var openAIModelTemperature
-    @LocalPreference(.fogModel) private var fogModel
-    @LocalPreference(.resourceLimit) private var resourceLimit
+    @ObservationIgnored @LocalPreference(.llmSource) private var llmSource
+    @ObservationIgnored @LocalPreference(.openAIModel) private var openAIModel
+    @ObservationIgnored @LocalPreference(.openAIModelTemperature) private var openAIModelTemperature
+    @ObservationIgnored @LocalPreference(.fogModel) private var fogModel
+    @ObservationIgnored @LocalPreference(.resourceLimit) private var resourceLimit
     
     @MainActor var currentStudy: Study? {
         didSet {
@@ -41,7 +41,7 @@ final class FHIRInterpretationModule: Module, EnvironmentAccessible {
         }
     }
     
-    private var updateModelsTask: Task<Void, any Error>?
+    @ObservationIgnored private var updateModelsTask: Task<Void, any Error>?
     
     @MainActor var singleResourceLLMSchema: any LLMSchema {
         switch self.llmSource {
@@ -75,9 +75,10 @@ final class FHIRInterpretationModule: Module, EnvironmentAccessible {
     }
     
     
-    required init() {}
+    nonisolated init() {}
     
     
+    @MainActor
     func configure() {
         self.resourceSummary = FHIRResourceSummary(
             localStorage: localStorage,

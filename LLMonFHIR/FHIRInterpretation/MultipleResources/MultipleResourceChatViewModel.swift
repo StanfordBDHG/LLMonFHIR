@@ -23,7 +23,7 @@ class MultipleResourcesChatViewModel: Sendable {
     var processingState: ProcessingState = .processingSystemPrompts
     
     /// Direct access to the current LLM session for observing state changes
-    var llmSession: LLMSession {
+    var llmSession: any LLMSession {
         interpreter.llmSession
     }
     

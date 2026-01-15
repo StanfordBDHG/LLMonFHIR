@@ -20,6 +20,7 @@ final class FirebaseUpload: Module, EnvironmentAccessible, Sendable {
     func configure() {
         Task {
             do {
+                try? await accountService.logout()
                 try await accountService.signUpAnonymously()
             } catch {
                 logger.error("Error signing in: \(error)")

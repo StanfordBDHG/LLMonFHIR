@@ -59,7 +59,7 @@ extension MultipleResourcesChatViewModel {
         }
         
         
-        func calculateNewProcessingState(basedOn llmSession: LLMSession) async -> ProcessingState {
+        func calculateNewProcessingState(basedOn llmSession: any LLMSession) async -> ProcessingState {
             // Alerts and sheets can not be displayed at the same time.
             if case .error = await llmSession.state {
                 return .error
