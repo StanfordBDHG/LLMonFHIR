@@ -93,10 +93,10 @@ struct SurveyView: View {
                 .frame(maxWidth: .infinity)
                 .padding(4)
         }
-            .padding(.horizontal, -16)
-            .buttonStyle(.borderedProminent)
-            .disabled(!areAllQuestionsAnswered)
-            .listRowBackground(Color.clear)
+        .padding(.horizontal, -16)
+        .buttonStyle(.borderedProminent)
+        .disabled(!areAllQuestionsAnswered)
+        .listRowBackground(Color.clear)
     }
 
     private var toolbar: some ToolbarContent {
@@ -114,6 +114,7 @@ struct SurveyView: View {
                 }
             }
         }
+    }
 
     private var areAllQuestionsAnswered: Bool {
         task.questions.indices.allSatisfy { index in
