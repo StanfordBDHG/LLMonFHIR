@@ -11,9 +11,9 @@ import Foundation
 
 struct AppConfigFile: Codable {
     private enum CodingKeys: String, CodingKey {
-        case appLaunchMode
+        case appLaunchMode = "app_launch_mode"
         case studies
-        case firebaseConfig
+        case firebaseConfig = "firebase_config"
     }
     
     let appLaunchMode: LLMonFHIR.Mode

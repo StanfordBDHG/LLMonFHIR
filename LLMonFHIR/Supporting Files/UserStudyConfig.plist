@@ -2,9 +2,9 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>appLaunchMode</key>
+	<key>app_launch_mode</key>
 	<string>standalone</string>
-	<key>firebaseConfig</key>
+	<key>firebase_config</key>
 	<dict>
 		<key>API_KEY</key>
 		<string>A00000000000000000000000000000000000000</string>
