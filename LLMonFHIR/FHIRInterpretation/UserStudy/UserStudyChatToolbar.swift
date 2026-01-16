@@ -53,7 +53,7 @@ private struct PulsatingEffect: ViewModifier {
 struct UserStudyChatToolbar: ToolbarContent {
     var model: UserStudyChatViewModel
 
-    let isInputDisabled: Bool
+    let enableContinueAction: Bool
     let onDismiss: () -> Void
 
     var body: some ToolbarContent {
@@ -93,14 +93,14 @@ struct UserStudyChatToolbar: ToolbarContent {
             } label: {
                 Label("Next Task", systemImage: "arrow.forward.circle")
                     .accessibilityLabel("Next Task")
-                    .modifier(PulsatingEffect(isEnabled: !isInputDisabled))
+                    .modifier(PulsatingEffect(isEnabled: enableContinueAction))
             }
-            .disabled(isInputDisabled)
+            .disabled(!enableContinueAction)
             if model.navigationState != .completed {
                 if #available(iOS 26.0, *) {
                     button
-                        .if(!isInputDisabled) { $0.buttonStyle(.glassProminent) }
-                        .animation(.interactiveSpring, value: isInputDisabled)
+                        .if(enableContinueAction) { $0.buttonStyle(.glassProminent) }
+                        .animation(.interactiveSpring, value: !enableContinueAction)
                 } else {
                     button
                 }

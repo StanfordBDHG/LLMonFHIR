@@ -25,7 +25,7 @@ struct UserStudyChatView: View {
                 .toolbar {
                     UserStudyChatToolbar(
                         model: model,
-                        isInputDisabled: model.shouldDisableToolbarInput,
+                        enableContinueAction: model.shouldEnableContinueToNextTaskAction,
                         onDismiss: {
                             model.handleDismiss(dismiss: dismiss)
                         }
@@ -81,7 +81,7 @@ struct UserStudyChatView: View {
             MultipleResourcesChatViewProcessingView(model: model)
             ChatView(
                 model.chatBinding,
-                disableInput: model.shouldDisableChatInput,
+                disableInput: !model.shouldEnableChatInput,
                 speechToText: false,
                 messagePendingAnimation: .manual(shouldDisplay: model.showTypingIndicator)
             )

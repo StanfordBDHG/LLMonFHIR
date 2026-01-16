@@ -72,34 +72,31 @@ final class UserStudyChatViewModel: MultipleResourcesChatViewModel, Sendable { /
         study.tasks.firstIndex { $0.id == currentTaskId }.map { $0 + 1 }
     }
     
-    var shouldDisableChatInput: Bool {
+    /// Whether the chat input should currently be enabled, i.e. whether the user should currently be able to write (and submit) chat messages
+    var shouldEnableChatInput: Bool {
         // Always disable during processing
         if isProcessing {
-            return true
+            return false
         }
-
         // If no capacity range is configured for this task, enable chat input
         if !hasConfiguredCapacityForCurrentTask {
             return false
         }
-
         // Disable when the maximum number of messages is reached
-        return isMaxAssistantMessagesReached
+        return !isMaxAssistantMessagesReached
     }
 
-    var shouldDisableToolbarInput: Bool {
-        // Always disable during processing
+    var shouldEnableContinueToNextTaskAction: Bool {
         if isProcessing {
-            return true
-        }
-
-        // If no capacity range is configured for this task, enable toolbar
-        if !hasConfiguredCapacityForCurrentTask {
+            // Always disable during processing
             return false
         }
-
+        if !hasConfiguredCapacityForCurrentTask {
+            // If no capacity range is configured for this task, enable toolbar
+            return true
+        }
         // Disable if the minimum number of messages is not met
-        return !isMinAssistantMessagesReached
+        return isMinAssistantMessagesReached
     }
     
     private var currentTaskId: SurveyTask.ID? {
@@ -151,9 +148,10 @@ final class UserStudyChatViewModel: MultipleResourcesChatViewModel, Sendable { /
     }
 
     
-    func updateProcessingState() async {
-        // Alerts and sheets can not be displayed at the same time.
-        if case let .error(error) = llmSession.state {
+    private func updateProcessingState() async {
+        switch llmSession.state {
+        case .error(let error):
+            // Alerts and sheets can not be displayed at the same time.
             if presentedSheet != nil {
                 // We have to first dismiss all sheets.
                 presentedSheet = nil
@@ -165,17 +163,23 @@ final class UserStudyChatViewModel: MultipleResourcesChatViewModel, Sendable { /
                 llmSession.state = .error(error: error)
             }
             processingState = .error
-            return
+        default:
+            processingState = await processingState.calculateNewProcessingState(basedOn: llmSession)
         }
-        processingState = await processingState.calculateNewProcessingState(basedOn: llmSession)
     }
 
     /// Generates an assistant response if appropriate for the current context
     ///
     /// This method checks if a response is needed and if so, delegates
     /// to the interpreter to generate the actual response.
-    func generateAssistantResponse() async -> LLMContextEntity? {
-        guard let response = await super.generateAssistantResponse(preProcessingStateUpdate: updateProcessingState) else {
+    override func generateAssistantResponse(
+        preProcessingStateUpdate: @escaping () async -> Void = {}
+    ) async -> LLMContextEntity? {
+        let stateUpdate = {
+            await self.updateProcessingState()
+            await preProcessingStateUpdate()
+        }
+        guard let response = await super.generateAssistantResponse(preProcessingStateUpdate: stateUpdate) else {
             return nil
         }
         if let currentTaskId {
@@ -208,8 +212,8 @@ final class UserStudyChatViewModel: MultipleResourcesChatViewModel, Sendable { /
         for (index, answer) in answers.enumerated() {
             try study.submitAnswer(answer, forTaskId: currentTaskId, questionIndex: index)
         }
+//        presentedSheet = nil
         advanceToNextTask()
-        presentedSheet = nil
     }
 
     /// Resets the study to its initial state
@@ -285,7 +289,9 @@ final class UserStudyChatViewModel: MultipleResourcesChatViewModel, Sendable { /
         } else {
             navigationState = .completed
             Task {
+                presentedSheet = .uploadingReport
                 await uploadReport()
+                presentedSheet = nil
             }
         }
     }
