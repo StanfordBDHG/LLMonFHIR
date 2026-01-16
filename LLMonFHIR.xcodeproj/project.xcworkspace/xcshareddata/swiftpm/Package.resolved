@@ -249,8 +249,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/StanfordSpezi/SpeziFoundation.git",
       "state" : {
-        "revision" : "7b1d3f4db9922f0b58f5e02064356e5f7cb77dfd",
-        "version" : "2.6.0"
+        "revision" : "923effb63115b35dff52eb478ac5c761df7e892a",
+        "version" : "2.7.2"
       }
     },
     {
@@ -294,8 +294,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/StanfordSpezi/SpeziStorage.git",
       "state" : {
-        "revision" : "dfba9f0690a1ddfadd761f4f634254bf4406bd12",
-        "version" : "2.1.2"
+        "revision" : "4b700b9ae19e0e003c3102f899adc665b955d7dc",
+        "version" : "2.1.3"
       }
     },
     {
@@ -375,8 +375,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/apple/swift-log",
       "state" : {
-        "revision" : "b1fa4ef41fe21b13120c034854042d12c43f66b2",
-        "version" : "1.7.1"
+        "revision" : "7ee16e465622412764b0ff0c1301801dc71b8f61",
+        "version" : "1.9.0"
       }
     },
     {
@@ -447,8 +447,17 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/SimplyDanny/SwiftLintPlugins",
       "state" : {
-        "revision" : "ecafb5b056cb7995324f0d310a61f30661d00cad",
-        "version" : "0.62.2"
+        "revision" : "c099f18417c53548134830b11669b96ed9801971",
+        "version" : "0.63.1"
+      }
+    },
+    {
+      "identity" : "threadlocal",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/StanfordBDHG/ThreadLocal.git",
+      "state" : {
+        "revision" : "2600d766183e7223f1e951b0ab03bf98738e1ccc",
+        "version" : "0.1.1"
       }
     },
     {
@@ -485,6 +494,15 @@
       "state" : {
         "revision" : "51b5127c7fb6ffac106ad6d199aaa33c5024895f",
         "version" : "6.2.0"
+      }
+    },
+    {
+      "identity" : "zstd",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/StanfordBDHG/zstd.git",
+      "state" : {
+        "revision" : "ae9f20ca2716f2605822ca375995b7d876389b64",
+        "version" : "1.5.8-beta.1"
       }
     }
   ],
