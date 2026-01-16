@@ -1,5 +1,5 @@
 {
-  "originHash" : "4e4b947c99b281d7e755c002b9c27423ecfff87c19d56be06588977d4a1c93d9",
+  "originHash" : "4dd86ab56c4d75e788487482e2add96f8918a0e98a940b5d1f53d5be46abdd62",
   "pins" : [
     {
       "identity" : "abseil-cpp-binary",
@@ -195,8 +195,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/StanfordSpezi/Spezi.git",
       "state" : {
-        "revision" : "b066256d77efbde4e786256819ea8200a3ba330e",
-        "version" : "1.9.3"
+        "revision" : "9786fa758e1f8f43532d7b76f43a5286d12a731f",
+        "version" : "1.10.1"
       }
     },
     {
@@ -267,7 +267,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/StanfordSpezi/SpeziLLM.git",
       "state" : {
-        "revision" : "77dfb8ed9882492fa6536fc95399a35abd6fca4b"
+        "revision" : "b02e6d4f3413c4fa62fc656c76851a35982d7d18",
+        "version" : "0.13.2"
       }
     },
     {
