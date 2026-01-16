@@ -307,7 +307,11 @@ final class UserStudyChatViewModel: MultipleResourcesChatViewModel, Sendable { /
 
     private func generateStudyReport() async -> Data? {
         let report = UserStudyReport(
-            metadata: generateMetadata(),
+            metadata: Metadata(
+                studyID: study.id,
+                startTime: studyStartTime,
+                endTime: Date()
+            ),
             fhirResources: await getFHIRResources(),
             timeline: generateTimeline()
         )
@@ -322,25 +326,15 @@ final class UserStudyChatViewModel: MultipleResourcesChatViewModel, Sendable { /
         }
     }
 
-    private func generateMetadata() -> Metadata {
-        Metadata(
-            studyID: study.id,
-            startTime: studyStartTime,
-            endTime: Date()
-        )
-    }
-
     private func generateTimeline() -> [TimelineEvent] {
-        var timeline: [TimelineEvent] = []
-        let chatMessages = interpreter.llmSession.context.chat.map { message in
+        var timeline: [TimelineEvent] = interpreter.llmSession.context.chat.map { message in
             TimelineEvent.chatMessage(TimelineEvent.ChatMessage(
                 timestamp: message.date,
                 role: message.role.rawValue,
                 content: message.content
             ))
         }
-        timeline.append(contentsOf: chatMessages)
-        let surveyTasks = study.tasks.compactMap { task -> TimelineEvent? in
+        timeline.append(contentsOf: study.tasks.compactMap { task -> TimelineEvent? in
             guard let taskStartTime = taskStartTimes[task.id], let taskEndTime = taskEndTimes[task.id] else {
                 return nil
             }
@@ -358,8 +352,7 @@ final class UserStudyChatViewModel: MultipleResourcesChatViewModel, Sendable { /
                 }
             )
             return TimelineEvent.surveyTask(surveyTask)
-        }
-        timeline.append(contentsOf: surveyTasks)
+        })
         return timeline.sorted { $0.timestamp < $1.timestamp }
     }
 
