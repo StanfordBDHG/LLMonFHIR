@@ -49,7 +49,7 @@ struct UserStudyChatView: View {
                     case .survey:
                         surveySheet()
                     case .uploadingReport:
-                        Text(verbatim: "TODO")
+                        uploadSheet()
                     }
                 }
                 .onChange(of: model.llmSession.state, initial: true) { _, newState in
@@ -135,6 +135,16 @@ struct UserStudyChatView: View {
             TaskInstructionView(task: task, userDisplayableCurrentTaskIdx: taskIdx) {
                 model.presentedSheet = nil
             }
+        }
+    }
+    
+    @ViewBuilder
+    private func uploadSheet() -> some View {
+        BottomSheet {
+            ProgressView("Submitting Results...")
+                .progressViewStyle(.circular)
+                .padding()
+                .interactiveDismissDisabled()
         }
     }
 }

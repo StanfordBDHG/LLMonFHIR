@@ -2235,6 +2235,9 @@
     "Submit" : {
 
     },
+    "Submitting Results..." : {
+
+    },
     "SUMMARY_PROMPT" : {
       "comment" : "Title of the summary prompt.",
       "extractionState" : "manual",

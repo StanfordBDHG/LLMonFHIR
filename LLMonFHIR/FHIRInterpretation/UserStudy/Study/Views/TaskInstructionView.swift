@@ -13,11 +13,10 @@ struct TaskInstructionView: View {
     let userDisplayableCurrentTaskIdx: Int
     /// Called when the sheet should be dismissed
     let onDismiss: @MainActor () -> Void
-    @State private var sheetHeight: CGFloat = .zero
 
     var body: some View {
-        NavigationStack {
-            ScrollView {
+        BottomSheet {
+            Group {
                 if let instructions = task.instructions {
                     Text(instructions)
                         .padding()
@@ -25,12 +24,8 @@ struct TaskInstructionView: View {
                         .background(Color(UIColor.secondarySystemGroupedBackground))
                         .cornerRadius(10)
                         .padding()
-                        .onHeightChange {
-                            sheetHeight = $0 + 100
-                        }
                 }
             }
-            .background(Color(UIColor.systemGroupedBackground))
             .navigationTitle("Task \(userDisplayableCurrentTaskIdx)")
             .transforming {
                 if #available(iOS 26, *), let title = task.title {
@@ -42,7 +37,7 @@ struct TaskInstructionView: View {
             .navigationBarTitleDisplayMode(.inline)
             .toolbar { toolbar }
         }
-        .presentationDetents(sheetHeight == .zero ? [.medium] : [.height(sheetHeight)])
+        .background(Color(UIColor.systemGroupedBackground))
     }
     
     private var toolbar: some ToolbarContent {
@@ -60,26 +55,5 @@ struct TaskInstructionView: View {
                 }
             }
         }
-    }
-}
-
-extension View {
-    func onHeightChange(completion: @escaping (CGFloat) -> Void) -> some View {
-        background(
-            GeometryReader { geometry in
-                Color.clear
-                    .onAppear {
-                        completion(geometry.size.height)
-                    }
-                    .onChange(of: geometry.size.height) { _, newHeight in
-                        completion(newHeight)
-                    }
-            }
-        )
-    }
-    
-    @ViewBuilder
-    func transforming(@ViewBuilder _ transform: (Self) -> some View) -> some View {
-        transform(self)
     }
 }
