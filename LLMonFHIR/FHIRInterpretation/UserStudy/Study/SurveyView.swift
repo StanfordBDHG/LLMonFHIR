@@ -51,11 +51,11 @@ struct SurveyView: View {
     /// The task's index within its containing survey
     let taskIdx: Int
 
-    /// Controls whether this view is currently displayed
-    @Binding var isPresented: Bool
-
     /// Callback to invoke when the survey is submitted
-    let onSubmit: ([TaskQuestionAnswer]) async -> Void
+    let onSubmit: @MainActor ([TaskQuestionAnswer]) async -> Void
+    
+    /// Called when the sheet should be dismissed
+    let onDismiss: @MainActor () -> Void
 
     /// The state object managing all answers
     @State private var answerState = SurveyAnswerState()
@@ -71,11 +71,7 @@ struct SurveyView: View {
             }
             .navigationTitle("Task \(taskIdx + 1)")
             .navigationBarTitleDisplayMode(.automatic)
-            .toolbar {
-                ToolbarItem {
-                    dismissButton
-                }
-            }
+            .toolbar { toolbar }
             .interactiveDismissDisabled()
         }
     }
@@ -103,14 +99,21 @@ struct SurveyView: View {
             .listRowBackground(Color.clear)
     }
 
-    private var dismissButton: some View {
-        Button {
-            isPresented = false
-        } label: {
-            Label("Dismiss", systemImage: "xmark")
-                .accessibilityLabel("Dismiss")
+    private var toolbar: some ToolbarContent {
+        ToolbarItem {
+            if #available(iOS 26, *) {
+                Button(role: .close) {
+                    onDismiss()
+                }
+            } else {
+                Button {
+                    onDismiss()
+                } label: {
+                    Label("Dismiss", systemImage: "xmark")
+                        .accessibilityLabel("Dismiss")
+                }
+            }
         }
-    }
 
     private var areAllQuestionsAnswered: Bool {
         task.questions.indices.allSatisfy { index in
@@ -126,6 +129,6 @@ struct SurveyView: View {
     private func handleSubmit() async {
         let answers = answerState.getAnswers(for: task.questions)
         await onSubmit(answers)
-        isPresented = false
+        onDismiss()
     }
 }

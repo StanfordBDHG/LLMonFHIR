@@ -38,19 +38,26 @@ final class UserStudyChatViewModel: MultipleResourcesChatViewModel, Sendable { /
         }
     }
     
+    enum PresentedSheet: Hashable, Identifiable {
+        case instructions
+        case survey
+        case uploadingReport
+        
+        var id: some Hashable {
+            self
+        }
+    }
+    
     private let uploader: FirebaseUpload?
 
     /// The current navigation state of the study
     private(set) var navigationState: NavigationState = .introduction
-
-    /// Controls the visibility of the survey view
-    var isSurveyViewPresented = false
+    
+    /// The currently-presented sheet
+    var presentedSheet: PresentedSheet?
 
     /// Controls the visibility of the dismiss confirmation dialog
     var isDismissDialogPresented = false
-
-    /// Controls the visibility of the task instruction alert
-    var isTaskInstructionsSheetPresented = false
 
     var isTaskIntructionButtonDisabled: Bool {
         study.tasks.first { $0.id == currentTaskId }?.instructions == nil
@@ -147,10 +154,9 @@ final class UserStudyChatViewModel: MultipleResourcesChatViewModel, Sendable { /
     func updateProcessingState() async {
         // Alerts and sheets can not be displayed at the same time.
         if case let .error(error) = llmSession.state {
-            if isSurveyViewPresented || isTaskInstructionsSheetPresented {
+            if presentedSheet != nil {
                 // We have to first dismiss all sheets.
-                isSurveyViewPresented = false
-                isTaskInstructionsSheetPresented = false
+                presentedSheet = nil
                 // Wait for animation to complete
                 try? await Task.sleep(for: .seconds(1))
                 // Re-set the error state.
@@ -203,7 +209,7 @@ final class UserStudyChatViewModel: MultipleResourcesChatViewModel, Sendable { /
             try study.submitAnswer(answer, forTaskId: currentTaskId, questionIndex: index)
         }
         advanceToNextTask()
-        isSurveyViewPresented = false
+        presentedSheet = nil
     }
 
     /// Resets the study to its initial state
@@ -230,7 +236,7 @@ final class UserStudyChatViewModel: MultipleResourcesChatViewModel, Sendable { /
             numTotalTasks: study.tasks.count
         )
         taskStartTimes[taskId] = Date()
-        isTaskInstructionsSheetPresented = true
+        presentedSheet = .instructions
     }
 
     /// Generates a temporary file URL containing the study report
@@ -275,7 +281,7 @@ final class UserStudyChatViewModel: MultipleResourcesChatViewModel, Sendable { /
                 numTotalTasks: study.tasks.count
             )
             taskStartTimes[nextTask.id] = Date()
-            isTaskInstructionsSheetPresented = true
+            presentedSheet = .instructions
         } else {
             navigationState = .completed
             Task {

@@ -18,13 +18,13 @@ import SwiftUI
 
 struct MultipleResourcesChatView: View {
     @Environment(\.dismiss) private var dismiss
-    @State private var viewModel: MultipleResourcesChatViewModel
+    @State private var model: MultipleResourcesChatViewModel
     @LocalPreference(.enableTextToSpeech) private var textToSpeech
     
     var body: some View {
         NavigationStack {
             chatView
-                .navigationTitle(viewModel.navigationTitle)
+                .navigationTitle(model.navigationTitle)
                 .toolbar { toolbarContent }
         }
         .interactiveDismissDisabled()
@@ -32,29 +32,29 @@ struct MultipleResourcesChatView: View {
     
     private var chatView: some View {
         VStack {
-            MultipleResourcesChatViewProcessingView(viewModel: viewModel)
+            MultipleResourcesChatViewProcessingView(model: model)
             ChatView(
-                viewModel.chatBinding,
-                disableInput: viewModel.isProcessing,
+                model.chatBinding,
+                disableInput: model.isProcessing,
                 exportFormat: .text,
-                messagePendingAnimation: .manual(shouldDisplay: viewModel.showTypingIndicator)
+                messagePendingAnimation: .manual(shouldDisplay: model.showTypingIndicator)
             )
-            .speak(viewModel.llmSession.context.chat, muted: !textToSpeech)
+            .speak(model.llmSession.context.chat, muted: !textToSpeech)
             .speechToolbarButton(muted: !$textToSpeech)
-            .viewStateAlert(state: viewModel.llmSession.state)
-            .onChange(of: viewModel.llmSession.context, initial: true) {
+            .viewStateAlert(state: model.llmSession.state)
+            .onChange(of: model.llmSession.context, initial: true) {
                 Task {
-                    _ = await viewModel.generateAssistantResponse()
+                    _ = await model.generateAssistantResponse()
                 }
             }
         }
-        .animation(.easeInOut(duration: 0.4), value: viewModel.isProcessing)
+        .animation(.easeInOut(duration: 0.4), value: model.isProcessing)
     }
 
     @ToolbarContentBuilder private var toolbarContent: some ToolbarContent {
         ToolbarItem {
             Button {
-                viewModel.dismiss(dismiss)
+                model.dismiss(dismiss)
             } label: {
                 Label("Dismiss", systemImage: "xmark")
                     .accessibilityLabel("Dismiss")
@@ -62,12 +62,12 @@ struct MultipleResourcesChatView: View {
         }
         ToolbarItem(placement: .primaryAction) {
             Button {
-                viewModel.startNewConversation(for: nil)
+                model.startNewConversation(for: nil)
             } label: {
                 Image(systemName: "trash")
                     .accessibilityLabel(Text("Reset Chat"))
             }
-            .disabled(viewModel.isProcessing)
+            .disabled(model.isProcessing)
         }
     }
 
@@ -82,7 +82,7 @@ struct MultipleResourcesChatView: View {
     ///   - navigationTitle: The title to display in the navigation bar
     ///   - textToSpeech: A binding to control whether spoken feedback is enabled
     init(interpreter: FHIRMultipleResourceInterpreter, navigationTitle: String) {
-        viewModel = MultipleResourcesChatViewModel(
+        model = MultipleResourcesChatViewModel(
             interpreter: interpreter,
             navigationTitle: navigationTitle
         )

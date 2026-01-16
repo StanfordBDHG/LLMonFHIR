@@ -11,7 +11,8 @@ import SwiftUI
 struct TaskInstructionView: View {
     let task: SurveyTask
     let userDisplayableCurrentTaskIdx: Int
-    @Binding var isPresented: Bool
+    /// Called when the sheet should be dismissed
+    let onDismiss: @MainActor () -> Void
     @State private var sheetHeight: CGFloat = .zero
 
     var body: some View {
@@ -39,18 +40,26 @@ struct TaskInstructionView: View {
                 }
             }
             .navigationBarTitleDisplayMode(.inline)
-            .toolbar {
-                ToolbarItem {
-                    Button {
-                        isPresented = false
-                    } label: {
-                        Label("Dismiss", systemImage: "xmark")
-                            .accessibilityLabel("Dismiss")
-                    }
+            .toolbar { toolbar }
+        }
+        .presentationDetents(sheetHeight == .zero ? [.medium] : [.height(sheetHeight)])
+    }
+    
+    private var toolbar: some ToolbarContent {
+        ToolbarItem {
+            if #available(iOS 26, *) {
+                Button(role: .close) {
+                    onDismiss()
+                }
+            } else {
+                Button {
+                    onDismiss()
+                } label: {
+                    Label("Dismiss", systemImage: "xmark")
+                        .accessibilityLabel("Dismiss")
                 }
             }
         }
-        .presentationDetents(sheetHeight == .zero ? [.medium] : [.height(sheetHeight)])
     }
 }
 

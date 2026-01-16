@@ -13,48 +13,51 @@ import SwiftUI
 
 struct UserStudyChatView: View {
     @Environment(\.dismiss) private var dismiss
-    @State private var viewModel: UserStudyChatViewModel
+    @State private var model: UserStudyChatViewModel
     @State private var viewState: ViewState = .idle
     
     var body: some View {
-        @Bindable var viewModel = viewModel
+        @Bindable var model = model
         NavigationStack { // swiftlint:disable:this closure_body_length
             chatView
-                .navigationTitle(viewModel.navigationState.title)
+                .navigationTitle(model.navigationState.title)
                 .navigationBarTitleDisplayMode(.inline)
                 .toolbar {
                     UserStudyChatToolbar(
-                        viewModel: viewModel,
-                        isInputDisabled: viewModel.shouldDisableToolbarInput,
+                        model: model,
+                        isInputDisabled: model.shouldDisableToolbarInput,
                         onDismiss: {
-                            viewModel.handleDismiss(dismiss: dismiss)
+                            model.handleDismiss(dismiss: dismiss)
                         }
                     )
                 }
                 .toolbar {
                     ToolbarItem(placement: .topBarTrailing) {
                         Button {
-                            viewModel.isTaskInstructionsSheetPresented = true
+                            model.presentedSheet = .instructions
                         } label: {
                             Image(systemName: "info.circle")
                                 .accessibilityHidden(true)
                         }
-                        .disabled(viewModel.isTaskIntructionButtonDisabled)
+                        .disabled(model.isTaskIntructionButtonDisabled)
                     }
                 }
-                .sheet(isPresented: $viewModel.isSurveyViewPresented) {
-                    surveySheet()
+                .sheet(item: $model.presentedSheet) { sheet in
+                    switch sheet {
+                    case .instructions:
+                        taskInstructionSheet()
+                    case .survey:
+                        surveySheet()
+                    case .uploadingReport:
+                        Text(verbatim: "TODO")
+                    }
                 }
-                .sheet(isPresented: $viewModel.isTaskInstructionsSheetPresented) {
-                    taskInstructionSheet()
-                }
-                .onChange(of: viewModel.llmSession.state, initial: true) { _, newState in
+                .onChange(of: model.llmSession.state, initial: true) { _, newState in
                     switch newState {
                     case .error(let error):
                         Task {
                             try await Task.sleep(for: .seconds(0.5))
-                            viewModel.isSurveyViewPresented = false
-                            viewModel.isTaskInstructionsSheetPresented = false
+                            model.presentedSheet = nil
                             try await Task.sleep(for: .seconds(0.5))
                             viewState = .error(AnyLocalizedError(error: error))
                         }
@@ -63,10 +66,10 @@ struct UserStudyChatView: View {
                     }
                 }
                 .viewStateAlert(state: $viewState)
-                .onAppear(perform: viewModel.startSurvey)
-                .onChange(of: viewModel.llmSession.context, initial: true) {
+                .onAppear(perform: model.startSurvey)
+                .onChange(of: model.llmSession.context, initial: true) {
                     Task {
-                        _ = await viewModel.generateAssistantResponse()
+                        _ = await model.generateAssistantResponse()
                     }
                 }
         }
@@ -75,15 +78,15 @@ struct UserStudyChatView: View {
     
     @ViewBuilder private var chatView: some View {
         VStack {
-            MultipleResourcesChatViewProcessingView(viewModel: viewModel)
+            MultipleResourcesChatViewProcessingView(model: model)
             ChatView(
-                viewModel.chatBinding,
-                disableInput: viewModel.shouldDisableChatInput,
+                model.chatBinding,
+                disableInput: model.shouldDisableChatInput,
                 speechToText: false,
-                messagePendingAnimation: .manual(shouldDisplay: viewModel.showTypingIndicator)
+                messagePendingAnimation: .manual(shouldDisplay: model.showTypingIndicator)
             )
         }
-        .animation(.easeInOut(duration: 0.4), value: viewModel.isProcessing)
+        .animation(.easeInOut(duration: 0.4), value: model.isProcessing)
     }
     
     /// Creates a new user study chat view
@@ -101,7 +104,7 @@ struct UserStudyChatView: View {
         resourceSummary: FHIRResourceSummary,
         uploader: FirebaseUpload?
     ) {
-        viewModel = UserStudyChatViewModel(
+        model = UserStudyChatViewModel(
             study: study,
             interpreter: interpreter,
             resourceSummary: resourceSummary,
@@ -112,18 +115,15 @@ struct UserStudyChatView: View {
     
     @ViewBuilder
     private func surveySheet() -> some View {
-        @Bindable var viewModel = viewModel
-        if let task = viewModel.currentTask, let taskIdx = viewModel.userDisplayableCurrentTaskIdx {
-            SurveyView(
-                task: task,
-                taskIdx: taskIdx,
-                isPresented: $viewModel.isSurveyViewPresented
-            ) { answers in
+        if let task = model.currentTask, let taskIdx = model.userDisplayableCurrentTaskIdx {
+            SurveyView(task: task, taskIdx: taskIdx) { answers in
                 do {
-                    try viewModel.submitSurveyAnswers(answers)
+                    try model.submitSurveyAnswers(answers)
                 } catch {
                     print("Error submitting answers: \(error)")
                 }
+            } onDismiss: {
+                model.presentedSheet = nil
             }
             .presentationDetents([.large])
         }
@@ -131,12 +131,10 @@ struct UserStudyChatView: View {
     
     @ViewBuilder
     private func taskInstructionSheet() -> some View {
-        if let task = viewModel.currentTask, let taskIdx = viewModel.userDisplayableCurrentTaskIdx {
-            TaskInstructionView(
-                task: task,
-                userDisplayableCurrentTaskIdx: taskIdx,
-                isPresented: $viewModel.isTaskInstructionsSheetPresented
-            )
+        if let task = model.currentTask, let taskIdx = model.userDisplayableCurrentTaskIdx {
+            TaskInstructionView(task: task, userDisplayableCurrentTaskIdx: taskIdx) {
+                model.presentedSheet = nil
+            }
         }
     }
 }
