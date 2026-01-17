@@ -28,6 +28,8 @@ struct StudyHomeView: View {
     @WaitingState private var waitingState
     
     @State private var study: Study?
+    @State private var studyUserInfo: [String: String]
+    
     @State private var isPresentingEarliestHealthRecords = false
     @State private var isPresentingQRCodeScanner = false
     
@@ -53,8 +55,9 @@ struct StudyHomeView: View {
                         return .stopScanning
                     }
                     do {
-                        study = try StudyQRCodeHandler.processQRCode(payload: payload)
+                        let scanResult = try StudyQRCodeHandler.processQRCode(payload: payload)
                         isPresentingQRCodeScanner = false
+                        study = scanResult.study
                         return .stopScanning
                     } catch {
                         print("Failed to start study: \(error)")
@@ -64,6 +67,7 @@ struct StudyHomeView: View {
                 .fullScreenCover(item: $fhirInterpretationModule.currentStudy) { study in
                     UserStudyChatView(
                         study: study,
+                        userInfo: studyUserInfo,
                         interpreter: interpreter,
                         resourceSummary: resourceSummary,
                         uploader: uploader
@@ -212,8 +216,14 @@ struct StudyHomeView: View {
         }
     }
     
-    init(study: Study?) {
+    init(study: Study, userInfo: [String: String]) {
         _study = .init(initialValue: study)
+        _studyUserInfo = .init(initialValue: userInfo)
+    }
+    
+    init() {
+        _study = .init(initialValue: nil)
+        _studyUserInfo = .init(initialValue: [:])
     }
     
     /// Persists the OpenAI token of the user study in the keychain, if no other token already exists.

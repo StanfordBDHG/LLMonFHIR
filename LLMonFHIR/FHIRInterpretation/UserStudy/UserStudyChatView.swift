@@ -100,12 +100,14 @@ struct UserStudyChatView: View {
     ///   - resourceSummary: The FHIR resource summary provider for generating summaries of FHIR resources
     init(
         study: Study,
+        userInfo: [String: String],
         interpreter: FHIRMultipleResourceInterpreter,
         resourceSummary: FHIRResourceSummary,
         uploader: FirebaseUpload?
     ) {
         model = UserStudyChatViewModel(
             study: study,
+            userInfo: userInfo,
             interpreter: interpreter,
             resourceSummary: resourceSummary,
             uploader: uploader

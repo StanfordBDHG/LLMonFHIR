@@ -109,6 +109,8 @@ final class UserStudyChatViewModel: MultipleResourcesChatViewModel, Sendable { /
     }
 
     let study: Study
+    /// Additional key-value pairs associated with this particular study session (e.g., a participant id).
+    private let userInfo: [String: String]
     private let resourceSummary: FHIRResourceSummary
     private let studyStartTime = Date()
     private var taskStartTimes: [SurveyTask.ID: Date] = [:]
@@ -136,11 +138,13 @@ final class UserStudyChatViewModel: MultipleResourcesChatViewModel, Sendable { /
     ///   - resourceSummary: The FHIR resource summary provider for generating summaries of FHIR resources
     init(
         study: Study,
+        userInfo: [String: String],
         interpreter: FHIRMultipleResourceInterpreter,
         resourceSummary: FHIRResourceSummary,
         uploader: FirebaseUpload?
     ) {
         self.study = study
+        self.userInfo = userInfo
         self.resourceSummary = resourceSummary
         self.uploader = uploader
         super.init(interpreter: interpreter, navigationTitle: "")
@@ -316,7 +320,8 @@ final class UserStudyChatViewModel: MultipleResourcesChatViewModel, Sendable { /
             metadata: Metadata(
                 studyID: study.id,
                 startTime: studyStartTime,
-                endTime: Date()
+                endTime: Date(),
+                userInfo: userInfo
             ),
             fhirResources: await getFHIRResources(),
             timeline: generateTimeline()

@@ -12,7 +12,7 @@ import CryptoKit
 import Foundation
 
 
-/// Manages a collection of survey tasks and their responses
+/// Manages a collection of survey tasks and their responses.
 final class Study: Identifiable {
     enum OpenAIEndpointConfig: Equatable {
         /// The study uses the regular OpenAI API to generate chat completions
@@ -75,6 +75,17 @@ final class Study: Identifiable {
         self.summarizeSingleResourcePrompt = summarizeSingleResourcePrompt ?? .summarizeSingleFHIRResourceDefaultPrompt
         self.interpretMultipleResourcesPrompt = interpretMultipleResourcesPrompt ?? .interpretMultipleResourcesDefaultPrompt
         self.tasks = tasks
+    }
+}
+
+
+extension Study: Hashable {
+    static func == (lhs: Study, rhs: Study) -> Bool {
+        ObjectIdentifier(lhs) == ObjectIdentifier(rhs)
+    }
+    
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(ObjectIdentifier(self))
     }
 }
 

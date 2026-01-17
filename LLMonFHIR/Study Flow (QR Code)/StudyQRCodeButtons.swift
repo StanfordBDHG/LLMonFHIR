@@ -14,7 +14,7 @@ import SwiftUI
 
 /// A `Button` that opens the study enrollment QR code scanner.
 struct ScanQRCodeButton: View {
-    let didScan: @MainActor (Study) -> Void
+    let didScan: @MainActor (StudyQRCodeHandler.ScanResult) -> Void
     @State private var showQRCodeScanner = false
     
     var body: some View {

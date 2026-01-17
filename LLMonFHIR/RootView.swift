@@ -23,9 +23,9 @@ struct RootView: View {
                     HomeView()
                 case .study(let studyId):
                     if let studyId, let study = AppConfigFile.current().studies.first(where: { $0.id == studyId }) {
-                        StudyHomeView(study: study)
+                        StudyHomeView(study: study, userInfo: [:])
                     } else {
-                        StudyHomeView(study: nil)
+                        StudyHomeView()
                     }
                 }
             }

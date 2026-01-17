@@ -9,10 +9,11 @@
 import Spezi
 import SwiftUI
 
+
 struct HomeView: View {
     @Environment(FHIRMultipleResourceInterpreter.self) var interpreter
     @State private var showMultipleResourcesChat = false
-    @State private var study: Study?
+    @State private var qrCodeScanResult: StudyQRCodeHandler.ScanResult?
 
     var body: some View {
         NavigationStack {
@@ -28,8 +29,8 @@ struct HomeView: View {
                     navigationTitle: "LLM on FHIR"
                 )
             }
-            .fullScreenCover(item: $study) { study in
-                StudyHomeView(study: study)
+            .fullScreenCover(item: $qrCodeScanResult, id: \.self) { scanResult in
+                StudyHomeView(study: scanResult.study, userInfo: scanResult.userInfo)
             }
         }
     }
@@ -37,10 +38,10 @@ struct HomeView: View {
     @ToolbarContentBuilder private var toolbarContent: some ToolbarContent {
         ToolbarItem(placement: .topBarLeading) {
             ScanQRCodeButton { study in
-                guard self.study == nil else {
+                guard self.qrCodeScanResult == nil else {
                     return
                 }
-                self.study = study
+                self.qrCodeScanResult = study
             }
         }
         ToolbarItem(placement: .topBarTrailing) {
