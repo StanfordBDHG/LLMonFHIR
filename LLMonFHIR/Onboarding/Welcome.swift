@@ -49,6 +49,13 @@ struct Welcome: View {
                 managedNavigationStackPath.nextStep()
             }
         )
+        .toolbar {
+            if ProcessInfo.processInfo.isiOSAppOnMac {
+                ToolbarItem(placement: .topBarLeading) {
+                    CreateQRCodeButton()
+                }
+            }
+        }
     }
 }
 

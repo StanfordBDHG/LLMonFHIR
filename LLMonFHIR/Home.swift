@@ -36,7 +36,7 @@ struct HomeView: View {
 
     @ToolbarContentBuilder private var toolbarContent: some ToolbarContent {
         ToolbarItem(placement: .topBarLeading) {
-            StudyQRCodeButton { study in
+            ScanQRCodeButton { study in
                 guard self.study == nil else {
                     return
                 }
