@@ -960,7 +960,7 @@
 			repositoryURL = "https://github.com/StanfordSpezi/SpeziFoundation.git";
 			requirement = {
 				kind = upToNextMajorVersion;
-				minimumVersion = 2.6.0;
+				minimumVersion = 2.7.2;
 			};
 		};
 		80A98FA42F13DA5C00BDD5B7 /* XCRemoteSwiftPackageReference "SpeziFHIR" */ = {
