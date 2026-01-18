@@ -58,6 +58,10 @@ final class UserStudyChatViewModel: MultipleResourcesChatViewModel, Sendable { /
 
     /// Controls the visibility of the dismiss confirmation dialog
     var isDismissDialogPresented = false
+    
+    var isUploadingReport: Bool {
+        presentedSheet == .uploadingReport
+    }
 
     var isTaskIntructionButtonDisabled: Bool {
         study.tasks.first { $0.id == currentTaskId }?.instructions == nil
@@ -216,7 +220,6 @@ final class UserStudyChatViewModel: MultipleResourcesChatViewModel, Sendable { /
         for (index, answer) in answers.enumerated() {
             try study.submitAnswer(answer, forTaskId: currentTaskId, questionIndex: index)
         }
-//        presentedSheet = nil
         advanceToNextTask()
     }
 
@@ -250,11 +253,11 @@ final class UserStudyChatViewModel: MultipleResourcesChatViewModel, Sendable { /
     /// Generates a temporary file URL containing the study report
     ///
     /// - Returns: The URL of the generated report file, or nil if generation fails
-    func generateStudyReportFile() async throws -> URL? {
+    func generateStudyReportFile(encryptIfPossible: Bool) async throws -> URL? {
         guard var studyReport = await generateStudyReport() else {
             return nil
         }
-        if let key = study.encryptionKey {
+        if encryptIfPossible, let key = study.encryptionKey {
             studyReport = try studyReport.encrypted(using: key)
         }
         let tempDir = FileManager.default.temporaryDirectory
@@ -305,7 +308,11 @@ final class UserStudyChatViewModel: MultipleResourcesChatViewModel, Sendable { /
             return
         }
         do {
-            guard let reportFile = try await generateStudyReportFile() else {
+            // This sleep is exclusively for cosmetic reasons;
+            // it allows the "submitting response" sheet to stick around long enough for the user to read the text.
+            // Otherwise, there would be no indication in the UI that the upload actually took place & succeeded.
+            try await Task.sleep(for: .seconds(0.5))
+            guard let reportFile = try await generateStudyReportFile(encryptIfPossible: false) else {
                 return
             }
             try await uploader.uploadReport(at: reportFile, for: study)

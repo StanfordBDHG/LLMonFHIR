@@ -51,6 +51,8 @@ private struct PulsatingEffect: ViewModifier {
 
 
 struct UserStudyChatToolbar: ToolbarContent {
+    @Environment(FirebaseUpload.self) private var uploader: FirebaseUpload?
+    
     var model: UserStudyChatViewModel
 
     let enableContinueAction: Bool
@@ -108,10 +110,13 @@ struct UserStudyChatToolbar: ToolbarContent {
         }
     }
     
-    private var shareButton: some ToolbarContent {
-        ToolbarItemGroup(placement: .topBarTrailing) {
-            if model.navigationState == .completed {
-                ShareButton(model: model)
+    @ToolbarContentBuilder private var shareButton: some ToolbarContent {
+        // we only show the share button if no firebase upload is taking place.
+        if uploader == nil {
+            ToolbarItemGroup(placement: .topBarTrailing) {
+                if model.navigationState == .completed {
+                    ShareButton(model: model)
+                }
             }
         }
     }
@@ -130,7 +135,7 @@ extension UserStudyChatToolbar {
             // (with no indication on the view that it is active), while the custom approach here is way faster,
             // and also somehow gets us a significantly nicer-looking share sheet...
             AsyncButton(state: $viewState) {
-                reportUrl = try await model.generateStudyReportFile()
+                reportUrl = try await model.generateStudyReportFile(encryptIfPossible: true)
             } label: {
                 Image(systemName: "square.and.arrow.up")
                     .accessibilityLabel("Share Survey Results")
