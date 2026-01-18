@@ -16,7 +16,7 @@ import OpenAPIRuntime
 
 struct OpenAIRequestInterceptor: ClientMiddleware, Sendable {
     private struct Error: Swift.Error {
-        let message: String
+        let message: String // periphery:ignore - API
         init(_ message: String) {
             self.message = message
         }

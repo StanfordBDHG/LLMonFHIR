@@ -109,10 +109,6 @@ extension AppConfigFile {
         
         private let entries: [String: Value]
         
-        private init(_ entries: [String: Value]) {
-            self.entries = entries
-        }
-        
         init(from decoder: any Decoder) throws {
             let container = try decoder.singleValueContainer()
             entries = try container.decode([String: Value].self)

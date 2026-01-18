@@ -58,10 +58,6 @@ final class UserStudyChatViewModel: MultipleResourcesChatViewModel, Sendable { /
 
     /// Controls the visibility of the dismiss confirmation dialog
     var isDismissDialogPresented = false
-    
-    var isUploadingReport: Bool {
-        presentedSheet == .uploadingReport
-    }
 
     var isTaskIntructionButtonDisabled: Bool {
         study.tasks.first { $0.id == currentTaskId }?.instructions == nil
