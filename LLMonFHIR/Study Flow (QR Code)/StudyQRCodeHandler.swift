@@ -45,9 +45,10 @@ enum StudyQRCodeHandler {
 extension StudyQRCodeHandler {
     struct QRCodePayload: Codable {
         enum CodingKeys: String, CodingKey {
-            case studyId = "id"
-            case expires
-            case userInfo
+            // using short keys to reduce the amount of data going into the QR code.
+            case studyId = "s"
+            case expires = "e"
+            case userInfo = "i"
         }
         
         let studyId: String
@@ -64,7 +65,7 @@ extension StudyQRCodeHandler {
             self.init(
                 studyId: studyId,
                 expires: expires,
-                userInfo: participantId.isEmpty ? [:] : ["participantId": participantId]
+                userInfo: participantId.isEmpty ? [:] : ["pid": participantId]
             )
         }
         
@@ -73,13 +74,6 @@ extension StudyQRCodeHandler {
             studyId = try container.decode(String.self, forKey: .studyId)
             expires = try container.decodeIfPresent(Date.self, forKey: .expires)
             userInfo = try container.decodeIfPresent([String: String].self, forKey: .userInfo) ?? [:]
-        }
-        
-        init(qrCodePayload payload: String) throws {
-            let decoder = JSONDecoder()
-            decoder.dateDecodingStrategy = .iso8601
-            let data = Data(payload.utf8)
-            self = try decoder.decode(Self.self, from: data)
         }
         
         func encode(to encoder: any Encoder) throws {
@@ -91,12 +85,48 @@ extension StudyQRCodeHandler {
                 forKey: .userInfo
             )
         }
-        
-        func qrCodePayload() throws -> String {
-            let encoder = JSONEncoder()
-            encoder.dateEncodingStrategy = .iso8601
-            let data = try encoder.encode(self)
-            return String(decoding: data, as: UTF8.self)
-        }
+    }
+}
+
+
+extension StudyQRCodeHandler.QRCodePayload {
+    init(qrCodePayload payload: String) throws {
+        let decoder = JSONDecoder()
+        decoder.dateDecodingStrategy = .roundedUnixTimestamp
+        let data = Data(payload.utf8)
+        self = try decoder.decode(Self.self, from: data)
+    }
+    
+    func qrCodePayload() throws -> String {
+        let encoder = JSONEncoder()
+        encoder.dateEncodingStrategy = .roundedUnixTimestamp
+        let data = try encoder.encode(self)
+        return String(decoding: data, as: UTF8.self)
+    }
+}
+
+
+extension JSONEncoder.DateEncodingStrategy {
+    /// A date encoding strategy that represents `Date` values as floored unix timestamps (i.e., rounded down to the next second).
+    ///
+    /// The motivation here is to be able to save on bytes when storing a `Date` in a QR code.
+    /// This does result in a small loss in precision, but allows us to save ~41% of the bytes required to store the value.
+    static let roundedUnixTimestamp = Self.custom { date, encoder in
+        let timestamp = Int(date.timeIntervalSince1970)
+        var container = encoder.singleValueContainer()
+        try container.encode(timestamp)
+    }
+}
+
+
+extension JSONDecoder.DateDecodingStrategy {
+    /// A date decoding strategy that represents `Date` values as floored unix timestamps (i.e., rounded down to the next second).
+    ///
+    /// The motivation here is to be able to save on bytes when storing a `Date` in a QR code.
+    /// This does result in a small loss in precision, but allows us to save ~41% of the bytes required to store the value.
+    static let roundedUnixTimestamp = Self.custom { decoder in
+        let container = try decoder.singleValueContainer()
+        let timestamp = try container.decode(Int.self)
+        return Date(timeIntervalSince1970: TimeInterval(timestamp))
     }
 }
