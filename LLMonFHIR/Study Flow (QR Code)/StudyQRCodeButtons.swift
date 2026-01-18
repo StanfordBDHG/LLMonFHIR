@@ -12,21 +12,9 @@ import Foundation
 import SwiftUI
 
 
-struct StudyQRCodeButton: View {
-    let didScan: @MainActor (Study) -> Void
-    
-    var body: some View {
-        if ProcessInfo.processInfo.isiOSAppOnMac {
-            CreateQRCodeButton()
-        } else {
-            ScanQRCodeButton(didScan: didScan)
-        }
-    }
-}
-
-
-private struct ScanQRCodeButton: View {
-    let didScan: @MainActor (Study) -> Void
+/// A `Button` that opens the study enrollment QR code scanner.
+struct ScanQRCodeButton: View {
+    let didScan: @MainActor (StudyQRCodeHandler.ScanResult) -> Void
     @State private var showQRCodeScanner = false
     
     var body: some View {
@@ -50,7 +38,8 @@ private struct ScanQRCodeButton: View {
 }
 
 
-private struct CreateQRCodeButton: View {
+/// A `Button` that opens the study enrollment QR code generator.
+struct CreateQRCodeButton: View {
     @State private var isPresented = false
     
     var body: some View {

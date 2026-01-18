@@ -12,8 +12,15 @@ import CryptoKit
 import Foundation
 
 
-/// Manages a collection of survey tasks and their responses
+/// Manages a collection of survey tasks and their responses.
 final class Study: Identifiable {
+    enum OpenAIEndpointConfig: Equatable {
+        /// The study uses the regular OpenAI API to generate chat completions
+        case regular
+        /// The study uses a firebase function to generate chat completions
+        case firebaseFunction(name: String)
+    }
+    
     /// The survey's unique identifier.
     let id: String
     /// The survey's title.
@@ -24,8 +31,11 @@ final class Study: Identifiable {
     ///
     /// Set this value to `nil` to disable the lock and always have the settings directly accessible.
     let settingsUnlockCode: String?
+    
     /// The OpenAI API key that should be used when answering this survey.
     let openAIAPIKey: String
+    let openAIEndpoint: OpenAIEndpointConfig
+    
     /// The email address to which the report file should be sent.
     let reportEmail: String?
     
@@ -47,6 +57,7 @@ final class Study: Identifiable {
         explainer: String,
         settingsUnlockCode: String?,
         openAIAPIKey: String,
+        openAIEndpoint: OpenAIEndpointConfig,
         reportEmail: String?,
         encryptionKey: Curve25519.KeyAgreement.PublicKey?,
         summarizeSingleResourcePrompt: FHIRPrompt?,
@@ -58,11 +69,23 @@ final class Study: Identifiable {
         self.explainer = explainer
         self.settingsUnlockCode = settingsUnlockCode
         self.openAIAPIKey = openAIAPIKey
+        self.openAIEndpoint = openAIEndpoint
         self.reportEmail = reportEmail
         self.encryptionKey = encryptionKey
         self.summarizeSingleResourcePrompt = summarizeSingleResourcePrompt ?? .summarizeSingleFHIRResourceDefaultPrompt
         self.interpretMultipleResourcesPrompt = interpretMultipleResourcesPrompt ?? .interpretMultipleResourcesDefaultPrompt
         self.tasks = tasks
+    }
+}
+
+
+extension Study: Hashable {
+    static func == (lhs: Study, rhs: Study) -> Bool {
+        ObjectIdentifier(lhs) == ObjectIdentifier(rhs)
+    }
+    
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(ObjectIdentifier(self))
     }
 }
 
@@ -104,6 +127,7 @@ extension Study: Codable {
         case tasks = "tasks"
         case settingsUnlockCode = "settings_code"
         case openAIAPIKey = "openai_api_key"
+        case openAIEndpoint = "openai_endpoint"
         case reportEmail = "report_email"
         case encryptionKey = "encryption_key"
         case summarizeSingleResourcePrompt = "prompt_summarize_single_resource"
@@ -118,6 +142,7 @@ extension Study: Codable {
             explainer: try container.decode(String.self, forKey: .explainer),
             settingsUnlockCode: try container.decodeIfPresent(String.self, forKey: .settingsUnlockCode),
             openAIAPIKey: try container.decode(String.self, forKey: .openAIAPIKey),
+            openAIEndpoint: try container.decode(OpenAIEndpointConfig.self, forKey: .openAIEndpoint),
             reportEmail: try container.decodeIfPresent(String.self, forKey: .reportEmail),
             encryptionKey: try container.decodeIfPresent(Data.self, forKey: .encryptionKey)
                 .flatMap { $0.isEmpty ? nil : try .init(pemFileContents: $0) },
@@ -136,6 +161,7 @@ extension Study: Codable {
         try container.encode(explainer, forKey: .explainer)
         try container.encodeIfPresent(settingsUnlockCode, forKey: .settingsUnlockCode)
         try container.encode(openAIAPIKey, forKey: .openAIAPIKey)
+        try container.encode(openAIEndpoint, forKey: .openAIEndpoint)
         try container.encodeIfPresent(reportEmail, forKey: .reportEmail)
         try container.encodeIfPresent(encryptionKey?.pemFileContents, forKey: .encryptionKey)
         try container.encode(summarizeSingleResourcePrompt.promptText, forKey: .summarizeSingleResourcePrompt)
@@ -181,5 +207,30 @@ extension SurveyTask: Codable {
         try container.encodeIfPresent(instructions, forKey: .instructions)
         try container.encodeIfPresent(assistantMessagesLimit?.llmOnFhirStringValue, forKey: .assistantMessagesLimit)
         try container.encode(questions, forKey: .questions)
+    }
+}
+
+
+extension Study.OpenAIEndpointConfig: RawRepresentable, Codable {
+    var rawValue: String {
+        switch self {
+        case .regular:
+            "regular"
+        case .firebaseFunction(let name):
+            "firebase-function:\(name)"
+        }
+    }
+    
+    init?(rawValue: String) {
+        switch rawValue {
+        case "regular":
+            self = .regular
+        case let value where value.starts(with: "firebase-function:"):
+            let idx = value.firstIndex(of: ":")! // swiftlint:disable:this force_unwrapping
+            let name = String(value[value.index(after: idx)...])
+            self = .firebaseFunction(name: name)
+        default:
+            return nil
+        }
     }
 }

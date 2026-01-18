@@ -23,7 +23,7 @@ class MultipleResourcesChatViewModel: Sendable {
     var processingState: ProcessingState = .processingSystemPrompts
     
     /// Direct access to the current LLM session for observing state changes
-    var llmSession: LLMSession {
+    var llmSession: any LLMSession {
         interpreter.llmSession
     }
     
@@ -101,20 +101,15 @@ class MultipleResourcesChatViewModel: Sendable {
     func generateAssistantResponse(preProcessingStateUpdate: @escaping () async -> Void = {}) async -> LLMContextEntity? {
         await preProcessingStateUpdate()
         processingState = await processingState.calculateNewProcessingState(basedOn: llmSession)
-        
         guard shouldGenerateResponse else {
             return nil
         }
-
         processingState = .processingSystemPrompts
-
         guard let response = await interpreter.generateAssistantResponse() else {
             return nil
         }
-        
         await preProcessingStateUpdate()
         processingState = await processingState.calculateNewProcessingState(basedOn: llmSession)
-
         return response
     }
 }

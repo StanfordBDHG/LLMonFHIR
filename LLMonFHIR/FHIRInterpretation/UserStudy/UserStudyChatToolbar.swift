@@ -51,9 +51,11 @@ private struct PulsatingEffect: ViewModifier {
 
 
 struct UserStudyChatToolbar: ToolbarContent {
-    var viewModel: UserStudyChatViewModel
+    @Environment(FirebaseUpload.self) private var uploader: FirebaseUpload?
+    
+    var model: UserStudyChatViewModel
 
-    let isInputDisabled: Bool
+    let enableContinueAction: Bool
     let onDismiss: () -> Void
 
     var body: some ToolbarContent {
@@ -63,17 +65,17 @@ struct UserStudyChatToolbar: ToolbarContent {
     }
 
     @ToolbarContentBuilder private var dismissButton: some ToolbarContent {
-        @Bindable var viewModel = viewModel
+        @Bindable var model = model
         ToolbarItem(placement: .cancellationAction) {
             Button {
-                viewModel.isDismissDialogPresented = true
+                model.isDismissDialogPresented = true
             } label: {
                 Image(systemName: "xmark")
                     .accessibilityLabel("Dismiss")
             }
             .confirmationDialog(
                 "Going back will reset your chat history.",
-                isPresented: $viewModel.isDismissDialogPresented,
+                isPresented: $model.isDismissDialogPresented,
                 titleVisibility: .visible,
                 actions: {
                     Button("Yes", role: .destructive, action: onDismiss)
@@ -89,18 +91,18 @@ struct UserStudyChatToolbar: ToolbarContent {
     private var continueButton: some ToolbarContent {
         ToolbarItem(placement: .primaryAction) {
             let button = Button {
-                viewModel.isSurveyViewPresented = true
+                model.presentedSheet = .survey
             } label: {
                 Label("Next Task", systemImage: "arrow.forward.circle")
                     .accessibilityLabel("Next Task")
-                    .modifier(PulsatingEffect(isEnabled: !isInputDisabled))
+                    .modifier(PulsatingEffect(isEnabled: enableContinueAction))
             }
-            .disabled(isInputDisabled)
-            if viewModel.navigationState != .completed {
+            .disabled(!enableContinueAction)
+            if model.navigationState != .completed {
                 if #available(iOS 26.0, *) {
                     button
-                        .if(!isInputDisabled) { $0.buttonStyle(.glassProminent) }
-                        .animation(.interactiveSpring, value: isInputDisabled)
+                        .if(enableContinueAction) { $0.buttonStyle(.glassProminent) }
+                        .animation(.interactiveSpring, value: !enableContinueAction)
                 } else {
                     button
                 }
@@ -108,10 +110,13 @@ struct UserStudyChatToolbar: ToolbarContent {
         }
     }
     
-    private var shareButton: some ToolbarContent {
-        ToolbarItemGroup(placement: .topBarTrailing) {
-            if viewModel.navigationState == .completed {
-                ShareButton(viewModel: viewModel)
+    @ToolbarContentBuilder private var shareButton: some ToolbarContent {
+        // we only show the share button if no firebase upload is taking place.
+        if uploader == nil {
+            ToolbarItemGroup(placement: .topBarTrailing) {
+                if model.navigationState == .completed {
+                    ShareButton(model: model)
+                }
             }
         }
     }
@@ -120,7 +125,7 @@ struct UserStudyChatToolbar: ToolbarContent {
 
 extension UserStudyChatToolbar {
     private struct ShareButton: View {
-        var viewModel: UserStudyChatViewModel
+        var model: UserStudyChatViewModel
         @State private var viewState: ViewState = .idle
         @State private var reportUrl: URL?
         
@@ -130,12 +135,12 @@ extension UserStudyChatToolbar {
             // (with no indication on the view that it is active), while the custom approach here is way faster,
             // and also somehow gets us a significantly nicer-looking share sheet...
             AsyncButton(state: $viewState) {
-                reportUrl = try await viewModel.generateStudyReportFile()
+                reportUrl = try await model.generateStudyReportFile(encryptIfPossible: true)
             } label: {
                 Image(systemName: "square.and.arrow.up")
                     .accessibilityLabel("Share Survey Results")
             }
-            .studyReportShareSheet(url: $reportUrl, for: viewModel.study)
+            .studyReportShareSheet(url: $reportUrl, for: model.study)
         }
     }
 }

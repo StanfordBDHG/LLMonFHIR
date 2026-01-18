@@ -16,7 +16,7 @@ import SpeziViews
 import SwiftUI
 
 
-actor LLMonFHIRStandard: Standard, HealthKitConstraint, EnvironmentAccessible {
+actor LLMonFHIRStandard: Standard, EnvironmentAccessible {
     static let recordTypes: [SampleType<HKClinicalRecord>] = [
         .allergyRecord, .clinicalNoteRecord, .conditionRecord,
         .coverageRecord, .immunizationRecord, .labResultRecord,
@@ -105,9 +105,10 @@ actor LLMonFHIRStandard: Standard, HealthKitConstraint, EnvironmentAccessible {
     private func updateSchemas() async {
         await fhirInterpretationModule.updateSchemas()
     }
-    
-    // HealthKitConstraint
-    
+}
+
+
+extension LLMonFHIRStandard: HealthKitConstraint {
     func handleNewSamples<Sample>(_ addedSamples: some Collection<Sample>, ofType sampleType: SampleType<Sample>) async {
         for sample in addedSamples {
             guard let sample = sample as? HKClinicalRecord else {

@@ -24,6 +24,7 @@ extension UserStudyChatViewModel {
         let studyID: String
         let startTime: Date
         let endTime: Date
+        let userInfo: [String: String]
     }
 
     /// FHIR resources associated with the study, split into full and partial representations.
@@ -35,14 +36,12 @@ extension UserStudyChatViewModel {
     /// A wrapper for a full FHIR resource, delegating encoding to the underlying resource.
     struct FullFHIRResource: Encodable {
         private let versionedResource: SpeziFHIR.FHIRResource.VersionedFHIRResource
-
-
+        
         init(_ versionedResource: SpeziFHIR.FHIRResource.VersionedFHIRResource) {
             self.versionedResource = versionedResource
         }
-
-
-        func encode(to encoder: Encoder) throws {
+        
+        func encode(to encoder: any Encoder) throws {
             switch versionedResource {
             case .r4(let resource):
                 try resource.encode(to: encoder)
@@ -105,7 +104,7 @@ extension UserStudyChatViewModel {
             }
         }
 
-        func encode(to encoder: Encoder) throws {
+        func encode(to encoder: any Encoder) throws {
             var container = encoder.container(keyedBy: CodingKeys.self)
             switch self {
             case .chatMessage(let message):

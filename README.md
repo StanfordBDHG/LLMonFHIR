@@ -84,6 +84,21 @@ When running LLMonFHIR via Xcode, you can use the `--mode` CLI flag to control t
 - `--mode study` launches LLMonFHIR into its study mode, showing a "Scan QR Code" button to select and open a study.
 
 
+### UserStudyConfig.plist file
+
+LLMonFHIR contains a UserStudyConfig.plist file, which is loaded on launch, and used to configure the app and populate it with studies.
+The UserStudyConfig.plist file contains the following:
+- Firebase configuration: used, if present, to connect the app to a Firebase environment, which is used to upload study reports
+- app launch mode: used to control how the app should behave upon launch (e.g., whether the study-only mode should be enabled, and optionally to also directly launch a study)
+- list of available studies (see the `Study` type within the iOS codebase for more details)
+
+The UserStudyConfig.plist file bundled with the repo is missing some data (the OpenAI key, the Firebase credentials, and the study report encryption key).
+You can use the Python tool in `tools/build-plist` to add these to the plist:
+```bash
+uv run main.py -f GoogleService-Info.plist -o <openai_key> -k public_key.pem '../../LLMonFHIR/Supporting Files/UserStudyConfig.plist'
+```
+
+
 ### Study Report File Encryption
 
 The report files generated form the usability study are optionally encrypted, using the public key stored in `UserStudyConfig.plist.

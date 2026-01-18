@@ -37,18 +37,27 @@ final class UserStudyChatViewModel: MultipleResourcesChatViewModel, Sendable { /
             }
         }
     }
+    
+    enum PresentedSheet: Hashable, Identifiable {
+        case instructions
+        case survey
+        case uploadingReport
+        
+        var id: some Hashable {
+            self
+        }
+    }
+    
+    private let uploader: FirebaseUpload?
 
     /// The current navigation state of the study
     private(set) var navigationState: NavigationState = .introduction
-
-    /// Controls the visibility of the survey view
-    var isSurveyViewPresented = false
+    
+    /// The currently-presented sheet
+    var presentedSheet: PresentedSheet?
 
     /// Controls the visibility of the dismiss confirmation dialog
     var isDismissDialogPresented = false
-
-    /// Controls the visibility of the task instruction alert
-    var isTaskInstructionsSheetPresented = false
 
     var isTaskIntructionButtonDisabled: Bool {
         study.tasks.first { $0.id == currentTaskId }?.instructions == nil
@@ -63,34 +72,31 @@ final class UserStudyChatViewModel: MultipleResourcesChatViewModel, Sendable { /
         study.tasks.firstIndex { $0.id == currentTaskId }.map { $0 + 1 }
     }
     
-    var shouldDisableChatInput: Bool {
+    /// Whether the chat input should currently be enabled, i.e. whether the user should currently be able to write (and submit) chat messages
+    var shouldEnableChatInput: Bool {
         // Always disable during processing
         if isProcessing {
-            return true
+            return false
         }
-
         // If no capacity range is configured for this task, enable chat input
         if !hasConfiguredCapacityForCurrentTask {
             return false
         }
-
         // Disable when the maximum number of messages is reached
-        return isMaxAssistantMessagesReached
+        return !isMaxAssistantMessagesReached
     }
 
-    var shouldDisableToolbarInput: Bool {
-        // Always disable during processing
+    var shouldEnableContinueToNextTaskAction: Bool {
         if isProcessing {
-            return true
-        }
-
-        // If no capacity range is configured for this task, enable toolbar
-        if !hasConfiguredCapacityForCurrentTask {
+            // Always disable during processing
             return false
         }
-
+        if !hasConfiguredCapacityForCurrentTask {
+            // If no capacity range is configured for this task, enable toolbar
+            return true
+        }
         // Disable if the minimum number of messages is not met
-        return !isMinAssistantMessagesReached
+        return isMinAssistantMessagesReached
     }
     
     private var currentTaskId: SurveyTask.ID? {
@@ -103,6 +109,8 @@ final class UserStudyChatViewModel: MultipleResourcesChatViewModel, Sendable { /
     }
 
     let study: Study
+    /// Additional key-value pairs associated with this particular study session (e.g., a participant id).
+    private let userInfo: [String: String]
     private let resourceSummary: FHIRResourceSummary
     private let studyStartTime = Date()
     private var taskStartTimes: [SurveyTask.ID: Date] = [:]
@@ -130,23 +138,27 @@ final class UserStudyChatViewModel: MultipleResourcesChatViewModel, Sendable { /
     ///   - resourceSummary: The FHIR resource summary provider for generating summaries of FHIR resources
     init(
         study: Study,
+        userInfo: [String: String],
         interpreter: FHIRMultipleResourceInterpreter,
-        resourceSummary: FHIRResourceSummary
+        resourceSummary: FHIRResourceSummary,
+        uploader: FirebaseUpload?
     ) {
         self.study = study
+        self.userInfo = userInfo
         self.resourceSummary = resourceSummary
+        self.uploader = uploader
         super.init(interpreter: interpreter, navigationTitle: "")
         configureMessageLimits()
     }
 
     
-    func updateProcessingState() async {
-        // Alerts and sheets can not be displayed at the same time.
-        if case let .error(error) = llmSession.state {
-            if isSurveyViewPresented || isTaskInstructionsSheetPresented {
+    private func updateProcessingState() async {
+        switch llmSession.state {
+        case .error(let error):
+            // Alerts and sheets can not be displayed at the same time.
+            if presentedSheet != nil {
                 // We have to first dismiss all sheets.
-                isSurveyViewPresented = false
-                isTaskInstructionsSheetPresented = false
+                presentedSheet = nil
                 // Wait for animation to complete
                 try? await Task.sleep(for: .seconds(1))
                 // Re-set the error state.
@@ -154,20 +166,24 @@ final class UserStudyChatViewModel: MultipleResourcesChatViewModel, Sendable { /
                 try? await Task.sleep(for: .seconds(0.5))
                 llmSession.state = .error(error: error)
             }
-            
             processingState = .error
-            return
+        default:
+            processingState = await processingState.calculateNewProcessingState(basedOn: llmSession)
         }
-        
-        processingState = await processingState.calculateNewProcessingState(basedOn: llmSession)
     }
 
     /// Generates an assistant response if appropriate for the current context
     ///
     /// This method checks if a response is needed and if so, delegates
     /// to the interpreter to generate the actual response.
-    func generateAssistantResponse() async -> LLMContextEntity? {
-        guard let response = await super.generateAssistantResponse(preProcessingStateUpdate: updateProcessingState) else {
+    override func generateAssistantResponse(
+        preProcessingStateUpdate: @escaping () async -> Void = {}
+    ) async -> LLMContextEntity? {
+        let stateUpdate = {
+            await self.updateProcessingState()
+            await preProcessingStateUpdate()
+        }
+        guard let response = await super.generateAssistantResponse(preProcessingStateUpdate: stateUpdate) else {
             return nil
         }
         if let currentTaskId {
@@ -192,7 +208,7 @@ final class UserStudyChatViewModel: MultipleResourcesChatViewModel, Sendable { /
     ///
     /// - Parameter answers: Array of answers provided by the user
     /// - Throws: An error if the submission fails
-    func submitSurveyAnswers(_ answers: [TaskQuestionAnswer]) async throws {
+    func submitSurveyAnswers(_ answers: [TaskQuestionAnswer]) throws {
         guard let currentTaskId else {
             return
         }
@@ -200,8 +216,7 @@ final class UserStudyChatViewModel: MultipleResourcesChatViewModel, Sendable { /
         for (index, answer) in answers.enumerated() {
             try study.submitAnswer(answer, forTaskId: currentTaskId, questionIndex: index)
         }
-        await advanceToNextTask()
-        isSurveyViewPresented = false
+        advanceToNextTask()
     }
 
     /// Resets the study to its initial state
@@ -228,21 +243,21 @@ final class UserStudyChatViewModel: MultipleResourcesChatViewModel, Sendable { /
             numTotalTasks: study.tasks.count
         )
         taskStartTimes[taskId] = Date()
-        isTaskInstructionsSheetPresented = true
+        presentedSheet = .instructions
     }
 
     /// Generates a temporary file URL containing the study report
     ///
     /// - Returns: The URL of the generated report file, or nil if generation fails
-    func generateStudyReportFile() async throws -> URL? {
-        guard var studyReport = await generateStudyReport()?.data(using: .utf8) else {
+    func generateStudyReportFile(encryptIfPossible: Bool) async throws -> URL? {
+        guard var studyReport = await generateStudyReport() else {
             return nil
         }
-        if let key = study.encryptionKey {
+        if encryptIfPossible, let key = study.encryptionKey {
             studyReport = try studyReport.encrypted(using: key)
         }
         let tempDir = FileManager.default.temporaryDirectory
-        let reportURL = tempDir.appendingPathComponent("survey_report_\(study.id.lowercased()).txt")
+        let reportURL = tempDir.appendingPathComponent("survey_report_\(study.id.lowercased()).json")
         try studyReport.write(to: reportURL)
         return reportURL
     }
@@ -261,7 +276,7 @@ final class UserStudyChatViewModel: MultipleResourcesChatViewModel, Sendable { /
         }
     }
 
-    private func advanceToNextTask() async {
+    private func advanceToNextTask() {
         guard let currentTaskIdx = study.tasks.firstIndex(where: { $0.id == currentTaskId }) else {
             return
         }
@@ -273,16 +288,44 @@ final class UserStudyChatViewModel: MultipleResourcesChatViewModel, Sendable { /
                 numTotalTasks: study.tasks.count
             )
             taskStartTimes[nextTask.id] = Date()
-            isTaskInstructionsSheetPresented = true
+            presentedSheet = .instructions
         } else {
             navigationState = .completed
+            Task {
+                presentedSheet = .uploadingReport
+                await uploadReport()
+                presentedSheet = nil
+            }
+        }
+    }
+    
+    private func uploadReport() async {
+        guard let uploader else {
+            return
+        }
+        do {
+            // This sleep is exclusively for cosmetic reasons;
+            // it allows the "submitting response" sheet to stick around long enough for the user to read the text.
+            // Otherwise, there would be no indication in the UI that the upload actually took place & succeeded.
+            try await Task.sleep(for: .seconds(0.5))
+            guard let reportFile = try await generateStudyReportFile(encryptIfPossible: false) else {
+                return
+            }
+            try await uploader.uploadReport(at: reportFile, for: study)
+        } catch {
+            print("study report upload failed: \(error)")
         }
     }
 
 
-    private func generateStudyReport() async -> String? {
+    private func generateStudyReport() async -> Data? {
         let report = UserStudyReport(
-            metadata: generateMetadata(),
+            metadata: Metadata(
+                studyID: study.id,
+                startTime: studyStartTime,
+                endTime: Date(),
+                userInfo: userInfo
+            ),
             fhirResources: await getFHIRResources(),
             timeline: generateTimeline()
         )
@@ -290,34 +333,22 @@ final class UserStudyChatViewModel: MultipleResourcesChatViewModel, Sendable { /
             let encoder = JSONEncoder()
             encoder.dateEncodingStrategy = .iso8601
             encoder.outputFormatting = [.prettyPrinted, .withoutEscapingSlashes]
-            let data = try encoder.encode(report)
-            let string = String(data: data, encoding: .utf8)
-            return string
+            return try encoder.encode(report)
         } catch {
             print("Error generating study report: \(error)")
             return nil
         }
     }
 
-    private func generateMetadata() -> Metadata {
-        Metadata(
-            studyID: study.id,
-            startTime: studyStartTime,
-            endTime: Date()
-        )
-    }
-
     private func generateTimeline() -> [TimelineEvent] {
-        var timeline: [TimelineEvent] = []
-        let chatMessages = interpreter.llmSession.context.chat.map { message in
+        var timeline: [TimelineEvent] = interpreter.llmSession.context.chat.map { message in
             TimelineEvent.chatMessage(TimelineEvent.ChatMessage(
                 timestamp: message.date,
                 role: message.role.rawValue,
                 content: message.content
             ))
         }
-        timeline.append(contentsOf: chatMessages)
-        let surveyTasks = study.tasks.compactMap { task -> TimelineEvent? in
+        timeline.append(contentsOf: study.tasks.compactMap { task -> TimelineEvent? in
             guard let taskStartTime = taskStartTimes[task.id], let taskEndTime = taskEndTimes[task.id] else {
                 return nil
             }
@@ -335,8 +366,7 @@ final class UserStudyChatViewModel: MultipleResourcesChatViewModel, Sendable { /
                 }
             )
             return TimelineEvent.surveyTask(surveyTask)
-        }
-        timeline.append(contentsOf: surveyTasks)
+        })
         return timeline.sorted { $0.timestamp < $1.timestamp }
     }
 

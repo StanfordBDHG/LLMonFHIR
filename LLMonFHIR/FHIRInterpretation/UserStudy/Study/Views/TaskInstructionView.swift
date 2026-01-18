@@ -11,12 +11,12 @@ import SwiftUI
 struct TaskInstructionView: View {
     let task: SurveyTask
     let userDisplayableCurrentTaskIdx: Int
-    @Binding var isPresented: Bool
-    @State private var sheetHeight: CGFloat = .zero
+    /// Called when the sheet should be dismissed
+    let onDismiss: @MainActor () -> Void
 
     var body: some View {
-        NavigationStack {
-            ScrollView {
+        BottomSheet {
+            Group {
                 if let instructions = task.instructions {
                     Text(instructions)
                         .padding()
@@ -24,12 +24,8 @@ struct TaskInstructionView: View {
                         .background(Color(UIColor.secondarySystemGroupedBackground))
                         .cornerRadius(10)
                         .padding()
-                        .onHeightChange {
-                            sheetHeight = $0 + 100
-                        }
                 }
             }
-            .background(Color(UIColor.systemGroupedBackground))
             .navigationTitle("Task \(userDisplayableCurrentTaskIdx)")
             .transforming {
                 if #available(iOS 26, *), let title = task.title {
@@ -39,38 +35,25 @@ struct TaskInstructionView: View {
                 }
             }
             .navigationBarTitleDisplayMode(.inline)
-            .toolbar {
-                ToolbarItem {
-                    Button {
-                        isPresented = false
-                    } label: {
-                        Label("Dismiss", systemImage: "xmark")
-                            .accessibilityLabel("Dismiss")
-                    }
+            .toolbar { toolbar }
+        }
+        .background(Color(UIColor.systemGroupedBackground))
+    }
+    
+    private var toolbar: some ToolbarContent {
+        ToolbarItem {
+            if #available(iOS 26, *) {
+                Button(role: .close) {
+                    onDismiss()
+                }
+            } else {
+                Button {
+                    onDismiss()
+                } label: {
+                    Label("Dismiss", systemImage: "xmark")
+                        .accessibilityLabel("Dismiss")
                 }
             }
         }
-        .presentationDetents(sheetHeight == .zero ? [.medium] : [.height(sheetHeight)])
-    }
-}
-
-extension View {
-    func onHeightChange(completion: @escaping (CGFloat) -> Void) -> some View {
-        background(
-            GeometryReader { geometry in
-                Color.clear
-                    .onAppear {
-                        completion(geometry.size.height)
-                    }
-                    .onChange(of: geometry.size.height) { _, newHeight in
-                        completion(newHeight)
-                    }
-            }
-        )
-    }
-    
-    @ViewBuilder
-    func transforming(@ViewBuilder _ transform: (Self) -> some View) -> some View {
-        transform(self)
     }
 }

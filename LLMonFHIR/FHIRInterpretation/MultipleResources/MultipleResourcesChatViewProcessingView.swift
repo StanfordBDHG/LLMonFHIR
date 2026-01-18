@@ -10,11 +10,11 @@ import SwiftUI
 
 
 struct MultipleResourcesChatViewProcessingView: View {
-    let viewModel: MultipleResourcesChatViewModel
+    let model: MultipleResourcesChatViewModel
     
     var body: some View {
         Group {
-            if viewModel.isProcessing {
+            if model.isProcessing {
                 Group {
                     if #available(iOS 26.0, *) {
                         content
@@ -29,22 +29,22 @@ struct MultipleResourcesChatViewProcessingView: View {
                 .padding(.bottom, 8)
             }
         }
-            .animation(.interactiveSpring, value: viewModel.isProcessing)
+        .animation(.interactiveSpring, value: model.isProcessing)
     }
     
     private var content: some View {
         VStack(spacing: 8) {
-            ProgressView(value: viewModel.processingState.progress, total: 100)
+            ProgressView(value: model.processingState.progress, total: 100)
                 .progressViewStyle(.linear)
                 .tint(.accentColor)
-                .animation(.easeInOut(duration: 0.3), value: viewModel.processingState.progress)
+                .animation(.easeInOut(duration: 0.3), value: model.processingState.progress)
             
-            Text(viewModel.processingState.statusDescription)
+            Text(model.processingState.statusDescription)
                 .font(.caption)
                 .foregroundStyle(.secondary)
-                .animation(.easeInOut(duration: 0.3), value: viewModel.processingState.statusDescription)
+                .animation(.easeInOut(duration: 0.3), value: model.processingState.statusDescription)
         }
-            .padding(.horizontal)
-            .padding(.vertical, 4)
+        .padding(.horizontal)
+        .padding(.vertical, 4)
     }
 }

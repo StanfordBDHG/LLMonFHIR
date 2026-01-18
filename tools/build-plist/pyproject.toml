@@ -1,0 +1,14 @@
+#
+# This source file is part of the Stanford LLM on FHIR project
+#
+# SPDX-FileCopyrightText: 2026 Stanford University
+#
+# SPDX-License-Identifier: MIT
+#
+
+[project]
+name = "build-plist"
+version = "0.1.0"
+description = "LLMonFHIR UserStudyConfig.plist builder"
+requires-python = ">=3.14"
+dependencies = []

@@ -17,6 +17,7 @@ struct CreateEnrollmentQRCodeSheet: View {
         var expires = true
         var validDuration: Duration = .seconds(5)
         var correctionLevel: QRCodeGenerator.CorrectionLevel = .high
+        var participantId: String = ""
     }
     
     @State private var options = CodeGenerationOptions()
@@ -110,6 +111,15 @@ struct CreateEnrollmentQRCodeSheet: View {
                         .tag(QRCodeGenerator.CorrectionLevel.highest)
                 }
             }
+            Section("Additional Fields") {
+                HStack {
+                    Text("Participant ID")
+                    Spacer()
+                    TextField("", text: $options.participantId)
+                        .monospaced()
+                        .multilineTextAlignment(.trailing)
+                }
+            }
         }
     }
     
@@ -120,7 +130,8 @@ struct CreateEnrollmentQRCodeSheet: View {
         }
         let payload = StudyQRCodeHandler.QRCodePayload(
             studyId: studyId,
-            expires: options.expires ? .now + options.validDuration.timeInterval : nil
+            expires: options.expires ? .now + options.validDuration.timeInterval : nil,
+            participantId: options.participantId
         )
         guard let payload = try? payload.qrCodePayload() else {
             qrCode = nil

@@ -20,4 +20,7 @@ enum FeatureFlags {
     
     /// Export the raw JSON for all FHIR resources in the export for the user study
     static let exportRawJSONFHIRResources = CommandLine.arguments.contains("--exportRawJSONFHIRResources")
+    
+    /// Whether the app should use a local firebase emulator
+    static let useFirebaseEmulator = CommandLine.arguments.contains("--useFirebaseEmulator")
 }

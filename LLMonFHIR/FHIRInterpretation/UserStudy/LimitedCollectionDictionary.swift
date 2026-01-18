@@ -21,9 +21,9 @@ enum LimitedCollectionDictionaryError: Sendable, Error {
 ///
 /// This allows setting different capacity limits for different keys.
 /// When the limit is reached for a key, adding more elements will throw an error.
-struct LimitedCollectionDictionary<Key: Hashable & Sendable, Element> {
+struct LimitedCollectionDictionary<Key: Hashable & Sendable, Value> {
     private(set) var capacityRanges: [Key: ClosedRange<Int>] = [:]
-    private(set) var collections: [Key: LimitedCollection<Element>] = [:]
+    private(set) var collections: [Key: LimitedCollection<Value>] = [:]
 
     /// Sets the minimum and maximum number of elements allowed for a key
     /// - Parameters:
@@ -34,11 +34,9 @@ struct LimitedCollectionDictionary<Key: Hashable & Sendable, Element> {
     mutating func setCapacityRange(minimum: Int, maximum: Int, forKey key: Key) throws {
         precondition(minimum >= 0, "Minimum capacity cannot be negative")
         precondition(maximum >= minimum, "Maximum capacity must be >= minimum")
-
         capacityRanges[key] = minimum...maximum
-
         if let existingCollection = collections[key] {
-            var newCollection = LimitedCollection<Element>(capacity: maximum)
+            var newCollection = LimitedCollection<Value>(capacity: maximum)
             try newCollection.append(contentsOf: existingCollection.all)
             collections[key] = newCollection
         }
@@ -51,20 +49,20 @@ struct LimitedCollectionDictionary<Key: Hashable & Sendable, Element> {
         collections.removeValue(forKey: key)
     }
 
-    /// Adds a single element to a key's collection if within capacity
+    /// Adds a single value to a key's collection if within capacity
     /// - Parameters:
-    ///   - element: Element to add
+    ///   - value: Value to add
     ///   - key: Target key
     /// - Throws: Error if capacity is exceeded or collection cannot be accessed
-    mutating func append(_ element: Element, forKey key: Key) throws {
+    mutating func append(_ value: Value, forKey key: Key) throws {
         if collections[key] == nil, let limit = capacityRanges[key]?.upperBound {
-            collections[key] = LimitedCollection<Element>(capacity: limit)
+            collections[key] = LimitedCollection<Value>(capacity: limit)
         }
         guard var collection = collections[key] else {
             throw LimitedCollectionDictionaryError.keyNotConfigured(key: key)
         }
         do {
-            try collection.append(element)
+            try collection.append(value)
             collections[key] = collection
         } catch LimitedCollectionError.capacityExceeded(let maximum) {
             throw LimitedCollectionDictionaryError.capacityExceeded(key: key, maximum: maximum)
@@ -81,18 +79,12 @@ struct LimitedCollectionDictionary<Key: Hashable & Sendable, Element> {
     /// - Parameter key: The key to check
     /// - Returns: True if the minimum is met or no minimum is set
     func isMinReached(forKey key: Key) -> Bool {
-        guard let range = capacityRanges[key] else {
+        guard let range = capacityRanges[key], range.lowerBound > 0 else {
             return true
         }
-
-        if range.lowerBound == 0 {
-            return true
-        }
-
         guard let collection = collections[key] else {
             return false
         }
-
         return collection.count >= range.lowerBound
     }
 

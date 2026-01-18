@@ -1,6 +1,9 @@
 {
   "sourceLanguage" : "en",
   "strings" : {
+    "" : {
+
+    },
     "\n%@" : {
 
     },
@@ -17,6 +20,9 @@
 
     },
     "A fog node must be configured in your local network. Please consult the LLMonFHIR docs for setup instructions." : {
+
+    },
+    "Additional Fields" : {
 
     },
     "Allergies" : {
@@ -1591,6 +1597,9 @@
       },
       "shouldTranslate" : false
     },
+    "Participant ID" : {
+
+    },
     "Place %@ at the position in the prompt where the FHIR resource should be inserted. Optionally place %@ where you would like to insert the current locale." : {
       "localizations" : {
         "en" : {
@@ -2233,6 +2242,9 @@
       }
     },
     "Submit" : {
+
+    },
+    "Submitting Results..." : {
 
     },
     "SUMMARY_PROMPT" : {
