@@ -41,7 +41,7 @@
 			<key>openai_api_key</key>
 			<string></string>
 			<key>openai_endpoint</key>
-			<string>regular</string>
+			<string>firebase-function:chat</string>
 			<key>encryption_key</key>
 			<data></data>
 			<key>report_email</key>
