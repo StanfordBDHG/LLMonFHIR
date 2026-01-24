@@ -21,7 +21,7 @@ struct UserStudyChatView: View {
         @Bindable var model = model
         NavigationStack { // swiftlint:disable:this closure_body_length
             chatView
-                .navigationTitle(model.navigationState.title)
+                .navigationTitle(model.navigationState.title(in: model.study))
                 .navigationBarTitleDisplayMode(.inline)
                 .toolbar {
                     UserStudyChatToolbar(

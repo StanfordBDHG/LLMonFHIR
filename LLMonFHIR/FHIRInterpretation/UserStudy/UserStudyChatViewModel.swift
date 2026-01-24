@@ -23,18 +23,23 @@ final class UserStudyChatViewModel: MultipleResourcesChatViewModel, Sendable { /
     /// The current state of the survey navigation
     enum NavigationState: Equatable {
         case introduction
-        case task(taskId: SurveyTask.ID, taskIdx: Int, numTotalTasks: Int)
+        case task(task: SurveyTask, taskIdx: Int, numTotalTasks: Int)
         case completed
 
         /// The title to display in the navigation bar based on current state
-        var title: String {
+        func title(in study: Study) -> String {
             switch self {
             case .introduction:
-                return "Introduction"
-            case let .task(taskId: _, taskIdx, numTotalTasks):
-                return "Task \(taskIdx + 1) of \(numTotalTasks)"
+                "Introduction"
+            case let .task(task, taskIdx, numTotalTasks):
+                switch study.chatTitleConfig {
+                case .default:
+                    task.title ?? "Task \(taskIdx + 1) of \(numTotalTasks)"
+                case .studyTitle:
+                    study.title
+                }
             case .completed:
-                return "Study Completed"
+                "Study Completed"
             }
         }
     }
@@ -106,8 +111,8 @@ final class UserStudyChatViewModel: MultipleResourcesChatViewModel, Sendable { /
     
     private var currentTaskId: SurveyTask.ID? {
         switch navigationState {
-        case let .task(taskId, taskIdx: _, numTotalTasks: _):
-            taskId
+        case let .task(task, taskIdx: _, numTotalTasks: _):
+            task.id
         case .introduction, .completed:
             nil
         }
@@ -241,15 +246,15 @@ final class UserStudyChatViewModel: MultipleResourcesChatViewModel, Sendable { /
     ///
     /// This method initializes the survey process if it hasn't already been started.
     func startSurvey() {
-        guard let taskId = study.tasks.first?.id else {
+        guard let task = study.tasks.first else {
             return
         }
         navigationState = .task(
-            taskId: taskId,
+            task: task,
             taskIdx: 0,
             numTotalTasks: study.tasks.count
         )
-        taskStartTimes[taskId] = Date()
+        taskStartTimes[task.id] = Date()
         presentedSheet = .instructions
     }
 
@@ -290,7 +295,7 @@ final class UserStudyChatViewModel: MultipleResourcesChatViewModel, Sendable { /
         let nextTaskIdx = study.tasks.index(after: currentTaskIdx)
         if let nextTask = study.tasks[safe: nextTaskIdx] {
             navigationState = .task(
-                taskId: nextTask.id,
+                task: nextTask,
                 taskIdx: nextTaskIdx,
                 numTotalTasks: study.tasks.count
             )

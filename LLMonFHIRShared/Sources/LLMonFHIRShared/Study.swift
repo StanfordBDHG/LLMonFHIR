@@ -14,11 +14,16 @@ import Foundation
 
 /// Manages a collection of survey tasks and their responses.
 public final class Study: Identifiable {
-    public enum OpenAIEndpointConfig: Equatable, Sendable {
+    public enum OpenAIEndpointConfig: Hashable, Sendable {
         /// The study uses the regular OpenAI API to generate chat completions
         case regular
         /// The study uses a firebase function to generate chat completions
         case firebaseFunction(name: String)
+    }
+    
+    public enum ChatTitleConfig: String, Hashable, Codable, Sendable {
+        case `default`
+        case studyTitle
     }
     
     /// The survey's unique identifier.
@@ -47,6 +52,8 @@ public final class Study: Identifiable {
     public let summarizeSingleResourcePrompt: FHIRPrompt
     public let interpretMultipleResourcesPrompt: FHIRPrompt
     
+    public let chatTitleConfig: ChatTitleConfig
+    
     /// The tasks that make up this survey
     public private(set) var tasks: [SurveyTask]
     
@@ -62,6 +69,7 @@ public final class Study: Identifiable {
         encryptionKey: Curve25519.KeyAgreement.PublicKey?,
         summarizeSingleResourcePrompt: FHIRPrompt?,
         interpretMultipleResourcesPrompt: FHIRPrompt?,
+        chatTitleConfig: ChatTitleConfig,
         tasks: [SurveyTask]
     ) {
         self.id = id
@@ -74,6 +82,7 @@ public final class Study: Identifiable {
         self.encryptionKey = encryptionKey
         self.summarizeSingleResourcePrompt = summarizeSingleResourcePrompt ?? .summarizeSingleFHIRResourceDefaultPrompt
         self.interpretMultipleResourcesPrompt = interpretMultipleResourcesPrompt ?? .interpretMultipleResourcesDefaultPrompt
+        self.chatTitleConfig = chatTitleConfig
         self.tasks = tasks
     }
 }
@@ -132,6 +141,7 @@ extension Study: Codable {
         case encryptionKey = "encryption_key"
         case summarizeSingleResourcePrompt = "prompt_summarize_single_resource"
         case interpretMultipleResourcesPrompt = "prompt_interpret_multiple_resources"
+        case chatTitleConfig = "chat_title_config"
     }
     
     public convenience init(from decoder: any Decoder) throws {
@@ -150,6 +160,7 @@ extension Study: Codable {
                 .flatMap { $0.isEmpty ? nil : FHIRPrompt(promptText: $0) },
             interpretMultipleResourcesPrompt: try container.decodeIfPresent(String.self, forKey: .interpretMultipleResourcesPrompt)
                 .flatMap { $0.isEmpty ? nil : FHIRPrompt(promptText: $0) },
+            chatTitleConfig: try container.decode(ChatTitleConfig.self, forKey: .chatTitleConfig),
             tasks: try container.decode([SurveyTask].self, forKey: .tasks)
         )
     }
@@ -174,6 +185,7 @@ extension Study: Codable {
         } else {
             try container.encode("", forKey: .interpretMultipleResourcesPrompt)
         }
+        try container.encode(chatTitleConfig, forKey: .chatTitleConfig)
         try container.encode(tasks, forKey: .tasks)
     }
 }
