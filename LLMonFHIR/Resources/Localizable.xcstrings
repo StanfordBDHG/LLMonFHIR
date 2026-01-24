@@ -1364,6 +1364,9 @@
     "Loading Resources" : {
 
     },
+    "Loading Resources…" : {
+
+    },
     "LOADING_HEALTH_RECORDS" : {
       "localizations" : {
         "en" : {
