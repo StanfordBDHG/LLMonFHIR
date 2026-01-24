@@ -6,6 +6,7 @@
 // SPDX-License-Identifier: MIT
 //
 
+import LLMonFHIRShared
 import os
 import Spezi
 import SpeziChat

@@ -6,6 +6,7 @@
 // SPDX-License-Identifier: MIT
 //
 
+import LLMonFHIRShared
 import SpeziChat
 import SpeziLLM
 import SwiftUI

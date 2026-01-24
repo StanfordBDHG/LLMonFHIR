@@ -6,34 +6,35 @@
 // SPDX-License-Identifier: MIT
 //
 
-import Foundation
+public import Foundation
 
 
-struct AppConfigFile: Codable {
+public struct AppConfigFile: Codable {
     private enum CodingKeys: String, CodingKey {
         case appLaunchMode = "app_launch_mode"
         case studies
         case firebaseConfig = "firebase_config"
     }
     
-    let appLaunchMode: LLMonFHIR.Mode
-    var studies: [Study]
-    var firebaseConfig: FirebaseConfigDictionary?
+    public let appLaunchMode: AppLaunchMode
+    public var studies: [Study]
+    public var firebaseConfig: FirebaseConfigDictionary?
     
-    init(launchMode: LLMonFHIR.Mode, studies: [Study], firebaseConfig: FirebaseConfigDictionary?) {
+    public init(launchMode: AppLaunchMode, studies: [Study], firebaseConfig: FirebaseConfigDictionary?) {
         self.appLaunchMode = launchMode
         self.studies = studies
         self.firebaseConfig = firebaseConfig
     }
     
-    init(from decoder: any Decoder) throws {
+    public init(from decoder: any Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        appLaunchMode = try .init(argv: ["--mode"] + container.decode(String.self, forKey: .appLaunchMode).components(separatedBy: " "))
+        appLaunchMode = try container.decode(AppLaunchMode.self, forKey: .appLaunchMode)
+//        appLaunchMode = try .init(argv: ["--mode"] + container.decode(String.self, forKey: .appLaunchMode).components(separatedBy: " "))
         studies = try container.decode([Study].self, forKey: .studies)
         firebaseConfig = try container.decodeIfPresent(FirebaseConfigDictionary.self, forKey: .firebaseConfig)
     }
     
-    func encode(to encoder: any Encoder) throws {
+    public func encode(to encoder: any Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
         switch appLaunchMode {
         case .standalone:
@@ -42,19 +43,20 @@ struct AppConfigFile: Codable {
             try container.encode("test", forKey: .appLaunchMode)
         case .study(let studyId):
             if let studyId {
-                try container.encode("study \(studyId)", forKey: .appLaunchMode)
+                try container.encode("study=\(studyId)", forKey: .appLaunchMode)
             } else {
                 try container.encode("study", forKey: .appLaunchMode)
             }
         }
         try container.encode(studies, forKey: .studies)
+        try container.encode(firebaseConfig, forKey: .firebaseConfig)
     }
 }
 
 
 extension AppConfigFile {
     /// Attempts to load a configuration from a plist file in the main bundle.
-    init?(nameInBundle: String) {
+    public init?(nameInBundle: String) {
         guard let url = Bundle.main.url(forResource: nameInBundle, withExtension: "plist") else {
             return nil
         }
@@ -62,7 +64,7 @@ extension AppConfigFile {
     }
     
     /// Attempts to load a configuration from a URL.
-    init?(contentsOf url: URL) {
+    public init?(contentsOf url: URL) {
         do {
             let data = try Data(contentsOf: url)
             self = try PropertyListDecoder().decode(Self.self, from: data)
@@ -74,15 +76,15 @@ extension AppConfigFile {
     /// The configuration bundled with the app.
     ///
     /// Returns an empty ``LLMonFHIR/LLMonFHIR/Mode/standalone`` config if the file is not present or cannot be decoded.
-    static func current() -> Self {
+    public static func current() -> Self {
         Self(nameInBundle: "UserStudyConfig") ?? Self(launchMode: .standalone, studies: [], firebaseConfig: nil)
     }
 }
 
 
 extension AppConfigFile {
-    struct FirebaseConfigDictionary: Codable {
-        private enum Value: Codable {
+    public struct FirebaseConfigDictionary: Codable, Sendable {
+        private enum Value: Codable, ExpressibleByBooleanLiteral, ExpressibleByStringLiteral, Sendable {
             case bool(Bool)
             case string(String)
             
@@ -93,6 +95,14 @@ extension AppConfigFile {
                 case .string(let value):
                     value
                 }
+            }
+            
+            init(booleanLiteral value: Bool) {
+                self = .bool(value)
+            }
+            
+            init(stringLiteral value: String) {
+                self = .string(value)
             }
             
             init(from decoder: any Decoder) throws {
@@ -119,20 +129,42 @@ extension AppConfigFile {
         
         private let entries: [String: Value]
         
-        init(from decoder: any Decoder) throws {
+        private init(entries: [String: Value]) {
+            self.entries = entries
+        }
+        
+        public init(from decoder: any Decoder) throws {
             let container = try decoder.singleValueContainer()
             entries = try container.decode([String: Value].self)
         }
         
-        func encode(to encoder: any Encoder) throws {
+        public func encode(to encoder: any Encoder) throws {
             var container = encoder.singleValueContainer()
             try container.encode(entries)
         }
         
         // swiftlint:disable legacy_objc_type
-        func asNSDictionary() -> NSDictionary {
+        public func asNSDictionary() -> NSDictionary {
             NSDictionary(dictionary: entries.mapValues(\.anyValue))
         }
         // swiftlint:enable legacy_objc_type
     }
+}
+
+
+extension AppConfigFile.FirebaseConfigDictionary {
+    public static let empty = Self(entries: [
+        "API_KEY": "A00000000000000000000000000000000000000",
+        "GCM_SENDER_ID": "GCM_SENDER_ID",
+        "PLIST_VERSION": "1",
+        "BUNDLE_ID": "edu.stanford.bdhg.llmonfhir",
+        "PROJECT_ID": "som-rit-phi-lit-ai-dev",
+        "STORAGE_BUCKET": "som-rit-phi-lit-ai-dev.firebasestorage.app",
+        "IS_ADS_ENABLED": false,
+        "IS_ANALYTICS_ENABLED": false,
+        "IS_APPINVITE_ENABLED": true,
+        "IS_GCM_ENABLED": true,
+        "IS_SIGNIN_ENABLED": true,
+        "GOOGLE_APP_ID": "1:123456789012:ios:1234567890123456789012"
+    ])
 }

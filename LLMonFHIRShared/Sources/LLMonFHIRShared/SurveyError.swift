@@ -6,11 +6,11 @@
 // SPDX-License-Identifier: MIT
 //
 
-import Foundation
+public import Foundation
 
 
 /// Represents errors that can occur during survey operations
-enum SurveyError: LocalizedError {
+public enum SurveyError: LocalizedError {
     /// Indicates a numerical response was outside the valid range
     case invalidRange(expected: ClosedRange<Int>)
 
@@ -23,16 +23,16 @@ enum SurveyError: LocalizedError {
     /// Indicates an attempt to access a task that doesn't exist
     case taskNotFound
 
-    var errorDescription: String? {
+    public var errorDescription: String? {
         switch self {
         case .invalidRange(let range):
-            return "Value must be between \(range.lowerBound) and \(range.upperBound)"
+            "Value must be between \(range.lowerBound) and \(range.upperBound)"
         case .typeMismatch:
-            return "Answer type doesn't match question type"
+            "Answer type doesn't match question type"
         case .invalidQuestionIndex:
-            return "Question index out of bounds"
+            "Question index out of bounds"
         case .taskNotFound:
-            return "Task not found"
+            "Task not found"
         }
     }
 }

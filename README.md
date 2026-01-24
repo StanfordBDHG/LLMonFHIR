@@ -93,9 +93,15 @@ The UserStudyConfig.plist file contains the following:
 - list of available studies (see the `Study` type within the iOS codebase for more details)
 
 The UserStudyConfig.plist file bundled with the repo is missing some data (the OpenAI key, the Firebase credentials, and the study report encryption key).
-You can use the Python tool in `tools/build-plist` to add these to the plist:
+You can use the `export-config` tool in the LLMonFHIRShared folder to generate a complete config file:
 ```bash
-uv run main.py -f GoogleService-Info.plist -o <openai_key> -k public_key.pem '../../LLMonFHIR/Supporting Files/UserStudyConfig.plist'
+swift run LLMonFHIRCLI export-config \
+    -f ~/GoogleService-Info.plist \
+    -o edu.stanford.LLMonFHIR.study1:sk-123 \
+    -o edu.stanford.LLMonFHIR.study2:sk-456 \
+    -k edu.stanford.LLMonFHIR.study1:./public_key1.pem \
+    -k edu.stanford.LLMonFHIR.study2:./public_key2.pem \
+    ../LLMonFHIR/Supporting\ Files/UserStudyConfig.plist
 ```
 
 

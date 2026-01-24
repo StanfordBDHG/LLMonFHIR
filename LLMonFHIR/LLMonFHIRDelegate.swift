@@ -9,6 +9,7 @@
 // swiftlint:disable type_contents_order
 
 import FirebaseCore
+import LLMonFHIRShared
 import Spezi
 import SpeziAccessGuard
 import SpeziAccount

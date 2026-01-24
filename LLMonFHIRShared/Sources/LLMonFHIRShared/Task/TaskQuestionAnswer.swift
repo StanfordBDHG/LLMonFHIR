@@ -6,17 +6,17 @@
 // SPDX-License-Identifier: MIT
 //
 
-import Foundation
+public import Foundation
 
 
 /// Represents a user's response to a survey question
-enum TaskQuestionAnswer: Hashable, Sendable {
+public enum TaskQuestionAnswer: Hashable, Sendable {
     case scale(Int)
     case freeText(String)
     case netPromoterScore(Int)
     case unanswered
     
-    var rawValue: String {
+    public var rawValue: String {
         switch self {
         case .scale(let value):
             "\(value)"
@@ -32,7 +32,7 @@ enum TaskQuestionAnswer: Hashable, Sendable {
 
 
 extension TaskQuestionAnswer {
-    init?(from string: String, for questionKind: TaskQuestionType) {
+    public init?(from string: String, for questionKind: TaskQuestionType) {
         if string == Self.unanswered.rawValue {
             self = .unanswered
             return
@@ -58,11 +58,11 @@ extension TaskQuestionAnswer {
 
 
 extension TaskQuestionAnswer: Encodable, DecodableWithConfiguration {
-    struct DecodingConfiguration {
+    public struct DecodingConfiguration {
         let questionKind: TaskQuestionType
     }
     
-    init(from decoder: any Decoder, configuration: DecodingConfiguration) throws {
+    public init(from decoder: any Decoder, configuration: DecodingConfiguration) throws {
         let container = try decoder.singleValueContainer()
         let rawValue = try container.decode(String.self)
         if let value = Self(from: rawValue, for: configuration.questionKind) {
@@ -72,7 +72,7 @@ extension TaskQuestionAnswer: Encodable, DecodableWithConfiguration {
         }
     }
     
-    func encode(to encoder: any Encoder) throws {
+    public func encode(to encoder: any Encoder) throws {
         var container = encoder.singleValueContainer()
         try container.encode(rawValue)
     }

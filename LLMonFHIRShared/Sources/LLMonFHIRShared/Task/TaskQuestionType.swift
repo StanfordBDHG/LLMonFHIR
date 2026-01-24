@@ -10,14 +10,14 @@ import Foundation
 
 
 /// Defines the type of question and its validation rules
-enum TaskQuestionType: Hashable, Sendable {
+public enum TaskQuestionType: Hashable, Sendable {
     /// The question only provides instructions, and does not collect an answer.
     case instructional
     case scale(responseOptions: AnswerOptions)
     case freeText
     case netPromoterScore(range: ClosedRange<Int>)
 
-    var range: ClosedRange<Int>? {
+    public var range: ClosedRange<Int>? {
         switch self {
         case .scale(let responseOptions):
             1...(responseOptions.count)
@@ -74,12 +74,12 @@ extension TaskQuestionType: Codable {
         }
     }
     
-    init(from decoder: any Decoder) throws {
+    public init(from decoder: any Decoder) throws {
         let stringValue = try decoder.singleValueContainer().decode(String.self)
         try self.init(stringValue: stringValue)
     }
     
-    func encode(to encoder: any Encoder) throws {
+    public func encode(to encoder: any Encoder) throws {
         var container = encoder.singleValueContainer()
         try container.encode(stringValue)
     }
@@ -87,11 +87,11 @@ extension TaskQuestionType: Codable {
 
 
 extension ClosedRange where Bound == Int {
-    var llmOnFhirStringValue: String {
+    public var llmOnFhirStringValue: String {
         "\(lowerBound);\(upperBound)"
     }
     
-    init?(llmOnFhirStringValue string: some StringProtocol) {
+    public init?(llmOnFhirStringValue string: some StringProtocol) {
         let components = string.split(separator: ";")
         guard components.count == 2 else {
             return nil

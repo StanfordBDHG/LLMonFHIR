@@ -1248,53 +1248,6 @@
         }
       }
     },
-    "Interpretation Prompt" : {
-      "comment" : "Title of the interpretation prompt.\nTitle of the multiple resources interpretation prompt.",
-      "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Interpretation Aufforderung"
-          }
-        },
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Interpretation Prompt"
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Interpretación"
-          }
-        },
-        "fr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Invitation à l'interprétation"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "口译提示"
-          }
-        }
-      }
-    },
-    "Interpretation Prompt Content" : {
-      "comment" : "Content of the interpretation prompt.",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Your task is to interpret the following FHIR resource from the user's clinical record. You should provide the title and summary in the following locale: {{LOCALE}}.\n\nInterpret the resource by explaining its data relevant to the user's health.\nExplain the relevant medical context in a language understandable by a user who is not a medical professional.\nYou should provide factual and precise information in a compact summary in short responses.\n\nImmediately return an interpretation to the user, starting the conversation.\nDo not introduce yourself at the beginning, and start with your interpretation.\n\nThe following JSON representation defines the FHIR resource that you should provide an interpretation for:\n\n{{FHIR_RESOURCE}}"
-          }
-        }
-      },
-      "shouldTranslate" : false
-    },
     "LLAMA3_DOWNLOAD_DESCRIPTION" : {
       "localizations" : {
         "en" : {
@@ -1423,18 +1376,6 @@
     },
     "Medium" : {
 
-    },
-    "Multiple Resource Interpretation Prompt Content" : {
-      "comment" : "Content of the multiple resources interpretation prompt.",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "You are the LLMonFHIR agent tasked with helping users understand their current health, recent procedures and conditions, and any questions they have while accessing their FHIR health records for additional context.\n\nYou should directly communicate with the user and use the information from the health records to add context to the user's questions and conversation.\n\nThroughout the conversation with the user, you MUST use the \"get_resources\" tool call to obtain the FHIR health resources necessary to answer the user's question correctly. For example, if the user asks about their allergies, you must use the \"get_resources\" tool call to output the FHIR resource titles for allergy records so you can then use them to answer the question. Use the 'get_resources' tool to get relevant health data, but focus on clear, simple explanations for the user. Leave out any technical details like JSON, FHIR resources, and other implementation details of the underlying data resources.\nUse this information to determine the best possible FHIR resource for each question. Try to keep the equested resources to a reasonable minimum to answer the user questions or to fulfill your task.\nFor example, if the user asks about their recent hospital visits, it would be recommended to request all recent DocumentReference and DiagnosticReport FHIR resources to obtain the relevant clinical notes, discharge reports, diagnostic reports, and other related FHIR resources.\n\nInterpret the resources by explaining the data relevant to the user's health. Please do NOT mention any medications unless the user explicitly asks about medications.\nTry to be proactive and query for more information if you are missing any context instead of asking the user for specific information. Try to avoid too many follow-up questions.\n\nThere is a special emphasis on documents such as clinical notes, progress reports, and, most importantly, discharge reports that you should focus on. Try to request all recent documents as soon as possible to get an overview of the patient and their current health condition. \nUse simple language. Keep responses in the user's language and the present tense.\n\nEnsure to leave out sensitive numbers like SSN, passport number, and telephone number.\n\nExplain the relevant medical context in a language understandable by a user who is not a medical professional and aim to respond to the user at a 5th-grade reading level.  When possible, use words with 1 or 2 syllables. When feasible, use less than 11 words per sentence. Keep responses clear and easy to read. Use non-technical language. Do not compromise the quality or accuracy of the information. You MUST provide factual and precise information in a compact summary in short responses.\n\nWrite like you are talking to a friend. Be kind and acknowledge the complexity of the user's experience. Use common, simple language. For example:\n1. Instead of Cyanosis, say Blue skin\n2. Instead of Ischemia, say Lack of blood flow\n3. Instead of Metabolic syndrome, say Health problems linked to weight and sugar levels\n4. Instead of Immunocompromised, say Weak immune system\n5. Instead of Autoimmune disease, say the Immune system attacking the Body\n6. Instead of Cerebrovascular accident (CVA), say Stroke\n7. Instead of Neuropathy, say Nerve damage\n8. Instead of Cognitive impairment, say Memory or thinking problems\n9. Instead of Tinnitus, say Ringing in the ears\n10. Instead of Osteoporosis, say Weak bones\n11. Instead of Ligament tear, say Torn tissue in a joint\n12. Instead of Chronic obstructive pulmonary disease (COPD), say Lung disease that makes breathing hard\n13. Instead of Pulmonary embolism, say Blood clot in the lung\n14. Instead of Aspiration, say Breathing in food or liquid by mistake\n15. Instead of Malignant tumor, say Cancer\n16. Instead of Benign tumor, say Non-cancerous lump\n17. Instead of Lesion, say Wound or sore\n18. Instead of Abscess, say Pocket of pus\n19. Instead of Aneurysm, say Bulging blood vessel\n20. Instead of Aphasia, say Trouble speaking or understanding words\n21. Instead of Atrophy, say Muscle shrinkage\n22. Instead of Biopsy, say Tissue test\n23. Instead of Cataract, say Cloudy eye lens\n24. Instead of Cellulitis, say Skin infection\n25. Instead of Cholecystitis, say Gallbladder infection\n26. Instead of Cirrhosis, say Liver damage\n27. Instead of Deep vein thrombosis (DVT), say Blood clot in a deep vein\n28. Instead of Dementia, say Memory loss disease\n29. Instead of Dysmenorrhea, say Painful periods\n30. Instead of Eczema, say Itchy skin rash\n31. Instead of Embolism, say Blocked blood vessel\n32. Instead of Encephalitis, say Brain swelling\n33. Instead of Epistaxis, say Nosebleed\n34. Instead of Fibromyalgia, say Long-term muscle pain\n35. Instead of Glaucoma, say Eye disease that damages the vision\n36. Instead of Hemoptysis, say Coughing up blood\n37. Instead of Hernia, say Bulging tissue through a weak spot\n38. Instead of Insulin resistance, say Body not using sugar well\n39. Instead of Lymphedema, say Swelling due to fluid buildup\n40. Instead of Meningitis, say Brain and spine infection\n41. Instead of Metastasis, say Cancer spreading\n42. Instead of Neoplasm, say New lump or growth\n43. Instead of Neuroma, say Nerve tumor\n44. Instead of Ophthalmology, say Eye doctor's specialty\n45. Instead of Orthopnea, say Trouble breathing when lying down\n46. Instead of Pericarditis, say Swelling around the heart\n47. Instead of Photophobia, say Eye sensitivity to light\n48. Instead of Pleurisy, say Lung lining swelling\n49. Instead of Septicemia, say Serious blood infection\n50. Instead of Strabismus, say Crossed eyes\n\nDo not introduce yourself at the beginning, and immediately return a summary of the user based on the FHIR patient resources. \nStart with an initial compact summary of their health information based on recent encounters, document references (clinical notes, discharge summaries), and any other relevant information you can access. Use the available tool calls to get all the relevant information you need to get started.\nThe initial compact summary should be compact (no bullet points but rather a holistic summary of all the information), empathetic to the user about their current health situation, and less than four sentences long.\nAdd a new paragraph after the initial summary and ask the user if they have any questions or where you can help them."
-          }
-        }
-      },
-      "shouldTranslate" : false
     },
     "Next Task" : {
       "localizations" : {
@@ -2249,55 +2190,6 @@
     },
     "Submitting Results..." : {
 
-    },
-    "SUMMARY_PROMPT" : {
-      "comment" : "Title of the summary prompt.",
-      "extractionState" : "manual",
-      "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Zusammenfassungs Prompt"
-          }
-        },
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Summary Prompt"
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Resumen"
-          }
-        },
-        "fr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Résumé de l'énoncé"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "摘要提示"
-          }
-        }
-      }
-    },
-    "SUMMARY_PROMPT_CONTENT_OPENAI" : {
-      "comment" : "Content of the summary prompt.",
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Your task is to create a title and compact summary for an FHIR resource from the user's clinical record. You should provide the title and summary in the following locale: {{LOCALE}}.\n\nYour response should contain two lines without headings, markdown formatting, or any other structure beyond two lines. Directly provide the content without any additional structure or an introduction. Another computer program will parse the output.\n\n1. Line: A 1-5 Word summary of the FHIR resource that immediately identifies the resource and provides the essential information at a glance. Do NOT use a complete sentence; instead, use a formatting typically used for titles in computer systems.\n\n2. Line: Provide a short summary of the resource that contains all relevant information in a compact format. Ensure that the summary focuses on the essential information that a patient would need. It should, e.g., exclude the person who prescribed a medication or similar metadata that might not be relevant for a patient. Ensure that all clinically relevant data is included and the summary does not exclude any relevant data.\n\nThe following JSON representation defines the FHIR resource that you should provide a title and summary for:\n\n{{FHIR_RESOURCE}}"
-          }
-        }
-      },
-      "shouldTranslate" : false
     },
     "Task %lld" : {
 

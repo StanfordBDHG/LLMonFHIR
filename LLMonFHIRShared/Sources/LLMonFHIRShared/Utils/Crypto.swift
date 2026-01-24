@@ -6,8 +6,8 @@
 // SPDX-License-Identifier: MIT
 //
 
-import CryptoKit
-import Foundation
+public import CryptoKit
+public import Foundation
 
 
 extension Curve25519.KeyAgreement.PublicKey: @retroactive Hashable {
@@ -22,7 +22,7 @@ extension Curve25519.KeyAgreement.PublicKey: @retroactive Hashable {
 
 
 extension Curve25519.KeyAgreement.PublicKey {
-    var pemFileContents: Data {
+    public var pemFileContents: Data {
         // The standard ASN.1 header for X25519 (OID: 1.3.101.110)
         // Structure: Sequence(42) { Sequence(5) { OID(3) }, BitString(33) { Unused(0) + Key(32) } }
         var data = Data([ // start off with the x25519Header
@@ -36,7 +36,7 @@ extension Curve25519.KeyAgreement.PublicKey {
         return Data("-----BEGIN PUBLIC KEY-----\n\(base64)\n-----END PUBLIC KEY-----\n".utf8)
     }
     
-    init(pemFileContents: Data) throws {
+    public init(pemFileContents: Data) throws {
         let possiblePrefix = Data("-----BEGIN PUBLIC KEY-----\n".utf8)
         let possibleSuffix = Data("\n-----END PUBLIC KEY-----\n".utf8)
         var data = pemFileContents
@@ -51,11 +51,15 @@ extension Curve25519.KeyAgreement.PublicKey {
         }
         try self.init(rawRepresentation: data.suffix(32))
     }
+    
+    public init(contentsOf url: URL) throws {
+        try self.init(pemFileContents: Data(contentsOf: url))
+    }
 }
 
 
 extension Data {
-    func encrypted(using publicKey: Curve25519.KeyAgreement.PublicKey) throws -> Data {
+    public func encrypted(using publicKey: Curve25519.KeyAgreement.PublicKey) throws -> Data {
         let ephemeralPrivateKey = Curve25519.KeyAgreement.PrivateKey()
         let sharedSecret = try ephemeralPrivateKey.sharedSecretFromKeyAgreement(with: publicKey)
         let symmetricKey = sharedSecret.hkdfDerivedSymmetricKey(

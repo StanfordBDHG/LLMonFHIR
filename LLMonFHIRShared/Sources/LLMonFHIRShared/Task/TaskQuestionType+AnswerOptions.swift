@@ -11,25 +11,25 @@ import SpeziFoundation
 
 
 extension TaskQuestionType {
-    struct AnswerOptions: Hashable, RandomAccessCollection, ExpressibleByArrayLiteral, Sendable {
+    public struct AnswerOptions: Hashable, RandomAccessCollection, ExpressibleByArrayLiteral, Sendable {
         private let storage: [String]
         
-        var startIndex: Int {
+        public var startIndex: Int {
             storage.startIndex
         }
-        var endIndex: Int {
+        public var endIndex: Int {
             storage.endIndex
         }
         
-        init(_ other: some Sequence<String>) {
+        public init(_ other: some Sequence<String>) {
             storage = Array(other)
         }
         
-        init(arrayLiteral elements: String...) {
+        public init(arrayLiteral elements: String...) {
             storage = elements
         }
         
-        subscript(position: Int) -> String {
+        public subscript(position: Int) -> String {
             storage[position]
         }
     }
@@ -37,7 +37,7 @@ extension TaskQuestionType {
 
 
 extension TaskQuestionType.AnswerOptions: Codable {
-    var stringValue: String {
+    public var stringValue: String {
         if let key = Self.presets.first(where: { $0.value == self })?.key {
             "<\(key)>"
         } else {
@@ -45,7 +45,7 @@ extension TaskQuestionType.AnswerOptions: Codable {
         }
     }
     
-    init(stringValue string: some StringProtocol) {
+    public init(stringValue string: some StringProtocol) {
         if string.first == "<", string.last == ">", let preset = Self.presets[String(string.dropFirst().dropLast())] {
             self = preset
         } else {
@@ -53,13 +53,13 @@ extension TaskQuestionType.AnswerOptions: Codable {
         }
     }
     
-    init(from decoder: any Decoder) throws {
+    public init(from decoder: any Decoder) throws {
         let container = try decoder.singleValueContainer()
         let stringValue = try container.decode(String.self)
         self.init(stringValue: stringValue)
     }
     
-    func encode(to encoder: any Encoder) throws {
+    public func encode(to encoder: any Encoder) throws {
         var container = encoder.singleValueContainer()
         try container.encode(stringValue)
     }
@@ -67,7 +67,7 @@ extension TaskQuestionType.AnswerOptions: Codable {
 
 
 extension TaskQuestionType.AnswerOptions {
-    static let presets: [String: Self] = [
+    public static let presets: [String: Self] = [
         "clarityScale": clarityScale,
         "effectivenessScale": effectivenessScale,
         "confidentnessScale": confidentnessScale,
@@ -76,7 +76,7 @@ extension TaskQuestionType.AnswerOptions {
         "frequencyOptions": frequencyOptions
     ]
     
-    static let clarityScale: Self = [
+    public static let clarityScale: Self = [
         "Very clear",
         "Somewhat clear",
         "Neither clear nor unclear",
@@ -84,7 +84,7 @@ extension TaskQuestionType.AnswerOptions {
         "Very unclear"
     ]
 
-    static let effectivenessScale: Self = [
+    public static let effectivenessScale: Self = [
         "Very effective",
         "Somewhat effective",
         "Neither clear nor unclear",
@@ -92,7 +92,7 @@ extension TaskQuestionType.AnswerOptions {
         "Very ineffective"
     ]
     
-    static let confidentnessScale: Self = [
+    public static let confidentnessScale: Self = [
         "Very confident",
         "Somewhat confident",
         "Neither confident nor unconfident",
@@ -100,7 +100,7 @@ extension TaskQuestionType.AnswerOptions {
         "Very unconfident"
     ]
 
-    static let comparisonScale: Self = [
+    public static let comparisonScale: Self = [
         "Significantly better",
         "Slightly better",
         "No change",
@@ -108,7 +108,7 @@ extension TaskQuestionType.AnswerOptions {
         "Significantly worse"
     ]
 
-    static let balancedEaseScale: Self = [
+    public static let balancedEaseScale: Self = [
         "Very easy",
         "Somewhat easy",
         "Neither easy nor difficult",
@@ -116,7 +116,7 @@ extension TaskQuestionType.AnswerOptions {
         "Very difficult"
     ]
 
-    static let frequencyOptions: Self = [
+    public static let frequencyOptions: Self = [
         "Always",
         "Often",
         "Sometimes",

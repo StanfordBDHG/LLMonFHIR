@@ -8,6 +8,7 @@
 
 import FirebaseStorage
 import Foundation
+import LLMonFHIRShared
 import Spezi
 import SpeziFirebaseAccount
 

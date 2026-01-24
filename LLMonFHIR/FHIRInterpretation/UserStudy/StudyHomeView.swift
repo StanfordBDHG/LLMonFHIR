@@ -6,6 +6,7 @@
 // SPDX-License-Identifier: MIT
 //
 
+import LLMonFHIRShared
 import os.log
 import SpeziFHIR
 import SpeziFoundation

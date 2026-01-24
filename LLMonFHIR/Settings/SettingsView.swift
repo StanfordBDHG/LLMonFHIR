@@ -6,6 +6,7 @@
 // SPDX-License-Identifier: MIT
 //
 
+import LLMonFHIRShared
 import SpeziFoundation
 import SpeziLLMLocalDownload
 import SpeziLLMOpenAI
@@ -182,8 +183,4 @@ extension SettingsView {
             self.action = action
         }
     }
-}
-
-#Preview {
-    SettingsView()
 }

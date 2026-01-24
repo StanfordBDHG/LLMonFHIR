@@ -8,13 +8,13 @@
 
 // swiftlint:disable redundant_string_enum_value
 
-import CryptoKit
+public import CryptoKit
 import Foundation
 
 
 /// Manages a collection of survey tasks and their responses.
-final class Study: Identifiable {
-    enum OpenAIEndpointConfig: Equatable {
+public final class Study: Identifiable {
+    public enum OpenAIEndpointConfig: Equatable, Sendable {
         /// The study uses the regular OpenAI API to generate chat completions
         case regular
         /// The study uses a firebase function to generate chat completions
@@ -22,36 +22,36 @@ final class Study: Identifiable {
     }
     
     /// The survey's unique identifier.
-    let id: String
+    public let id: String
     /// The survey's title.
-    let title: String
+    public let title: String
     /// A brief explainer detailing what the survey does.
-    let explainer: String
+    public let explainer: String
     /// Passcode "used" to unlock the Settings sheet within the app.
     ///
     /// Set this value to `nil` to disable the lock and always have the settings directly accessible.
-    let settingsUnlockCode: String?
+    public let settingsUnlockCode: String?
     
     /// The OpenAI API key that should be used when answering this survey.
-    let openAIAPIKey: String
-    let openAIEndpoint: OpenAIEndpointConfig
+    public var openAIAPIKey: String
+    public let openAIEndpoint: OpenAIEndpointConfig
     
     /// The email address to which the report file should be sent.
-    let reportEmail: String?
+    public let reportEmail: String?
     
     /// The public key to use when encrypting a report file.
     ///
     /// `nil` if the files should never be encrypted.
-    let encryptionKey: Curve25519.KeyAgreement.PublicKey?
+    public var encryptionKey: Curve25519.KeyAgreement.PublicKey?
     
-    let summarizeSingleResourcePrompt: FHIRPrompt
-    let interpretMultipleResourcesPrompt: FHIRPrompt
+    public let summarizeSingleResourcePrompt: FHIRPrompt
+    public let interpretMultipleResourcesPrompt: FHIRPrompt
     
     /// The tasks that make up this survey
-    private(set) var tasks: [SurveyTask]
+    public private(set) var tasks: [SurveyTask]
     
     /// Creates a new survey.
-    init(
+    public init(
         id: String,
         title: String,
         explainer: String,
@@ -80,11 +80,11 @@ final class Study: Identifiable {
 
 
 extension Study: Hashable {
-    static func == (lhs: Study, rhs: Study) -> Bool {
+    public static func == (lhs: Study, rhs: Study) -> Bool {
         ObjectIdentifier(lhs) == ObjectIdentifier(rhs)
     }
     
-    func hash(into hasher: inout Hasher) {
+    public func hash(into hasher: inout Hasher) {
         hasher.combine(ObjectIdentifier(self))
     }
 }
@@ -97,7 +97,7 @@ extension Study {
     ///   - taskId: The ID of the task containing the question
     ///   - questionIndex: The index of the question within the task
     /// - Throws: `SurveyError` if the task or question cannot be found or the answer is invalid
-    func submitAnswer(_ answer: TaskQuestionAnswer, forTaskId taskId: SurveyTask.ID, questionIndex: Int) throws {
+    public func submitAnswer(_ answer: TaskQuestionAnswer, forTaskId taskId: SurveyTask.ID, questionIndex: Int) throws {
         guard let groupIndex = tasks.firstIndex(where: { $0.id == taskId }) else {
             throw SurveyError.taskNotFound
         }
@@ -105,7 +105,7 @@ extension Study {
     }
 
     /// Resets all answers in the survey to unanswered
-    func resetAllAnswers() {
+    public func resetAllAnswers() {
         tasks = tasks.map { task in
             var newTask = task
             for index in newTask.questions.indices {
@@ -134,7 +134,7 @@ extension Study: Codable {
         case interpretMultipleResourcesPrompt = "prompt_interpret_multiple_resources"
     }
     
-    convenience init(from decoder: any Decoder) throws {
+    public convenience init(from decoder: any Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         self.init(
             id: try container.decode(String.self, forKey: .id),
@@ -147,14 +147,14 @@ extension Study: Codable {
             encryptionKey: try container.decodeIfPresent(Data.self, forKey: .encryptionKey)
                 .flatMap { $0.isEmpty ? nil : try .init(pemFileContents: $0) },
             summarizeSingleResourcePrompt: try container.decodeIfPresent(String.self, forKey: .summarizeSingleResourcePrompt)
-                .map { FHIRPrompt(promptText: $0) },
+                .flatMap { $0.isEmpty ? nil : FHIRPrompt(promptText: $0) },
             interpretMultipleResourcesPrompt: try container.decodeIfPresent(String.self, forKey: .interpretMultipleResourcesPrompt)
-                .map { FHIRPrompt(promptText: $0) },
+                .flatMap { $0.isEmpty ? nil : FHIRPrompt(promptText: $0) },
             tasks: try container.decode([SurveyTask].self, forKey: .tasks)
         )
     }
     
-    func encode(to encoder: any Encoder) throws {
+    public func encode(to encoder: any Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
         try container.encode(id, forKey: .id)
         try container.encode(title, forKey: .title)
@@ -164,8 +164,16 @@ extension Study: Codable {
         try container.encode(openAIEndpoint, forKey: .openAIEndpoint)
         try container.encodeIfPresent(reportEmail, forKey: .reportEmail)
         try container.encodeIfPresent(encryptionKey?.pemFileContents, forKey: .encryptionKey)
-        try container.encode(summarizeSingleResourcePrompt.promptText, forKey: .summarizeSingleResourcePrompt)
-        try container.encode(interpretMultipleResourcesPrompt.promptText, forKey: .interpretMultipleResourcesPrompt)
+        if summarizeSingleResourcePrompt != .summarizeSingleFHIRResourceDefaultPrompt {
+            try container.encode(summarizeSingleResourcePrompt.promptText, forKey: .summarizeSingleResourcePrompt)
+        } else {
+            try container.encode("", forKey: .summarizeSingleResourcePrompt)
+        }
+        if interpretMultipleResourcesPrompt != .interpretMultipleResourcesDefaultPrompt {
+            try container.encode(interpretMultipleResourcesPrompt.promptText, forKey: .interpretMultipleResourcesPrompt)
+        } else {
+            try container.encode("", forKey: .interpretMultipleResourcesPrompt)
+        }
         try container.encode(tasks, forKey: .tasks)
     }
 }
@@ -180,7 +188,7 @@ extension SurveyTask: Codable {
         case questions = "questions"
     }
     
-    init(from decoder: any Decoder) throws {
+    public init(from decoder: any Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         self.init(
             id: try container.decode(String.self, forKey: .id),
@@ -200,7 +208,7 @@ extension SurveyTask: Codable {
         )
     }
     
-    func encode(to encoder: any Encoder) throws {
+    public func encode(to encoder: any Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
         try container.encode(id, forKey: .id)
         try container.encodeIfPresent(title, forKey: .id)
@@ -212,7 +220,7 @@ extension SurveyTask: Codable {
 
 
 extension Study.OpenAIEndpointConfig: RawRepresentable, Codable {
-    var rawValue: String {
+    public var rawValue: String {
         switch self {
         case .regular:
             "regular"
@@ -221,7 +229,7 @@ extension Study.OpenAIEndpointConfig: RawRepresentable, Codable {
         }
     }
     
-    init?(rawValue: String) {
+    public init?(rawValue: String) {
         switch rawValue {
         case "regular":
             self = .regular

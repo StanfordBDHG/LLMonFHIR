@@ -12,19 +12,19 @@ import Foundation
 
 
 /// Represents a group of related questions in a survey
-struct SurveyTask: Hashable, Identifiable, Sendable {
+public struct SurveyTask: Hashable, Identifiable, Sendable {
     /// Unique identifier for the task
-    let id: String
-    let title: String?
+    public let id: String
+    public let title: String?
     /// Optional instructions displayed to the user
-    let instructions: String?
+    public let instructions: String?
     
-    let assistantMessagesLimit: ClosedRange<Int>?
+    public let assistantMessagesLimit: ClosedRange<Int>?
 
     /// The questions contained in this task
-    private(set) var questions: [TaskQuestion]
+    public private(set) var questions: [TaskQuestion]
     
-    init(
+    public init(
         id: String,
         title: String? = nil,
         instructions: String?,
@@ -43,7 +43,7 @@ struct SurveyTask: Hashable, Identifiable, Sendable {
     ///   - answer: The new answer to store
     ///   - index: The index of the question to update
     /// - Throws: `SurveyError` if the index is invalid or the answer is invalid
-    mutating func updateAnswer(_ answer: TaskQuestionAnswer, forQuestionIndex index: Int) throws {
+    public mutating func updateAnswer(_ answer: TaskQuestionAnswer, forQuestionIndex index: Int) throws {
         guard questions.indices.contains(index) else {
             throw SurveyError.invalidQuestionIndex
         }

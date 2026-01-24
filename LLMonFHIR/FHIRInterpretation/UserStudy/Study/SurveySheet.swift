@@ -8,6 +8,7 @@
 
 // swiftlint:disable file_types_order
 
+import LLMonFHIRShared
 import SpeziViews
 import SwiftUI
 
