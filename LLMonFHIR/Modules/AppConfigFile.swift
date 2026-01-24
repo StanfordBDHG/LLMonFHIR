@@ -17,8 +17,8 @@ struct AppConfigFile: Codable {
     }
     
     let appLaunchMode: LLMonFHIR.Mode
-    let studies: [Study]
-    let firebaseConfig: FirebaseConfigDictionary?
+    var studies: [Study]
+    var firebaseConfig: FirebaseConfigDictionary?
     
     init(launchMode: LLMonFHIR.Mode, studies: [Study], firebaseConfig: FirebaseConfigDictionary?) {
         self.appLaunchMode = launchMode
@@ -53,19 +53,29 @@ struct AppConfigFile: Codable {
 
 
 extension AppConfigFile {
+    /// Attempts to load a configuration from a plist file in the main bundle.
+    init?(nameInBundle: String) {
+        guard let url = Bundle.main.url(forResource: nameInBundle, withExtension: "plist") else {
+            return nil
+        }
+        self.init(contentsOf: url)
+    }
+    
+    /// Attempts to load a configuration from a URL.
+    init?(contentsOf url: URL) {
+        do {
+            let data = try Data(contentsOf: url)
+            self = try PropertyListDecoder().decode(Self.self, from: data)
+        } catch {
+            return nil
+        }
+    }
+    
     /// The configuration bundled with the app.
     ///
     /// Returns an empty ``LLMonFHIR/LLMonFHIR/Mode/standalone`` config if the file is not present or cannot be decoded.
     static func current() -> Self {
-        guard let url = Bundle.main.url(forResource: "UserStudyConfig", withExtension: "plist") else {
-            return Self(launchMode: .standalone, studies: [], firebaseConfig: nil)
-        }
-        do {
-            let data = try Data(contentsOf: url)
-            return try PropertyListDecoder().decode(Self.self, from: data)
-        } catch {
-            return Self(launchMode: .standalone, studies: [], firebaseConfig: nil)
-        }
+        Self(nameInBundle: "UserStudyConfig") ?? Self(launchMode: .standalone, studies: [], firebaseConfig: nil)
     }
 }
 
