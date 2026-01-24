@@ -31,14 +31,14 @@ struct SurveySheet: View {
                 view(for: taskIdx)
             }
             .onChange(of: model.currentTaskIdx, initial: true) { _, newValue in
-                guard model.presentedSheet == .survey else {
+                guard let newValue, model.presentedSheet == .survey else {
                     // don't update the path if we're not presented.
                     // otherwise, the sheet will navigate forward as it is being dismissed, which looks weird.
                     return
                 }
                 // update the path to contain all task indices with questions,
                 // in the range of 1 after the initial task with a question (which is handled separately above) and the current task.
-                path = Array((0...(newValue ?? 0)).filter { !model.study.tasks[$0].questions.isEmpty }.dropFirst())
+                path = Array((0...newValue).filter { !model.study.tasks[$0].questions.isEmpty }.dropFirst())
             }
         }
     }
@@ -71,11 +71,11 @@ struct SurveySheet: View {
 /// The main view for displaying and collecting survey responses
 private struct SurveyView: View {
     /// The task containing the questions to display
-    let task: SurveyTask
+    let task: Study.Task
     /// The task's index within its containing survey, in a user-displayable format.
     let userDisplayableTaskIdx: Int
     /// Callback to invoke when the survey is submitted
-    let onSubmit: @MainActor ([TaskQuestionAnswer]) async -> Void
+    let onSubmit: @MainActor ([Study.Task.Question.Answer]) async -> Void
     /// Called when the sheet should be dismissed
     let onDismiss: @MainActor () -> Void
     

@@ -55,7 +55,7 @@ public final class Study: Identifiable {
     public let chatTitleConfig: ChatTitleConfig
     
     /// The tasks that make up this survey
-    public private(set) var tasks: [SurveyTask]
+    public private(set) var tasks: [Task]
     
     /// Creates a new survey.
     public init(
@@ -70,7 +70,7 @@ public final class Study: Identifiable {
         summarizeSingleResourcePrompt: FHIRPrompt?,
         interpretMultipleResourcesPrompt: FHIRPrompt?,
         chatTitleConfig: ChatTitleConfig,
-        tasks: [SurveyTask]
+        tasks: [Task]
     ) {
         self.id = id
         self.title = title
@@ -105,10 +105,10 @@ extension Study {
     ///   - answer: The answer to submit
     ///   - taskId: The ID of the task containing the question
     ///   - questionIndex: The index of the question within the task
-    /// - Throws: `SurveyError` if the task or question cannot be found or the answer is invalid
-    public func submitAnswer(_ answer: TaskQuestionAnswer, forTaskId taskId: SurveyTask.ID, questionIndex: Int) throws {
+    /// - Throws: `StudyError` if the task or question cannot be found or the answer is invalid
+    public func submitAnswer(_ answer: Task.Question.Answer, forTaskId taskId: Task.ID, questionIndex: Int) throws(StudyError) {
         guard let groupIndex = tasks.firstIndex(where: { $0.id == taskId }) else {
-            throw SurveyError.taskNotFound
+            throw .taskNotFound
         }
         try tasks[groupIndex].updateAnswer(answer, forQuestionIndex: questionIndex)
     }
@@ -161,7 +161,7 @@ extension Study: Codable {
             interpretMultipleResourcesPrompt: try container.decodeIfPresent(String.self, forKey: .interpretMultipleResourcesPrompt)
                 .flatMap { $0.isEmpty ? nil : FHIRPrompt(promptText: $0) },
             chatTitleConfig: try container.decode(ChatTitleConfig.self, forKey: .chatTitleConfig),
-            tasks: try container.decode([SurveyTask].self, forKey: .tasks)
+            tasks: try container.decode([Task].self, forKey: .tasks)
         )
     }
     
@@ -191,7 +191,7 @@ extension Study: Codable {
 }
 
 
-extension SurveyTask: Codable {
+extension Study.Task: Codable {
     private enum CodingKeys: String, CodingKey {
         case id = "id"
         case title = "title"
@@ -216,7 +216,7 @@ extension SurveyTask: Codable {
                     throw DecodingError.dataCorrupted(.init(codingPath: [], debugDescription: "Invalid input '\(string)'"))
                 }
             }(),
-            questions: try container.decode([TaskQuestion].self, forKey: .questions)
+            questions: try container.decode([Question].self, forKey: .questions)
         )
     }
     

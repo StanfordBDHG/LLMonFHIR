@@ -10,7 +10,7 @@ import Foundation
 import SpeziFoundation
 
 
-extension TaskQuestionType {
+extension Study.Task.Question.Kind {
     /// The user-selectable options associated with a ``TaskQuestionType/scale(responseOptions:)``
     public struct AnswerOptions: Hashable, RandomAccessCollection, ExpressibleByArrayLiteral, Sendable {
         private let storage: [String]
@@ -37,7 +37,7 @@ extension TaskQuestionType {
 }
 
 
-extension TaskQuestionType.AnswerOptions: Codable {
+extension Study.Task.Question.Kind.AnswerOptions: Codable {
     public var stringValue: String {
         if let key = Self.presets.first(where: { $0.value == self })?.key {
             "<\(key)>"
@@ -67,7 +67,7 @@ extension TaskQuestionType.AnswerOptions: Codable {
 }
 
 
-extension TaskQuestionType.AnswerOptions {
+extension Study.Task.Question.Kind.AnswerOptions {
     /// All hardcoded presets.
     public static let presets: [String: Self] = [
         "clarityScale": clarityScale,

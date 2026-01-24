@@ -13,7 +13,7 @@ import SwiftUI
 /// A view that displays a single question and its corresponding input method
 struct TaskQuestionView: View {
     /// The question to display
-    let question: TaskQuestion
+    let question: Study.Task.Question
 
     /// The index of this question in the task
     let index: Int

@@ -10,7 +10,7 @@ public import Foundation
 
 
 /// Represents errors that can occur during survey operations
-public enum SurveyError: LocalizedError {
+public enum StudyError: LocalizedError {
     /// Indicates a numerical response was outside the valid range
     case invalidRange(expected: ClosedRange<Int>)
 

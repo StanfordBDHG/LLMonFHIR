@@ -9,32 +9,34 @@
 import Foundation
 
 
-/// Defines the type of question and its validation rules
-public enum TaskQuestionType: Hashable, Sendable {
-    /// The question only provides instructions, and does not collect an answer.
-    case instructional
-    /// A scale question, where the user is asked to select one of a range of options.
-    case scale(responseOptions: AnswerOptions)
-    /// A free text question.
-    case freeText
-    /// An NPS question
-    case netPromoterScore(range: ClosedRange<Int>)
+extension Study.Task.Question {
+    /// Defines the type of question and its validation rules
+    public enum Kind: Hashable, Sendable {
+        /// The question only provides instructions, and does not collect an answer.
+        case instructional
+        /// A scale question, where the user is asked to select one of a range of options.
+        case scale(responseOptions: AnswerOptions)
+        /// A free text question.
+        case freeText
+        /// An NPS question
+        case netPromoterScore(range: ClosedRange<Int>)
 
-    /// The question's associated range.
-    public var range: ClosedRange<Int>? {
-        switch self {
-        case .scale(let responseOptions):
-            1...(responseOptions.count)
-        case .netPromoterScore(let range):
-            range
-        case .freeText, .instructional:
-            nil
+        /// The question's associated range.
+        public var range: ClosedRange<Int>? {
+            switch self {
+            case .scale(let responseOptions):
+                1...(responseOptions.count)
+            case .netPromoterScore(let range):
+                range
+            case .freeText, .instructional:
+                nil
+            }
         }
     }
 }
 
 
-extension TaskQuestionType: Codable {
+extension Study.Task.Question.Kind: Codable {
     private enum ParsingError: Error {
         case unknownType
         case invalidInput

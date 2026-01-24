@@ -78,9 +78,7 @@ struct ExportConfigFile: ParsableCommand {
         for study in config.studies {
             if let key = openAIKeys.last(where: { $0.studyId == study.id })?.value {
                 study.openAIAPIKey = key
-            } else if allowEmptyAPIKeys {
-                study.openAIAPIKey = ""
-            } else {
+            } else if !allowEmptyAPIKeys {
                 throw NSError(domain: "edu.stanford.LLMonFHIR.CLI", code: 0, userInfo: [
                     NSLocalizedDescriptionKey: "Missing OpenAI API key for study '\(study.id)'"
                 ])

@@ -10,7 +10,7 @@ import LLMonFHIRShared
 import SwiftUI
 
 struct TaskInstructionView: View {
-    let task: SurveyTask
+    let task: Study.Task
     let userDisplayableCurrentTaskIdx: Int
     /// Called when the sheet should be dismissed
     let onDismiss: @MainActor () -> Void

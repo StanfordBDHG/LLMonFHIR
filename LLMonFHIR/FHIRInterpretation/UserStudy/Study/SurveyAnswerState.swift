@@ -19,7 +19,7 @@ final class SurveyAnswerState {
     let freeTextState = FreeTextAnswerState()
     let npsState = NPSAnswerState()
 
-    func getAnswers(for questions: [TaskQuestion]) -> [TaskQuestionAnswer] {
+    func getAnswers(for questions: [Study.Task.Question]) -> [Study.Task.Question.Answer] {
         questions.enumerated().map { index, question in
             switch question.type {
             case .scale:
@@ -34,7 +34,7 @@ final class SurveyAnswerState {
         }
     }
 
-    func isAnswered(questionIndex: Int, type: TaskQuestionType, isOptional: Bool) -> Bool {
+    func isAnswered(questionIndex: Int, type: Study.Task.Question.Kind, isOptional: Bool) -> Bool {
         switch type {
         case .instructional:
             true

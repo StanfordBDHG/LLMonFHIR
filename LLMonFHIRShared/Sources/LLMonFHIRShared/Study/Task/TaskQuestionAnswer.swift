@@ -9,31 +9,33 @@
 public import Foundation
 
 
-/// Represents a user's response to a survey question
-public enum TaskQuestionAnswer: Hashable, Sendable {
-    case scale(Int)
-    case freeText(String)
-    case netPromoterScore(Int)
-    case unanswered
-    
-    public var rawValue: String {
-        switch self {
-        case .scale(let value):
-            "\(value)"
-        case .freeText(let value):
-            "\(value)"
-        case .netPromoterScore(let value):
-            "\(value)"
-        case .unanswered:
-            "unanswered"
+extension Study.Task.Question {
+    /// Represents a user's response to a survey question
+    public enum Answer: Hashable, Sendable {
+        case scale(Int)
+        case freeText(String)
+        case netPromoterScore(Int)
+        case unanswered
+        
+        public var rawValue: String {
+            switch self {
+            case .scale(let value):
+                "\(value)"
+            case .freeText(let value):
+                "\(value)"
+            case .netPromoterScore(let value):
+                "\(value)"
+            case .unanswered:
+                "unanswered"
+            }
         }
     }
 }
 
 
-extension TaskQuestionAnswer {
+extension Study.Task.Question.Answer {
     /// Decodes an answer from a string.
-    public init?(from string: String, for questionKind: TaskQuestionType) {
+    public init?(from string: String, for questionKind: Study.Task.Question.Kind) {
         if string == Self.unanswered.rawValue {
             self = .unanswered
             return
@@ -58,9 +60,9 @@ extension TaskQuestionAnswer {
 }
 
 
-extension TaskQuestionAnswer: Encodable, DecodableWithConfiguration {
+extension Study.Task.Question.Answer: Encodable, DecodableWithConfiguration {
     public struct DecodingConfiguration {
-        let questionKind: TaskQuestionType
+        let questionKind: Study.Task.Question.Kind
     }
     
     public init(from decoder: any Decoder, configuration: DecodingConfiguration) throws {
