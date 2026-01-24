@@ -68,8 +68,12 @@ final class UserStudyChatViewModel: MultipleResourcesChatViewModel, Sendable { /
         study.tasks.first { $0.id == currentTaskId }
     }
     
+    var currentTaskIdx: Int? {
+        study.tasks.firstIndex { $0.id == currentTaskId }
+    }
+    
     var userDisplayableCurrentTaskIdx: Int? {
-        study.tasks.firstIndex { $0.id == currentTaskId }.map { $0 + 1 }
+        currentTaskIdx.map { $0 + 1 }
     }
     
     /// Whether the chat input should currently be enabled, i.e. whether the user should currently be able to write (and submit) chat messages
@@ -201,22 +205,24 @@ final class UserStudyChatViewModel: MultipleResourcesChatViewModel, Sendable { /
         dismiss()
     }
 
-    /// Handles the submission of survey answers for the current task
+    /// Handles the submission of survey answers for a task within the survey.
     ///
-    /// This method processes the user's answers and advances to the next task
-    /// in the survey sequence.
+    /// This method processes the user's answers. If `task` is the current task, it also advances to the next task in the survey sequence.
     ///
-    /// - Parameter answers: Array of answers provided by the user
-    /// - Throws: An error if the submission fails
-    func submitSurveyAnswers(_ answers: [TaskQuestionAnswer]) throws {
-        guard let currentTaskId else {
-            return
+    /// - parameter answers: Array of answers provided by the user
+    /// - parameter task: The ``SurveyTask`` to which the answers belong.
+    /// - throws: An error if the submission fails
+    func submitSurveyAnswers(_ answers: [TaskQuestionAnswer], for task: SurveyTask) throws {
+        let isCurrentTask = task == currentTask
+        if isCurrentTask {
+            taskEndTimes[task.id] = Date()
         }
-        taskEndTimes[currentTaskId] = Date()
         for (index, answer) in answers.enumerated() {
-            try study.submitAnswer(answer, forTaskId: currentTaskId, questionIndex: index)
+            try study.submitAnswer(answer, forTaskId: task.id, questionIndex: index)
         }
-        advanceToNextTask()
+        if isCurrentTask {
+            advanceToNextTask()
+        }
     }
 
     /// Resets the study to its initial state
@@ -288,7 +294,15 @@ final class UserStudyChatViewModel: MultipleResourcesChatViewModel, Sendable { /
                 numTotalTasks: study.tasks.count
             )
             taskStartTimes[nextTask.id] = Date()
-            presentedSheet = .instructions
+            if (nextTask.instructions ?? "").isEmpty,
+               nextTask.assistantMessagesLimit == nil || nextTask.assistantMessagesLimit == 0...0,
+               !nextTask.questions.isEmpty {
+                // if the next task has no instructions and no/empty messaging limits, but does have questions, we directly go to the survey
+                presentedSheet = .survey
+            } else {
+                // otherwise, we simply show the instructions sheet
+                presentedSheet = .instructions
+            }
         } else {
             navigationState = .completed
             Task {

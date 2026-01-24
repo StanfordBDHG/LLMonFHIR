@@ -25,16 +25,20 @@ struct TaskQuestionView: View {
         Section {
             questionContent
         } header: {
-            Text(question.isOptional ? "\(question.text) (Optional)" : question.text)
-                .textCase(.none)
-                .font(.body)
-                .fontWeight(.medium)
+            if question.type != .instructional {
+                Text(question.isOptional ? "\(question.text) (Optional)" : question.text)
+                    .textCase(.none)
+                    .font(.body)
+                    .fontWeight(.medium)
+            }
         }
     }
 
 
     @ViewBuilder private var questionContent: some View {
         switch question.type {
+        case .instructional:
+            Text(question.text)
         case .scale(let responseOptions):
             ScaleView(
                 index: index,

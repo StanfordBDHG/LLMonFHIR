@@ -33,7 +33,7 @@ struct TaskQuestion: Hashable, Sendable {
     init(text: String, type: TaskQuestionType, isOptional: Bool = false) {
         self.text = text
         self.type = type
-        self.isOptional = isOptional
+        self.isOptional = type == .instructional ? true : isOptional
     }
 
 

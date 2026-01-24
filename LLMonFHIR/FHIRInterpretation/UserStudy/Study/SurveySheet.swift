@@ -6,77 +6,88 @@
 // SPDX-License-Identifier: MIT
 //
 
+// swiftlint:disable file_types_order
+
 import SpeziViews
 import SwiftUI
 
 
-/// Manages the state of answers for different types of survey questions
-@MainActor
-@Observable
-final class SurveyAnswerState {
-    let scaleState = ScaleAnswerState()
-    let freeTextState = FreeTextAnswerState()
-    let npsState = NPSAnswerState()
-
-    func getAnswers(for questions: [TaskQuestion]) -> [TaskQuestionAnswer] {
-        questions.enumerated().map { index, question in
-            switch question.type {
-            case .scale:
-                return scaleState.answers[index].map { .scale($0) } ?? .unanswered
-            case .freeText:
-                return  freeTextState.answers[index].map { .freeText($0) } ?? .unanswered
-            case .netPromoterScore:
-                return npsState.answer.map { .netPromoterScore($0) } ?? .unanswered
+struct SurveySheet: View {
+    private var model: UserStudyChatViewModel
+    private let firstTaskIdxWithQuestions: Int?
+    @State private var path: [Int] = []
+    
+    var body: some View {
+        NavigationStack(path: $path) {
+            VStack {
+                if let idx = firstTaskIdxWithQuestions {
+                    view(for: idx)
+                } else {
+                    EmptyView()
+                }
+            }
+            .navigationDestination(for: Int.self) { taskIdx in
+                view(for: taskIdx)
+            }
+            .onChange(of: model.currentTaskIdx, initial: true) { _, newValue in
+                // update the path to contain all task indices with questions,
+                // in the range of 1 after the initial task with a question (which is handled separately above) and the current task.
+                path = Array((0...(newValue ?? 0)).filter { !model.study.tasks[$0].questions.isEmpty }.dropFirst())
             }
         }
     }
-
-    func isAnswered(questionIndex: Int, type: TaskQuestionType, isOptional: Bool) -> Bool {
-        switch type {
-        case .scale:
-            return scaleState.isAnswered(questionIndex: questionIndex, isOptional: isOptional)
-        case .freeText:
-            return freeTextState.isAnswered(questionIndex: questionIndex, isOptional: isOptional)
-        case .netPromoterScore:
-            return npsState.isAnswered(isOptional: isOptional)
+    
+    init(model: UserStudyChatViewModel) {
+        self.model = model
+        self.firstTaskIdxWithQuestions = model.study.tasks.firstIndex { !$0.questions.isEmpty }
+    }
+    
+    @ViewBuilder
+    private func view(for taskIdx: Int) -> some View {
+        let task = model.study.tasks[taskIdx]
+        SurveyView(task: task, userDisplayableTaskIdx: taskIdx + 1) { answers in
+            do {
+                try model.submitSurveyAnswers(answers, for: task)
+            } catch {
+                print("Error submitting answers: \(error)")
+            }
+        } onDismiss: {
+            model.presentedSheet = nil
         }
+        .presentationDetents([.large])
+        .navigationBarBackButtonHidden()
     }
 }
 
+
+// MARK: Survey View
+
 /// The main view for displaying and collecting survey responses
-struct SurveyView: View {
+private struct SurveyView: View {
     /// The task containing the questions to display
     let task: SurveyTask
-    
-    /// The task's index within its containing survey
-    let taskIdx: Int
-
+    /// The task's index within its containing survey, in a user-displayable format.
+    let userDisplayableTaskIdx: Int
     /// Callback to invoke when the survey is submitted
     let onSubmit: @MainActor ([TaskQuestionAnswer]) async -> Void
-    
     /// Called when the sheet should be dismissed
     let onDismiss: @MainActor () -> Void
-
+    
     /// The state object managing all answers
     @State private var answerState = SurveyAnswerState()
-    
     @State private var viewState: ViewState = .idle
-
-
+    
     var body: some View {
-        NavigationStack {
-            Form {
-                questionSections
-                submitButtonSection
-            }
-            .navigationTitle("Task \(taskIdx + 1)")
-            .navigationBarTitleDisplayMode(.automatic)
-            .toolbar { toolbar }
-            .interactiveDismissDisabled()
+        Form {
+            questionSections
+            submitButtonSection
         }
+        .navigationTitle("Task \(userDisplayableTaskIdx)")
+        .navigationBarTitleDisplayMode(.automatic)
+        .toolbar { toolbar }
+        .interactiveDismissDisabled()
     }
     
-
     private var questionSections: some View {
         ForEach(Array(task.questions.enumerated()), id: \.offset) { index, question in
             TaskQuestionView(
@@ -86,7 +97,7 @@ struct SurveyView: View {
             )
         }
     }
-
+    
     private var submitButtonSection: some View {
         AsyncButton(state: $viewState, action: handleSubmit) {
             Text("Submit")
@@ -98,7 +109,7 @@ struct SurveyView: View {
         .disabled(!areAllQuestionsAnswered)
         .listRowBackground(Color.clear)
     }
-
+    
     private var toolbar: some ToolbarContent {
         ToolbarItem {
             if #available(iOS 26, *) {
@@ -115,7 +126,7 @@ struct SurveyView: View {
             }
         }
     }
-
+    
     private var areAllQuestionsAnswered: Bool {
         task.questions.indices.allSatisfy { index in
             let question = task.questions[index]
@@ -126,10 +137,10 @@ struct SurveyView: View {
             )
         }
     }
-
+    
     private func handleSubmit() async {
+        onDismiss()
         let answers = answerState.getAnswers(for: task.questions)
         await onSubmit(answers)
-        onDismiss()
     }
 }

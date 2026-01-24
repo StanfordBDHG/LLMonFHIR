@@ -11,6 +11,8 @@ import Foundation
 
 /// Defines the type of question and its validation rules
 enum TaskQuestionType: Hashable, Sendable {
+    /// The question only provides instructions, and does not collect an answer.
+    case instructional
     case scale(responseOptions: AnswerOptions)
     case freeText
     case netPromoterScore(range: ClosedRange<Int>)
@@ -18,11 +20,11 @@ enum TaskQuestionType: Hashable, Sendable {
     var range: ClosedRange<Int>? {
         switch self {
         case .scale(let responseOptions):
-            return 1...(responseOptions.count)
+            1...(responseOptions.count)
         case .netPromoterScore(let range):
-            return range
-        case .freeText:
-            return nil
+            range
+        case .freeText, .instructional:
+            nil
         }
     }
 }
@@ -36,6 +38,8 @@ extension TaskQuestionType: Codable {
     
     private var stringValue: String {
         switch self {
+        case .instructional:
+            "instruction"
         case .freeText:
             "text"
         case .scale(let options):
@@ -52,7 +56,9 @@ extension TaskQuestionType: Codable {
             }
             return string[string.index(after: startIdx)...].dropLast()
         }
-        if string == "text" {
+        if string == Self.instructional.stringValue {
+            self = .instructional
+        } else if string == Self.freeText.stringValue {
             self = .freeText
         } else if string.starts(with: "scale") {
             self = .scale(responseOptions: AnswerOptions(stringValue: try rawOptions()))

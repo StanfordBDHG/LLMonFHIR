@@ -47,7 +47,7 @@ struct UserStudyChatView: View {
                     case .instructions:
                         taskInstructionSheet()
                     case .survey:
-                        surveySheet()
+                        SurveySheet(model: model)
                     case .uploadingReport:
                         uploadSheet()
                     }
@@ -74,7 +74,6 @@ struct UserStudyChatView: View {
                 }
         }
     }
-    
     
     @ViewBuilder private var chatView: some View {
         VStack {
@@ -112,23 +111,6 @@ struct UserStudyChatView: View {
             resourceSummary: resourceSummary,
             uploader: uploader
         )
-    }
-    
-    
-    @ViewBuilder
-    private func surveySheet() -> some View {
-        if let task = model.currentTask, let taskIdx = model.userDisplayableCurrentTaskIdx {
-            SurveyView(task: task, taskIdx: taskIdx) { answers in
-                do {
-                    try model.submitSurveyAnswers(answers)
-                } catch {
-                    print("Error submitting answers: \(error)")
-                }
-            } onDismiss: {
-                model.presentedSheet = nil
-            }
-            .presentationDetents([.large])
-        }
     }
     
     @ViewBuilder

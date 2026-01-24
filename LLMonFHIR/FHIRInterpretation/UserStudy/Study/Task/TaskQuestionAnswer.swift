@@ -38,6 +38,8 @@ extension TaskQuestionAnswer {
             return
         }
         switch questionKind {
+        case .instructional:
+            self = .unanswered
         case .scale:
             guard let intValue = Int(string) else {
                 return nil
