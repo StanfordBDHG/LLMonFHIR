@@ -31,7 +31,7 @@ struct DecryptStudyReport: ParsableCommand {
     var outputUrl: URL
     
     func run() throws {
-        let key = Curve25519.KeyAgreement.PrivateKey(contentsOf: keyUrl)
+        let key = try Curve25519.KeyAgreement.PrivateKey(contentsOf: keyUrl)
         let input = try Data(contentsOf: inputUrl)
         let decrypted = try input.decrypted(using: key)
         if outputUrl == URL(argument: "-") {
