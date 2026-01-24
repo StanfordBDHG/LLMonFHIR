@@ -15,7 +15,7 @@ import LLMonFHIRShared
 import LLMonFHIRStudyDefinitions
 
 
-struct ExportConfigFile: ParsableCommand {
+struct DecryptStudyReport: ParsableCommand {
     static let configuration = CommandConfiguration(
         commandName: "decrypt-study-report",
         abstract: "Decrypts a study report file encrypted by the LLMonFHIR app",

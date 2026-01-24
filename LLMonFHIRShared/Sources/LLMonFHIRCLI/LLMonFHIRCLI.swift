@@ -19,7 +19,7 @@ struct LLMonFHIRCLI: ParsableCommand {
         discussion: "",
         version: "0.0.1",
         shouldDisplay: true,
-        subcommands: [ExportConfigFile.self],
+        subcommands: [ExportConfigFile.self, DecryptStudyReport.self],
         groupedSubcommands: [],
         defaultSubcommand: nil,
         helpNames: nil,

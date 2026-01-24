@@ -64,7 +64,7 @@ struct ExportConfigFile: ParsableCommand {
             guard let firebaseConfigFilePath else {
                 return nil
             }
-            if firebaseConfigFilePath == URL(filePath: "<emulator>") {
+            if firebaseConfigFilePath == URL(argument: "<emulator>") {
                 return .emulator
             }
             let data = try Data(contentsOf: firebaseConfigFilePath)
