@@ -6,6 +6,8 @@
 // SPDX-License-Identifier: MIT
 //
 
+// swiftlint:disable attributes
+
 import ArgumentParser
 import CryptoKit
 import Foundation
@@ -62,8 +64,8 @@ struct ExportConfigFile: ParsableCommand {
             guard let firebaseConfigFilePath else {
                 return nil
             }
-            if firebaseConfigFilePath == URL(filePath: "<empty>") {
-                return .empty
+            if firebaseConfigFilePath == URL(filePath: "<emulator>") {
+                return .emulator
             }
             let data = try Data(contentsOf: firebaseConfigFilePath)
             return try PropertyListDecoder().decode(AppConfigFile.FirebaseConfigDictionary.self, from: data)
@@ -95,7 +97,6 @@ struct ExportConfigFile: ParsableCommand {
 }
 
 
-
 // MARK: Utils
 
 extension ExportConfigFile {
@@ -104,7 +105,6 @@ extension ExportConfigFile {
         let value: Value
         
         init?(argument: String) {
-            print(Self.self, #function, argument)
             guard let idx = argument.firstIndex(of: ":") else {
                 return nil
             }
@@ -130,6 +130,6 @@ extension AppLaunchMode: ExpressibleByArgument {
 
 extension URL: @retroactive ExpressibleByArgument {
     public init?(argument: String) {
-        self = URL(filePath: argument, relativeTo: .currentDirectory())//.absoluteURL
+        self = URL(filePath: argument, relativeTo: .currentDirectory())
     }
 }

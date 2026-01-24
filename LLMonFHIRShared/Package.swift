@@ -55,7 +55,8 @@ let package = Package(
         ),
         .testTarget(
             name: "LLMonFHIRSharedTests",
-            dependencies: ["LLMonFHIRShared"]
-        ),
+            dependencies: ["LLMonFHIRShared"],
+            resources: [.process("Resources")]
+        )
     ]
 )

@@ -6,10 +6,13 @@
 // SPDX-License-Identifier: MIT
 //
 
+// swiftlint:disable line_length
+
 public import LLMonFHIRShared
 
 
 extension Study {
+    /// LLMonFHIR's gyn study
     public static var gynStudy: Study {
         let effectivenessQuestion = TaskQuestion(
             text: "How effective was the LLM in helping to answer your health question?",
@@ -270,5 +273,5 @@ private let postInterventionQuestions = [
         text: "I know how to prevent further problems with my reproductive health",
         type: .scale(responseOptions: .frequencyOptions),
         isOptional: false
-    ),
+    )
 ]

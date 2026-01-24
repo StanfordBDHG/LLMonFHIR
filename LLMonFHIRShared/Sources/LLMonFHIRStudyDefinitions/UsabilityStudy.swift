@@ -6,10 +6,13 @@
 // SPDX-License-Identifier: MIT
 //
 
+// swiftlint:disable line_length
+
 public import LLMonFHIRShared
 
 
 extension Study {
+    /// LLMonFHIR's usability study
     public static var usabilityStudy: Study {
         Study(
             id: "edu.stanford.LLMonFHIR.usabilityStudy",
@@ -74,7 +77,7 @@ extension Study {
                             text: "What surprised you about the LLM's answer, either positively or negatively?",
                             type: .freeText,
                             isOptional: true
-                        ),
+                        )
                     ]
                 ),
                 SurveyTask(
@@ -102,7 +105,7 @@ extension Study {
                             text: "On a scale of 0-10, how likely are you to recommend this tool to a friend or colleague?",
                             type: .netPromoterScore(range: 0...10),
                             isOptional: false
-                        ),
+                        )
                     ]
                 ),
                 SurveyTask(

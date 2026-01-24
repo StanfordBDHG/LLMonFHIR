@@ -6,6 +6,7 @@
 // SPDX-License-Identifier: MIT
 //
 
+// swiftlint:disable line_length
 
 extension FHIRPrompt {
     /// Prompt used to interpret multiple FHIR resources
@@ -25,7 +26,7 @@ extension FHIRPrompt {
             Interpret the resources by explaining the data relevant to the user's health. Please do NOT mention any medications unless the user explicitly asks about medications.
             Try to be proactive and query for more information if you are missing any context instead of asking the user for specific information. Try to avoid too many follow-up questions.
             
-            There is a special emphasis on documents such as clinical notes, progress reports, and, most importantly, discharge reports that you should focus on. Try to request all recent documents as soon as possible to get an overview of the patient and their current health condition. 
+            There is a special emphasis on documents such as clinical notes, progress reports, and, most importantly, discharge reports that you should focus on. Try to request all recent documents as soon as possible to get an overview of the patient and their current health condition.
             Use simple language. Keep responses in the user's language and the present tense.
             
             Ensure to leave out sensitive numbers like SSN, passport number, and telephone number.
@@ -84,7 +85,7 @@ extension FHIRPrompt {
             49. Instead of Septicemia, say Serious blood infection
             50. Instead of Strabismus, say Crossed eyes
             
-            Do not introduce yourself at the beginning, and immediately return a summary of the user based on the FHIR patient resources. 
+            Do not introduce yourself at the beginning, and immediately return a summary of the user based on the FHIR patient resources.
             Start with an initial compact summary of their health information based on recent encounters, document references (clinical notes, discharge summaries), and any other relevant information you can access. Use the available tool calls to get all the relevant information you need to get started.
             The initial compact summary should be compact (no bullet points but rather a holistic summary of all the information), empathetic to the user about their current health situation, and less than four sentences long.
             Add a new paragraph after the initial summary and ask the user if they have any questions or where you can help them.

@@ -107,7 +107,7 @@ swift run LLMonFHIRCLI export-config \
 
 ### Study Report File Encryption
 
-The report files generated form the usability study are optionally encrypted, using the public key stored in `UserStudyConfig.plist.
+The report files generated form the usability study are optionally encrypted, using the public key stored in UserStudyConfig.plist.
 
 You can generate a public/private key pair using the following commands:
 ```bash
@@ -118,14 +118,11 @@ openssl genpkey -algorithm X25519 -out private_key.pem
 openssl pkey -in private_key.pem -pubout -out public_key.pem
 ```
 
-Run the following command to place your public key in the user study config file:
-```bash
-plutil -replace ENCRYPTION_KEY -data $(cat public_key.pem | base64) LLMonFHIR/Supporting\ Files/UserStudyConfig.plist
-```
+Use the `export-config` tool showcased above to place your public key in the user study config file:.
 
-In order to decrypt a report file created by the app, you can use the python tool in `tools/decrypt-study-report`:
+In order to decrypt a report file created by the app, you can use the `decrypt-study-report` tool in the LLMonFHIRShared folder:
 ```bash
-uv run main.py -k private_key.pem <input file>
+swift run LLMonFHIRCLI decrypt-study-report -k private_key.pem studyReport report.json
 ```
 
 

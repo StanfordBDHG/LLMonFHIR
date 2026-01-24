@@ -32,6 +32,7 @@ public enum TaskQuestionAnswer: Hashable, Sendable {
 
 
 extension TaskQuestionAnswer {
+    /// Decodes an answer from a string.
     public init?(from string: String, for questionKind: TaskQuestionType) {
         if string == Self.unanswered.rawValue {
             self = .unanswered

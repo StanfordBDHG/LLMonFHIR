@@ -11,6 +11,7 @@ import SpeziFoundation
 
 
 extension TaskQuestionType {
+    /// The user-selectable options associated with a ``TaskQuestionType/scale(responseOptions:)``
     public struct AnswerOptions: Hashable, RandomAccessCollection, ExpressibleByArrayLiteral, Sendable {
         private let storage: [String]
         
@@ -67,6 +68,7 @@ extension TaskQuestionType.AnswerOptions: Codable {
 
 
 extension TaskQuestionType.AnswerOptions {
+    /// All hardcoded presets.
     public static let presets: [String: Self] = [
         "clarityScale": clarityScale,
         "effectivenessScale": effectivenessScale,
@@ -76,6 +78,7 @@ extension TaskQuestionType.AnswerOptions {
         "frequencyOptions": frequencyOptions
     ]
     
+    /// A clarity scale.
     public static let clarityScale: Self = [
         "Very clear",
         "Somewhat clear",
@@ -84,6 +87,7 @@ extension TaskQuestionType.AnswerOptions {
         "Very unclear"
     ]
 
+    /// An effectiveness scale.
     public static let effectivenessScale: Self = [
         "Very effective",
         "Somewhat effective",
@@ -92,6 +96,7 @@ extension TaskQuestionType.AnswerOptions {
         "Very ineffective"
     ]
     
+    /// A confidence scale.
     public static let confidentnessScale: Self = [
         "Very confident",
         "Somewhat confident",
@@ -100,6 +105,7 @@ extension TaskQuestionType.AnswerOptions {
         "Very unconfident"
     ]
 
+    /// A comparison scale.
     public static let comparisonScale: Self = [
         "Significantly better",
         "Slightly better",
@@ -108,6 +114,7 @@ extension TaskQuestionType.AnswerOptions {
         "Significantly worse"
     ]
 
+    /// An ease scale.
     public static let balancedEaseScale: Self = [
         "Very easy",
         "Somewhat easy",
@@ -116,6 +123,7 @@ extension TaskQuestionType.AnswerOptions {
         "Very difficult"
     ]
 
+    /// A frequency scale.
     public static let frequencyOptions: Self = [
         "Always",
         "Often",

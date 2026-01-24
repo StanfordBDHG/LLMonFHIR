@@ -13,10 +13,14 @@ import Foundation
 public enum TaskQuestionType: Hashable, Sendable {
     /// The question only provides instructions, and does not collect an answer.
     case instructional
+    /// A scale question, where the user is asked to select one of a range of options.
     case scale(responseOptions: AnswerOptions)
+    /// A free text question.
     case freeText
+    /// An NPS question
     case netPromoterScore(range: ClosedRange<Int>)
 
+    /// The question's associated range.
     public var range: ClosedRange<Int>? {
         switch self {
         case .scale(let responseOptions):
@@ -87,10 +91,12 @@ extension TaskQuestionType: Codable {
 
 
 extension ClosedRange where Bound == Int {
+    /// LLMonFHIR-usable-formatted string value
     public var llmOnFhirStringValue: String {
         "\(lowerBound);\(upperBound)"
     }
     
+    /// Decodes a value produced by ``llmOnFhirStringValue`` back into a `ClosedRange`
     public init?(llmOnFhirStringValue string: some StringProtocol) {
         let components = string.split(separator: ";")
         guard components.count == 2 else {

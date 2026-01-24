@@ -9,6 +9,7 @@
 public import Foundation
 
 
+/// The `UserStudyConfig.plist` file bundled with the app/
 public struct AppConfigFile: Codable {
     private enum CodingKeys: String, CodingKey {
         case appLaunchMode = "app_launch_mode"
@@ -16,8 +17,11 @@ public struct AppConfigFile: Codable {
         case firebaseConfig = "firebase_config"
     }
     
+    /// The app's intended launch mode.
     public let appLaunchMode: AppLaunchMode
+    /// The studies bundled with the app.
     public var studies: [Study]
+    /// The firebase config the app should use, if any.
     public var firebaseConfig: FirebaseConfigDictionary?
     
     public init(launchMode: AppLaunchMode, studies: [Study], firebaseConfig: FirebaseConfigDictionary?) {
@@ -29,7 +33,6 @@ public struct AppConfigFile: Codable {
     public init(from decoder: any Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         appLaunchMode = try container.decode(AppLaunchMode.self, forKey: .appLaunchMode)
-//        appLaunchMode = try .init(argv: ["--mode"] + container.decode(String.self, forKey: .appLaunchMode).components(separatedBy: " "))
         studies = try container.decode([Study].self, forKey: .studies)
         firebaseConfig = try container.decodeIfPresent(FirebaseConfigDictionary.self, forKey: .firebaseConfig)
     }
@@ -153,7 +156,8 @@ extension AppConfigFile {
 
 
 extension AppConfigFile.FirebaseConfigDictionary {
-    public static let empty = Self(entries: [
+    /// A firebase config that is suitable for connecting to the emulator.
+    public static let emulator = Self(entries: [
         "API_KEY": "A00000000000000000000000000000000000000",
         "GCM_SENDER_ID": "GCM_SENDER_ID",
         "PLIST_VERSION": "1",
