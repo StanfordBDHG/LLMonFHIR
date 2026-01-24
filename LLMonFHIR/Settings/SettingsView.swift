@@ -143,7 +143,7 @@ struct SettingsView: View {
         if promptDefinition.isCustomizable {
             NavigationButton(label) {
                 path.append {
-                    FHIRPromptCustomizationView(promptDefinition) {
+                    FHIRPromptCustomizationView(label, prompt: promptDefinition) {
                         await fhirInterpretationModule.updateSchemas()
                         path.removeLast()
                     }

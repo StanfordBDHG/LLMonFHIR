@@ -15,6 +15,7 @@ import SwiftUI
 ///
 /// Allows users to edit and save a prompt associated with a specific ``FHIRPrompt`` type, including where to insert FHIR resources dynamically in the prompt.
 struct FHIRPromptCustomizationView: View {
+    private let title: LocalizedStringResource
     private let promptDefinition: FHIRPrompt
     private let onSave: () async -> Void
     @State private var promptText: String = ""
@@ -22,7 +23,7 @@ struct FHIRPromptCustomizationView: View {
     
     var body: some View {
         VStack(spacing: 16) {
-            Text("Customize the \(promptDefinition.localizedDescription.lowercased()).")
+            Text("Customize prompt: \(title)")
                 .multilineTextAlignment(.leading)
             TextEditor(text: $promptText)
                 .fontDesign(.monospaced)
@@ -39,14 +40,16 @@ struct FHIRPromptCustomizationView: View {
             .buttonStyle(.borderedProminent)
         }
         .padding()
-        .navigationTitle(promptDefinition.localizedDescription)
+        .navigationTitle(title)
+        .navigationBarTitleDisplayMode(.inline)
     }
     
     /// Initializes a new `PromptSettingsView` with the specified ``FHIRPrompt`` and a save action.
     /// - Parameters:
     ///   - promptType: The ``FHIRPrompt`` instance whose settings are being modified. It holds the information about the specific prompt being edited.
     ///   - onSave: A closure to be called when the user saves the prompt. This allows for custom actions, like dismissing the view.
-    init(_ promptDefinition: FHIRPrompt, onSave: @escaping () async -> Void) {
+    init(_ title: LocalizedStringResource, prompt promptDefinition: FHIRPrompt, onSave: @escaping () async -> Void) {
+        self.title = title
         self.promptDefinition = promptDefinition
         self.onSave = onSave
         self._promptText = State(initialValue: promptDefinition.promptText)
