@@ -25,6 +25,7 @@ extension Study {
             encryptionKey: nil,
             summarizeSingleResourcePrompt: nil,
             interpretMultipleResourcesPrompt: nil,
+            chatTitleConfig: .default,
             tasks: [
                 SurveyTask(
                     id: "Welcome",
