@@ -189,7 +189,6 @@ struct StudyHomeView: View {
                 // to make sure everything is in a proper state when the study gets launched.
                 try await healthKit.askForAuthorization()
                 fhirInterpretationModule.currentStudy = study
-                await fhirInterpretationModule.updateSchemas(forceImmediateUpdate: true)
                 interpreter.startNewConversation(for: study)
             } else {
                 isPresentingQRCodeScanner = true

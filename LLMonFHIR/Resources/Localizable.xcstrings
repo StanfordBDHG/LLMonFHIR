@@ -1217,6 +1217,9 @@
         }
       }
     },
+    "Launch LLMonFHIR into its study mode by enabling the `--mode study:edu.stanford.LLMonFHIR.usabilityStudy` flag in Xcode (via the `⌘ ⇧ ,` shortcut)" : {
+
+    },
     "LLAMA3_DOWNLOAD_DESCRIPTION" : {
       "localizations" : {
         "en" : {
@@ -1360,6 +1363,9 @@
 
     },
     "No Resources Found" : {
+
+    },
+    "No Study Loaded" : {
 
     },
     "Observations" : {

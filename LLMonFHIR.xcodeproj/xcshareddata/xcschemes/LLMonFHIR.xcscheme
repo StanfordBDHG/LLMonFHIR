@@ -106,7 +106,7 @@
             isEnabled = "NO">
          </CommandLineArgument>
          <CommandLineArgument
-            argument = "--mode study edu.stanford.LLMonFHIR.usabilityStudy"
+            argument = "--mode study:edu.stanford.LLMonFHIR.spineAI"
             isEnabled = "NO">
          </CommandLineArgument>
       </CommandLineArguments>

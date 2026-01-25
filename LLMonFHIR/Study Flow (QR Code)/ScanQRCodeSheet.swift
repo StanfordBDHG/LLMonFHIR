@@ -58,6 +58,14 @@ private struct ScanQRCodeSheet: View {
     }
     
     private var scanner: some View {
+        #if targetEnvironment(simulator)
+        ContentUnavailableView(
+            "No Study Loaded",
+            systemImage: "document.badge.gearshape",
+            // swiftlint:disable:next line_length
+            description: Text("Launch LLMonFHIR into its study mode by enabling the `--mode study:edu.stanford.LLMonFHIR.usabilityStudy` flag in Xcode (via the `⌘ ⇧ ,` shortcut)")
+        )
+        #else
         DataScannerView(isScanning: $isScanning, onSuccess: onSuccess)
             .ignoresSafeArea()
             .onAppear {
@@ -66,6 +74,7 @@ private struct ScanQRCodeSheet: View {
             .onDisappear {
                 isScanning = false
             }
+        #endif
     }
     
     private var permissionsDeniedInfo: some View {
