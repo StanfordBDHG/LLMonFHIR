@@ -6,6 +6,7 @@
 // SPDX-License-Identifier: MIT
 //
 
+@preconcurrency import FirebaseAuth
 import FirebaseStorage
 import Foundation
 import LLMonFHIRShared
@@ -21,8 +22,11 @@ final class FirebaseUpload: Module, EnvironmentAccessible, Sendable {
     func configure() {
         Task {
             do {
-                try? await accountService.logout()
+                logger.notice("user before anon sign up: \(Auth.auth().currentUser?.uid ?? "n/a")")
+                try await accountService.logout()
+                logger.notice("user before anon sign up: \(Auth.auth().currentUser?.uid ?? "n/a")")
                 try await accountService.signUpAnonymously()
+                logger.notice("user after anon sign up: \(Auth.auth().currentUser?.uid ?? "n/a")")
             } catch {
                 logger.error("Error signing in: \(error)")
             }

@@ -21,6 +21,7 @@ extension Study {
         )
         return Study(
             id: "edu.stanford.LLMonFHIR.gynStudy",
+            isStanfordIRBApproved: false,
             title: "LLMonFHIR Gyn Study",
             explainer: "GYN STUDY EXPLAINER",
             settingsUnlockCode: nil,
@@ -31,6 +32,7 @@ extension Study {
             summarizeSingleResourcePrompt: nil,
             interpretMultipleResourcesPrompt: nil,
             chatTitleConfig: .default,
+            initialQuestionnaire: nil,
             tasks: [
                 Task(
                     id: "0",

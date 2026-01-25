@@ -6,7 +6,10 @@
 // SPDX-License-Identifier: MIT
 //
 
+// swiftlint:disable file_length
+
 import LLMonFHIRShared
+import class ModelsR4.QuestionnaireResponse
 import SpeziChat
 import SpeziLLM
 import SwiftUI
@@ -30,21 +33,35 @@ final class UserStudyChatViewModel: MultipleResourcesChatViewModel, Sendable { /
             case chatting
             case answeringSurvey
         }
-
-        /// The title to display in the navigation bar based on current state
-        func title(in study: Study) -> String {
-            switch self {
+        
+        struct TitleConfig {
+            let title: String
+            let subtitle: String?
+        }
+        
+        func titleConfig(in study: Study) -> TitleConfig {
+            let regularConfig = switch self {
             case .introduction:
-                "Introduction"
+                TitleConfig(title: "Introduction", subtitle: study.title)
             case let .task(task, taskIdx, numTotalTasks, taskState: _):
-                switch study.chatTitleConfig {
-                case .default:
-                    task.title ?? "Task \(taskIdx + 1) of \(numTotalTasks)"
-                case .studyTitle:
-                    study.title
-                }
+                TitleConfig(
+                    title: "Task \(taskIdx + 1) of \(numTotalTasks)",
+                    subtitle: { () -> String in
+                        if let taskTitle = task.title {
+                            "\(study.title) — \(taskTitle)"
+                        } else {
+                            study.title
+                        }
+                    }()
+                )
             case .completed:
-                "Study Completed"
+                TitleConfig(title: "Study Completed", subtitle: study.title)
+            }
+            return switch study.chatTitleConfig {
+            case .default:
+                regularConfig
+            case .studyTitle:
+                TitleConfig(title: study.title, subtitle: regularConfig.title)
             }
         }
     }
@@ -95,7 +112,7 @@ final class UserStudyChatViewModel: MultipleResourcesChatViewModel, Sendable { /
         }
         // If no capacity range is configured for this task, enable chat input
         if !hasConfiguredCapacityForCurrentTask {
-            return false
+            return true
         }
         // Disable when the maximum number of messages is reached
         return !isMaxAssistantMessagesReached
@@ -126,6 +143,8 @@ final class UserStudyChatViewModel: MultipleResourcesChatViewModel, Sendable { /
     let study: Study
     /// Additional key-value pairs associated with this particular study session (e.g., a participant id).
     private let userInfo: [String: String]
+    /// The response to the Study's initial questionnaire, if any.
+    private let initialQuestionnaireResponse: ModelsR4.QuestionnaireResponse?
     private let resourceSummary: FHIRResourceSummary
     private let studyStartTime = Date()
     private var taskStartTimes: [Study.Task.ID: Date] = [:]
@@ -154,12 +173,14 @@ final class UserStudyChatViewModel: MultipleResourcesChatViewModel, Sendable { /
     init(
         study: Study,
         userInfo: [String: String],
+        initialQuestionnaireResponse: ModelsR4.QuestionnaireResponse?,
         interpreter: FHIRMultipleResourceInterpreter,
         resourceSummary: FHIRResourceSummary,
         uploader: FirebaseUpload?
     ) {
         self.study = study
         self.userInfo = userInfo
+        self.initialQuestionnaireResponse = initialQuestionnaireResponse
         self.resourceSummary = resourceSummary
         self.uploader = uploader
         super.init(interpreter: interpreter, navigationTitle: "")
@@ -335,6 +356,12 @@ final class UserStudyChatViewModel: MultipleResourcesChatViewModel, Sendable { /
         }
     }
     
+    /// Advances the user's progression within the study.
+    ///
+    /// Depending on the current ``navigationState``, this function will either advance within the current task (e.g., move from the chat phase to the survey)
+    /// or advance within the overall study (e.g., move from task N's survey to task N+1's instructions).
+    ///
+    /// If the study is already completed, this function does nothing.
     func advance() {
         switch navigationState {
         case .introduction:
@@ -387,6 +414,7 @@ final class UserStudyChatViewModel: MultipleResourcesChatViewModel, Sendable { /
                 endTime: Date(),
                 userInfo: userInfo
             ),
+            initialQuestionnaireResponse: initialQuestionnaireResponse,
             fhirResources: await getFHIRResources(),
             timeline: generateTimeline()
         )

@@ -11,7 +11,7 @@ private import SpeziFoundation
 
 
 /// Handle dynamic, localized LLM prompts for FHIR resources.
-public struct FHIRPrompt: Hashable, ExpressibleByStringLiteral, Sendable {
+public struct FHIRPrompt: Hashable, Sendable {
     /// Placeholder for FHIR resource in prompts.
     public static let fhirResourcePlaceholder = "{{FHIR_RESOURCE}}"
     /// Placeholder for the current locale in a prompt
@@ -49,10 +49,6 @@ public struct FHIRPrompt: Hashable, ExpressibleByStringLiteral, Sendable {
         self.defaultPromptText = promptText
     }
     
-    public init(stringLiteral value: String) {
-        self.init(promptText: value)
-    }
-    
     
     /// Saves a new version of the prompt, if the prompt definition is persistable to UserDefaults.
     /// - Parameter prompt: The new prompt.
@@ -77,5 +73,12 @@ public struct FHIRPrompt: Hashable, ExpressibleByStringLiteral, Sendable {
         promptText
             .replacingOccurrences(of: FHIRPrompt.fhirResourcePlaceholder, with: resource)
             .replacingOccurrences(of: FHIRPrompt.localePlaceholder, with: locale)
+    }
+}
+
+
+extension FHIRPrompt: ExpressibleByStringLiteral, ExpressibleByStringInterpolation {
+    public init(stringLiteral value: String) {
+        self.init(promptText: value)
     }
 }

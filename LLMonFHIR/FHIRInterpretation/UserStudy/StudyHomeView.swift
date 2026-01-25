@@ -7,6 +7,8 @@
 //
 
 import LLMonFHIRShared
+import class ModelsR4.Questionnaire
+import class ModelsR4.QuestionnaireResponse
 import os.log
 import SpeziFHIR
 import SpeziFoundation
@@ -31,6 +33,9 @@ struct StudyHomeView: View {
     @State private var study: Study?
     @State private var studyUserInfo: [String: String]
     
+    @State private var isPresentingQuestionnaire = false
+    @State private var questionnaireResponse: QuestionnaireResponse?
+    
     @State private var isPresentingEarliestHealthRecords = false
     @State private var isPresentingQRCodeScanner = false
     
@@ -39,6 +44,10 @@ struct StudyHomeView: View {
     }
     private var oldestHealthRecordTimestamp: Date? {
         earliestDates.values.min()
+    }
+    /// Whether the currently enabled study has an initial questionnaire, and the user still needs to fill that out.
+    private var isMissingPreChatQuestionnaire: Bool {
+        study?.initialQuestionnaire != nil && questionnaireResponse == nil
     }
     
     var body: some View {
@@ -50,6 +59,10 @@ struct StudyHomeView: View {
                 .navigationBarTitleDisplayMode(.inline)
                 .toolbar {
                     SettingsButton()
+                }
+                .sheet(isPresented: $isPresentingEarliestHealthRecords) {
+                    EarliestHealthRecordsView(dataSource: earliestDates)
+                        .presentationDetents([.medium, .large])
                 }
                 .qrCodeScanningSheet(isPresented: $isPresentingQRCodeScanner) { payload in
                     guard study == nil else {
@@ -65,20 +78,22 @@ struct StudyHomeView: View {
                         return .continueScanning
                     }
                 }
+                .fullScreenCover(isPresented: $isPresentingQuestionnaire) {
+                    if let study {
+                        QuestionnaireSheet(study: study, response: $questionnaireResponse)
+                    } else {
+                        ContentUnavailableView("Study not selected", systemImage: "document.badge.gearshape")
+                    }
+                }
                 .fullScreenCover(item: $fhirInterpretationModule.currentStudy) { study in
-                    UserStudyChatView(
+                    UserStudyChatView(model: .init(
                         study: study,
                         userInfo: studyUserInfo,
+                        initialQuestionnaireResponse: questionnaireResponse,
                         interpreter: interpreter,
                         resourceSummary: resourceSummary,
                         uploader: uploader
-                    )
-                }
-                .sheet(isPresented: $isPresentingEarliestHealthRecords) {
-                    EarliestHealthRecordsView(
-                        dataSource: earliestDates
-                    )
-                    .presentationDetents([.medium, .large])
+                    ))
                 }
                 .task {
                     self.persistUserStudyOpenApiToken()
@@ -116,23 +131,11 @@ struct StudyHomeView: View {
     }
 
     private var studyTitle: some View {
-        let (title, subtitle) = { () -> (LocalizedStringResource, LocalizedStringResource?) in
-            if let study {
-                ("\(study.title)", "LLM_ON_FHIR")
-            } else {
-                ("LLM_ON_FHIR", nil)
-            }
-        }()
-        return VStack(spacing: 8) {
-            Text(title)
+        VStack(spacing: 8) {
+            Text(study?.title ?? "LLM on FHIR")
                 .font(.title)
                 .fontWeight(.bold)
                 .foregroundColor(.primary)
-            if let subtitle {
-                Text(subtitle)
-                    .font(.title2)
-                    .foregroundColor(.secondary)
-            }
         }
     }
 
@@ -177,7 +180,9 @@ struct StudyHomeView: View {
                     }
                 }
             recordsStartDateView
-            approvalBadge
+            if let study, study.isStanfordIRBApproved {
+                IRBApprovalBadge()
+            }
         }
         .padding(.bottom, 24)
     }
@@ -185,10 +190,15 @@ struct StudyHomeView: View {
     private var primaryActionButton: some View {
         PrimaryActionButton {
             if let study {
+                if isMissingPreChatQuestionnaire {
+                    isPresentingQuestionnaire = true
+                    return
+                }
                 // the HealthKit permissions should already have been granted via the onboarding, but we re-request them here, just in case,
                 // to make sure everything is in a proper state when the study gets launched.
                 try await healthKit.askForAuthorization()
                 fhirInterpretationModule.currentStudy = study
+                await fhirInterpretationModule.updateSchemas(forceImmediateUpdate: true)
                 interpreter.startNewConversation(for: study)
             } else {
                 isPresentingQRCodeScanner = true
@@ -197,22 +207,14 @@ struct StudyHomeView: View {
             if waitingState.isWaiting {
                 Text("LOADING_HEALTH_RECORDS")
             } else if study != nil {
-                Text("START_SESSION")
+                if isMissingPreChatQuestionnaire {
+                    Text("Start Questionnaire")
+                } else {
+                    Text("START_SESSION")
+                }
             } else {
                 Label("Scan QR Code", systemImage: "qrcode.viewfinder")
             }
-        }
-    }
-
-    private var approvalBadge: some View {
-        HStack(spacing: 8) {
-            Image(systemName: "checkmark.seal.fill")
-                .foregroundColor(.secondary)
-                .accessibilityLabel(Text("Checkmark"))
-            Text("USER_STUDY_APPROVAL_BADGE_TEXT")
-                .font(.caption)
-                .fontWeight(.medium)
-                .foregroundColor(.secondary)
         }
     }
     
@@ -228,7 +230,7 @@ struct StudyHomeView: View {
     
     /// Persists the OpenAI token of the user study in the keychain, if no other token already exists.
     private func persistUserStudyOpenApiToken() {
-        guard let study else {
+        guard let study, !study.openAIAPIKey.isEmpty else {
             return
         }
         guard case let .keychain(tag, username) = self.platform.configuration.authToken else {

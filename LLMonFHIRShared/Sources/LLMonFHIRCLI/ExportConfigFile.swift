@@ -19,6 +19,10 @@ struct ExportConfigFile: ParsableCommand {
     static let configuration = CommandConfiguration(
         commandName: "export-config",
         abstract: "Creates a UserStudyConfig.plist file that can be embedded into the app",
+        discussion: #"""
+            Note: in order to create the sample plist file that is commited to the repo, use the following command:
+                swift run LLMonFHIRCLI export-config -f '<emulator>' --allow-empty-api-keys ../LLMonFHIR/Supporting\ Files/UserStudyConfig.plist
+            """#
     )
     
     @Option(

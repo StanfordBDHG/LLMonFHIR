@@ -31,6 +31,9 @@
     "Allow in Settings" : {
 
     },
+    "Approved by Stanford IRB" : {
+
+    },
     "Authorize Health Access" : {
 
     },
@@ -38,9 +41,6 @@
 
     },
     "Chat with all Resources" : {
-
-    },
-    "Checkmark" : {
 
     },
     "Computation is performed on so-called fog nodes, running directly inside your own network." : {
@@ -1217,6 +1217,9 @@
         }
       }
     },
+    "It may take a few moments while we analyze your answers." : {
+
+    },
     "LLAMA3_DOWNLOAD_DESCRIPTION" : {
       "localizations" : {
         "en" : {
@@ -1234,6 +1237,7 @@
 
     },
     "LLM_ON_FHIR" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -1559,6 +1563,12 @@
           }
         }
       }
+    },
+    "Processing Questionnaire Response ..." : {
+
+    },
+    "Questionnaire not selected" : {
+
     },
     "Random" : {
 
@@ -2134,6 +2144,9 @@
     "Start Client Setup" : {
 
     },
+    "Start Questionnaire" : {
+
+    },
     "START_SESSION" : {
       "localizations" : {
         "en" : {
@@ -2145,6 +2158,9 @@
       }
     },
     "Study" : {
+
+    },
+    "Study not selected" : {
 
     },
     "STUDY_QR_CODE_GEN_EXPIRATION_FOOTER" : {
@@ -2298,16 +2314,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Enable User Study"
-          }
-        }
-      }
-    },
-    "USER_STUDY_APPROVAL_BADGE_TEXT" : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Approved by Stanford IRB"
           }
         }
       }

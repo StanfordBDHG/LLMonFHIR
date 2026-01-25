@@ -1,0 +1,351 @@
+{
+  "resourceType": "Bundle",
+  "type": "transaction",
+  "entry": [
+    {
+      "fullUrl": "urn:uuid:013e3124-8565-4424-96f3-345330553755",
+      "resource": {
+        "resourceType": "Patient",
+        "id": "013e3124-8565-4424-96f3-345330553755",
+        "text": {
+          "status": "generated",
+          "div": "<div xmlns=\"http://www.w3.org/1999/xhtml\">Elena Vance - Comprehensive Record</div>"
+        },
+        "extension": [
+          {
+            "url": "http://hl7.org/fhir/us/core/StructureDefinition/us-core-race",
+            "extension": [
+              { "url": "ombCategory", "valueCoding": { "system": "urn:oid:2.16.840.1.113883.6.238", "code": "2106-3", "display": "White" } },
+              { "url": "text", "valueString": "White" }
+            ]
+          },
+          {
+            "url": "http://hl7.org/fhir/us/core/StructureDefinition/us-core-ethnicity",
+            "extension": [
+              { "url": "ombCategory", "valueCoding": { "system": "urn:oid:2.16.840.1.113883.6.238", "code": "2186-5", "display": "Not Hispanic or Latino" } },
+              { "url": "text", "valueString": "Not Hispanic or Latino" }
+            ]
+          },
+          { "url": "http://hl7.org/fhir/us/core/StructureDefinition/us-core-birthsex", "valueCode": "F" }
+        ],
+        "identifier": [
+          { "system": "https://github.com/synthetichealth/synthea", "value": "013e3124-8565-4424-96f3-345330553755" },
+          { "system": "http://hl7.org/fhir/sid/us-ssn", "value": "999-22-8844" }
+        ],
+        "name": [ { "use": "official", "family": "Vance", "given": [ "Elena" ], "prefix": [ "Ms." ] } ],
+        "gender": "female",
+        "birthDate": "1983-04-12",
+        "address": [ { "line": [ "2204 Maple Ave" ], "city": "Burlington", "state": "VT", "postalCode": "05401", "country": "US" } ],
+        "communication": [ { "language": { "coding": [ { "system": "urn:ietf:bcp:47", "code": "en-US", "display": "English (United States)" } ] } } ],
+        "maritalStatus": { "coding": [ { "system": "http://terminology.hl7.org/CodeSystem/v3-MaritalStatus", "code": "S", "display": "Never Married" } ] }
+      },
+      "request": { "method": "POST", "url": "Patient" }
+    },
+    {
+      "fullUrl": "urn:uuid:allergy-latex-uuid",
+      "resource": {
+        "resourceType": "AllergyIntolerance",
+        "id": "allergy-latex-uuid",
+        "clinicalStatus": { "coding": [ { "system": "http://terminology.hl7.org/CodeSystem/allergyintolerance-clinical", "code": "active" } ] },
+        "verificationStatus": { "coding": [ { "system": "http://terminology.hl7.org/CodeSystem/allergyintolerance-verification", "code": "confirmed" } ] },
+        "type": "allergy",
+        "category": [ "environment" ],
+        "criticality": "low",
+        "code": {
+          "coding": [ { "system": "http://snomed.info/sct", "code": "300916003", "display": "Latex allergy" } ],
+          "text": "Latex Allergy"
+        },
+        "patient": { "reference": "urn:uuid:013e3124-8565-4424-96f3-345330553755" },
+        "reaction": [ { "manifestation": [ { "coding": [ { "system": "http://snomed.info/sct", "code": "271807003", "display": "Eruption of skin" } ], "text": "Skin Rash" } ], "severity": "mild" } ]
+      },
+      "request": { "method": "POST", "url": "AllergyIntolerance" }
+    },
+    {
+      "fullUrl": "urn:uuid:obs-social-job-uuid",
+      "resource": {
+        "resourceType": "Observation",
+        "id": "obs-social-job-uuid",
+        "status": "final",
+        "category": [ { "coding": [ { "system": "http://terminology.hl7.org/CodeSystem/observation-category", "code": "social-history" } ] } ],
+        "code": { "coding": [ { "system": "http://loinc.org", "code": "11341-5", "display": "History of occupation" } ], "text": "Occupation" },
+        "subject": { "reference": "urn:uuid:013e3124-8565-4424-96f3-345330553755" },
+        "valueString": "Yoga Instructor. Active lifestyle. History of competitive gymnastics.",
+        "effectiveDateTime": "2025-01-15"
+      },
+      "request": { "method": "POST", "url": "Observation" }
+    },
+    {
+      "fullUrl": "urn:uuid:obs-smoking-uuid",
+      "resource": {
+        "resourceType": "Observation",
+        "id": "obs-smoking-uuid",
+        "status": "final",
+        "category": [ { "coding": [ { "system": "http://terminology.hl7.org/CodeSystem/observation-category", "code": "social-history" } ] } ],
+        "code": { "coding": [ { "system": "http://loinc.org", "code": "72166-2", "display": "Tobacco smoking status" } ] },
+        "subject": { "reference": "urn:uuid:013e3124-8565-4424-96f3-345330553755" },
+        "valueCodeableConcept": {
+          "coding": [ { "system": "http://snomed.info/sct", "code": "266919005", "display": "Never smoked tobacco" } ],
+          "text": "Never Smoker"
+        },
+        "effectiveDateTime": "2025-01-15"
+      },
+      "request": { "method": "POST", "url": "Observation" }
+    },
+    {
+      "fullUrl": "urn:uuid:enc-injection-visit-uuid",
+      "resource": {
+        "resourceType": "Encounter",
+        "id": "enc-injection-visit-uuid",
+        "status": "finished",
+        "class": { "system": "http://terminology.hl7.org/CodeSystem/v3-ActCode", "code": "AMB", "display": "ambulatory" },
+        "type": [ { "coding": [ { "system": "http://snomed.info/sct", "code": "305355008", "display": "Pain clinic admission" } ], "text": "Interventional Pain Management" } ],
+        "subject": { "reference": "urn:uuid:013e3124-8565-4424-96f3-345330553755" },
+        "period": { "start": "2025-12-01T14:00:00-05:00", "end": "2025-12-01T15:30:00-05:00" }
+      },
+      "request": { "method": "POST", "url": "Encounter" }
+    },
+    {
+      "fullUrl": "urn:uuid:proc-injection-uuid",
+      "resource": {
+        "resourceType": "Procedure",
+        "id": "proc-injection-uuid",
+        "status": "completed",
+        "code": {
+          "coding": [ { "system": "http://snomed.info/sct", "code": "18946005", "display": "Epidural injection of steroid" } ],
+          "text": "L5-S1 Epidural Steroid Injection"
+        },
+        "subject": { "reference": "urn:uuid:013e3124-8565-4424-96f3-345330553755" },
+        "encounter": { "reference": "urn:uuid:enc-injection-visit-uuid" },
+        "performedDateTime": "2025-12-01",
+        "outcome": { "text": "Partial relief (40%) observed for 4 weeks. Symptoms returned to baseline." }
+      },
+      "request": { "method": "POST", "url": "Procedure" }
+    },
+    {
+      "fullUrl": "urn:uuid:enc-spine-consult-uuid",
+      "resource": {
+        "resourceType": "Encounter",
+        "id": "enc-spine-consult-uuid",
+        "status": "finished",
+        "class": { "system": "http://terminology.hl7.org/CodeSystem/v3-ActCode", "code": "AMB", "display": "ambulatory" },
+        "type": [ { "coding": [ { "system": "http://snomed.info/sct", "code": "33389009", "display": "Orthopedic Follow-up" } ], "text": "Spine Surgical Consult" } ],
+        "subject": { "reference": "urn:uuid:013e3124-8565-4424-96f3-345330553755" },
+        "period": { "start": "2026-03-10T09:00:00-05:00", "end": "2026-03-10T09:45:00-05:00" }
+      },
+      "request": { "method": "POST", "url": "Encounter" }
+    },
+    {
+      "fullUrl": "urn:uuid:cond-spondy-uuid",
+      "resource": {
+        "resourceType": "Condition",
+        "id": "cond-spondy-uuid",
+        "clinicalStatus": { "coding": [ { "system": "http://terminology.hl7.org/CodeSystem/condition-clinical", "code": "active" } ] },
+        "code": {
+          "coding": [ { "system": "http://snomed.info/sct", "code": "203646004", "display": "Spondylolisthesis grade 2" } ],
+          "text": "L5-S1 Isthmic Spondylolisthesis"
+        },
+        "subject": { "reference": "urn:uuid:013e3124-8565-4424-96f3-345330553755" },
+        "encounter": { "reference": "urn:uuid:enc-spine-consult-uuid" },
+        "note": [ { "text": "Mechanical instability; pain worsens with extension/standing." } ],
+        "onsetDateTime": "2024-06-01"
+      },
+      "request": { "method": "POST", "url": "Condition" }
+    },
+    {
+      "fullUrl": "urn:uuid:cond-radic-uuid",
+      "resource": {
+        "resourceType": "Condition",
+        "id": "cond-radic-uuid",
+        "clinicalStatus": { "coding": [ { "system": "http://terminology.hl7.org/CodeSystem/condition-clinical", "code": "active" } ] },
+        "code": {
+          "coding": [ { "system": "http://snomed.info/sct", "code": "49206005", "display": "Lumbar radiculopathy" } ],
+          "text": "Right L5 Radiculopathy"
+        },
+        "subject": { "reference": "urn:uuid:013e3124-8565-4424-96f3-345330553755" },
+        "encounter": { "reference": "urn:uuid:enc-spine-consult-uuid" }
+      },
+      "request": { "method": "POST", "url": "Condition" }
+    },
+    {
+      "fullUrl": "urn:uuid:obs-mri-uuid",
+      "resource": {
+        "resourceType": "Observation",
+        "id": "obs-mri-uuid",
+        "status": "final",
+        "category": [ { "coding": [ { "system": "http://terminology.hl7.org/CodeSystem/observation-category", "code": "imaging" } ] } ],
+        "code": { "text": "MRI Lumbar Spine" },
+        "subject": { "reference": "urn:uuid:013e3124-8565-4424-96f3-345330553755" },
+        "encounter": { "reference": "urn:uuid:enc-spine-consult-uuid" },
+        "valueString": "Bilateral pars interarticularis defects at L5. Grade II anterolisthesis (30% slip). Severe foraminal stenosis on Right.",
+        "effectiveDateTime": "2026-03-01"
+      },
+      "request": { "method": "POST", "url": "Observation" }
+    },
+    {
+      "fullUrl": "urn:uuid:proc-pt-uuid",
+      "resource": {
+        "resourceType": "Procedure",
+        "id": "proc-pt-uuid",
+        "status": "completed",
+        "code": {
+          "coding": [ { "system": "http://snomed.info/sct", "code": "91251008", "display": "Physical therapy procedure" } ],
+          "text": "Physical Therapy (6 weeks)"
+        },
+        "subject": { "reference": "urn:uuid:013e3124-8565-4424-96f3-345330553755" },
+        "performedPeriod": { "start": "2025-09-01", "end": "2025-10-15" },
+        "outcome": { "text": "Failed. Extension-based exercises exacerbated symptoms." }
+      },
+      "request": { "method": "POST", "url": "Procedure" }
+    },
+    {
+      "fullUrl": "urn:uuid:obs-bp-uuid",
+      "resource": {
+        "resourceType": "Observation",
+        "id": "obs-bp-uuid",
+        "status": "final",
+        "category": [ { "coding": [ { "system": "http://terminology.hl7.org/CodeSystem/observation-category", "code": "vital-signs" } ] } ],
+        "code": { "coding": [ { "system": "http://loinc.org", "code": "85354-9", "display": "Blood pressure panel" } ] },
+        "subject": { "reference": "urn:uuid:013e3124-8565-4424-96f3-345330553755" },
+        "encounter": { "reference": "urn:uuid:enc-spine-consult-uuid" },
+        "component": [
+          { "code": { "coding": [ { "system": "http://loinc.org", "code": "8480-6", "display": "Systolic blood pressure" } ] }, "valueQuantity": { "value": 110, "unit": "mmHg" } },
+          { "code": { "coding": [ { "system": "http://loinc.org", "code": "8462-4", "display": "Diastolic blood pressure" } ] }, "valueQuantity": { "value": 70, "unit": "mmHg" } }
+        ],
+        "effectiveDateTime": "2026-03-10"
+      },
+      "request": { "method": "POST", "url": "Observation" }
+    },
+    {
+      "fullUrl": "urn:uuid:obs-heartrate-uuid",
+      "resource": {
+        "resourceType": "Observation",
+        "id": "obs-heartrate-uuid",
+        "status": "final",
+        "category": [ { "coding": [ { "system": "http://terminology.hl7.org/CodeSystem/observation-category", "code": "vital-signs" } ] } ],
+        "code": { "coding": [ { "system": "http://loinc.org", "code": "8867-4", "display": "Heart rate" } ] },
+        "subject": { "reference": "urn:uuid:013e3124-8565-4424-96f3-345330553755" },
+        "encounter": { "reference": "urn:uuid:enc-spine-consult-uuid" },
+        "valueQuantity": { "value": 62, "unit": "beats/min", "system": "http://unitsofmeasure.org", "code": "/min" },
+        "effectiveDateTime": "2026-03-10"
+      },
+      "request": { "method": "POST", "url": "Observation" }
+    },
+    {
+      "fullUrl": "urn:uuid:obs-resprate-uuid",
+      "resource": {
+        "resourceType": "Observation",
+        "id": "obs-resprate-uuid",
+        "status": "final",
+        "category": [ { "coding": [ { "system": "http://terminology.hl7.org/CodeSystem/observation-category", "code": "vital-signs" } ] } ],
+        "code": { "coding": [ { "system": "http://loinc.org", "code": "9279-1", "display": "Respiratory rate" } ] },
+        "subject": { "reference": "urn:uuid:013e3124-8565-4424-96f3-345330553755" },
+        "encounter": { "reference": "urn:uuid:enc-spine-consult-uuid" },
+        "valueQuantity": { "value": 14, "unit": "breaths/min", "system": "http://unitsofmeasure.org", "code": "/min" },
+        "effectiveDateTime": "2026-03-10"
+      },
+      "request": { "method": "POST", "url": "Observation" }
+    },
+    {
+      "fullUrl": "urn:uuid:obs-temp-uuid",
+      "resource": {
+        "resourceType": "Observation",
+        "id": "obs-temp-uuid",
+        "status": "final",
+        "category": [ { "coding": [ { "system": "http://terminology.hl7.org/CodeSystem/observation-category", "code": "vital-signs" } ] } ],
+        "code": { "coding": [ { "system": "http://loinc.org", "code": "8310-5", "display": "Body temperature" } ] },
+        "subject": { "reference": "urn:uuid:013e3124-8565-4424-96f3-345330553755" },
+        "encounter": { "reference": "urn:uuid:enc-spine-consult-uuid" },
+        "valueQuantity": { "value": 36.6, "unit": "Cel", "system": "http://unitsofmeasure.org", "code": "Cel" },
+        "effectiveDateTime": "2026-03-10"
+      },
+      "request": { "method": "POST", "url": "Observation" }
+    },
+    {
+      "fullUrl": "urn:uuid:obs-height-uuid",
+      "resource": {
+        "resourceType": "Observation",
+        "id": "obs-height-uuid",
+        "status": "final",
+        "category": [ { "coding": [ { "system": "http://terminology.hl7.org/CodeSystem/observation-category", "code": "vital-signs" } ] } ],
+        "code": { "coding": [ { "system": "http://loinc.org", "code": "8302-2", "display": "Body Height" } ] },
+        "subject": { "reference": "urn:uuid:013e3124-8565-4424-96f3-345330553755" },
+        "encounter": { "reference": "urn:uuid:enc-spine-consult-uuid" },
+        "valueQuantity": { "value": 165, "unit": "cm", "system": "http://unitsofmeasure.org", "code": "cm" },
+        "effectiveDateTime": "2026-03-10"
+      },
+      "request": { "method": "POST", "url": "Observation" }
+    },
+    {
+      "fullUrl": "urn:uuid:obs-weight-uuid",
+      "resource": {
+        "resourceType": "Observation",
+        "id": "obs-weight-uuid",
+        "status": "final",
+        "category": [ { "coding": [ { "system": "http://terminology.hl7.org/CodeSystem/observation-category", "code": "vital-signs" } ] } ],
+        "code": { "coding": [ { "system": "http://loinc.org", "code": "29463-7", "display": "Body Weight" } ] },
+        "subject": { "reference": "urn:uuid:013e3124-8565-4424-96f3-345330553755" },
+        "encounter": { "reference": "urn:uuid:enc-spine-consult-uuid" },
+        "valueQuantity": { "value": 61, "unit": "kg", "system": "http://unitsofmeasure.org", "code": "kg" },
+        "effectiveDateTime": "2026-03-10"
+      },
+      "request": { "method": "POST", "url": "Observation" }
+    },
+    {
+      "fullUrl": "urn:uuid:obs-bmi-uuid",
+      "resource": {
+        "resourceType": "Observation",
+        "id": "obs-bmi-uuid",
+        "status": "final",
+        "category": [ { "coding": [ { "system": "http://terminology.hl7.org/CodeSystem/observation-category", "code": "vital-signs" } ] } ],
+        "code": { "coding": [ { "system": "http://loinc.org", "code": "39156-5", "display": "Body mass index (BMI)" } ] },
+        "subject": { "reference": "urn:uuid:013e3124-8565-4424-96f3-345330553755" },
+        "encounter": { "reference": "urn:uuid:enc-spine-consult-uuid" },
+        "valueQuantity": { "value": 22.4, "unit": "kg/m2", "system": "http://unitsofmeasure.org", "code": "kg/m2" },
+        "effectiveDateTime": "2026-03-10"
+      },
+      "request": { "method": "POST", "url": "Observation" }
+    },
+    {
+      "fullUrl": "urn:uuid:med-mobic-uuid",
+      "resource": {
+        "resourceType": "MedicationRequest",
+        "id": "med-mobic-uuid",
+        "status": "active",
+        "intent": "order",
+        "medicationCodeableConcept": { "coding": [ { "system": "http://www.nlm.nih.gov/research/umls/rxnorm", "code": "141626", "display": "Meloxicam 15 MG Oral Tablet" } ], "text": "Meloxicam 15 MG" },
+        "subject": { "reference": "urn:uuid:013e3124-8565-4424-96f3-345330553755" },
+        "encounter": { "reference": "urn:uuid:enc-spine-consult-uuid" },
+        "dosageInstruction": [ { "text": "15 mg daily with food" } ]
+      },
+      "request": { "method": "POST", "url": "MedicationRequest" }
+    },
+    {
+      "fullUrl": "urn:uuid:med-tizanidine-uuid",
+      "resource": {
+        "resourceType": "MedicationRequest",
+        "id": "med-tizanidine-uuid",
+        "status": "active",
+        "intent": "order",
+        "medicationCodeableConcept": { "coding": [ { "system": "http://www.nlm.nih.gov/research/umls/rxnorm", "code": "313220", "display": "Tizanidine 4 MG Oral Tablet" } ], "text": "Tizanidine 4 MG" },
+        "subject": { "reference": "urn:uuid:013e3124-8565-4424-96f3-345330553755" },
+        "encounter": { "reference": "urn:uuid:enc-spine-consult-uuid" },
+        "dosageInstruction": [ { "text": "4 mg at bedtime for muscle spasm" } ]
+      },
+      "request": { "method": "POST", "url": "MedicationRequest" }
+    },
+    {
+      "fullUrl": "urn:uuid:med-birthcontrol-uuid",
+      "resource": {
+        "resourceType": "MedicationRequest",
+        "id": "med-birthcontrol-uuid",
+        "status": "active",
+        "intent": "order",
+        "medicationCodeableConcept": { "coding": [ { "system": "http://www.nlm.nih.gov/research/umls/rxnorm", "code": "748797", "display": "Drospirenone 3 MG / Ethinyl Estradiol 0.03 MG Oral Tablet" } ], "text": "Drospirenone / Ethinyl Estradiol" },
+        "subject": { "reference": "urn:uuid:013e3124-8565-4424-96f3-345330553755" },
+        "encounter": { "reference": "urn:uuid:enc-spine-consult-uuid" },
+        "dosageInstruction": [ { "text": "1 tablet daily" } ]
+      },
+      "request": { "method": "POST", "url": "MedicationRequest" }
+    }
+  ]
+}

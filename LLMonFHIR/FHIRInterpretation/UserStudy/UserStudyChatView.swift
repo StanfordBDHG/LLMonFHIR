@@ -21,7 +21,7 @@ struct UserStudyChatView: View {
         @Bindable var model = model
         NavigationStack { // swiftlint:disable:this closure_body_length
             chatView
-                .navigationTitle(model.navigationState.title(in: model.study))
+                .applyTitleConfig(model.navigationState.titleConfig(in: model.study))
                 .navigationBarTitleDisplayMode(.inline)
                 .toolbar {
                     UserStudyChatToolbar(
@@ -89,29 +89,8 @@ struct UserStudyChatView: View {
         .animation(.easeInOut(duration: 0.4), value: model.isProcessing)
     }
     
-    /// Creates a new user study chat view
-    ///
-    /// This initializer sets up a view for conducting a structured study with
-    /// chat-based interactions and survey tasks.
-    ///
-    /// - Parameters:
-    ///   - survey: The survey configuration to use for this study
-    ///   - interpreter: The FHIR interpreter to use for chat functionality
-    ///   - resourceSummary: The FHIR resource summary provider for generating summaries of FHIR resources
-    init(
-        study: Study,
-        userInfo: [String: String],
-        interpreter: FHIRMultipleResourceInterpreter,
-        resourceSummary: FHIRResourceSummary,
-        uploader: FirebaseUpload?
-    ) {
-        model = UserStudyChatViewModel(
-            study: study,
-            userInfo: userInfo,
-            interpreter: interpreter,
-            resourceSummary: resourceSummary,
-            uploader: uploader
-        )
+    init(model: UserStudyChatViewModel) {
+        self.model = model
     }
     
     @ViewBuilder
@@ -130,6 +109,19 @@ struct UserStudyChatView: View {
                 .progressViewStyle(.circular)
                 .padding()
                 .interactiveDismissDisabled()
+        }
+    }
+}
+
+
+extension View {
+    @ViewBuilder
+    func applyTitleConfig(_ config: UserStudyChatViewModel.NavigationState.TitleConfig) -> some View {
+        if #available(iOS 26, *), let subtitle = config.subtitle {
+            self.navigationTitle(config.title)
+                .navigationSubtitle(subtitle)
+        } else {
+            self.navigationTitle(config.title)
         }
     }
 }

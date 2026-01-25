@@ -79,7 +79,7 @@
       <CommandLineArguments>
          <CommandLineArgument
             argument = "--useFirebaseEmulator"
-            isEnabled = "NO">
+            isEnabled = "YES">
          </CommandLineArgument>
          <CommandLineArgument
             argument = "--showOnboarding"
@@ -95,7 +95,7 @@
          </CommandLineArgument>
          <CommandLineArgument
             argument = "--mode standalone"
-            isEnabled = "YES">
+            isEnabled = "NO">
          </CommandLineArgument>
          <CommandLineArgument
             argument = "--mode test"
@@ -107,7 +107,7 @@
          </CommandLineArgument>
          <CommandLineArgument
             argument = "--mode study:edu.stanford.LLMonFHIR.spineAI"
-            isEnabled = "NO">
+            isEnabled = "YES">
          </CommandLineArgument>
       </CommandLineArguments>
    </LaunchAction>

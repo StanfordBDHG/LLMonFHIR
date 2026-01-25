@@ -10,6 +10,7 @@
 
 public import CryptoKit
 import Foundation
+public import class ModelsR4.Questionnaire
 
 
 /// Manages a collection of survey tasks and their responses.
@@ -28,6 +29,8 @@ public final class Study: Identifiable {
     
     /// The survey's unique identifier.
     public let id: String
+    /// Whether the study is approved by Stanford University IRB
+    public let isStanfordIRBApproved: Bool
     /// The survey's title.
     public let title: String
     /// A brief explainer detailing what the survey does.
@@ -50,9 +53,12 @@ public final class Study: Identifiable {
     public var encryptionKey: Curve25519.KeyAgreement.PublicKey?
     
     public let summarizeSingleResourcePrompt: FHIRPrompt
-    public let interpretMultipleResourcesPrompt: FHIRPrompt
+    public var interpretMultipleResourcesPrompt: FHIRPrompt
     
     public let chatTitleConfig: ChatTitleConfig
+    
+    /// Initial Questionnaire that should be asked before the user enters the chat view.
+    public let initialQuestionnaire: Questionnaire?
     
     /// The tasks that make up this survey
     public private(set) var tasks: [Task]
@@ -60,6 +66,7 @@ public final class Study: Identifiable {
     /// Creates a new survey.
     public init(
         id: String,
+        isStanfordIRBApproved: Bool,
         title: String,
         explainer: String,
         settingsUnlockCode: String?,
@@ -70,9 +77,11 @@ public final class Study: Identifiable {
         summarizeSingleResourcePrompt: FHIRPrompt?,
         interpretMultipleResourcesPrompt: FHIRPrompt?,
         chatTitleConfig: ChatTitleConfig,
+        initialQuestionnaire: Questionnaire?,
         tasks: [Task]
     ) {
         self.id = id
+        self.isStanfordIRBApproved = isStanfordIRBApproved
         self.title = title
         self.explainer = explainer
         self.settingsUnlockCode = settingsUnlockCode
@@ -83,6 +92,7 @@ public final class Study: Identifiable {
         self.summarizeSingleResourcePrompt = summarizeSingleResourcePrompt ?? .summarizeSingleFHIRResourceDefaultPrompt
         self.interpretMultipleResourcesPrompt = interpretMultipleResourcesPrompt ?? .interpretMultipleResourcesDefaultPrompt
         self.chatTitleConfig = chatTitleConfig
+        self.initialQuestionnaire = initialQuestionnaire
         self.tasks = tasks
     }
 }
@@ -131,6 +141,7 @@ extension Study {
 extension Study: Codable {
     private enum CodingKeys: String, CodingKey {
         case id = "id"
+        case isStanfordIRBApproved = "is_stanford_irb_approved"
         case title = "title"
         case explainer = "explainer"
         case tasks = "tasks"
@@ -142,12 +153,25 @@ extension Study: Codable {
         case summarizeSingleResourcePrompt = "prompt_summarize_single_resource"
         case interpretMultipleResourcesPrompt = "prompt_interpret_multiple_resources"
         case chatTitleConfig = "chat_title_config"
+        case initialQuestionnaire = "initial_questionnaire"
     }
+    
+    /// The `JSONEncoder` that should be used to encode the nested ``initialQuestionnaire``.
+    ///
+    /// Encodes the questionnaire in a way that keeps the keys sorted.
+    /// The reason for this is to make encoding a study stable, i.e. we don't want the resulting plist to keep changing if we run the CLI tool multiple times,
+    /// just because the JSON string is different each time bc the fields are in a different order...
+    private static let nestedQuestionnaireEncoder: JSONEncoder = {
+        let encoder = JSONEncoder()
+        encoder.outputFormatting = .sortedKeys
+        return encoder
+    }()
     
     public convenience init(from decoder: any Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         self.init(
             id: try container.decode(String.self, forKey: .id),
+            isStanfordIRBApproved: try container.decode(Bool.self, forKey: .isStanfordIRBApproved),
             title: try container.decode(String.self, forKey: .title),
             explainer: try container.decode(String.self, forKey: .explainer),
             settingsUnlockCode: try container.decodeIfPresent(String.self, forKey: .settingsUnlockCode),
@@ -161,6 +185,8 @@ extension Study: Codable {
             interpretMultipleResourcesPrompt: try container.decodeIfPresent(String.self, forKey: .interpretMultipleResourcesPrompt)
                 .flatMap { $0.isEmpty ? nil : FHIRPrompt(promptText: $0) },
             chatTitleConfig: try container.decode(ChatTitleConfig.self, forKey: .chatTitleConfig),
+            initialQuestionnaire: try container.decodeIfPresent(String.self, forKey: .initialQuestionnaire)
+                .flatMap { try? JSONDecoder().decode(Questionnaire.self, from: Data($0.utf8)) },
             tasks: try container.decode([Task].self, forKey: .tasks)
         )
     }
@@ -168,6 +194,7 @@ extension Study: Codable {
     public func encode(to encoder: any Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
         try container.encode(id, forKey: .id)
+        try container.encode(isStanfordIRBApproved, forKey: .isStanfordIRBApproved)
         try container.encode(title, forKey: .title)
         try container.encode(explainer, forKey: .explainer)
         try container.encodeIfPresent(settingsUnlockCode, forKey: .settingsUnlockCode)
@@ -186,6 +213,10 @@ extension Study: Codable {
             try container.encode("", forKey: .interpretMultipleResourcesPrompt)
         }
         try container.encode(chatTitleConfig, forKey: .chatTitleConfig)
+        try container.encodeIfPresent(
+            initialQuestionnaire.map { String(data: try Self.nestedQuestionnaireEncoder.encode($0), encoding: .utf8) },
+            forKey: .initialQuestionnaire
+        )
         try container.encode(tasks, forKey: .tasks)
     }
 }

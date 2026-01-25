@@ -1,0 +1,1085 @@
+{
+  "resourceType": "Bundle",
+  "type": "transaction",
+  "entry": [
+    {
+      "fullUrl": "urn:uuid:2e3f52e2-45c4-b540-78ae-ad01b8a50a07",
+      "resource": {
+        "resourceType": "Patient",
+        "id": "2e3f52e2-45c4-b540-78ae-ad01b8a50a07",
+        "text": {
+          "status": "generated",
+          "div": "<div xmlns=\"http://www.w3.org/1999/xhtml\">Warner Howell - Spinal Revision Candidate</div>"
+        },
+        "extension": [
+          {
+            "url": "http://hl7.org/fhir/us/core/StructureDefinition/us-core-race",
+            "extension": [
+              {
+                "url": "ombCategory",
+                "valueCoding": {
+                  "system": "urn:oid:2.16.840.1.113883.6.238",
+                  "code": "2106-3",
+                  "display": "White"
+                }
+              },
+              {
+                "url": "text",
+                "valueString": "White"
+              }
+            ]
+          },
+          {
+            "url": "http://hl7.org/fhir/us/core/StructureDefinition/us-core-ethnicity",
+            "extension": [
+              {
+                "url": "ombCategory",
+                "valueCoding": {
+                  "system": "urn:oid:2.16.840.1.113883.6.238",
+                  "code": "2186-5",
+                  "display": "Not Hispanic or Latino"
+                }
+              },
+              {
+                "url": "text",
+                "valueString": "Not Hispanic or Latino"
+              }
+            ]
+          },
+          {
+            "url": "http://hl7.org/fhir/us/core/StructureDefinition/us-core-birthsex",
+            "valueCode": "M"
+          }
+        ],
+        "identifier": [
+          {
+            "system": "https://github.com/synthetichealth/synthea",
+            "value": "2e3f52e2-45c4-b540-78ae-ad01b8a50a07"
+          },
+          {
+            "system": "http://hl7.org/fhir/sid/us-ssn",
+            "value": "999-14-9499"
+          }
+        ],
+        "name": [
+          {
+            "use": "official",
+            "family": "Howell",
+            "given": [
+              "Warner"
+            ],
+            "prefix": [
+              "Mr."
+            ]
+          }
+        ],
+        "gender": "male",
+        "birthDate": "1951-01-31",
+        "address": [
+          {
+            "line": [
+              "786 Paucek Meadow"
+            ],
+            "city": "Buckland",
+            "state": "MA",
+            "postalCode": "01338",
+            "country": "US"
+          }
+        ],
+        "communication": [
+          {
+            "language": {
+              "coding": [
+                {
+                  "system": "urn:ietf:bcp:47",
+                  "code": "en-US",
+                  "display": "English (United States)"
+                }
+              ],
+              "text": "English (United States)"
+            }
+          }
+        ]
+      },
+      "request": {
+        "method": "POST",
+        "url": "Patient"
+      }
+    },
+    {
+      "resource": {
+        "resourceType": "Observation",
+        "id": "obs-blood-type",
+        "status": "final",
+        "category": [
+          {
+            "coding": [
+              {
+                "system": "http://terminology.hl7.org/CodeSystem/observation-category",
+                "code": "laboratory",
+                "display": "Laboratory"
+              }
+            ]
+          }
+        ],
+        "code": {
+          "coding": [
+            {
+              "system": "http://loinc.org",
+              "code": "883-9",
+              "display": "ABO group [Type] in Blood"
+            }
+          ],
+          "text": "Blood Type"
+        },
+        "subject": {
+          "reference": "urn:uuid:2e3f52e2-45c4-b540-78ae-ad01b8a50a07"
+        },
+        "valueCodeableConcept": {
+          "coding": [
+            {
+              "system": "http://snomed.info/sct",
+              "code": "58460004",
+              "display": "Blood group A (finding)"
+            }
+          ],
+          "text": "Type A"
+        },
+        "effectiveDateTime": "2018-03-15"
+      },
+      "request": {
+        "method": "POST",
+        "url": "Observation"
+      },
+      "fullUrl": "urn:uuid:obs-blood-type"
+    },
+    {
+      "resource": {
+        "resourceType": "Observation",
+        "id": "obs-rh-status",
+        "status": "final",
+        "category": [
+          {
+            "coding": [
+              {
+                "system": "http://terminology.hl7.org/CodeSystem/observation-category",
+                "code": "laboratory"
+              }
+            ]
+          }
+        ],
+        "code": {
+          "coding": [
+            {
+              "system": "http://loinc.org",
+              "code": "10331-7",
+              "display": "Rh [Type] in Blood"
+            }
+          ],
+          "text": "Rh Status"
+        },
+        "subject": {
+          "reference": "urn:uuid:2e3f52e2-45c4-b540-78ae-ad01b8a50a07"
+        },
+        "valueCodeableConcept": {
+          "coding": [
+            {
+              "system": "http://snomed.info/sct",
+              "code": "165747007",
+              "display": "Rh positive (finding)"
+            }
+          ],
+          "text": "Positive"
+        },
+        "effectiveDateTime": "2018-03-15"
+      },
+      "request": {
+        "method": "POST",
+        "url": "Observation"
+      },
+      "fullUrl": "urn:uuid:obs-rh-status"
+    },
+    {
+      "fullUrl": "urn:uuid:enc-index-surgery-2018",
+      "resource": {
+        "resourceType": "Encounter",
+        "id": "enc-index-surgery-2018",
+        "status": "finished",
+        "class": {
+          "system": "http://terminology.hl7.org/CodeSystem/v3-ActCode",
+          "code": "IMP",
+          "display": "inpatient encounter"
+        },
+        "type": [
+          {
+            "coding": [
+              {
+                "system": "http://snomed.info/sct",
+                "code": "305351004",
+                "display": "Admission to orthopedic department"
+              }
+            ],
+            "text": "Index Surgery: L4-L5 Intervention"
+          }
+        ],
+        "subject": {
+          "reference": "urn:uuid:2e3f52e2-45c4-b540-78ae-ad01b8a50a07"
+        },
+        "period": {
+          "start": "2018-03-15T08:00:00-05:00",
+          "end": "2018-03-18T14:00:00-05:00"
+        }
+      },
+      "request": {
+        "method": "POST",
+        "url": "Encounter"
+      }
+    },
+    {
+      "resource": {
+        "resourceType": "Condition",
+        "id": "cond-degenerative-disease",
+        "clinicalStatus": {
+          "coding": [
+            {
+              "system": "http://terminology.hl7.org/CodeSystem/condition-clinical",
+              "code": "inactive"
+            }
+          ]
+        },
+        "code": {
+          "coding": [
+            {
+              "system": "http://snomed.info/sct",
+              "code": "396277003",
+              "display": "Degenerative disc disease of lumbar spine"
+            }
+          ],
+          "text": "Degenerative Lumbar Spine Disease (Index Diagnosis)"
+        },
+        "subject": {
+          "reference": "urn:uuid:2e3f52e2-45c4-b540-78ae-ad01b8a50a07"
+        },
+        "encounter": {
+          "reference": "urn:uuid:enc-index-surgery-2018"
+        },
+        "onsetDateTime": "2018-01-01"
+      },
+      "request": {
+        "method": "POST",
+        "url": "Condition"
+      },
+      "fullUrl": "urn:uuid:cond-degenerative-disease"
+    },
+    {
+      "resource": {
+        "resourceType": "Procedure",
+        "id": "proc-index-surgery",
+        "status": "completed",
+        "code": {
+          "coding": [
+            {
+              "system": "http://snomed.info/sct",
+              "code": "447056003",
+              "display": "Total replacement of disc of lumbar vertebra"
+            }
+          ],
+          "text": "Total disc replacement (L4-L5)"
+        },
+        "subject": {
+          "reference": "urn:uuid:2e3f52e2-45c4-b540-78ae-ad01b8a50a07"
+        },
+        "encounter": {
+          "reference": "urn:uuid:enc-index-surgery-2018"
+        },
+        "performedDateTime": "2018-03-15"
+      },
+      "request": {
+        "method": "POST",
+        "url": "Procedure"
+      },
+      "fullUrl": "urn:uuid:proc-index-surgery"
+    },
+    {
+      "fullUrl": "urn:uuid:enc-revision-consult-2026",
+      "resource": {
+        "resourceType": "Encounter",
+        "id": "enc-revision-consult-2026",
+        "status": "finished",
+        "class": {
+          "system": "http://terminology.hl7.org/CodeSystem/v3-ActCode",
+          "code": "AMB",
+          "display": "ambulatory"
+        },
+        "type": [
+          {
+            "coding": [
+              {
+                "system": "http://snomed.info/sct",
+                "code": "33389009",
+                "display": "Orthopedic Follow-up"
+              }
+            ],
+            "text": "Spine Revision Consultation"
+          }
+        ],
+        "subject": {
+          "reference": "urn:uuid:2e3f52e2-45c4-b540-78ae-ad01b8a50a07"
+        },
+        "period": {
+          "start": "2026-01-20T10:00:00-05:00",
+          "end": "2026-01-20T11:00:00-05:00"
+        }
+      },
+      "request": {
+        "method": "POST",
+        "url": "Encounter"
+      }
+    },
+    {
+      "resource": {
+        "resourceType": "Condition",
+        "id": "cond-asd",
+        "clinicalStatus": {
+          "coding": [
+            {
+              "system": "http://terminology.hl7.org/CodeSystem/condition-clinical",
+              "code": "active"
+            }
+          ]
+        },
+        "code": {
+          "coding": [
+            {
+              "system": "http://snomed.info/sct",
+              "code": "202607001",
+              "display": "Adjacent segment disease of spine"
+            }
+          ],
+          "text": "Adjacent Segment Disease (L3-L4)"
+        },
+        "subject": {
+          "reference": "urn:uuid:2e3f52e2-45c4-b540-78ae-ad01b8a50a07"
+        },
+        "encounter": {
+          "reference": "urn:uuid:enc-revision-consult-2026"
+        },
+        "note": [
+          {
+            "text": "Patient presents with persistent back/radicular pain > 6 months."
+          }
+        ]
+      },
+      "request": {
+        "method": "POST",
+        "url": "Condition"
+      },
+      "fullUrl": "urn:uuid:cond-asd"
+    },
+    {
+      "resource": {
+        "resourceType": "Condition",
+        "id": "cond-radiculopathy",
+        "clinicalStatus": {
+          "coding": [
+            {
+              "system": "http://terminology.hl7.org/CodeSystem/condition-clinical",
+              "code": "active"
+            }
+          ]
+        },
+        "code": {
+          "coding": [
+            {
+              "system": "http://snomed.info/sct",
+              "code": "49206005",
+              "display": "Lumbar radiculopathy"
+            }
+          ],
+          "text": "Recurrent Lumbar Radiculopathy (Left)"
+        },
+        "subject": {
+          "reference": "urn:uuid:2e3f52e2-45c4-b540-78ae-ad01b8a50a07"
+        },
+        "encounter": {
+          "reference": "urn:uuid:enc-revision-consult-2026"
+        }
+      },
+      "request": {
+        "method": "POST",
+        "url": "Condition"
+      },
+      "fullUrl": "urn:uuid:cond-radiculopathy"
+    },
+    {
+      "resource": {
+        "resourceType": "Observation",
+        "id": "obs-lordosis",
+        "status": "final",
+        "category": [
+          {
+            "coding": [
+              {
+                "system": "http://terminology.hl7.org/CodeSystem/observation-category",
+                "code": "imaging",
+                "display": "Imaging"
+              }
+            ]
+          }
+        ],
+        "code": {
+          "coding": [
+            {
+              "system": "http://loinc.org",
+              "code": "8251-1",
+              "display": "Lumbar spine curvature [Length] on X-ray"
+            }
+          ],
+          "text": "L4-S1 Lordosis"
+        },
+        "subject": {
+          "reference": "urn:uuid:2e3f52e2-45c4-b540-78ae-ad01b8a50a07"
+        },
+        "encounter": {
+          "reference": "urn:uuid:enc-revision-consult-2026"
+        },
+        "valueString": "Inadequate caudal lordosis (Predictor for revision extension)",
+        "effectiveDateTime": "2026-01-20"
+      },
+      "request": {
+        "method": "POST",
+        "url": "Observation"
+      },
+      "fullUrl": "urn:uuid:obs-lordosis"
+    },
+    {
+      "resource": {
+        "resourceType": "Observation",
+        "id": "obs-sagittal",
+        "status": "final",
+        "category": [
+          {
+            "coding": [
+              {
+                "system": "http://terminology.hl7.org/CodeSystem/observation-category",
+                "code": "imaging"
+              }
+            ]
+          }
+        ],
+        "code": {
+          "text": "Sagittal Alignment (L1 Pelvic Angle)"
+        },
+        "subject": {
+          "reference": "urn:uuid:2e3f52e2-45c4-b540-78ae-ad01b8a50a07"
+        },
+        "encounter": {
+          "reference": "urn:uuid:enc-revision-consult-2026"
+        },
+        "valueString": "Suboptimal/Poor Alignment",
+        "effectiveDateTime": "2026-01-20"
+      },
+      "request": {
+        "method": "POST",
+        "url": "Observation"
+      },
+      "fullUrl": "urn:uuid:obs-sagittal"
+    },
+    {
+      "resource": {
+        "resourceType": "MedicationRequest",
+        "status": "active",
+        "intent": "order",
+        "medicationCodeableConcept": {
+          "coding": [
+            {
+              "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+              "code": "310430",
+              "display": "Gabapentin 600 MG Oral Tablet"
+            }
+          ],
+          "text": "Gabapentin 600 MG"
+        },
+        "subject": {
+          "reference": "urn:uuid:2e3f52e2-45c4-b540-78ae-ad01b8a50a07"
+        },
+        "encounter": {
+          "reference": "urn:uuid:enc-revision-consult-2026"
+        },
+        "dosageInstruction": [
+          {
+            "text": "600 mg TID"
+          }
+        ],
+        "id": "medreq-gabapentin"
+      },
+      "request": {
+        "method": "POST",
+        "url": "MedicationRequest"
+      },
+      "fullUrl": "urn:uuid:medreq-gabapentin"
+    },
+    {
+      "resource": {
+        "resourceType": "MedicationRequest",
+        "status": "active",
+        "intent": "order",
+        "medicationCodeableConcept": {
+          "coding": [
+            {
+              "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+              "code": "205318",
+              "display": "Celecoxib 200 MG Oral Capsule"
+            }
+          ],
+          "text": "Celecoxib 200 MG"
+        },
+        "subject": {
+          "reference": "urn:uuid:2e3f52e2-45c4-b540-78ae-ad01b8a50a07"
+        },
+        "encounter": {
+          "reference": "urn:uuid:enc-revision-consult-2026"
+        },
+        "dosageInstruction": [
+          {
+            "text": "200 mg daily"
+          }
+        ],
+        "id": "medreq-celecoxib"
+      },
+      "request": {
+        "method": "POST",
+        "url": "MedicationRequest"
+      },
+      "fullUrl": "urn:uuid:medreq-celecoxib"
+    },
+    {
+      "resource": {
+        "resourceType": "MedicationRequest",
+        "status": "active",
+        "intent": "order",
+        "medicationCodeableConcept": {
+          "coding": [
+            {
+              "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+              "code": "833036",
+              "display": "Tramadol Hydrochloride 50 MG Oral Tablet"
+            }
+          ],
+          "text": "Tramadol 50 MG"
+        },
+        "subject": {
+          "reference": "urn:uuid:2e3f52e2-45c4-b540-78ae-ad01b8a50a07"
+        },
+        "encounter": {
+          "reference": "urn:uuid:enc-revision-consult-2026"
+        },
+        "dosageInstruction": [
+          {
+            "text": "50 mg PRN"
+          }
+        ],
+        "id": "medreq-tramadol"
+      },
+      "request": {
+        "method": "POST",
+        "url": "MedicationRequest"
+      },
+      "fullUrl": "urn:uuid:medreq-tramadol"
+    },
+    {
+      "resource": {
+        "resourceType": "MedicationRequest",
+        "status": "active",
+        "intent": "order",
+        "medicationCodeableConcept": {
+          "coding": [
+            {
+              "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+              "code": "855324",
+              "display": "Baclofen 10 MG Oral Tablet"
+            }
+          ],
+          "text": "Baclofen 10 MG"
+        },
+        "subject": {
+          "reference": "urn:uuid:2e3f52e2-45c4-b540-78ae-ad01b8a50a07"
+        },
+        "encounter": {
+          "reference": "urn:uuid:enc-revision-consult-2026"
+        },
+        "dosageInstruction": [
+          {
+            "text": "10 mg at bedtime"
+          }
+        ],
+        "id": "medreq-baclofen"
+      },
+      "request": {
+        "method": "POST",
+        "url": "MedicationRequest"
+      },
+      "fullUrl": "urn:uuid:medreq-baclofen"
+    },
+    {
+      "resource": {
+        "resourceType": "Observation",
+        "id": "obs-blood-pressure",
+        "status": "final",
+        "category": [
+          {
+            "coding": [
+              {
+                "system": "http://terminology.hl7.org/CodeSystem/observation-category",
+                "code": "vital-signs",
+                "display": "Vital Signs"
+              }
+            ]
+          }
+        ],
+        "code": {
+          "coding": [
+            {
+              "system": "http://loinc.org",
+              "code": "85354-9",
+              "display": "Blood pressure panel with all children optional"
+            }
+          ],
+          "text": "Blood Pressure"
+        },
+        "subject": {
+          "reference": "urn:uuid:2e3f52e2-45c4-b540-78ae-ad01b8a50a07"
+        },
+        "encounter": {
+          "reference": "urn:uuid:enc-revision-consult-2026"
+        },
+        "effectiveDateTime": "2026-01-20",
+        "component": [
+          {
+            "code": {
+              "coding": [
+                {
+                  "system": "http://loinc.org",
+                  "code": "8480-6",
+                  "display": "Systolic blood pressure"
+                }
+              ]
+            },
+            "valueQuantity": {
+              "value": 138,
+              "unit": "mmHg",
+              "system": "http://unitsofmeasure.org",
+              "code": "mm[Hg]"
+            }
+          },
+          {
+            "code": {
+              "coding": [
+                {
+                  "system": "http://loinc.org",
+                  "code": "8462-4",
+                  "display": "Diastolic blood pressure"
+                }
+              ]
+            },
+            "valueQuantity": {
+              "value": 88,
+              "unit": "mmHg",
+              "system": "http://unitsofmeasure.org",
+              "code": "mm[Hg]"
+            }
+          }
+        ]
+      },
+      "request": {
+        "method": "POST",
+        "url": "Observation"
+      },
+      "fullUrl": "urn:uuid:obs-blood-pressure"
+    },
+    {
+      "resource": {
+        "resourceType": "Observation",
+        "id": "obs-weight",
+        "status": "final",
+        "category": [
+          {
+            "coding": [
+              {
+                "system": "http://terminology.hl7.org/CodeSystem/observation-category",
+                "code": "vital-signs"
+              }
+            ]
+          }
+        ],
+        "code": {
+          "coding": [
+            {
+              "system": "http://loinc.org",
+              "code": "29463-7",
+              "display": "Body Weight"
+            }
+          ],
+          "text": "Weight"
+        },
+        "subject": {
+          "reference": "urn:uuid:2e3f52e2-45c4-b540-78ae-ad01b8a50a07"
+        },
+        "encounter": {
+          "reference": "urn:uuid:enc-revision-consult-2026"
+        },
+        "effectiveDateTime": "2026-01-20",
+        "valueQuantity": {
+          "value": 88.5,
+          "unit": "kg",
+          "system": "http://unitsofmeasure.org",
+          "code": "kg"
+        }
+      },
+      "request": {
+        "method": "POST",
+        "url": "Observation"
+      },
+      "fullUrl": "urn:uuid:obs-weight"
+    },
+    {
+      "resource": {
+        "resourceType": "Observation",
+        "id": "obs-height",
+        "status": "final",
+        "category": [
+          {
+            "coding": [
+              {
+                "system": "http://terminology.hl7.org/CodeSystem/observation-category",
+                "code": "vital-signs"
+              }
+            ]
+          }
+        ],
+        "code": {
+          "coding": [
+            {
+              "system": "http://loinc.org",
+              "code": "8302-2",
+              "display": "Body Height"
+            }
+          ],
+          "text": "Height"
+        },
+        "subject": {
+          "reference": "urn:uuid:2e3f52e2-45c4-b540-78ae-ad01b8a50a07"
+        },
+        "encounter": {
+          "reference": "urn:uuid:enc-revision-consult-2026"
+        },
+        "effectiveDateTime": "2026-01-20",
+        "valueQuantity": {
+          "value": 176.5,
+          "unit": "cm",
+          "system": "http://unitsofmeasure.org",
+          "code": "cm"
+        }
+      },
+      "request": {
+        "method": "POST",
+        "url": "Observation"
+      },
+      "fullUrl": "urn:uuid:obs-height"
+    },
+    {
+      "resource": {
+        "resourceType": "Observation",
+        "id": "obs-bmi",
+        "status": "final",
+        "category": [
+          {
+            "coding": [
+              {
+                "system": "http://terminology.hl7.org/CodeSystem/observation-category",
+                "code": "vital-signs"
+              }
+            ]
+          }
+        ],
+        "code": {
+          "coding": [
+            {
+              "system": "http://loinc.org",
+              "code": "39156-5",
+              "display": "Body mass index (BMI) [Ratio]"
+            }
+          ],
+          "text": "BMI"
+        },
+        "subject": {
+          "reference": "urn:uuid:2e3f52e2-45c4-b540-78ae-ad01b8a50a07"
+        },
+        "encounter": {
+          "reference": "urn:uuid:enc-revision-consult-2026"
+        },
+        "effectiveDateTime": "2026-01-20",
+        "valueQuantity": {
+          "value": 28.4,
+          "unit": "kg/m2",
+          "system": "http://unitsofmeasure.org",
+          "code": "kg/m2"
+        }
+      },
+      "request": {
+        "method": "POST",
+        "url": "Observation"
+      },
+      "fullUrl": "urn:uuid:obs-bmi"
+    },
+    {
+      "resource": {
+        "resourceType": "Observation",
+        "id": "obs-smoking-status",
+        "status": "final",
+        "category": [
+          {
+            "coding": [
+              {
+                "system": "http://terminology.hl7.org/CodeSystem/observation-category",
+                "code": "social-history"
+              }
+            ]
+          }
+        ],
+        "code": {
+          "coding": [
+            {
+              "system": "http://loinc.org",
+              "code": "72166-2",
+              "display": "Tobacco smoking status"
+            }
+          ],
+          "text": "Smoking Status"
+        },
+        "subject": {
+          "reference": "urn:uuid:2e3f52e2-45c4-b540-78ae-ad01b8a50a07"
+        },
+        "encounter": {
+          "reference": "urn:uuid:enc-revision-consult-2026"
+        },
+        "valueCodeableConcept": {
+          "coding": [
+            {
+              "system": "http://snomed.info/sct",
+              "code": "8517006",
+              "display": "Former smoker"
+            }
+          ],
+          "text": "Former Smoker"
+        }
+      },
+      "request": {
+        "method": "POST",
+        "url": "Observation"
+      },
+      "fullUrl": "urn:uuid:obs-smoking-status"
+    },
+    {
+      "resource": {
+        "resourceType": "AllergyIntolerance",
+        "id": "allergy-penicillin",
+        "clinicalStatus": {
+          "coding": [
+            {
+              "system": "http://terminology.hl7.org/CodeSystem/allergyintolerance-clinical",
+              "code": "active"
+            }
+          ]
+        },
+        "verificationStatus": {
+          "coding": [
+            {
+              "system": "http://terminology.hl7.org/CodeSystem/allergyintolerance-verification",
+              "code": "confirmed"
+            }
+          ]
+        },
+        "code": {
+          "coding": [
+            {
+              "system": "http://snomed.info/sct",
+              "code": "91936005",
+              "display": "Allergy to penicillin"
+            }
+          ],
+          "text": "Penicillin Allergy"
+        },
+        "patient": {
+          "reference": "urn:uuid:2e3f52e2-45c4-b540-78ae-ad01b8a50a07"
+        },
+        "reaction": [
+          {
+            "manifestation": [
+              {
+                "coding": [
+                  {
+                    "system": "http://snomed.info/sct",
+                    "code": "126485001",
+                    "display": "Urticaria"
+                  }
+                ],
+                "text": "Hives"
+              }
+            ],
+            "severity": "severe"
+          }
+        ]
+      },
+      "request": {
+        "method": "POST",
+        "url": "AllergyIntolerance"
+      },
+      "fullUrl": "urn:uuid:allergy-penicillin"
+    },
+    {
+      "resource": {
+        "resourceType": "Condition",
+        "id": "cond-hypertension",
+        "clinicalStatus": {
+          "coding": [
+            {
+              "system": "http://terminology.hl7.org/CodeSystem/condition-clinical",
+              "code": "active"
+            }
+          ]
+        },
+        "code": {
+          "coding": [
+            {
+              "system": "http://snomed.info/sct",
+              "code": "38341003",
+              "display": "Hypertensive disorder, systemic arterial"
+            }
+          ],
+          "text": "Essential Hypertension"
+        },
+        "subject": {
+          "reference": "urn:uuid:2e3f52e2-45c4-b540-78ae-ad01b8a50a07"
+        },
+        "onsetDateTime": "2015-06-12"
+      },
+      "request": {
+        "method": "POST",
+        "url": "Condition"
+      },
+      "fullUrl": "urn:uuid:cond-hypertension"
+    },
+    {
+      "resource": {
+        "resourceType": "Condition",
+        "id": "cond-hyperlipidemia",
+        "clinicalStatus": {
+          "coding": [
+            {
+              "system": "http://terminology.hl7.org/CodeSystem/condition-clinical",
+              "code": "active"
+            }
+          ]
+        },
+        "code": {
+          "coding": [
+            {
+              "system": "http://snomed.info/sct",
+              "code": "55822004",
+              "display": "Hyperlipidemia"
+            }
+          ],
+          "text": "Hyperlipidemia"
+        },
+        "subject": {
+          "reference": "urn:uuid:2e3f52e2-45c4-b540-78ae-ad01b8a50a07"
+        },
+        "onsetDateTime": "2010-09-01"
+      },
+      "request": {
+        "method": "POST",
+        "url": "Condition"
+      },
+      "fullUrl": "urn:uuid:cond-hyperlipidemia"
+    },
+    {
+      "resource": {
+        "resourceType": "MedicationRequest",
+        "status": "active",
+        "intent": "order",
+        "medicationCodeableConcept": {
+          "coding": [
+            {
+              "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+              "code": "314076",
+              "display": "Lisinopril 10 MG Oral Tablet"
+            }
+          ],
+          "text": "Lisinopril 10 MG"
+        },
+        "subject": {
+          "reference": "urn:uuid:2e3f52e2-45c4-b540-78ae-ad01b8a50a07"
+        },
+        "encounter": {
+          "reference": "urn:uuid:enc-revision-consult-2026"
+        },
+        "reasonReference": [
+          {
+            "reference": "urn:uuid:cond-hypertension"
+          }
+        ],
+        "dosageInstruction": [
+          {
+            "text": "10 mg daily"
+          }
+        ],
+        "id": "medreq-lisinopril"
+      },
+      "request": {
+        "method": "POST",
+        "url": "MedicationRequest"
+      },
+      "fullUrl": "urn:uuid:medreq-lisinopril"
+    },
+    {
+      "resource": {
+        "resourceType": "MedicationRequest",
+        "status": "active",
+        "intent": "order",
+        "medicationCodeableConcept": {
+          "coding": [
+            {
+              "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+              "code": "617314",
+              "display": "Atorvastatin 20 MG Oral Tablet"
+            }
+          ],
+          "text": "Atorvastatin 20 MG"
+        },
+        "subject": {
+          "reference": "urn:uuid:2e3f52e2-45c4-b540-78ae-ad01b8a50a07"
+        },
+        "encounter": {
+          "reference": "urn:uuid:enc-revision-consult-2026"
+        },
+        "reasonReference": [
+          {
+            "reference": "urn:uuid:cond-hyperlipidemia"
+          }
+        ],
+        "dosageInstruction": [
+          {
+            "text": "20 mg daily at bedtime"
+          }
+        ],
+        "id": "medreq-atorvastatin"
+      },
+      "request": {
+        "method": "POST",
+        "url": "MedicationRequest"
+      },
+      "fullUrl": "urn:uuid:medreq-atorvastatin"
+    }
+  ]
+}
