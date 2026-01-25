@@ -21,7 +21,7 @@ struct UserStudyChatView: View {
         @Bindable var model = model
         NavigationStack { // swiftlint:disable:this closure_body_length
             chatView
-                .navigationTitle(model.navigationState.title(in: model.study))
+                .applyTitleConfig(model.navigationState.titleConfig(in: model.study))
                 .navigationBarTitleDisplayMode(.inline)
                 .toolbar {
                     UserStudyChatToolbar(
@@ -109,6 +109,19 @@ struct UserStudyChatView: View {
                 .progressViewStyle(.circular)
                 .padding()
                 .interactiveDismissDisabled()
+        }
+    }
+}
+
+
+extension View {
+    @ViewBuilder
+    func applyTitleConfig(_ config: UserStudyChatViewModel.NavigationState.TitleConfig) -> some View {
+        if #available(iOS 26, *), let subtitle = config.subtitle {
+            self.navigationTitle(config.title)
+                .navigationSubtitle(subtitle)
+        } else {
+            self.navigationTitle(config.title)
         }
     }
 }
