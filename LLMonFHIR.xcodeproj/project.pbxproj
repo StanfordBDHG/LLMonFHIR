@@ -20,6 +20,7 @@
 		44E18E8E2CEBEC9500829A26 /* SpeziLLMLocalDownload in Frameworks */ = {isa = PBXBuildFile; productRef = 44E18E8D2CEBEC9500829A26 /* SpeziLLMLocalDownload */; };
 		44E18E902CEBEC9500829A26 /* SpeziLLMOpenAI in Frameworks */ = {isa = PBXBuildFile; productRef = 44E18E8F2CEBEC9500829A26 /* SpeziLLMOpenAI */; };
 		44E18E932CEBF29200829A26 /* SpeziLocalStorage in Frameworks */ = {isa = PBXBuildFile; productRef = 44E18E922CEBF29200829A26 /* SpeziLocalStorage */; };
+		65D03CDE2F25E55F00AA89DF /* SpeziQuestionnaire in Frameworks */ = {isa = PBXBuildFile; productRef = 65D03CDD2F25E55F00AA89DF /* SpeziQuestionnaire */; };
 		8004693A2EEF472400585753 /* SpeziOnboarding in Frameworks */ = {isa = PBXBuildFile; productRef = 800469392EEF472400585753 /* SpeziOnboarding */; };
 		801761AC2EE5CC2400383DB3 /* SpeziViews in Frameworks */ = {isa = PBXBuildFile; productRef = 801761AB2EE5CC2400383DB3 /* SpeziViews */; };
 		8040C2A02F19396A00884AD3 /* SpeziLLM in Frameworks */ = {isa = PBXBuildFile; productRef = 8040C29F2F19396A00884AD3 /* SpeziLLM */; };
@@ -155,6 +156,7 @@
 				97EAB5DE2B7A010A00A0B036 /* SpeziFHIR in Frameworks */,
 				806F40BE2F179FDB0001E988 /* FirebaseCore in Frameworks */,
 				806DF5BE2EC234AD00A8243C /* SpeziFHIRMockPatients in Frameworks */,
+				65D03CDE2F25E55F00AA89DF /* SpeziQuestionnaire in Frameworks */,
 				8040C2A62F19396A00884AD3 /* SpeziLLMLocalDownload in Frameworks */,
 				80A98FA62F13DA5C00BDD5B7 /* SpeziFHIR in Frameworks */,
 				80A98FAA2F13DA5C00BDD5B7 /* SpeziFHIRMockPatients in Frameworks */,
@@ -316,6 +318,7 @@
 				8040C2A52F19396A00884AD3 /* SpeziLLMLocalDownload */,
 				8040C2A72F19396A00884AD3 /* SpeziLLMOpenAI */,
 				805C26302F25171E00769AC1 /* LLMonFHIRShared */,
+				65D03CDD2F25E55F00AA89DF /* SpeziQuestionnaire */,
 			);
 			productName = LLMonFHIR;
 			productReference = 653A254D283387FE005D4D48 /* LLMonFHIR.app */;
@@ -423,6 +426,7 @@
 				80A990752F1699B500BDD5B7 /* XCRemoteSwiftPackageReference "SpeziFirebase" */,
 				806F40BC2F179FDB0001E988 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
 				8040C29E2F19396A00884AD3 /* XCRemoteSwiftPackageReference "SpeziLLM" */,
+				65D03CDC2F25E55F00AA89DF /* XCRemoteSwiftPackageReference "SpeziQuestionnaire" */,
 			);
 			productRefGroup = 653A254E283387FE005D4D48 /* Products */;
 			projectDirPath = "";
@@ -920,6 +924,14 @@
 				minimumVersion = 0.61.0;
 			};
 		};
+		65D03CDC2F25E55F00AA89DF /* XCRemoteSwiftPackageReference "SpeziQuestionnaire" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/StanfordSpezi/SpeziQuestionnaire.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.2.4;
+			};
+		};
 		800469382EEF472400585753 /* XCRemoteSwiftPackageReference "SpeziOnboarding" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/StanfordSpezi/SpeziOnboarding.git";
@@ -1059,6 +1071,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 658E102D2E74A1380038C003 /* XCRemoteSwiftPackageReference "SwiftLintPlugins" */;
 			productName = "plugin:SwiftLintBuildToolPlugin";
+		};
+		65D03CDD2F25E55F00AA89DF /* SpeziQuestionnaire */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 65D03CDC2F25E55F00AA89DF /* XCRemoteSwiftPackageReference "SpeziQuestionnaire" */;
+			productName = SpeziQuestionnaire;
 		};
 		800469392EEF472400585753 /* SpeziOnboarding */ = {
 			isa = XCSwiftPackageProductDependency;

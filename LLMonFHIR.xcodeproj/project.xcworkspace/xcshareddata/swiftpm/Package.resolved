@@ -1,5 +1,5 @@
 {
-  "originHash" : "bed5d60bb30334ab6aae5d176bd2733a75c5e425c6c6af0904cd9dd5eb525dea",
+  "originHash" : "59e2dcc513e42597a15cdad1f43e75400d83e332005d872edc780f6d338824fc",
   "pins" : [
     {
       "identity" : "abseil-cpp-binary",
@@ -8,6 +8,15 @@
       "state" : {
         "revision" : "bbe8b69694d7873315fd3a4ad41efe043e1c07c5",
         "version" : "1.2024072200.0"
+      }
+    },
+    {
+      "identity" : "antlr4",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/antlr/antlr4.git",
+      "state" : {
+        "revision" : "cc82115a4e7f53d71d9d905caa2c2dfa4da58899",
+        "version" : "4.13.2"
       }
     },
     {
@@ -191,6 +200,24 @@
       }
     },
     {
+      "identity" : "researchkit",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/StanfordBDHG/ResearchKit.git",
+      "state" : {
+        "revision" : "8029e36bfa88b7995d8c997f4c7f52ef9e6679ea",
+        "version" : "3.1.2"
+      }
+    },
+    {
+      "identity" : "researchkitonfhir",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/StanfordBDHG/ResearchKitOnFHIR.git",
+      "state" : {
+        "revision" : "dc3e35d55e5c0acc0059c5f939535de230fdbd99",
+        "version" : "2.0.7"
+      }
+    },
+    {
       "identity" : "spezi",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/StanfordSpezi/Spezi.git",
@@ -220,7 +247,7 @@
     {
       "identity" : "spezichat",
       "kind" : "remoteSourceControl",
-      "location" : "https://github.com/StanfordSpezi/SpeziChat.git",
+      "location" : "https://github.com/StanfordSpezi/SpeziChat",
       "state" : {
         "revision" : "d696d882f2722d22669e6d50254e87a124ef6643",
         "version" : "0.2.5"
@@ -278,6 +305,15 @@
       "state" : {
         "revision" : "1b1c0f685dc7416b1ce81ffaa17bb12486626731",
         "version" : "2.0.4"
+      }
+    },
+    {
+      "identity" : "speziquestionnaire",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/StanfordSpezi/SpeziQuestionnaire.git",
+      "state" : {
+        "revision" : "6110a9ec1be8fc35caf9b7aa20b7cf570e1a8ffb",
+        "version" : "1.2.4"
       }
     },
     {

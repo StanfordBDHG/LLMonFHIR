@@ -35,13 +35,7 @@ final class FHIRInterpretationModule: Module, EnvironmentAccessible, @unchecked 
     @ObservationIgnored @LocalPreference(.fogModel) private var fogModel
     @ObservationIgnored @LocalPreference(.resourceLimit) private var resourceLimit
     
-    @MainActor var currentStudy: Study? {
-        didSet {
-            Task {
-                await updateSchemas(forceImmediateUpdate: true)
-            }
-        }
-    }
+    @MainActor var currentStudy: Study?
     
     @ObservationIgnored private var updateModelsTask: Task<Void, any Error>?
     

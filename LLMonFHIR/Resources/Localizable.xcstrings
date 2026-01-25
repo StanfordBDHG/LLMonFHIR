@@ -40,9 +40,6 @@
     "Chat with all Resources" : {
 
     },
-    "Checkmark" : {
-
-    },
     "Computation is performed on so-called fog nodes, running directly inside your own network." : {
 
     },
@@ -1217,6 +1214,9 @@
         }
       }
     },
+    "It may take a few moments while we analyze your answers." : {
+
+    },
     "LLAMA3_DOWNLOAD_DESCRIPTION" : {
       "localizations" : {
         "en" : {
@@ -1559,6 +1559,12 @@
           }
         }
       }
+    },
+    "Processing Questionnaire Response ..." : {
+
+    },
+    "Questinnaire not selected" : {
+
     },
     "Random" : {
 
@@ -2134,6 +2140,9 @@
     "Start Client Setup" : {
 
     },
+    "Start Questinnaire" : {
+
+    },
     "START_SESSION" : {
       "localizations" : {
         "en" : {
@@ -2145,6 +2154,9 @@
       }
     },
     "Study" : {
+
+    },
+    "Study not selected" : {
 
     },
     "STUDY_QR_CODE_GEN_EXPIRATION_FOOTER" : {
@@ -2303,6 +2315,7 @@
       }
     },
     "USER_STUDY_APPROVAL_BADGE_TEXT" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {

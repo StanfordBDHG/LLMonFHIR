@@ -7,6 +7,8 @@
 //
 
 import LLMonFHIRShared
+import class ModelsR4.Questionnaire
+import class ModelsR4.QuestionnaireResponse
 import os.log
 import SpeziFHIR
 import SpeziFoundation
@@ -31,6 +33,9 @@ struct StudyHomeView: View {
     @State private var study: Study?
     @State private var studyUserInfo: [String: String]
     
+    @State private var isPresentinQuestinnaire = false
+    @State private var questinnaireResponse: QuestionnaireResponse?
+    
     @State private var isPresentingEarliestHealthRecords = false
     @State private var isPresentingQRCodeScanner = false
     
@@ -39,6 +44,13 @@ struct StudyHomeView: View {
     }
     private var oldestHealthRecordTimestamp: Date? {
         earliestDates.values.min()
+    }
+    private var displayQuestinnaireNext: Bool {
+        guard let study else {
+            return false
+        }
+        
+        return study.initialQuestinnaire != nil && questinnaireResponse == nil
     }
     
     var body: some View {
@@ -73,6 +85,13 @@ struct StudyHomeView: View {
                         resourceSummary: resourceSummary,
                         uploader: uploader
                     )
+                }
+                .fullScreenCover(isPresented: $isPresentinQuestinnaire) {
+                    if let study {
+                        QuestinnaireView(study: study, questinnaireResponse: $questinnaireResponse)
+                    } else {
+                        ContentUnavailableView("Study not selected", systemImage: "document.badge.gearshape")
+                    }
                 }
                 .sheet(isPresented: $isPresentingEarliestHealthRecords) {
                     EarliestHealthRecordsView(
@@ -177,7 +196,6 @@ struct StudyHomeView: View {
                     }
                 }
             recordsStartDateView
-            approvalBadge
         }
         .padding(.bottom, 24)
     }
@@ -185,10 +203,16 @@ struct StudyHomeView: View {
     private var primaryActionButton: some View {
         PrimaryActionButton {
             if let study {
+                if displayQuestinnaireNext {
+                    isPresentinQuestinnaire = true
+                    return
+                }
+                
                 // the HealthKit permissions should already have been granted via the onboarding, but we re-request them here, just in case,
                 // to make sure everything is in a proper state when the study gets launched.
                 try await healthKit.askForAuthorization()
                 fhirInterpretationModule.currentStudy = study
+                await fhirInterpretationModule.updateSchemas(forceImmediateUpdate: true)
                 interpreter.startNewConversation(for: study)
             } else {
                 isPresentingQRCodeScanner = true
@@ -197,22 +221,14 @@ struct StudyHomeView: View {
             if waitingState.isWaiting {
                 Text("LOADING_HEALTH_RECORDS")
             } else if study != nil {
-                Text("START_SESSION")
+                if displayQuestinnaireNext {
+                    Text("Start Questinnaire")
+                } else {
+                    Text("START_SESSION")
+                }
             } else {
                 Label("Scan QR Code", systemImage: "qrcode.viewfinder")
             }
-        }
-    }
-
-    private var approvalBadge: some View {
-        HStack(spacing: 8) {
-            Image(systemName: "checkmark.seal.fill")
-                .foregroundColor(.secondary)
-                .accessibilityLabel(Text("Checkmark"))
-            Text("USER_STUDY_APPROVAL_BADGE_TEXT")
-                .font(.caption)
-                .fontWeight(.medium)
-                .foregroundColor(.secondary)
         }
     }
     
@@ -228,7 +244,7 @@ struct StudyHomeView: View {
     
     /// Persists the OpenAI token of the user study in the keychain, if no other token already exists.
     private func persistUserStudyOpenApiToken() {
-        guard let study else {
+        guard let study, !study.openAIAPIKey.isEmpty else {
             return
         }
         guard case let .keychain(tag, username) = self.platform.configuration.authToken else {
