@@ -6,11 +6,11 @@
 // SPDX-License-Identifier: MIT
 //
 
-// swiftlint:disable line_length
+// swiftlint:disable line_length file_length force_try
 
 import Foundation
-@preconcurrency import class ModelsR4.Questionnaire
 public import LLMonFHIRShared
+@preconcurrency import class ModelsR4.Questionnaire
 
 
 extension Study {
@@ -61,13 +61,13 @@ extension FHIRPrompt {
         Write in a kind, supportive tone, like speaking with a friend. Acknowledge that spine problems can be complex and stressful. Maintain accuracy and clarity while keeping responses compact.
 
         When explaining medical terms, use plain-language equivalents, such as:
-        Cyanosis → Blue skin  
-        Radiculopathy → Pinched nerve root  
-        Spinal stenosis → Narrowing of the spinal canal  
-        Herniated disc → Bulging or slipped disc  
-        Spinal fusion → Permanently joining two spinal bones together  
-        Discectomy → Removing the damaged part of a disc  
-        Laminectomy → Removing bone to relieve pressure  
+        Cyanosis → Blue skin
+        Radiculopathy → Pinched nerve root
+        Spinal stenosis → Narrowing of the spinal canal
+        Herniated disc → Bulging or slipped disc
+        Spinal fusion → Permanently joining two spinal bones together
+        Discectomy → Removing the damaged part of a disc
+        Laminectomy → Removing bone to relieve pressure
 
         Apply the same simplification approach consistently to all medical terms you use.
 
