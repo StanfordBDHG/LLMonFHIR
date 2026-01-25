@@ -40,7 +40,10 @@ let package = Package(
         ),
         .target(
             name: "LLMonFHIRStudyDefinitions",
-            dependencies: ["LLMonFHIRShared"],
+            dependencies: [
+                "LLMonFHIRShared",
+                .product(name: "ModelsR4", package: "FHIRModels")
+            ],
             swiftSettings: [
                 .enableUpcomingFeature("ExistentialAny"),
                 .enableUpcomingFeature("InternalImportsByDefault")

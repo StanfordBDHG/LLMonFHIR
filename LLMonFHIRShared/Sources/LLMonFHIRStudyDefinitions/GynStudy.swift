@@ -31,6 +31,7 @@ extension Study {
             summarizeSingleResourcePrompt: nil,
             interpretMultipleResourcesPrompt: nil,
             chatTitleConfig: .default,
+            initialQuestinnaire: nil,
             tasks: [
                 Task(
                     id: "0",

@@ -39,7 +39,7 @@ public final class Study: Identifiable {
     public let settingsUnlockCode: String?
     
     /// The OpenAI API key that should be used when answering this survey.
-    public let openAIAPIKey: String
+    public var openAIAPIKey: String
     public let openAIEndpoint: OpenAIEndpointConfig
     
     /// The email address to which the report file should be sent.
