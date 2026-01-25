@@ -89,7 +89,6 @@ final class UserStudyChatViewModel: MultipleResourcesChatViewModel, Sendable { /
     
     /// Whether the chat input should currently be enabled, i.e. whether the user should currently be able to write (and submit) chat messages
     var shouldEnableChatInput: Bool {
-        print("shouldEnableChatInput: isProcessing = \(isProcessing), hasConfiguredCapacityForCurrentTask = \(hasConfiguredCapacityForCurrentTask), isMaxAssistantMessagesReached = \(isMaxAssistantMessagesReached)")
         // Always disable during processing
         if isProcessing {
             return false
@@ -103,8 +102,6 @@ final class UserStudyChatViewModel: MultipleResourcesChatViewModel, Sendable { /
     }
 
     var shouldEnableContinueToNextTaskAction: Bool {
-        print("shouldEnableContinueToNextTaskAction: isProcessing = \(isProcessing), hasConfiguredCapacityForCurrentTask = \(hasConfiguredCapacityForCurrentTask), isMaxAssistantMessagesReached = \(isMaxAssistantMessagesReached)")
-        
         if isProcessing {
             // Always disable during processing
             return false

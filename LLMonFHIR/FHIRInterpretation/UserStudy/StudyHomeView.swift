@@ -135,23 +135,11 @@ struct StudyHomeView: View {
     }
 
     private var studyTitle: some View {
-        let (title, subtitle) = { () -> (LocalizedStringResource, LocalizedStringResource?) in
-            if let study {
-                ("\(study.title)", "LLM_ON_FHIR")
-            } else {
-                ("LLM_ON_FHIR", nil)
-            }
-        }()
-        return VStack(spacing: 8) {
-            Text(title)
+        VStack(spacing: 8) {
+            Text(study?.title ?? "LLM on FHIR")
                 .font(.title)
                 .fontWeight(.bold)
                 .foregroundColor(.primary)
-            if let subtitle {
-                Text(subtitle)
-                    .font(.title2)
-                    .foregroundColor(.secondary)
-            }
         }
     }
 

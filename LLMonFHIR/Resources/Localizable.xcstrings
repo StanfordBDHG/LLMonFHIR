@@ -1234,6 +1234,7 @@
 
     },
     "LLM_ON_FHIR" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
