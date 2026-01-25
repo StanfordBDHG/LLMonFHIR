@@ -8,7 +8,9 @@
 
 import CryptoKit
 import Foundation
-@testable import LLMonFHIRShared
+import LLMonFHIRShared
+import LLMonFHIRStudyDefinitions
+import class ModelsR4.Questionnaire
 import Testing
 
 
@@ -26,5 +28,20 @@ struct LLMonFHIRSharedTests {
         let encrypted = try data.encrypted(using: publicKey)
         let decrypted = try encrypted.decrypted(using: privateKey)
         #expect(decrypted == data)
+    }
+    
+    @Test
+    func studyInitialQuestionnaireEncodingAndDecoding() throws {
+        for study in Study.allStudies {
+            guard let questionnaire = study.initialQuestionnaire else {
+                continue
+            }
+            let jsonEncoded = try JSONEncoder().encode(questionnaire)
+            let jsonDecoded = try JSONDecoder().decode(Questionnaire.self, from: jsonEncoded)
+            #expect(jsonDecoded.isEqual(to: questionnaire))
+            let plistEncoded = try PropertyListEncoder().encode(questionnaire)
+            let plistDecoded = try PropertyListDecoder().decode(Questionnaire.self, from: plistEncoded)
+            #expect(plistDecoded.isEqual(to: questionnaire))
+        }
     }
 }
