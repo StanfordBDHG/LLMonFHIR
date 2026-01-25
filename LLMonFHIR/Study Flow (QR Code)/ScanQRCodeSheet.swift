@@ -62,8 +62,7 @@ private struct ScanQRCodeSheet: View {
         ContentUnavailableView(
             "No Study Loaded",
             systemImage: "document.badge.gearshape",
-            // swiftlint:disable:next line_length
-            description: Text("Launch LLMonFHIR into its study mode by enabling the `--mode study:edu.stanford.LLMonFHIR.usabilityStudy` flag in Xcode (via the `⌘ ⇧ ,` shortcut)")
+            description: Text(verbatim: "Launch into study mode by enabling the `--mode study:ID` flag in Xcode (via the `⌘ ⇧ ,` shortcut)")
         )
         #else
         DataScannerView(isScanning: $isScanning, onSuccess: onSuccess)
