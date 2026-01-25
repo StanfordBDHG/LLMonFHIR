@@ -7,6 +7,7 @@
 //
 
 import LLMonFHIRShared
+import class ModelsR4.QuestionnaireResponse
 import SpeziChat
 import SpeziLLM
 import SwiftUI
@@ -126,6 +127,8 @@ final class UserStudyChatViewModel: MultipleResourcesChatViewModel, Sendable { /
     let study: Study
     /// Additional key-value pairs associated with this particular study session (e.g., a participant id).
     private let userInfo: [String: String]
+    /// The response to the Study's initial questionnaire, if any.
+    private let initialQuestionnaireResponse: ModelsR4.QuestionnaireResponse?
     private let resourceSummary: FHIRResourceSummary
     private let studyStartTime = Date()
     private var taskStartTimes: [Study.Task.ID: Date] = [:]
@@ -154,12 +157,14 @@ final class UserStudyChatViewModel: MultipleResourcesChatViewModel, Sendable { /
     init(
         study: Study,
         userInfo: [String: String],
+        initialQuestionnaireResponse: ModelsR4.QuestionnaireResponse?,
         interpreter: FHIRMultipleResourceInterpreter,
         resourceSummary: FHIRResourceSummary,
         uploader: FirebaseUpload?
     ) {
         self.study = study
         self.userInfo = userInfo
+        self.initialQuestionnaireResponse = initialQuestionnaireResponse
         self.resourceSummary = resourceSummary
         self.uploader = uploader
         super.init(interpreter: interpreter, navigationTitle: "")
@@ -393,6 +398,7 @@ final class UserStudyChatViewModel: MultipleResourcesChatViewModel, Sendable { /
                 endTime: Date(),
                 userInfo: userInfo
             ),
+            initialQuestionnaireResponse: initialQuestionnaireResponse,
             fhirResources: await getFHIRResources(),
             timeline: generateTimeline()
         )

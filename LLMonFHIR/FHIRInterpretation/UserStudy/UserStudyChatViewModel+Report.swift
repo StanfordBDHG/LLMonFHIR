@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import class ModelsR4.QuestionnaireResponse
 import SpeziFHIR
 
 
@@ -15,6 +16,7 @@ extension UserStudyChatViewModel {
     /// A report summarizing a user study session, including metadata, FHIR resources, and timeline events.
     struct UserStudyReport: Encodable {
         let metadata: Metadata
+        let initialQuestionnaireResponse: ModelsR4.QuestionnaireResponse?
         let fhirResources: FHIRResources
         let timeline: [TimelineEvent]
     }

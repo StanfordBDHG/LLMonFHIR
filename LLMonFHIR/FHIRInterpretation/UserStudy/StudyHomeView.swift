@@ -60,6 +60,10 @@ struct StudyHomeView: View {
                 .toolbar {
                     SettingsButton()
                 }
+                .sheet(isPresented: $isPresentingEarliestHealthRecords) {
+                    EarliestHealthRecordsView(dataSource: earliestDates)
+                        .presentationDetents([.medium, .large])
+                }
                 .qrCodeScanningSheet(isPresented: $isPresentingQRCodeScanner) { payload in
                     guard study == nil else {
                         return .stopScanning
@@ -74,15 +78,6 @@ struct StudyHomeView: View {
                         return .continueScanning
                     }
                 }
-                .fullScreenCover(item: $fhirInterpretationModule.currentStudy) { study in
-                    UserStudyChatView(
-                        study: study,
-                        userInfo: studyUserInfo,
-                        interpreter: interpreter,
-                        resourceSummary: resourceSummary,
-                        uploader: uploader
-                    )
-                }
                 .fullScreenCover(isPresented: $isPresentingQuestionnaire) {
                     if let study {
                         QuestionnaireSheet(study: study, response: $questionnaireResponse)
@@ -90,11 +85,15 @@ struct StudyHomeView: View {
                         ContentUnavailableView("Study not selected", systemImage: "document.badge.gearshape")
                     }
                 }
-                .sheet(isPresented: $isPresentingEarliestHealthRecords) {
-                    EarliestHealthRecordsView(
-                        dataSource: earliestDates
-                    )
-                    .presentationDetents([.medium, .large])
+                .fullScreenCover(item: $fhirInterpretationModule.currentStudy) { study in
+                    UserStudyChatView(model: .init(
+                        study: study,
+                        userInfo: studyUserInfo,
+                        initialQuestionnaireResponse: questionnaireResponse,
+                        interpreter: interpreter,
+                        resourceSummary: resourceSummary,
+                        uploader: uploader
+                    ))
                 }
                 .task {
                     self.persistUserStudyOpenApiToken()
