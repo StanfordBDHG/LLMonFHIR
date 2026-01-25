@@ -6,7 +6,7 @@
 // SPDX-License-Identifier: MIT
 //
 
-// swiftlint:disable line_length file_length force_try
+// swiftlint:disable line_length force_try
 
 import Foundation
 public import LLMonFHIRShared
