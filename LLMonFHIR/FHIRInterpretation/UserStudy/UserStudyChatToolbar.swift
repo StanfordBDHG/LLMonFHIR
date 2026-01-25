@@ -6,6 +6,7 @@
 // SPDX-License-Identifier: MIT
 //
 
+import LLMonFHIRShared
 import SpeziViews
 import SwiftUI
 
@@ -91,7 +92,7 @@ struct UserStudyChatToolbar: ToolbarContent {
     private var continueButton: some ToolbarContent {
         ToolbarItem(placement: .primaryAction) {
             let button = Button {
-                model.presentedSheet = .survey
+                model.advance()
             } label: {
                 Label("Next Task", systemImage: "arrow.forward.circle")
                     .accessibilityLabel("Next Task")

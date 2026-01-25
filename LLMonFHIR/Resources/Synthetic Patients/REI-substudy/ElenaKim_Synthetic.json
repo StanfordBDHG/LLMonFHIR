@@ -1,0 +1,517 @@
+{
+  "resourceType": "Bundle",
+  "id": "bundle-elena-kim-master",
+  "type": "collection",
+  "timestamp": "2026-01-21T20:00:00-08:00",
+  "entry": [
+    {
+      "fullUrl": "urn:uuid:org-sf-fertility",
+      "resource": {
+        "resourceType": "Organization",
+        "id": "org-sf-fertility",
+        "name": "San Francisco Fertility Center (Synthetic)"
+      }
+    },
+    {
+      "fullUrl": "urn:uuid:practitioner-chen",
+      "resource": {
+        "resourceType": "Practitioner",
+        "id": "practitioner-chen",
+        "name": [ { "family": "Chen", "given": [ "David" ], "prefix": [ "Dr." ] } ]
+      }
+    },
+    {
+      "fullUrl": "urn:uuid:patient-elena",
+      "resource": {
+        "resourceType": "Patient",
+        "id": "patient-elena",
+        "meta": { "profile": [ "http://hl7.org/fhir/us/core/StructureDefinition/us-core-patient" ] },
+        "identifier": [ { "system": "http://hospital.example.org/mrn", "value": "MRN-AMA-8821" } ],
+        "name": [ { "use": "official", "family": "Kim", "given": [ "Elena" ] } ],
+        "gender": "female",
+        "birthDate": "1983-05-12",
+        "telecom": [ { "system": "phone", "value": "555-019-9999", "use": "mobile" } ],
+        "address": [ { "line": [ "450 Sutter St" ], "city": "San Francisco", "state": "CA", "postalCode": "94108", "country": "USA" } ],
+        "communication": [ { "language": { "coding": [ { "system": "urn:ietf:bcp:47", "code": "en", "display": "English" } ] }, "preferred": true } ],
+        "extension": [
+          {
+            "url": "http://hl7.org/fhir/us/core/StructureDefinition/us-core-race",
+            "extension": [
+              { "url": "ombCategory", "valueCoding": { "system": "urn:oid:2.16.840.1.113883.6.238", "code": "2028-9", "display": "Asian" } },
+              { "url": "detailed", "valueCoding": { "system": "urn:oid:2.16.840.1.113883.6.238", "code": "2034-7", "display": "Korean" } },
+              { "url": "text", "valueString": "Asian" }
+            ]
+          },
+          {
+            "url": "http://hl7.org/fhir/us/core/StructureDefinition/us-core-ethnicity",
+            "extension": [
+              { "url": "ombCategory", "valueCoding": { "system": "urn:oid:2.16.840.1.113883.6.238", "code": "2186-5", "display": "Not Hispanic or Latino" } },
+              { "url": "text", "valueString": "Not Hispanic or Latino" }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "fullUrl": "urn:uuid:encounter-ama-consult",
+      "resource": {
+        "resourceType": "Encounter",
+        "id": "encounter-ama-consult",
+        "status": "finished",
+        "class": { "system": "http://terminology.hl7.org/CodeSystem/v3-ActCode", "code": "AMB", "display": "ambulatory" },
+        "type": [ { "text": "AMA Fertility Evaluation" } ],
+        "subject": { "reference": "urn:uuid:patient-elena" },
+        "serviceProvider": { "reference": "urn:uuid:org-sf-fertility" },
+        "participant": [ { "individual": { "reference": "urn:uuid:practitioner-chen" } } ],
+        "period": { "start": "2026-01-20T14:00:00-08:00", "end": "2026-01-20T15:00:00-08:00" },
+        "reasonCode": [ { "text": "Infertility >6 months age 42" } ]
+      }
+    },
+    {
+      "fullUrl": "urn:uuid:cond-ama",
+      "resource": {
+        "resourceType": "Condition",
+        "id": "cond-ama",
+        "clinicalStatus": { "coding": [ { "system": "http://terminology.hl7.org/CodeSystem/condition-clinical", "code": "active" } ] },
+        "code": { "coding": [ { "system": "http://snomed.info/sct", "code": "416471008", "display": "Advanced maternal age gravid" } ], "text": "Advanced Maternal Age (42yo)" },
+        "subject": { "reference": "urn:uuid:patient-elena" },
+        "onsetDateTime": "2018-05-12"
+      }
+    },
+    {
+      "fullUrl": "urn:uuid:cond-dor",
+      "resource": {
+        "resourceType": "Condition",
+        "id": "cond-dor",
+        "clinicalStatus": { "coding": [ { "system": "http://terminology.hl7.org/CodeSystem/condition-clinical", "code": "active" } ] },
+        "code": { "coding": [ { "system": "http://snomed.info/sct", "code": "112163000", "display": "Decreased ovarian reserve" } ], "text": "Diminished Ovarian Reserve" },
+        "subject": { "reference": "urn:uuid:patient-elena" },
+        "note": [ { "text": "Elevated FSH (>10) and Low AMH." } ]
+      }
+    },
+    {
+      "fullUrl": "urn:uuid:cond-sec-infertility",
+      "resource": {
+        "resourceType": "Condition",
+        "id": "cond-sec-infertility",
+        "clinicalStatus": { "coding": [ { "system": "http://terminology.hl7.org/CodeSystem/condition-clinical", "code": "active" } ] },
+        "code": { "coding": [ { "system": "http://snomed.info/sct", "code": "19830005", "display": "Secondary infertility" } ], "text": "Secondary Infertility" },
+        "subject": { "reference": "urn:uuid:patient-elena" },
+        "onsetDateTime": "2024-01-10",
+        "note": [ { "text": "Trying to conceive for 12 months. Has one child born 2018." } ]
+      }
+    },
+    {
+      "fullUrl": "urn:uuid:cond-vitd-def",
+      "resource": {
+        "resourceType": "Condition",
+        "id": "cond-vitd-def",
+        "clinicalStatus": { "coding": [ { "system": "http://terminology.hl7.org/CodeSystem/condition-clinical", "code": "active" } ] },
+        "code": { "coding": [ { "system": "http://snomed.info/sct", "code": "34713006", "display": "Vitamin D deficiency" } ], "text": "Vitamin D Deficiency" },
+        "subject": { "reference": "urn:uuid:patient-elena" },
+        "onsetDateTime": "2025-10-15"
+      }
+    },
+    {
+      "fullUrl": "urn:uuid:cond-appendicitis",
+      "resource": {
+        "resourceType": "Condition",
+        "id": "cond-appendicitis",
+        "clinicalStatus": { "coding": [ { "system": "http://terminology.hl7.org/CodeSystem/condition-clinical", "code": "resolved" } ] },
+        "verificationStatus": { "coding": [ { "system": "http://terminology.hl7.org/CodeSystem/condition-ver-status", "code": "confirmed" } ] },
+        "code": { "coding": [ { "system": "http://snomed.info/sct", "code": "74400008", "display": "Acute appendicitis" } ], "text": "Acute Appendicitis" },
+        "subject": { "reference": "urn:uuid:patient-elena" },
+        "onsetDateTime": "1993-06-15",
+        "note": [ { "text": "Occurred at age 10." } ]
+      }
+    },
+    {
+      "fullUrl": "urn:uuid:cond-knee-injury",
+      "resource": {
+        "resourceType": "Condition",
+        "id": "cond-knee-injury",
+        "clinicalStatus": { "coding": [ { "system": "http://terminology.hl7.org/CodeSystem/condition-clinical", "code": "resolved" } ] },
+        "code": { "coding": [ { "system": "http://snomed.info/sct", "code": "20946005", "display": "Rupture of lateral collateral ligament of knee" } ], "text": "Rupture of LCL (Right Knee)" },
+        "subject": { "reference": "urn:uuid:patient-elena" },
+        "onsetDateTime": "2010-02-20",
+        "note": [ { "text": "Skiing injury." } ]
+      }
+    },
+    {
+      "fullUrl": "urn:uuid:proc-appendectomy",
+      "resource": {
+        "resourceType": "Procedure",
+        "id": "proc-appendectomy",
+        "status": "completed",
+        "code": { "coding": [ { "system": "http://snomed.info/sct", "code": "80146002" } ], "text": "Appendectomy" },
+        "subject": { "reference": "urn:uuid:patient-elena" },
+        "performedDateTime": "1993-06-15",
+        "reasonReference": [ { "reference": "urn:uuid:cond-appendicitis" } ]
+      }
+    },
+    {
+      "fullUrl": "urn:uuid:proc-knee-repair",
+      "resource": {
+        "resourceType": "Procedure",
+        "id": "proc-knee-repair",
+        "status": "completed",
+        "code": { "coding": [ { "system": "http://snomed.info/sct", "code": "179376008" } ], "text": "LCL Repair Surgery" },
+        "subject": { "reference": "urn:uuid:patient-elena" },
+        "performedDateTime": "2010-03-01",
+        "reasonReference": [ { "reference": "urn:uuid:cond-knee-injury" } ]
+      }
+    },
+    {
+      "fullUrl": "urn:uuid:proc-prior-failed-ivf",
+      "resource": {
+        "resourceType": "Procedure",
+        "id": "proc-prior-failed-ivf",
+        "status": "stopped",
+        "code": { "text": "IVF Cycle (Cancelled)" },
+        "subject": { "reference": "urn:uuid:patient-elena" },
+        "performedDateTime": "2025-09-15",
+        "outcome": { "text": "Cycle cancelled prior to retrieval due to poor response (only 1 dominant follicle)." }
+      }
+    },
+    {
+      "fullUrl": "urn:uuid:proc-delivery",
+      "resource": {
+        "resourceType": "Procedure",
+        "id": "proc-delivery",
+        "status": "completed",
+        "code": { "coding": [ { "system": "http://snomed.info/sct", "code": "700000" } ], "text": "Spontaneous vaginal delivery (Term)" },
+        "subject": { "reference": "urn:uuid:patient-elena" },
+        "performedDateTime": "2018-06-10"
+      }
+    },
+    {
+      "fullUrl": "urn:uuid:proc-sis",
+      "resource": {
+        "resourceType": "Procedure",
+        "id": "proc-sis",
+        "status": "completed",
+        "code": { "coding": [ { "system": "http://snomed.info/sct", "code": "44760007" } ], "text": "Saline Infusion Sonogram (SIS)" },
+        "subject": { "reference": "urn:uuid:patient-elena" },
+        "performedDateTime": "2026-01-10T11:00:00-08:00",
+        "outcome": { "text": "Normal uterine cavity. No polyps or fibroids identified." }
+      }
+    },
+    {
+      "fullUrl": "urn:uuid:obs-blood-type",
+      "resource": {
+        "resourceType": "Observation",
+        "id": "obs-blood-type",
+        "status": "final",
+        "category": [ { "coding": [ { "system": "http://terminology.hl7.org/CodeSystem/observation-category", "code": "laboratory" } ] } ],
+        "code": { "coding": [ { "system": "http://loinc.org", "code": "882-1", "display": "ABO and Rh group" } ], "text": "Blood Type" },
+        "subject": { "reference": "urn:uuid:patient-elena" },
+        "effectiveDateTime": "2026-01-18T08:00:00-08:00",
+        "valueCodeableConcept": { "coding": [ { "system": "http://snomed.info/sct", "code": "112144000", "display": "Blood group A" }, { "system": "http://snomed.info/sct", "code": "165747007", "display": "Rh positive" } ], "text": "A Positive" }
+      }
+    },
+    {
+      "fullUrl": "urn:uuid:obs-infectious-panel",
+      "resource": {
+        "resourceType": "Observation",
+        "id": "obs-infectious-panel",
+        "status": "final",
+        "category": [ { "coding": [ { "system": "http://terminology.hl7.org/CodeSystem/observation-category", "code": "laboratory" } ] } ],
+        "code": { "text": "IVF Infectious Disease Panel" },
+        "subject": { "reference": "urn:uuid:patient-elena" },
+        "effectiveDateTime": "2026-01-18T08:30:00-08:00",
+        "component": [
+          { "code": { "coding": [ { "system": "http://loinc.org", "code": "7917-8" } ], "text": "HBsAg" }, "valueCodeableConcept": { "text": "Non-reactive" } },
+          { "code": { "coding": [ { "system": "http://loinc.org", "code": "13955-0" } ], "text": "Hepatitis C Ab" }, "valueCodeableConcept": { "text": "Non-reactive" } },
+          { "code": { "coding": [ { "system": "http://loinc.org", "code": "7919-4" } ], "text": "HIV 1/2 Ag/Ab" }, "valueCodeableConcept": { "text": "Non-reactive" } },
+          { "code": { "coding": [ { "system": "http://loinc.org", "code": "2244-2" } ], "text": "RPR (Syphilis)" }, "valueCodeableConcept": { "text": "Non-reactive" } }
+        ]
+      }
+    },
+    {
+      "fullUrl": "urn:uuid:obs-cbc",
+      "resource": {
+        "resourceType": "Observation",
+        "id": "obs-cbc",
+        "status": "final",
+        "category": [ { "coding": [ { "system": "http://terminology.hl7.org/CodeSystem/observation-category", "code": "laboratory" } ] } ],
+        "code": { "coding": [ { "system": "http://loinc.org", "code": "58410-2", "display": "CBC panel" } ], "text": "Complete Blood Count" },
+        "subject": { "reference": "urn:uuid:patient-elena" },
+        "effectiveDateTime": "2026-01-18T08:30:00-08:00",
+        "component": [
+          { "code": { "text": "WBC" }, "valueQuantity": { "value": 6.8, "unit": "10*3/uL" } },
+          { "code": { "text": "RBC" }, "valueQuantity": { "value": 4.2, "unit": "10*6/uL" } },
+          { "code": { "text": "Hgb" }, "valueQuantity": { "value": 13.1, "unit": "g/dL" } },
+          { "code": { "text": "Hct" }, "valueQuantity": { "value": 39.5, "unit": "%" } },
+          { "code": { "text": "Plt" }, "valueQuantity": { "value": 245, "unit": "10*3/uL" } }
+        ]
+      }
+    },
+    {
+      "fullUrl": "urn:uuid:obs-vitals-panel",
+      "resource": {
+        "resourceType": "Observation",
+        "id": "obs-vitals-panel",
+        "status": "final",
+        "category": [ { "coding": [ { "system": "http://terminology.hl7.org/CodeSystem/observation-category", "code": "vital-signs" } ] } ],
+        "code": { "text": "Comprehensive Vitals" },
+        "subject": { "reference": "urn:uuid:patient-elena" },
+        "effectiveDateTime": "2026-01-20T14:05:00-08:00",
+        "component": [
+          { "code": { "coding": [ { "system": "http://loinc.org", "code": "8302-2" } ], "text": "Height" }, "valueQuantity": { "value": 162, "unit": "cm" } },
+          { "code": { "coding": [ { "system": "http://loinc.org", "code": "29463-7" } ], "text": "Weight" }, "valueQuantity": { "value": 68, "unit": "kg" } },
+          { "code": { "coding": [ { "system": "http://loinc.org", "code": "39156-5" } ], "text": "BMI" }, "valueQuantity": { "value": 25.9, "unit": "kg/m2" }, "interpretation": [ { "text": "Overweight (Asian criteria)" } ] },
+          { "code": { "coding": [ { "system": "http://loinc.org", "code": "85354-9" } ], "text": "BP" }, "valueString": "128/78 mmHg" }
+        ]
+      }
+    },
+    {
+      "fullUrl": "urn:uuid:obs-hormones-panel",
+      "resource": {
+        "resourceType": "Observation",
+        "id": "obs-hormones-panel",
+        "status": "final",
+        "category": [ { "coding": [ { "system": "http://terminology.hl7.org/CodeSystem/observation-category", "code": "laboratory" } ] } ],
+        "code": { "text": "Fertility Hormone Panel" },
+        "subject": { "reference": "urn:uuid:patient-elena" },
+        "effectiveDateTime": "2026-01-18T08:00:00-08:00",
+        "component": [
+          { "code": { "coding": [ { "system": "http://loinc.org", "code": "15067-2" } ], "text": "FSH" }, "valueQuantity": { "value": 15.2, "unit": "mIU/mL" }, "interpretation": [ { "text": "High (>10)" } ] },
+          { "code": { "coding": [ { "system": "http://loinc.org", "code": "38476-8" } ], "text": "AMH" }, "valueQuantity": { "value": 0.42, "unit": "ng/mL" }, "interpretation": [ { "text": "Low" } ] },
+          { "code": { "coding": [ { "system": "http://loinc.org", "code": "2243-4" } ], "text": "Estradiol" }, "valueQuantity": { "value": 55, "unit": "pg/mL" } },
+          { "code": { "coding": [ { "system": "http://loinc.org", "code": "11580-8" } ], "text": "TSH" }, "valueQuantity": { "value": 1.9, "unit": "uIU/mL" } }
+        ]
+      }
+    },
+    {
+      "fullUrl": "urn:uuid:obs-screening-panel",
+      "resource": {
+        "resourceType": "Observation",
+        "id": "obs-screening-panel",
+        "status": "final",
+        "category": [ { "coding": [ { "system": "http://terminology.hl7.org/CodeSystem/observation-category", "code": "laboratory" } ] } ],
+        "code": { "text": "Metabolic Screening" },
+        "subject": { "reference": "urn:uuid:patient-elena" },
+        "effectiveDateTime": "2026-01-18T08:05:00-08:00",
+        "component": [
+          { "code": { "coding": [ { "system": "http://loinc.org", "code": "4548-4" } ], "text": "HbA1c" }, "valueQuantity": { "value": 5.4, "unit": "%" } },
+          { "code": { "coding": [ { "system": "http://loinc.org", "code": "1989-3" } ], "text": "Vitamin D" }, "valueQuantity": { "value": 22, "unit": "ng/mL" }, "interpretation": [ { "text": "Insufficient" } ] },
+          { "code": { "coding": [ { "system": "http://loinc.org", "code": "5195-3" } ], "text": "Rubella IgG" }, "valueCodeableConcept": { "text": "Immune" } }
+        ]
+      }
+    },
+    {
+      "fullUrl": "urn:uuid:obs-pap-smear",
+      "resource": {
+        "resourceType": "Observation",
+        "id": "obs-pap-smear",
+        "status": "final",
+        "category": [ { "coding": [ { "system": "http://terminology.hl7.org/CodeSystem/observation-category", "code": "laboratory" } ] } ],
+        "code": { "coding": [ { "system": "http://loinc.org", "code": "10524-7", "display": "Microscopic observation [Identifier] in Cervix by Cyto stain" } ], "text": "Pap Smear" },
+        "subject": { "reference": "urn:uuid:patient-elena" },
+        "effectiveDateTime": "2025-06-15",
+        "valueCodeableConcept": { "text": "Negative for intraepithelial lesion or malignancy (NILM)" }
+      }
+    },
+    {
+      "fullUrl": "urn:uuid:obs-afc",
+      "resource": {
+        "resourceType": "Observation",
+        "id": "obs-afc",
+        "status": "final",
+        "code": { "text": "Antral Follicle Count (AFC)" },
+        "subject": { "reference": "urn:uuid:patient-elena" },
+        "effectiveDateTime": "2026-01-20T14:30:00-08:00",
+        "valueString": "Right: 2, Left: 3. Total AFC: 5."
+      }
+    },
+    {
+      "fullUrl": "urn:uuid:obs-ob-history",
+      "resource": {
+        "resourceType": "Observation",
+        "id": "obs-ob-history",
+        "status": "final",
+        "category": [ { "coding": [ { "system": "http://terminology.hl7.org/CodeSystem/observation-category", "code": "survey" } ] } ],
+        "code": { "coding": [ { "system": "http://loinc.org", "code": "11996-6" } ], "text": "Obstetric History Summary" },
+        "subject": { "reference": "urn:uuid:patient-elena" },
+        "valueString": "G1P1 (Spontaneous Vaginal Delivery 2018). No history of miscarriage."
+      }
+    },
+    {
+      "fullUrl": "urn:uuid:obs-smoker",
+      "resource": {
+        "resourceType": "Observation",
+        "id": "obs-smoker",
+        "status": "final",
+        "category": [ { "coding": [ { "system": "http://terminology.hl7.org/CodeSystem/observation-category", "code": "social-history" } ] } ],
+        "code": { "coding": [ { "system": "http://loinc.org", "code": "72166-2" } ], "text": "Tobacco smoking status" },
+        "subject": { "reference": "urn:uuid:patient-elena" },
+        "valueCodeableConcept": { "coding": [ { "system": "http://snomed.info/sct", "code": "266919005" } ], "text": "Never smoked tobacco" }
+      }
+    },
+    {
+      "fullUrl": "urn:uuid:medreq-gonalf",
+      "resource": {
+        "resourceType": "MedicationRequest",
+        "id": "medreq-gonalf",
+        "status": "active",
+        "intent": "order",
+        "medicationCodeableConcept": { "text": "Gonal-F (Follitropin alpha) 450 IU pen" },
+        "subject": { "reference": "urn:uuid:patient-elena" },
+        "authoredOn": "2026-01-20",
+        "dosageInstruction": [ { "text": "Inject 300 IU subcutaneously daily (AM)." } ]
+      }
+    },
+    {
+      "fullUrl": "urn:uuid:medreq-menopur",
+      "resource": {
+        "resourceType": "MedicationRequest",
+        "id": "medreq-menopur",
+        "status": "active",
+        "intent": "order",
+        "medicationCodeableConcept": { "text": "Menopur (Menotropins) 75 IU vial" },
+        "subject": { "reference": "urn:uuid:patient-elena" },
+        "authoredOn": "2026-01-20",
+        "dosageInstruction": [ { "text": "Inject 150 IU (2 vials) subcutaneously daily (PM)." } ]
+      }
+    },
+    {
+      "fullUrl": "urn:uuid:medreq-lupron",
+      "resource": {
+        "resourceType": "MedicationRequest",
+        "id": "medreq-lupron",
+        "status": "active",
+        "intent": "order",
+        "medicationCodeableConcept": { "text": "Leuprolide Acetate (Lupron) 2-week kit" },
+        "subject": { "reference": "urn:uuid:patient-elena" },
+        "authoredOn": "2026-01-20",
+        "dosageInstruction": [ { "text": "Inject 20 units subcutaneously twice daily (Microdose Flare protocol)." } ]
+      }
+    },
+    {
+      "fullUrl": "urn:uuid:medreq-vitd-supp",
+      "resource": {
+        "resourceType": "MedicationRequest",
+        "id": "medreq-vitd-supp",
+        "status": "active",
+        "intent": "order",
+        "medicationCodeableConcept": { "text": "Vitamin D3 2000 IU" },
+        "subject": { "reference": "urn:uuid:patient-elena" },
+        "authoredOn": "2026-01-20",
+        "dosageInstruction": [ { "text": "Take 1 tablet daily for deficiency." } ]
+      }
+    },
+    {
+      "fullUrl": "urn:uuid:medreq-coq10",
+      "resource": {
+        "resourceType": "MedicationRequest",
+        "id": "medreq-coq10",
+        "status": "active",
+        "medicationCodeableConcept": { "text": "CoQ10 (Ubiquinol) 600mg" },
+        "subject": { "reference": "urn:uuid:patient-elena" },
+        "authoredOn": "2026-01-20"
+      }
+    },
+    {
+      "fullUrl": "urn:uuid:medreq-omega3",
+      "resource": {
+        "resourceType": "MedicationRequest",
+        "id": "medreq-omega3",
+        "status": "active",
+        "medicationCodeableConcept": { "text": "Omega-3 Fish Oil 1000mg" },
+        "subject": { "reference": "urn:uuid:patient-elena" },
+        "authoredOn": "2026-01-20"
+      }
+    },
+    {
+      "fullUrl": "urn:uuid:medreq-dhea",
+      "resource": {
+        "resourceType": "MedicationRequest",
+        "id": "medreq-dhea",
+        "status": "active",
+        "medicationCodeableConcept": { "text": "DHEA 25mg micronized" },
+        "subject": { "reference": "urn:uuid:patient-elena" },
+        "authoredOn": "2026-01-20"
+      }
+    },
+    {
+      "fullUrl": "urn:uuid:medreq-prenatal",
+      "resource": {
+        "resourceType": "MedicationRequest",
+        "id": "medreq-prenatal",
+        "status": "active",
+        "medicationCodeableConcept": { "text": "Prenatal Vitamin" },
+        "subject": { "reference": "urn:uuid:patient-elena" },
+        "authoredOn": "2024-01-10"
+      }
+    },
+    {
+      "fullUrl": "urn:uuid:imm-flu",
+      "resource": {
+        "resourceType": "Immunization",
+        "id": "imm-flu",
+        "status": "completed",
+        "vaccineCode": { "coding": [ { "system": "http://hl7.org/fhir/sid/cvx", "code": "140" } ], "text": "Influenza Vaccine 2025-2026" },
+        "patient": { "reference": "urn:uuid:patient-elena" },
+        "occurrenceDateTime": "2025-10-05"
+      }
+    },
+    {
+      "fullUrl": "urn:uuid:imm-tdap",
+      "resource": {
+        "resourceType": "Immunization",
+        "id": "imm-tdap",
+        "status": "completed",
+        "vaccineCode": { "coding": [ { "system": "http://hl7.org/fhir/sid/cvx", "code": "115" } ], "text": "Tdap" },
+        "patient": { "reference": "urn:uuid:patient-elena" },
+        "occurrenceDateTime": "2022-04-10"
+      }
+    },
+    {
+      "fullUrl": "urn:uuid:imm-covid",
+      "resource": {
+        "resourceType": "Immunization",
+        "id": "imm-covid",
+        "status": "completed",
+        "vaccineCode": { "coding": [ { "system": "http://hl7.org/fhir/sid/cvx", "code": "207" } ], "text": "COVID-19 mRNA" },
+        "patient": { "reference": "urn:uuid:patient-elena" },
+        "occurrenceDateTime": "2024-09-15"
+      }
+    },
+    {
+      "fullUrl": "urn:uuid:risk-miscarriage",
+      "resource": {
+        "resourceType": "RiskAssessment",
+        "id": "risk-miscarriage",
+        "status": "final",
+        "subject": { "reference": "urn:uuid:patient-elena" },
+        "condition": { "reference": "urn:uuid:cond-ama" },
+        "prediction": [
+          {
+            "outcome": { "text": "Risk of spontaneous abortion" },
+            "probabilityDecimal": 36.6,
+            "rationale": "Age >42 years"
+          }
+        ]
+      }
+    },
+    {
+      "fullUrl": "urn:uuid:doc-plan",
+      "resource": {
+        "resourceType": "DocumentReference",
+        "id": "doc-plan",
+        "status": "current",
+        "type": { "coding": [ { "system": "http://loinc.org", "code": "11488-4", "display": "Consult note" } ], "text": "AMA Counseling Note" },
+        "subject": { "reference": "urn:uuid:patient-elena" },
+        "date": "2026-01-20T15:00:00-08:00",
+        "content": [
+          {
+            "attachment": {
+              "contentType": "text/plain",
+              "data": "Q29uc3VsdCBOb3RlOiA0MnlvIEcxUDEgKHNlY29uZGFyeSBpbmZlcnRpbGl0eSkuIFJpc2sgQ291bnNlbGluZzogRGlzY3Vzc2VkIGFjY2VsZXJhdGVkIGZlcnRpbGl0eSBkZWNsaW5lIGFmdGVyIGFnZSAzNy4gR2l2ZW4gYWdlID40MiwgbWlzY2FycmlhZ2UgcmlzayBlc3RpbWF0ZWQgYXQgMzYuNiUgb3IgaGlnaGVyIGR1ZSB0byBhbmd1cGxvaWR5LiBQbGFuOiBJbW1lZGlhdGUgSVZGIHdpdGggPGVtYnJ5byBiYW5raW5nPiB0byBtYXhpbWl6ZSBmb2xsaWNsZSByZWNydWl0bWVudC4gUHJlY29uY2VwdGlvbiBzY3JlZW5pbmcgKEJQLCBBMWMpIHdpdGhpbiBub3JtYWwgbGltaXRzLiBEb25vciBPb2N5dGUgb3B0aW9uIGRpc2N1c3NlZCBhcyBhbHRlcm5hdGl2ZSBpZiBhdXRvbG9nb3VzIElWRiBmYWlscywgd2l0aCBnb29kIHByb2dub3NpcyB1bnRpbCBhZ2UgNDUu"
+            }
+          }
+        ]
+      }
+    }
+  ]
+}

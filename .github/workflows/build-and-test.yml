@@ -18,8 +18,8 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  buildandtest:
-    name: Build and Test
+  app_tests:
+    name: Build and Test (App)
     uses: StanfordBDHG/.github/.github/workflows/xcodebuild-or-fastlane.yml@v2
     permissions:
       contents: read
@@ -27,13 +27,22 @@ jobs:
       artifactname: LLMonFHIR.xcresult
       runsonlabels: '["macOS", "self-hosted"]'
       fastlanelane: test
+  shared_spm_pkg_tests:
+    name: Build and Test (Shared)
+    uses: StanfordBDHG/.github/.github/workflows/xcodebuild-or-fastlane.yml@v2
+    with:
+      path: LLMonFHIRShared
+      runsonlabels: '["macOS", "self-hosted"]'
+      scheme: LLMonFHIRShared-Package
+      resultBundle: LLMonFHIRShared-UnitTests.xcresult
+      artifactname: LLMonFHIRShared-UnitTests.xcresult
   uploadcoveragereport:
     name: Upload Coverage Report
-    needs: buildandtest
+    needs: [app_tests, shared_spm_pkg_tests]
     uses: StanfordBDHG/.github/.github/workflows/create-and-upload-coverage-report.yml@v2
     permissions:
       contents: read
     with:
-      coveragereports: LLMonFHIR.xcresult
+      coveragereports: LLMonFHIR.xcresult LLMonFHIRShared-UnitTests.xcresult
     secrets:
       token: ${{ secrets.CODECOV_TOKEN }}

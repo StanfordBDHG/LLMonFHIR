@@ -6,6 +6,7 @@
 // SPDX-License-Identifier: MIT
 //
 
+import LLMonFHIRShared
 import Spezi
 import SpeziFHIR
 import SpeziFoundation
@@ -37,7 +38,7 @@ final class FHIRInterpretationModule: Module, EnvironmentAccessible, @unchecked 
     @MainActor var currentStudy: Study? {
         didSet {
             Task {
-                await updateSchemas()
+                await updateSchemas(forceImmediateUpdate: true)
             }
         }
     }
@@ -125,7 +126,7 @@ final class FHIRInterpretationModule: Module, EnvironmentAccessible, @unchecked 
             await imp()
         } else {
             updateModelsTask = Task {
-                try? await Task.sleep(for: .seconds(2))
+                try? await Task.sleep(for: .seconds(0.1))
                 if !Task.isCancelled {
                     await imp()
                 }

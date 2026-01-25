@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import LLMonFHIRShared
 import SpeziFoundation
 import SwiftUI
 

@@ -11,6 +11,7 @@ import FirebaseCore
 import FirebaseFunctions
 import Foundation
 import HTTPTypes
+import LLMonFHIRShared
 import OpenAPIRuntime
 
 

@@ -19,7 +19,7 @@ class OnboardingTests: XCTestCase, Sendable {
         continueAfterFailure = false
         
         let app = XCUIApplication()
-        app.launchArguments = ["--showOnboarding"]
+        app.launchArguments = ["--showOnboarding", "--mode", "test"]
         app.deleteAndLaunch(withSpringboardAppName: "LLMonFHIR")
     }
     

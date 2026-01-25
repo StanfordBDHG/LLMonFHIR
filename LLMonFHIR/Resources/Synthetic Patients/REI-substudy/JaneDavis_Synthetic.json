@@ -1,0 +1,482 @@
+{
+  "resourceType": "Bundle",
+  "id": "bundle-jane-davis-extensive",
+  "type": "collection",
+  "timestamp": "2026-01-21T10:00:00-08:00",
+  "entry": [{
+      "fullUrl": "urn:uuid:obs-genetics-jane",
+      "resource": {
+        "resourceType": "Observation",
+        "id": "obs-genetics-jane",
+        "status": "final",
+        "code": { "text": "Expanded Carrier Screening" },
+        "subject": { "reference": "urn:uuid:patient-jane" },
+        "valueString": "POSITIVE: Carrier for Cystic Fibrosis (CFTR mutation deltaF508). Negative for SMA, Fragile X.",
+        "interpretation": [ { "text": "Carrier" } ]
+      }
+    },
+    {
+      "fullUrl": "urn:uuid:obs-genetics-john",
+      "resource": {
+        "resourceType": "Observation",
+        "id": "obs-genetics-john",
+        "status": "final",
+        "code": { "text": "Partner Carrier Screening (John Doe)" },
+        "subject": { "reference": "urn:uuid:patient-jane" },
+        "valueString": "POSITIVE: Carrier for Cystic Fibrosis (CFTR mutation R117H).",
+        "note": [ { "text": "CRITICAL: Both partners are CF carriers. 25% risk to offspring." } ]
+      }
+    },
+    {
+      "fullUrl": "urn:uuid:patient-jane",
+      "resource": {
+        "resourceType": "Patient",
+        "id": "patient-jane",
+        "meta": {
+          "profile": [ "http://hl7.org/fhir/us/core/StructureDefinition/us-core-patient" ]
+        },
+        "identifier": [
+          {
+            "system": "http://hospital.example.org/mrn",
+            "value": "MRN-2026-45789"
+          }
+        ],
+        "name": [
+          {
+            "use": "official",
+            "family": "Davis",
+            "given": [ "Jane" ]
+          }
+        ],
+        "gender": "female",
+        "birthDate": "1991-04-15",
+        "telecom": [
+          {
+            "system": "phone",
+            "value": "+1-650-555-1234",
+            "use": "mobile"
+          },
+          {
+            "system": "email",
+            "value": "jane.davis@example.com"
+          }
+        ],
+        "address": [
+          {
+            "line": [ "123 Main St" ],
+            "city": "Palo Alto",
+            "state": "CA",
+            "postalCode": "94301",
+            "country": "USA"
+          }
+        ],
+        "communication": [
+          {
+            "language": {
+              "coding": [ { "system": "urn:ietf:bcp:47", "code": "en", "display": "English" } ],
+              "text": "English"
+            },
+            "preferred": true
+          }
+        ],
+        "extension": [
+          {
+            "url": "http://hl7.org/fhir/us/core/StructureDefinition/us-core-race",
+            "extension": [
+              {
+                "url": "ombCategory",
+                "valueCoding": { "system": "urn:oid:2.16.840.1.113883.6.238", "code": "2106-3", "display": "White" }
+              },
+              { "url": "text", "valueString": "White" }
+            ]
+          },
+          {
+            "url": "http://hl7.org/fhir/us/core/StructureDefinition/us-core-ethnicity",
+            "extension": [
+              {
+                "url": "ombCategory",
+                "valueCoding": { "system": "urn:oid:2.16.840.1.113883.6.238", "code": "2186-5", "display": "Not Hispanic or Latino" }
+              },
+              { "url": "text", "valueString": "Not Hispanic or Latino" }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "fullUrl": "urn:uuid:practitioner-smith",
+      "resource": {
+        "resourceType": "Practitioner",
+        "id": "practitioner-smith",
+        "name": [ { "family": "Smith", "given": [ "Alice" ], "prefix": [ "Dr." ] } ],
+        "qualification": [ { "code": { "text": "Reproductive Endocrinology and Infertility" } } ]
+      }
+    },
+    {
+      "fullUrl": "urn:uuid:patient-partner",
+      "resource": {
+        "resourceType": "Patient",
+        "id": "patient-partner",
+        "name": [ { "family": "Davis", "given": [ "John" ] } ],
+        "gender": "male",
+        "birthDate": "1990-02-20",
+        "contact": [ { "relationship": [ { "coding": [ { "system": "http://terminology.hl7.org/CodeSystem/v2-0131", "code": "CP", "display": "Contact Person" } ] } ], "name": { "family": "Davis", "given": [ "Jane" ] } } ]
+      }
+    },
+    {
+      "fullUrl": "urn:uuid:encounter-consult",
+      "resource": {
+        "resourceType": "Encounter",
+        "id": "encounter-consult",
+        "status": "finished",
+        "class": { "system": "http://terminology.hl7.org/CodeSystem/v3-ActCode", "code": "AMB", "display": "ambulatory" },
+        "type": [ { "text": "Initial Fertility Consultation" } ],
+        "subject": { "reference": "urn:uuid:patient-jane" },
+        "participant": [ { "individual": { "reference": "urn:uuid:practitioner-smith" } } ],
+        "period": { "start": "2026-01-15T10:00:00-08:00", "end": "2026-01-15T10:45:00-08:00" },
+        "reasonCode": [ { "text": "Primary infertility for 18 months" } ]
+      }
+    },
+    {
+      "fullUrl": "urn:uuid:cond-pcos",
+      "resource": {
+        "resourceType": "Condition",
+        "id": "cond-pcos",
+        "clinicalStatus": { "coding": [ { "system": "http://terminology.hl7.org/CodeSystem/condition-clinical", "code": "active" } ] },
+        "verificationStatus": { "coding": [ { "system": "http://terminology.hl7.org/CodeSystem/condition-ver-status", "code": "confirmed" } ] },
+        "code": {
+          "coding": [ { "system": "http://snomed.info/sct", "code": "69878008", "display": "Polycystic ovarian syndrome" } ],
+          "text": "PCOS"
+        },
+        "subject": { "reference": "urn:uuid:patient-jane" },
+        "onsetDateTime": "2019-06-01"
+      }
+    },
+    {
+      "fullUrl": "urn:uuid:cond-endo",
+      "resource": {
+        "resourceType": "Condition",
+        "id": "cond-endo",
+        "clinicalStatus": { "coding": [ { "system": "http://terminology.hl7.org/CodeSystem/condition-clinical", "code": "active" } ] },
+        "verificationStatus": { "coding": [ { "system": "http://terminology.hl7.org/CodeSystem/condition-ver-status", "code": "confirmed" } ] },
+        "code": {
+          "coding": [ { "system": "http://snomed.info/sct", "code": "396224008", "display": "Endometriosis (disorder)" } ],
+          "text": "Stage II Endometriosis"
+        },
+        "subject": { "reference": "urn:uuid:patient-jane" },
+        "onsetDateTime": "2025-09-20",
+        "note": [ { "text": "Confirmed via laparoscopy." } ]
+      }
+    },
+    {
+      "fullUrl": "urn:uuid:cond-hypothyroid",
+      "resource": {
+        "resourceType": "Condition",
+        "id": "cond-hypothyroid",
+        "clinicalStatus": { "coding": [ { "system": "http://terminology.hl7.org/CodeSystem/condition-clinical", "code": "active" } ] },
+        "verificationStatus": { "coding": [ { "system": "http://terminology.hl7.org/CodeSystem/condition-ver-status", "code": "confirmed" } ] },
+        "code": {
+          "coding": [ { "system": "http://snomed.info/sct", "code": "40930008", "display": "Hypothyroidism (disorder)" } ],
+          "text": "Subclinical Hypothyroidism"
+        },
+        "subject": { "reference": "urn:uuid:patient-jane" },
+        "onsetDateTime": "2020-03-10"
+      }
+    },
+    {
+      "fullUrl": "urn:uuid:cond-migraine",
+      "resource": {
+        "resourceType": "Condition",
+        "id": "cond-migraine",
+        "clinicalStatus": { "coding": [ { "system": "http://terminology.hl7.org/CodeSystem/condition-clinical", "code": "active" } ] },
+        "verificationStatus": { "coding": [ { "system": "http://terminology.hl7.org/CodeSystem/condition-ver-status", "code": "confirmed" } ] },
+        "category": [ { "coding": [ { "system": "http://terminology.hl7.org/CodeSystem/condition-category", "code": "problem-list-item" } ] } ],
+        "code": {
+          "coding": [ { "system": "http://snomed.info/sct", "code": "56018004", "display": "Migraine without aura (disorder)" } ],
+          "text": "Migraine without aura"
+        },
+        "subject": { "reference": "urn:uuid:patient-jane" },
+        "onsetDateTime": "2015-02-14",
+        "note": [ { "text": "Episodic, triggered by stress." } ]
+      }
+    },
+    {
+      "fullUrl": "urn:uuid:cond-vitd",
+      "resource": {
+        "resourceType": "Condition",
+        "id": "cond-vitd",
+        "clinicalStatus": { "coding": [ { "system": "http://terminology.hl7.org/CodeSystem/condition-clinical", "code": "active" } ] },
+        "verificationStatus": { "coding": [ { "system": "http://terminology.hl7.org/CodeSystem/condition-ver-status", "code": "confirmed" } ] },
+        "code": {
+          "coding": [ { "system": "http://snomed.info/sct", "code": "34713006", "display": "Vitamin D deficiency (disorder)" } ],
+          "text": "Vitamin D deficiency"
+        },
+        "subject": { "reference": "urn:uuid:patient-jane" },
+        "onsetDateTime": "2024-11-05"
+      }
+    },
+    {
+      "fullUrl": "urn:uuid:cond-appendectomy",
+      "resource": {
+        "resourceType": "Condition",
+        "id": "cond-appendectomy",
+        "clinicalStatus": { "coding": [ { "system": "http://terminology.hl7.org/CodeSystem/condition-clinical", "code": "resolved" } ] },
+        "verificationStatus": { "coding": [ { "system": "http://terminology.hl7.org/CodeSystem/condition-ver-status", "code": "confirmed" } ] },
+        "code": {
+          "coding": [ { "system": "http://snomed.info/sct", "code": "428251008", "display": "History of appendectomy (situation)" } ],
+          "text": "History of Appendectomy"
+        },
+        "subject": { "reference": "urn:uuid:patient-jane" },
+        "onsetDateTime": "2009-07-20"
+      }
+    },
+    {
+      "fullUrl": "urn:uuid:medreq-levo",
+      "resource": {
+        "resourceType": "MedicationRequest",
+        "id": "medreq-levo",
+        "status": "active",
+        "intent": "order",
+        "medicationCodeableConcept": { "text": "Levothyroxine 50 mcg tablet" },
+        "subject": { "reference": "urn:uuid:patient-jane" },
+        "authoredOn": "2025-10-15",
+        "requester": { "reference": "urn:uuid:practitioner-smith" },
+        "dosageInstruction": [ { "text": "50 mcg orally once daily." } ]
+      }
+    },
+    {
+      "fullUrl": "urn:uuid:medreq-metformin",
+      "resource": {
+        "resourceType": "MedicationRequest",
+        "id": "medreq-metformin",
+        "status": "active",
+        "intent": "order",
+        "medicationCodeableConcept": { "text": "Metformin 500 mg tablet" },
+        "subject": { "reference": "urn:uuid:patient-jane" },
+        "authoredOn": "2025-10-15",
+        "requester": { "reference": "urn:uuid:practitioner-smith" },
+        "dosageInstruction": [ { "text": "500 mg orally twice daily with meals." } ]
+      }
+    },
+    {
+      "fullUrl": "urn:uuid:medreq-vitd",
+      "resource": {
+        "resourceType": "MedicationRequest",
+        "id": "medreq-vitd",
+        "status": "active",
+        "intent": "order",
+        "medicationCodeableConcept": {
+          "coding": [ { "system": "http://snomed.info/sct", "code": "32223000", "display": "Cholecalciferol (product)" } ],
+          "text": "Vitamin D3 2000 IU"
+        },
+        "subject": { "reference": "urn:uuid:patient-jane" },
+        "authoredOn": "2024-11-05",
+        "dosageInstruction": [ { "text": "2000 IU orally daily." } ]
+      }
+    },
+    {
+      "fullUrl": "urn:uuid:medreq-sumatriptan",
+      "resource": {
+        "resourceType": "MedicationRequest",
+        "id": "medreq-sumatriptan",
+        "status": "active",
+        "intent": "order",
+        "medicationCodeableConcept": {
+          "coding": [ { "system": "http://snomed.info/sct", "code": "96233005", "display": "Sumatriptan (product)" } ],
+          "text": "Sumatriptan 50 mg"
+        },
+        "subject": { "reference": "urn:uuid:patient-jane" },
+        "authoredOn": "2025-01-10",
+        "dosageInstruction": [ { "text": "Take 1 tablet at onset of migraine. May repeat in 2 hours. Max 200mg/day." } ]
+      }
+    },
+    {
+      "fullUrl": "urn:uuid:allergy-penicillin",
+      "resource": {
+        "resourceType": "AllergyIntolerance",
+        "id": "allergy-penicillin",
+        "clinicalStatus": { "coding": [ { "system": "http://terminology.hl7.org/CodeSystem/allergyintolerance-clinical", "code": "active" } ] },
+        "verificationStatus": { "coding": [ { "system": "http://terminology.hl7.org/CodeSystem/allergyintolerance-verification", "code": "confirmed" } ] },
+        "code": { "coding": [ { "system": "http://snomed.info/sct", "code": "764146007", "display": "Penicillin (substance)" } ], "text": "Penicillin" },
+        "patient": { "reference": "urn:uuid:patient-jane" },
+        "onsetDateTime": "2010-05-20",
+        "reaction": [ { "manifestation": [ { "coding": [ { "system": "http://snomed.info/sct", "code": "247472004", "display": "Urticarial rash" } ], "text": "Hives/Rash" } ], "severity": "mild" } ]
+      }
+    },
+    {
+      "fullUrl": "urn:uuid:proc-appendectomy",
+      "resource": {
+        "resourceType": "Procedure",
+        "id": "proc-appendectomy",
+        "status": "completed",
+        "code": {
+          "coding": [ { "system": "http://snomed.info/sct", "code": "80146002", "display": "Appendectomy (procedure)" } ],
+          "text": "Laparoscopic Appendectomy"
+        },
+        "subject": { "reference": "urn:uuid:patient-jane" },
+        "performedDateTime": "2009-07-20",
+        "reasonCode": [ { "text": "Acute Appendicitis" } ]
+      }
+    },
+    {
+      "fullUrl": "urn:uuid:proc-hsg",
+      "resource": {
+        "resourceType": "Procedure",
+        "id": "proc-hsg",
+        "status": "completed",
+        "code": { "coding": [ { "system": "http://snomed.info/sct", "code": "399026002", "display": "Hysterosalpingography (procedure)" } ], "text": "Hysterosalpingogram (HSG)" },
+        "subject": { "reference": "urn:uuid:patient-jane" },
+        "performedDateTime": "2025-10-15T11:00:00-08:00",
+        "reasonCode": [ { "text": "Tubal patency evaluation" } ],
+        "outcome": { "text": "Normal uterine cavity; bilateral tubal patency demonstrated with free spill of contrast." }
+      }
+    },
+    {
+      "fullUrl": "urn:uuid:proc-laparoscopy",
+      "resource": {
+        "resourceType": "Procedure",
+        "id": "proc-laparoscopy",
+        "status": "completed",
+        "code": { "text": "Diagnostic laparoscopy with biopsy" },
+        "subject": { "reference": "urn:uuid:patient-jane" },
+        "performedDateTime": "2025-09-20T07:30:00-08:00",
+        "outcome": { "text": "Laparoscopic findings consistent with stage II endometriosis; biopsy obtained." }
+      }
+    },
+    {
+      "fullUrl": "urn:uuid:imm-mmr",
+      "resource": {
+        "resourceType": "Immunization",
+        "id": "imm-mmr",
+        "status": "completed",
+        "vaccineCode": { "coding": [ { "system": "http://hl7.org/fhir/sid/cvx", "code": "03", "display": "MMR" } ], "text": "Measles, Mumps, Rubella" },
+        "patient": { "reference": "urn:uuid:patient-jane" },
+        "occurrenceDateTime": "1992-04-15"
+      }
+    },
+    {
+      "fullUrl": "urn:uuid:imm-varicella",
+      "resource": {
+        "resourceType": "Immunization",
+        "id": "imm-varicella",
+        "status": "completed",
+        "vaccineCode": { "coding": [ { "system": "http://hl7.org/fhir/sid/cvx", "code": "21", "display": "Varicella" } ], "text": "Varicella (Chickenpox)" },
+        "patient": { "reference": "urn:uuid:patient-jane" },
+        "occurrenceDateTime": "1992-06-20"
+      }
+    },
+    {
+      "fullUrl": "urn:uuid:imm-flu-2025",
+      "resource": {
+        "resourceType": "Immunization",
+        "id": "imm-flu-2025",
+        "status": "completed",
+        "vaccineCode": { "coding": [ { "system": "http://hl7.org/fhir/sid/cvx", "code": "140", "display": "Influenza, seasonal, injectable" } ], "text": "Influenza Vaccine 2025-2026" },
+        "patient": { "reference": "urn:uuid:patient-jane" },
+        "occurrenceDateTime": "2025-10-01"
+      }
+    },
+    {
+      "fullUrl": "urn:uuid:imm-tdap",
+      "resource": {
+        "resourceType": "Immunization",
+        "id": "imm-tdap",
+        "status": "completed",
+        "vaccineCode": { "coding": [ { "system": "http://hl7.org/fhir/sid/cvx", "code": "115", "display": "Tdap" } ], "text": "Tdap" },
+        "patient": { "reference": "urn:uuid:patient-jane" },
+        "occurrenceDateTime": "2021-04-15"
+      }
+    },
+    {
+      "fullUrl": "urn:uuid:obs-vitals-comprehensive",
+      "resource": {
+        "resourceType": "Observation",
+        "id": "obs-vitals-comprehensive",
+        "status": "final",
+        "category": [ { "coding": [ { "system": "http://terminology.hl7.org/CodeSystem/observation-category", "code": "vital-signs" } ] } ],
+        "code": { "text": "Comprehensive Vitals" },
+        "subject": { "reference": "urn:uuid:patient-jane" },
+        "effectiveDateTime": "2026-01-15T10:05:00-08:00",
+        "component": [
+          { "code": { "coding": [ { "system": "http://loinc.org", "code": "8302-2", "display": "Body height" } ] }, "valueQuantity": { "value": 165, "unit": "cm", "system": "http://unitsofmeasure.org", "code": "cm" } },
+          { "code": { "coding": [ { "system": "http://loinc.org", "code": "29463-7", "display": "Body weight" } ] }, "valueQuantity": { "value": 75, "unit": "kg", "system": "http://unitsofmeasure.org", "code": "kg" } },
+          { "code": { "coding": [ { "system": "http://loinc.org", "code": "39156-5", "display": "Body mass index (BMI)" } ] }, "valueQuantity": { "value": 27.5, "unit": "kg/m2", "system": "http://unitsofmeasure.org", "code": "kg/m2" } },
+          { "code": { "coding": [ { "system": "http://loinc.org", "code": "85354-9", "display": "Blood pressure panel" } ] }, "valueString": "118/74 mmHg" }
+        ]
+      }
+    },
+    {
+      "fullUrl": "urn:uuid:obs-bloodtype",
+      "resource": {
+        "resourceType": "Observation",
+        "id": "obs-bloodtype",
+        "status": "final",
+        "category": [ { "coding": [ { "system": "http://terminology.hl7.org/CodeSystem/observation-category", "code": "laboratory" } ] } ],
+        "code": { "coding": [ { "system": "http://loinc.org", "code": "882-1", "display": "ABO and Rh group" } ] },
+        "subject": { "reference": "urn:uuid:patient-jane" },
+        "effectiveDateTime": "2020-05-20",
+        "valueCodeableConcept": {
+          "coding": [ { "system": "http://snomed.info/sct", "code": "112144000", "display": "A positive" } ],
+          "text": "A+"
+        }
+      }
+    },
+    {
+      "fullUrl": "urn:uuid:obs-hormones",
+      "resource": {
+        "resourceType": "Observation",
+        "id": "obs-hormones",
+        "status": "final",
+        "category": [ { "coding": [ { "system": "http://terminology.hl7.org/CodeSystem/observation-category", "code": "laboratory" } ] } ],
+        "code": { "text": "Fertility Hormone Panel" },
+        "subject": { "reference": "urn:uuid:patient-jane" },
+        "effectiveDateTime": "2025-11-20T08:00:00-08:00",
+        "component": [
+          { "code": { "coding": [ { "system": "http://loinc.org", "code": "15067-2" } ], "text": "FSH" }, "valueQuantity": { "value": 6.2, "unit": "mIU/mL" } },
+          { "code": { "coding": [ { "system": "http://loinc.org", "code": "10501-5" } ], "text": "LH" }, "valueQuantity": { "value": 9.8, "unit": "mIU/mL" } },
+          { "code": { "coding": [ { "system": "http://loinc.org", "code": "2243-4" } ], "text": "Estradiol" }, "valueQuantity": { "value": 38, "unit": "pg/mL" } },
+          { "code": { "coding": [ { "system": "http://loinc.org", "code": "38476-8" } ], "text": "AMH" }, "valueQuantity": { "value": 3.1, "unit": "ng/mL" } },
+          { "code": { "coding": [ { "system": "http://loinc.org", "code": "15081-3" } ], "text": "Prolactin" }, "valueQuantity": { "value": 12.5, "unit": "ng/mL" } },
+          { "code": { "coding": [ { "system": "http://loinc.org", "code": "11580-8" } ], "text": "TSH" }, "valueQuantity": { "value": 1.8, "unit": "uIU/mL" } }
+        ]
+      }
+    },
+    {
+      "fullUrl": "urn:uuid:obs-semen-analysis",
+      "resource": {
+        "resourceType": "Observation",
+        "id": "obs-semen-analysis",
+        "status": "final",
+        "category": [ { "coding": [ { "system": "http://terminology.hl7.org/CodeSystem/observation-category", "code": "laboratory" } ] } ],
+        "code": { "coding": [ { "system": "http://loinc.org", "code": "56858-4", "display": "Semen analysis panel" } ], "text": "Partner Semen Analysis" },
+        "subject": { "reference": "urn:uuid:patient-partner" },
+        "effectiveDateTime": "2025-11-25T09:00:00-08:00",
+        "interpretation": [ { "text": "Oligoasthenoteratozoospermia" } ],
+        "component": [
+          { "code": { "text": "Sperm Count" }, "valueQuantity": { "value": 12, "unit": "10*6/mL" } },
+          { "code": { "text": "Total Motility" }, "valueQuantity": { "value": 35, "unit": "%" } },
+          { "code": { "text": "Morphology" }, "valueQuantity": { "value": 2, "unit": "%" } }
+        ]
+      }
+    },
+    {
+      "fullUrl": "urn:uuid:doc-consult-note",
+      "resource": {
+        "resourceType": "DocumentReference",
+        "id": "doc-consult-note",
+        "status": "current",
+        "type": { "coding": [ { "system": "http://loinc.org", "code": "11488-4", "display": "Consult note" } ], "text": "REI Consultation Note" },
+        "subject": { "reference": "urn:uuid:patient-jane" },
+        "date": "2026-01-15T11:00:00-08:00",
+        "content": [
+          {
+            "attachment": {
+              "contentType": "text/plain",
+              "data": "Q29uc3VsdCBOb3RlOiAzNHlvIEdQMC4gSGlzdG9yeSBvZiBQQ09TLCBFbmRvbWV0cmlvc2lzIChTdGFnZSBJSSksIGFuZCBtaWdyYWluZXMuIFBhcnRuZXIgd2l0aCBPQVRzLiBQbGFuOiBJVkYgd2l0aCBJQ1NJLiBDb250aW51ZSBMZXZvdGh5cm94aW5lLCBNZXRmb3JtaW4sIGFuZCBVitEIGFzIHByZXNjcmliZWQu"
+            }
+          }
+        ]
+      }
+    }
+  ]
+}

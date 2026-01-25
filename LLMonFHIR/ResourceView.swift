@@ -24,8 +24,7 @@ struct ResourceView: View {
             } footer: {
                 #if targetEnvironment(simulator)
                 if LLMonFHIR.mode == .standalone {
-                    // swiftlint:disable:next line_length
-                    Text(verbatim: "Tip: Launch LLMonFHIR into its study mode by enabling the `--mode study edu.stanford.LLMonFHIR.usabilityStudy` flag in Xcode (via the `⌘ ⇧ ,` shortcut)")
+                    Text(verbatim: "Launch into study mode by enabling the `--mode study:ID` flag in Xcode (via the `⌘ ⇧ ,` shortcut)")
                 }
                 #endif
             }

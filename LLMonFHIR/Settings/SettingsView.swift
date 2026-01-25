@@ -6,6 +6,7 @@
 // SPDX-License-Identifier: MIT
 //
 
+import LLMonFHIRShared
 import SpeziFoundation
 import SpeziLLMLocalDownload
 import SpeziLLMOpenAI
@@ -142,7 +143,7 @@ struct SettingsView: View {
         if promptDefinition.isCustomizable {
             NavigationButton(label) {
                 path.append {
-                    FHIRPromptCustomizationView(promptDefinition) {
+                    FHIRPromptCustomizationView(label, prompt: promptDefinition) {
                         await fhirInterpretationModule.updateSchemas()
                         path.removeLast()
                     }
@@ -182,8 +183,4 @@ extension SettingsView {
             self.action = action
         }
     }
-}
-
-#Preview {
-    SettingsView()
 }

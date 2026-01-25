@@ -6,6 +6,7 @@
 // SPDX-License-Identifier: MIT
 //
 
+import LLMonFHIRShared
 import SwiftUI
 
 
@@ -32,7 +33,7 @@ struct ScaleView: View {
     let index: Int
 
     /// The response options for this question
-    let responseOptions: TaskQuestionType.AnswerOptions
+    let responseOptions: Study.Task.Question.Kind.AnswerOptions
 
     /// The state object for managing answers
     let answerState: ScaleAnswerState

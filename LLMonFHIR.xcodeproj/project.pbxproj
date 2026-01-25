@@ -28,6 +28,7 @@
 		8040C2A62F19396A00884AD3 /* SpeziLLMLocalDownload in Frameworks */ = {isa = PBXBuildFile; productRef = 8040C2A52F19396A00884AD3 /* SpeziLLMLocalDownload */; };
 		8040C2A82F19396A00884AD3 /* SpeziLLMOpenAI in Frameworks */ = {isa = PBXBuildFile; productRef = 8040C2A72F19396A00884AD3 /* SpeziLLMOpenAI */; };
 		805368DD2EC92DE30037E73E /* SpeziAccessGuard in Frameworks */ = {isa = PBXBuildFile; productRef = 805368DC2EC92DE30037E73E /* SpeziAccessGuard */; };
+		805C26312F25171E00769AC1 /* LLMonFHIRShared in Frameworks */ = {isa = PBXBuildFile; productRef = 805C26302F25171E00769AC1 /* LLMonFHIRShared */; };
 		806DF5BA2EC234AD00A8243C /* SpeziFHIR in Frameworks */ = {isa = PBXBuildFile; productRef = 806DF5B92EC234AD00A8243C /* SpeziFHIR */; };
 		806DF5BC2EC234AD00A8243C /* SpeziFHIRHealthKit in Frameworks */ = {isa = PBXBuildFile; productRef = 806DF5BB2EC234AD00A8243C /* SpeziFHIRHealthKit */; };
 		806DF5BE2EC234AD00A8243C /* SpeziFHIRMockPatients in Frameworks */ = {isa = PBXBuildFile; productRef = 806DF5BD2EC234AD00A8243C /* SpeziFHIRMockPatients */; };
@@ -87,6 +88,7 @@
 		653A255D28338800005D4D48 /* LLMonFHIRTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = LLMonFHIRTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		653A256728338800005D4D48 /* LLMonFHIRUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = LLMonFHIRUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		80154A3D2EC52A61005DAD1B /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
+		805C262F2F25162200769AC1 /* LLMonFHIRShared */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = LLMonFHIRShared; sourceTree = "<group>"; };
 		97B76BCD2B195D650019D706 /* CONTRIBUTORS.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = CONTRIBUTORS.md; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -101,7 +103,7 @@
 /* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
-		65397DF32D8159A90067F1BE /* LLMonFHIR */ = {isa = PBXFileSystemSynchronizedRootGroup; exceptions = (65397E232D8159A90067F1BE /* PBXFileSystemSynchronizedBuildFileExceptionSet */, ); explicitFileTypes = {}; explicitFolders = (); path = LLMonFHIR; sourceTree = "<group>"; };
+		65397DF32D8159A90067F1BE /* LLMonFHIR */ = {isa = PBXFileSystemSynchronizedRootGroup; exceptions = (65397E232D8159A90067F1BE /* PBXFileSystemSynchronizedBuildFileExceptionSet */, ); explicitFileTypes = {}; explicitFolders = ("Resources/Synthetic Patients", ); path = LLMonFHIR; sourceTree = "<group>"; };
 		65397E252D8159AC0067F1BE /* LLMonFHIRTests */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = LLMonFHIRTests; sourceTree = "<group>"; };
 		65397E292D8159AF0067F1BE /* LLMonFHIRUITests */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = LLMonFHIRUITests; sourceTree = "<group>"; };
 /* End PBXFileSystemSynchronizedRootGroup section */
@@ -133,6 +135,7 @@
 				97BECCD42B8C68C10017E47D /* SpeziFHIRHealthKit in Frameworks */,
 				80A990772F1699B500BDD5B7 /* SpeziFirebaseAccount in Frameworks */,
 				80A98FA82F13DA5C00BDD5B7 /* SpeziFHIRHealthKit in Frameworks */,
+				805C26312F25171E00769AC1 /* LLMonFHIRShared in Frameworks */,
 				9710D3562B84151F00E0A20F /* SpeziChat in Frameworks */,
 				97BC1F272B7F390100438263 /* SpeziFHIR in Frameworks */,
 				8040C2A22F19396A00884AD3 /* SpeziLLMFog in Frameworks */,
@@ -216,6 +219,7 @@
 				97B76BCD2B195D650019D706 /* CONTRIBUTORS.md */,
 				80154A3D2EC52A61005DAD1B /* README.md */,
 				2FC94CD4298B0A1D009C8209 /* LLMonFHIR.xctestplan */,
+				805C262F2F25162200769AC1 /* LLMonFHIRShared */,
 				65397DF32D8159A90067F1BE /* LLMonFHIR */,
 				65397E252D8159AC0067F1BE /* LLMonFHIRTests */,
 				65397E292D8159AF0067F1BE /* LLMonFHIRUITests */,
@@ -311,6 +315,7 @@
 				8040C2A32F19396A00884AD3 /* SpeziLLMLocal */,
 				8040C2A52F19396A00884AD3 /* SpeziLLMLocalDownload */,
 				8040C2A72F19396A00884AD3 /* SpeziLLMOpenAI */,
+				805C26302F25171E00769AC1 /* LLMonFHIRShared */,
 			);
 			productName = LLMonFHIR;
 			productReference = 653A254D283387FE005D4D48 /* LLMonFHIR.app */;
@@ -1094,6 +1099,10 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 805368DB2EC92DE30037E73E /* XCRemoteSwiftPackageReference "SpeziAccessGuard" */;
 			productName = SpeziAccessGuard;
+		};
+		805C26302F25171E00769AC1 /* LLMonFHIRShared */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = LLMonFHIRShared;
 		};
 		806DF5B92EC234AD00A8243C /* SpeziFHIR */ = {
 			isa = XCSwiftPackageProductDependency;

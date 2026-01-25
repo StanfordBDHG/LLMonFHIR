@@ -80,7 +80,7 @@ You can build and run the application using [Xcode](https://developer.apple.com/
 
 When running LLMonFHIR via Xcode, you can use the `--mode` CLI flag to control the behaviour of the app (configurable via the Run scheme):
 - `--mode standalone` performs a regular launch, where LLMonFHIR can be used with a custom OpenAI API key to use the chat mode;
-- `--mode study <study-id>` launches LLMonFHIR into its study mode, loads the study with the specified id from the UserStudyConfig.plist file, and automatically opens it;
+- `--mode study:<study-id>` launches LLMonFHIR into its study mode, loads the study with the specified id from the UserStudyConfig.plist file, and automatically opens it;
 - `--mode study` launches LLMonFHIR into its study mode, showing a "Scan QR Code" button to select and open a study.
 
 
@@ -93,15 +93,21 @@ The UserStudyConfig.plist file contains the following:
 - list of available studies (see the `Study` type within the iOS codebase for more details)
 
 The UserStudyConfig.plist file bundled with the repo is missing some data (the OpenAI key, the Firebase credentials, and the study report encryption key).
-You can use the Python tool in `tools/build-plist` to add these to the plist:
+You can use the `export-config` tool in the LLMonFHIRShared folder to generate a complete config file:
 ```bash
-uv run main.py -f GoogleService-Info.plist -o <openai_key> -k public_key.pem '../../LLMonFHIR/Supporting Files/UserStudyConfig.plist'
+swift run LLMonFHIRCLI export-config \
+    -f ~/GoogleService-Info.plist \
+    -o edu.stanford.LLMonFHIR.study1:sk-123 \
+    -o edu.stanford.LLMonFHIR.study2:sk-456 \
+    -k edu.stanford.LLMonFHIR.study1:./public_key1.pem \
+    -k edu.stanford.LLMonFHIR.study2:./public_key2.pem \
+    ../LLMonFHIR/Supporting\ Files/UserStudyConfig.plist
 ```
 
 
 ### Study Report File Encryption
 
-The report files generated form the usability study are optionally encrypted, using the public key stored in `UserStudyConfig.plist.
+The report files generated form the usability study are optionally encrypted, using the public key stored in UserStudyConfig.plist.
 
 You can generate a public/private key pair using the following commands:
 ```bash
@@ -112,14 +118,11 @@ openssl genpkey -algorithm X25519 -out private_key.pem
 openssl pkey -in private_key.pem -pubout -out public_key.pem
 ```
 
-Run the following command to place your public key in the user study config file:
-```bash
-plutil -replace ENCRYPTION_KEY -data $(cat public_key.pem | base64) LLMonFHIR/Supporting\ Files/UserStudyConfig.plist
-```
+Use the `export-config` tool showcased above to place your public key in the user study config file:.
 
-In order to decrypt a report file created by the app, you can use the python tool in `tools/decrypt-study-report`:
+In order to decrypt a report file created by the app, you can use the `decrypt-study-report` tool in the LLMonFHIRShared folder:
 ```bash
-uv run main.py -k private_key.pem <input file>
+swift run LLMonFHIRCLI decrypt-study-report -k private_key.pem studyReport report.json
 ```
 
 

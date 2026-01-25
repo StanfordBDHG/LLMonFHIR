@@ -6,6 +6,7 @@
 // SPDX-License-Identifier: MIT
 //
 
+import LLMonFHIRShared
 import SpeziChat
 import SpeziLLM
 import SwiftUI
@@ -22,18 +23,28 @@ final class UserStudyChatViewModel: MultipleResourcesChatViewModel, Sendable { /
     /// The current state of the survey navigation
     enum NavigationState: Equatable {
         case introduction
-        case task(taskId: SurveyTask.ID, taskIdx: Int, numTotalTasks: Int)
+        case task(task: Study.Task, taskIdx: Int, numTotalTasks: Int, taskState: TaskState)
         case completed
+        
+        enum TaskState {
+            case chatting
+            case answeringSurvey
+        }
 
         /// The title to display in the navigation bar based on current state
-        var title: String {
+        func title(in study: Study) -> String {
             switch self {
             case .introduction:
-                return "Introduction"
-            case let .task(taskId: _, taskIdx, numTotalTasks):
-                return "Task \(taskIdx + 1) of \(numTotalTasks)"
+                "Introduction"
+            case let .task(task, taskIdx, numTotalTasks, taskState: _):
+                switch study.chatTitleConfig {
+                case .default:
+                    task.title ?? "Task \(taskIdx + 1) of \(numTotalTasks)"
+                case .studyTitle:
+                    study.title
+                }
             case .completed:
-                return "Study Completed"
+                "Study Completed"
             }
         }
     }
@@ -64,12 +75,16 @@ final class UserStudyChatViewModel: MultipleResourcesChatViewModel, Sendable { /
     }
 
     /// Returns the current task if one is active
-    var currentTask: SurveyTask? {
+    var currentTask: Study.Task? {
         study.tasks.first { $0.id == currentTaskId }
     }
     
+    var currentTaskIdx: Int? {
+        study.tasks.firstIndex { $0.id == currentTaskId }
+    }
+    
     var userDisplayableCurrentTaskIdx: Int? {
-        study.tasks.firstIndex { $0.id == currentTaskId }.map { $0 + 1 }
+        currentTaskIdx.map { $0 + 1 }
     }
     
     /// Whether the chat input should currently be enabled, i.e. whether the user should currently be able to write (and submit) chat messages
@@ -99,10 +114,10 @@ final class UserStudyChatViewModel: MultipleResourcesChatViewModel, Sendable { /
         return isMinAssistantMessagesReached
     }
     
-    private var currentTaskId: SurveyTask.ID? {
+    private var currentTaskId: Study.Task.ID? {
         switch navigationState {
-        case let .task(taskId, taskIdx: _, numTotalTasks: _):
-            taskId
+        case let .task(task, taskIdx: _, numTotalTasks: _, taskState: _):
+            task.id
         case .introduction, .completed:
             nil
         }
@@ -113,9 +128,9 @@ final class UserStudyChatViewModel: MultipleResourcesChatViewModel, Sendable { /
     private let userInfo: [String: String]
     private let resourceSummary: FHIRResourceSummary
     private let studyStartTime = Date()
-    private var taskStartTimes: [SurveyTask.ID: Date] = [:]
-    private var taskEndTimes: [SurveyTask.ID: Date] = [:]
-    private var assistantMessagesByTask = LimitedCollectionDictionary<SurveyTask.ID, String>()
+    private var taskStartTimes: [Study.Task.ID: Date] = [:]
+    private var taskEndTimes: [Study.Task.ID: Date] = [:]
+    private var assistantMessagesByTask = LimitedCollectionDictionary<Study.Task.ID, String>()
 
     private var isMaxAssistantMessagesReached: Bool {
         currentTaskId.map { assistantMessagesByTask.isMaxReached(forKey: $0) } ?? false
@@ -201,22 +216,24 @@ final class UserStudyChatViewModel: MultipleResourcesChatViewModel, Sendable { /
         dismiss()
     }
 
-    /// Handles the submission of survey answers for the current task
+    /// Handles the submission of survey answers for a task within the survey.
     ///
-    /// This method processes the user's answers and advances to the next task
-    /// in the survey sequence.
+    /// This method processes the user's answers. If `task` is the current task, it also advances to the next task in the survey sequence.
     ///
-    /// - Parameter answers: Array of answers provided by the user
-    /// - Throws: An error if the submission fails
-    func submitSurveyAnswers(_ answers: [TaskQuestionAnswer]) throws {
-        guard let currentTaskId else {
-            return
+    /// - parameter answers: Array of answers provided by the user
+    /// - parameter task: The ``SurveyTask`` to which the answers belong.
+    /// - throws: An error if the submission fails
+    func submitSurveyAnswers(_ answers: [Study.Task.Question.Answer], for task: Study.Task) throws {
+        let isCurrentTask = task == currentTask
+        if isCurrentTask {
+            taskEndTimes[task.id] = Date()
         }
-        taskEndTimes[currentTaskId] = Date()
         for (index, answer) in answers.enumerated() {
-            try study.submitAnswer(answer, forTaskId: currentTaskId, questionIndex: index)
+            try study.submitAnswer(answer, forTaskId: task.id, questionIndex: index)
         }
-        advanceToNextTask()
+        if isCurrentTask {
+            advanceToNextTask()
+        }
     }
 
     /// Resets the study to its initial state
@@ -234,15 +251,16 @@ final class UserStudyChatViewModel: MultipleResourcesChatViewModel, Sendable { /
     ///
     /// This method initializes the survey process if it hasn't already been started.
     func startSurvey() {
-        guard let taskId = study.tasks.first?.id else {
+        guard let task = study.tasks.first else {
             return
         }
         navigationState = .task(
-            taskId: taskId,
+            task: task,
             taskIdx: 0,
-            numTotalTasks: study.tasks.count
+            numTotalTasks: study.tasks.count,
+            taskState: .chatting
         )
-        taskStartTimes[taskId] = Date()
+        taskStartTimes[task.id] = Date()
         presentedSheet = .instructions
     }
 
@@ -282,20 +300,63 @@ final class UserStudyChatViewModel: MultipleResourcesChatViewModel, Sendable { /
         }
         let nextTaskIdx = study.tasks.index(after: currentTaskIdx)
         if let nextTask = study.tasks[safe: nextTaskIdx] {
+            let newTaskState = { () -> NavigationState.TaskState in
+                if (nextTask.instructions ?? "").isEmpty,
+                   nextTask.assistantMessagesLimit == nil || nextTask.assistantMessagesLimit == 0...0,
+                   !nextTask.questions.isEmpty {
+                    // if the next task has no instructions and no/empty messaging limits, but does have questions, we directly go to the survey
+                    .answeringSurvey
+                } else {
+                    // otherwise, we simply show the instructions sheet
+                    .chatting
+                }
+            }()
             navigationState = .task(
-                taskId: nextTask.id,
+                task: nextTask,
                 taskIdx: nextTaskIdx,
-                numTotalTasks: study.tasks.count
+                numTotalTasks: study.tasks.count,
+                taskState: newTaskState
             )
             taskStartTimes[nextTask.id] = Date()
-            presentedSheet = .instructions
+            switch newTaskState {
+            case .chatting:
+                presentedSheet = .instructions
+            case .answeringSurvey:
+                presentedSheet = .survey
+            }
         } else {
+            // no next task.
             navigationState = .completed
             Task {
                 presentedSheet = .uploadingReport
                 await uploadReport()
                 presentedSheet = nil
             }
+        }
+    }
+    
+    func advance() {
+        switch navigationState {
+        case .introduction:
+            startSurvey()
+        case let .task(task, taskIdx, numTotalTasks, taskState):
+            switch taskState {
+            case .chatting:
+                if !task.questions.isEmpty {
+                    // we're currently in the chat phase, and there are questions, so we start the survey
+                    navigationState = .task(task: task, taskIdx: taskIdx, numTotalTasks: numTotalTasks, taskState: .answeringSurvey)
+                    presentedSheet = .survey
+                } else {
+                    // we're in the chat phase, and there are no questions, so we go to the next task
+                    advanceToNextTask()
+                }
+            case .answeringSurvey:
+                // we're answering the survey, so advancing from there means going to the next task
+                advanceToNextTask()
+            }
+        case .completed:
+            // if we've already completed the survey, there is nowhere else to go
+            return
         }
     }
     
