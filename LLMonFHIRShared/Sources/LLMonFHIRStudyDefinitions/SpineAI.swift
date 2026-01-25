@@ -23,7 +23,7 @@ extension Study {
             explainer: "Welcome to the SpineAI Study!",
             settingsUnlockCode: nil,
             openAIAPIKey: "",
-            openAIEndpoint: .regular,
+            openAIEndpoint: .firebaseFunction(name: "chat"),
             reportEmail: "digitalhealthresearch@stanford.edu",
             encryptionKey: nil,
             summarizeSingleResourcePrompt: nil,

@@ -23,6 +23,8 @@ final class FirebaseUpload: Module, EnvironmentAccessible, Sendable {
         Task {
             do {
                 logger.notice("user before anon sign up: \(Auth.auth().currentUser?.uid ?? "n/a")")
+                try await accountService.logout()
+                logger.notice("user before anon sign up: \(Auth.auth().currentUser?.uid ?? "n/a")")
                 try await accountService.signUpAnonymously()
                 logger.notice("user after anon sign up: \(Auth.auth().currentUser?.uid ?? "n/a")")
             } catch {

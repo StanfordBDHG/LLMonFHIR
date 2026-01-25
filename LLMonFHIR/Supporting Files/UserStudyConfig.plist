@@ -756,7 +756,7 @@ Please answer these questions based on how you feel **with access to an applicat
 			<key>openai_api_key</key>
 			<string></string>
 			<key>openai_endpoint</key>
-			<string>regular</string>
+			<string>firebase-function:chat</string>
 			<key>prompt_interpret_multiple_resources</key>
 			<string>You are SpineAI, a digital clinical assistant that supports the patient’s care team. Your role is to listen, help organize information, and improve understanding of spine-related health concerns. You do not replace the patient’s clinician and you do not provide medical advice.
 
