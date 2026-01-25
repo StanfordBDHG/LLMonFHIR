@@ -33,8 +33,8 @@ struct StudyHomeView: View {
     @State private var study: Study?
     @State private var studyUserInfo: [String: String]
     
-    @State private var isPresentinQuestinnaire = false
-    @State private var questinnaireResponse: QuestionnaireResponse?
+    @State private var isPresentinQuestionnaire = false
+    @State private var questionnaireResponse: QuestionnaireResponse?
     
     @State private var isPresentingEarliestHealthRecords = false
     @State private var isPresentingQRCodeScanner = false
@@ -45,12 +45,12 @@ struct StudyHomeView: View {
     private var oldestHealthRecordTimestamp: Date? {
         earliestDates.values.min()
     }
-    private var displayQuestinnaireNext: Bool {
+    private var displayQuestionnaireNext: Bool {
         guard let study else {
             return false
         }
         
-        return study.initialQuestinnaire != nil && questinnaireResponse == nil
+        return study.initialQuestionnaire != nil && questionnaireResponse == nil
     }
     
     var body: some View {
@@ -86,9 +86,9 @@ struct StudyHomeView: View {
                         uploader: uploader
                     )
                 }
-                .fullScreenCover(isPresented: $isPresentinQuestinnaire) {
+                .fullScreenCover(isPresented: $isPresentinQuestionnaire) {
                     if let study {
-                        QuestinnaireView(study: study, questinnaireResponse: $questinnaireResponse)
+                        QuestionnaireView(study: study, questionnaireResponse: $questionnaireResponse)
                     } else {
                         ContentUnavailableView("Study not selected", systemImage: "document.badge.gearshape")
                     }
@@ -191,8 +191,8 @@ struct StudyHomeView: View {
     private var primaryActionButton: some View {
         PrimaryActionButton {
             if let study {
-                if displayQuestinnaireNext {
-                    isPresentinQuestinnaire = true
+                if displayQuestionnaireNext {
+                    isPresentinQuestionnaire = true
                     return
                 }
                 
@@ -209,8 +209,8 @@ struct StudyHomeView: View {
             if waitingState.isWaiting {
                 Text("LOADING_HEALTH_RECORDS")
             } else if study != nil {
-                if displayQuestinnaireNext {
-                    Text("Start Questinnaire")
+                if displayQuestionnaireNext {
+                    Text("Start Questionnaire")
                 } else {
                     Text("START_SESSION")
                 }

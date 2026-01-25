@@ -14,26 +14,26 @@ import SpeziViews
 import SwiftUI
 
 
-struct QuestinnaireView: View {
+struct QuestionnaireView: View {
     @Environment(\.dismiss) var dismiss
     @Environment(LLMOpenAIPlatform.self) private var platform
     
     let study: Study
     
     @State private var viewState: ViewState = .idle
-    @Binding private(set) var questinnaireResponse: QuestionnaireResponse?
+    @Binding private(set) var questionnaireResponse: QuestionnaireResponse?
     
     
     var body: some View {
         Group {
-            if let initialQuestinnaire = study.initialQuestinnaire {
+            if let initialQuestionnaire = study.initialQuestionnaire {
                 if viewState == .idle {
-                    QuestionnaireView(
-                        questionnaire: initialQuestinnaire,
+                    SpeziQuestionnaire.QuestionnaireView(
+                        questionnaire: initialQuestionnaire,
                         questionnaireResult: { result in
                             switch result {
-                            case let .completed(questinnaireResponse):
-                                self.questinnaireResponse = questinnaireResponse
+                            case let .completed(questionnaireResponse):
+                                self.questionnaireResponse = questionnaireResponse
                             default:
                                 break
                             }
@@ -43,11 +43,11 @@ struct QuestinnaireView: View {
                     progressView
                 }
             } else {
-                ContentUnavailableView("Questinnaire not selected", systemImage: "document.badge.gearshape")
+                ContentUnavailableView("Questionnaire not selected", systemImage: "document.badge.gearshape")
             }
         }
-        .onChange(of: questinnaireResponse) {
-            processQuestinnaireResponse()
+        .onChange(of: questionnaireResponse) {
+            processQuestionnaireResponse()
         }
         .viewStateAlert(state: $viewState)
     }
@@ -81,8 +81,8 @@ struct QuestinnaireView: View {
     }
     
     
-    private func processQuestinnaireResponse() {
-        guard let questinnaireResponse, let initialQuestinnaire = study.initialQuestinnaire else {
+    private func processQuestionnaireResponse() {
+        guard let questionnaireResponse, let initialQuestionnaire = study.initialQuestionnaire else {
             dismiss()
             return
         }
@@ -96,31 +96,31 @@ struct QuestinnaireView: View {
                         parameters: LLMOpenAIParameters(
                             modelType: .gpt5_mini,
                             systemPrompt: """
-                            Your task is to transform the FHIR questinnaire response into text, do not leave out any question or response.
+                            Your task is to transform the FHIR questionnaire response into text, do not leave out any question or response.
                             List all questions and their written out answers next to each other. Do not list the code or coding system.
-                            Questinnaire:
+                            Questionnaire:
                             ```json
-                            \((try? String(data: JSONEncoder().encode(initialQuestinnaire), encoding: .utf8)) ?? "")
+                            \((try? String(data: JSONEncoder().encode(initialQuestionnaire), encoding: .utf8)) ?? "")
                             ```
-                            Questinnaire Response:
+                            Questionnaire Response:
                             ```json
-                            \((try? String(data: JSONEncoder().encode(questinnaireResponse), encoding: .utf8)) ?? "")
+                            \((try? String(data: JSONEncoder().encode(questionnaireResponse), encoding: .utf8)) ?? "")
                             ```
                             """
                         )
                     )
                 )
-                var questinnaireSummary = ""
+                var questionnaireSummary = ""
                 for try await token in try await session.generate() {
-                    questinnaireSummary.append(token)
+                    questionnaireSummary.append(token)
                 }
                 
                 study.interpretMultipleResourcesPrompt = FHIRPrompt(
                     promptText: """
                     \(study.interpretMultipleResourcesPrompt.promptText)
                     
-                    Initial User Questinnaire Summary:
-                    \(questinnaireSummary)
+                    Initial User Questionnaire Summary:
+                    \(questionnaireSummary)
                     """
                 )
                 

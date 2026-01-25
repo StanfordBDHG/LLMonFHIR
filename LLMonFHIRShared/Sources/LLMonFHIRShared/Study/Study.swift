@@ -56,7 +56,7 @@ public final class Study: Identifiable {
     public let chatTitleConfig: ChatTitleConfig
     
     /// Initial Questionnaire that should be asked before the user enters the chat view.
-    public let initialQuestinnaire: Questionnaire?
+    public let initialQuestionnaire: Questionnaire?
     
     /// The tasks that make up this survey
     public private(set) var tasks: [Task]
@@ -74,7 +74,7 @@ public final class Study: Identifiable {
         summarizeSingleResourcePrompt: FHIRPrompt?,
         interpretMultipleResourcesPrompt: FHIRPrompt?,
         chatTitleConfig: ChatTitleConfig,
-        initialQuestinnaire: Questionnaire?,
+        initialQuestionnaire: Questionnaire?,
         tasks: [Task]
     ) {
         self.id = id
@@ -88,7 +88,7 @@ public final class Study: Identifiable {
         self.summarizeSingleResourcePrompt = summarizeSingleResourcePrompt ?? .summarizeSingleFHIRResourceDefaultPrompt
         self.interpretMultipleResourcesPrompt = interpretMultipleResourcesPrompt ?? .interpretMultipleResourcesDefaultPrompt
         self.chatTitleConfig = chatTitleConfig
-        self.initialQuestinnaire = initialQuestinnaire
+        self.initialQuestionnaire = initialQuestionnaire
         self.tasks = tasks
     }
 }
@@ -148,7 +148,7 @@ extension Study: Codable {
         case summarizeSingleResourcePrompt = "prompt_summarize_single_resource"
         case interpretMultipleResourcesPrompt = "prompt_interpret_multiple_resources"
         case chatTitleConfig = "chat_title_config"
-        case initialQuestinnaire = "initial_questinnaire"
+        case initialQuestionnaire = "initial_questionnaire"
     }
     
     public convenience init(from decoder: any Decoder) throws {
@@ -168,7 +168,7 @@ extension Study: Codable {
             interpretMultipleResourcesPrompt: try container.decodeIfPresent(String.self, forKey: .interpretMultipleResourcesPrompt)
                 .flatMap { $0.isEmpty ? nil : FHIRPrompt(promptText: $0) },
             chatTitleConfig: try container.decode(ChatTitleConfig.self, forKey: .chatTitleConfig),
-            initialQuestinnaire: try container.decodeIfPresent(String.self, forKey: .initialQuestinnaire)
+            initialQuestionnaire: try container.decodeIfPresent(String.self, forKey: .initialQuestionnaire)
                 .flatMap { try? JSONDecoder().decode(Questionnaire.self, from: Data($0.utf8)) },
             tasks: try container.decode([Task].self, forKey: .tasks)
         )
@@ -196,8 +196,8 @@ extension Study: Codable {
         }
         try container.encode(chatTitleConfig, forKey: .chatTitleConfig)
         try container.encodeIfPresent(
-            initialQuestinnaire.map { String(data: try JSONEncoder().encode($0), encoding: .utf8) },
-            forKey: .initialQuestinnaire
+            initialQuestionnaire.map { String(data: try JSONEncoder().encode($0), encoding: .utf8) },
+            forKey: .initialQuestionnaire
         )
         try container.encode(tasks, forKey: .tasks)
     }

@@ -28,7 +28,7 @@ extension Study {
             summarizeSingleResourcePrompt: nil,
             interpretMultipleResourcesPrompt: .spineAISystemPrompt,
             chatTitleConfig: .studyTitle,
-            initialQuestinnaire: try! Questionnaire.named("SpineAI_InitialSurvey"),
+            initialQuestionnaire: try! Questionnaire.named("SpineAI_InitialSurvey"),
             tasks: []
         )
     }
