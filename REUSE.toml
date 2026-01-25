@@ -5,6 +5,7 @@ path = [
     "LLMonFHIR.xcodeproj/**",
     "LLMonFHIR/Resources/**",
     "LLMonFHIR/Supporting Files/**",
+    "LLMonFHIRShared/Sources/LLMonFHIRStudyDefinitions/Resources/*",
     "LLMonFHIRShared/Tests/LLMonFHIRSharedTests/Resources/*"
 ]
 SPDX-FileCopyrightText = "2025 Stanford University and the project authors (see CONTRIBUTORS.md)"
