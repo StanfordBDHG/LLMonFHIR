@@ -1,0 +1,1486 @@
+{
+  "resourceType": "Questionnaire",
+  "id": "lumbar-spine-module",
+  "url": "https://spineai.stanford.edu/fhir/Questionnaire/lumbar-spine-triage",
+  "version": "1.3",
+  "name": "LumbarSpineTriageAndPhenotyping",
+  "title": "SpineAI Questionnaire",
+  "status": "active",
+  "date": "2026-01-23",
+  "publisher": "Spine AI Research Team",
+  "description": "Triage and phenotyping questionnaire for lumbar spine conditions including axial back pain and radiculopathy.",
+  "subjectType": [
+    "Patient"
+  ],
+  "item": [
+    {
+      "linkId": "Triage",
+      "text": "Triage Questions",
+      "type": "group",
+      "item": [
+        {
+          "linkId": "T1",
+          "text": "Which option best describes your primary symptom?",
+          "type": "choice",
+          "answerOption": [
+            {
+              "valueCoding": {
+                "system": "https://spineai.stanford.edu/CodeSystem/primary-symptom",
+                "code": "low-back-only",
+                "display": "Low back pain only"
+              }
+            },
+            {
+              "valueCoding": {
+                "system": "https://spineai.stanford.edu/CodeSystem/primary-symptom",
+                "code": "leg-pain",
+                "display": "Leg pain or numbness"
+              }
+            },
+            {
+              "valueCoding": {
+                "system": "https://spineai.stanford.edu/CodeSystem/primary-symptom",
+                "code": "trouble-walking",
+                "display": "Difficulty walking or standing because of leg symptoms"
+              }
+            },
+            {
+              "valueCoding": {
+                "system": "https://spineai.stanford.edu/CodeSystem/primary-symptom",
+                "code": "mixed",
+                "display": "Both back and leg symptoms"
+              }
+            }
+          ],
+          "required": true
+        },
+        {
+          "linkId": "T2",
+          "text": "How long have these symptoms been present?",
+          "type": "choice",
+          "answerOption": [
+            {
+              "valueCoding": {
+                "system": "https://spineai.stanford.edu/CodeSystem/symptom-duration",
+                "code": "lt6w",
+                "display": "Less than 6 weeks"
+              }
+            },
+            {
+              "valueCoding": {
+                "system": "https://spineai.stanford.edu/CodeSystem/symptom-duration",
+                "code": "6w-3m",
+                "display": "6 weeks to 3 months"
+              }
+            },
+            {
+              "valueCoding": {
+                "system": "https://spineai.stanford.edu/CodeSystem/symptom-duration",
+                "code": "3m-12m",
+                "display": "3 to 12 months"
+              }
+            },
+            {
+              "valueCoding": {
+                "system": "https://spineai.stanford.edu/CodeSystem/symptom-duration",
+                "code": "gt12m",
+                "display": "More than 1 year"
+              }
+            }
+          ],
+          "required": true,
+          "code": [
+            {
+              "system": "http://loinc.org",
+              "code": "38207-7",
+              "display": "Pain duration - Reported"
+            }
+          ]
+        },
+        {
+          "linkId": "T3",
+          "text": "Did your symptoms start following a fall or a significant trauma?",
+          "type": "choice",
+          "answerOption": [
+            {
+              "valueCoding": {
+                "system": "http://snomed.info/sct",
+                "code": "373066001",
+                "display": "Yes"
+              }
+            },
+            {
+              "valueCoding": {
+                "system": "http://snomed.info/sct",
+                "code": "373067005",
+                "display": "No"
+              }
+            }
+          ],
+          "required": true
+        },
+        {
+          "linkId": "T4",
+          "text": "Have you ever been diagnosed with any form of cancer?",
+          "type": "choice",
+          "answerOption": [
+            {
+              "valueCoding": {
+                "system": "http://snomed.info/sct",
+                "code": "373066001",
+                "display": "Yes"
+              }
+            },
+            {
+              "valueCoding": {
+                "system": "http://snomed.info/sct",
+                "code": "373067005",
+                "display": "No"
+              }
+            }
+          ],
+          "required": true
+        },
+        {
+          "linkId": "T5",
+          "text": "Have you recently experienced fevers or chills, or have you been diagnosed with a spinal infection?",
+          "type": "choice",
+          "answerOption": [
+            {
+              "valueCoding": {
+                "system": "http://snomed.info/sct",
+                "code": "373066001",
+                "display": "Yes"
+              }
+            },
+            {
+              "valueCoding": {
+                "system": "http://snomed.info/sct",
+                "code": "373067005",
+                "display": "No"
+              }
+            }
+          ],
+          "required": true
+        },
+        {
+          "linkId": "T6",
+          "text": "Do you currently have any of the following symptoms?",
+          "type": "choice",
+          "answerOption": [
+            {
+              "valueCoding": {
+                "system": "https://spineai.stanford.edu/CodeSystem/neurologic-emergency",
+                "code": "bladder-bowel",
+                "display": "Loss of bladder or bowel control"
+              }
+            },
+            {
+              "valueCoding": {
+                "system": "https://spineai.stanford.edu/CodeSystem/neurologic-emergency",
+                "code": "leg-weakness",
+                "display": "Severe leg weakness that is getting worse"
+              }
+            },
+            {
+              "valueCoding": {
+                "system": "https://spineai.stanford.edu/CodeSystem/neurologic-emergency",
+                "code": "perineal-numbness",
+                "display": "Numbness around the groin or inner thighs"
+              }
+            },
+            {
+              "valueCoding": {
+                "system": "https://spineai.stanford.edu/CodeSystem/neurologic-emergency",
+                "code": "none",
+                "display": "None of the above"
+              },
+              "extension": [
+                {
+                  "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-optionExclusive",
+                  "valueBoolean": true
+                }
+              ]
+            }
+          ],
+          "repeats": true,
+          "required": true
+        },
+        {
+          "linkId": "T7",
+          "text": "Have you ever been told you have any of the following conditions?",
+          "type": "choice",
+          "answerOption": [
+            {
+              "valueCoding": {
+                "system": "https://spineai.stanford.edu/CodeSystem/structural-context",
+                "code": "stenosis",
+                "display": "Lumbar stenosis"
+              }
+            },
+            {
+              "valueCoding": {
+                "system": "https://spineai.stanford.edu/CodeSystem/structural-context",
+                "code": "scoliosis",
+                "display": "Lumbar scoliosis"
+              }
+            },
+            {
+              "valueCoding": {
+                "system": "https://spineai.stanford.edu/CodeSystem/structural-context",
+                "code": "spondylolisthesis",
+                "display": "Lumbar spondylolisthesis"
+              }
+            },
+            {
+              "valueCoding": {
+                "system": "https://spineai.stanford.edu/CodeSystem/structural-context",
+                "code": "disc",
+                "display": "Lumbar disc herniation"
+              }
+            },
+            {
+              "valueCoding": {
+                "system": "https://spineai.stanford.edu/CodeSystem/structural-context",
+                "code": "none",
+                "display": "None / not sure"
+              },
+              "extension": [
+                {
+                  "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-optionExclusive",
+                  "valueBoolean": true
+                }
+              ]
+            }
+          ],
+          "repeats": true
+        },
+        {
+          "linkId": "T4a",
+          "text": "Do you currently have known metastatic disease involving your spine?",
+          "type": "choice",
+          "answerOption": [
+            {
+              "valueCoding": {
+                "system": "http://snomed.info/sct",
+                "code": "373066001",
+                "display": "Yes"
+              }
+            },
+            {
+              "valueCoding": {
+                "system": "http://snomed.info/sct",
+                "code": "373067005",
+                "display": "No"
+              }
+            },
+            {
+              "valueCoding": {
+                "system": "http://snomed.info/sct",
+                "code": "261665006",
+                "display": "Not sure"
+              }
+            }
+          ],
+          "enableWhen": [
+            {
+              "question": "T4",
+              "operator": "=",
+              "answerCoding": {
+                "system": "http://snomed.info/sct",
+                "code": "373066001",
+                "display": "Yes"
+              }
+            }
+          ],
+          "enableBehavior": "all"
+        }
+      ]
+    },
+    {
+      "linkId": "fracture-pathway",
+      "type": "group",
+      "text": "Lumbar Fracture Pathway",
+      "enableWhen": [
+        {
+          "question": "T3",
+          "operator": "=",
+          "answerCoding": {
+            "system": "http://snomed.info/sct",
+            "code": "373066001",
+            "display": "Yes"
+          }
+        }
+      ],
+      "enableBehavior": "all",
+      "item": [
+        {
+          "linkId": "fracture-display",
+          "type": "display",
+          "text": "Please proceed to the Lumbar Fracture Pathway for urgent management."
+        }
+      ]
+    },
+    {
+      "linkId": "tumor-pathway",
+      "type": "group",
+      "text": "Lumbar Tumor Pathway",
+      "enableWhen": [
+        {
+          "question": "T4a",
+          "operator": "=",
+          "answerCoding": {
+            "system": "http://snomed.info/sct",
+            "code": "373066001",
+            "display": "Yes"
+          }
+        },
+        {
+          "question": "T4a",
+          "operator": "=",
+          "answerCoding": {
+            "system": "http://snomed.info/sct",
+            "code": "261665006",
+            "display": "Not sure"
+          }
+        }
+      ],
+      "enableBehavior": "any",
+      "item": [
+        {
+          "linkId": "tumor-display",
+          "type": "display",
+          "text": "Please proceed to the Lumbar Tumor Pathway for evaluation of possible metastasis."
+        }
+      ]
+    },
+    {
+      "linkId": "infection-pathway",
+      "type": "group",
+      "text": "Lumbar Infection Pathway",
+      "enableWhen": [
+        {
+          "question": "T5",
+          "operator": "=",
+          "answerCoding": {
+            "system": "http://snomed.info/sct",
+            "code": "373066001",
+            "display": "Yes"
+          }
+        }
+      ],
+      "enableBehavior": "all",
+      "item": [
+        {
+          "linkId": "infection-display",
+          "type": "display",
+          "text": "Please proceed to the Lumbar Infection Pathway for evaluation of possible infection."
+        }
+      ]
+    },
+    {
+      "linkId": "emergency-eval",
+      "type": "group",
+      "text": "Immediate Emergency Evaluation (Possible Cauda Equina)",
+      "enableWhen": [
+        {
+          "question": "T6",
+          "operator": "=",
+          "answerCoding": {
+            "system": "https://spineai.stanford.edu/CodeSystem/neurologic-emergency",
+            "code": "bladder-bowel"
+          }
+        },
+        {
+          "question": "T6",
+          "operator": "=",
+          "answerCoding": {
+            "system": "https://spineai.stanford.edu/CodeSystem/neurologic-emergency",
+            "code": "leg-weakness"
+          }
+        },
+        {
+          "question": "T6",
+          "operator": "=",
+          "answerCoding": {
+            "system": "https://spineai.stanford.edu/CodeSystem/neurologic-emergency",
+            "code": "perineal-numbness"
+          }
+        }
+      ],
+      "enableBehavior": "any",
+      "item": [
+        {
+          "linkId": "emergency-display",
+          "type": "display",
+          "text": "Immediate evaluation is recommended due to potential cauda equina syndrome."
+        }
+      ]
+    },
+    {
+      "linkId": "axial-module",
+      "text": "Axial Lumbar Back Pain Module",
+      "type": "group",
+      "enableWhen": [
+        {
+          "question": "T1",
+          "operator": "=",
+          "answerCoding": {
+            "system": "https://spineai.stanford.edu/CodeSystem/primary-symptom",
+            "code": "low-back-only"
+          }
+        },
+        {
+          "question": "T1",
+          "operator": "=",
+          "answerCoding": {
+            "system": "https://spineai.stanford.edu/CodeSystem/primary-symptom",
+            "code": "mixed"
+          }
+        }
+      ],
+      "enableBehavior": "any",
+      "item": [
+        {
+          "linkId": "A1",
+          "text": "Where do you feel your back pain?",
+          "type": "choice",
+          "repeats": true,
+          "answerOption": [
+            {
+              "valueCoding": {
+                "system": "https://spineai.stanford.edu/CodeSystem/axial-pain-location",
+                "code": "central",
+                "display": "Central low back"
+              }
+            },
+            {
+              "valueCoding": {
+                "system": "https://spineai.stanford.edu/CodeSystem/axial-pain-location",
+                "code": "right",
+                "display": "More on the right side"
+              }
+            },
+            {
+              "valueCoding": {
+                "system": "https://spineai.stanford.edu/CodeSystem/axial-pain-location",
+                "code": "left",
+                "display": "More on the left side"
+              }
+            },
+            {
+              "valueCoding": {
+                "system": "https://spineai.stanford.edu/CodeSystem/axial-pain-location",
+                "code": "both",
+                "display": "Both sides equally"
+              }
+            },
+            {
+              "valueCoding": {
+                "system": "https://spineai.stanford.edu/CodeSystem/axial-pain-location",
+                "code": "buttock",
+                "display": "Low back and upper buttock"
+              }
+            }
+          ],
+          "required": true
+        },
+        {
+          "linkId": "A2",
+          "text": "Which activities make your back pain worse?",
+          "type": "choice",
+          "answerOption": [
+            {
+              "valueCoding": {
+                "system": "https://spineai.stanford.edu/CodeSystem/axial-aggravating-activity",
+                "code": "sitting",
+                "display": "Sitting"
+              }
+            },
+            {
+              "valueCoding": {
+                "system": "https://spineai.stanford.edu/CodeSystem/axial-aggravating-activity",
+                "code": "standing",
+                "display": "Standing"
+              }
+            },
+            {
+              "valueCoding": {
+                "system": "https://spineai.stanford.edu/CodeSystem/axial-aggravating-activity",
+                "code": "walking",
+                "display": "Walking"
+              }
+            },
+            {
+              "valueCoding": {
+                "system": "https://spineai.stanford.edu/CodeSystem/axial-aggravating-activity",
+                "code": "bend-forward",
+                "display": "Bending forward"
+              }
+            },
+            {
+              "valueCoding": {
+                "system": "https://spineai.stanford.edu/CodeSystem/axial-aggravating-activity",
+                "code": "bend-backward",
+                "display": "Bending backward"
+              }
+            },
+            {
+              "valueCoding": {
+                "system": "https://spineai.stanford.edu/CodeSystem/axial-aggravating-activity",
+                "code": "twisting",
+                "display": "Twisting or rotating"
+              }
+            }
+          ],
+          "repeats": true
+        },
+        {
+          "linkId": "A3",
+          "text": "Does lying down improve your pain?",
+          "type": "choice",
+          "answerOption": [
+            {
+              "valueCoding": {
+                "system": "http://snomed.info/sct",
+                "code": "373066001",
+                "display": "Yes"
+              }
+            },
+            {
+              "valueCoding": {
+                "system": "http://snomed.info/sct",
+                "code": "373067005",
+                "display": "No"
+              }
+            }
+          ],
+          "required": true
+        },
+        {
+          "linkId": "A4",
+          "text": "When you bend forward, does your pain improve, stay the same, or worsen?",
+          "type": "choice",
+          "answerOption": [
+            {
+              "valueCoding": {
+                "system": "https://spineai.stanford.edu/CodeSystem/axial-forward-bending",
+                "code": "improves",
+                "display": "Improves"
+              }
+            },
+            {
+              "valueCoding": {
+                "system": "https://spineai.stanford.edu/CodeSystem/axial-forward-bending",
+                "code": "same",
+                "display": "Same"
+              }
+            },
+            {
+              "valueCoding": {
+                "system": "https://spineai.stanford.edu/CodeSystem/axial-forward-bending",
+                "code": "worsens",
+                "display": "Worsens"
+              }
+            }
+          ],
+          "required": true
+        },
+        {
+          "linkId": "A5",
+          "text": "When you bend backward, does your pain improve, stay the same, or worsen?",
+          "type": "choice",
+          "answerOption": [
+            {
+              "valueCoding": {
+                "system": "https://spineai.stanford.edu/CodeSystem/axial-backward-bending",
+                "code": "improves",
+                "display": "Improves"
+              }
+            },
+            {
+              "valueCoding": {
+                "system": "https://spineai.stanford.edu/CodeSystem/axial-backward-bending",
+                "code": "same",
+                "display": "Same"
+              }
+            },
+            {
+              "valueCoding": {
+                "system": "https://spineai.stanford.edu/CodeSystem/axial-backward-bending",
+                "code": "worsens",
+                "display": "Worsens"
+              }
+            }
+          ],
+          "required": true
+        },
+        {
+          "linkId": "A6",
+          "text": "Is your pain generally worse when you are sitting, standing, or about the same?",
+          "type": "choice",
+          "answerOption": [
+            {
+              "valueCoding": {
+                "system": "https://spineai.stanford.edu/CodeSystem/axial-posture-worse",
+                "code": "sitting",
+                "display": "Sitting"
+              }
+            },
+            {
+              "valueCoding": {
+                "system": "https://spineai.stanford.edu/CodeSystem/axial-posture-worse",
+                "code": "standing",
+                "display": "Standing"
+              }
+            },
+            {
+              "valueCoding": {
+                "system": "https://spineai.stanford.edu/CodeSystem/axial-posture-worse",
+                "code": "same",
+                "display": "About the same"
+              }
+            }
+          ],
+          "required": true
+        },
+        {
+          "linkId": "A7",
+          "text": "If sitting makes your pain worse, is it pain that builds while you are sitting or does it become severe when standing after sitting?",
+          "type": "choice",
+          "answerOption": [
+            {
+              "valueCoding": {
+                "system": "https://spineai.stanford.edu/CodeSystem/axial-sitting-clarification",
+                "code": "builds",
+                "display": "Pain that builds while sitting"
+              }
+            },
+            {
+              "valueCoding": {
+                "system": "https://spineai.stanford.edu/CodeSystem/axial-sitting-clarification",
+                "code": "standing-after",
+                "display": "Pain that becomes severe when standing after sitting"
+              }
+            }
+          ],
+          "enableWhen": [
+            {
+              "question": "A6",
+              "operator": "=",
+              "answerCoding": {
+                "system": "https://spineai.stanford.edu/CodeSystem/axial-posture-worse",
+                "code": "sitting"
+              }
+            }
+          ],
+          "enableBehavior": "any"
+        },
+        {
+          "linkId": "A8",
+          "text": "Have you ever been told you have scoliosis (a curvature of the spine)?",
+          "type": "choice",
+          "answerOption": [
+            {
+              "valueCoding": {
+                "system": "http://snomed.info/sct",
+                "code": "373066001",
+                "display": "Yes"
+              }
+            },
+            {
+              "valueCoding": {
+                "system": "http://snomed.info/sct",
+                "code": "373067005",
+                "display": "No"
+              }
+            },
+            {
+              "valueCoding": {
+                "system": "http://snomed.info/sct",
+                "code": "261665006",
+                "display": "Not sure"
+              }
+            }
+          ],
+          "required": true
+        },
+        {
+          "linkId": "A9",
+          "text": "If you have scoliosis, is your back pain worse on one side of your back?",
+          "type": "choice",
+          "answerOption": [
+            {
+              "valueCoding": {
+                "system": "http://snomed.info/sct",
+                "code": "373066001",
+                "display": "Yes"
+              }
+            },
+            {
+              "valueCoding": {
+                "system": "http://snomed.info/sct",
+                "code": "373067005",
+                "display": "No"
+              }
+            }
+          ],
+          "enableWhen": [
+            {
+              "question": "A8",
+              "operator": "=",
+              "answerCoding": {
+                "system": "http://snomed.info/sct",
+                "code": "373066001",
+                "display": "Yes"
+              }
+            }
+          ],
+          "enableBehavior": "any"
+        },
+        {
+          "linkId": "A10",
+          "text": "Which side has more severe back pain?",
+          "type": "choice",
+          "answerOption": [
+            {
+              "valueCoding": {
+                "system": "https://spineai.stanford.edu/CodeSystem/axial-worse-side",
+                "code": "right",
+                "display": "Right"
+              }
+            },
+            {
+              "valueCoding": {
+                "system": "https://spineai.stanford.edu/CodeSystem/axial-worse-side",
+                "code": "left",
+                "display": "Left"
+              }
+            }
+          ],
+          "enableWhen": [
+            {
+              "question": "A9",
+              "operator": "=",
+              "answerCoding": {
+                "system": "http://snomed.info/sct",
+                "code": "373066001",
+                "display": "Yes"
+              }
+            }
+          ],
+          "enableBehavior": "any"
+        }
+      ]
+    },
+    {
+      "linkId": "radic-module",
+      "text": "Lumbar Radiculopathy Module",
+      "type": "group",
+      "enableWhen": [
+        {
+          "question": "T1",
+          "operator": "=",
+          "answerCoding": {
+            "system": "https://spineai.stanford.edu/CodeSystem/primary-symptom",
+            "code": "leg-pain"
+          }
+        },
+        {
+          "question": "T1",
+          "operator": "=",
+          "answerCoding": {
+            "system": "https://spineai.stanford.edu/CodeSystem/primary-symptom",
+            "code": "mixed"
+          }
+        }
+      ],
+      "enableBehavior": "any",
+      "item": [
+        {
+          "linkId": "R2-left",
+          "text": "In your left leg, where do you feel pain?",
+          "type": "choice",
+          "answerOption": [
+            {
+              "valueCoding": {
+                "system": "https://spineai.stanford.edu/CodeSystem/radic-pain-loc",
+                "code": "none",
+                "display": "No pain in this leg"
+              },
+              "extension": [
+                {
+                  "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-optionExclusive",
+                  "valueBoolean": true
+                }
+              ]
+            },
+            {
+              "valueCoding": {
+                "system": "https://spineai.stanford.edu/CodeSystem/radic-pain-loc",
+                "code": "buttock",
+                "display": "Buttock"
+              }
+            },
+            {
+              "valueCoding": {
+                "system": "https://spineai.stanford.edu/CodeSystem/radic-pain-loc",
+                "code": "front-thigh",
+                "display": "Front of thigh"
+              }
+            },
+            {
+              "valueCoding": {
+                "system": "https://spineai.stanford.edu/CodeSystem/radic-pain-loc",
+                "code": "back-thigh",
+                "display": "Back of thigh"
+              }
+            },
+            {
+              "valueCoding": {
+                "system": "https://spineai.stanford.edu/CodeSystem/radic-pain-loc",
+                "code": "medial-shin",
+                "display": "Front/inside of shin"
+              }
+            },
+            {
+              "valueCoding": {
+                "system": "https://spineai.stanford.edu/CodeSystem/radic-pain-loc",
+                "code": "lateral-shin",
+                "display": "Outside of shin"
+              }
+            },
+            {
+              "valueCoding": {
+                "system": "https://spineai.stanford.edu/CodeSystem/radic-pain-loc",
+                "code": "top-foot",
+                "display": "Top of foot"
+              }
+            },
+            {
+              "valueCoding": {
+                "system": "https://spineai.stanford.edu/CodeSystem/radic-pain-loc",
+                "code": "bottom-foot",
+                "display": "Bottom of foot"
+              }
+            },
+            {
+              "valueCoding": {
+                "system": "https://spineai.stanford.edu/CodeSystem/radic-pain-loc",
+                "code": "big-toe",
+                "display": "Big toe"
+              }
+            },
+            {
+              "valueCoding": {
+                "system": "https://spineai.stanford.edu/CodeSystem/radic-pain-loc",
+                "code": "small-toe",
+                "display": "Small toe"
+              }
+            }
+          ],
+          "repeats": true
+        },
+        {
+          "linkId": "R2-right",
+          "text": "In your right leg, where do you feel pain?",
+          "type": "choice",
+          "answerOption": [
+            {
+              "valueCoding": {
+                "system": "https://spineai.stanford.edu/CodeSystem/radic-pain-loc",
+                "code": "none",
+                "display": "No pain in this leg"
+              },
+              "extension": [
+                {
+                  "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-optionExclusive",
+                  "valueBoolean": true
+                }
+              ]
+            },
+            {
+              "valueCoding": {
+                "system": "https://spineai.stanford.edu/CodeSystem/radic-pain-loc",
+                "code": "buttock",
+                "display": "Buttock"
+              }
+            },
+            {
+              "valueCoding": {
+                "system": "https://spineai.stanford.edu/CodeSystem/radic-pain-loc",
+                "code": "front-thigh",
+                "display": "Front of thigh"
+              }
+            },
+            {
+              "valueCoding": {
+                "system": "https://spineai.stanford.edu/CodeSystem/radic-pain-loc",
+                "code": "back-thigh",
+                "display": "Back of thigh"
+              }
+            },
+            {
+              "valueCoding": {
+                "system": "https://spineai.stanford.edu/CodeSystem/radic-pain-loc",
+                "code": "medial-shin",
+                "display": "Front/inside of shin"
+              }
+            },
+            {
+              "valueCoding": {
+                "system": "https://spineai.stanford.edu/CodeSystem/radic-pain-loc",
+                "code": "lateral-shin",
+                "display": "Outside of shin"
+              }
+            },
+            {
+              "valueCoding": {
+                "system": "https://spineai.stanford.edu/CodeSystem/radic-pain-loc",
+                "code": "top-foot",
+                "display": "Top of foot"
+              }
+            },
+            {
+              "valueCoding": {
+                "system": "https://spineai.stanford.edu/CodeSystem/radic-pain-loc",
+                "code": "bottom-foot",
+                "display": "Bottom of foot"
+              }
+            },
+            {
+              "valueCoding": {
+                "system": "https://spineai.stanford.edu/CodeSystem/radic-pain-loc",
+                "code": "big-toe",
+                "display": "Big toe"
+              }
+            },
+            {
+              "valueCoding": {
+                "system": "https://spineai.stanford.edu/CodeSystem/radic-pain-loc",
+                "code": "small-toe",
+                "display": "Small toe"
+              }
+            }
+          ],
+          "repeats": true
+        },
+        {
+          "linkId": "R3",
+          "text": "Do you experience numbness or tingling?",
+          "type": "choice",
+          "answerOption": [
+            {
+              "valueCoding": {
+                "system": "https://spineai.stanford.edu/CodeSystem/radic-numbness",
+                "code": "no",
+                "display": "No"
+              }
+            },
+            {
+              "valueCoding": {
+                "system": "https://spineai.stanford.edu/CodeSystem/radic-numbness",
+                "code": "yes-same",
+                "display": "Yes - same area as pain"
+              }
+            },
+            {
+              "valueCoding": {
+                "system": "https://spineai.stanford.edu/CodeSystem/radic-numbness",
+                "code": "yes-diff",
+                "display": "Yes - different area"
+              }
+            }
+          ],
+          "required": true
+        },
+        {
+          "linkId": "R3-left",
+          "text": "In your left leg, where do you feel numbness or tingling?",
+          "type": "choice",
+          "answerOption": [
+            {
+              "valueCoding": {
+                "system": "https://spineai.stanford.edu/CodeSystem/radic-numbness-loc",
+                "code": "buttock",
+                "display": "Buttock"
+              }
+            },
+            {
+              "valueCoding": {
+                "system": "https://spineai.stanford.edu/CodeSystem/radic-numbness-loc",
+                "code": "front-thigh",
+                "display": "Front of thigh"
+              }
+            },
+            {
+              "valueCoding": {
+                "system": "https://spineai.stanford.edu/CodeSystem/radic-numbness-loc",
+                "code": "back-thigh",
+                "display": "Back of thigh"
+              }
+            },
+            {
+              "valueCoding": {
+                "system": "https://spineai.stanford.edu/CodeSystem/radic-numbness-loc",
+                "code": "medial-shin",
+                "display": "Front/inside of shin"
+              }
+            },
+            {
+              "valueCoding": {
+                "system": "https://spineai.stanford.edu/CodeSystem/radic-numbness-loc",
+                "code": "lateral-shin",
+                "display": "Outside of shin"
+              }
+            },
+            {
+              "valueCoding": {
+                "system": "https://spineai.stanford.edu/CodeSystem/radic-numbness-loc",
+                "code": "top-foot",
+                "display": "Top of foot"
+              }
+            },
+            {
+              "valueCoding": {
+                "system": "https://spineai.stanford.edu/CodeSystem/radic-numbness-loc",
+                "code": "bottom-foot",
+                "display": "Bottom of foot"
+              }
+            },
+            {
+              "valueCoding": {
+                "system": "https://spineai.stanford.edu/CodeSystem/radic-numbness-loc",
+                "code": "big-toe",
+                "display": "Big toe"
+              }
+            },
+            {
+              "valueCoding": {
+                "system": "https://spineai.stanford.edu/CodeSystem/radic-numbness-loc",
+                "code": "small-toe",
+                "display": "Small toe"
+              }
+            }
+          ],
+          "repeats": true,
+          "enableWhen": [
+            {
+              "question": "R3",
+              "operator": "=",
+              "answerCoding": {
+                "system": "https://spineai.stanford.edu/CodeSystem/radic-numbness",
+                "code": "yes-diff"
+              }
+            }
+          ],
+          "enableBehavior": "any"
+        },
+        {
+          "linkId": "R3-right",
+          "text": "In your right leg, where do you feel numbness or tingling?",
+          "type": "choice",
+          "answerOption": [
+            {
+              "valueCoding": {
+                "system": "https://spineai.stanford.edu/CodeSystem/radic-numbness-loc",
+                "code": "buttock",
+                "display": "Buttock"
+              }
+            },
+            {
+              "valueCoding": {
+                "system": "https://spineai.stanford.edu/CodeSystem/radic-numbness-loc",
+                "code": "front-thigh",
+                "display": "Front of thigh"
+              }
+            },
+            {
+              "valueCoding": {
+                "system": "https://spineai.stanford.edu/CodeSystem/radic-numbness-loc",
+                "code": "back-thigh",
+                "display": "Back of thigh"
+              }
+            },
+            {
+              "valueCoding": {
+                "system": "https://spineai.stanford.edu/CodeSystem/radic-numbness-loc",
+                "code": "medial-shin",
+                "display": "Front/inside of shin"
+              }
+            },
+            {
+              "valueCoding": {
+                "system": "https://spineai.stanford.edu/CodeSystem/radic-numbness-loc",
+                "code": "lateral-shin",
+                "display": "Outside of shin"
+              }
+            },
+            {
+              "valueCoding": {
+                "system": "https://spineai.stanford.edu/CodeSystem/radic-numbness-loc",
+                "code": "top-foot",
+                "display": "Top of foot"
+              }
+            },
+            {
+              "valueCoding": {
+                "system": "https://spineai.stanford.edu/CodeSystem/radic-numbness-loc",
+                "code": "bottom-foot",
+                "display": "Bottom of foot"
+              }
+            },
+            {
+              "valueCoding": {
+                "system": "https://spineai.stanford.edu/CodeSystem/radic-numbness-loc",
+                "code": "big-toe",
+                "display": "Big toe"
+              }
+            },
+            {
+              "valueCoding": {
+                "system": "https://spineai.stanford.edu/CodeSystem/radic-numbness-loc",
+                "code": "small-toe",
+                "display": "Small toe"
+              }
+            }
+          ],
+          "repeats": true,
+          "enableWhen": [
+            {
+              "question": "R3",
+              "operator": "=",
+              "answerCoding": {
+                "system": "https://spineai.stanford.edu/CodeSystem/radic-numbness",
+                "code": "yes-diff"
+              }
+            }
+          ],
+          "enableBehavior": "any"
+        },
+        {
+          "linkId": "R4",
+          "text": "Does coughing, sneezing, or straining make your leg pain worse?",
+          "type": "choice",
+          "answerOption": [
+            {
+              "valueCoding": {
+                "system": "http://snomed.info/sct",
+                "code": "373066001",
+                "display": "Yes"
+              }
+            },
+            {
+              "valueCoding": {
+                "system": "http://snomed.info/sct",
+                "code": "373067005",
+                "display": "No"
+              }
+            },
+            {
+              "valueCoding": {
+                "system": "http://snomed.info/sct",
+                "code": "261665006",
+                "display": "Not sure"
+              }
+            }
+          ],
+          "required": true
+        },
+        {
+          "linkId": "R5",
+          "text": "Have you noticed any weakness in your leg?",
+          "type": "choice",
+          "answerOption": [
+            {
+              "valueCoding": {
+                "system": "https://spineai.stanford.edu/CodeSystem/radic-weakness",
+                "code": "none",
+                "display": "No weakness"
+              }
+            },
+            {
+              "valueCoding": {
+                "system": "https://spineai.stanford.edu/CodeSystem/radic-weakness",
+                "code": "mild",
+                "display": "Mild"
+              }
+            },
+            {
+              "valueCoding": {
+                "system": "https://spineai.stanford.edu/CodeSystem/radic-weakness",
+                "code": "moderate",
+                "display": "Moderate"
+              }
+            },
+            {
+              "valueCoding": {
+                "system": "https://spineai.stanford.edu/CodeSystem/radic-weakness",
+                "code": "severe",
+                "display": "Severe - I cannot lift my foot up or push off with my foot"
+              }
+            }
+          ],
+          "required": true
+        },
+        {
+          "linkId": "R6",
+          "text": "Have you experienced any of the following motor difficulties?",
+          "type": "choice",
+          "answerOption": [
+            {
+              "valueCoding": {
+                "system": "https://spineai.stanford.edu/CodeSystem/radic-functional-motor",
+                "code": "heel-walking",
+                "display": "Trouble walking on heels"
+              }
+            },
+            {
+              "valueCoding": {
+                "system": "https://spineai.stanford.edu/CodeSystem/radic-functional-motor",
+                "code": "toe-walking",
+                "display": "Trouble walking on toes"
+              }
+            },
+            {
+              "valueCoding": {
+                "system": "https://spineai.stanford.edu/CodeSystem/radic-functional-motor",
+                "code": "knee-gives",
+                "display": "Knee gives way"
+              }
+            },
+            {
+              "valueCoding": {
+                "system": "https://spineai.stanford.edu/CodeSystem/radic-functional-motor",
+                "code": "hip-weak",
+                "display": "Hip feels weak lifting the leg"
+              }
+            },
+            {
+              "valueCoding": {
+                "system": "https://spineai.stanford.edu/CodeSystem/radic-functional-motor",
+                "code": "none",
+                "display": "None"
+              },
+              "extension": [
+                {
+                  "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-optionExclusive",
+                  "valueBoolean": true
+                }
+              ]
+            }
+          ],
+          "repeats": true
+        },
+        {
+          "linkId": "R7",
+          "text": "How did your leg pain start?",
+          "type": "choice",
+          "answerOption": [
+            {
+              "valueCoding": {
+                "system": "https://spineai.stanford.edu/CodeSystem/radic-onset",
+                "code": "sudden",
+                "display": "Suddenly"
+              }
+            },
+            {
+              "valueCoding": {
+                "system": "https://spineai.stanford.edu/CodeSystem/radic-onset",
+                "code": "gradual-weeks",
+                "display": "Gradually over weeks"
+              }
+            },
+            {
+              "valueCoding": {
+                "system": "https://spineai.stanford.edu/CodeSystem/radic-onset",
+                "code": "gradual-months",
+                "display": "Gradually over months"
+              }
+            }
+          ],
+          "required": true
+        },
+        {
+          "linkId": "R8",
+          "text": "How long have you had leg symptoms?",
+          "type": "choice",
+          "answerOption": [
+            {
+              "valueCoding": {
+                "system": "https://spineai.stanford.edu/CodeSystem/radic-duration",
+                "code": "lt6w",
+                "display": "< 6 weeks"
+              }
+            },
+            {
+              "valueCoding": {
+                "system": "https://spineai.stanford.edu/CodeSystem/radic-duration",
+                "code": "6w-3m",
+                "display": "6 weeks - 3 months"
+              }
+            },
+            {
+              "valueCoding": {
+                "system": "https://spineai.stanford.edu/CodeSystem/radic-duration",
+                "code": "3m-12m",
+                "display": "3 - 12 months"
+              }
+            },
+            {
+              "valueCoding": {
+                "system": "https://spineai.stanford.edu/CodeSystem/radic-duration",
+                "code": "gt12m",
+                "display": "> 12 months"
+              }
+            }
+          ],
+          "required": true
+        },
+        {
+          "linkId": "R9",
+          "text": "Do your symptoms get worse when you stand or walk and improve when you sit?",
+          "type": "choice",
+          "answerOption": [
+            {
+              "valueCoding": {
+                "system": "http://snomed.info/sct",
+                "code": "373066001",
+                "display": "Yes"
+              }
+            },
+            {
+              "valueCoding": {
+                "system": "http://snomed.info/sct",
+                "code": "373067005",
+                "display": "No"
+              }
+            }
+          ],
+          "required": true
+        },
+        {
+          "linkId": "R10",
+          "text": "Does leaning forward while walking, such as in a shopping-cart position, relieve your symptoms?",
+          "type": "choice",
+          "answerOption": [
+            {
+              "valueCoding": {
+                "system": "http://snomed.info/sct",
+                "code": "373066001",
+                "display": "Yes"
+              }
+            },
+            {
+              "valueCoding": {
+                "system": "http://snomed.info/sct",
+                "code": "373067005",
+                "display": "No"
+              }
+            }
+          ],
+          "required": true
+        },
+        {
+          "linkId": "R11",
+          "text": "How much does pain limit your walking?",
+          "type": "choice",
+          "answerOption": [
+            {
+              "valueCoding": {
+                "system": "https://spineai.stanford.edu/CodeSystem/walking-limitation",
+                "code": "no-limit",
+                "display": "Pain does not prevent me from walking any distance"
+              }
+            },
+            {
+              "valueCoding": {
+                "system": "https://spineai.stanford.edu/CodeSystem/walking-limitation",
+                "code": "one-mile",
+                "display": "Pain prevents me from walking more than 1 mile"
+              }
+            },
+            {
+              "valueCoding": {
+                "system": "https://spineai.stanford.edu/CodeSystem/walking-limitation",
+                "code": "half-mile",
+                "display": "Pain prevents me from walking more than 1/2 mile"
+              }
+            },
+            {
+              "valueCoding": {
+                "system": "https://spineai.stanford.edu/CodeSystem/walking-limitation",
+                "code": "hundred-yards",
+                "display": "Pain prevents me from walking more than 100 yards"
+              }
+            },
+            {
+              "valueCoding": {
+                "system": "https://spineai.stanford.edu/CodeSystem/walking-limitation",
+                "code": "stick",
+                "display": "I can only walk using a stick or crutches"
+              }
+            },
+            {
+              "valueCoding": {
+                "system": "https://spineai.stanford.edu/CodeSystem/walking-limitation",
+                "code": "bed",
+                "display": "I am in bed most of the time"
+              }
+            }
+          ],
+          "required": true
+        },
+        {
+          "linkId": "R12",
+          "text": "Have you ever been told you have any of these conditions?",
+          "type": "choice",
+          "answerOption": [
+            {
+              "valueCoding": {
+                "system": "https://spineai.stanford.edu/CodeSystem/radic-structural-history",
+                "code": "stenosis",
+                "display": "Lumbar stenosis"
+              }
+            },
+            {
+              "valueCoding": {
+                "system": "https://spineai.stanford.edu/CodeSystem/radic-structural-history",
+                "code": "spondylolisthesis",
+                "display": "Spondylolisthesis"
+              }
+            },
+            {
+              "valueCoding": {
+                "system": "https://spineai.stanford.edu/CodeSystem/radic-structural-history",
+                "code": "scoliosis",
+                "display": "Lumbar scoliosis"
+              }
+            },
+            {
+              "valueCoding": {
+                "system": "https://spineai.stanford.edu/CodeSystem/radic-structural-history",
+                "code": "disc",
+                "display": "Disc herniation"
+              }
+            },
+            {
+              "valueCoding": {
+                "system": "https://spineai.stanford.edu/CodeSystem/radic-structural-history",
+                "code": "none",
+                "display": "None / not sure"
+              },
+              "extension": [
+                {
+                  "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-optionExclusive",
+                  "valueBoolean": true
+                }
+              ]
+            }
+          ],
+          "repeats": true
+        }
+      ]
+    }
+  ]
+}

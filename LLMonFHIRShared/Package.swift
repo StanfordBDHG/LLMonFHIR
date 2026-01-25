@@ -44,6 +44,7 @@ let package = Package(
                 "LLMonFHIRShared",
                 .product(name: "ModelsR4", package: "FHIRModels")
             ],
+            resources: [.process("Resources")],
             swiftSettings: [
                 .enableUpcomingFeature("ExistentialAny"),
                 .enableUpcomingFeature("InternalImportsByDefault")

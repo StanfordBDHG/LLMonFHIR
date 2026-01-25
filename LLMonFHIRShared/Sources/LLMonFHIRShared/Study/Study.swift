@@ -195,7 +195,10 @@ extension Study: Codable {
             try container.encode("", forKey: .interpretMultipleResourcesPrompt)
         }
         try container.encode(chatTitleConfig, forKey: .chatTitleConfig)
-        try container.encode(String(data: JSONEncoder().encode(initialQuestinnaire), encoding: .utf8), forKey: .initialQuestinnaire)
+        try container.encodeIfPresent(
+            initialQuestinnaire.map { String(data: try JSONEncoder().encode($0), encoding: .utf8) },
+            forKey: .initialQuestinnaire
+        )
         try container.encode(tasks, forKey: .tasks)
     }
 }
