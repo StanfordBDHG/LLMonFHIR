@@ -33,7 +33,7 @@ struct StudyHomeView: View {
     @State private var study: Study?
     @State private var studyUserInfo: [String: String]
     
-    @State private var isPresentinQuestionnaire = false
+    @State private var isPresentingQuestionnaire = false
     @State private var questionnaireResponse: QuestionnaireResponse?
     
     @State private var isPresentingEarliestHealthRecords = false
@@ -45,12 +45,9 @@ struct StudyHomeView: View {
     private var oldestHealthRecordTimestamp: Date? {
         earliestDates.values.min()
     }
-    private var displayQuestionnaireNext: Bool {
-        guard let study else {
-            return false
-        }
-        
-        return study.initialQuestionnaire != nil && questionnaireResponse == nil
+    /// Whether the currently enabled study has an initial questionnaire, and the user still needs to fill that out.
+    private var isMissingPreChatQuestionnaire: Bool {
+        study?.initialQuestionnaire != nil && questionnaireResponse == nil
     }
     
     var body: some View {
@@ -86,9 +83,9 @@ struct StudyHomeView: View {
                         uploader: uploader
                     )
                 }
-                .fullScreenCover(isPresented: $isPresentinQuestionnaire) {
+                .fullScreenCover(isPresented: $isPresentingQuestionnaire) {
                     if let study {
-                        QuestionnaireView(study: study, questionnaireResponse: $questionnaireResponse)
+                        QuestionnaireSheet(study: study, response: $questionnaireResponse)
                     } else {
                         ContentUnavailableView("Study not selected", systemImage: "document.badge.gearshape")
                     }
@@ -191,11 +188,10 @@ struct StudyHomeView: View {
     private var primaryActionButton: some View {
         PrimaryActionButton {
             if let study {
-                if displayQuestionnaireNext {
-                    isPresentinQuestionnaire = true
+                if isMissingPreChatQuestionnaire {
+                    isPresentingQuestionnaire = true
                     return
                 }
-                
                 // the HealthKit permissions should already have been granted via the onboarding, but we re-request them here, just in case,
                 // to make sure everything is in a proper state when the study gets launched.
                 try await healthKit.askForAuthorization()
@@ -209,7 +205,7 @@ struct StudyHomeView: View {
             if waitingState.isWaiting {
                 Text("LOADING_HEALTH_RECORDS")
             } else if study != nil {
-                if displayQuestionnaireNext {
+                if isMissingPreChatQuestionnaire {
                     Text("Start Questionnaire")
                 } else {
                     Text("START_SESSION")

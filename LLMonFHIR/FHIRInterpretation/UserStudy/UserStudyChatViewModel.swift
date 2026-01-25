@@ -335,6 +335,12 @@ final class UserStudyChatViewModel: MultipleResourcesChatViewModel, Sendable { /
         }
     }
     
+    /// Advances the user's progression within the study.
+    ///
+    /// Depending on the current ``navigationState``, this function will either advance within the current task (e.g., move from the chat phase to the survey)
+    /// or advance within the overall study (e.g., move from task N's survey to task N+1's instructions).
+    ///
+    /// If the study is already completed, this function does nothing.
     func advance() {
         switch navigationState {
         case .introduction:

@@ -928,8 +928,8 @@
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/StanfordSpezi/SpeziQuestionnaire.git";
 			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 1.2.4;
+				kind = revision;
+				revision = 3afe9dd072bb8352164f2d7488857b978b90ef50;
 			};
 		};
 		800469382EEF472400585753 /* XCRemoteSwiftPackageReference "SpeziOnboarding" */ = {
@@ -944,8 +944,8 @@
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/StanfordSpezi/SpeziViews.git";
 			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 1.12.9;
+				kind = revision;
+				revision = ef428b26ecbeb347e4d6125cdf13a0175929d1f1;
 			};
 		};
 		8040C29E2F19396A00884AD3 /* XCRemoteSwiftPackageReference "SpeziLLM" */ = {

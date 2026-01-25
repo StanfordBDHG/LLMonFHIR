@@ -1,5 +1,5 @@
 {
-  "originHash" : "6954fb0af1f08244727cb2e487ce5d69fc9a4886da7c508c3c02ee0dde461144",
+  "originHash" : "98ffc639ecdeddfb1053aadaca5041ca9ee007e6e33503fe1c958fcccf721313",
   "pins" : [
     {
       "identity" : "abseil-cpp-binary",
@@ -204,8 +204,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/StanfordBDHG/ResearchKit.git",
       "state" : {
-        "revision" : "8029e36bfa88b7995d8c997f4c7f52ef9e6679ea",
-        "version" : "3.1.2"
+        "revision" : "d1d523e9e738b7ad9c97ca6101aada1c041ea9da",
+        "version" : "3.1.4"
       }
     },
     {
@@ -312,8 +312,7 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/StanfordSpezi/SpeziQuestionnaire.git",
       "state" : {
-        "revision" : "6110a9ec1be8fc35caf9b7aa20b7cf570e1a8ffb",
-        "version" : "1.2.4"
+        "revision" : "3afe9dd072bb8352164f2d7488857b978b90ef50"
       }
     },
     {
@@ -339,8 +338,7 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/StanfordSpezi/SpeziViews.git",
       "state" : {
-        "revision" : "bf7cc7830a4b81bed381fba7f5d96c5d2050fb09",
-        "version" : "1.12.9"
+        "revision" : "ef428b26ecbeb347e4d6125cdf13a0175929d1f1"
       }
     },
     {
