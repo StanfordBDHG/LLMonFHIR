@@ -31,6 +31,9 @@
     "Allow in Settings" : {
 
     },
+    "Approved by Stanford IRB" : {
+
+    },
     "Authorize Health Access" : {
 
     },
@@ -2311,17 +2314,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Enable User Study"
-          }
-        }
-      }
-    },
-    "USER_STUDY_APPROVAL_BADGE_TEXT" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Approved by Stanford IRB"
           }
         }
       }
