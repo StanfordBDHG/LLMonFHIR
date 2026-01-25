@@ -156,6 +156,17 @@ extension Study: Codable {
         case initialQuestionnaire = "initial_questionnaire"
     }
     
+    /// The `JSONEncoder` that should be used to encode the nested ``initialQuestionnaire``.
+    ///
+    /// Encodes the questionnaire in a way that keeps the keys sorted.
+    /// The reason for this is to make encoding a study stable, i.e. we don't want the resulting plist to keep changing if we run the CLI tool multiple times,
+    /// just because the JSON string is different each time bc the fields are in a different order...
+    private static let nestedQuestionnaireEncoder: JSONEncoder = {
+        let encoder = JSONEncoder()
+        encoder.outputFormatting = .sortedKeys
+        return encoder
+    }()
+    
     public convenience init(from decoder: any Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         self.init(
@@ -203,7 +214,7 @@ extension Study: Codable {
         }
         try container.encode(chatTitleConfig, forKey: .chatTitleConfig)
         try container.encodeIfPresent(
-            initialQuestionnaire.map { String(data: try JSONEncoder().encode($0), encoding: .utf8) },
+            initialQuestionnaire.map { String(data: try Self.nestedQuestionnaireEncoder.encode($0), encoding: .utf8) },
             forKey: .initialQuestionnaire
         )
         try container.encode(tasks, forKey: .tasks)
