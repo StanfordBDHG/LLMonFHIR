@@ -9,7 +9,7 @@
 // swiftlint:disable redundant_string_enum_value
 
 public import CryptoKit
-import Foundation
+public import Foundation
 public import class ModelsR4.Questionnaire
 
 
@@ -58,10 +58,11 @@ public final class Study: Identifiable {
     public let chatTitleConfig: ChatTitleConfig
     
     /// Initial Questionnaire that should be asked before the user enters the chat view.
-    public let initialQuestionnaire: Questionnaire?
+    private let _initialQuestionnaire: String?
     
     /// The tasks that make up this survey
     public private(set) var tasks: [Task]
+    
     
     /// Creates a new survey.
     public init(
@@ -77,7 +78,7 @@ public final class Study: Identifiable {
         summarizeSingleResourcePrompt: FHIRPrompt?,
         interpretMultipleResourcesPrompt: FHIRPrompt?,
         chatTitleConfig: ChatTitleConfig,
-        initialQuestionnaire: Questionnaire?,
+        initialQuestionnaire: String?,
         tasks: [Task]
     ) {
         self.id = id
@@ -92,8 +93,23 @@ public final class Study: Identifiable {
         self.summarizeSingleResourcePrompt = summarizeSingleResourcePrompt ?? .summarizeSingleFHIRResourceDefaultPrompt
         self.interpretMultipleResourcesPrompt = interpretMultipleResourcesPrompt ?? .interpretMultipleResourcesDefaultPrompt
         self.chatTitleConfig = chatTitleConfig
-        self.initialQuestionnaire = initialQuestionnaire
+        self._initialQuestionnaire = initialQuestionnaire
         self.tasks = tasks
+    }
+    
+    
+    public func initialQuestionnaire(from bundle: Bundle) throws -> Questionnaire? {
+        guard let initialQuestionnaire = _initialQuestionnaire else {
+            return nil
+        }
+        
+        guard let url = bundle.url(forResource: initialQuestionnaire, withExtension: "json") else {
+            throw NSError(domain: "edu.stanford.LLMonFHIRShared", code: 0, userInfo: [
+                NSLocalizedDescriptionKey: "Unable to find resource '\(initialQuestionnaire).json'"
+            ])
+        }
+        let data = try Data(contentsOf: url)
+        return try JSONDecoder().decode(Questionnaire.self, from: data)
     }
 }
 
@@ -156,17 +172,6 @@ extension Study: Codable {
         case initialQuestionnaire = "initial_questionnaire"
     }
     
-    /// The `JSONEncoder` that should be used to encode the nested ``initialQuestionnaire``.
-    ///
-    /// Encodes the questionnaire in a way that keeps the keys sorted.
-    /// The reason for this is to make encoding a study stable, i.e. we don't want the resulting plist to keep changing if we run the CLI tool multiple times,
-    /// just because the JSON string is different each time bc the fields are in a different order...
-    private static let nestedQuestionnaireEncoder: JSONEncoder = {
-        let encoder = JSONEncoder()
-        encoder.outputFormatting = .sortedKeys
-        return encoder
-    }()
-    
     public convenience init(from decoder: any Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         self.init(
@@ -185,8 +190,7 @@ extension Study: Codable {
             interpretMultipleResourcesPrompt: try container.decodeIfPresent(String.self, forKey: .interpretMultipleResourcesPrompt)
                 .flatMap { $0.isEmpty ? nil : FHIRPrompt(promptText: $0) },
             chatTitleConfig: try container.decode(ChatTitleConfig.self, forKey: .chatTitleConfig),
-            initialQuestionnaire: try container.decodeIfPresent(String.self, forKey: .initialQuestionnaire)
-                .flatMap { try? JSONDecoder().decode(Questionnaire.self, from: Data($0.utf8)) },
+            initialQuestionnaire: try container.decodeIfPresent(String.self, forKey: .initialQuestionnaire),
             tasks: try container.decode([Task].self, forKey: .tasks)
         )
     }
@@ -213,10 +217,7 @@ extension Study: Codable {
             try container.encode("", forKey: .interpretMultipleResourcesPrompt)
         }
         try container.encode(chatTitleConfig, forKey: .chatTitleConfig)
-        try container.encodeIfPresent(
-            initialQuestionnaire.map { String(data: try Self.nestedQuestionnaireEncoder.encode($0), encoding: .utf8) },
-            forKey: .initialQuestionnaire
-        )
+        try container.encodeIfPresent(_initialQuestionnaire, forKey: .initialQuestionnaire)
         try container.encode(tasks, forKey: .tasks)
     }
 }

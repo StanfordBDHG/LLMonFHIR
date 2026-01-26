@@ -6,7 +6,7 @@
 // SPDX-License-Identifier: MIT
 //
 
-// swiftlint:disable line_length force_try
+// swiftlint:disable line_length
 
 import Foundation
 public import LLMonFHIRShared
@@ -29,7 +29,7 @@ extension Study {
             summarizeSingleResourcePrompt: nil,
             interpretMultipleResourcesPrompt: .spineAISystemPrompt,
             chatTitleConfig: .studyTitle,
-            initialQuestionnaire: try! Questionnaire.named("SpineAI_InitialSurvey"),
+            initialQuestionnaire: "SpineAI_InitialSurvey",
             tasks: []
         )
     }

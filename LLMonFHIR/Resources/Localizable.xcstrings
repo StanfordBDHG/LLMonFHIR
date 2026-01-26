@@ -1217,9 +1217,6 @@
         }
       }
     },
-    "It may take a few moments while we analyze your answers." : {
-
-    },
     "LLAMA3_DOWNLOAD_DESCRIPTION" : {
       "localizations" : {
         "en" : {
@@ -1563,9 +1560,6 @@
           }
         }
       }
-    },
-    "Processing Questionnaire Response ..." : {
-
     },
     "Questionnaire not selected" : {
 
