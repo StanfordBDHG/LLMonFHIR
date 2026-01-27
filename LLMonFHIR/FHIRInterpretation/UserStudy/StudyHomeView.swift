@@ -47,7 +47,7 @@ struct StudyHomeView: View {
     }
     /// Whether the currently enabled study has an initial questionnaire, and the user still needs to fill that out.
     private var isMissingPreChatQuestionnaire: Bool {
-        study?.initialQuestionnaire != nil && questionnaireResponse == nil
+        (try? study?.initialQuestionnaire(from: .main)) != nil && questionnaireResponse == nil
     }
     
     var body: some View {
