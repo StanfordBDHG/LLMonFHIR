@@ -45,7 +45,7 @@ struct OpenAIRequestInterceptor: ClientMiddleware, Sendable {
             return try await next(request, body, baseURL)
         case .firebaseFunction(let name):
             guard let data = try await body?.data(upTo: maxBodySize),
-                  let input = String(data: Data(data), encoding: .utf8) else {
+                  let input = String(bytes: data, encoding: .utf8) else {
                 throw Error("Missing Body")
             }
             let callable = Functions.functions()
@@ -68,9 +68,6 @@ struct OpenAIRequestInterceptor: ClientMiddleware, Sendable {
                                 chunk
                             }
                             continuation.yield(HTTPBody.ByteChunk(string.utf8))
-                            if case .result = event {
-                                break
-                            }
                         }
                         continuation.finish()
                     } catch {
