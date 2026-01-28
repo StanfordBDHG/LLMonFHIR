@@ -1,0 +1,303 @@
+{
+  "resourceType": "Bundle",
+  "type": "collection",
+  "entry": [
+    {
+      "resource": {
+        "resourceType": "Patient",
+        "id": "mina-curiel-acs-final",
+        "active": true,
+        "name": [
+          { "family": "Curiel", "given": ["Mina"] }
+        ],
+        "gender": "female",
+        "birthDate": "1976-05-14",
+        "address": [
+          {
+            "line": ["1234 Maple St"],
+            "city": "Redwood City",
+            "state": "CA",
+            "postalCode": "94063"
+          }
+        ],
+        "maritalStatus": { "coding": [{ "system": "http://terminology.hl7.org/CodeSystem/v3-MaritalStatus", "code": "L", "display": "Legally Separated" }] },
+        "extension": [
+          {
+            "url": "http://hl7.org/fhir/us/core/StructureDefinition/us-core-race",
+            "extension": [
+              { "url": "ombCategory", "valueCoding": { "system": "urn:oid:2.16.840.1.113883.6.238", "code": "2135-2", "display": "Hispanic or Latino" } }
+            ]
+          },
+          {
+            "url": "http://hl7.org/fhir/StructureDefinition/patient-occupation",
+            "valueString": "Metal Industry Worker (Manual Labor)"
+          }
+        ]
+      }
+    },
+    {
+      "resource": {
+        "resourceType": "Coverage",
+        "id": "coverage-medicaid",
+        "status": "active",
+        "beneficiary": { "reference": "Patient/mina-curiel-acs-final" },
+        "payor": [{ "display": "Medicaid" }],
+        "type": { "coding": [{ "system": "http://terminology.hl7.org/CodeSystem/v3-ActCode", "code": "MCD", "display": "Medicaid" }] }
+      }
+    },
+    {
+      "resource": {
+        "resourceType": "Organization",
+        "id": "provider-org",
+        "name": "Redwood City Community Health Center",
+        "type": [{ "coding": [{ "system": "http://terminology.hl7.org/CodeSystem/organization-type", "code": "prov", "display": "Healthcare Provider" }] }]
+      }
+    },
+    {
+      "resource": {
+        "resourceType": "Practitioner",
+        "id": "dr-valdez",
+        "name": [{ "family": "Valdez", "given": ["Elena"], "prefix": ["Dr."] }],
+        "gender": "female"
+      }
+    },
+    {
+      "resource": {
+        "resourceType": "Encounter",
+        "id": "current-encounter-acs",
+        "status": "in-progress",
+        "class": { "system": "http://terminology.hl7.org/CodeSystem/v3-ActCode", "code": "AMB", "display": "ambulatory" },
+        "type": [
+          { "coding": [{ "system": "http://snomed.info/sct", "code": "185349003", "display": "Encounter for check up (procedure)" }] }
+        ],
+        "subject": { "reference": "Patient/mina-curiel-acs-final" },
+        "period": { "start": "2026-01-22T09:00:00Z" },
+        "participant": [{ "individual": { "reference": "Practitioner/dr-valdez" } }],
+        "serviceProvider": { "reference": "Organization/provider-org" },
+        "reasonCode": [
+            {
+              "coding": [{ "system": "http://snomed.info/sct", "code": "29857009", "display": "Chest pain" }],
+              "text": "Worsening chest discomfort (3 weeks)"
+            }
+        ]
+      }
+    },
+    {
+      "resource": {
+        "resourceType": "Condition",
+        "id": "condition-presenting",
+        "clinicalStatus": { "coding": [{ "system": "http://terminology.hl7.org/CodeSystem/condition-clinical", "code": "active" }] },
+        "verificationStatus": { "coding": [{ "system": "http://terminology.hl7.org/CodeSystem/condition-ver-status", "code": "provisional" }] },
+        "code": { "coding": [{ "system": "http://snomed.info/sct", "code": "194828000", "display": "Angina pectoris" }] },
+        "subject": { "reference": "Patient/mina-curiel-acs-final" },
+        "onsetDateTime": "2026-01-01T08:00:00Z",
+        "note": [
+            { "text": "HPI: 3-week history of worsening chest discomfort ('Crescendo Angina')." },
+            { "text": "Pain Character: Baseline 'dull aching soreness' retrosternal + superimposed severe 'stabbing' mid-left chest." },
+            { "text": "Triggers: Minimal exertion (deep breathing) and emotional stress. Previously triggered by heavy lifting." },
+            { "text": "Red Flags: Radiation deep behind sternum, Diaphoresis (clammy), Anxiety." }
+        ]
+      }
+    },
+    {
+      "resource": {
+        "resourceType": "Observation",
+        "id": "obs-prodrome",
+        "status": "final",
+        "code": { "text": "Prodromal Symptoms (ACS)" },
+        "subject": { "reference": "Patient/mina-curiel-acs-final" },
+        "effectiveDateTime": "2025-12-22T09:00:00Z",
+        "valueString": "1 Month Ago: Unusual fatigue and sleep disturbances. 48 Hours Ago: Nausea and lightheadedness at work. Current: Dyspnea ('shallow breathing')."
+      }
+    },
+    {
+      "resource": {
+        "resourceType": "Observation",
+        "id": "obs-height",
+        "status": "final",
+        "code": { "coding": [{ "system": "http://loinc.org", "code": "8302-2", "display": "Body Height" }] },
+        "subject": { "reference": "Patient/mina-curiel-acs-final" },
+        "effectiveDateTime": "2026-01-22T09:05:00Z",
+        "valueQuantity": { "value": 165, "unit": "cm", "system": "http://unitsofmeasure.org", "code": "cm" }
+      }
+    },
+    {
+      "resource": {
+        "resourceType": "Observation",
+        "id": "obs-weight",
+        "status": "final",
+        "code": { "coding": [{ "system": "http://loinc.org", "code": "29463-7", "display": "Body Weight" }] },
+        "subject": { "reference": "Patient/mina-curiel-acs-final" },
+        "effectiveDateTime": "2026-01-22T09:05:00Z",
+        "valueQuantity": { "value": 66, "unit": "kg", "system": "http://unitsofmeasure.org", "code": "kg" }
+      }
+    },
+    {
+      "resource": {
+        "resourceType": "Observation",
+        "id": "obs-bmi",
+        "status": "final",
+        "code": { "coding": [{ "system": "http://loinc.org", "code": "39156-5", "display": "Body Mass Index" }] },
+        "subject": { "reference": "Patient/mina-curiel-acs-final" },
+        "effectiveDateTime": "2026-01-22T09:05:00Z",
+        "valueQuantity": { "value": 24.2, "unit": "kg/m2", "system": "http://unitsofmeasure.org", "code": "kg/m2" },
+        "interpretation": [{ "coding": [{ "system": "http://terminology.hl7.org/CodeSystem/v3-ObservationInterpretation", "code": "N", "display": "Normal" }] }]
+      }
+    },
+    {
+      "resource": {
+        "resourceType": "Observation",
+        "id": "obs-bp",
+        "status": "final",
+        "code": { "coding": [{ "system": "http://loinc.org", "code": "85354-9", "display": "Blood Pressure panel" }] },
+        "subject": { "reference": "Patient/mina-curiel-acs-final" },
+        "effectiveDateTime": "2026-01-22T09:10:00Z",
+        "component": [
+          { "code": { "coding": [{ "system": "http://loinc.org", "code": "8480-6", "display": "Systolic blood pressure" }] }, "valueQuantity": { "value": 125, "unit": "mmHg" } },
+          { "code": { "coding": [{ "system": "http://loinc.org", "code": "8462-4", "display": "Diastolic blood pressure" }] }, "valueQuantity": { "value": 90, "unit": "mmHg" } }
+        ],
+        "interpretation": [{ "text": "Isolated Diastolic Hypertension" }]
+      }
+    },
+    {
+      "resource": {
+        "resourceType": "Observation",
+        "id": "lab-lipids-ldl",
+        "status": "final",
+        "code": { "coding": [{ "system": "http://loinc.org", "code": "2089-1", "display": "LDL Cholesterol" }] },
+        "subject": { "reference": "Patient/mina-curiel-acs-final" },
+        "effectiveDateTime": "2025-07-22T09:00:00Z",
+        "valueQuantity": { "value": 145, "unit": "mg/dL" },
+        "interpretation": [{ "coding": [{ "system": "http://terminology.hl7.org/CodeSystem/v3-ObservationInterpretation", "code": "H", "display": "High" }] }]
+      }
+    },
+    {
+      "resource": {
+        "resourceType": "Observation",
+        "id": "lab-lipids-hdl",
+        "status": "final",
+        "code": { "coding": [{ "system": "http://loinc.org", "code": "2085-9", "display": "HDL Cholesterol" }] },
+        "subject": { "reference": "Patient/mina-curiel-acs-final" },
+        "effectiveDateTime": "2025-07-22T09:00:00Z",
+        "valueQuantity": { "value": 40, "unit": "mg/dL" },
+        "interpretation": [{ "coding": [{ "system": "http://terminology.hl7.org/CodeSystem/v3-ObservationInterpretation", "code": "L", "display": "Low" }] }]
+      }
+    },
+    {
+      "resource": {
+        "resourceType": "DiagnosticReport",
+        "id": "report-echo-previous",
+        "status": "final",
+        "code": { "coding": [{ "system": "http://loinc.org", "code": "12326-7", "display": "Echocardiogram" }] },
+        "subject": { "reference": "Patient/mina-curiel-acs-final" },
+        "effectiveDateTime": "2024-01-22T12:30:00Z",
+        "conclusion": "Grade 1 Diastolic Dysfunction (impaired relaxation). LVEF 60%. Correlates with diastolic hypertension.",
+        "performer": [{ "display": "Cardiology Dept" }]
+      }
+    },
+    {
+      "resource": {
+        "resourceType": "Encounter",
+        "id": "past-encounter-palpitations",
+        "status": "finished",
+        "class": { "code": "EMER", "display": "emergency" },
+        "type": [
+            { "coding": [{ "system": "http://snomed.info/sct", "code": "4525004", "display": "Emergency department patient visit" }] }
+        ],
+        "subject": { "reference": "Patient/mina-curiel-acs-final" },
+        "period": { "start": "2024-01-22T10:00:00Z", "end": "2024-01-22T14:00:00Z" },
+        "reasonCode": [
+          {
+            "coding": [{ "system": "http://snomed.info/sct", "code": "80313002", "display": "Palpitations" }],
+            "text": "Heart skipping beats, lasted 2 minutes"
+          }
+        ]
+      }
+    },
+    {
+      "resource": {
+        "resourceType": "MedicationStatement",
+        "id": "med-advil",
+        "status": "active",
+        "medicationCodeableConcept": { "coding": [{ "system": "http://www.nlm.nih.gov/research/umls/rxnorm", "code": "204299", "display": "Ibuprofen 200 MG" }] },
+        "subject": { "reference": "Patient/mina-curiel-acs-final" },
+        "effectiveDateTime": "2026-01-22T09:00:00Z",
+        "dosage": [{ "text": "Take 400mg as needed for pain (PRN)" }]
+      }
+    },
+    {
+      "resource": {
+        "resourceType": "AllergyIntolerance",
+        "id": "allergy-penicillin",
+        "clinicalStatus": { "coding": [{ "system": "http://terminology.hl7.org/CodeSystem/allergyintolerance-clinical", "code": "active" }] },
+        "code": { "coding": [{ "system": "http://snomed.info/sct", "code": "91936005", "display": "Allergy to Penicillin" }] },
+        "patient": { "reference": "Patient/mina-curiel-acs-final" },
+        "reaction": [{ "manifestation": [{ "text": "Skin Rash" }] }]
+      }
+    },
+    {
+      "resource": {
+        "resourceType": "Immunization",
+        "id": "imm-covid",
+        "status": "completed",
+        "vaccineCode": { "coding": [{ "system": "http://hl7.org/fhir/sid/cvx", "code": "207", "display": "COVID-19, mRNA, LNP-S, PF, 100 mcg/0.5mL dose" }] },
+        "patient": { "reference": "Patient/mina-curiel-acs-final" },
+        "occurrenceDateTime": "2024-11-10"
+      }
+    },
+    {
+      "resource": {
+        "resourceType": "Immunization",
+        "id": "imm-flu",
+        "status": "completed",
+        "vaccineCode": { "coding": [{ "system": "http://hl7.org/fhir/sid/cvx", "code": "140", "display": "Influenza, seasonal, injectable" }] },
+        "patient": { "reference": "Patient/mina-curiel-acs-final" },
+        "occurrenceDateTime": "2025-10-01"
+      }
+    },
+    {
+      "resource": {
+        "resourceType": "FamilyMemberHistory",
+        "status": "completed",
+        "patient": { "reference": "Patient/mina-curiel-acs-final" },
+        "relationship": { "coding": [{ "system": "http://terminology.hl7.org/CodeSystem/v3-RoleCode", "code": "FTH", "display": "father" }] },
+        "sex": { "coding": [{ "code": "male" }] },
+        "ageAge": { "value": 74, "unit": "yr" },
+        "condition": [
+          { "code": { "coding": [{ "system": "http://snomed.info/sct", "code": "53741008", "display": "Coronary Artery Disease" }] } },
+          { "code": { "coding": [{ "system": "http://snomed.info/sct", "code": "230690007", "display": "Stroke" }] }, "note": [{ "text": "Stroke at age 69 (5 years ago), mild paralysis right side." }] }
+        ]
+      }
+    },
+    {
+      "resource": {
+        "resourceType": "FamilyMemberHistory",
+        "status": "completed",
+        "patient": { "reference": "Patient/mina-curiel-acs-final" },
+        "relationship": { "coding": [{ "system": "http://terminology.hl7.org/CodeSystem/v3-RoleCode", "code": "MTH", "display": "mother" }] },
+        "ageAge": { "value": 69, "unit": "yr" },
+        "condition": [
+          { "code": { "coding": [{ "system": "http://snomed.info/sct", "code": "87720002", "display": "Emphysema" }] } },
+          { "code": { "coding": [{ "system": "http://snomed.info/sct", "code": "77176002", "display": "Smoker" }] }, "note": [{ "text": "Secondhand smoke exposure during patient childhood." }] }
+        ]
+      }
+    },
+    {
+      "resource": {
+        "resourceType": "Observation",
+        "id": "social-stress",
+        "status": "final",
+        "code": { "text": "Psychosocial Stressors" },
+        "category": [{
+          "coding": [{
+            "system": "http://terminology.hl7.org/CodeSystem/observation-category",
+            "code": "social-history",
+            "display": "Social History"
+          }]
+        }],
+        "subject": { "reference": "Patient/mina-curiel-acs-final" },
+        "note": [{ "text": "High psychosocial stress: Medicaid/Uninsured status, recent separation (6 months), single parenting." }]
+      }
+    }
+  ]
+}
