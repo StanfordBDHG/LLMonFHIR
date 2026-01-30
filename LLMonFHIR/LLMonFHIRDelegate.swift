@@ -34,9 +34,11 @@ final class LLMonFHIRDelegate: SpeziAppDelegate {
             let fhirInterpretationModule = FHIRInterpretationModule()
             fhirInterpretationModule
             HealthKit {
-                RequestReadAccess(other: LLMonFHIRStandard.recordTypes)
-                for type in LLMonFHIRStandard.recordTypes {
-                    CollectSamples(type, start: .manual, continueInBackground: false, timeRange: .newSamples)
+                if HKHealthStore().supportsHealthRecords() {
+                    RequestReadAccess(other: LLMonFHIRStandard.recordTypes)
+                    for type in LLMonFHIRStandard.recordTypes {
+                        CollectSamples(type, start: .manual, continueInBackground: false, timeRange: .newSamples)
+                    }
                 }
             }
             LLMRunner {
