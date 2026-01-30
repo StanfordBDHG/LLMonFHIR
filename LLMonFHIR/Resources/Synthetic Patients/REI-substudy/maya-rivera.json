@@ -739,7 +739,7 @@
         "requester": { "reference": "Practitioner/pract-1" },
         "dosageInstruction": [
           {
-            "text": "Take 1 prenatal vitamin by mouth daily."
+            "text": "Take 1 prenatal vitamin by mouth daily.These include folate 800 mcg, fish oul 1g and vitamin D 2000u"
           }
         ]
       }
@@ -856,7 +856,7 @@
         },
         "subject": { "reference": "Patient/pat-1" },
         "effectiveDateTime": "2026-01-10",
-        "valueString": "G2P0A2 (two first-trimester pregnancy losses). No living children."
+        "valueString": "G2P0020 (two first-trimester pregnancy losses). No living children."
       }
     }
     ,
@@ -947,7 +947,7 @@
         "abatementDateTime": "2023-12-05",
         "note": [
           {
-            "text": "Spontaneous miscarriage at ~7 weeks gestation (synthetic)."
+            "text": "Spontaneous miscarriage at ~7 weeks gestation (synthetic), no genetics."
           }
         ]
       }
