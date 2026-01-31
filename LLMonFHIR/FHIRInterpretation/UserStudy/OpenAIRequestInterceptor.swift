@@ -29,7 +29,7 @@ struct OpenAIRequestInterceptor: ClientMiddleware, Sendable {
         self.fhirInterpretationModule = fhirInterpretationModule
     }
     
-    func intercept( // swiftlint:disable:this function_body_length cyclomatic_complexity
+    func intercept(
         _ request: HTTPRequest,
         body: HTTPBody?,
         baseURL: URL,
@@ -44,45 +44,30 @@ struct OpenAIRequestInterceptor: ClientMiddleware, Sendable {
         case .regular:
             return try await next(request, body, baseURL)
         case .firebaseFunction(let name):
-            guard let projectId = FirebaseApp.app()?.options.projectID else {
-                throw Error("Missing projectId")
-            }
-            guard let token = try await Auth.auth().currentUser?.getIDToken() else {
-                throw Error("Missing Firebase IDToken")
-            }
-            guard let data = try await body?.data(upTo: maxBodySize) else {
+            guard let data = try await body?.data(upTo: maxBodySize),
+                  let input = String(bytes: data, encoding: .utf8) else {
                 throw Error("Missing Body")
             }
-            let endpoint: URL = try {
-                if let emulatorOrigin = Functions.functions().emulatorOrigin {
-                    try URL("\(emulatorOrigin)/\(projectId)/us-central1/\(name)", strategy: .url)
-                } else {
-                    try URL("https://us-central1-\(projectId).cloudfunctions.net/\(name)", strategy: .url)
-                }
-            }()
-            var req = URLRequest(url: endpoint)
-            req.httpMethod = "POST"
-            req.httpBody = Data(data)
-            req.setValue("application/json", forHTTPHeaderField: "Content-Type")
-            req.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
-            let (bytes, response) = try await URLSession.shared.bytes(for: req)
-            guard let response = response as? HTTPURLResponse else {
-                throw Error("Invalid response")
-            }
-            let status = HTTPResponse.Status(code: response.statusCode)
-            var fields = HTTPFields()
-            for (key, value) in response.allHeaderFields {
-                guard let key = (key as? String).flatMap({ HTTPField.Name($0) }), let value = value as? String else {
-                    continue
-                }
-                fields[key] = value
-            }
-            let res = HTTPResponse(status: status, headerFields: fields)
+            let callable = Functions.functions()
+                .httpsCallable(name, requestAs: String.self, responseAs: StreamResponse<String, String>.self)
+            let res = HTTPResponse(
+                status: .ok,
+                headerFields: [
+                    .contentType: "text/event-stream",
+                    .cacheControl: "no-cache",
+                    .connection: "keep-alive"
+                ]
+            )
             let stream = AsyncThrowingStream(HTTPBody.ByteChunk.self) { continuation in
                 Task {
                     do {
-                        for try await byte in bytes {
-                            continuation.yield([byte])
+                        let stream = try callable.stream(input)
+                        for try await event in stream {
+                            let string = switch event {
+                            case .message(let chunk), .result(let chunk):
+                                chunk
+                            }
+                            continuation.yield(HTTPBody.ByteChunk(string.utf8))
                         }
                         continuation.finish()
                     } catch {
