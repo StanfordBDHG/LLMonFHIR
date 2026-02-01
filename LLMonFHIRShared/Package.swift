@@ -33,6 +33,9 @@ let package = Package(
                 .product(name: "SpeziFoundation", package: "SpeziFoundation"),
                 .product(name: "ModelsR4", package: "FHIRModels")
             ],
+            resources: [
+                .copy("Resources/Synthetic Patients")
+            ],
             swiftSettings: [
                 .enableUpcomingFeature("ExistentialAny"),
                 .enableUpcomingFeature("InternalImportsByDefault")

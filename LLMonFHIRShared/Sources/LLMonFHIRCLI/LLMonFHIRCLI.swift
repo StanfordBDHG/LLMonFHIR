@@ -11,7 +11,7 @@ import Foundation
 
 
 @main
-struct LLMonFHIRCLI: ParsableCommand {
+struct LLMonFHIRCLI: AsyncParsableCommand {
     static let configuration = CommandConfiguration(
         commandName: "LLMonFHIRCLI",
         abstract: "Utility tools for the LLMonFHIR app",
@@ -19,14 +19,18 @@ struct LLMonFHIRCLI: ParsableCommand {
         discussion: "",
         version: "0.0.1",
         shouldDisplay: true,
-        subcommands: [ExportConfigFile.self, DecryptStudyReport.self],
+        subcommands: [
+            ExportConfigFile.self,
+            DecryptStudyReport.self,
+            SimulateSession.self
+        ],
         groupedSubcommands: [],
         defaultSubcommand: nil,
         helpNames: nil,
         aliases: []
     )
     
-    func run() throws {
+    func run() async throws {
         print(Self.helpMessage())
     }
 }
