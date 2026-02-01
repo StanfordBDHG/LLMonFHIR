@@ -6,25 +6,23 @@
 // SPDX-License-Identifier: MIT
 //
 
-import Foundation
-import LLMonFHIRShared
-import SpeziChat
-import SpeziFHIR
-import SpeziLLM
-import SpeziLLMOpenAI
-import SpeziLocalStorage
+// swiftlint:disable missing_docs
+
+public import SpeziFHIR
+public import SpeziLLM
+public import SpeziLocalStorage
 
 
-actor FHIRResourceProcessor<Content: Codable & LosslessStringConvertible> {
-    typealias Results = [FHIRResource.ID: Content]
+public actor FHIRResourceProcessor<Content: Codable & LosslessStringConvertible> {
+    public typealias Results = [FHIRResource.ID: Content]
     
     private let localStorage: LocalStorage
     private let llmRunner: LLMRunner
     private let storageKey: String
     /// The prompt used to summarize a FHIR resource
-    var summarizationPrompt: FHIRPrompt
+    private(set) var summarizationPrompt: FHIRPrompt
     
-    private(set) var results: Results = [:] {
+    public private(set) var results: Results = [:] {
         didSet {
             try? localStorage.store(results, for: .init(storageKey))
         }
@@ -32,7 +30,7 @@ actor FHIRResourceProcessor<Content: Codable & LosslessStringConvertible> {
     
     private(set) var llmSchema: any LLMSchema
     
-    init(
+    public init(
         localStorage: LocalStorage,
         llmRunner: LLMRunner,
         llmSchema: any LLMSchema,
@@ -48,13 +46,13 @@ actor FHIRResourceProcessor<Content: Codable & LosslessStringConvertible> {
     }
     
     
-    func update(llmSchema schema: any LLMSchema, summarizationPrompt: FHIRPrompt) {
+    public func update(llmSchema schema: any LLMSchema, summarizationPrompt: FHIRPrompt) {
         self.llmSchema = schema
         self.summarizationPrompt = summarizationPrompt
     }
     
     @discardableResult
-    func process(resource: SendableFHIRResource, forceReload: Bool = false) async throws -> Content {
+    public func process(resource: SendableFHIRResource, forceReload: Bool = false) async throws -> Content {
         if let result = results[resource.id], !result.description.isEmpty, !forceReload {
             return result
         }

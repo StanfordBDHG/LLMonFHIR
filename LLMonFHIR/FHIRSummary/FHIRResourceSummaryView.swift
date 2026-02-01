@@ -6,6 +6,7 @@
 // SPDX-License-Identifier: MIT
 //
 
+import LLMonFHIRShared
 import SpeziFHIR
 import SpeziViews
 import SwiftUI
@@ -58,7 +59,8 @@ struct FHIRResourceSummaryView: View {
         }
         .viewStateAlert(state: $viewState)
         .task {
-            summary = await fhirResourceSummary.cachedSummary(forResource: resource)
+            nonisolated(unsafe) let unsafeSendableResource = resource
+            summary = await fhirResourceSummary.cachedSummary(forResource: unsafeSendableResource)
         }
     }
     

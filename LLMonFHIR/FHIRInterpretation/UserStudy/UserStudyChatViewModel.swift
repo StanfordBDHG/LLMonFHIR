@@ -22,7 +22,7 @@ import SwiftUI
 /// LLM operations and persistence to the underlying interpreter.
 @MainActor
 @Observable
-final class UserStudyChatViewModel: MultipleResourcesChatViewModel, Sendable { // swiftlint:disable:this type_body_length
+final class UserStudyChatViewModel: Sendable {
     /// The current state of the survey navigation
     enum NavigationState: Equatable {
         case introduction
@@ -77,69 +77,25 @@ final class UserStudyChatViewModel: MultipleResourcesChatViewModel, Sendable { /
     }
     
     private let uploader: FirebaseUpload?
-
+    
+    let interpreter: FHIRMultipleResourceInterpreter
+    var processingState: ProcessingState = .processingSystemPrompts
+    
     /// The current navigation state of the study
     private(set) var navigationState: NavigationState = .introduction
     
     /// The currently-presented sheet
     var presentedSheet: PresentedSheet?
-
+    
     /// Controls the visibility of the dismiss confirmation dialog
     var isDismissDialogPresented = false
-
-    var isTaskIntructionButtonDisabled: Bool {
-        study.tasks.first { $0.id == currentTaskId }?.instructions == nil
-    }
-
-    /// Returns the current task if one is active
-    var currentTask: Study.Task? {
-        study.tasks.first { $0.id == currentTaskId }
+    
+    /// Indicates if the LLM is currently processing or generating a response
+    /// This property directly reflects the LLM session's state
+    var isProcessing: Bool {
+        llmSession.state.representation == .processing
     }
     
-    var currentTaskIdx: Int? {
-        study.tasks.firstIndex { $0.id == currentTaskId }
-    }
-    
-    var userDisplayableCurrentTaskIdx: Int? {
-        currentTaskIdx.map { $0 + 1 }
-    }
-    
-    /// Whether the chat input should currently be enabled, i.e. whether the user should currently be able to write (and submit) chat messages
-    var shouldEnableChatInput: Bool {
-        // Always disable during processing
-        if isProcessing {
-            return false
-        }
-        // If no capacity range is configured for this task, enable chat input
-        if !hasConfiguredCapacityForCurrentTask {
-            return true
-        }
-        // Disable when the maximum number of messages is reached
-        return !isMaxAssistantMessagesReached
-    }
-
-    var shouldEnableContinueToNextTaskAction: Bool {
-        if isProcessing {
-            // Always disable during processing
-            return false
-        }
-        if !hasConfiguredCapacityForCurrentTask {
-            // If no capacity range is configured for this task, enable toolbar
-            return true
-        }
-        // Disable if the minimum number of messages is not met
-        return isMinAssistantMessagesReached
-    }
-    
-    private var currentTaskId: Study.Task.ID? {
-        switch navigationState {
-        case let .task(task, taskIdx: _, numTotalTasks: _, taskState: _):
-            task.id
-        case .introduction, .completed:
-            nil
-        }
-    }
-
     let study: Study
     /// Additional key-value pairs associated with this particular study session (e.g., a participant id).
     private let userInfo: [String: String]
@@ -150,20 +106,8 @@ final class UserStudyChatViewModel: MultipleResourcesChatViewModel, Sendable { /
     private var taskStartTimes: [Study.Task.ID: Date] = [:]
     private var taskEndTimes: [Study.Task.ID: Date] = [:]
     private var assistantMessagesByTask = LimitedCollectionDictionary<Study.Task.ID, String>()
-
-    private var isMaxAssistantMessagesReached: Bool {
-        currentTaskId.map { assistantMessagesByTask.isMaxReached(forKey: $0) } ?? false
-    }
-
-    private var isMinAssistantMessagesReached: Bool {
-        currentTaskId.map { assistantMessagesByTask.isMinReached(forKey: $0) } ?? false
-    }
-
-    private var hasConfiguredCapacityForCurrentTask: Bool {
-        currentTaskId.map { assistantMessagesByTask.hasConfiguredCapacity(forKey: $0) } ?? false
-    }
-
-
+    
+    
     /// Creates a new view model for managing a user study chat session
     ///
     /// - Parameters:
@@ -178,56 +122,46 @@ final class UserStudyChatViewModel: MultipleResourcesChatViewModel, Sendable { /
         resourceSummary: FHIRResourceSummary,
         uploader: FirebaseUpload?
     ) {
+        self.interpreter = interpreter
+        self.resourceSummary = resourceSummary
         self.study = study
         self.userInfo = userInfo
         self.initialQuestionnaireResponse = initialQuestionnaireResponse
-        self.resourceSummary = resourceSummary
         self.uploader = uploader
-        super.init(interpreter: interpreter, navigationTitle: "")
         configureMessageLimits()
     }
-
     
-    private func updateProcessingState() async {
-        switch llmSession.state {
-        case .error(let error):
-            // Alerts and sheets can not be displayed at the same time.
-            if presentedSheet != nil {
-                // We have to first dismiss all sheets.
-                presentedSheet = nil
-                // Wait for animation to complete
-                try? await Task.sleep(for: .seconds(1))
-                // Re-set the error state.
-                llmSession.state = .generating
-                try? await Task.sleep(for: .seconds(0.5))
-                llmSession.state = .error(error: error)
-            }
-            processingState = .error
-        default:
-            processingState = await processingState.calculateNewProcessingState(basedOn: llmSession)
-        }
+    static func unguided(
+        title: String,
+        interpreter: FHIRMultipleResourceInterpreter,
+        resourceSummary: FHIRResourceSummary
+    ) -> Self {
+        let emptyStudy = Study(
+            id: "edu.stanford.LLMonFHIR.unguidedStudy",
+            isStanfordIRBApproved: false,
+            title: title,
+            explainer: "",
+            settingsUnlockCode: nil,
+            openAIAPIKey: "",
+            openAIEndpoint: .regular,
+            reportEmail: nil,
+            encryptionKey: nil,
+            summarizeSingleResourcePrompt: nil,
+            interpretMultipleResourcesPrompt: nil,
+            chatTitleConfig: .studyTitle,
+            initialQuestionnaire: nil,
+            tasks: []
+        )
+        return Self(
+            study: emptyStudy,
+            userInfo: [:],
+            initialQuestionnaireResponse: nil,
+            interpreter: interpreter,
+            resourceSummary: resourceSummary,
+            uploader: nil
+        )
     }
-
-    /// Generates an assistant response if appropriate for the current context
-    ///
-    /// This method checks if a response is needed and if so, delegates
-    /// to the interpreter to generate the actual response.
-    override func generateAssistantResponse(
-        preProcessingStateUpdate: @escaping () async -> Void = {}
-    ) async -> LLMContextEntity? {
-        let stateUpdate = {
-            await self.updateProcessingState()
-            await preProcessingStateUpdate()
-        }
-        guard let response = await super.generateAssistantResponse(preProcessingStateUpdate: stateUpdate) else {
-            return nil
-        }
-        if let currentTaskId {
-            try? assistantMessagesByTask.append(response.id.uuidString, forKey: currentTaskId)
-        }
-        return response
-    }
-
+    
     /// Cancels any ongoing operations and dismisses the current view
     ///
     /// - Parameter dismiss: The dismiss action from the environment to close the view
@@ -236,7 +170,7 @@ final class UserStudyChatViewModel: MultipleResourcesChatViewModel, Sendable { /
         resetStudy()
         dismiss()
     }
-
+    
     /// Handles the submission of survey answers for a task within the survey.
     ///
     /// This method processes the user's answers. If `task` is the current task, it also advances to the next task in the survey sequence.
@@ -256,7 +190,7 @@ final class UserStudyChatViewModel: MultipleResourcesChatViewModel, Sendable { /
             advanceToNextTask()
         }
     }
-
+    
     /// Resets the study to its initial state
     ///
     /// This method clears all survey answers and resets the navigation state,
@@ -267,7 +201,7 @@ final class UserStudyChatViewModel: MultipleResourcesChatViewModel, Sendable { /
         taskEndTimes.removeAll()
         navigationState = .introduction
     }
-
+    
     /// Starts the survey portion of the study
     ///
     /// This method initializes the survey process if it hasn't already been started.
@@ -284,37 +218,7 @@ final class UserStudyChatViewModel: MultipleResourcesChatViewModel, Sendable { /
         taskStartTimes[task.id] = Date()
         presentedSheet = .instructions
     }
-
-    /// Generates a temporary file URL containing the study report
-    ///
-    /// - Returns: The URL of the generated report file, or nil if generation fails
-    func generateStudyReportFile(encryptIfPossible: Bool) async throws -> URL? {
-        guard var studyReport = await generateStudyReport() else {
-            return nil
-        }
-        if encryptIfPossible, let key = study.encryptionKey {
-            studyReport = try studyReport.encrypted(using: key)
-        }
-        let tempDir = FileManager.default.temporaryDirectory
-        let reportURL = tempDir.appendingPathComponent("survey_report_\(study.id.lowercased()).json")
-        try studyReport.write(to: reportURL)
-        return reportURL
-    }
-
-    private func configureMessageLimits() {
-        for task in study.tasks {
-            guard let limits = task.assistantMessagesLimit else {
-                assistantMessagesByTask.setUnlimitedCapacity(forKey: task.id)
-                continue
-            }
-            do {
-                try assistantMessagesByTask.setCapacityRange(minimum: limits.lowerBound, maximum: limits.upperBound, forKey: task.id)
-            } catch {
-                print("Error configuring message limit for task \(task.id): \(error)")
-            }
-        }
-    }
-
+    
     private func advanceToNextTask() {
         guard let currentTaskIdx = study.tasks.firstIndex(where: { $0.id == currentTaskId }) else {
             return
@@ -386,7 +290,188 @@ final class UserStudyChatViewModel: MultipleResourcesChatViewModel, Sendable { /
             return
         }
     }
+}
+
+
+extension UserStudyChatViewModel {
+    var isTaskIntructionButtonDisabled: Bool {
+        study.tasks.first { $0.id == currentTaskId }?.instructions == nil
+    }
     
+    /// Returns the current task if one is active
+    var currentTask: Study.Task? {
+        study.tasks.first { $0.id == currentTaskId }
+    }
+    
+    private var currentTaskId: Study.Task.ID? {
+        switch navigationState {
+        case let .task(task, taskIdx: _, numTotalTasks: _, taskState: _):
+            task.id
+        case .introduction, .completed:
+            nil
+        }
+    }
+    
+    var currentTaskIdx: Int? {
+        study.tasks.firstIndex { $0.id == currentTaskId }
+    }
+    
+    var userDisplayableCurrentTaskIdx: Int? {
+        currentTaskIdx.map { $0 + 1 }
+    }
+}
+
+
+extension UserStudyChatViewModel {
+    /// Determines whether to display a typing indicator in the chat interface.
+    var showTypingIndicator: Bool {
+        processingState.isProcessing
+    }
+    
+    // Whether the chat input should currently be enabled, i.e. whether the user should currently be able to write (and submit) chat messages
+    var shouldEnableChatInput: Bool {
+        // Always disable during processing
+        if isProcessing {
+            return false
+        }
+        // If no capacity range is configured for this task, enable chat input
+        if !hasConfiguredCapacityForCurrentTask {
+            return true
+        }
+        // Disable when the maximum number of messages is reached
+        return !isMaxAssistantMessagesReached
+    }
+    
+    var shouldEnableContinueToNextTaskAction: Bool {
+        if isProcessing {
+            // Always disable during processing
+            return false
+        }
+        if !hasConfiguredCapacityForCurrentTask {
+            // If no capacity range is configured for this task, enable toolbar
+            return true
+        }
+        // Disable if the minimum number of messages is not met
+        return isMinAssistantMessagesReached
+    }
+}
+
+
+extension UserStudyChatViewModel {
+    /// Direct access to the current LLM session for observing state changes
+    var llmSession: any LLMSession {
+        interpreter.llmSession
+    }
+    
+    /// Provides a binding to the chat messages for use in SwiftUI views
+    ///
+    /// This binding allows the ChatView component to both display messages
+    /// and add new user messages to the conversation.
+    var chatBinding: Binding<Chat> {
+        Binding { [weak self] in
+            self?.interpreter.llmSession.context.chat ?? []
+        } set: { [weak self] newChat in
+            self?.interpreter.llmSession.context.chat = newChat
+        }
+    }
+}
+
+
+extension UserStudyChatViewModel {
+    private var isMaxAssistantMessagesReached: Bool {
+        currentTaskId.map { assistantMessagesByTask.isMaxReached(forKey: $0) } ?? false
+    }
+
+    private var isMinAssistantMessagesReached: Bool {
+        currentTaskId.map { assistantMessagesByTask.isMinReached(forKey: $0) } ?? false
+    }
+
+    private var hasConfiguredCapacityForCurrentTask: Bool {
+        currentTaskId.map { assistantMessagesByTask.hasConfiguredCapacity(forKey: $0) } ?? false
+    }
+    
+    private func configureMessageLimits() {
+        for task in study.tasks {
+            guard let limits = task.assistantMessagesLimit else {
+                assistantMessagesByTask.setUnlimitedCapacity(forKey: task.id)
+                continue
+            }
+            do {
+                try assistantMessagesByTask.setCapacityRange(minimum: limits.lowerBound, maximum: limits.upperBound, forKey: task.id)
+            } catch {
+                print("Error configuring message limit for task \(task.id): \(error)")
+            }
+        }
+    }
+}
+
+
+extension UserStudyChatViewModel {
+    private var shouldGenerateResponse: Bool {
+        if llmSession.state == .generating || isProcessing {
+            return false
+        }
+        // Check if the last message is from a user (needs a response)
+        let lastMessageIsUser = interpreter.llmSession.context.last?.role == .user
+        // Check if there are no assistant messages yet (initial prompt needs a response)
+        let noAssistantMessages = !interpreter.llmSession.context.contains(where: { $0.role == .assistant() })
+        // Generate if last message is from user or if there are no assistant messages yet
+        return lastMessageIsUser || noAssistantMessages
+    }
+    
+    private func updateProcessingState() async {
+        switch llmSession.state {
+        case .error(let error):
+            // Alerts and sheets can not be displayed at the same time.
+            if presentedSheet != nil {
+                // We have to first dismiss all sheets.
+                presentedSheet = nil
+                // Wait for animation to complete
+                try? await Task.sleep(for: .seconds(1))
+                // Re-set the error state.
+                llmSession.state = .generating
+                try? await Task.sleep(for: .seconds(0.5))
+                llmSession.state = .error(error: error)
+            }
+            processingState = .error
+        default:
+            processingState = await processingState.calculateNewProcessingState(basedOn: llmSession)
+        }
+    }
+
+    /// Generates an assistant response if appropriate for the current context
+    ///
+    /// This method checks if a response is needed and if so, delegates
+    /// to the interpreter to generate the actual response.
+    func generateAssistantResponse() async -> LLMContextEntity? {
+        let imp = { [unowned self] () async -> LLMContextEntity? in // swiftlint:disable:this unowned_variable_capture
+            await updateProcessingState()
+            processingState = await processingState.calculateNewProcessingState(basedOn: llmSession)
+            guard shouldGenerateResponse else {
+                return nil
+            }
+            processingState = .processingSystemPrompts
+            guard let response = await interpreter.generateAssistantResponse() else {
+                return nil
+            }
+            await updateProcessingState()
+            processingState = await processingState.calculateNewProcessingState(basedOn: llmSession)
+            return response
+        }
+        guard let response = await imp() else {
+            return nil
+        }
+        if let currentTaskId {
+            try? assistantMessagesByTask.append(response.id.uuidString, forKey: currentTaskId)
+        }
+        return response
+    }
+}
+
+
+// MARK: Model + Report
+
+extension UserStudyChatViewModel {
     private func uploadReport() async {
         guard let uploader else {
             return
@@ -404,8 +489,23 @@ final class UserStudyChatViewModel: MultipleResourcesChatViewModel, Sendable { /
             print("study report upload failed: \(error)")
         }
     }
-
-
+    
+    /// Generates a temporary file URL containing the study report
+    ///
+    /// - Returns: The URL of the generated report file, or nil if generation fails
+    func generateStudyReportFile(encryptIfPossible: Bool) async throws -> URL? {
+        guard var studyReport = await generateStudyReport() else {
+            return nil
+        }
+        if encryptIfPossible, let key = study.encryptionKey {
+            studyReport = try studyReport.encrypted(using: key)
+        }
+        let tempDir = FileManager.default.temporaryDirectory
+        let reportURL = tempDir.appendingPathComponent("survey_report_\(study.id.lowercased()).json")
+        try studyReport.write(to: reportURL)
+        return reportURL
+    }
+    
     private func generateStudyReport() async -> Data? {
         let report = UserStudyReport(
             metadata: Metadata(
@@ -465,6 +565,7 @@ final class UserStudyChatViewModel: MultipleResourcesChatViewModel, Sendable { /
                 FullFHIRResource(resource.versionedResource)
             }
         let allResources = await interpreter.fhirStore.allResources.mapAsync { resource in
+            nonisolated(unsafe) let resource = resource
             let summary = await resourceSummary.cachedSummary(forResource: resource)
             return PartialFHIRResource(
                 id: resource.id,
@@ -480,6 +581,9 @@ final class UserStudyChatViewModel: MultipleResourcesChatViewModel, Sendable { /
         )
     }
 }
+
+
+// MARK: Other
 
 extension ChatEntity.Role {
     var rawValue: String {

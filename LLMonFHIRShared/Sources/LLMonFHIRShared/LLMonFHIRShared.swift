@@ -10,6 +10,7 @@ public import Foundation
 
 
 extension Bundle {
+    /// The `LLMonFHIR` module's Bundle.
     public static var llmOnFhirShared: Bundle {
         .module
     }

@@ -6,6 +6,7 @@
 // SPDX-License-Identifier: MIT
 //
 
+import LLMonFHIRShared
 import SpeziFHIR
 import SpeziLLM
 import SpeziViews
@@ -69,7 +70,8 @@ struct InspectResourceView: View {
             }
         }
         .task {
-            summary = await fhirResourceSummary.cachedSummary(forResource: resource)
+            nonisolated(unsafe) let unsafeSendableResource = resource
+            summary = await fhirResourceSummary.cachedSummary(forResource: unsafeSendableResource)
         }
     }
     

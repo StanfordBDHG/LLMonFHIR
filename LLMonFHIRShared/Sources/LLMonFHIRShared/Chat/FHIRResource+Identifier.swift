@@ -7,7 +7,7 @@
 //
 
 import Foundation
-import SpeziFHIR
+public import SpeziFHIR
 
 
 extension FHIRResource {
@@ -18,7 +18,8 @@ extension FHIRResource {
     }()
     
     
-    var functionCallIdentifier: String {
+    // swiftlint:disable:next missing_docs
+    public var functionCallIdentifier: String {
         resourceType.filter { $0.isLetter || $0.isWholeNumber }
             + "-"
             + displayName.filter { $0.isLetter || $0.isWholeNumber }.prefix(75)

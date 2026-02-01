@@ -13,7 +13,7 @@ import SpeziViews
 import SwiftUI
 
 
-struct ResourceView: View {
+struct ResourceView: View { // Maybe rename this at some point?
     @Environment(FHIRStore.self) private var fhirStore
     @Binding var showMultipleResourcesChat: Bool
     

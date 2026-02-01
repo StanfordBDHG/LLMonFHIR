@@ -6,12 +6,15 @@
 // SPDX-License-Identifier: MIT
 //
 
+import LLMonFHIRShared
 import Spezi
 import SwiftUI
 
 
 struct HomeView: View {
     @Environment(FHIRMultipleResourceInterpreter.self) var interpreter
+    @Environment(FHIRResourceSummary.self) var resourceSummary
+    
     @State private var showMultipleResourcesChat = false
     @State private var qrCodeScanResult: StudyQRCodeHandler.ScanResult?
 
@@ -24,10 +27,11 @@ struct HomeView: View {
                 toolbarContent
             }
             .sheet(isPresented: $showMultipleResourcesChat) {
-                MultipleResourcesChatView(
+                UserStudyChatView(model: .unguided(
+                    title: "LLM on FHIR",
                     interpreter: interpreter,
-                    navigationTitle: "LLM on FHIR"
-                )
+                    resourceSummary: resourceSummary
+                ))
             }
             .fullScreenCover(item: $qrCodeScanResult, id: \.self) { scanResult in
                 StudyHomeView(study: scanResult.study, userInfo: scanResult.userInfo)

@@ -12,6 +12,7 @@ import SpeziLLM
 import SpeziViews
 import SwiftUI
 
+
 struct UserStudyChatView: View {
     @Environment(\.dismiss) private var dismiss
     @State private var model: UserStudyChatViewModel
@@ -78,7 +79,7 @@ struct UserStudyChatView: View {
     
     @ViewBuilder private var chatView: some View {
         VStack {
-            MultipleResourcesChatViewProcessingView(model: model)
+            UserStudyChatProcessingView(model: model)
             ChatView(
                 model.chatBinding,
                 disableInput: !model.shouldEnableChatInput,

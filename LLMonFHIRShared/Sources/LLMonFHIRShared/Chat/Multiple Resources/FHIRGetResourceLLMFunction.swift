@@ -6,27 +6,24 @@
 // SPDX-License-Identifier: MIT
 //
 
-@preconcurrency import ModelsR4
-import os
-import SpeziFHIR
-import SpeziLLMOpenAI
+private import ModelsR4
+private import os
+public import SpeziFHIR
+public import SpeziLLMOpenAI
 
 
-struct FHIRGetResourceLLMFunction: LLMFunction {
-    static let logger = Logger(subsystem: "edu.stanford.spezi.fhir", category: "SpeziFHIRLLM")
+public struct FHIRGetResourceLLMFunction: LLMFunction {
+    private static let logger = Logger(subsystem: "edu.stanford.spezi.fhir", category: "SpeziFHIRLLM")
     
-    static let name = "get_resources"
-    static let description = String(localized: "FUNCTION_DESCRIPTION \(FHIRResource.functionCallIdentifierDateFormatter.string(from: .now))")
+    public static let name = "get_resources"
     
     private let fhirStore: FHIRStore
     private let resourceSummary: FHIRResourceSummary
     
-    
     @Parameter var resourceCategories: [String]
     
-    
     @MainActor
-    init(
+    public init(
         fhirStore: FHIRStore,
         resourceSummary: FHIRResourceSummary,
         resourceCountLimit: Int
@@ -35,7 +32,13 @@ struct FHIRGetResourceLLMFunction: LLMFunction {
         self.resourceSummary = resourceSummary
         
         _resourceCategories = Parameter(
-            description: String(localized: "PARAMETER_DESCRIPTION \(FHIRResource.functionCallIdentifierDateFormatter.string(from: .now))"),
+            description: """
+                Pass in one or more identifiers that you want to access.
+                It is possible that multiple titles apply to the users's question (e.g for multiple medications).
+                You can also request a larger set of FHIR resources by, e.g., just stating the resource type but this might not include all relevant resources to avoid exceeding the token limit.
+                Ensure that you request the most recent information to get a good overview of the user's current health status.
+                Today’s date is \(FHIRResource.functionCallIdentifierDateFormatter.string(from: .now)).
+                """,
             enum: fhirStore.allResourcesFunctionCallIdentifier.suffix(resourceCountLimit)
         )
     }
@@ -50,7 +53,7 @@ struct FHIRGetResourceLLMFunction: LLMFunction {
     }
     
     
-    func execute() async throws -> String? {
+    public func execute() async throws -> String? {
         try await processResourceCategories(resourceCategories)
             .joined(separator: "\n\n")
     }
@@ -107,4 +110,24 @@ struct FHIRGetResourceLLMFunction: LLMFunction {
         Self.logger.debug("Summary of appended FHIR resource category \(resourceCategory): \(summary.description)")
         return String(localized: "This is the summary of the requested \(resourceCategory):\n\n\(summary.description)")
     }
+}
+
+
+extension FHIRGetResourceLLMFunction {
+    // swiftlint:disable:next missing_docs
+    public static let description = """
+        Call this function to request the relevant FHIR health records based on the user's question and conversation context using their FHIR resource identifiers.
+
+        The FHIR resource identifiers are composed of three elements:
+        1. The FHIR resource type, e.g., DocumentReference, DiagnosticReport, MedicationRequest, Encounter, Observation, Procedure, Condition, ...
+        2. The descriptive title of the FHIR resource.
+        3. The date associated with the FHIR resource.
+
+        Use this information to request the most relevant FHIR resources.
+        Pass in one or more resource identifiers that you need access to the `resourceCategories` argument.
+        You can also request a more extensive set of FHIR resources by only stating the resource type.
+
+        Use the date in the parameter enum cases to identify relevant resources within the correct time window. Aim to request recent FHIR resources.
+        Today's date is \(FHIRResource.functionCallIdentifierDateFormatter.string(from: .now)).
+        """
 }
