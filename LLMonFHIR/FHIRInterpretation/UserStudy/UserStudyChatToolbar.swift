@@ -106,7 +106,7 @@ struct UserStudyChatToolbar: ToolbarContent {
         } label: {
             Label("Next Task", systemImage: "arrow.forward.circle")
                 .accessibilityLabel("Next Task")
-                .modifier(PulsatingEffect(isEnabled: enableContinueAction))
+                .pulsate(enableContinueAction)
         }
         .disabled(!enableContinueAction)
         if model.navigationState != .completed {
