@@ -58,7 +58,7 @@ public final class FHIRResourceSummary: Sendable {
     ///   - llmRunner: OpenAI module that needs to be passed to the ``FHIRResourceSummary`` to allow it to retrieve summaries.
     ///   - llmSchema: LLM schema to use for generating summaries.
     public init(
-        localStorage: LocalStorage,
+        localStorage: LocalStorage?,
         llmRunner: LLMRunner,
         llmSchema: any LLMSchema,
         summarizationPrompt: FHIRPrompt = .summarizeSingleFHIRResourceDefaultPrompt
@@ -107,7 +107,10 @@ public final class FHIRResourceSummary: Sendable {
     ///
     /// - Parameter resource: The resource where the cached summary should be loaded from.
     /// - Returns: The cached summary. Returns `nil` if the resource is not present.
-    public func cachedSummary(forResource resource: FHIRResource) async -> Summary? {
+    public func cachedSummary(
+        isolation: isolated (any Actor)? = #isolation,
+        forResource resource: FHIRResource
+    ) async -> Summary? {
         await resourceProcessor.results[resource.id]
     }
     

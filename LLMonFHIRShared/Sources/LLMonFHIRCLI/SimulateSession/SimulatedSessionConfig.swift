@@ -13,13 +13,20 @@ import LLMonFHIRShared
 import LLMonFHIRStudyDefinitions
 import class ModelsR4.Bundle
 import class ModelsR4.Patient
+import SpeziLLMOpenAI
 
 
-struct SimulatedSessionConfig {
+struct SimulatedSessionConfig: Sendable {
     let numberOfRuns: Int
-    let study: Study
-    let bundle: ModelsR4.Bundle
+    let model: LLMOpenAIParameters.ModelType
+    
+    // we're not collecting any survey responses in the simulated sessions, so this is in fact safe.
+    nonisolated(unsafe) let study: Study
+    // isn't allowed to get mutated.
+    nonisolated(unsafe) let bundle: ModelsR4.Bundle
     let openAIKey: String
+    
+    let userQuestions: [String]
 }
 
 
@@ -29,6 +36,8 @@ extension SimulatedSessionConfig: Decodable {
         case studyId
         case bundleName
         case openAIKey
+        case userQuestions
+        case model
     }
     
     init(from decoder: any Decoder) throws {
@@ -45,6 +54,8 @@ extension SimulatedSessionConfig: Decodable {
             throw DecodingError.dataCorrupted(.init(codingPath: [], debugDescription: "Unable to find bundle named '\(bundleName)'"))
         }
         self.bundle = bundle
+        self.userQuestions = try container.decode([String].self, forKey: .userQuestions)
+        self.model = try container.decode(LLMOpenAIParameters.ModelType.self, forKey: .model)
     }
     
 //    func encode(to encoder: any Encoder) throws {

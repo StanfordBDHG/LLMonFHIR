@@ -40,7 +40,7 @@ final class FHIRInterpretationModule: Module, EnvironmentAccessible, @unchecked 
     @ObservationIgnored private var updateModelsTask: Task<Void, any Error>?
     
     @MainActor var singleResourceLLMSchema: any LLMSchema {
-        switch self.llmSource {
+        switch llmSource {
         case .openai:
             LLMOpenAISchema(
                 parameters: .init(modelType: openAIModel.rawValue, systemPrompts: []),
@@ -114,7 +114,10 @@ final class FHIRInterpretationModule: Module, EnvironmentAccessible, @unchecked 
             let summarizePrompt = currentStudy?.summarizeSingleResourcePrompt ?? .summarizeSingleFHIRResourceDefaultPrompt
             await resourceSummary.update(llmSchema: singleResourceLLMSchema, summarizationPrompt: summarizePrompt)
             await resourceInterpreter.update(llmSchema: singleResourceLLMSchema, summarizationPrompt: summarizePrompt)
-            multipleResourceInterpreter.changeLLMSchema(to: multipleResourceInterpreterOpenAISchema, for: currentStudy)
+            multipleResourceInterpreter.changeLLMSchema(
+                to: multipleResourceInterpreterOpenAISchema,
+                using: currentStudy?.interpretMultipleResourcesPrompt ?? .interpretMultipleResourcesDefaultPrompt
+            )
         }
         if forceImmediateUpdate {
             await imp()

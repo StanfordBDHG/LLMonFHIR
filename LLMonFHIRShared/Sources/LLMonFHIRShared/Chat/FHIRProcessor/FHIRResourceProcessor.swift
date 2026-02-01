@@ -16,7 +16,7 @@ public import SpeziLocalStorage
 public actor FHIRResourceProcessor<Content: Codable & LosslessStringConvertible> {
     public typealias Results = [FHIRResource.ID: Content]
     
-    private let localStorage: LocalStorage
+    private let localStorage: LocalStorage?
     private let llmRunner: LLMRunner
     private let storageKey: String
     /// The prompt used to summarize a FHIR resource
@@ -24,14 +24,14 @@ public actor FHIRResourceProcessor<Content: Codable & LosslessStringConvertible>
     
     public private(set) var results: Results = [:] {
         didSet {
-            try? localStorage.store(results, for: .init(storageKey))
+            try? localStorage?.store(results, for: .init(storageKey))
         }
     }
     
     private(set) var llmSchema: any LLMSchema
     
     public init(
-        localStorage: LocalStorage,
+        localStorage: LocalStorage?,
         llmRunner: LLMRunner,
         llmSchema: any LLMSchema,
         storageKey: String,
@@ -42,7 +42,7 @@ public actor FHIRResourceProcessor<Content: Codable & LosslessStringConvertible>
         self.llmSchema = llmSchema
         self.storageKey = storageKey
         self.summarizationPrompt = summarizationPrompt
-        self.results = (try? localStorage.load(.init(storageKey))) ?? [:]
+        self.results = (try? localStorage?.load(.init(storageKey))) ?? [:]
     }
     
     

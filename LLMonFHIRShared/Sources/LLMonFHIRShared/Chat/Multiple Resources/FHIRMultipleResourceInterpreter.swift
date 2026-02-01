@@ -28,7 +28,7 @@ private enum FHIRMultipleResourceInterpreterConstants {
 public final class FHIRMultipleResourceInterpreter: Sendable {
     private static let logger = Logger(subsystem: "edu.stanford.spezi.fhir", category: "SpeziFHIRLLM")
     
-    private let localStorage: LocalStorage
+    private let localStorage: LocalStorage?
     private let llmRunner: LLMRunner
     private var llmSchema: any LLMSchema
     public let fhirStore: FHIRStore
@@ -53,7 +53,7 @@ public final class FHIRMultipleResourceInterpreter: Sendable {
     ///   - llmSchema: Configuration that defines how the LLM responds
     ///   - fhirStore: Provider of FHIR resources to be interpreted
     public init(
-        localStorage: LocalStorage,
+        localStorage: LocalStorage?,
         llmRunner: LLMRunner,
         llmSchema: any LLMSchema,
         fhirStore: FHIRStore
@@ -64,26 +64,28 @@ public final class FHIRMultipleResourceInterpreter: Sendable {
         self.fhirStore = fhirStore
         self.llmSession = llmRunner(with: llmSchema)
         
-        if let storedContext: LLMContext = try? localStorage.load(.init(FHIRMultipleResourceInterpreterConstants.context)) {
+        if let storedContext: LLMContext = try? localStorage?.load(.init(FHIRMultipleResourceInterpreterConstants.context)) {
             llmSession.context = storedContext
             Self.logger.debug("Restored previous conversation context")
         } else {
             Self.logger.debug("Setting up new conversation context")
-            llmSession.context = createInterpretationContext(for: nil)
+            llmSession.context = createInterpretationContext(using: .interpretMultipleResourcesDefaultPrompt)
         }
     }
     
     /// Starts a new conversation by creating a fresh LLM session.
     ///
     /// This  creates an entirely new session and replaces the current one.
-    public func startNewConversation(for study: Study?) {
+    public func startNewConversation(using prompt: FHIRPrompt) {
         let newLLMSession = llmRunner(with: llmSchema)
-        newLLMSession.context = createInterpretationContext(for: study)
-        do {
-            try localStorage.delete(.init(FHIRMultipleResourceInterpreterConstants.context))
-            Self.logger.debug("Deleted previous conversation context from storage")
-        } catch {
-            Self.logger.error("Failed to delete conversation context: \(error)")
+        newLLMSession.context = createInterpretationContext(using: prompt)
+        if let localStorage {
+            do {
+                try localStorage.delete(.init(FHIRMultipleResourceInterpreterConstants.context))
+                Self.logger.debug("Deleted previous conversation context from storage")
+            } catch {
+                Self.logger.error("Failed to delete conversation context: \(error)")
+            }
         }
         llmSession = newLLMSession
         Self.logger.debug("Created new LLM session with fresh context")
@@ -111,8 +113,10 @@ public final class FHIRMultipleResourceInterpreter: Sendable {
                 }
                 try Task.checkCancellation()
                 llmSession.context.completeAssistantStreaming()
-                try localStorage.store(llmSession.context, for: .init(FHIRMultipleResourceInterpreterConstants.context))
-                Self.logger.debug("Successfully stored updated conversation context")
+                if let localStorage {
+                    try localStorage.store(llmSession.context, for: .init(FHIRMultipleResourceInterpreterConstants.context))
+                    Self.logger.debug("Successfully stored updated conversation context")
+                }
                 return llmSession.context.last
             } catch is CancellationError {
                 Self.logger.error("Response generation was cancelled")
@@ -136,12 +140,12 @@ public final class FHIRMultipleResourceInterpreter: Sendable {
     ///
     /// After calling this method, any new responses will be generated using the new schema,
     /// but the conversation will start fresh with only system messages.
-    public func changeLLMSchema(to newSchema: some LLMSchema, for study: Study?) {
+    public func changeLLMSchema(to newSchema: some LLMSchema, using prompt: FHIRPrompt) {
         Self.logger.debug("Updating LLM schema")
         self.llmSchema = newSchema
         let newSession = llmRunner(with: llmSchema)
         Self.logger.debug("Setting up new conversation with updated schema")
-        newSession.context = createInterpretationContext(for: study)
+        newSession.context = createInterpretationContext(using: prompt)
         llmSession = newSession
     }
     
@@ -153,11 +157,9 @@ public final class FHIRMultipleResourceInterpreter: Sendable {
         currentGenerationTask?.cancel()
     }
     
-    private func createInterpretationContext(for study: Study?) -> LLMContext {
+    private func createInterpretationContext(using prompt: FHIRPrompt) -> LLMContext {
         var context = LLMContext()
-        context.append(
-            systemMessage: (study?.interpretMultipleResourcesPrompt ?? .interpretMultipleResourcesDefaultPrompt).promptText
-        )
+        context.append(systemMessage: prompt.promptText)
         return context
     }
 }

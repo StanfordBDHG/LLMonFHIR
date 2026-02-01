@@ -208,7 +208,7 @@ final class UserStudyChatViewModel: Sendable {
     /// This preserves system messages but removes all conversation history,
     /// providing the user with a fresh chat while maintaining the interpreter context.
     func startNewConversation() {
-        interpreter.startNewConversation(for: study)
+        interpreter.startNewConversation(using: study.interpretMultipleResourcesPrompt)
     }
     
     /// Starts the survey portion of the study
@@ -575,7 +575,6 @@ extension UserStudyChatViewModel {
                 FullFHIRResource(resource.versionedResource)
             }
         let allResources = await interpreter.fhirStore.allResources.mapAsync { resource in
-            nonisolated(unsafe) let resource = resource
             let summary = await resourceSummary.cachedSummary(forResource: resource)
             return PartialFHIRResource(
                 id: resource.id,

@@ -59,8 +59,7 @@ struct FHIRResourceSummaryView: View {
         }
         .viewStateAlert(state: $viewState)
         .task {
-            nonisolated(unsafe) let unsafeSendableResource = resource
-            summary = await fhirResourceSummary.cachedSummary(forResource: unsafeSendableResource)
+            summary = await fhirResourceSummary.cachedSummary(forResource: resource)
         }
     }
     
