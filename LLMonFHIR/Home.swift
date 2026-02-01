@@ -17,7 +17,7 @@ struct HomeView: View {
     
     @State private var showMultipleResourcesChat = false
     @State private var qrCodeScanResult: StudyQRCodeHandler.ScanResult?
-
+    
     var body: some View {
         NavigationStack {
             ResourceView(

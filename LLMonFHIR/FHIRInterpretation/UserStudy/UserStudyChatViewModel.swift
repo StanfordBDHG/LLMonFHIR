@@ -61,7 +61,8 @@ final class UserStudyChatViewModel: Sendable {
             case .default:
                 regularConfig
             case .studyTitle:
-                TitleConfig(title: study.title, subtitle: regularConfig.title)
+//                TitleConfig(title: study.title, subtitle: regularConfig.title)
+                TitleConfig(title: study.title, subtitle: nil)
             }
         }
     }
@@ -137,7 +138,7 @@ final class UserStudyChatViewModel: Sendable {
         resourceSummary: FHIRResourceSummary
     ) -> Self {
         let emptyStudy = Study(
-            id: "edu.stanford.LLMonFHIR.unguidedStudy",
+            id: Study.unguidedStudyId,
             isStanfordIRBApproved: false,
             title: title,
             explainer: "",
@@ -200,6 +201,14 @@ final class UserStudyChatViewModel: Sendable {
         taskStartTimes.removeAll()
         taskEndTimes.removeAll()
         navigationState = .introduction
+    }
+    
+    /// Starts a new conversation by clearing all user and assistant messages
+    ///
+    /// This preserves system messages but removes all conversation history,
+    /// providing the user with a fresh chat while maintaining the interpreter context.
+    func startNewConversation() {
+        interpreter.startNewConversation(for: study)
     }
     
     /// Starts the survey portion of the study
@@ -494,6 +503,7 @@ extension UserStudyChatViewModel {
     ///
     /// - Returns: The URL of the generated report file, or nil if generation fails
     func generateStudyReportFile(encryptIfPossible: Bool) async throws -> URL? {
+        // TODO have a text-only version here (if unguided) to replicate the old MultipleResourcesChatView (ie, ChatView export) behaviour!!!
         guard var studyReport = await generateStudyReport() else {
             return nil
         }
@@ -584,6 +594,14 @@ extension UserStudyChatViewModel {
 
 
 // MARK: Other
+
+extension Study {
+    static let unguidedStudyId = "edu.stanford.LLMonFHIR.unguidedStudy"
+    
+    var isUnguided: Bool {
+        id == Self.unguidedStudyId
+    }
+}
 
 extension ChatEntity.Role {
     var rawValue: String {

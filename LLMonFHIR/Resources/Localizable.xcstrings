@@ -16,6 +16,9 @@
     "%@" : {
 
     },
+    "%@ Text to Speech" : {
+
+    },
     "%lld" : {
 
     },
@@ -1546,7 +1549,6 @@
 
     },
     "Reset Chat" : {
-      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -2301,6 +2303,9 @@
       }
     },
     "Valid for" : {
+
+    },
+    "View Instructions" : {
 
     },
     "WELCOME_AREA1_DESCRIPTION" : {

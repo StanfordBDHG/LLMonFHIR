@@ -11,114 +11,120 @@ import SpeziViews
 import SwiftUI
 
 
-private struct PulsatingEffect: ViewModifier {
-    let isEnabled: Bool
-    @State private var scale: CGFloat = 1.0
-
-
-    func body(content: Content) -> some View {
-        content
-            .scaleEffect(scale)
-            .onChange(of: isEnabled) { _, newValue in
-                if newValue {
-                    startPulsing()
-                } else {
-                    stopPulsing()
-                }
-            }
-            .onAppear {
-                if isEnabled {
-                    startPulsing()
-                }
-            }
-    }
-
-
-    private func startPulsing() {
-        withAnimation(
-            .easeInOut(duration: 1.0)
-            .repeatForever(autoreverses: true)
-        ) {
-            scale = 1.2
-        }
-    }
-
-    private func stopPulsing() {
-        withAnimation {
-            scale = 1.0
-        }
-    }
-}
-
-
 struct UserStudyChatToolbar: ToolbarContent {
     @Environment(FirebaseUpload.self) private var uploader: FirebaseUpload?
     
     var model: UserStudyChatViewModel
-
-    let enableContinueAction: Bool
-    let onDismiss: () -> Void
-
-    var body: some ToolbarContent {
-        dismissButton
-        continueButton
-        shareButton
+    @Binding var isTextToSpeechEnabled: Bool
+    let onDismiss: @MainActor () -> Void
+    
+    private var enableContinueAction: Bool {
+        model.shouldEnableContinueToNextTaskAction
     }
-
-    @ToolbarContentBuilder private var dismissButton: some ToolbarContent {
-        @Bindable var model = model
+    
+    var body: some ToolbarContent {
         ToolbarItem(placement: .cancellationAction) {
-            Button {
-                model.isDismissDialogPresented = true
-            } label: {
-                Image(systemName: "xmark")
-                    .accessibilityLabel("Dismiss")
+            dismissButton
+        }
+        ToolbarItemGroup(placement: .primaryAction) {
+            if model.study.isUnguided {
+                resetChatButton
+                textToSpeechButton
+            } else {
+                viewInstructionsButton
             }
-            .confirmationDialog(
-                "Going back will reset your chat history.",
-                isPresented: $model.isDismissDialogPresented,
-                titleVisibility: .visible,
-                actions: {
-                    Button("Yes", role: .destructive, action: onDismiss)
-                    Button("No", role: .cancel) {}
-                },
-                message: {
-                    Text("Do you want to continue?")
+        }
+        ToolbarItem(placement: .primaryAction) {
+            if model.study.isUnguided {
+                // if the study is unguided, we always enable sharing
+                shareButton
+            } else {
+                // otherwise, we conditionally have either the continue button, or the share button
+                if model.navigationState == .completed {
+                    shareButton
+                } else {
+                    continueButton
                 }
-            )
+            }
         }
     }
 
-    private var continueButton: some ToolbarContent {
-        ToolbarItem(placement: .primaryAction) {
-            let button = Button {
-                model.advance()
-            } label: {
-                Label("Next Task", systemImage: "arrow.forward.circle")
-                    .accessibilityLabel("Next Task")
-                    .modifier(PulsatingEffect(isEnabled: enableContinueAction))
+    @ViewBuilder private var dismissButton: some View {
+        @Bindable var model = model
+        Button {
+            model.isDismissDialogPresented = true
+        } label: {
+            Image(systemName: "xmark")
+                .accessibilityLabel("Dismiss")
+        }
+        .confirmationDialog(
+            "Going back will reset your chat history.",
+            isPresented: $model.isDismissDialogPresented,
+            titleVisibility: .visible,
+            actions: {
+                Button("Yes", role: .destructive, action: onDismiss)
+                Button("No", role: .cancel) {}
+            },
+            message: {
+                Text("Do you want to continue?")
             }
-            .disabled(!enableContinueAction)
-            if model.navigationState != .completed {
-                if #available(iOS 26.0, *) {
-                    button
-                        .if(enableContinueAction) { $0.buttonStyle(.glassProminent) }
-                        .animation(.interactiveSpring, value: !enableContinueAction)
-                } else {
-                    button
-                }
+        )
+    }
+    
+    private var resetChatButton: some View {
+        Button {
+            model.startNewConversation()
+        } label: {
+            Label("Reset Chat", systemImage: "trash")
+        }
+        .disabled(model.isProcessing)
+    }
+    
+    private var textToSpeechButton: some View {
+        Button {
+            isTextToSpeechEnabled.toggle()
+        } label: {
+            Image(systemName: isTextToSpeechEnabled ? "speaker" : "speaker.slash")
+                .accessibilityLabel("\(isTextToSpeechEnabled ? "Disable" : "Enable") Text to Speech")
+        }
+        .disabled(model.isProcessing)
+    }
+    
+    private var viewInstructionsButton: some View {
+        Button {
+            model.presentedSheet = .instructions
+        } label: {
+            Image(systemName: "info.circle")
+                .accessibilityLabel("View Instructions")
+        }
+        .disabled(model.isTaskIntructionButtonDisabled)
+    }
+    
+    @ViewBuilder private var continueButton: some View {
+        let button = Button {
+            model.advance()
+        } label: {
+            Label("Next Task", systemImage: "arrow.forward.circle")
+                .accessibilityLabel("Next Task")
+                .modifier(PulsatingEffect(isEnabled: enableContinueAction))
+        }
+        .disabled(!enableContinueAction)
+        if model.navigationState != .completed {
+            if #available(iOS 26.0, *) {
+                button
+                    .if(enableContinueAction) { $0.buttonStyle(.glassProminent) }
+                    .animation(.interactiveSpring, value: !enableContinueAction)
+            } else {
+                button
             }
         }
     }
     
-    @ToolbarContentBuilder private var shareButton: some ToolbarContent {
+    @ViewBuilder private var shareButton: some View {
         // we only show the share button if no firebase upload is taking place.
-        if uploader == nil {
-            ToolbarItemGroup(placement: .topBarTrailing) {
-                if model.navigationState == .completed {
-                    ShareButton(model: model)
-                }
-            }
+        if uploader == nil || model.study.isUnguided {
+            ShareButton(model: model)
+                .disabled(model.isProcessing)
         }
     }
 }

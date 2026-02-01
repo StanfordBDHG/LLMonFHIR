@@ -8,6 +8,7 @@
 
 import LLMonFHIRShared
 import SpeziChat
+import SpeziFoundation
 import SpeziLLM
 import SpeziViews
 import SwiftUI
@@ -15,8 +16,22 @@ import SwiftUI
 
 struct UserStudyChatView: View {
     @Environment(\.dismiss) private var dismiss
+    
+    @LocalPreference(.enableTextToSpeech) private var enableTextToSpeechPrefValue
+    
     @State private var model: UserStudyChatViewModel
     @State private var viewState: ViewState = .idle
+    
+    private var enableTextToSpeech: Binding<Bool> {
+        Binding<Bool> { [weak model] in
+            guard let model else {
+                return false
+            }
+            return model.study.isUnguided ? enableTextToSpeechPrefValue : false
+        } set: { newValue in
+            enableTextToSpeechPrefValue = newValue
+        }
+    }
     
     var body: some View {
         @Bindable var model = model
@@ -27,22 +42,11 @@ struct UserStudyChatView: View {
                 .toolbar {
                     UserStudyChatToolbar(
                         model: model,
-                        enableContinueAction: model.shouldEnableContinueToNextTaskAction,
+                        isTextToSpeechEnabled: enableTextToSpeech,
                         onDismiss: {
                             model.handleDismiss(dismiss: dismiss)
                         }
                     )
-                }
-                .toolbar {
-                    ToolbarItem(placement: .topBarTrailing) {
-                        Button {
-                            model.presentedSheet = .instructions
-                        } label: {
-                            Image(systemName: "info.circle")
-                                .accessibilityHidden(true)
-                        }
-                        .disabled(model.isTaskIntructionButtonDisabled)
-                    }
                 }
                 .sheet(item: $model.presentedSheet) { sheet in
                     switch sheet {
@@ -83,9 +87,10 @@ struct UserStudyChatView: View {
             ChatView(
                 model.chatBinding,
                 disableInput: !model.shouldEnableChatInput,
-                speechToText: false,
+                speechToText: model.study.isUnguided,
                 messagePendingAnimation: .manual(shouldDisplay: model.showTypingIndicator)
             )
+            .speak(model.llmSession.context.chat, muted: !enableTextToSpeech.wrappedValue)
         }
         .animation(.easeInOut(duration: 0.4), value: model.isProcessing)
     }
