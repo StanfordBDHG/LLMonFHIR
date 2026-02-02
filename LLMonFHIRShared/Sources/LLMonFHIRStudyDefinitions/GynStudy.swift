@@ -21,7 +21,6 @@ extension Study {
         )
         return Study(
             id: "edu.stanford.LLMonFHIR.gynStudy",
-            isStanfordIRBApproved: false,
             title: "LLMonFHIR Gyn Study",
             explainer: "GYN STUDY EXPLAINER",
             settingsUnlockCode: nil,

@@ -16,7 +16,6 @@ extension Study {
     public static var usabilityStudy: Study {
         Study(
             id: "edu.stanford.LLMonFHIR.usabilityStudy",
-            isStanfordIRBApproved: false,
             title: "LLMonFHIR User Study",
             explainer: "During this study, you’ll complete a survey about your experiences navigating the healthcare system and have the opportunity to ask the chat questions about your health.",
             settingsUnlockCode: nil,

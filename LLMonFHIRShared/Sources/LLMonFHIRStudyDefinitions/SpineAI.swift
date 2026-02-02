@@ -18,7 +18,6 @@ extension Study {
     public static var spineAI: Study {
         Study(
             id: "edu.stanford.LLMonFHIR.spineAI",
-            isStanfordIRBApproved: false,
             title: "SpineAI",
             explainer: "Welcome to the SpineAI Study!",
             settingsUnlockCode: nil,

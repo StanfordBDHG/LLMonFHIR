@@ -180,9 +180,6 @@ struct StudyHomeView: View {
                     }
                 }
             recordsStartDateView
-            if let study, study.isStanfordIRBApproved {
-                IRBApprovalBadge()
-            }
         }
         .padding(.bottom, 24)
     }

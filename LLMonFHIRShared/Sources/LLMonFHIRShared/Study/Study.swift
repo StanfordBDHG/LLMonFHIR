@@ -29,8 +29,6 @@ public final class Study: Identifiable {
     
     /// The survey's unique identifier.
     public let id: String
-    /// Whether the study is approved by Stanford University IRB
-    public let isStanfordIRBApproved: Bool
     /// The survey's title.
     public let title: String
     /// A brief explainer detailing what the survey does.
@@ -67,7 +65,6 @@ public final class Study: Identifiable {
     /// Creates a new survey.
     public init(
         id: String,
-        isStanfordIRBApproved: Bool,
         title: String,
         explainer: String,
         settingsUnlockCode: String?,
@@ -82,7 +79,6 @@ public final class Study: Identifiable {
         tasks: [Task]
     ) {
         self.id = id
-        self.isStanfordIRBApproved = isStanfordIRBApproved
         self.title = title
         self.explainer = explainer
         self.settingsUnlockCode = settingsUnlockCode
@@ -157,7 +153,6 @@ extension Study {
 extension Study: Codable {
     private enum CodingKeys: String, CodingKey {
         case id = "id"
-        case isStanfordIRBApproved = "is_stanford_irb_approved"
         case title = "title"
         case explainer = "explainer"
         case tasks = "tasks"
@@ -176,7 +171,6 @@ extension Study: Codable {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         self.init(
             id: try container.decode(String.self, forKey: .id),
-            isStanfordIRBApproved: try container.decode(Bool.self, forKey: .isStanfordIRBApproved),
             title: try container.decode(String.self, forKey: .title),
             explainer: try container.decode(String.self, forKey: .explainer),
             settingsUnlockCode: try container.decodeIfPresent(String.self, forKey: .settingsUnlockCode),
@@ -198,7 +192,6 @@ extension Study: Codable {
     public func encode(to encoder: any Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
         try container.encode(id, forKey: .id)
-        try container.encode(isStanfordIRBApproved, forKey: .isStanfordIRBApproved)
         try container.encode(title, forKey: .title)
         try container.encode(explainer, forKey: .explainer)
         try container.encodeIfPresent(settingsUnlockCode, forKey: .settingsUnlockCode)
