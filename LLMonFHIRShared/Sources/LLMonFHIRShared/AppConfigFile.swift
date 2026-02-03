@@ -12,12 +12,6 @@ private import SpeziFoundation
 
 /// The `UserStudyConfig.plist` file bundled with the app/
 public struct AppConfigFile: Codable {
-    private enum CodingKeys: String, CodingKey {
-        case appLaunchMode = "app_launch_mode"
-        case studyConfigs = "study_configs"
-        case firebaseConfig = "firebase_config"
-    }
-    
     /// The app's intended launch mode.
     public let appLaunchMode: AppLaunchMode
     /// The studies bundled with the app.
@@ -29,31 +23,6 @@ public struct AppConfigFile: Codable {
         self.appLaunchMode = launchMode
         self.studyConfigs = studyConfigs
         self.firebaseConfig = firebaseConfig
-    }
-    
-    public init(from decoder: any Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        appLaunchMode = try container.decode(AppLaunchMode.self, forKey: .appLaunchMode)
-        studyConfigs = try container.decode([Study.ID: StudyConfig].self, forKey: .studyConfigs)
-        firebaseConfig = try container.decodeIfPresent(FirebaseConfigDictionary.self, forKey: .firebaseConfig)
-    }
-    
-    public func encode(to encoder: any Encoder) throws {
-        var container = encoder.container(keyedBy: CodingKeys.self)
-        switch appLaunchMode {
-        case .standalone:
-            try container.encode("standalone", forKey: .appLaunchMode)
-        case .test:
-            try container.encode("test", forKey: .appLaunchMode)
-        case .study(let studyId):
-            if let studyId {
-                try container.encode("study=\(studyId)", forKey: .appLaunchMode)
-            } else {
-                try container.encode("study", forKey: .appLaunchMode)
-            }
-        }
-        try container.encode(studyConfigs, forKey: .studyConfigs)
-        try container.encode(firebaseConfig, forKey: .firebaseConfig)
     }
 }
 

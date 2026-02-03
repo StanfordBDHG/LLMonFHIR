@@ -68,7 +68,7 @@ struct ExportConfigFile: ParsableCommand {
     var settingsUnlockCodes: [StudyIdIdentified<String>] = []
     
     @Option(
-        name: [.customShort("e"), .customLong("studyEndpoints")],
+        name: [.customLong("studyEndpoint")],
         help: "Each study's OpenAI Endpoint. Defaults to 'regular' if omitted",
     )
     var studyEndpoints: [StudyIdIdentified<StudyConfig.OpenAIEndpointConfig>] = []
