@@ -103,23 +103,9 @@ struct ExportConfigFile: ParsableCommand {
                         isRequired: !allowEmptyAPIKeys,
                         default: ""
                     ),
-                    openAIEndpoint:  try studyValue(
-                        for: study.id,
-                        in: studyEndpoints,
-                        what: "OpenAI Endpoint",
-                        isRequired: false,
-                        default: .regular
-                    ),
-                    settingsUnlockCode: studyValue(
-                        for: study.id,
-                        in: settingsUnlockCodes,
-                        default: ""
-                    ),
-                    reportEmail: studyValue(
-                        for: study.id,
-                        in: reportEmails,
-                        default: ""
-                    ),
+                    openAIEndpoint: studyValue(for: study.id, in: studyEndpoints, default: .regular),
+                    settingsUnlockCode: studyValue( for: study.id, in: settingsUnlockCodes, default: ""),
+                    reportEmail: studyValue( for: study.id, in: reportEmails, default: ""),
                     encryptionKey: try { () -> Curve25519.KeyAgreement.PublicKey? in
                         if let url = studyValue(for: study.id, in: encryptionKeys, default: nil) {
                             try Curve25519.KeyAgreement.PublicKey(contentsOf: url)
