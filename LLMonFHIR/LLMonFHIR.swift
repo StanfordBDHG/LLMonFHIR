@@ -25,9 +25,13 @@ struct LLMonFHIR: App {
 
     var body: some Scene {
         WindowGroup {
-            RootView()
-                .testingSetup()
-                .spezi(appDelegate)
+            if ProcessInfo.processInfo.isiOSAppOnMac {
+                CreateEnrollmentQRCodeSheet()
+            } else {
+                RootView()
+                    .testingSetup()
+                    .spezi(appDelegate)
+            }
         }
     }
 }
