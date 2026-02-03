@@ -23,7 +23,6 @@ on:
         options:
           - development
           - staging
-          - userstudy
           - production
       version:
         description: |

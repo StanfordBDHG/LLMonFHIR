@@ -137,7 +137,7 @@ extension AppConfigFile.FirebaseConfigDictionary {
         "API_KEY": "A00000000000000000000000000000000000000",
         "GCM_SENDER_ID": "GCM_SENDER_ID",
         "PLIST_VERSION": "1",
-        "BUNDLE_ID": "edu.stanford.bdhg.llmonfhir",
+        "BUNDLE_ID": "edu.stanford.llmonfhir",
         "PROJECT_ID": "som-rit-phi-lit-ai-dev",
         "STORAGE_BUCKET": "som-rit-phi-lit-ai-dev.firebasestorage.app",
         "IS_ADS_ENABLED": false,

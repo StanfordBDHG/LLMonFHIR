@@ -10,9 +10,9 @@ default_platform(:ios)
 
 APP_CONFIG = {
   default_environment: "staging",
-  default_app_identifier: "edu.stanford.bdhg.llmonfhir",
-  default_provisioningProfile: "LLM on FHIR",
-  default_version_name: "0.5.0",
+  default_app_identifier: "edu.stanford.llmonfhir",
+  default_provisioningProfile: "LLMonFHIR - Stanford Biodesign Digital Health",
+  default_version_name: "0.6.1",
   default_release_notes: "Bug fixes and performance improvements.",
   scheme: "LLMonFHIR",
   plist_path: "LLMonFHIR/Supporting Files/Info.plist"
@@ -204,18 +204,6 @@ platform :ios do
         reject_if_possible: true,
         automatic_release: true,
         precheck_include_in_app_purchases: false,
-      )
-    elsif environment == "userstudy"
-      upload_to_testflight(
-        app_identifier: appidentifier,
-        distribute_external: true,
-        reject_build_waiting_for_review: true,
-        groups: [
-          "User Study"
-        ],
-        submit_beta_review: true,
-        notify_external_testers: true,
-        changelog: commit[:message]
       )
     else
       upload_to_testflight(

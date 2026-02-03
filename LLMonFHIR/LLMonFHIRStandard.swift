@@ -23,7 +23,7 @@ actor LLMonFHIRStandard: Standard, EnvironmentAccessible {
         .medicationRecord, .procedureRecord, .vitalSignRecord
     ]
     
-    private let logger = Logger(subsystem: "edu.stanford.bdhg.llmonfhir", category: "LLMonFHIRStandard")
+    private let logger = Logger(subsystem: "edu.stanford.llmonfhir", category: "LLMonFHIRStandard")
     
     @Dependency(FHIRStore.self) private var fhirStore
     @Dependency(HealthKit.self) private var healthKit
