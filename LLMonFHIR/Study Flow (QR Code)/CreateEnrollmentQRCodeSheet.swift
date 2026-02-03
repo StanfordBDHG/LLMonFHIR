@@ -8,6 +8,7 @@
 
 import Foundation
 import LLMonFHIRShared
+import LLMonFHIRStudyDefinitions
 import SpeziFoundation
 import SwiftUI
 
@@ -80,7 +81,7 @@ struct CreateEnrollmentQRCodeSheet: View {
                         .tag(Study.ID?.none)
                         .selectionDisabled()
                     Divider()
-                    ForEach(AppConfigFile.current().studies) { study in
+                    ForEach(Study.allStudies) { study in
                         Text(study.title)
                             .tag(study.id)
                     }

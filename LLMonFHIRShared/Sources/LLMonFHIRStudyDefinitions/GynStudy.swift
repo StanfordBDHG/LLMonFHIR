@@ -21,14 +21,8 @@ extension Study {
         )
         return Study(
             id: "edu.stanford.LLMonFHIR.gynStudy",
-            isStanfordIRBApproved: false,
             title: "LLMonFHIR Gyn Study",
             explainer: "GYN STUDY EXPLAINER",
-            settingsUnlockCode: nil,
-            openAIAPIKey: "",
-            openAIEndpoint: .regular,
-            reportEmail: "digitalhealthresearch@stanford.edu",
-            encryptionKey: nil,
             summarizeSingleResourcePrompt: nil,
             interpretMultipleResourcesPrompt: .gynStudySystemPrompt,
             chatTitleConfig: .default,
@@ -83,23 +77,23 @@ extension Study {
                     id: "5",
                     title: nil,
                     instructions: "Before we end our session, feel free to ask the app any medical questions you might have related to your health",
-                    assistantMessagesLimit: 1...5,
+                    assistantMessagesLimit: 1...10,
                     questions: [
                         effectivenessQuestion,
                         Study.Task.Question(
                             text: "What surprised you about the LLM’s answer, either positively or negatively",
                             type: .freeText,
-                            isOptional: true
+                            isOptional: false
                         ),
                         Study.Task.Question(
-                            text: "Compared to other sources of health information (e.g. websites, doctors) how do you rate the LLM’s responses?",
+                            text: "Compared to other sources of health information (e.g. websites, informational leaflets, doctors) how do you rate the LLM’s responses?",
                             type: .scale(responseOptions: .comparisonScale),
-                            isOptional: true
+                            isOptional: false
                         ),
                         Study.Task.Question(
                             text: "What were the most and least useful features of the LLM? Do you have any suggestions to share",
                             type: .freeText,
-                            isOptional: true
+                            isOptional: false
                         ),
                         Study.Task.Question(
                             text: "How has the LLM impacted your ability to manage your health?",
@@ -188,7 +182,7 @@ private let postInterventionQuestions = [
         type: .instructional
     ),
     Study.Task.Question(
-        text: "When all is said and done, ultimately, I am responsible for managing my reproductive journey.",
+        text: "When all is said and done, ultimately, I am responsible for managing my reproductive journey",
         type: .scale(responseOptions: .frequencyOptions),
         isOptional: false
     ),
@@ -268,7 +262,7 @@ private let postInterventionQuestions = [
         isOptional: false
     ),
     Study.Task.Question(
-        text: "I am aware of the treatment options available throughout my reproductive journey.",
+        text: "I am aware of the treatment options available throughout my reproductive journey",
         type: .scale(responseOptions: .frequencyOptions),
         isOptional: false
     ),

@@ -15,3 +15,10 @@ extension Study {
         [.usabilityStudy, .gynStudy, .spineAI]
     }
 }
+
+extension Study {
+    /// Fetches the study with the specified id, if available.
+    public static func withId(_ id: Study.ID) -> Study? {
+        allStudies.first { $0.id == id }
+    }
+}

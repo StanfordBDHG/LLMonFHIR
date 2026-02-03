@@ -11,7 +11,6 @@
 import FirebaseCore
 import LLMonFHIRShared
 import Spezi
-import SpeziAccessGuard
 import SpeziAccount
 import SpeziFirebaseAccount
 import SpeziFirebaseAccountStorage
@@ -31,8 +30,9 @@ final class LLMonFHIRDelegate: SpeziAppDelegate {
             if let config = AppConfigFile.current().firebaseConfig {
                 firebaseModules(using: config)
             }
-            let fhirInterpretationModule = FHIRInterpretationModule()
-            fhirInterpretationModule
+            let openAIInterceptor = OpenAIRequestInterceptor()
+            openAIInterceptor
+            FHIRInterpretationModule()
             HealthKit {
                 if HKHealthStore().supportsHealthRecords() {
                     RequestReadAccess(other: LLMonFHIRStandard.recordTypes)
@@ -46,19 +46,10 @@ final class LLMonFHIRDelegate: SpeziAppDelegate {
                     authToken: .keychain(tag: .openAIKey, username: "LLMonFHIR_OpenAI_Token"),
                     concurrentStreams: 100,
                     retryPolicy: .attempts(3),  // Automatically perform up to 3 retries on retryable OpenAI API status codes
-                    middlewares: [OpenAIRequestInterceptor(fhirInterpretationModule)]
+                    middlewares: [openAIInterceptor]
                 ))
                 LLMFogPlatform(configuration: .init(host: "spezillmfog.local", connectionType: .http, authToken: .none))
                 LLMLocalPlatform()
-            }
-            AccessGuards {
-                CodeAccessGuard(.userStudySettings, message: "Enter Code to Access Settings", format: .numeric(4)) { @MainActor code in
-                    if let expected = fhirInterpretationModule.currentStudy?.settingsUnlockCode {
-                        code == expected ? .valid : .invalid
-                    } else {
-                        .valid
-                    }
-                }
             }
         }
     }

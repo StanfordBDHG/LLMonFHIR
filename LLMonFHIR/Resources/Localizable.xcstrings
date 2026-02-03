@@ -31,9 +31,6 @@
     "Allow in Settings" : {
 
     },
-    "Approved by Stanford IRB" : {
-
-    },
     "Authorize Health Access" : {
 
     },
@@ -664,9 +661,6 @@
         }
       }
     },
-    "Enter Code to Access Settings" : {
-
-    },
     "Expires" : {
 
     },
@@ -1082,31 +1076,31 @@
       "localizations" : {
         "de" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "Sie können die verschiedenen Arten von Gesundheitsdaten auswählen, die Sie in LLM on FHIR überprüfen möchten."
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "You can select the different types of health records that you like to inspect in LLM on FHIR"
+            "value" : "You can select the different types of health records that you like to inspect in LLM on FHIR\n\nYou need to grant LLMonFHIR **full access** to your clinical records, in order to be able to participate in studies."
           }
         },
         "es" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "Puede seleccionar los diferentes tipos de registros de salud que le gustaría inspeccionar en LLM en FHIR."
           }
         },
         "fr" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "Vous pouvez sélectionner les différents types de dossiers de santé que vous souhaitez inspecter dans LLM sur FHIR."
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "您可以选择您希望在LLM on FHIR中检视的不同类型的健康记录。"
           }
         }
