@@ -67,7 +67,12 @@ struct UserStudyChatView: View {
                     }
                 }
                 .viewStateAlert(state: $viewState)
-                .onAppear(perform: model.startSurvey)
+                .onAppear {
+                    model.didUploadHandler = {
+                        dismiss()
+                    }
+                    model.startSurvey()
+                }
                 .onChange(of: model.llmSession.context, initial: true) {
                     Task {
                         _ = await model.generateAssistantResponse()

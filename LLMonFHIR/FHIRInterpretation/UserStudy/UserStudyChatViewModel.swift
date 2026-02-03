@@ -83,6 +83,9 @@ final class UserStudyChatViewModel: MultipleResourcesChatViewModel, Sendable { /
     
     /// The currently-presented sheet
     var presentedSheet: PresentedSheet?
+    
+    /// Called when the firebase upload completed successfully.
+    var didUploadHandler: (@MainActor () -> Void)?
 
     /// Controls the visibility of the dismiss confirmation dialog
     var isDismissDialogPresented = false
@@ -349,8 +352,11 @@ final class UserStudyChatViewModel: MultipleResourcesChatViewModel, Sendable { /
             navigationState = .completed
             Task {
                 presentedSheet = .uploadingReport
-                await uploadReport()
+                let didUpload = await uploadReport()
                 presentedSheet = nil
+                if didUpload {
+                    didUploadHandler?()
+                }
             }
         }
     }
@@ -386,9 +392,12 @@ final class UserStudyChatViewModel: MultipleResourcesChatViewModel, Sendable { /
         }
     }
     
-    private func uploadReport() async {
+    /// Uploads the report using the firebase backend, if available
+    ///
+    /// - returns: a flag indicating whether the upload was successful.
+    private func uploadReport() async -> Bool {
         guard let uploader else {
-            return
+            return false
         }
         do {
             // This sleep is exclusively for cosmetic reasons;
@@ -396,11 +405,13 @@ final class UserStudyChatViewModel: MultipleResourcesChatViewModel, Sendable { /
             // Otherwise, there would be no indication in the UI that the upload actually took place & succeeded.
             try await Task.sleep(for: .seconds(0.5))
             guard let reportFile = try await generateStudyReportFile(encryptIfPossible: false) else {
-                return
+                return false
             }
             try await uploader.uploadReport(at: reportFile, for: study)
+            return true
         } catch {
             print("study report upload failed: \(error)")
+            return false
         }
     }
 
