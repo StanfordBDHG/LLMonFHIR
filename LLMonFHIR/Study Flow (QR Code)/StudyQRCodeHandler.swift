@@ -8,6 +8,7 @@
 
 import Foundation
 import LLMonFHIRShared
+import LLMonFHIRStudyDefinitions
 import Spezi
 import SpeziFoundation
 
@@ -22,6 +23,7 @@ enum StudyQRCodeHandler {
     
     struct ScanResult: Hashable {
         let study: Study
+        let studyConfig: StudyConfig
         let userInfo: [String: String]
     }
     
@@ -32,13 +34,13 @@ enum StudyQRCodeHandler {
         } catch {
             throw .failedParsingQRCodePayload(error)
         }
-        guard let study = AppConfigFile.current().studies.first(where: { $0.id == payload.studyId }) else {
+        guard let study = Study.withId(payload.studyId), let config = AppConfigFile.current().studyConfigs[payload.studyId] else {
             throw .unknownStudy
         }
         if let expirationTimestamp = payload.expires, expirationTimestamp < .now {
             throw .expiredTimestamp
         }
-        return ScanResult(study: study, userInfo: payload.userInfo)
+        return ScanResult(study: study, studyConfig: config, userInfo: payload.userInfo)
     }
 }
 

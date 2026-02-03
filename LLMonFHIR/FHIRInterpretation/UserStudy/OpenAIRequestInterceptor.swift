@@ -13,9 +13,11 @@ import Foundation
 import HTTPTypes
 import LLMonFHIRShared
 import OpenAPIRuntime
+import Spezi
 
 
-struct OpenAIRequestInterceptor: ClientMiddleware, Sendable {
+@Observable
+final class OpenAIRequestInterceptor: Module, EnvironmentAccessible, ClientMiddleware, @unchecked Sendable {
     private struct Error: Swift.Error {
         let message: String // periphery:ignore - API
         init(_ message: String) {
@@ -23,11 +25,7 @@ struct OpenAIRequestInterceptor: ClientMiddleware, Sendable {
         }
     }
     
-    private let fhirInterpretationModule: FHIRInterpretationModule
-    
-    init(_ fhirInterpretationModule: FHIRInterpretationModule) {
-        self.fhirInterpretationModule = fhirInterpretationModule
-    }
+    @ObservationIgnored @Dependency(FHIRInterpretationModule.self) private var interpretationModule
     
     func intercept(
         _ request: HTTPRequest,
@@ -37,10 +35,11 @@ struct OpenAIRequestInterceptor: ClientMiddleware, Sendable {
         next: @Sendable @concurrent (HTTPRequest, HTTPBody?, URL) async throws -> (HTTPResponse, HTTPBody?)
     ) async throws -> (HTTPResponse, HTTPBody?) {
         let maxBodySize = 7 * 1024 * 1024 // 7 MB
-        let endpointConfig = await MainActor.run {
-            fhirInterpretationModule.currentStudy?.openAIEndpoint ?? .regular
+        let endpoint = await MainActor.run {
+            interpretationModule.currentStudy?.config.openAIEndpoint ?? .regular
         }
-        switch endpointConfig {
+        dispatchPrecondition(condition: .notOnQueue(.main))
+        switch endpoint {
         case .regular:
             return try await next(request, body, baseURL)
         case .firebaseFunction(let name):

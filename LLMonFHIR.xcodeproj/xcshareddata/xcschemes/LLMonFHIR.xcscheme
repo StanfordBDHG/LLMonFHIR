@@ -79,7 +79,7 @@
       <CommandLineArguments>
          <CommandLineArgument
             argument = "--useFirebaseEmulator"
-            isEnabled = "YES">
+            isEnabled = "NO">
          </CommandLineArgument>
          <CommandLineArgument
             argument = "--showOnboarding"
@@ -107,7 +107,7 @@
          </CommandLineArgument>
          <CommandLineArgument
             argument = "--mode study:edu.stanford.LLMonFHIR.gynStudy"
-            isEnabled = "YES">
+            isEnabled = "NO">
          </CommandLineArgument>
       </CommandLineArguments>
    </LaunchAction>

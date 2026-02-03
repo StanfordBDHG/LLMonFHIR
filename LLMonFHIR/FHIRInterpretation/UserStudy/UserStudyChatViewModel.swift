@@ -140,9 +140,10 @@ final class UserStudyChatViewModel: MultipleResourcesChatViewModel, Sendable { /
         }
     }
 
-    let study: Study
-    /// Additional key-value pairs associated with this particular study session (e.g., a participant id).
-    private let userInfo: [String: String]
+    let inProgressStudy: InProgressStudy
+    var study: Study {
+        inProgressStudy.study
+    }
     /// The response to the Study's initial questionnaire, if any.
     private let initialQuestionnaireResponse: ModelsR4.QuestionnaireResponse?
     private let resourceSummary: FHIRResourceSummary
@@ -171,15 +172,13 @@ final class UserStudyChatViewModel: MultipleResourcesChatViewModel, Sendable { /
     ///   - interpreter: The FHIR interpreter to use for chat functionality
     ///   - resourceSummary: The FHIR resource summary provider for generating summaries of FHIR resources
     init(
-        study: Study,
-        userInfo: [String: String],
+        inProgressStudy: InProgressStudy,
         initialQuestionnaireResponse: ModelsR4.QuestionnaireResponse?,
         interpreter: FHIRMultipleResourceInterpreter,
         resourceSummary: FHIRResourceSummary,
         uploader: FirebaseUpload?
     ) {
-        self.study = study
-        self.userInfo = userInfo
+        self.inProgressStudy = inProgressStudy
         self.initialQuestionnaireResponse = initialQuestionnaireResponse
         self.resourceSummary = resourceSummary
         self.uploader = uploader
@@ -292,7 +291,7 @@ final class UserStudyChatViewModel: MultipleResourcesChatViewModel, Sendable { /
         guard var studyReport = await generateStudyReport() else {
             return nil
         }
-        if encryptIfPossible, let key = study.encryptionKey {
+        if encryptIfPossible, let key = inProgressStudy.config.encryptionKey {
             studyReport = try studyReport.encrypted(using: key)
         }
         let tempDir = FileManager.default.temporaryDirectory
@@ -412,7 +411,7 @@ final class UserStudyChatViewModel: MultipleResourcesChatViewModel, Sendable { /
                 studyID: study.id,
                 startTime: studyStartTime,
                 endTime: Date(),
-                userInfo: userInfo
+                userInfo: inProgressStudy.userInfo
             ),
             initialQuestionnaireResponse: initialQuestionnaireResponse,
             fhirResources: await getFHIRResources(),

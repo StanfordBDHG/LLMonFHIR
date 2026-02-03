@@ -19,6 +19,7 @@ let package = Package(
     ],
     products: [
         .library(name: "LLMonFHIRShared", targets: ["LLMonFHIRShared"]),
+        .library(name: "LLMonFHIRStudyDefinitions", targets: ["LLMonFHIRStudyDefinitions"]),
         .executable(name: "LLMonFHIRCLI", targets: ["LLMonFHIRCLI"])
     ],
     dependencies: [

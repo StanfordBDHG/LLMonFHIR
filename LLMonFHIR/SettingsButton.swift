@@ -23,7 +23,7 @@ struct SettingsButton: View {
                 .accessibilityLabel(Text("SETTINGS"))
         }
         .sheet(isPresented: $isPresentingSheet) {
-            if fhirInterpretationModule.currentStudy?.settingsUnlockCode != nil {
+            if fhirInterpretationModule.currentStudy?.config != nil {
                 AccessGuarded(.userStudySettings) {
                     SettingsView()
                 }

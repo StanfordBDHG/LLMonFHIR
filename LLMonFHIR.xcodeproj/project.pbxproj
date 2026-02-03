@@ -23,6 +23,7 @@
 		65D03CDE2F25E55F00AA89DF /* SpeziQuestionnaire in Frameworks */ = {isa = PBXBuildFile; productRef = 65D03CDD2F25E55F00AA89DF /* SpeziQuestionnaire */; };
 		8004693A2EEF472400585753 /* SpeziOnboarding in Frameworks */ = {isa = PBXBuildFile; productRef = 800469392EEF472400585753 /* SpeziOnboarding */; };
 		801761AC2EE5CC2400383DB3 /* SpeziViews in Frameworks */ = {isa = PBXBuildFile; productRef = 801761AB2EE5CC2400383DB3 /* SpeziViews */; };
+		803D16682F30DA3C0060B931 /* LLMonFHIRStudyDefinitions in Frameworks */ = {isa = PBXBuildFile; productRef = 803D16672F30DA3C0060B931 /* LLMonFHIRStudyDefinitions */; };
 		8040C2A02F19396A00884AD3 /* SpeziLLM in Frameworks */ = {isa = PBXBuildFile; productRef = 8040C29F2F19396A00884AD3 /* SpeziLLM */; };
 		8040C2A22F19396A00884AD3 /* SpeziLLMFog in Frameworks */ = {isa = PBXBuildFile; productRef = 8040C2A12F19396A00884AD3 /* SpeziLLMFog */; };
 		8040C2A42F19396A00884AD3 /* SpeziLLMLocal in Frameworks */ = {isa = PBXBuildFile; productRef = 8040C2A32F19396A00884AD3 /* SpeziLLMLocal */; };
@@ -119,6 +120,7 @@
 				806F40C22F179FDB0001E988 /* FirebaseStorage in Frameworks */,
 				44E18E882CEBEC9500829A26 /* SpeziLLM in Frameworks */,
 				8040C2A82F19396A00884AD3 /* SpeziLLMOpenAI in Frameworks */,
+				803D16682F30DA3C0060B931 /* LLMonFHIRStudyDefinitions in Frameworks */,
 				806DF5BC2EC234AD00A8243C /* SpeziFHIRHealthKit in Frameworks */,
 				44E18E8E2CEBEC9500829A26 /* SpeziLLMLocalDownload in Frameworks */,
 				97EAB5E02B7A010A00A0B036 /* SpeziFHIRHealthKit in Frameworks */,
@@ -319,6 +321,7 @@
 				8040C2A72F19396A00884AD3 /* SpeziLLMOpenAI */,
 				805C26302F25171E00769AC1 /* LLMonFHIRShared */,
 				65D03CDD2F25E55F00AA89DF /* SpeziQuestionnaire */,
+				803D16672F30DA3C0060B931 /* LLMonFHIRStudyDefinitions */,
 			);
 			productName = LLMonFHIR;
 			productReference = 653A254D283387FE005D4D48 /* LLMonFHIR.app */;
@@ -1086,6 +1089,10 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 801761A62EE5CC2400383DB3 /* XCRemoteSwiftPackageReference "SpeziViews" */;
 			productName = SpeziViews;
+		};
+		803D16672F30DA3C0060B931 /* LLMonFHIRStudyDefinitions */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = LLMonFHIRStudyDefinitions;
 		};
 		8040C29F2F19396A00884AD3 /* SpeziLLM */ = {
 			isa = XCSwiftPackageProductDependency;

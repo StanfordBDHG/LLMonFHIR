@@ -141,7 +141,7 @@ extension UserStudyChatToolbar {
                 Image(systemName: "square.and.arrow.up")
                     .accessibilityLabel("Share Survey Results")
             }
-            .studyReportShareSheet(url: $reportUrl, for: model.study)
+            .studyReportShareSheet(url: $reportUrl, for: model.inProgressStudy.config)
         }
     }
 }
@@ -151,17 +151,17 @@ extension View {
     @ViewBuilder
     fileprivate func studyReportShareSheet(
         url urlBinding: Binding<URL?>,
-        for study: Study
+        for studyConfig: StudyConfig
     ) -> some View {
-        if EmailSheet.isAvailable, let recipient = study.reportEmail, !recipient.isEmpty {
+        if EmailSheet.isAvailable, !studyConfig.reportEmail.isEmpty {
             self.sheet(item: urlBinding, id: \.self) { url in
                 EmailSheet(message: EmailSheet.Message(
-                    recipient: recipient,
+                    recipient: studyConfig.reportEmail,
                     subject: "LLMonFHIR usabiity study result",
                     body: """
-                        The attached file contains your\(study.encryptionKey != nil ? " encrypyed" : "") results of the usability study.
+                        The attached file contains your\(studyConfig.encryptionKey != nil ? " encrypyed" : "") results of the usability study.
                         
-                        Please send the email to our team at \(recipient).
+                        Please send the email to our team at \(studyConfig.reportEmail).
                         
                         Thank you for helping us improve the LLMonFHIR app!
                         """,

@@ -30,7 +30,11 @@ struct HomeView: View {
                 )
             }
             .fullScreenCover(item: $qrCodeScanResult, id: \.self) { scanResult in
-                StudyHomeView(study: scanResult.study, userInfo: scanResult.userInfo)
+                StudyHomeView(
+                    study: scanResult.study,
+                    config: scanResult.studyConfig,
+                    userInfo: scanResult.userInfo
+                )
             }
         }
     }

@@ -30,8 +30,7 @@ struct StudyHomeView: View {
     @Environment(FirebaseUpload.self) private var uploader: FirebaseUpload?
     @WaitingState private var waitingState
     
-    @State private var study: Study?
-    @State private var studyUserInfo: [String: String]
+    @State private var inProgressStudy: InProgressStudy?
     
     @State private var isPresentingQuestionnaire = false
     @State private var questionnaireResponse: QuestionnaireResponse?
@@ -47,7 +46,7 @@ struct StudyHomeView: View {
     }
     /// Whether the currently enabled study has an initial questionnaire, and the user still needs to fill that out.
     private var isMissingPreChatQuestionnaire: Bool {
-        (try? study?.initialQuestionnaire(from: .main)) != nil && questionnaireResponse == nil
+        (try? inProgressStudy?.study.initialQuestionnaire(from: .main)) != nil && questionnaireResponse == nil
     }
     
     var body: some View {
@@ -65,13 +64,17 @@ struct StudyHomeView: View {
                         .presentationDetents([.medium, .large])
                 }
                 .qrCodeScanningSheet(isPresented: $isPresentingQRCodeScanner) { payload in
-                    guard study == nil else {
+                    guard inProgressStudy == nil else {
                         return .stopScanning
                     }
                     do {
                         let scanResult = try StudyQRCodeHandler.processQRCode(payload: payload)
                         isPresentingQRCodeScanner = false
-                        study = scanResult.study
+                        inProgressStudy = .init(
+                            study: scanResult.study,
+                            config: scanResult.studyConfig,
+                            userInfo: scanResult.userInfo
+                        )
                         return .stopScanning
                     } catch {
                         print("Failed to start study: \(error)")
@@ -79,16 +82,15 @@ struct StudyHomeView: View {
                     }
                 }
                 .fullScreenCover(isPresented: $isPresentingQuestionnaire) {
-                    if let study {
-                        QuestionnaireSheet(study: study, response: $questionnaireResponse)
+                    if let inProgressStudy {
+                        QuestionnaireSheet(study: inProgressStudy.study, response: $questionnaireResponse)
                     } else {
                         ContentUnavailableView("Study not selected", systemImage: "document.badge.gearshape")
                     }
                 }
-                .fullScreenCover(item: $fhirInterpretationModule.currentStudy) { study in
+                .fullScreenCover(item: $fhirInterpretationModule.currentStudy) { inProgressStudy in
                     UserStudyChatView(model: .init(
-                        study: study,
-                        userInfo: studyUserInfo,
+                        inProgressStudy: inProgressStudy,
                         initialQuestionnaireResponse: questionnaireResponse,
                         interpreter: interpreter,
                         resourceSummary: resourceSummary,
@@ -132,7 +134,7 @@ struct StudyHomeView: View {
 
     private var studyTitle: some View {
         VStack(spacing: 8) {
-            Text(study?.title ?? "LLM on FHIR")
+            Text(inProgressStudy?.study.title ?? "LLM on FHIR")
                 .font(.title)
                 .fontWeight(.bold)
                 .foregroundColor(.primary)
@@ -140,7 +142,7 @@ struct StudyHomeView: View {
     }
 
     private var studyDescription: some View {
-        let text: LocalizedStringResource = (study?.explainer).map { "\($0)" } ?? "Scan a QR Code to Participate in a Study"
+        let text: LocalizedStringResource = (inProgressStudy?.study.explainer).map { "\($0)" } ?? "Scan a QR Code to Participate in a Study"
         return Text(text)
             .font(.body)
             .multilineTextAlignment(.center)
@@ -186,7 +188,7 @@ struct StudyHomeView: View {
     
     private var primaryActionButton: some View {
         PrimaryActionButton {
-            if let study {
+            if let inProgressStudy {
                 if isMissingPreChatQuestionnaire {
                     isPresentingQuestionnaire = true
                     return
@@ -194,16 +196,16 @@ struct StudyHomeView: View {
                 // the HealthKit permissions should already have been granted via the onboarding, but we re-request them here, just in case,
                 // to make sure everything is in a proper state when the study gets launched.
                 try await healthKit.askForAuthorization()
-                fhirInterpretationModule.currentStudy = study
+                fhirInterpretationModule.currentStudy = inProgressStudy
                 await fhirInterpretationModule.updateSchemas(forceImmediateUpdate: true)
-                interpreter.startNewConversation(for: study)
+                interpreter.startNewConversation(for: inProgressStudy.study)
             } else {
                 isPresentingQRCodeScanner = true
             }
         } label: {
             if waitingState.isWaiting {
                 Text("LOADING_HEALTH_RECORDS")
-            } else if study != nil {
+            } else if inProgressStudy != nil {
                 if isMissingPreChatQuestionnaire {
                     Text("Start Questionnaire")
                 } else {
@@ -215,19 +217,17 @@ struct StudyHomeView: View {
         }
     }
     
-    init(study: Study, userInfo: [String: String]) {
-        _study = .init(initialValue: study)
-        _studyUserInfo = .init(initialValue: userInfo)
+    init(study: Study, config: StudyConfig, userInfo: [String: String]) {
+        _inProgressStudy = .init(initialValue: InProgressStudy(study: study, config: config, userInfo: userInfo))
     }
     
     init() {
-        _study = .init(initialValue: nil)
-        _studyUserInfo = .init(initialValue: [:])
+        _inProgressStudy = .init(initialValue: nil)
     }
     
     /// Persists the OpenAI token of the user study in the keychain, if no other token already exists.
     private func persistUserStudyOpenApiToken() {
-        guard let study, !study.openAIAPIKey.isEmpty else {
+        guard let inProgressStudy, !inProgressStudy.config.openAIAPIKey.isEmpty else {
             return
         }
         guard case let .keychain(tag, username) = self.platform.configuration.authToken else {
@@ -238,7 +238,7 @@ struct StudyHomeView: View {
             try keychainStorage.store(
                 Credentials(
                     username: username,
-                    password: study.openAIAPIKey
+                    password: inProgressStudy.config.openAIAPIKey
                 ),
                 for: tag
             )

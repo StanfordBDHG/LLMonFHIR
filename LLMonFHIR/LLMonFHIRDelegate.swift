@@ -31,6 +31,8 @@ final class LLMonFHIRDelegate: SpeziAppDelegate {
             if let config = AppConfigFile.current().firebaseConfig {
                 firebaseModules(using: config)
             }
+            let openAIInterceptor = OpenAIRequestInterceptor()
+            openAIInterceptor
             let fhirInterpretationModule = FHIRInterpretationModule()
             fhirInterpretationModule
             HealthKit {
@@ -46,14 +48,14 @@ final class LLMonFHIRDelegate: SpeziAppDelegate {
                     authToken: .keychain(tag: .openAIKey, username: "LLMonFHIR_OpenAI_Token"),
                     concurrentStreams: 100,
                     retryPolicy: .attempts(3),  // Automatically perform up to 3 retries on retryable OpenAI API status codes
-                    middlewares: [OpenAIRequestInterceptor(fhirInterpretationModule)]
+                    middlewares: [openAIInterceptor]
                 ))
                 LLMFogPlatform(configuration: .init(host: "spezillmfog.local", connectionType: .http, authToken: .none))
                 LLMLocalPlatform()
             }
             AccessGuards {
                 CodeAccessGuard(.userStudySettings, message: "Enter Code to Access Settings", format: .numeric(4)) { @MainActor code in
-                    if let expected = fhirInterpretationModule.currentStudy?.settingsUnlockCode {
+                    if let expected = fhirInterpretationModule.currentStudy?.config.settingsUnlockCode, !expected.isEmpty {
                         code == expected ? .valid : .invalid
                     } else {
                         .valid
