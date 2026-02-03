@@ -41,8 +41,6 @@
 			<string>regular</string>
 			<key>reportEmail</key>
 			<string></string>
-			<key>settingsUnlockCode</key>
-			<string></string>
 		</dict>
 		<key>edu.stanford.LLMonFHIR.spineAI</key>
 		<dict>
@@ -52,8 +50,6 @@
 			<string>regular</string>
 			<key>reportEmail</key>
 			<string></string>
-			<key>settingsUnlockCode</key>
-			<string></string>
 		</dict>
 		<key>edu.stanford.LLMonFHIR.usabilityStudy</key>
 		<dict>
@@ -62,8 +58,6 @@
 			<key>openAIEndpoint</key>
 			<string>regular</string>
 			<key>reportEmail</key>
-			<string></string>
-			<key>settingsUnlockCode</key>
 			<string></string>
 		</dict>
 	</dict>

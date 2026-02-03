@@ -11,7 +11,6 @@
 import FirebaseCore
 import LLMonFHIRShared
 import Spezi
-import SpeziAccessGuard
 import SpeziAccount
 import SpeziFirebaseAccount
 import SpeziFirebaseAccountStorage
@@ -33,8 +32,7 @@ final class LLMonFHIRDelegate: SpeziAppDelegate {
             }
             let openAIInterceptor = OpenAIRequestInterceptor()
             openAIInterceptor
-            let fhirInterpretationModule = FHIRInterpretationModule()
-            fhirInterpretationModule
+            FHIRInterpretationModule()
             HealthKit {
                 if HKHealthStore().supportsHealthRecords() {
                     RequestReadAccess(other: LLMonFHIRStandard.recordTypes)
@@ -52,15 +50,6 @@ final class LLMonFHIRDelegate: SpeziAppDelegate {
                 ))
                 LLMFogPlatform(configuration: .init(host: "spezillmfog.local", connectionType: .http, authToken: .none))
                 LLMLocalPlatform()
-            }
-            AccessGuards {
-                CodeAccessGuard(.userStudySettings, message: "Enter Code to Access Settings", format: .numeric(4)) { @MainActor code in
-                    if let expected = fhirInterpretationModule.currentStudy?.config.settingsUnlockCode, !expected.isEmpty {
-                        code == expected ? .valid : .invalid
-                    } else {
-                        .valid
-                    }
-                }
             }
         }
     }

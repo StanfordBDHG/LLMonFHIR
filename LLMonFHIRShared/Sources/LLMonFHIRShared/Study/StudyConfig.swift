@@ -22,11 +22,6 @@ public struct StudyConfig: Hashable, Codable, Sendable {
     public let openAIAPIKey: String
     public let openAIEndpoint: OpenAIEndpointConfig
     
-    /// Passcode used to unlock the Settings sheet within the app.
-    ///
-    /// Set this value to `nil` to disable the lock and always have the settings directly accessible.
-    public let settingsUnlockCode: String
-    
     /// The email address to which the report file should be sent.
     public let reportEmail: String
     
@@ -38,13 +33,11 @@ public struct StudyConfig: Hashable, Codable, Sendable {
     public init(
         openAIAPIKey: String,
         openAIEndpoint: OpenAIEndpointConfig,
-        settingsUnlockCode: String,
         reportEmail: String,
         encryptionKey: Curve25519.KeyAgreement.PublicKey?
     ) {
         self.openAIAPIKey = openAIAPIKey
         self.openAIEndpoint = openAIEndpoint
-        self.settingsUnlockCode = settingsUnlockCode
         self.reportEmail = reportEmail
         self.encryptionKey = encryptionKey
     }

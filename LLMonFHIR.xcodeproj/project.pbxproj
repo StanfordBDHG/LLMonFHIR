@@ -29,7 +29,6 @@
 		8040C2A42F19396A00884AD3 /* SpeziLLMLocal in Frameworks */ = {isa = PBXBuildFile; productRef = 8040C2A32F19396A00884AD3 /* SpeziLLMLocal */; };
 		8040C2A62F19396A00884AD3 /* SpeziLLMLocalDownload in Frameworks */ = {isa = PBXBuildFile; productRef = 8040C2A52F19396A00884AD3 /* SpeziLLMLocalDownload */; };
 		8040C2A82F19396A00884AD3 /* SpeziLLMOpenAI in Frameworks */ = {isa = PBXBuildFile; productRef = 8040C2A72F19396A00884AD3 /* SpeziLLMOpenAI */; };
-		805368DD2EC92DE30037E73E /* SpeziAccessGuard in Frameworks */ = {isa = PBXBuildFile; productRef = 805368DC2EC92DE30037E73E /* SpeziAccessGuard */; };
 		805C26312F25171E00769AC1 /* LLMonFHIRShared in Frameworks */ = {isa = PBXBuildFile; productRef = 805C26302F25171E00769AC1 /* LLMonFHIRShared */; };
 		806DF5BA2EC234AD00A8243C /* SpeziFHIR in Frameworks */ = {isa = PBXBuildFile; productRef = 806DF5B92EC234AD00A8243C /* SpeziFHIR */; };
 		806DF5BC2EC234AD00A8243C /* SpeziFHIRHealthKit in Frameworks */ = {isa = PBXBuildFile; productRef = 806DF5BB2EC234AD00A8243C /* SpeziFHIRHealthKit */; };
@@ -149,7 +148,6 @@
 				44E18E8C2CEBEC9500829A26 /* SpeziLLMLocal in Frameworks */,
 				2FD8E8312A1AB00D00357F4E /* HealthKitOnFHIR in Frameworks */,
 				8040C2A42F19396A00884AD3 /* SpeziLLMLocal in Frameworks */,
-				805368DD2EC92DE30037E73E /* SpeziAccessGuard in Frameworks */,
 				8040C2A02F19396A00884AD3 /* SpeziLLM in Frameworks */,
 				80A9907B2F1699B500BDD5B7 /* SpeziFirebaseConfiguration in Frameworks */,
 				97EAB5E42B7A010A00A0B036 /* SpeziFHIRMockPatients in Frameworks */,
@@ -297,7 +295,6 @@
 				806DF5B92EC234AD00A8243C /* SpeziFHIR */,
 				806DF5BB2EC234AD00A8243C /* SpeziFHIRHealthKit */,
 				806DF5BD2EC234AD00A8243C /* SpeziFHIRMockPatients */,
-				805368DC2EC92DE30037E73E /* SpeziAccessGuard */,
 				801761AB2EE5CC2400383DB3 /* SpeziViews */,
 				800469392EEF472400585753 /* SpeziOnboarding */,
 				808EBE712F0976710032D087 /* SpeziFoundation */,
@@ -420,7 +417,6 @@
 				44E18EE82CED09C800829A26 /* XCRemoteSwiftPackageReference "SpeziChat" */,
 				44E18EE92CED09DA00829A26 /* XCRemoteSwiftPackageReference "SpeziSpeech" */,
 				658E102D2E74A1380038C003 /* XCRemoteSwiftPackageReference "SwiftLintPlugins" */,
-				805368DB2EC92DE30037E73E /* XCRemoteSwiftPackageReference "SpeziAccessGuard" */,
 				801761A62EE5CC2400383DB3 /* XCRemoteSwiftPackageReference "SpeziViews" */,
 				800469382EEF472400585753 /* XCRemoteSwiftPackageReference "SpeziOnboarding" */,
 				808EBE702F0976710032D087 /* XCRemoteSwiftPackageReference "SpeziFoundation" */,
@@ -959,14 +955,6 @@
 				minimumVersion = 0.13.2;
 			};
 		};
-		805368DB2EC92DE30037E73E /* XCRemoteSwiftPackageReference "SpeziAccessGuard" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/StanfordSpezi/SpeziAccessGuard.git";
-			requirement = {
-				kind = upToNextMinorVersion;
-				minimumVersion = 0.5.0;
-			};
-		};
 		806F40BC2F179FDB0001E988 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/firebase/firebase-ios-sdk.git";
@@ -1118,11 +1106,6 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 8040C29E2F19396A00884AD3 /* XCRemoteSwiftPackageReference "SpeziLLM" */;
 			productName = SpeziLLMOpenAI;
-		};
-		805368DC2EC92DE30037E73E /* SpeziAccessGuard */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 805368DB2EC92DE30037E73E /* XCRemoteSwiftPackageReference "SpeziAccessGuard" */;
-			productName = SpeziAccessGuard;
 		};
 		805C26302F25171E00769AC1 /* LLMonFHIRShared */ = {
 			isa = XCSwiftPackageProductDependency;

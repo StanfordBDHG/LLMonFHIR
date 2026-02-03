@@ -56,9 +56,6 @@ struct StudyHomeView: View {
                 .background(Color(.systemBackground))
                 .navigationTitle("USER_STUDY_WECOME")
                 .navigationBarTitleDisplayMode(.inline)
-                .toolbar {
-                    SettingsButton()
-                }
                 .sheet(isPresented: $isPresentingEarliestHealthRecords) {
                     EarliestHealthRecordsView(dataSource: earliestDates)
                         .presentationDetents([.medium, .large])

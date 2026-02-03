@@ -62,12 +62,6 @@ struct ExportConfigFile: ParsableCommand {
     var reportEmails: [StudyIdIdentified<String>] = []
     
     @Option(
-        name: [.customShort("s"), .customLong("settingsUnlockCode")],
-        help: "Defines each study's settings unlock code, if applicable",
-    )
-    var settingsUnlockCodes: [StudyIdIdentified<String>] = []
-    
-    @Option(
         name: [.customLong("studyEndpoint")],
         help: "Each study's OpenAI Endpoint. Defaults to 'regular' if omitted",
     )
@@ -85,7 +79,6 @@ struct ExportConfigFile: ParsableCommand {
         try openAIKeys.validate(optionName: "OpenAI Key")
         try encryptionKeys.validate(optionName: "Encryption Key")
         try reportEmails.validate(optionName: "Report Email")
-        try settingsUnlockCodes.validate(optionName: "Settings Unlock Code")
         try studyEndpoints.validate(optionName: "Study Endpoint")
         
         let firebaseConfig: AppConfigFile.FirebaseConfigDictionary? = try {
@@ -110,7 +103,6 @@ struct ExportConfigFile: ParsableCommand {
                         default: ""
                     ),
                     openAIEndpoint: studyValue(for: study.id, in: studyEndpoints, default: .regular),
-                    settingsUnlockCode: studyValue( for: study.id, in: settingsUnlockCodes, default: ""),
                     reportEmail: studyValue( for: study.id, in: reportEmails, default: ""),
                     encryptionKey: try { () -> Curve25519.KeyAgreement.PublicKey? in
                         if let url = studyValue(for: study.id, in: encryptionKeys, default: nil) {
