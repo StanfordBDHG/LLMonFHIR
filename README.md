@@ -104,6 +104,9 @@ swift run LLMonFHIRCLI export-config \
     ../LLMonFHIR/Supporting\ Files/UserStudyConfig.plist
 ```
 
+Some of the flags use a `-x <studyId>:<value>` format and can be specified multiple times, to specify each study's value.
+You can also add one entry that uses `*` as the study id, in order to define a default value for all studies not explicitly listed.
+(E.g., `-o '*':$OPENAI_KEY` would define the OpenAI key used by all studies that don't have a `-o` entry of their own.)
 
 ### Study Report File Encryption
 

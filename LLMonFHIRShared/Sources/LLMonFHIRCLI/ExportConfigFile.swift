@@ -82,6 +82,12 @@ struct ExportConfigFile: ParsableCommand {
     
     
     func run() throws {
+        try openAIKeys.validate(optionName: "OpenAI Key")
+        try encryptionKeys.validate(optionName: "Encryption Key")
+        try reportEmails.validate(optionName: "Report Email")
+        try settingsUnlockCodes.validate(optionName: "Settings Unlock Code")
+        try studyEndpoints.validate(optionName: "Study Endpoint")
+        
         let firebaseConfig: AppConfigFile.FirebaseConfigDictionary? = try {
             guard let firebaseConfigFilePath else {
                 return nil
@@ -131,7 +137,7 @@ struct ExportConfigFile: ParsableCommand {
         isRequired: Bool,
         default defaultValue: @autoclosure () -> V
     ) throws -> V {
-        if let value = values.last(where: { $0.studyId == studyId })?.value {
+        if let value = _studyValue(for: studyId, in: values) {
             return value
         } else if !isRequired {
             return defaultValue()
@@ -147,7 +153,7 @@ struct ExportConfigFile: ParsableCommand {
         in values: [StudyIdIdentified<V>],
         default defaultValue: @autoclosure () -> V
     ) -> V {
-        values.last(where: { $0.studyId == studyId })?.value ?? defaultValue()
+        _studyValue(for: studyId, in: values) ?? defaultValue()
     }
     
     private func studyValue<V>(
@@ -155,7 +161,11 @@ struct ExportConfigFile: ParsableCommand {
         in values: [StudyIdIdentified<V>],
         default defaultValue: @autoclosure () -> V?
     ) -> V? {
-        values.last(where: { $0.studyId == studyId })?.value ?? defaultValue()
+        _studyValue(for: studyId, in: values) ?? defaultValue()
+    }
+    
+    private func _studyValue<V>(for studyId: Study.ID, in values: [StudyIdIdentified<V>]) -> V? {
+        values.last { $0.studyId == studyId }?.value ?? values.last(where: \.isWildcard)?.value
     }
 }
 
@@ -167,6 +177,10 @@ extension ExportConfigFile {
         let studyId: String
         let value: Value
         
+        var isWildcard: Bool {
+            studyId == "*"
+        }
+        
         init?(argument: String) {
             guard let idx = argument.firstIndex(of: ":") else {
                 return nil
@@ -176,6 +190,16 @@ extension ExportConfigFile {
                 return nil
             }
             self.value = value
+        }
+    }
+}
+
+extension Array {
+    fileprivate func validate<V>(optionName: String) throws where Element == ExportConfigFile.StudyIdIdentified<V> {
+        guard count(where: \.isWildcard) <= 1 else {
+            throw NSError(domain: "edu.stanford.LLMonFHIR.CLI", code: 0, userInfo: [
+                NSLocalizedDescriptionKey: "Multiple wildcard entries in \(optionName). At most one is allowed!"
+            ])
         }
     }
 }
