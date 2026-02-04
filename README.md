@@ -17,13 +17,13 @@ SPDX-License-Identifier: MIT
 <table style="width: 80%">
     <tr>
         <td align="center" width="33.33333%">
-            <img src="fastlane/screenshots/en-US/0_APP_IPHONE_67_0.jpeg" width="80%"/>
+            <img src="Figures/0_APP_IPHONE_67_0.png" width="80%"/>
         </td>
         <td align="center" width="33.33333%">
-            <img src="fastlane/screenshots/en-US/1_APP_IPHONE_67_1.jpeg" width="80%"/>
+            <img src="Figures/1_APP_IPHONE_67_1.png" width="80%"/>
         </td>
         <td align="center" width="33.33333%">
-            <img src="fastlane/screenshots/en-US/2_APP_IPHONE_67_2.jpeg" width="80%"/>
+            <img src="Figures/2_APP_IPHONE_67_2.png" width="80%"/>
         </td>
     </tr>
     <tr>
