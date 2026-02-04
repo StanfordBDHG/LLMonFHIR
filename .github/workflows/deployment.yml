@@ -12,6 +12,7 @@ on:
   push:
     branches:
       - main
+      - deployment
   workflow_dispatch:
     inputs:
       environment:
@@ -23,7 +24,6 @@ on:
         options:
           - development
           - staging
-          - userstudy
           - production
       version:
         description: |

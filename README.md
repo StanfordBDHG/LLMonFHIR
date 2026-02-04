@@ -10,36 +10,37 @@ SPDX-License-Identifier: MIT
 
 # LLM on FHIR - Demystifying Health Records
 
-[![Beta Deployment](https://github.com/PSchmiedmayer/LLMonFHIR/actions/workflows/beta-deployment.yml/badge.svg)](https://github.com/PSchmiedmayer/LLMonFHIR/actions/workflows/beta-deployment.yml)
+[![Deployment](https://github.com/StanfordBDHG/LLMonFHIR/actions/workflows/deployment.yml/badge.svg)](https://github.com/StanfordBDHG/LLMonFHIR/actions/workflows/deployment.yml)
 [![codecov](https://codecov.io/gh/StanfordBDHG/LLMonFHIR/branch/main/graph/badge.svg?token=9fvSAiFJUY)](https://codecov.io/gh/StanfordBDHG/LLMonFHIR)
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.7959850.svg)](https://doi.org/10.5281/zenodo.7959850)
 
-*"Demystifying Health Records - A Conversational Interface to Your Health Data"*
+<table style="width: 80%">
+    <tr>
+        <td align="center" width="33.33333%">
+            <img src="Figures/0_APP_IPHONE_67_0.png" width="80%"/>
+        </td>
+        <td align="center" width="33.33333%">
+            <img src="Figures/1_APP_IPHONE_67_1.png" width="80%"/>
+        </td>
+        <td align="center" width="33.33333%">
+            <img src="Figures/2_APP_IPHONE_67_2.png" width="80%"/>
+        </td>
+    </tr>
+    <tr>
+        <td align="center">Select Multiple Studies</td>
+        <td align="center">Study-specific Content</td>
+        <td align="center">Task-driven Chat Flows</td>
+    </tr>
+</table>
 
-<p float="left">
- <img alt="AllHealthRecords" src="Figures/LLMonFHIR_Screenshots_Main.png">
-</p>
+## Study Overview
 
-This repository contains the LLM on FHIR Application to demonstrate the power of LLMs to explain and provide helpful context around patient data provided in the FHIR format.
-It demonstrates using the [Spezi](https://github.com/StanfordSpezi/Spezi) framework and builds on top of the [Stanford Spezi Template Application](https://github.com/StanfordSpezi/SpeziTemplateApplication). The application connects to the OpenAI GPT API to interpret FHIR resources using the GPT suite of large language models.
+This repository demonstrates how large language models can interpret and provide context around patient data in FHIR format. The LLM on FHIR application is designed as a research study to evaluate the effectiveness of conversational AI in helping users understand their health records.
 
-<p float="left">
- <img alt="AllHealthRecords" src="Figures/LLMonFHIR_Screenshots_Translation.png">
-</p>
-
-LLMonFHIR supports multiple languages. The LLM is prompt-engineered to converse with users based on their system language. The application is currently translated into English, Spanish, Chinese, German, and French.
+The study leverages the [Spezi](https://github.com/StanfordSpezi/Spezi) framework and connects to the OpenAI GPT API to interpret FHIR resources. Participants can engage with their health data through a conversational interface, ask follow-up questions, and receive AI-generated summaries and explanations tailored to their system language.
 
 > [!NOTE] 
-> Do you want to try out the LLM on FHIR Application? You can download it to your iOS device using [TestFlight](https://testflight.apple.com/join/HBFZ5WOn)!
-
-## Overview
-
-- **Inspect Your Health Data:** Our application connects with the Apple Health app via the FHIR (Fast Healthcare Interoperability Resources) patient data API, allowing you to view your health data conveniently.
-
-- **Summarize & Interpret Your Data:** The app uses OpenAI's sophisticated large language model (LLM) to interpret and summarize complex health records, presenting them in a user-friendly, understandable manner.
-
-- **Learn More About Your Data:** You can utilize the chat functionality for follow-up questions, enabling a deeper understanding of your health records.
-
+> Interested in participating? Download LLM on FHIR on your iOS device via [TestFlight](https://testflight.apple.com/join/HBFZ5WOn)!
 
 ## Disclaimer
 

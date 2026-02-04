@@ -42,3 +42,4 @@ firebase-debug.*.log*
 
 # Firebase cache
 .firebase/
+.vscode/
