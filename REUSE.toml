@@ -4,6 +4,7 @@ version = 1
 path = [
     "fastlane/metadata/**",
     "fastlane/screenshots/**",
+    "Figures/**",
     "LLMonFHIR.xcodeproj/**",
     "LLMonFHIR/Resources/**",
     "LLMonFHIR/Supporting Files/**",
