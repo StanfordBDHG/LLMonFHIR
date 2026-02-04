@@ -10,7 +10,7 @@ SPDX-License-Identifier: MIT
 
 # LLM on FHIR - Demystifying Health Records
 
-[![Beta Deployment](https://github.com/PSchmiedmayer/LLMonFHIR/actions/workflows/beta-deployment.yml/badge.svg)](https://github.com/PSchmiedmayer/LLMonFHIR/actions/workflows/beta-deployment.yml)
+[![Deployment](https://github.com/StanfordBDHG/LLMonFHIR/actions/workflows/deployment.yml/badge.svg)](https://github.com/StanfordBDHG/LLMonFHIR/actions/workflows/deployment.yml)
 [![codecov](https://codecov.io/gh/StanfordBDHG/LLMonFHIR/branch/main/graph/badge.svg?token=9fvSAiFJUY)](https://codecov.io/gh/StanfordBDHG/LLMonFHIR)
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.7959850.svg)](https://doi.org/10.5281/zenodo.7959850)
 
