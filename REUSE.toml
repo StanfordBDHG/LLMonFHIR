@@ -2,6 +2,8 @@ version = 1
 
 [[annotations]]
 path = [
+    "fastlane/metadata/**",
+    "fastlane/screenshots/**",
     "LLMonFHIR.xcodeproj/**",
     "LLMonFHIR/Resources/**",
     "LLMonFHIR/Supporting Files/**",
