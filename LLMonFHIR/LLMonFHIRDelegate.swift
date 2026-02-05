@@ -10,7 +10,7 @@
 
 import FirebaseCore
 import LLMonFHIRShared
-import Spezi
+@_spi(APISupport) import Spezi
 import SpeziAccount
 import SpeziFirebaseAccount
 import SpeziFirebaseAccountStorage
@@ -18,6 +18,7 @@ import SpeziFirebaseConfiguration
 import SpeziFirebaseStorage
 import SpeziFoundation
 import SpeziHealthKit
+import SpeziKeychainStorage
 import SpeziLLM
 import SpeziLLMFog
 import SpeziLLMLocal
@@ -32,7 +33,8 @@ final class LLMonFHIRDelegate: SpeziAppDelegate {
             }
             let openAIInterceptor = OpenAIRequestInterceptor()
             openAIInterceptor
-            FHIRInterpretationModule()
+            let fhirInterpretationModule = FHIRInterpretationModule()
+            fhirInterpretationModule
             HealthKit {
                 if HKHealthStore().supportsHealthRecords() {
                     RequestReadAccess(other: LLMonFHIRStandard.recordTypes)
@@ -43,7 +45,7 @@ final class LLMonFHIRDelegate: SpeziAppDelegate {
             }
             LLMRunner {
                 LLMOpenAIPlatform(configuration: .init(
-                    authToken: .keychain(tag: .openAIKey, username: "LLMonFHIR_OpenAI_Token"),
+                    authToken: .closure { await self.openAIToken() },
                     concurrentStreams: 100,
                     retryPolicy: .attempts(3),  // Automatically perform up to 3 retries on retryable OpenAI API status codes
                     middlewares: [openAIInterceptor]
@@ -79,6 +81,19 @@ final class LLMonFHIRDelegate: SpeziAppDelegate {
             (host: "localhost", port: 9099)
         } else {
             nil
+        }
+    }
+    
+    private func openAIToken() -> String? {
+        guard let spezi = Self.spezi,
+              let fhirInterpretation = spezi.module(FHIRInterpretationModule.self),
+              let keychain = spezi.module(KeychainStorage.self) else {
+            return nil
+        }
+        if let token = fhirInterpretation.currentStudy?.config.openAIAPIKey, !token.isEmpty {
+            return token
+        } else {
+            return try? keychain.retrieveCredentials(withUsername: "LLMonFHIR_OpenAI_Token", for: .openAIKey)?.password
         }
     }
 }

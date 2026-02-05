@@ -13,7 +13,6 @@ import os.log
 import SpeziFHIR
 import SpeziFoundation
 import SpeziHealthKit
-import SpeziKeychainStorage
 import SpeziLLMOpenAI
 import SwiftUI
 
@@ -25,7 +24,6 @@ struct StudyHomeView: View {
     @Environment(FHIRInterpretationModule.self) private var fhirInterpretationModule
     @Environment(FHIRMultipleResourceInterpreter.self) private var interpreter
     @Environment(FHIRResourceSummary.self) private var resourceSummary
-    @Environment(KeychainStorage.self) private var keychainStorage
     @Environment(LLMOpenAIPlatform.self) private var platform
     @Environment(FirebaseUpload.self) private var uploader: FirebaseUpload?
     @WaitingState private var waitingState
@@ -95,7 +93,6 @@ struct StudyHomeView: View {
                     ))
                 }
                 .task {
-                    self.persistUserStudyOpenApiToken()
                     await standard.fetchRecordsFromHealthKit()
                     await fhirInterpretationModule.updateSchemas()
                 }
@@ -220,27 +217,5 @@ struct StudyHomeView: View {
     
     init() {
         _inProgressStudy = .init(initialValue: nil)
-    }
-    
-    /// Persists the OpenAI token of the user study in the keychain, if no other token already exists.
-    private func persistUserStudyOpenApiToken() {
-        guard let inProgressStudy, !inProgressStudy.config.openAIAPIKey.isEmpty else {
-            return
-        }
-        guard case let .keychain(tag, username) = self.platform.configuration.authToken else {
-            fatalError("LLMonFHIR relies on an auth token stored in Keychain. Please check your `LLMOpenAIPlatform` configuration.")
-        }
-        let logger = Logger(subsystem: "edu.stanford.llmonfhir", category: "UserStudyWelcomeView")
-        do {
-            try keychainStorage.store(
-                Credentials(
-                    username: username,
-                    password: inProgressStudy.config.openAIAPIKey
-                ),
-                for: tag
-            )
-        } catch {
-            logger.warning("Could not access keychain to read or store OpenAI API key: \(error)")
-        }
     }
 }
