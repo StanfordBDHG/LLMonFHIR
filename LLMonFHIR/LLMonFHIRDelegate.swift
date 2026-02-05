@@ -9,6 +9,7 @@
 // swiftlint:disable type_contents_order
 
 import FirebaseCore
+import GeneratedOpenAIClient
 import LLMonFHIRShared
 @_spi(APISupport) import Spezi
 import SpeziAccount
@@ -45,7 +46,7 @@ final class LLMonFHIRDelegate: SpeziAppDelegate {
             }
             LLMRunner {
                 LLMOpenAIPlatform(configuration: .init(
-                    authToken: .closure { await self.openAIToken() },
+                    authToken: self.openAITokenConfig,
                     concurrentStreams: 100,
                     retryPolicy: .attempts(3),  // Automatically perform up to 3 retries on retryable OpenAI API status codes
                     middlewares: [openAIInterceptor]
@@ -84,16 +85,14 @@ final class LLMonFHIRDelegate: SpeziAppDelegate {
         }
     }
     
-    private func openAIToken() -> String? {
-        guard let spezi = Self.spezi,
-              let fhirInterpretation = spezi.module(FHIRInterpretationModule.self),
-              let keychain = spezi.module(KeychainStorage.self) else {
-            return nil
-        }
-        if let token = fhirInterpretation.currentStudy?.config.openAIAPIKey, !token.isEmpty {
-            return token
-        } else {
-            return try? keychain.retrieveCredentials(withUsername: "LLMonFHIR_OpenAI_Token", for: .openAIKey)?.password
+    nonisolated private var openAITokenConfig: RemoteLLMInferenceAuthToken {
+        switch LLMonFHIR.mode {
+        case .standalone, .test:
+            .keychain(tag: .openAIKey, username: "LLMonFHIR_OpenAI_Token")
+        case .study:
+            .closure { @MainActor in
+                Self.spezi?.module(FHIRInterpretationModule.self)?.currentStudy?.config.openAIAPIKey
+            }
         }
     }
 }

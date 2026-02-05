@@ -13,7 +13,7 @@ import SwiftUI
 
 @main
 struct LLMonFHIR: App {
-    static let mode: AppLaunchMode = {
+    nonisolated static let mode: AppLaunchMode = {
         let argv = CommandLine.arguments
         return argv.firstIndex(of: "--mode")
             .flatMap { argv[safe: $0 + 1] }

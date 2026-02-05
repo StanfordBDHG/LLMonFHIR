@@ -9,7 +9,7 @@
 import Foundation
 
 
-public enum AppLaunchMode: Equatable {
+public enum AppLaunchMode: Equatable, Sendable {
     /// The app is used by a user who needs to supply their own API key, and then can use the chat.
     case standalone
     case test
