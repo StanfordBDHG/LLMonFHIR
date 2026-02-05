@@ -7,13 +7,9 @@
 //
 
 import LLMonFHIRShared
-import class ModelsR4.Questionnaire
 import class ModelsR4.QuestionnaireResponse
-import os.log
-import SpeziFHIR
 import SpeziFoundation
 import SpeziHealthKit
-import SpeziLLMOpenAI
 import SwiftUI
 
 
@@ -24,7 +20,6 @@ struct StudyHomeView: View {
     @Environment(FHIRInterpretationModule.self) private var fhirInterpretationModule
     @Environment(FHIRMultipleResourceInterpreter.self) private var interpreter
     @Environment(FHIRResourceSummary.self) private var resourceSummary
-    @Environment(LLMOpenAIPlatform.self) private var platform
     @Environment(FirebaseUpload.self) private var uploader: FirebaseUpload?
     @WaitingState private var waitingState
     
