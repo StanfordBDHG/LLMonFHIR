@@ -9,8 +9,9 @@
 // swiftlint:disable type_contents_order
 
 import FirebaseCore
+import GeneratedOpenAIClient
 import LLMonFHIRShared
-import Spezi
+@_spi(APISupport) import Spezi
 import SpeziAccount
 import SpeziFirebaseAccount
 import SpeziFirebaseAccountStorage
@@ -18,6 +19,7 @@ import SpeziFirebaseConfiguration
 import SpeziFirebaseStorage
 import SpeziFoundation
 import SpeziHealthKit
+import SpeziKeychainStorage
 import SpeziLLM
 import SpeziLLMFog
 import SpeziLLMLocal
@@ -32,7 +34,8 @@ final class LLMonFHIRDelegate: SpeziAppDelegate {
             }
             let openAIInterceptor = OpenAIRequestInterceptor()
             openAIInterceptor
-            FHIRInterpretationModule()
+            let fhirInterpretationModule = FHIRInterpretationModule()
+            fhirInterpretationModule
             HealthKit {
                 if HKHealthStore().supportsHealthRecords() {
                     RequestReadAccess(other: LLMonFHIRStandard.recordTypes)
@@ -43,7 +46,7 @@ final class LLMonFHIRDelegate: SpeziAppDelegate {
             }
             LLMRunner {
                 LLMOpenAIPlatform(configuration: .init(
-                    authToken: .keychain(tag: .openAIKey, username: "LLMonFHIR_OpenAI_Token"),
+                    authToken: self.openAITokenConfig,
                     concurrentStreams: 100,
                     retryPolicy: .attempts(3),  // Automatically perform up to 3 retries on retryable OpenAI API status codes
                     middlewares: [openAIInterceptor]
@@ -79,6 +82,17 @@ final class LLMonFHIRDelegate: SpeziAppDelegate {
             (host: "localhost", port: 9099)
         } else {
             nil
+        }
+    }
+    
+    nonisolated private var openAITokenConfig: RemoteLLMInferenceAuthToken {
+        switch LLMonFHIR.mode {
+        case .standalone, .test:
+            .keychain(tag: .openAIKey, username: "LLMonFHIR_OpenAI_Token")
+        case .study:
+            .closure { @MainActor in
+                Self.spezi?.module(FHIRInterpretationModule.self)?.currentStudy?.config.openAIAPIKey
+            }
         }
     }
 }
