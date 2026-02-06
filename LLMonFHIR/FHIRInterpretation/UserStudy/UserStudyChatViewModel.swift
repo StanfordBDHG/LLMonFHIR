@@ -510,7 +510,7 @@ extension UserStudyChatViewModel {
     ///
     /// - Returns: The URL of the generated report file, or nil if generation fails
     func generateStudyReportFile(encryptIfPossible: Bool) async throws -> URL? {
-        // TODO have a text-only version here (if unguided) to replicate the old MultipleResourcesChatView (ie, ChatView export) behaviour!!!
+        // IDEA: have a text-only version here (if unguided) to replicate the old MultipleResourcesChatView (ie, ChatView export) behaviour!!!
         guard var studyReport = await generateStudyReport() else {
             return nil
         }
