@@ -10,7 +10,7 @@ import Foundation
 import SpeziLLM
 
 
-extension MultipleResourcesChatViewModel {
+extension UserStudyChatViewModel {
     enum ProcessingState: Equatable {
         case processingSystemPrompts
         case processingFunctionCalls(currentCall: Int, totalCalls: Int)
@@ -37,38 +37,35 @@ extension MultipleResourcesChatViewModel {
         var statusDescription: String {
             switch self {
             case .processingSystemPrompts:
-                return "Interpreting message..."
+                "Interpreting message..."
             case let .processingFunctionCalls(current, total):
-                return "Processing data (\(current)/\(total))..."
+                "Processing data (\(current)/\(total))..."
             case .generatingResponse:
-                return "Generating response..."
+                "Generating response..."
             case .completed:
-                return "Processing completed"
+                "Processing completed"
             case .error:
-                return "Encountered an error"
+                "Encountered an error"
             }
         }
         
         var isProcessing: Bool {
             switch self {
             case .processingSystemPrompts, .processingFunctionCalls:
-                return true
+                true
             case .generatingResponse, .completed, .error:
-                return false
+                false
             }
         }
-        
         
         func calculateNewProcessingState(basedOn llmSession: any LLMSession) async -> ProcessingState {
             // Alerts and sheets can not be displayed at the same time.
             if case .error = await llmSession.state {
                 return .error
             }
-            
             guard let lastMessage = await llmSession.context.last else {
                 return self
             }
-            
             switch lastMessage.role {
             case .system:
                 return .processingSystemPrompts
@@ -102,7 +99,6 @@ extension MultipleResourcesChatViewModel {
                     currentCall = 0
                     totalCalls = 0
                 }
-                
                 currentCall += 1
                 return .processingFunctionCalls(
                     currentCall: currentCall,

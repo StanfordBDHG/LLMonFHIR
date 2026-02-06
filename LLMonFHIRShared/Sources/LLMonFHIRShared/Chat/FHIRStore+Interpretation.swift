@@ -6,9 +6,9 @@
 // SPDX-License-Identifier: MIT
 //
 
-import Foundation
-@preconcurrency import ModelsR4
-import SpeziFHIR
+public import Foundation
+private import ModelsR4
+public import SpeziFHIR
 
 
 extension FHIRStore {

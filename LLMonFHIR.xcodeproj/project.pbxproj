@@ -104,7 +104,7 @@
 /* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
-		65397DF32D8159A90067F1BE /* LLMonFHIR */ = {isa = PBXFileSystemSynchronizedRootGroup; exceptions = (65397E232D8159A90067F1BE /* PBXFileSystemSynchronizedBuildFileExceptionSet */, ); explicitFileTypes = {}; explicitFolders = ("Resources/Synthetic Patients", ); path = LLMonFHIR; sourceTree = "<group>"; };
+		65397DF32D8159A90067F1BE /* LLMonFHIR */ = {isa = PBXFileSystemSynchronizedRootGroup; exceptions = (65397E232D8159A90067F1BE /* PBXFileSystemSynchronizedBuildFileExceptionSet */, ); explicitFileTypes = {}; explicitFolders = (); path = LLMonFHIR; sourceTree = "<group>"; };
 		65397E252D8159AC0067F1BE /* LLMonFHIRTests */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = LLMonFHIRTests; sourceTree = "<group>"; };
 		65397E292D8159AF0067F1BE /* LLMonFHIRUITests */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = LLMonFHIRUITests; sourceTree = "<group>"; };
 /* End PBXFileSystemSynchronizedRootGroup section */

@@ -6,8 +6,6 @@
 // SPDX-License-Identifier: MIT
 //
 
-// swiftlint:disable line_length
-
 extension FHIRPrompt {
     /// Prompt used to interpret multiple FHIR resources
     ///

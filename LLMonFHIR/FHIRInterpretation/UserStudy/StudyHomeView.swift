@@ -187,7 +187,7 @@ struct StudyHomeView: View {
                 try await healthKit.askForAuthorization()
                 fhirInterpretationModule.currentStudy = inProgressStudy
                 await fhirInterpretationModule.updateSchemas(forceImmediateUpdate: true)
-                interpreter.startNewConversation(for: inProgressStudy.study)
+                interpreter.startNewConversation(using: inProgressStudy.study.interpretMultipleResourcesPrompt)
             } else {
                 isPresentingQRCodeScanner = true
             }
