@@ -66,9 +66,7 @@ public final class FHIRMultipleResourceInterpreter: Sendable {
         
         if let storedContext: LLMContext = try? localStorage?.load(.init(FHIRMultipleResourceInterpreterConstants.context)) {
             llmSession.context = storedContext
-            Self.logger.debug("Restored previous conversation context")
         } else {
-            Self.logger.debug("Setting up new conversation context")
             llmSession.context = createInterpretationContext(using: .interpretMultipleResourcesDefaultPrompt)
         }
     }
@@ -82,13 +80,11 @@ public final class FHIRMultipleResourceInterpreter: Sendable {
         if let localStorage {
             do {
                 try localStorage.delete(.init(FHIRMultipleResourceInterpreterConstants.context))
-                Self.logger.debug("Deleted previous conversation context from storage")
             } catch {
                 Self.logger.error("Failed to delete conversation context: \(error)")
             }
         }
         llmSession = newLLMSession
-        Self.logger.debug("Created new LLM session with fresh context")
     }
     
     /// Generates an assistant response based on the current conversation context.
@@ -104,7 +100,6 @@ public final class FHIRMultipleResourceInterpreter: Sendable {
             defer {
                 currentGenerationTask = nil
             }
-            Self.logger.debug("The Multiple Resource Interpreter has access to \(self.fhirStore.llmRelevantResources.count) resources.")
             do {
                 let stream = try await llmSession.generate()
                 for try await token in stream {

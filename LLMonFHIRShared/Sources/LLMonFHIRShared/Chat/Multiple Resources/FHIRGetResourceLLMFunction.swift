@@ -78,11 +78,7 @@ public struct FHIRGetResourceLLMFunction: LLMFunction {
     private func processResourceCategory(_ resourceCategory: String) async throws -> [String] {
         var fittingResources = await Array(fhirStore.llmRelevantResources(filteredBy: resourceCategory))
         guard !fittingResources.isEmpty else {
-            return [
-                String(
-                    localized: "The medical record does not include any FHIR resources for the search term \(resourceCategory)."
-                )
-            ]
+            return [String(localized: "The medical record does not include any FHIR resources for the search term \(resourceCategory).")]
         }
         fittingResources = Self.filterFittingResources(fittingResources)
         return try await summarizeFHIRResources(fittingResources, resourceCategory: resourceCategory)
@@ -107,7 +103,6 @@ public struct FHIRGetResourceLLMFunction: LLMFunction {
     
     private func summarizeFHIRResource(_ resource: SendableFHIRResource, resourceCategory: String) async throws -> String {
         let summary = try await resourceSummary.summarize(resource: resource)
-        Self.logger.debug("Summary of appended FHIR resource category \(resourceCategory): \(summary.description)")
         return String(localized: "This is the summary of the requested \(resourceCategory):\n\n\(summary.description)")
     }
 }

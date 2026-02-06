@@ -6,24 +6,24 @@
 // SPDX-License-Identifier: MIT
 //
 
-import Observation
-import Spezi
-import SpeziFHIR
-import SpeziLLM
-import SpeziLLMOpenAI
-import SpeziLocalStorage
+public import Observation
+public import Spezi
+private import SpeziFHIR
+private import SpeziLLM
+public import SpeziLLMOpenAI
+private import SpeziLocalStorage
 
 
 @Observable
-final class FHIRInterpretationModule: Module, @unchecked Sendable {
-    struct Config {
-        static let `default` = Self(
-            model: .gpt4o,
-            temperature: 0,
-            resourceLimit: nil,
-            summarizeSingleResourcePrompt: .summarizeSingleFHIRResourceDefaultPrompt,
-            systemPrompt: .interpretMultipleResourcesDefaultPrompt
-        )
+public final class FHIRInterpretationModule: Module, @unchecked Sendable { // TODO either gut this entirely (for the CLI use case), or share it back into the app!
+    public struct Config: Sendable {
+//        static let `default` = Self(
+//            model: .gpt4o,
+//            temperature: 0,
+//            resourceLimit: nil,
+//            summarizeSingleResourcePrompt: .summarizeSingleFHIRResourceDefaultPrompt,
+//            systemPrompt: .interpretMultipleResourcesDefaultPrompt
+//        )
         
         let model: LLMOpenAIParameters.ModelType
         let temperature: Double
@@ -31,41 +31,46 @@ final class FHIRInterpretationModule: Module, @unchecked Sendable {
         let summarizeSingleResourcePrompt: FHIRPrompt
         let systemPrompt: FHIRPrompt
         
-        init(
+        public init(
             model: LLMOpenAIParameters.ModelType,
             temperature: Double,
-            resourceLimit: Int?,
+            resourceLimit: Int,
             summarizeSingleResourcePrompt: FHIRPrompt,
             systemPrompt: FHIRPrompt
         ) {
             self.model = model
             self.temperature = temperature
-            self.resourceLimit = resourceLimit ?? 250
+            self.resourceLimit = resourceLimit
             self.summarizeSingleResourcePrompt = summarizeSingleResourcePrompt
             self.systemPrompt = systemPrompt
         }
     }
     
     
-    @ObservationIgnored @MainActor @Dependency(LocalStorage.self) private var localStorage: LocalStorage?
+//    @ObservationIgnored @MainActor @Dependency(LocalStorage.self) private var localStorage: LocalStorage? // TODO stop HealthKit from initializing this!
+    private let localStorage: LocalStorage? = nil
     @ObservationIgnored @MainActor @Dependency(LLMRunner.self) private var llmRunner
     @ObservationIgnored @MainActor @Dependency(FHIRStore.self) private var fhirStore
     
     // swiftlint:disable implicitly_unwrapped_optional
-    @ObservationIgnored @MainActor private var resourceSummary: FHIRResourceSummary!
+    @ObservationIgnored @MainActor public private(set) var resourceSummary: FHIRResourceSummary!
     @ObservationIgnored @MainActor private var resourceInterpreter: FHIRResourceInterpreter!
-    @ObservationIgnored @MainActor private var multipleResourceInterpreter: FHIRMultipleResourceInterpreter!
+    @ObservationIgnored @MainActor public private(set) var multipleResourceInterpreter: FHIRMultipleResourceInterpreter!
     // swiftlint:enable implicitly_unwrapped_optional
     
-    @MainActor var config: Config?
+    private let config: Config
     
     @ObservationIgnored private var updateModelsTask: Task<Void, any Error>?
     
     
-    nonisolated init() {}
+    nonisolated public init(config: Config) {
+        self.config = config
+    }
     
     @MainActor
-    func configure() {
+    public func configure() {
+//        precondition(testModule == nil)
+//        precondition(localStorage == nil)
         self.resourceSummary = FHIRResourceSummary(
             localStorage: localStorage,
             llmRunner: llmRunner,
@@ -98,15 +103,15 @@ final class FHIRInterpretationModule: Module, @unchecked Sendable {
     ///
     /// - parameter forceImmediateUpdate: Set this to `true` to disable the delay and instead update the schema immediately.
     @MainActor
-    func updateSchemas(forceImmediateUpdate: Bool = false) async {
+    public func updateSchemas(forceImmediateUpdate: Bool = false) async {
         updateModelsTask?.cancel()
         let imp = { [self] in
-            let summarizePrompt = config?.summarizeSingleResourcePrompt ?? .summarizeSingleFHIRResourceDefaultPrompt
+            let summarizePrompt = config.summarizeSingleResourcePrompt
             await resourceSummary.update(llmSchema: singleResourceLLMSchema, summarizationPrompt: summarizePrompt)
             await resourceInterpreter.update(llmSchema: singleResourceLLMSchema, summarizationPrompt: summarizePrompt)
             multipleResourceInterpreter.changeLLMSchema(
                 to: multipleResourceInterpreterOpenAISchema,
-                using: config?.systemPrompt ?? .interpretMultipleResourcesDefaultPrompt
+                using: config.systemPrompt
             )
         }
         if forceImmediateUpdate {
@@ -124,17 +129,15 @@ final class FHIRInterpretationModule: Module, @unchecked Sendable {
 
 
 extension FHIRInterpretationModule {
-    @MainActor var singleResourceLLMSchema: any LLMSchema {
-        let config = config ?? .default
-        return LLMOpenAISchema(
+    @MainActor private var singleResourceLLMSchema: any LLMSchema {
+        LLMOpenAISchema(
             parameters: .init(modelType: config.model.rawValue, systemPrompts: []),
             modelParameters: .init(temperature: config.temperature)
         )
     }
     
-    @MainActor var multipleResourceInterpreterOpenAISchema: LLMOpenAISchema {
-        let config = config ?? .default
-        return LLMOpenAISchema(
+    @MainActor private var multipleResourceInterpreterOpenAISchema: LLMOpenAISchema {
+        LLMOpenAISchema(
             parameters: .init(modelType: config.model.rawValue, systemPrompts: []),
             modelParameters: .init(temperature: config.temperature)
         ) {

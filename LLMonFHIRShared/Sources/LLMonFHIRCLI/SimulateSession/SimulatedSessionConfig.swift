@@ -19,6 +19,7 @@ import SpeziLLMOpenAI
 struct SimulatedSessionConfig: Sendable {
     let numberOfRuns: Int
     let model: LLMOpenAIParameters.ModelType
+    let temperature: Double
     
     // we're not collecting any survey responses in the simulated sessions, so this is in fact safe.
     nonisolated(unsafe) let study: Study
@@ -38,11 +39,13 @@ extension SimulatedSessionConfig: Decodable {
         case openAIKey
         case userQuestions
         case model
+        case temperature
     }
     
     init(from decoder: any Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         self.numberOfRuns = try container.decode(Int.self, forKey: .numberOfRuns)
+        self.temperature = try container.decode(Double.self, forKey: .temperature)
         self.openAIKey = try container.decode(String.self, forKey: .openAIKey)
         let studyId = try container.decode(Study.ID.self, forKey: .studyId)
         guard let study = Study.allStudies.first(where: { $0.id == studyId }) else {

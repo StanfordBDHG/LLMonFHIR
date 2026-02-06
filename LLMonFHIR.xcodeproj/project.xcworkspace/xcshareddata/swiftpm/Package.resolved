@@ -1,5 +1,5 @@
 {
-  "originHash" : "9bef9d52810da875459a7f7e376ea61884a08948097908ced1001d1dbc2b8fca",
+  "originHash" : "8965be61fc4b4744c768a3860c4dde347ed3de74580580710d2dcc314fbeea02",
   "pins" : [
     {
       "identity" : "abseil-cpp-binary",
@@ -285,8 +285,7 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/StanfordSpezi/SpeziLLM.git",
       "state" : {
-        "revision" : "b02e6d4f3413c4fa62fc656c76851a35982d7d18",
-        "version" : "0.13.2"
+        "revision" : "4c3c942a8c9be8f60ecafc6145e6a9f8bdac41c0"
       }
     },
     {
@@ -393,8 +392,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/huggingface/swift-jinja.git",
       "state" : {
-        "revision" : "ba2364165002abe8f4f3992d74a7b547c635638e",
-        "version" : "2.2.1"
+        "revision" : "d81197f35f41445bc10e94600795e68c6f5e94b0",
+        "version" : "2.3.1"
       }
     },
     {
@@ -519,8 +518,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/jpsim/Yams",
       "state" : {
-        "revision" : "51b5127c7fb6ffac106ad6d199aaa33c5024895f",
-        "version" : "6.2.0"
+        "revision" : "deaf82e867fa2cbd3cd865978b079bfcf384ac28",
+        "version" : "6.2.1"
       }
     },
     {
