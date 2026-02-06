@@ -38,18 +38,18 @@ struct SimulateSession: AsyncParsableCommand {
         
         let spezi = Spezi(from: speziConfig(for: config))
         
-        let interpreter = FHIRMultipleResourceInterpreter(
-            localStorage: spezi[LocalStorage.self]!,
-            llmRunner: spezi[LLMRunner.self]!,
-            llmSchema: <#T##any LLMSchema#>,
-            fhirStore: <#T##FHIRStore#>
-        )
-        guard let interpreter = spezi.module(FHIRMultipleResourceInterpreter.self) else {
-            fatalError()
-        }
-        
-        // TODO is this necessary?
-        withExtendedLifetime(spezi) { _ = $0 }
+//        let interpreter = FHIRMultipleResourceInterpreter(
+//            localStorage: spezi[LocalStorage.self]!,
+//            llmRunner: spezi[LLMRunner.self]!,
+//            llmSchema: <#T##any LLMSchema#>,
+//            fhirStore: <#T##FHIRStore#>
+//        )
+//        guard let interpreter = spezi.module(FHIRMultipleResourceInterpreter.self) else {
+//            fatalError()
+//        }
+//        
+//        // TODO is this necessary?
+//        withExtendedLifetime(spezi) { _ = $0 }
     }
     
     
@@ -57,7 +57,7 @@ struct SimulateSession: AsyncParsableCommand {
     private func _run(_ config: SimulatedSessionConfig, using interpreter: FHIRMultipleResourceInterpreter) async throws {
         var chat: Chat {
             get {
-                interpreter.llmSession.context.chat ?? []
+                interpreter.llmSession.context.chat
             }
             set {
                 interpreter.llmSession.context.chat = newValue
@@ -88,6 +88,7 @@ extension SimulateSession {
 
 
 extension Spezi {
+    @MainActor
     subscript<M: Module>(_ moduleType: M.Type) -> M? {
         module(moduleType)
     }
