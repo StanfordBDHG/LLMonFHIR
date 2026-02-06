@@ -1,5 +1,5 @@
 {
-  "originHash" : "8965be61fc4b4744c768a3860c4dde347ed3de74580580710d2dcc314fbeea02",
+  "originHash" : "d9cad0b575400c449a715f1dfa3bf5a03f1bda6de6459424e2b65935eced63ad",
   "pins" : [
     {
       "identity" : "abseil-cpp-binary",
@@ -285,7 +285,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/StanfordSpezi/SpeziLLM.git",
       "state" : {
-        "revision" : "4c3c942a8c9be8f60ecafc6145e6a9f8bdac41c0"
+        "revision" : "ea2d0668f2fa2fd74bd582e14cf607bed18c74d9",
+        "version" : "0.13.3"
       }
     },
     {
