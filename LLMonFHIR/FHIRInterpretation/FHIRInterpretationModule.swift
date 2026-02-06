@@ -35,7 +35,7 @@ final class FHIRInterpretationModule: Module, EnvironmentAccessible, @unchecked 
     @ObservationIgnored @LocalPreference(.fogModel) private var fogModel
     @ObservationIgnored @LocalPreference(.resourceLimit) private var resourceLimit
     
-    @MainActor var currentStudy: Study?
+    @MainActor var currentStudy: InProgressStudy?
     
     @ObservationIgnored private var updateModelsTask: Task<Void, any Error>?
     
@@ -111,12 +111,12 @@ final class FHIRInterpretationModule: Module, EnvironmentAccessible, @unchecked 
     func updateSchemas(forceImmediateUpdate: Bool = false) async {
         updateModelsTask?.cancel()
         let imp = { [self] in
-            let summarizePrompt = currentStudy?.summarizeSingleResourcePrompt ?? .summarizeSingleFHIRResourceDefaultPrompt
+            let summarizePrompt = currentStudy?.study.summarizeSingleResourcePrompt ?? .summarizeSingleFHIRResourceDefaultPrompt
             await resourceSummary.update(llmSchema: singleResourceLLMSchema, summarizationPrompt: summarizePrompt)
             await resourceInterpreter.update(llmSchema: singleResourceLLMSchema, summarizationPrompt: summarizePrompt)
             multipleResourceInterpreter.changeLLMSchema(
                 to: multipleResourceInterpreterOpenAISchema,
-                using: currentStudy?.interpretMultipleResourcesPrompt ?? .interpretMultipleResourcesDefaultPrompt
+                using: currentStudy?.study.interpretMultipleResourcesPrompt ?? .interpretMultipleResourcesDefaultPrompt
             )
         }
         if forceImmediateUpdate {

@@ -1,0 +1,6 @@
+LLMonFHIR is a Stanford University research study app.
+
+Use this app only if you are invited to participate.
+
+LLMonFHIR is for research and informational purposes only and is not a medical device. It does not provide medical advice, diagnosis, or treatment.
+

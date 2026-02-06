@@ -39,7 +39,11 @@ struct TaskQuestionView: View {
     @ViewBuilder private var questionContent: some View {
         switch question.type {
         case .instructional:
-            Text(question.text)
+            if let markdown = try? AttributedString(markdown: question.text) {
+                Text(markdown)
+            } else {
+                Text(question.text)
+            }
         case .scale(let responseOptions):
             ScaleView(
                 index: index,

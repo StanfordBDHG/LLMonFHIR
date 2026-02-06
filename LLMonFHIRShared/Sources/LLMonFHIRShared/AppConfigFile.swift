@@ -7,52 +7,22 @@
 //
 
 public import Foundation
+private import SpeziFoundation
 
 
 /// The `UserStudyConfig.plist` file bundled with the app/
 public struct AppConfigFile: Codable {
-    private enum CodingKeys: String, CodingKey {
-        case appLaunchMode = "app_launch_mode"
-        case studies
-        case firebaseConfig = "firebase_config"
-    }
-    
     /// The app's intended launch mode.
     public let appLaunchMode: AppLaunchMode
     /// The studies bundled with the app.
-    public var studies: [Study]
+    public let studyConfigs: [Study.ID: StudyConfig]
     /// The firebase config the app should use, if any.
     public var firebaseConfig: FirebaseConfigDictionary?
     
-    public init(launchMode: AppLaunchMode, studies: [Study], firebaseConfig: FirebaseConfigDictionary?) {
+    public init(launchMode: AppLaunchMode, studyConfigs: [Study.ID: StudyConfig], firebaseConfig: FirebaseConfigDictionary?) {
         self.appLaunchMode = launchMode
-        self.studies = studies
+        self.studyConfigs = studyConfigs
         self.firebaseConfig = firebaseConfig
-    }
-    
-    public init(from decoder: any Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        appLaunchMode = try container.decode(AppLaunchMode.self, forKey: .appLaunchMode)
-        studies = try container.decode([Study].self, forKey: .studies)
-        firebaseConfig = try container.decodeIfPresent(FirebaseConfigDictionary.self, forKey: .firebaseConfig)
-    }
-    
-    public func encode(to encoder: any Encoder) throws {
-        var container = encoder.container(keyedBy: CodingKeys.self)
-        switch appLaunchMode {
-        case .standalone:
-            try container.encode("standalone", forKey: .appLaunchMode)
-        case .test:
-            try container.encode("test", forKey: .appLaunchMode)
-        case .study(let studyId):
-            if let studyId {
-                try container.encode("study=\(studyId)", forKey: .appLaunchMode)
-            } else {
-                try container.encode("study", forKey: .appLaunchMode)
-            }
-        }
-        try container.encode(studies, forKey: .studies)
-        try container.encode(firebaseConfig, forKey: .firebaseConfig)
     }
 }
 
@@ -69,8 +39,14 @@ extension AppConfigFile {
     /// Attempts to load a configuration from a URL.
     public init?(contentsOf url: URL) {
         do {
-            let data = try Data(contentsOf: url)
-            self = try PropertyListDecoder().decode(Self.self, from: data)
+            var data = try Data(contentsOf: url)
+            do {
+                self = try PropertyListDecoder().decode(Self.self, from: data)
+            } catch {
+                // if the decoding failed, its bc the file might be compressed
+                data = try data.decompressed(using: Zstd.self)
+                self = try PropertyListDecoder().decode(Self.self, from: data)
+            }
         } catch {
             return nil
         }
@@ -80,7 +56,7 @@ extension AppConfigFile {
     ///
     /// Returns an empty ``LLMonFHIR/LLMonFHIR/Mode/standalone`` config if the file is not present or cannot be decoded.
     public static func current() -> Self {
-        Self(nameInBundle: "UserStudyConfig") ?? Self(launchMode: .standalone, studies: [], firebaseConfig: nil)
+        Self(nameInBundle: "UserStudyConfig") ?? Self(launchMode: .standalone, studyConfigs: [:], firebaseConfig: nil)
     }
 }
 
@@ -161,7 +137,7 @@ extension AppConfigFile.FirebaseConfigDictionary {
         "API_KEY": "A00000000000000000000000000000000000000",
         "GCM_SENDER_ID": "GCM_SENDER_ID",
         "PLIST_VERSION": "1",
-        "BUNDLE_ID": "edu.stanford.bdhg.llmonfhir",
+        "BUNDLE_ID": "edu.stanford.llmonfhir",
         "PROJECT_ID": "som-rit-phi-lit-ai-dev",
         "STORAGE_BUCKET": "som-rit-phi-lit-ai-dev.firebasestorage.app",
         "IS_ADS_ENABLED": false,

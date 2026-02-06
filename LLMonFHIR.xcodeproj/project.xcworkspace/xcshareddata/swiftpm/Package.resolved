@@ -1,5 +1,5 @@
 {
-  "originHash" : "98ffc639ecdeddfb1053aadaca5041ca9ee007e6e33503fe1c958fcccf721313",
+  "originHash" : "9bef9d52810da875459a7f7e376ea61884a08948097908ced1001d1dbc2b8fca",
   "pins" : [
     {
       "identity" : "abseil-cpp-binary",
@@ -224,15 +224,6 @@
       "state" : {
         "revision" : "9786fa758e1f8f43532d7b76f43a5286d12a731f",
         "version" : "1.10.1"
-      }
-    },
-    {
-      "identity" : "speziaccessguard",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/StanfordSpezi/SpeziAccessGuard.git",
-      "state" : {
-        "revision" : "92f87aaf0ba6ebfe08bf9739bd572a9d1528181d",
-        "version" : "0.5.0"
       }
     },
     {

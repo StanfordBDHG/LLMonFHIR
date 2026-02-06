@@ -19,12 +19,7 @@ struct TaskInstructionView: View {
         BottomSheet {
             Group {
                 if let instructions = task.instructions {
-                    Text(instructions)
-                        .padding()
-                        .frame(maxWidth: .infinity, alignment: .leading)
-                        .background(Color(UIColor.secondarySystemGroupedBackground))
-                        .cornerRadius(10)
-                        .padding()
+                    instructionsText(for: instructions)
                 }
             }
             .navigationTitle("Task \(userDisplayableCurrentTaskIdx)")
@@ -56,5 +51,19 @@ struct TaskInstructionView: View {
                 }
             }
         }
+    }
+    
+    private func instructionsText(for instructions: String) -> some View {
+        let text = if let markdown = try? AttributedString(markdown: instructions) {
+            Text(markdown)
+        } else {
+            Text(instructions)
+        }
+        return text
+            .padding()
+            .frame(maxWidth: .infinity, alignment: .leading)
+            .background(Color(UIColor.secondarySystemGroupedBackground))
+            .cornerRadius(10)
+            .padding()
     }
 }

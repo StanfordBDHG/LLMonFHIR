@@ -23,12 +23,12 @@
 		65D03CDE2F25E55F00AA89DF /* SpeziQuestionnaire in Frameworks */ = {isa = PBXBuildFile; productRef = 65D03CDD2F25E55F00AA89DF /* SpeziQuestionnaire */; };
 		8004693A2EEF472400585753 /* SpeziOnboarding in Frameworks */ = {isa = PBXBuildFile; productRef = 800469392EEF472400585753 /* SpeziOnboarding */; };
 		801761AC2EE5CC2400383DB3 /* SpeziViews in Frameworks */ = {isa = PBXBuildFile; productRef = 801761AB2EE5CC2400383DB3 /* SpeziViews */; };
+		803D16682F30DA3C0060B931 /* LLMonFHIRStudyDefinitions in Frameworks */ = {isa = PBXBuildFile; productRef = 803D16672F30DA3C0060B931 /* LLMonFHIRStudyDefinitions */; };
 		8040C2A02F19396A00884AD3 /* SpeziLLM in Frameworks */ = {isa = PBXBuildFile; productRef = 8040C29F2F19396A00884AD3 /* SpeziLLM */; };
 		8040C2A22F19396A00884AD3 /* SpeziLLMFog in Frameworks */ = {isa = PBXBuildFile; productRef = 8040C2A12F19396A00884AD3 /* SpeziLLMFog */; };
 		8040C2A42F19396A00884AD3 /* SpeziLLMLocal in Frameworks */ = {isa = PBXBuildFile; productRef = 8040C2A32F19396A00884AD3 /* SpeziLLMLocal */; };
 		8040C2A62F19396A00884AD3 /* SpeziLLMLocalDownload in Frameworks */ = {isa = PBXBuildFile; productRef = 8040C2A52F19396A00884AD3 /* SpeziLLMLocalDownload */; };
 		8040C2A82F19396A00884AD3 /* SpeziLLMOpenAI in Frameworks */ = {isa = PBXBuildFile; productRef = 8040C2A72F19396A00884AD3 /* SpeziLLMOpenAI */; };
-		805368DD2EC92DE30037E73E /* SpeziAccessGuard in Frameworks */ = {isa = PBXBuildFile; productRef = 805368DC2EC92DE30037E73E /* SpeziAccessGuard */; };
 		805C26312F25171E00769AC1 /* LLMonFHIRShared in Frameworks */ = {isa = PBXBuildFile; productRef = 805C26302F25171E00769AC1 /* LLMonFHIRShared */; };
 		806DF5BA2EC234AD00A8243C /* SpeziFHIR in Frameworks */ = {isa = PBXBuildFile; productRef = 806DF5B92EC234AD00A8243C /* SpeziFHIR */; };
 		806DF5BC2EC234AD00A8243C /* SpeziFHIRHealthKit in Frameworks */ = {isa = PBXBuildFile; productRef = 806DF5BB2EC234AD00A8243C /* SpeziFHIRHealthKit */; };
@@ -119,6 +119,7 @@
 				806F40C22F179FDB0001E988 /* FirebaseStorage in Frameworks */,
 				44E18E882CEBEC9500829A26 /* SpeziLLM in Frameworks */,
 				8040C2A82F19396A00884AD3 /* SpeziLLMOpenAI in Frameworks */,
+				803D16682F30DA3C0060B931 /* LLMonFHIRStudyDefinitions in Frameworks */,
 				806DF5BC2EC234AD00A8243C /* SpeziFHIRHealthKit in Frameworks */,
 				44E18E8E2CEBEC9500829A26 /* SpeziLLMLocalDownload in Frameworks */,
 				97EAB5E02B7A010A00A0B036 /* SpeziFHIRHealthKit in Frameworks */,
@@ -147,7 +148,6 @@
 				44E18E8C2CEBEC9500829A26 /* SpeziLLMLocal in Frameworks */,
 				2FD8E8312A1AB00D00357F4E /* HealthKitOnFHIR in Frameworks */,
 				8040C2A42F19396A00884AD3 /* SpeziLLMLocal in Frameworks */,
-				805368DD2EC92DE30037E73E /* SpeziAccessGuard in Frameworks */,
 				8040C2A02F19396A00884AD3 /* SpeziLLM in Frameworks */,
 				80A9907B2F1699B500BDD5B7 /* SpeziFirebaseConfiguration in Frameworks */,
 				97EAB5E42B7A010A00A0B036 /* SpeziFHIRMockPatients in Frameworks */,
@@ -295,7 +295,6 @@
 				806DF5B92EC234AD00A8243C /* SpeziFHIR */,
 				806DF5BB2EC234AD00A8243C /* SpeziFHIRHealthKit */,
 				806DF5BD2EC234AD00A8243C /* SpeziFHIRMockPatients */,
-				805368DC2EC92DE30037E73E /* SpeziAccessGuard */,
 				801761AB2EE5CC2400383DB3 /* SpeziViews */,
 				800469392EEF472400585753 /* SpeziOnboarding */,
 				808EBE712F0976710032D087 /* SpeziFoundation */,
@@ -319,6 +318,7 @@
 				8040C2A72F19396A00884AD3 /* SpeziLLMOpenAI */,
 				805C26302F25171E00769AC1 /* LLMonFHIRShared */,
 				65D03CDD2F25E55F00AA89DF /* SpeziQuestionnaire */,
+				803D16672F30DA3C0060B931 /* LLMonFHIRStudyDefinitions */,
 			);
 			productName = LLMonFHIR;
 			productReference = 653A254D283387FE005D4D48 /* LLMonFHIR.app */;
@@ -417,7 +417,6 @@
 				44E18EE82CED09C800829A26 /* XCRemoteSwiftPackageReference "SpeziChat" */,
 				44E18EE92CED09DA00829A26 /* XCRemoteSwiftPackageReference "SpeziSpeech" */,
 				658E102D2E74A1380038C003 /* XCRemoteSwiftPackageReference "SwiftLintPlugins" */,
-				805368DB2EC92DE30037E73E /* XCRemoteSwiftPackageReference "SpeziAccessGuard" */,
 				801761A62EE5CC2400383DB3 /* XCRemoteSwiftPackageReference "SpeziViews" */,
 				800469382EEF472400585753 /* XCRemoteSwiftPackageReference "SpeziOnboarding" */,
 				808EBE702F0976710032D087 /* XCRemoteSwiftPackageReference "SpeziFoundation" */,
@@ -647,7 +646,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "";
-				DEVELOPMENT_TEAM = 637867499T;
+				DEVELOPMENT_TEAM = CQRZ4E7K9U;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "LLMonFHIR/Supporting Files/Info.plist";
@@ -673,7 +672,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = edu.stanford.bdhg.llmonfhir;
+				PRODUCT_BUNDLE_IDENTIFIER = edu.stanford.llmonfhir;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
@@ -697,7 +696,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "";
 				DEVELOPMENT_TEAM = "";
-				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = 637867499T;
+				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = CQRZ4E7K9U;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "LLMonFHIR/Supporting Files/Info.plist";
@@ -723,10 +722,10 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = edu.stanford.bdhg.llmonfhir;
+				PRODUCT_BUNDLE_IDENTIFIER = edu.stanford.llmonfhir;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
-				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = "LLM on FHIR";
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = "LLMonFHIR - Stanford Biodesign Digital Health";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = YES;
@@ -745,7 +744,7 @@
 				DEVELOPMENT_TEAM = 637867499T;
 				GENERATE_INFOPLIST_FILE = YES;
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = edu.stanford.bdhg.llmonfhir.tests;
+				PRODUCT_BUNDLE_IDENTIFIER = edu.stanford.llmonfhir.tests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				"SWIFT_ELicenseRef-LLMonFHIR_LOC_STRINGS" = NO;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -762,7 +761,7 @@
 				DEVELOPMENT_TEAM = 637867499T;
 				GENERATE_INFOPLIST_FILE = YES;
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = edu.stanford.bdhg.llmonfhir.tests;
+				PRODUCT_BUNDLE_IDENTIFIER = edu.stanford.llmonfhir.tests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				"SWIFT_ELicenseRef-LLMonFHIR_LOC_STRINGS" = NO;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -778,7 +777,7 @@
 				DEVELOPMENT_TEAM = 637867499T;
 				GENERATE_INFOPLIST_FILE = YES;
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = edu.stanford.bdhg.llmonfhiruitests;
+				PRODUCT_BUNDLE_IDENTIFIER = edu.stanford.llmonfhiruitests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				"SWIFT_ELicenseRef-LLMonFHIR_LOC_STRINGS" = NO;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -794,7 +793,7 @@
 				DEVELOPMENT_TEAM = 637867499T;
 				GENERATE_INFOPLIST_FILE = YES;
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = edu.stanford.bdhg.llmonfhiruitests;
+				PRODUCT_BUNDLE_IDENTIFIER = edu.stanford.llmonfhiruitests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				"SWIFT_ELicenseRef-LLMonFHIR_LOC_STRINGS" = NO;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -956,14 +955,6 @@
 				minimumVersion = 0.13.2;
 			};
 		};
-		805368DB2EC92DE30037E73E /* XCRemoteSwiftPackageReference "SpeziAccessGuard" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/StanfordSpezi/SpeziAccessGuard.git";
-			requirement = {
-				kind = upToNextMinorVersion;
-				minimumVersion = 0.5.0;
-			};
-		};
 		806F40BC2F179FDB0001E988 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/firebase/firebase-ios-sdk.git";
@@ -1087,6 +1078,10 @@
 			package = 801761A62EE5CC2400383DB3 /* XCRemoteSwiftPackageReference "SpeziViews" */;
 			productName = SpeziViews;
 		};
+		803D16672F30DA3C0060B931 /* LLMonFHIRStudyDefinitions */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = LLMonFHIRStudyDefinitions;
+		};
 		8040C29F2F19396A00884AD3 /* SpeziLLM */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 8040C29E2F19396A00884AD3 /* XCRemoteSwiftPackageReference "SpeziLLM" */;
@@ -1111,11 +1106,6 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 8040C29E2F19396A00884AD3 /* XCRemoteSwiftPackageReference "SpeziLLM" */;
 			productName = SpeziLLMOpenAI;
-		};
-		805368DC2EC92DE30037E73E /* SpeziAccessGuard */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 805368DB2EC92DE30037E73E /* XCRemoteSwiftPackageReference "SpeziAccessGuard" */;
-			productName = SpeziAccessGuard;
 		};
 		805C26302F25171E00769AC1 /* LLMonFHIRShared */ = {
 			isa = XCSwiftPackageProductDependency;

@@ -13,7 +13,7 @@ import SwiftUI
 
 @main
 struct LLMonFHIR: App {
-    static let mode: AppLaunchMode = {
+    nonisolated static let mode: AppLaunchMode = {
         let argv = CommandLine.arguments
         return argv.firstIndex(of: "--mode")
             .flatMap { argv[safe: $0 + 1] }
@@ -25,9 +25,13 @@ struct LLMonFHIR: App {
 
     var body: some Scene {
         WindowGroup {
-            RootView()
-                .testingSetup()
-                .spezi(appDelegate)
+            if ProcessInfo.processInfo.isiOSAppOnMac {
+                CreateEnrollmentQRCodeSheet()
+            } else {
+                RootView()
+                    .testingSetup()
+                    .spezi(appDelegate)
+            }
         }
     }
 }

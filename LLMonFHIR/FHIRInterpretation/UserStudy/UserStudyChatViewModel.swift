@@ -88,6 +88,9 @@ final class UserStudyChatViewModel: Sendable {
     /// The currently-presented sheet
     var presentedSheet: PresentedSheet?
     
+    /// Called when the firebase upload completed successfully.
+    var didUploadHandler: (@MainActor () -> Void)?
+
     /// Controls the visibility of the dismiss confirmation dialog
     var isDismissDialogPresented = false
     
@@ -97,9 +100,10 @@ final class UserStudyChatViewModel: Sendable {
         llmSession.state.representation == .processing
     }
     
-    let study: Study
-    /// Additional key-value pairs associated with this particular study session (e.g., a participant id).
-    private let userInfo: [String: String]
+    let inProgressStudy: InProgressStudy
+    var study: Study {
+        inProgressStudy.study
+    }
     /// The response to the Study's initial questionnaire, if any.
     private let initialQuestionnaireResponse: ModelsR4.QuestionnaireResponse?
     private let resourceSummary: FHIRResourceSummary
@@ -116,18 +120,16 @@ final class UserStudyChatViewModel: Sendable {
     ///   - interpreter: The FHIR interpreter to use for chat functionality
     ///   - resourceSummary: The FHIR resource summary provider for generating summaries of FHIR resources
     init(
-        study: Study,
-        userInfo: [String: String],
+        inProgressStudy: InProgressStudy,
         initialQuestionnaireResponse: ModelsR4.QuestionnaireResponse?,
         interpreter: FHIRMultipleResourceInterpreter,
         resourceSummary: FHIRResourceSummary,
         uploader: FirebaseUpload?
     ) {
+        self.inProgressStudy = inProgressStudy
+        self.initialQuestionnaireResponse = initialQuestionnaireResponse
         self.interpreter = interpreter
         self.resourceSummary = resourceSummary
-        self.study = study
-        self.userInfo = userInfo
-        self.initialQuestionnaireResponse = initialQuestionnaireResponse
         self.uploader = uploader
         configureMessageLimits()
     }
@@ -139,14 +141,8 @@ final class UserStudyChatViewModel: Sendable {
     ) -> Self {
         let emptyStudy = Study(
             id: Study.unguidedStudyId,
-            isStanfordIRBApproved: false,
             title: title,
             explainer: "",
-            settingsUnlockCode: nil,
-            openAIAPIKey: "",
-            openAIEndpoint: .regular,
-            reportEmail: nil,
-            encryptionKey: nil,
             summarizeSingleResourcePrompt: nil,
             interpretMultipleResourcesPrompt: nil,
             chatTitleConfig: .studyTitle,
@@ -154,8 +150,11 @@ final class UserStudyChatViewModel: Sendable {
             tasks: []
         )
         return Self(
-            study: emptyStudy,
-            userInfo: [:],
+            inProgressStudy: InProgressStudy(
+                study: emptyStudy,
+                config: .init(openAIAPIKey: "", openAIEndpoint: .regular, reportEmail: "", encryptionKey: nil),
+                userInfo: [:]
+            ),
             initialQuestionnaireResponse: nil,
             interpreter: interpreter,
             resourceSummary: resourceSummary,
@@ -263,8 +262,11 @@ final class UserStudyChatViewModel: Sendable {
             navigationState = .completed
             Task {
                 presentedSheet = .uploadingReport
-                await uploadReport()
+                let didUpload = await uploadReport()
                 presentedSheet = nil
+                if didUpload {
+                    didUploadHandler?()
+                }
             }
         }
     }
@@ -481,9 +483,12 @@ extension UserStudyChatViewModel {
 // MARK: Model + Report
 
 extension UserStudyChatViewModel {
-    private func uploadReport() async {
+    /// Uploads the report using the firebase backend, if available
+    ///
+    /// - returns: a flag indicating whether the upload was successful.
+    private func uploadReport() async -> Bool {
         guard let uploader else {
-            return
+            return false
         }
         do {
             // This sleep is exclusively for cosmetic reasons;
@@ -491,11 +496,13 @@ extension UserStudyChatViewModel {
             // Otherwise, there would be no indication in the UI that the upload actually took place & succeeded.
             try await Task.sleep(for: .seconds(0.5))
             guard let reportFile = try await generateStudyReportFile(encryptIfPossible: false) else {
-                return
+                return false
             }
             try await uploader.uploadReport(at: reportFile, for: study)
+            return true
         } catch {
             print("study report upload failed: \(error)")
+            return false
         }
     }
     
@@ -507,7 +514,7 @@ extension UserStudyChatViewModel {
         guard var studyReport = await generateStudyReport() else {
             return nil
         }
-        if encryptIfPossible, let key = study.encryptionKey {
+        if encryptIfPossible, let key = inProgressStudy.config.encryptionKey {
             studyReport = try studyReport.encrypted(using: key)
         }
         let tempDir = FileManager.default.temporaryDirectory
@@ -522,7 +529,7 @@ extension UserStudyChatViewModel {
                 studyID: study.id,
                 startTime: studyStartTime,
                 endTime: Date(),
-                userInfo: userInfo
+                userInfo: inProgressStudy.userInfo
             ),
             initialQuestionnaireResponse: initialQuestionnaireResponse,
             fhirResources: await getFHIRResources(),

@@ -18,14 +18,8 @@ extension Study {
     public static var spineAI: Study {
         Study(
             id: "edu.stanford.LLMonFHIR.spineAI",
-            isStanfordIRBApproved: false,
             title: "SpineAI",
             explainer: "Welcome to the SpineAI Study!",
-            settingsUnlockCode: nil,
-            openAIAPIKey: "",
-            openAIEndpoint: .firebaseFunction(name: "chat"),
-            reportEmail: "digitalhealthresearch@stanford.edu",
-            encryptionKey: nil,
             summarizeSingleResourcePrompt: nil,
             interpretMultipleResourcesPrompt: .spineAISystemPrompt,
             chatTitleConfig: .studyTitle,

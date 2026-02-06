@@ -8,20 +8,12 @@
 
 // swiftlint:disable redundant_string_enum_value
 
-public import CryptoKit
 public import Foundation
 public import class ModelsR4.Questionnaire
 
 
 /// Manages a collection of survey tasks and their responses.
 public final class Study: Identifiable {
-    public enum OpenAIEndpointConfig: Hashable, Sendable {
-        /// The study uses the regular OpenAI API to generate chat completions
-        case regular
-        /// The study uses a firebase function to generate chat completions
-        case firebaseFunction(name: String)
-    }
-    
     public enum ChatTitleConfig: String, Hashable, Codable, Sendable {
         case `default`
         case studyTitle
@@ -29,28 +21,10 @@ public final class Study: Identifiable {
     
     /// The survey's unique identifier.
     public let id: String
-    /// Whether the study is approved by Stanford University IRB
-    public let isStanfordIRBApproved: Bool
     /// The survey's title.
     public let title: String
     /// A brief explainer detailing what the survey does.
     public let explainer: String
-    /// Passcode "used" to unlock the Settings sheet within the app.
-    ///
-    /// Set this value to `nil` to disable the lock and always have the settings directly accessible.
-    public let settingsUnlockCode: String?
-    
-    /// The OpenAI API key that should be used when answering this survey.
-    public var openAIAPIKey: String
-    public let openAIEndpoint: OpenAIEndpointConfig
-    
-    /// The email address to which the report file should be sent.
-    public let reportEmail: String?
-    
-    /// The public key to use when encrypting a report file.
-    ///
-    /// `nil` if the files should never be encrypted.
-    public var encryptionKey: Curve25519.KeyAgreement.PublicKey?
     
     public let summarizeSingleResourcePrompt: FHIRPrompt
     public var interpretMultipleResourcesPrompt: FHIRPrompt
@@ -67,14 +41,8 @@ public final class Study: Identifiable {
     /// Creates a new survey.
     public init(
         id: String,
-        isStanfordIRBApproved: Bool,
         title: String,
         explainer: String,
-        settingsUnlockCode: String?,
-        openAIAPIKey: String,
-        openAIEndpoint: OpenAIEndpointConfig,
-        reportEmail: String?,
-        encryptionKey: Curve25519.KeyAgreement.PublicKey?,
         summarizeSingleResourcePrompt: FHIRPrompt?,
         interpretMultipleResourcesPrompt: FHIRPrompt?,
         chatTitleConfig: ChatTitleConfig,
@@ -82,14 +50,8 @@ public final class Study: Identifiable {
         tasks: [Task]
     ) {
         self.id = id
-        self.isStanfordIRBApproved = isStanfordIRBApproved
         self.title = title
         self.explainer = explainer
-        self.settingsUnlockCode = settingsUnlockCode
-        self.openAIAPIKey = openAIAPIKey
-        self.openAIEndpoint = openAIEndpoint
-        self.reportEmail = reportEmail
-        self.encryptionKey = encryptionKey
         self.summarizeSingleResourcePrompt = summarizeSingleResourcePrompt ?? .summarizeSingleFHIRResourceDefaultPrompt
         self.interpretMultipleResourcesPrompt = interpretMultipleResourcesPrompt ?? .interpretMultipleResourcesDefaultPrompt
         self.chatTitleConfig = chatTitleConfig
@@ -157,15 +119,9 @@ extension Study {
 extension Study: Codable {
     private enum CodingKeys: String, CodingKey {
         case id = "id"
-        case isStanfordIRBApproved = "is_stanford_irb_approved"
         case title = "title"
         case explainer = "explainer"
         case tasks = "tasks"
-        case settingsUnlockCode = "settings_code"
-        case openAIAPIKey = "openai_api_key"
-        case openAIEndpoint = "openai_endpoint"
-        case reportEmail = "report_email"
-        case encryptionKey = "encryption_key"
         case summarizeSingleResourcePrompt = "prompt_summarize_single_resource"
         case interpretMultipleResourcesPrompt = "prompt_interpret_multiple_resources"
         case chatTitleConfig = "chat_title_config"
@@ -176,15 +132,8 @@ extension Study: Codable {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         self.init(
             id: try container.decode(String.self, forKey: .id),
-            isStanfordIRBApproved: try container.decode(Bool.self, forKey: .isStanfordIRBApproved),
             title: try container.decode(String.self, forKey: .title),
             explainer: try container.decode(String.self, forKey: .explainer),
-            settingsUnlockCode: try container.decodeIfPresent(String.self, forKey: .settingsUnlockCode),
-            openAIAPIKey: try container.decode(String.self, forKey: .openAIAPIKey),
-            openAIEndpoint: try container.decode(OpenAIEndpointConfig.self, forKey: .openAIEndpoint),
-            reportEmail: try container.decodeIfPresent(String.self, forKey: .reportEmail),
-            encryptionKey: try container.decodeIfPresent(Data.self, forKey: .encryptionKey)
-                .flatMap { $0.isEmpty ? nil : try .init(pemFileContents: $0) },
             summarizeSingleResourcePrompt: try container.decodeIfPresent(String.self, forKey: .summarizeSingleResourcePrompt)
                 .flatMap { $0.isEmpty ? nil : FHIRPrompt(promptText: $0) },
             interpretMultipleResourcesPrompt: try container.decodeIfPresent(String.self, forKey: .interpretMultipleResourcesPrompt)
@@ -198,14 +147,8 @@ extension Study: Codable {
     public func encode(to encoder: any Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
         try container.encode(id, forKey: .id)
-        try container.encode(isStanfordIRBApproved, forKey: .isStanfordIRBApproved)
         try container.encode(title, forKey: .title)
         try container.encode(explainer, forKey: .explainer)
-        try container.encodeIfPresent(settingsUnlockCode, forKey: .settingsUnlockCode)
-        try container.encode(openAIAPIKey, forKey: .openAIAPIKey)
-        try container.encode(openAIEndpoint, forKey: .openAIEndpoint)
-        try container.encodeIfPresent(reportEmail, forKey: .reportEmail)
-        try container.encodeIfPresent(encryptionKey?.pemFileContents, forKey: .encryptionKey)
         if summarizeSingleResourcePrompt != .summarizeSingleFHIRResourceDefaultPrompt {
             try container.encode(summarizeSingleResourcePrompt.promptText, forKey: .summarizeSingleResourcePrompt)
         } else {
@@ -259,30 +202,5 @@ extension Study.Task: Codable {
         try container.encodeIfPresent(instructions, forKey: .instructions)
         try container.encodeIfPresent(assistantMessagesLimit?.llmOnFhirStringValue, forKey: .assistantMessagesLimit)
         try container.encode(questions, forKey: .questions)
-    }
-}
-
-
-extension Study.OpenAIEndpointConfig: RawRepresentable, Codable {
-    public var rawValue: String {
-        switch self {
-        case .regular:
-            "regular"
-        case .firebaseFunction(let name):
-            "firebase-function:\(name)"
-        }
-    }
-    
-    public init?(rawValue: String) {
-        switch rawValue {
-        case "regular":
-            self = .regular
-        case let value where value.starts(with: "firebase-function:"):
-            let idx = value.firstIndex(of: ":")! // swiftlint:disable:this force_unwrapping
-            let name = String(value[value.index(after: idx)...])
-            self = .firebaseFunction(name: name)
-        default:
-            return nil
-        }
     }
 }

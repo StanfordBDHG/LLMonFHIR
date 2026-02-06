@@ -9,9 +9,9 @@
 // swiftlint:disable type_contents_order
 
 import FirebaseCore
+import GeneratedOpenAIClient
 import LLMonFHIRShared
-import Spezi
-import SpeziAccessGuard
+@_spi(APISupport) import Spezi
 import SpeziAccount
 import SpeziFirebaseAccount
 import SpeziFirebaseAccountStorage
@@ -19,6 +19,7 @@ import SpeziFirebaseConfiguration
 import SpeziFirebaseStorage
 import SpeziFoundation
 import SpeziHealthKit
+import SpeziKeychainStorage
 import SpeziLLM
 import SpeziLLMFog
 import SpeziLLMLocal
@@ -31,6 +32,8 @@ final class LLMonFHIRDelegate: SpeziAppDelegate {
             if let config = AppConfigFile.current().firebaseConfig {
                 firebaseModules(using: config)
             }
+            let openAIInterceptor = OpenAIRequestInterceptor()
+            openAIInterceptor
             let fhirInterpretationModule = FHIRInterpretationModule()
             fhirInterpretationModule
             HealthKit {
@@ -43,22 +46,13 @@ final class LLMonFHIRDelegate: SpeziAppDelegate {
             }
             LLMRunner {
                 LLMOpenAIPlatform(configuration: .init(
-                    authToken: .keychain(tag: .openAIKey, username: "LLMonFHIR_OpenAI_Token"),
+                    authToken: self.openAITokenConfig,
                     concurrentStreams: 100,
                     retryPolicy: .attempts(3),  // Automatically perform up to 3 retries on retryable OpenAI API status codes
-                    middlewares: [OpenAIRequestInterceptor(fhirInterpretationModule)]
+                    middlewares: [openAIInterceptor]
                 ))
                 LLMFogPlatform(configuration: .init(host: "spezillmfog.local", connectionType: .http, authToken: .none))
                 LLMLocalPlatform()
-            }
-            AccessGuards {
-                CodeAccessGuard(.userStudySettings, message: "Enter Code to Access Settings", format: .numeric(4)) { @MainActor code in
-                    if let expected = fhirInterpretationModule.currentStudy?.settingsUnlockCode {
-                        code == expected ? .valid : .invalid
-                    } else {
-                        .valid
-                    }
-                }
             }
         }
     }
@@ -88,6 +82,17 @@ final class LLMonFHIRDelegate: SpeziAppDelegate {
             (host: "localhost", port: 9099)
         } else {
             nil
+        }
+    }
+    
+    nonisolated private var openAITokenConfig: RemoteLLMInferenceAuthToken {
+        switch LLMonFHIR.mode {
+        case .standalone, .test:
+            .keychain(tag: .openAIKey, username: "LLMonFHIR_OpenAI_Token")
+        case .study:
+            .closure { @MainActor in
+                Self.spezi?.module(FHIRInterpretationModule.self)?.currentStudy?.config.openAIAPIKey
+            }
         }
     }
 }
