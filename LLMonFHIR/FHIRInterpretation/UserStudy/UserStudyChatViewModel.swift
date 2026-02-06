@@ -524,8 +524,8 @@ extension UserStudyChatViewModel {
     }
     
     private func generateStudyReport() async -> Data? {
-        let report = UserStudyReport(
-            metadata: Metadata(
+        let report = StudyReport(
+            metadata: .init(
                 studyID: study.id,
                 startTime: studyStartTime,
                 endTime: Date(),
@@ -546,44 +546,43 @@ extension UserStudyChatViewModel {
         }
     }
 
-    private func generateTimeline() -> [TimelineEvent] {
-        var timeline: [TimelineEvent] = interpreter.llmSession.context.chat.map { message in
-            TimelineEvent.chatMessage(TimelineEvent.ChatMessage(
+    private func generateTimeline() -> [StudyReport.TimelineEvent] {
+        var timeline: [StudyReport.TimelineEvent] = interpreter.llmSession.context.chat.map { message in
+            .chatMessage(.init(
                 timestamp: message.date,
                 role: message.role.rawValue,
                 content: message.content
             ))
         }
-        timeline.append(contentsOf: study.tasks.compactMap { task -> TimelineEvent? in
+        timeline.append(contentsOf: study.tasks.compactMap { task -> StudyReport.TimelineEvent? in
             guard let taskStartTime = taskStartTimes[task.id], let taskEndTime = taskEndTimes[task.id] else {
                 return nil
             }
-            let surveyTask = TimelineEvent.SurveyTask(
+            return .surveyTask(.init(
                 taskId: task.id,
                 startedAt: taskStartTime,
                 completedAt: taskEndTime,
                 duration: taskEndTime.timeIntervalSince(taskStartTime),
                 questions: task.questions.map { question in
-                    TimelineEvent.SurveyQuestion(
+                    StudyReport.TimelineEvent.SurveyQuestion(
                         questionText: question.text,
                         answer: question.answer.rawValue,
                         isOptional: question.isOptional
                     )
                 }
-            )
-            return TimelineEvent.surveyTask(surveyTask)
+            ))
         })
-        return timeline.sorted { $0.timestamp < $1.timestamp }
+        return timeline.sorted()
     }
 
-    private func getFHIRResources() async -> FHIRResources {
+    private func getFHIRResources() async -> StudyReport.FHIRResources {
         let llmRelevantResources = interpreter.fhirStore.llmRelevantResources
             .map { resource in
-                FullFHIRResource(resource.versionedResource)
+                StudyReport.FullFHIRResource(resource.versionedResource)
             }
         let allResources = await interpreter.fhirStore.allResources.mapAsync { resource in
             let summary = await resourceSummary.cachedSummary(forResource: resource)
-            return PartialFHIRResource(
+            return StudyReport.PartialFHIRResource(
                 id: resource.id,
                 resourceType: resource.resourceType,
                 displayName: resource.displayName,
@@ -591,7 +590,7 @@ extension UserStudyChatViewModel {
                 summary: summary?.description
             )
         }
-        return FHIRResources(
+        return StudyReport.FHIRResources(
             llmRelevantResources: FeatureFlags.exportRawJSONFHIRResources ? llmRelevantResources : [],
             allResources: allResources
         )
@@ -606,29 +605,5 @@ extension Study {
     
     var isUnguided: Bool {
         id == Self.unguidedStudyId
-    }
-}
-
-extension ChatEntity.Role {
-    var rawValue: String {
-        switch self {
-        case .user: "user"
-        case .assistant: "assistant"
-        case .assistantToolCall: "assistant_tool_call"
-        case .assistantToolResponse: "assistant_tool_response"
-        case .hidden(let type): "hidden_\(type.name)"
-        }
-    }
-}
-
-
-extension Sequence {
-    func mapAsync<Result, E>(_ transform: (Element) async throws(E) -> Result) async throws(E) -> [Result] {
-        var results: [Result] = []
-        results.reserveCapacity(underestimatedCount)
-        for element in self {
-            results.append(try await transform(element))
-        }
-        return results
     }
 }
