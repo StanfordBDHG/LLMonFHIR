@@ -19,6 +19,7 @@ extension Bundle {
 
 
 extension ChatEntity.Role {
+    // swiftlint:disable:next missing_docs
     public var rawValue: String {
         switch self {
         case .user:

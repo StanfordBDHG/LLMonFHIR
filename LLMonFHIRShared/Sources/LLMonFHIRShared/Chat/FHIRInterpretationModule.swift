@@ -17,14 +17,6 @@ private import SpeziLocalStorage
 @Observable
 public final class FHIRInterpretationModule: Module, @unchecked Sendable { // TODO either gut this entirely (for the CLI use case), or share it back into the app!
     public struct Config: Sendable {
-//        static let `default` = Self(
-//            model: .gpt4o,
-//            temperature: 0,
-//            resourceLimit: nil,
-//            summarizeSingleResourcePrompt: .summarizeSingleFHIRResourceDefaultPrompt,
-//            systemPrompt: .interpretMultipleResourcesDefaultPrompt
-//        )
-        
         let model: LLMOpenAIParameters.ModelType
         let temperature: Double
         let resourceLimit: Int
@@ -46,9 +38,6 @@ public final class FHIRInterpretationModule: Module, @unchecked Sendable { // TO
         }
     }
     
-    
-//    @ObservationIgnored @MainActor @Dependency(LocalStorage.self) private var localStorage: LocalStorage? // TODO stop HealthKit from initializing this!
-    private let localStorage: LocalStorage? = nil
     @ObservationIgnored @MainActor @Dependency(LLMRunner.self) private var llmRunner
     @ObservationIgnored @MainActor @Dependency(FHIRStore.self) private var fhirStore
     
@@ -69,22 +58,20 @@ public final class FHIRInterpretationModule: Module, @unchecked Sendable { // TO
     
     @MainActor
     public func configure() {
-//        precondition(testModule == nil)
-//        precondition(localStorage == nil)
         self.resourceSummary = FHIRResourceSummary(
-            localStorage: localStorage,
+            localStorage: nil,
             llmRunner: llmRunner,
             llmSchema: singleResourceLLMSchema
         )
         
         self.resourceInterpreter = FHIRResourceInterpreter(
-            localStorage: localStorage,
+            localStorage: nil,
             llmRunner: llmRunner,
             llmSchema: singleResourceLLMSchema
         )
         
         self.multipleResourceInterpreter = FHIRMultipleResourceInterpreter(
-            localStorage: localStorage,
+            localStorage: nil,
             llmRunner: llmRunner,
             llmSchema: multipleResourceInterpreterOpenAISchema,
             fhirStore: fhirStore

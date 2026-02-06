@@ -8,6 +8,7 @@
 
 
 extension Sequence {
+    /// asynchronous map operation.
     public func mapAsync<Result, E>(
         isolation actor: isolated (any Actor)? = #isolation,
         _ transform: nonisolated(nonsending) (Element) async throws(E) -> Result

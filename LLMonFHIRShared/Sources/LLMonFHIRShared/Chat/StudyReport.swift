@@ -46,7 +46,7 @@ extension StudyReport {
         private let endTime: Date
         private let userInfo: [String: String]
         
-        public init(studyID: String, startTime: Date, endTime: Date, userInfo: [String : String]) {
+        public init(studyID: String, startTime: Date, endTime: Date, userInfo: [String: String]) {
             self.studyID = studyID
             self.startTime = startTime
             self.endTime = endTime
