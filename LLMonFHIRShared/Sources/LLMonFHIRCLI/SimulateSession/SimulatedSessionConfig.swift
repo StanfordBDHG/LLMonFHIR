@@ -55,6 +55,7 @@ extension SimulatedSessionConfig: Decodable {
     init(from decoder: any Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         self.numberOfRuns = try container.decode(Int.self, forKey: .numberOfRuns)
+        self.model = try container.decode(LLMOpenAIParameters.ModelType.self, forKey: .model)
         self.temperature = try container.decode(Double.self, forKey: .temperature)
         self.openAIKey = try container.decode(String.self, forKey: .openAIKey)
         let studyId = try container.decode(Study.ID.self, forKey: .studyId)
@@ -68,6 +69,5 @@ extension SimulatedSessionConfig: Decodable {
         }
         self.bundle = bundle
         self.userQuestions = try container.decode([String].self, forKey: .userQuestions)
-        self.model = try container.decode(LLMOpenAIParameters.ModelType.self, forKey: .model)
     }
 }

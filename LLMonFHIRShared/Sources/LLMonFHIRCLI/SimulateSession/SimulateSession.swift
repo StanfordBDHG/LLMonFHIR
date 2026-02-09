@@ -38,9 +38,9 @@ struct SimulateSession: AsyncParsableCommand {
         let reports = try await withThrowingTaskGroup(of: StudyReport.self, returning: [StudyReport].self) { taskGroup in
             for config in configs {
                 for runIdx in 0..<config.numberOfRuns {
-                    let sessionDesc = "\(config.study.id) / \(config.bundleInputName) (\(runIdx + 1)/\(config.numberOfRuns))"
                     taskGroup.addTask {
-                        let simulator = await SessionSimulator(config: config)
+                        let simulator = await SessionSimulator(config: config, runIdx: runIdx)
+                        let sessionDesc = simulator.sessionDesc
                         print("Starting \(sessionDesc)")
                         do {
                             let result = try await simulator.run()
@@ -67,7 +67,7 @@ struct SimulateSession: AsyncParsableCommand {
         try FileManager.default.createDirectory(at: outputUrl, withIntermediateDirectories: true)
         
         let encoder = JSONEncoder()
-        encoder.outputFormatting = .prettyPrinted
+        encoder.outputFormatting = [.prettyPrinted, .withoutEscapingSlashes]
         for report in reports {
             let dstUrl = outputUrl.appendingPathComponent(UUID().uuidString, conformingTo: .json)
             let reportData = try encoder.encode(report)

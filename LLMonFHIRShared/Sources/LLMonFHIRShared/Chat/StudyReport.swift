@@ -11,6 +11,7 @@
 public import Foundation
 public import class ModelsR4.QuestionnaireResponse
 public import SpeziFHIR
+public import SpeziLLMOpenAI // for LLMOpenAIParameters.ModelType
 
 
 /// A report summarizing a user study session, including metadata, FHIR resources, and timeline events.
@@ -41,16 +42,27 @@ public struct StudyReport: Encodable, Sendable {
 extension StudyReport {
     /// Metadata about the study session.
     public struct Metadata: Encodable, Sendable {
+        public struct LLMConfig: Codable, Sendable {
+            public let model: LLMOpenAIParameters.ModelType
+            public let temperature: Double
+            public init(model: LLMOpenAIParameters.ModelType, temperature: Double) {
+                self.model = model
+                self.temperature = temperature
+            }
+        }
+        
         private let studyID: String
         private let startTime: Date
         private let endTime: Date
         private let userInfo: [String: String]
+        private let llmConfig: LLMConfig
         
-        public init(studyID: String, startTime: Date, endTime: Date, userInfo: [String: String]) {
+        public init(studyID: String, startTime: Date, endTime: Date, userInfo: [String: String], llmConfig: LLMConfig) {
             self.studyID = studyID
             self.startTime = startTime
             self.endTime = endTime
             self.userInfo = userInfo
+            self.llmConfig = llmConfig
         }
     }
 

@@ -19,6 +19,7 @@ import SpeziLLMOpenAI
 
 struct SessionSimulator: ~Copyable {
     private let config: SimulatedSessionConfig
+    private let runIdx: Int
     private let spezi: Spezi
     private let fhirStore: FHIRStore
     private let fhirInterpretation: FHIRInterpretationModule
@@ -26,8 +27,9 @@ struct SessionSimulator: ~Copyable {
     private let resourceSummarizer: FHIRResourceSummarizer
     
     @MainActor
-    init(config: SimulatedSessionConfig) async {
+    init(config: SimulatedSessionConfig, runIdx: Int) async {
         self.config = config
+        self.runIdx = runIdx
         spezi = Spezi(from: Self.speziConfig(for: config))
         fhirStore = spezi.module(FHIRStore.self)!
         fhirInterpretation = spezi.module(FHIRInterpretationModule.self)!
@@ -76,7 +78,11 @@ struct SessionSimulator: ~Copyable {
                 endTime: endTime,
                 userInfo: [
                     "bundle": self.config.bundleInputName
-                ]
+                ],
+                llmConfig: .init(
+                    model: config.model,
+                    temperature: config.temperature
+                )
             ),
             initialQuestionnaireResponse: nil, // (obviously) not supported
             fhirResources: await studyReportFHIRResources(),
@@ -154,6 +160,13 @@ extension SessionSimulator {
                 ))
             }
         }
+    }
+}
+
+
+extension SessionSimulator {
+    var sessionDesc: String {
+        "\(config.study.id) / \(config.bundleInputName) @ \(config.model)/\(config.temperature) (\(runIdx + 1)/\(config.numberOfRuns))"
     }
 }
 
