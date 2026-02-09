@@ -49,6 +49,15 @@ struct StudyHomeView: View {
                 .background(Color(.systemBackground))
                 .navigationTitle("USER_STUDY_WECOME")
                 .navigationBarTitleDisplayMode(.inline)
+                #if targetEnvironment(simulator)
+                .toolbar {
+                    ToolbarItem(placement: .topBarTrailing) {
+                        // Maybe instead show a button that directly brings up the ResourceSelection sheet?
+                        // (most of the other settings won't be taken into account in study mode...)
+                        SettingsButton()
+                    }
+                }
+                #endif
                 .sheet(isPresented: $isPresentingEarliestHealthRecords) {
                     EarliestHealthRecordsView(dataSource: earliestDates)
                         .presentationDetents([.medium, .large])
