@@ -78,6 +78,7 @@
 
     },
     "Could not create FHIR Summary" : {
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -112,6 +113,7 @@
       }
     },
     "Create Resource Summary" : {
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -702,6 +704,7 @@
       }
     },
     "FHIR_RESOURCES_INTERPRETATION_BUTTON" : {
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -736,6 +739,7 @@
       }
     },
     "FHIR_RESOURCES_INTERPRETATION_LOADING" : {
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -838,6 +842,7 @@
       }
     },
     "FHIR_RESOURCES_SUMMARY_BUTTON" : {
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -1270,6 +1275,12 @@
         }
       }
     },
+    "Load Resource Interpretation" : {
+
+    },
+    "Load Resource Summary" : {
+
+    },
     "Loading Resources" : {
 
     },
@@ -1540,6 +1551,9 @@
 
     },
     "Random" : {
+
+    },
+    "Reload Resource Summary" : {
 
     },
     "Reset Chat" : {
@@ -2228,6 +2242,9 @@
 
     },
     "Unable to access Camera" : {
+
+    },
+    "Update Resource Interpretation" : {
 
     },
     "Use HealthKit Resources" : {

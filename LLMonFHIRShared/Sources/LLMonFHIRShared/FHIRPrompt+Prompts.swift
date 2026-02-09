@@ -93,7 +93,7 @@ extension FHIRPrompt {
     
     /// Prompt used to summarize FHIR resources
     ///
-    /// This prompt is used by the ``FHIRResourceSummary``.
+    /// This prompt is used by the ``FHIRResourceSummarizer``.
     public static let summarizeSingleFHIRResourceDefaultPrompt = FHIRPrompt(
         storageKey: "prompt.summary",
         defaultPromptText: """

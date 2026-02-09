@@ -14,13 +14,13 @@ public import SpeziLocalStorage
 
 /// Responsible for summarizing FHIR resources.
 @Observable
-public final class FHIRResourceSummary: Sendable {
+public final class FHIRResourceSummarizer: Sendable {
     /// Error thrown when summarization fails.
     enum SummaryError: Error {
         case summaryFailed(String)
     }
 
-    /// Summary of a FHIR resource emitted by the ``FHIRResourceSummary``.
+    /// Summary of a FHIR resource emitted by the ``FHIRResourceSummarizer``.
     public struct Summary: Codable, LosslessStringConvertible, Sendable {
         /// Title of the FHIR resource, should be shorter than 4 words.
         public let title: String
@@ -54,8 +54,8 @@ public final class FHIRResourceSummary: Sendable {
 
 
     /// - Parameters:
-    ///   - localStorage: Local storage module that needs to be passed to the ``FHIRResourceSummary`` to allow it to cache summaries.
-    ///   - llmRunner: OpenAI module that needs to be passed to the ``FHIRResourceSummary`` to allow it to retrieve summaries.
+    ///   - localStorage: Local storage module that needs to be passed to the summarizer to allow it to cache summaries.
+    ///   - llmRunner: OpenAI module that needs to be passed to the summarizer to allow it to retrieve summaries.
     ///   - llmSchema: LLM schema to use for generating summaries.
     public init(
         localStorage: LocalStorage?,
@@ -67,7 +67,7 @@ public final class FHIRResourceSummary: Sendable {
             localStorage: localStorage,
             llmRunner: llmRunner,
             llmSchema: llmSchema,
-            storageKey: "FHIRResourceSummary.Summaries",
+            storageKey: "FHIRResourceSummarizer.Summaries",
             summarizationPrompt: summarizationPrompt
         )
     }
@@ -114,7 +114,7 @@ public final class FHIRResourceSummary: Sendable {
         await resourceProcessor.results[resource.id]
     }
     
-    /// Adjust the LLM schema used by the ``FHIRResourceSummary``.
+    /// Adjust the LLM schema used by the summarizer.
     ///
     /// - Parameters:
     ///    - schema: The to-be-used `LLMSchema`.

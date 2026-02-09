@@ -18,19 +18,18 @@ public struct FHIRGetResourceLLMFunction: LLMFunction {
     public static let name = "get_resources"
     
     private let fhirStore: FHIRStore
-    private let resourceSummary: FHIRResourceSummary
+    private let resourceSummarizer: FHIRResourceSummarizer
     
     @Parameter var resourceCategories: [String]
     
     @MainActor
     public init(
         fhirStore: FHIRStore,
-        resourceSummary: FHIRResourceSummary,
+        resourceSummarizer: FHIRResourceSummarizer,
         resourceCountLimit: Int
     ) {
         self.fhirStore = fhirStore
-        self.resourceSummary = resourceSummary
-        
+        self.resourceSummarizer = resourceSummarizer
         _resourceCategories = Parameter(
             description: """
                 Pass in one or more identifiers that you want to access.
@@ -102,7 +101,7 @@ public struct FHIRGetResourceLLMFunction: LLMFunction {
     
     
     private func summarizeFHIRResource(_ resource: SendableFHIRResource, resourceCategory: String) async throws -> String {
-        let summary = try await resourceSummary.summarize(resource: resource)
+        let summary = try await resourceSummarizer.summarize(resource: resource)
         return String(localized: "This is the summary of the requested \(resourceCategory):\n\n\(summary.description)")
     }
 }

@@ -11,11 +11,11 @@ import Testing
 
 
 @Suite
-struct FHIRResourceSummaryTests {
+struct FHIRResourceSummarizerTests {
     @Test
     func summaryInitializerWithOneLineInput() throws {
         let input = "This is a title"
-        let summary = FHIRResourceSummary.Summary(input)
+        let summary = FHIRResourceSummarizer.Summary(input)
         #expect(summary?.title == "This is a title")
         #expect(summary?.summary == "This is a title")
     }
@@ -23,7 +23,7 @@ struct FHIRResourceSummaryTests {
     @Test
     func summaryInitializerWithMultilineInput() throws {
         let input = "Title\nFirst line of summary\nSecond line of summary"
-        let summary = FHIRResourceSummary.Summary(input)
+        let summary = FHIRResourceSummarizer.Summary(input)
         #expect(summary != nil)
         #expect(summary?.title == "Title")
         #expect(summary?.summary == "First line of summary\nSecond line of summary")
@@ -32,14 +32,14 @@ struct FHIRResourceSummaryTests {
     @Test
     func summaryInitializerWithEmptyInput() throws {
         let input = ""
-        let summary = FHIRResourceSummary.Summary(input)
+        let summary = FHIRResourceSummarizer.Summary(input)
         #expect(summary == nil, "Summary should be nil for empty input")
     }
     
     @Test
     func summaryInitializerWithWhitespaceAroundContent() throws {
         let input = "  Title with whitespace  \n  Summary with whitespace  "
-        let summary = FHIRResourceSummary.Summary(input)
+        let summary = FHIRResourceSummarizer.Summary(input)
         #expect(summary?.title == "  Title with whitespace  ")
         #expect(summary?.summary == "  Summary with whitespace  ")
     }
@@ -49,7 +49,7 @@ struct FHIRResourceSummaryTests {
         let title = "Test Title"
         let summaryText = "This is a test summary"
         let input = "\(title)\n\(summaryText)"
-        let summary = FHIRResourceSummary.Summary(input)
+        let summary = FHIRResourceSummarizer.Summary(input)
 
         #expect(summary?.description == "\(title)\n\(summaryText)")
     }
@@ -57,7 +57,7 @@ struct FHIRResourceSummaryTests {
     @Test
     func summaryEmptyLineFiltering() throws {
         let input = "Title\n\nFirst line\n\nSecond line\n\n"
-        let summary = FHIRResourceSummary.Summary(input)
+        let summary = FHIRResourceSummarizer.Summary(input)
         #expect(summary?.title == "Title")
         #expect(summary?.summary == "First line\nSecond line")
     }

@@ -38,12 +38,13 @@ public final class FHIRInterpretationModule: Module, @unchecked Sendable { // TO
         }
     }
     
+//    @ObservationIgnored @MainActor @Dependency(LocalStorage.self) private var localStorage
     @ObservationIgnored @MainActor @Dependency(LLMRunner.self) private var llmRunner
     @ObservationIgnored @MainActor @Dependency(FHIRStore.self) private var fhirStore
     
     // swiftlint:disable implicitly_unwrapped_optional
-    @ObservationIgnored @MainActor public private(set) var resourceSummary: FHIRResourceSummary!
-    @ObservationIgnored @MainActor private var resourceInterpreter: FHIRResourceInterpreter!
+    @ObservationIgnored @MainActor public private(set) var resourceSummarizer: FHIRResourceSummarizer!
+    @ObservationIgnored @MainActor private var singleResourceInterpreter: SingleFHIRResourceInterpreter!
     @ObservationIgnored @MainActor public private(set) var multipleResourceInterpreter: FHIRMultipleResourceInterpreter!
     // swiftlint:enable implicitly_unwrapped_optional
     
@@ -58,19 +59,17 @@ public final class FHIRInterpretationModule: Module, @unchecked Sendable { // TO
     
     @MainActor
     public func configure() {
-        self.resourceSummary = FHIRResourceSummary(
+        resourceSummarizer = FHIRResourceSummarizer(
             localStorage: nil,
             llmRunner: llmRunner,
             llmSchema: singleResourceLLMSchema
         )
-        
-        self.resourceInterpreter = FHIRResourceInterpreter(
+        singleResourceInterpreter = SingleFHIRResourceInterpreter(
             localStorage: nil,
             llmRunner: llmRunner,
             llmSchema: singleResourceLLMSchema
         )
-        
-        self.multipleResourceInterpreter = FHIRMultipleResourceInterpreter(
+        multipleResourceInterpreter = FHIRMultipleResourceInterpreter(
             localStorage: nil,
             llmRunner: llmRunner,
             llmSchema: multipleResourceInterpreterOpenAISchema,
@@ -94,8 +93,8 @@ public final class FHIRInterpretationModule: Module, @unchecked Sendable { // TO
         updateModelsTask?.cancel()
         let imp = { [self] in
             let summarizePrompt = config.summarizeSingleResourcePrompt
-            await resourceSummary.update(llmSchema: singleResourceLLMSchema, summarizationPrompt: summarizePrompt)
-            await resourceInterpreter.update(llmSchema: singleResourceLLMSchema, summarizationPrompt: summarizePrompt)
+            await resourceSummarizer.update(llmSchema: singleResourceLLMSchema, summarizationPrompt: summarizePrompt)
+            await singleResourceInterpreter.update(llmSchema: singleResourceLLMSchema, summarizationPrompt: summarizePrompt)
             multipleResourceInterpreter.changeLLMSchema(
                 to: multipleResourceInterpreterOpenAISchema,
                 using: config.systemPrompt
@@ -130,7 +129,7 @@ extension FHIRInterpretationModule {
         ) {
             FHIRGetResourceLLMFunction(
                 fhirStore: fhirStore,
-                resourceSummary: resourceSummary,
+                resourceSummarizer: resourceSummarizer,
                 resourceCountLimit: config.resourceLimit
             )
         }

@@ -23,7 +23,7 @@ struct SessionSimulator: ~Copyable {
     private let fhirStore: FHIRStore
     private let fhirInterpretation: FHIRInterpretationModule
     private let interpreter: FHIRMultipleResourceInterpreter
-    private let resourceSummary: FHIRResourceSummary
+    private let resourceSummarizer: FHIRResourceSummarizer
     
     @MainActor
     init(config: SimulatedSessionConfig) async {
@@ -34,7 +34,7 @@ struct SessionSimulator: ~Copyable {
         fhirStore = spezi.module(FHIRStore.self)!
         fhirInterpretation = spezi.module(FHIRInterpretationModule.self)!
         interpreter = fhirInterpretation.multipleResourceInterpreter
-        resourceSummary = fhirInterpretation.resourceSummary
+        resourceSummarizer = fhirInterpretation.resourceSummarizer
     }
     
     @concurrent
@@ -92,8 +92,8 @@ struct SessionSimulator: ~Copyable {
             .map { resource in
                 StudyReport.FullFHIRResource(resource.versionedResource)
             }
-        let allResources = await fhirStore.allResources.mapAsync { [resourceSummary] resource in
-            let summary = await resourceSummary.cachedSummary(forResource: resource)
+        let allResources = await fhirStore.allResources.mapAsync { [resourceSummarizer] resource in
+            let summary = await resourceSummarizer.cachedSummary(forResource: resource)
             return StudyReport.PartialFHIRResource(
                 id: resource.id,
                 resourceType: resource.resourceType,

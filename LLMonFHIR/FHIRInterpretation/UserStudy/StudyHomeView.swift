@@ -19,7 +19,7 @@ struct StudyHomeView: View {
     @Environment(HealthKit.self) private var healthKit
     @Environment(FHIRInterpretationModule.self) private var fhirInterpretationModule
     @Environment(FHIRMultipleResourceInterpreter.self) private var interpreter
-    @Environment(FHIRResourceSummary.self) private var resourceSummary
+    @Environment(FHIRResourceSummarizer.self) private var resourceSummarizer
     @Environment(FirebaseUpload.self) private var uploader: FirebaseUpload?
     @WaitingState private var waitingState
     
@@ -83,7 +83,7 @@ struct StudyHomeView: View {
                         inProgressStudy: inProgressStudy,
                         initialQuestionnaireResponse: questionnaireResponse,
                         interpreter: interpreter,
-                        resourceSummary: resourceSummary,
+                        resourceSummarizer: resourceSummarizer,
                         uploader: uploader
                     ))
                 }

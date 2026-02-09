@@ -13,7 +13,7 @@ import SwiftUI
 
 struct HomeView: View {
     @Environment(FHIRMultipleResourceInterpreter.self) var interpreter
-    @Environment(FHIRResourceSummary.self) var resourceSummary
+    @Environment(FHIRResourceSummarizer.self) var resourceSummarizer
     
     @State private var showMultipleResourcesChat = false
     @State private var qrCodeScanResult: StudyQRCodeHandler.ScanResult?
@@ -30,7 +30,7 @@ struct HomeView: View {
                 UserStudyChatView(model: .unguided(
                     title: "LLM on FHIR",
                     interpreter: interpreter,
-                    resourceSummary: resourceSummary
+                    resourceSummarizer: resourceSummarizer
                 ))
             }
             .fullScreenCover(item: $qrCodeScanResult, id: \.self) { scanResult in

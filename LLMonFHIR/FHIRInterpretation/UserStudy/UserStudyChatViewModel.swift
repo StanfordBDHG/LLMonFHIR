@@ -61,7 +61,6 @@ final class UserStudyChatViewModel: Sendable {
             case .default:
                 regularConfig
             case .studyTitle:
-//                TitleConfig(title: study.title, subtitle: regularConfig.title)
                 TitleConfig(title: study.title, subtitle: nil)
             }
         }
@@ -106,7 +105,7 @@ final class UserStudyChatViewModel: Sendable {
     }
     /// The response to the Study's initial questionnaire, if any.
     private let initialQuestionnaireResponse: ModelsR4.QuestionnaireResponse?
-    private let resourceSummary: FHIRResourceSummary
+    private let resourceSummarizer: FHIRResourceSummarizer
     private let studyStartTime = Date()
     private var taskStartTimes: [Study.Task.ID: Date] = [:]
     private var taskEndTimes: [Study.Task.ID: Date] = [:]
@@ -118,18 +117,18 @@ final class UserStudyChatViewModel: Sendable {
     /// - Parameters:
     ///   - survey: The survey configuration to use for this study
     ///   - interpreter: The FHIR interpreter to use for chat functionality
-    ///   - resourceSummary: The FHIR resource summary provider for generating summaries of FHIR resources
+    ///   - resourceSummarizer: The FHIR resource summary provider for generating summaries of FHIR resources
     init(
         inProgressStudy: InProgressStudy,
         initialQuestionnaireResponse: ModelsR4.QuestionnaireResponse?,
         interpreter: FHIRMultipleResourceInterpreter,
-        resourceSummary: FHIRResourceSummary,
+        resourceSummarizer: FHIRResourceSummarizer,
         uploader: FirebaseUpload?
     ) {
         self.inProgressStudy = inProgressStudy
         self.initialQuestionnaireResponse = initialQuestionnaireResponse
         self.interpreter = interpreter
-        self.resourceSummary = resourceSummary
+        self.resourceSummarizer = resourceSummarizer
         self.uploader = uploader
         configureMessageLimits()
     }
@@ -137,7 +136,7 @@ final class UserStudyChatViewModel: Sendable {
     static func unguided(
         title: String,
         interpreter: FHIRMultipleResourceInterpreter,
-        resourceSummary: FHIRResourceSummary
+        resourceSummarizer: FHIRResourceSummarizer
     ) -> Self {
         let emptyStudy = Study(
             id: Study.unguidedStudyId,
@@ -157,7 +156,7 @@ final class UserStudyChatViewModel: Sendable {
             ),
             initialQuestionnaireResponse: nil,
             interpreter: interpreter,
-            resourceSummary: resourceSummary,
+            resourceSummarizer: resourceSummarizer,
             uploader: nil
         )
     }
@@ -581,7 +580,7 @@ extension UserStudyChatViewModel {
                 StudyReport.FullFHIRResource(resource.versionedResource)
             }
         let allResources = await interpreter.fhirStore.allResources.mapAsync { resource in
-            let summary = await resourceSummary.cachedSummary(forResource: resource)
+            let summary = await resourceSummarizer.cachedSummary(forResource: resource)
             return StudyReport.PartialFHIRResource(
                 id: resource.id,
                 resourceType: resource.resourceType,

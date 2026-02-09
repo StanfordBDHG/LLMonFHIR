@@ -12,11 +12,10 @@ public import SpeziLLM
 public import SpeziLocalStorage
 
 
-/// Responsible for interpreting FHIR resources.
+/// Responsible for interpreting a single FHIR resource (at a time).
 @Observable
-public final class FHIRResourceInterpreter: Sendable {
+public final class SingleFHIRResourceInterpreter: Sendable {
     private let resourceProcessor: FHIRResourceProcessor<String>
-    
     
     /// - Parameters:
     ///   - localStorage: Local storage module that needs to be passed to the ``FHIRResourceInterpreter`` to allow it to cache interpretations.
