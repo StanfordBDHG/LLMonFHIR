@@ -139,6 +139,52 @@ This setup provides low latency, strong performance, and improved privacy, since
 For instructions on running a minimal Docker-based fog node on Linux or macOS, see [FogNode/README.md](FogNode/README.md).
 
 
+## Session Simulation
+
+The LLMonFHIRShared sub-package contains a tool that allows simulating user chat sessions.
+
+During a simulated chat session, the LLM is provided the same context and data it would be during normal usage of the app, except that the inputs (both the patient's health records, as well as the questions being asked by the user) are pre-defined.
+This allows evaluating how different models (or even the same model, across multiple conversations) will handle various scenarios and situations.
+
+For each simulated session, a report file is generated, with the same structure as the report files generated for regular usage sessions in the app.
+
+Session simulation is controled via a JSON config file, which defines the parameters of each session, i.e.:
+- the FHIR bundle containing a synthetic patient
+- the session's OpenAI model and temperature
+- the session's API key
+- the study, in whose context the session should take place 
+- the specific questions the simulated patient should ask the LLM.
+
+The example config below performs 6 simulated runs of the `edu.stanford.LLMonFHIR.gynStudy` study, 3 each using GPT-4o and GPT-5.2, with each session providing the LLM the exact same data and asking the exact same questions.
+```json
+[{
+    "numberOfRuns": 3,
+    "studyId": "edu.stanford.LLMonFHIR.gynStudy",
+    "bundleName": "Elena Kim",
+    "model": "gpt-4o",
+    "temperature": 1,
+    "openAIKey": "sk-proj-...",
+    "userQuestions": [
+        "Tell me about my recent diagnoses and how they affect my fertility.",
+        "How are my hormonal levels?",
+        "So long and thanls for all the fish!!"
+    ]
+}, {
+    "numberOfRuns": 3,
+    "studyId": "edu.stanford.LLMonFHIR.gynStudy",
+    "bundleName": "Elena Kim",
+    "model": "gpt-5.2",
+    "temperature": 1,
+    "openAIKey": "sk-proj-...",
+    "userQuestions": [
+        "Tell me about my recent diagnoses and how they affect my fertility.",
+        "How are my hormonal levels?",
+        "So long and thanls for all the fish!!"
+    ]
+}]
+```
+
+
 ## Contributors & License
 
 This project is based on [Spezi](https://github.com/StanfordSpezi/Spezi) framework and builds on top of the [Stanford Spezi Template Application](https://github.com/StanfordSpezi/SpeziTemplateApplication) provided using the MIT license.
