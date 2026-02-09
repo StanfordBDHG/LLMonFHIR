@@ -20,68 +20,81 @@ extension ModelsR4.Bundle {
         case patientName
     }
     
-    private static let logger = Logger(subsystem: "edu.stanford.LLMonFHIR.LLMonFHIRShared", category: "ResourceBundleLoading")
-    
-    public static func named(_ bundleFilename: String) -> ModelsR4.Bundle? {
-        allCustomBundles(identifiedBy: .filePath)[bundleFilename]
-    }
-    
-    public static func forPatient(named patientName: String) -> ModelsR4.Bundle? {
-        allCustomBundles(identifiedBy: .patientName)[patientName]
-    }
-    
-    
-    /// Fetches all bundles located in `LLMonFHIRShared/Resources/Synthetic Patients/`.
-    ///
-    /// - parameter idSelector: specifies the propertly by which the bundles should be identified.
-    /// - returns: A dictionary, mapping each bundle identifier to its bundle.
-    public static func allCustomBundles(identifiedBy idSelector: BundleIdSelector) -> [String: ModelsR4.Bundle] {
-        guard let synthPatientsUrl = Foundation.Bundle.llmOnFhirShared.url(forResource: "Synthetic Patients", withExtension: nil),
-              let enumerator = FileManager.default.enumerator(
-                at: synthPatientsUrl,
+    private struct ResourceBundlesLookup: Sendable {
+        private static let logger = Logger(subsystem: "edu.stanford.LLMonFHIR.LLMonFHIRShared", category: "\(Self.self)")
+        
+        private(set) var bundlesByPath: [String: URL] = [:]
+        private(set) var bundlesByPatientName: [String: URL] = [:]
+        
+        init(rootUrl: URL?) {
+            guard let rootUrl, FileManager.default.isDirectory(at: rootUrl) else {
+                return
+            }
+            guard let enumerator = FileManager.default.enumerator(
+                at: rootUrl,
                 includingPropertiesForKeys: [.isRegularFileKey],
                 options: [.skipsHiddenFiles]
-              ) else {
-            return [:]
-        }
-        var seenBundleIds: Set<String> = []
-        var bundlesById: [String: ModelsR4.Bundle] = [:]
-        for url in enumerator.lazy.compactMap({ $0 as? URL }) {
-            guard (try? url.resourceValues(forKeys: [.isRegularFileKey]))?.isRegularFile == true else {
-                continue
+            ) else {
+                return
             }
-            let bundle: ModelsR4.Bundle
-            do {
-                bundle = try JSONDecoder().decode(ModelsR4.Bundle.self, from: Data(contentsOf: url))
-            } catch {
-                logger.warning("Skipping FHIR bundle at \(url.path): \(error)")
-                continue
-            }
-            let bundleId: String
-            switch idSelector {
-            case .filePath:
-                bundleId = url.deletingPathExtension().partialPath(relativeTo: synthPatientsUrl)!
-            case .patientName:
-                guard let name = bundle.singlePatient?.fullName else {
-                    logger.warning("Skipping FHIR bundle at \(url.path): no patient, or unable to obtain patient name")
+            var allBundlesByPatientName: [String: [URL]] = [:]
+            for url in enumerator.lazy.compactMap({ $0 as? URL }) {
+                guard (try? url.resourceValues(forKeys: [.isRegularFileKey]))?.isRegularFile == true else {
                     continue
                 }
-                bundleId = name
+                let bundle: ModelsR4.Bundle
+                do {
+                    bundle = try JSONDecoder().decode(ModelsR4.Bundle.self, from: Data(contentsOf: url))
+                } catch {
+                    Self.logger.warning("Skipping FHIR bundle at \(url.path) (unable to decode): \(error)")
+                    continue
+                }
+                if let patientName = bundle.singlePatient?.fullName {
+                    defer {
+                        allBundlesByPatientName[patientName, default: []].append(url)
+                    }
+                    guard !allBundlesByPatientName.keys.contains(patientName) else {
+                        bundlesByPatientName[patientName] = nil
+                        break
+                    }
+                    bundlesByPatientName[patientName] = url
+                }
+                if let bundleFilePathId = url.deletingPathExtension().partialPath(relativeTo: rootUrl) { // should always be nonnil
+                    bundlesByPath[bundleFilePathId] = url
+                }
             }
-            guard !seenBundleIds.contains(bundleId) else {
-                // we've already seen this bundle id,
-                // meaning there exist multiple bundles with this id,
-                // meaning that the id cannot be used to uniquely identify the bundle.
-                bundlesById[bundleId] = nil
-                continue
+            for (name, urls) in allBundlesByPatientName where urls.count > 1 {
+                Self.logger.warning("Found multiple FHIR bundles with same patient name '\(name)':\n\(urls.map { "- \($0.path)" }.joined(separator: "\n"))")
             }
-            seenBundleIds.insert(bundleId)
-            bundlesById[bundleId] = bundle
         }
-        for duplicateBundleId in seenBundleIds.subtracting(bundlesById.keys) {
-            logger.warning("Found multiple bundles with id '\(duplicateBundleId)'. Skipped all of them.")
+    }
+    
+    
+    private static let lookup = ResourceBundlesLookup(
+        rootUrl: Foundation.Bundle.llmOnFhirShared.url(forResource: "Synthetic Patients", withExtension: nil)
+    )
+    
+    /// The names of all synthetic patients that were found in FHIR bundles in the `Synthetic Patients` folder.
+    public static var allSyntheticPatientNames: Set<String> {
+        Set(lookup.bundlesByPatientName.keys)
+    }
+    
+    /// Fetches the bundle with the specified filename.
+    ///
+    /// - parameter bundleFilename: A filename/path relative to the `Synthetic Patients` folder.
+    public static func named(_ bundleFilename: String) -> ModelsR4.Bundle? {
+        lookup.bundlesByPath[bundleFilename].flatMap { url in
+            try? JSONDecoder().decode(ModelsR4.Bundle.self, from: Data(contentsOf: url))
         }
-        return bundlesById
+    }
+    
+    /// Fetches the bundle with the specified patient name.
+    ///
+    /// - parameter patientName: The name of the desired bundle's patient.
+    public static func forPatient(named patientName: String) -> ModelsR4.Bundle? {
+        lookup.bundlesByPatientName[patientName].flatMap { url in
+            try? JSONDecoder().decode(ModelsR4.Bundle.self, from: Data(contentsOf: url))
+        }
     }
 }
 

@@ -10,7 +10,6 @@ import Foundation
 import LLMonFHIRShared
 import LLMonFHIRStudyDefinitions
 import class ModelsR4.Bundle
-import class ModelsR4.Patient
 import SpeziLLMOpenAI
 
 
@@ -64,7 +63,7 @@ extension SimulatedSessionConfig: Decodable {
         }
         self.study = study
         bundleInputName = try container.decode(String.self, forKey: .bundleName)
-        guard let bundle = ModelsR4.Bundle.named(bundleInputName) else {
+        guard let bundle = ModelsR4.Bundle.forPatient(named: bundleInputName) else {
             throw DecodingError.dataCorrupted(.init(codingPath: [], debugDescription: "Unable to find bundle named '\(bundleInputName)'"))
         }
         self.bundle = bundle

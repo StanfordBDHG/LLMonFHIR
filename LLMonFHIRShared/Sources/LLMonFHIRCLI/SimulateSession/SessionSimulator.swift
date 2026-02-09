@@ -28,9 +28,7 @@ struct SessionSimulator: ~Copyable {
     @MainActor
     init(config: SimulatedSessionConfig) async {
         self.config = config
-        spezi = await MainActor.run {
-            Spezi(from: Self.speziConfig(for: config))
-        }
+        spezi = Spezi(from: Self.speziConfig(for: config))
         fhirStore = spezi.module(FHIRStore.self)!
         fhirInterpretation = spezi.module(FHIRInterpretationModule.self)!
         interpreter = fhirInterpretation.multipleResourceInterpreter
