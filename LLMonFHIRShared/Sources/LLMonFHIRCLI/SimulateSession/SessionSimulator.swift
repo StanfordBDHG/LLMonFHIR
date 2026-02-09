@@ -6,15 +6,15 @@
 // SPDX-License-Identifier: MIT
 //
 
-// swiftlint:disable attributes all
+// swiftlint:disable force_unwrapping
 
 import Foundation
 import LLMonFHIRShared
 @_spi(APISupport) import Spezi
-import SpeziLLM
-import SpeziLLMOpenAI
 import SpeziFHIR
 import SpeziHealthKit
+import SpeziLLM
+import SpeziLLMOpenAI
 
 
 struct SessionSimulator: ~Copyable {
@@ -51,7 +51,7 @@ struct SessionSimulator: ~Copyable {
     
     private consuming func _run() async throws -> StudyReport {
         let startTime = Date()
-        let interpretationModule = await MainActor.run { // TODO module? coordinator?
+        let interpretationModule = await MainActor.run {
             spezi.module(FHIRInterpretationModule.self)
         }!
         let fhirStore = await MainActor.run {
@@ -85,7 +85,6 @@ struct SessionSimulator: ~Copyable {
     }
     
     
-    
     @MainActor
     private func studyReportFHIRResources() async -> StudyReport.FHIRResources {
         let llmRelevantResources = fhirStore.llmRelevantResources
@@ -107,6 +106,7 @@ struct SessionSimulator: ~Copyable {
             allResources: allResources
         )
     }
+    
     
     @MainActor
     private func studyReportTimeline() -> [StudyReport.TimelineEvent] {
@@ -133,7 +133,7 @@ extension SessionSimulator {
             ofType sampleType: SampleType<Sample>
         ) {}
     }
-
+    
     
     @MainActor
     private static func speziConfig(for config: SimulatedSessionConfig) -> Configuration {
@@ -150,13 +150,13 @@ extension SessionSimulator {
                 LLMOpenAIPlatform(configuration: .init(
                     authToken: .constant(config.openAIKey),
                     concurrentStreams: 100,
-                    retryPolicy: .attempts(3),  // Automatically perform up to 3 retries on retryable OpenAI API status codes
-//                    middlewares: [OpenAIRequestInterceptor(fhirInterpretationModule)]
+                    retryPolicy: .attempts(3)
                 ))
             }
         }
     }
 }
+
 
 extension Spezi {
     @MainActor

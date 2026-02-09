@@ -6,8 +6,6 @@
 // SPDX-License-Identifier: MIT
 //
 
-// swiftlint:disable all
-
 import Foundation
 import LLMonFHIRShared
 import LLMonFHIRStudyDefinitions
@@ -60,13 +58,6 @@ extension SimulatedSessionConfig: Decodable {
         self.userQuestions = try container.decode([String].self, forKey: .userQuestions)
         self.model = try container.decode(LLMOpenAIParameters.ModelType.self, forKey: .model)
     }
-    
-//    func encode(to encoder: any Encoder) throws {
-//        var container = encoder.container(keyedBy: CodingKeys.self)
-//        try container.encode(study.id, forKey: .studyId)
-//        
-//        fatalError()
-//    }
 }
 
 

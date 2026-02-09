@@ -6,7 +6,7 @@
 // SPDX-License-Identifier: MIT
 //
 
-// swiftlint:disable attributes all
+// swiftlint:disable attributes
 
 import ArgumentParser
 import Foundation
@@ -14,10 +14,10 @@ import LLMonFHIRShared
 import LLMonFHIRStudyDefinitions
 @_spi(APISupport) import Spezi
 import SpeziChat
-import SpeziLLM
-import SpeziLLMOpenAI
 import SpeziFHIR
 import SpeziHealthKit
+import SpeziLLM
+import SpeziLLMOpenAI
 
 
 struct SimulateSession: AsyncParsableCommand {
