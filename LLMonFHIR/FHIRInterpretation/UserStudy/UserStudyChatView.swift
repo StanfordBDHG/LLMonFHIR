@@ -19,7 +19,7 @@ struct UserStudyChatView: View {
     
     @LocalPreference(.enableTextToSpeech) private var enableTextToSpeechPrefValue
     
-    @State private var model: UserStudyChatViewModel
+    private let model: UserStudyChatViewModel
     @State private var viewState: ViewState = .idle
     
     private var enableTextToSpeech: Binding<Bool> {

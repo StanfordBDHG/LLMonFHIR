@@ -18,8 +18,6 @@ struct StudyHomeView: View {
     @Environment(LLMonFHIRStandard.self) private var standard
     @Environment(HealthKit.self) private var healthKit
     @Environment(FHIRInterpretationModule.self) private var fhirInterpretationModule
-    @Environment(FHIRMultipleResourceInterpreter.self) private var interpreter
-    @Environment(FHIRResourceSummarizer.self) private var resourceSummarizer
     @Environment(FirebaseUpload.self) private var uploader: FirebaseUpload?
     @WaitingState private var waitingState
     
@@ -32,7 +30,7 @@ struct StudyHomeView: View {
     @State private var isPresentingQRCodeScanner = false
     
     private var earliestDates: [String: Date] {
-        interpreter.fhirStore.earliestDates(limit: resourceLimit)
+        fhirInterpretationModule.multipleResourceInterpreter.fhirStore.earliestDates(limit: resourceLimit)
     }
     private var oldestHealthRecordTimestamp: Date? {
         earliestDates.values.min()
@@ -91,8 +89,9 @@ struct StudyHomeView: View {
                     UserStudyChatView(model: .init(
                         inProgressStudy: inProgressStudy,
                         initialQuestionnaireResponse: questionnaireResponse,
-                        interpreter: interpreter,
-                        resourceSummarizer: resourceSummarizer,
+                        interpretationModule: fhirInterpretationModule,
+//                        interpreter: interpreter,
+//                        resourceSummarizer: resourceSummarizer,
                         uploader: uploader
                     ))
                 }
@@ -196,7 +195,9 @@ struct StudyHomeView: View {
                 try await healthKit.askForAuthorization()
                 fhirInterpretationModule.currentStudy = inProgressStudy
                 await fhirInterpretationModule.updateSchemas(forceImmediateUpdate: true)
-                interpreter.startNewConversation(using: inProgressStudy.study.interpretMultipleResourcesPrompt)
+                fhirInterpretationModule.multipleResourceInterpreter.startNewConversation(
+                    using: inProgressStudy.study.interpretMultipleResourcesPrompt
+                )
             } else {
                 isPresentingQRCodeScanner = true
             }

@@ -25,13 +25,13 @@ final class FHIRInterpretationModule: Module, EnvironmentAccessible, @unchecked 
     @ObservationIgnored @MainActor @Dependency(LLMRunner.self) private var llmRunner
     @ObservationIgnored @MainActor @Dependency(FHIRStore.self) private var fhirStore
     
-    @ObservationIgnored @MainActor @Model private var resourceSummarizer: FHIRResourceSummarizer
-    @ObservationIgnored @MainActor @Model private var singleResourceInterpreter: SingleFHIRResourceInterpreter
-    @ObservationIgnored @MainActor @Model private var multipleResourceInterpreter: FHIRMultipleResourceInterpreter
+    @ObservationIgnored @MainActor @Model private(set) var resourceSummarizer: FHIRResourceSummarizer
+    @ObservationIgnored @MainActor @Model private(set) var singleResourceInterpreter: SingleFHIRResourceInterpreter
+    @ObservationIgnored @MainActor @Model private(set) var multipleResourceInterpreter: FHIRMultipleResourceInterpreter
     
     @ObservationIgnored @LocalPreference(.llmSource) private var llmSource
-    @ObservationIgnored @LocalPreference(.openAIModel) private var openAIModel
-    @ObservationIgnored @LocalPreference(.openAIModelTemperature) private var openAIModelTemperature
+    @ObservationIgnored @LocalPreference(.openAIModel) private(set) var openAIModel
+    @ObservationIgnored @LocalPreference(.openAIModelTemperature) private(set) var openAIModelTemperature
     @ObservationIgnored @LocalPreference(.fogModel) private var fogModel
     @ObservationIgnored @LocalPreference(.resourceLimit) private var resourceLimit
     
