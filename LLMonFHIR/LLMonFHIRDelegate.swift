@@ -9,7 +9,7 @@
 // swiftlint:disable type_contents_order
 
 import FirebaseCore
-import GeneratedOpenAIClient
+import GeneratedOpenAIClient // periphery:ignore - false positive
 import LLMonFHIRShared
 @_spi(APISupport) import Spezi
 import SpeziAccount
