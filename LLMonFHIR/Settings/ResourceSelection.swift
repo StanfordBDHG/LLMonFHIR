@@ -23,8 +23,7 @@ struct ResourceSelection: View {
     @State private var bundles: [ModelsR4.Bundle] = []
     @State private var showBundleSelection = false
     
-    
-    @MainActor private var useHealthKitResources: Binding<Bool> {
+    private var useHealthKitResources: Binding<Bool> {
         Binding {
             if !HKHealthStore.isHealthDataAvailable() {
                 showBundleSelection = true

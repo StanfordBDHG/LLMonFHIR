@@ -38,9 +38,18 @@ struct SimulateSession: AsyncParsableCommand {
         let reports = try await withThrowingTaskGroup(of: StudyReport.self, returning: [StudyReport].self) { taskGroup in
             for config in configs {
                 for runIdx in 0..<config.numberOfRuns {
+                    let sessionDesc = "\(config.study.id) / \(config.bundleInputName) (\(runIdx + 1)/\(config.numberOfRuns))"
                     taskGroup.addTask {
                         let simulator = await SessionSimulator(config: config)
-                        return try await simulator.run()
+                        print("Starting \(sessionDesc)")
+                        do {
+                            let result = try await simulator.run()
+                            print("Ended \(sessionDesc)")
+                            return result
+                        } catch {
+                            print("\(sessionDesc) failed: \(error)")
+                            throw error
+                        }
                     }
                 }
             }
@@ -62,6 +71,7 @@ struct SimulateSession: AsyncParsableCommand {
         for report in reports {
             let dstUrl = outputUrl.appendingPathComponent(UUID().uuidString, conformingTo: .json)
             let reportData = try encoder.encode(report)
+            print("Writing report file to \(dstUrl.path)")
             try reportData.write(to: dstUrl)
         }
     }
