@@ -20,7 +20,7 @@ import SwiftUI
 
 // periphery:ignore - Properties are used through dependency injection and @Model configuration in `configure()`
 @Observable
-final class FHIRInterpretationModule: Module, EnvironmentAccessible, @unchecked Sendable {
+final class FHIRInterpretationModule: Module, EnvironmentAccessible, @unchecked Sendable { // maybe rename to smth Coordinator?
     @ObservationIgnored @MainActor @Dependency(LocalStorage.self) private var localStorage
     @ObservationIgnored @MainActor @Dependency(LLMRunner.self) private var llmRunner
     @ObservationIgnored @MainActor @Dependency(FHIRStore.self) private var fhirStore

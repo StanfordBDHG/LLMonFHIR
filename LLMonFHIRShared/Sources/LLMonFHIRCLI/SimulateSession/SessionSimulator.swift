@@ -6,8 +6,6 @@
 // SPDX-License-Identifier: MIT
 //
 
-// swiftlint:disable force_unwrapping
-
 import Foundation
 import LLMonFHIRShared
 @_spi(APISupport) import Spezi
@@ -22,19 +20,19 @@ struct SessionSimulator: ~Copyable {
     private let runIdx: Int
     private let spezi: Spezi
     private let fhirStore: FHIRStore
-    private let fhirInterpretation: FHIRInterpretationModule
+    private let coordinator: SessionCoordinator
     private let interpreter: FHIRMultipleResourceInterpreter
     private let resourceSummarizer: FHIRResourceSummarizer
     
     @MainActor
-    init(config: SimulatedSessionConfig, runIdx: Int) async {
+    init(config: SimulatedSessionConfig, runIdx: Int) {
         self.config = config
         self.runIdx = runIdx
         spezi = Spezi(from: Self.speziConfig(for: config))
-        fhirStore = spezi.module(FHIRStore.self)!
-        fhirInterpretation = spezi.module(FHIRInterpretationModule.self)!
-        interpreter = fhirInterpretation.multipleResourceInterpreter
-        resourceSummarizer = fhirInterpretation.resourceSummarizer
+        coordinator = spezi.module(SessionCoordinator.self)! // swiftlint:disable:this force_unwrapping
+        fhirStore = coordinator.fhirStore
+        interpreter = coordinator.multipleResourceInterpreter
+        resourceSummarizer = coordinator.resourceSummarizer
     }
     
     @concurrent
@@ -51,18 +49,9 @@ struct SessionSimulator: ~Copyable {
     
     private consuming func _run() async throws -> StudyReport {
         let startTime = Date()
-        let interpretationModule = await MainActor.run {
-            spezi.module(FHIRInterpretationModule.self)
-        }!
-        let fhirStore = await MainActor.run {
-            spezi.module(FHIRStore.self)
-        }!
-        
         await fhirStore.removeAllResources()
         await fhirStore.load(bundle: config.bundle)
-        
-        let interpreter = await interpretationModule.multipleResourceInterpreter!
-        await interpretationModule.updateSchemas(forceImmediateUpdate: true)
+        await coordinator.prepareForUse()
         await interpreter.startNewConversation(using: config.study.interpretMultipleResourcesPrompt)
         for question in config.userQuestions {
             await MainActor.run {
@@ -90,13 +79,10 @@ struct SessionSimulator: ~Copyable {
         )
     }
     
-    
     @MainActor
     private func studyReportFHIRResources() async -> StudyReport.FHIRResources {
         let llmRelevantResources = fhirStore.llmRelevantResources
-            .map { resource in
-                StudyReport.FullFHIRResource(resource.versionedResource)
-            }
+            .map { StudyReport.FullFHIRResource($0.versionedResource) }
         let allResources = await fhirStore.allResources.mapAsync { [resourceSummarizer] resource in
             let summary = await resourceSummarizer.cachedSummary(forResource: resource)
             return StudyReport.PartialFHIRResource(
@@ -112,7 +98,6 @@ struct SessionSimulator: ~Copyable {
             allResources: allResources
         )
     }
-    
     
     @MainActor
     private func studyReportTimeline() -> [StudyReport.TimelineEvent] {
@@ -140,12 +125,11 @@ extension SessionSimulator {
         ) {}
     }
     
-    
     @MainActor
     private static func speziConfig(for config: SimulatedSessionConfig) -> Configuration {
         Configuration(standard: FakeStandard()) {
             FHIRStore()
-            FHIRInterpretationModule(config: .init(
+            SessionCoordinator(config: .init(
                 model: config.model,
                 temperature: config.temperature,
                 resourceLimit: 1000,
