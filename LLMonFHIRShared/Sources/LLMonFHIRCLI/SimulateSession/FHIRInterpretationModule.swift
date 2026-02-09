@@ -6,12 +6,13 @@
 // SPDX-License-Identifier: MIT
 //
 
-public import Observation
-public import Spezi
-private import SpeziFHIR
-private import SpeziLLM
-public import SpeziLLMOpenAI
-private import SpeziLocalStorage
+import LLMonFHIRShared
+import Observation
+import Spezi
+import SpeziFHIR
+import SpeziLLM
+import SpeziLLMOpenAI
+import SpeziLocalStorage
 
 
 @Observable

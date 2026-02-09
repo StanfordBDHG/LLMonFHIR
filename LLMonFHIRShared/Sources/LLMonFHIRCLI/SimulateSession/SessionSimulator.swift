@@ -76,7 +76,9 @@ struct SessionSimulator: ~Copyable {
                 studyID: config.study.id,
                 startTime: startTime,
                 endTime: endTime,
-                userInfo: [:]
+                userInfo: [
+                    "bundle": self.config.bundleInputName
+                ]
             ),
             initialQuestionnaireResponse: nil, // (obviously) not supported
             fhirResources: await studyReportFHIRResources(),

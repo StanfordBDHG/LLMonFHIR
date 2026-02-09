@@ -51,9 +51,10 @@ struct SimulateSession: AsyncParsableCommand {
             return reports
         }
         
-//        if fileManager.itemExists(at: outputUrl) {
-//            try fileManager.removeItem(at: outputUrl)
-//        }
+        let outputUrl = outputUrl.appending(
+            path: Date.now.formatted(Date.ISO8601FormatStyle.suitableForFilenames),
+            directoryHint: .isDirectory
+        )
         try FileManager.default.createDirectory(at: outputUrl, withIntermediateDirectories: true)
         
         let encoder = JSONEncoder()
@@ -61,8 +62,19 @@ struct SimulateSession: AsyncParsableCommand {
         for report in reports {
             let dstUrl = outputUrl.appendingPathComponent(UUID().uuidString, conformingTo: .json)
             let reportData = try encoder.encode(report)
-            print("WILL WRITE TO \(dstUrl)")
             try reportData.write(to: dstUrl)
         }
     }
+}
+
+
+extension Date.ISO8601FormatStyle {
+    /// An ISO-8601 format style suitable for use in filenames.
+    static let suitableForFilenames = Self(
+        dateSeparator: .dash,
+        dateTimeSeparator: .standard,
+        timeSeparator: .omitted,
+        timeZoneSeparator: .omitted,
+        includingFractionalSeconds: true
+    )
 }
