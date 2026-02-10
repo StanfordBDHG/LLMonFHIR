@@ -150,6 +150,7 @@ For each simulated session, a report file is generated, with the same structure 
 
 Session simulation is controled via a JSON config file, which defines the parameters of each session, i.e.:
 - the FHIR bundle containing a synthetic patient
+    - this can be either the name of a patient in one of the bundles embedded in the LLMonFHIRShared/Resources folder, or a filepath, which will be resolved relative to the location of the config JSON file
 - the session's OpenAI model and temperature
 - the session's API key
 - the study, in whose context the session should take place 
