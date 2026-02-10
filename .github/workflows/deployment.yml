@@ -12,17 +12,15 @@ on:
   push:
     branches:
       - main
-      - deployment
   workflow_dispatch:
     inputs:
       environment:
         description: |
           The GitHub deployment environment.
         required: true
-        default: 'development'
+        default: 'staging'
         type: choice
         options:
-          - development
           - staging
           - production
       version:

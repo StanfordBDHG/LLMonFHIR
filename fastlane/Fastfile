@@ -199,6 +199,7 @@ platform :ios do
         release_notes: {
           'en-US' => releasenotes
         },
+        overwrite_screenshots: true,
         submit_for_review: true,
         force: true,
         reject_if_possible: true,
