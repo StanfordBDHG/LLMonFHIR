@@ -16,6 +16,9 @@
     "%@" : {
 
     },
+    "%@ Text to Speech" : {
+
+    },
     "%lld" : {
 
     },
@@ -75,6 +78,7 @@
 
     },
     "Could not create FHIR Summary" : {
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -109,6 +113,7 @@
       }
     },
     "Create Resource Summary" : {
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -699,6 +704,7 @@
       }
     },
     "FHIR_RESOURCES_INTERPRETATION_BUTTON" : {
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -733,6 +739,7 @@
       }
     },
     "FHIR_RESOURCES_INTERPRETATION_LOADING" : {
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -835,6 +842,7 @@
       }
     },
     "FHIR_RESOURCES_SUMMARY_BUTTON" : {
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -992,17 +1000,6 @@
           }
         }
       }
-    },
-    "FUNCTION_DESCRIPTION %@" : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Call this function to request the relevant FHIR health records based on the user's question and conversation context using their FHIR resource identifiers.\n\nThe FHIR resource identifiers are composed of three elements:\n1. The FHIR resource type, e.g., DocumentReference, DiagnosticReport, MedicationRequest, Encounter, Observation, Procedure, Condition, ...\n2. The descriptive title of the FHIR resource.\n3. The date associated with the FHIR resource.\n\nUse this information to request the most relevant FHIR resources.\nPass in one or more resource identifiers that you need access to the `resourceCategories` argument.\nYou can also request a more extensive set of FHIR resources by only stating the resource type.\n\nUse the date in the parameter enum cases to identify relevant resources within the correct time window. Aim to request recent FHIR resources.\nToday's date is %@."
-          }
-        }
-      },
-      "shouldTranslate" : false
     },
     "Going back will reset your chat history." : {
 
@@ -1278,6 +1275,12 @@
         }
       }
     },
+    "Load Resource Interpretation" : {
+
+    },
+    "Load Resource Summary" : {
+
+    },
     "Loading Resources" : {
 
     },
@@ -1497,17 +1500,6 @@
         }
       }
     },
-    "PARAMETER_DESCRIPTION %@" : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Pass in one or more identifiers that you want to access. It is possible that multiple titles apply to the users's question (e.g for multiple medications). You can also request a larger set of FHIR resources by, e.g., just stating the resource type but this might not include all relevant resources to avoid exceeding the token limit. Ensure that you request the most recent information to get a good overview of the user's current health status. Today’s date is %@."
-          }
-        }
-      },
-      "shouldTranslate" : false
-    },
     "Participant ID" : {
 
     },
@@ -1559,6 +1551,9 @@
 
     },
     "Random" : {
+
+    },
+    "Reload Resource Summary" : {
 
     },
     "Reset Chat" : {
@@ -2174,6 +2169,7 @@
 
     },
     "The medical record does not include any FHIR resources for the search term %@." : {
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -2208,6 +2204,7 @@
       }
     },
     "This is the summary of the requested %@:\n\n%@" : {
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -2247,8 +2244,8 @@
     "Unable to access Camera" : {
 
     },
-    "Unable to parse result of the LLM prompt." : {
-      "comment" : "Error thrown if the result can not be parsed in the underlying type."
+    "Update Resource Interpretation" : {
+
     },
     "Use HealthKit Resources" : {
       "localizations" : {
@@ -2317,6 +2314,9 @@
       }
     },
     "Valid for" : {
+
+    },
+    "View Instructions" : {
 
     },
     "WELCOME_AREA1_DESCRIPTION" : {

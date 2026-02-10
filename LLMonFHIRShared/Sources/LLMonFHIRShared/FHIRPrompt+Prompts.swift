@@ -6,8 +6,6 @@
 // SPDX-License-Identifier: MIT
 //
 
-// swiftlint:disable line_length
-
 extension FHIRPrompt {
     /// Prompt used to interpret multiple FHIR resources
     ///
@@ -95,7 +93,7 @@ extension FHIRPrompt {
     
     /// Prompt used to summarize FHIR resources
     ///
-    /// This prompt is used by the ``FHIRResourceSummary``.
+    /// This prompt is used by the ``FHIRResourceSummarizer``.
     public static let summarizeSingleFHIRResourceDefaultPrompt = FHIRPrompt(
         storageKey: "prompt.summary",
         defaultPromptText: """

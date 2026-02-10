@@ -18,8 +18,6 @@ struct StudyHomeView: View {
     @Environment(LLMonFHIRStandard.self) private var standard
     @Environment(HealthKit.self) private var healthKit
     @Environment(FHIRInterpretationModule.self) private var fhirInterpretationModule
-    @Environment(FHIRMultipleResourceInterpreter.self) private var interpreter
-    @Environment(FHIRResourceSummary.self) private var resourceSummary
     @Environment(FirebaseUpload.self) private var uploader: FirebaseUpload?
     @WaitingState private var waitingState
     
@@ -32,7 +30,7 @@ struct StudyHomeView: View {
     @State private var isPresentingQRCodeScanner = false
     
     private var earliestDates: [String: Date] {
-        interpreter.fhirStore.earliestDates(limit: resourceLimit)
+        fhirInterpretationModule.multipleResourceInterpreter.fhirStore.earliestDates(limit: resourceLimit)
     }
     private var oldestHealthRecordTimestamp: Date? {
         earliestDates.values.min()
@@ -49,6 +47,15 @@ struct StudyHomeView: View {
                 .background(Color(.systemBackground))
                 .navigationTitle("USER_STUDY_WECOME")
                 .navigationBarTitleDisplayMode(.inline)
+                #if targetEnvironment(simulator)
+                .toolbar {
+                    ToolbarItem(placement: .topBarTrailing) {
+                        // Maybe instead show a button that directly brings up the ResourceSelection sheet?
+                        // (most of the other settings won't be taken into account in study mode...)
+                        SettingsButton()
+                    }
+                }
+                #endif
                 .sheet(isPresented: $isPresentingEarliestHealthRecords) {
                     EarliestHealthRecordsView(dataSource: earliestDates)
                         .presentationDetents([.medium, .large])
@@ -82,8 +89,9 @@ struct StudyHomeView: View {
                     UserStudyChatView(model: .init(
                         inProgressStudy: inProgressStudy,
                         initialQuestionnaireResponse: questionnaireResponse,
-                        interpreter: interpreter,
-                        resourceSummary: resourceSummary,
+                        interpretationModule: fhirInterpretationModule,
+//                        interpreter: interpreter,
+//                        resourceSummarizer: resourceSummarizer,
                         uploader: uploader
                     ))
                 }
@@ -187,7 +195,9 @@ struct StudyHomeView: View {
                 try await healthKit.askForAuthorization()
                 fhirInterpretationModule.currentStudy = inProgressStudy
                 await fhirInterpretationModule.updateSchemas(forceImmediateUpdate: true)
-                interpreter.startNewConversation(for: inProgressStudy.study)
+                fhirInterpretationModule.multipleResourceInterpreter.startNewConversation(
+                    using: inProgressStudy.study.interpretMultipleResourcesPrompt
+                )
             } else {
                 isPresentingQRCodeScanner = true
             }

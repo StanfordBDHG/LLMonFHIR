@@ -6,34 +6,32 @@
 // SPDX-License-Identifier: MIT
 //
 
-import Foundation
-import LLMonFHIRShared
-import SpeziFHIR
-import SpeziLLM
-import SpeziLocalStorage
+public import Observation
+public import SpeziFHIR
+public import SpeziLLM
+public import SpeziLocalStorage
 
 
 /// Responsible for summarizing FHIR resources.
 @Observable
-final class FHIRResourceSummary: Sendable {
+public final class FHIRResourceSummarizer: Sendable {
     /// Error thrown when summarization fails.
     enum SummaryError: Error {
         case summaryFailed(String)
     }
 
-    /// Summary of a FHIR resource emitted by the ``FHIRResourceSummary``.
-    struct Summary: Codable, LosslessStringConvertible, Sendable {
+    /// Summary of a FHIR resource emitted by the ``FHIRResourceSummarizer``.
+    public struct Summary: Codable, LosslessStringConvertible, Sendable {
         /// Title of the FHIR resource, should be shorter than 4 words.
-        let title: String
+        public let title: String
         /// Summary of the FHIR resource, should be a single line of text.
-        let summary: String
+        public let summary: String
 
-        var description: String {
+        public var description: String {
             title + "\n" + summary
         }
-
         
-        init?(_ description: String) {
+        public init?(_ description: String) {
             let lines = description.components(separatedBy: "\n")
             let nonEmptyLines = lines.filter { !$0.isEmpty }
 
@@ -56,11 +54,11 @@ final class FHIRResourceSummary: Sendable {
 
 
     /// - Parameters:
-    ///   - localStorage: Local storage module that needs to be passed to the ``FHIRResourceSummary`` to allow it to cache summaries.
-    ///   - llmRunner: OpenAI module that needs to be passed to the ``FHIRResourceSummary`` to allow it to retrieve summaries.
+    ///   - localStorage: Local storage module that needs to be passed to the summarizer to allow it to cache summaries.
+    ///   - llmRunner: OpenAI module that needs to be passed to the summarizer to allow it to retrieve summaries.
     ///   - llmSchema: LLM schema to use for generating summaries.
-    init(
-        localStorage: LocalStorage,
+    public init(
+        localStorage: LocalStorage?,
         llmRunner: LLMRunner,
         llmSchema: any LLMSchema,
         summarizationPrompt: FHIRPrompt = .summarizeSingleFHIRResourceDefaultPrompt
@@ -69,7 +67,7 @@ final class FHIRResourceSummary: Sendable {
             localStorage: localStorage,
             llmRunner: llmRunner,
             llmSchema: llmSchema,
-            storageKey: "FHIRResourceSummary.Summaries",
+            storageKey: "FHIRResourceSummarizer.Summaries",
             summarizationPrompt: summarizationPrompt
         )
     }
@@ -81,7 +79,7 @@ final class FHIRResourceSummary: Sendable {
     ///   - forceReload: A boolean value that indicates whether to reload and reprocess the resource.
     /// - Returns: An asynchronous `String` representing the summarization of the resource.
     @discardableResult
-    func summarize(resource: SendableFHIRResource, forceReload: Bool = false) async throws -> Summary {
+    public func summarize(resource: SendableFHIRResource, forceReload: Bool = false) async throws -> Summary {
         try? resource.stringifyAttachments()
         
         var retryCount = 0
@@ -109,15 +107,18 @@ final class FHIRResourceSummary: Sendable {
     ///
     /// - Parameter resource: The resource where the cached summary should be loaded from.
     /// - Returns: The cached summary. Returns `nil` if the resource is not present.
-    func cachedSummary(forResource resource: FHIRResource) async -> Summary? {
+    public func cachedSummary(
+        isolation: isolated (any Actor)? = #isolation,
+        forResource resource: FHIRResource
+    ) async -> Summary? {
         await resourceProcessor.results[resource.id]
     }
     
-    /// Adjust the LLM schema used by the ``FHIRResourceSummary``.
+    /// Adjust the LLM schema used by the summarizer.
     ///
     /// - Parameters:
     ///    - schema: The to-be-used `LLMSchema`.
-    func update(llmSchema schema: any LLMSchema, summarizationPrompt: FHIRPrompt) async {
+    public func update(llmSchema schema: any LLMSchema, summarizationPrompt: FHIRPrompt) async {
         await resourceProcessor.update(llmSchema: schema, summarizationPrompt: summarizationPrompt)
     }
 }

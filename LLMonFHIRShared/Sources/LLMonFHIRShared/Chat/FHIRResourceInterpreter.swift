@@ -6,24 +6,22 @@
 // SPDX-License-Identifier: MIT
 //
 
-import Foundation
-import LLMonFHIRShared
-import SpeziFHIR
-import SpeziLLM
-import SpeziLocalStorage
+public import Foundation
+public import SpeziFHIR
+public import SpeziLLM
+public import SpeziLocalStorage
 
 
-/// Responsible for interpreting FHIR resources.
+/// Responsible for interpreting a single FHIR resource (at a time).
 @Observable
-final class FHIRResourceInterpreter: Sendable {
+public final class SingleFHIRResourceInterpreter: Sendable {
     private let resourceProcessor: FHIRResourceProcessor<String>
-    
     
     /// - Parameters:
     ///   - localStorage: Local storage module that needs to be passed to the ``FHIRResourceInterpreter`` to allow it to cache interpretations.
     ///   - openAIModel: OpenAI module that needs to be passed to the ``FHIRResourceInterpreter`` to allow it to retrieve interpretations.
-    init(
-        localStorage: LocalStorage,
+    public init(
+        localStorage: LocalStorage?,
         llmRunner: LLMRunner,
         llmSchema: any LLMSchema,
         summarizationPrompt: FHIRPrompt = .summarizeSingleFHIRResourceDefaultPrompt
@@ -45,7 +43,7 @@ final class FHIRResourceInterpreter: Sendable {
     ///   - forceReload: A boolean value that indicates whether to reload and reprocess the resource.
     /// - Returns: An asynchronous `String` representing the interpretation of the resource.
     @discardableResult
-    func interpret(resource: SendableFHIRResource, forceReload: Bool = false) async throws -> String {
+    public func interpret(resource: SendableFHIRResource, forceReload: Bool = false) async throws -> String {
         try await resourceProcessor.process(
             resource: resource,
             forceReload: forceReload
@@ -56,7 +54,10 @@ final class FHIRResourceInterpreter: Sendable {
     ///
     /// - Parameter resource: The resource where the cached interpretation should be loaded from.
     /// - Returns: The cached interpretation. Returns `nil` if the resource is not present.
-    func cachedInterpretation(forResource resource: FHIRResource) async -> String? {
+    public func cachedInterpretation(
+        isolation: isolated (any Actor)? = #isolation,
+        forResource resource: FHIRResource
+    ) async -> String? {
         await resourceProcessor.results[resource.id]
     }
     
@@ -64,7 +65,7 @@ final class FHIRResourceInterpreter: Sendable {
     ///
     /// - Parameters:
     ///    - schema: The to-be-used `LLMSchema`.
-    func update(llmSchema schema: any LLMSchema, summarizationPrompt: FHIRPrompt) async {
+    public func update(llmSchema schema: any LLMSchema, summarizationPrompt: FHIRPrompt) async {
         await resourceProcessor.update(llmSchema: schema, summarizationPrompt: summarizationPrompt)
     }
 }

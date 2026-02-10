@@ -1,16 +1,16 @@
 //
 // This source file is part of the Stanford Spezi project
 //
-// SPDX-FileCopyrightText: 2023 Stanford University
+// SPDX-FileCopyrightText: 2025 Stanford University
 //
 // SPDX-License-Identifier: MIT
 //
 
+import LLMonFHIRShared
 import SwiftUI
 
-
-struct MultipleResourcesChatViewProcessingView: View {
-    let model: MultipleResourcesChatViewModel
+struct UserStudyChatProcessingView: View {
+    let model: UserStudyChatViewModel
     
     var body: some View {
         Group {

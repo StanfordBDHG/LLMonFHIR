@@ -20,18 +20,18 @@ import SwiftUI
 
 // periphery:ignore - Properties are used through dependency injection and @Model configuration in `configure()`
 @Observable
-final class FHIRInterpretationModule: Module, EnvironmentAccessible, @unchecked Sendable {
+final class FHIRInterpretationModule: Module, EnvironmentAccessible, @unchecked Sendable { // maybe rename to smth Coordinator?
     @ObservationIgnored @MainActor @Dependency(LocalStorage.self) private var localStorage
     @ObservationIgnored @MainActor @Dependency(LLMRunner.self) private var llmRunner
     @ObservationIgnored @MainActor @Dependency(FHIRStore.self) private var fhirStore
     
-    @ObservationIgnored @MainActor @Model private var resourceSummary: FHIRResourceSummary
-    @ObservationIgnored @MainActor @Model private var resourceInterpreter: FHIRResourceInterpreter
-    @ObservationIgnored @MainActor @Model private var multipleResourceInterpreter: FHIRMultipleResourceInterpreter
+    @ObservationIgnored @MainActor @Model private(set) var resourceSummarizer: FHIRResourceSummarizer
+    @ObservationIgnored @MainActor @Model private(set) var singleResourceInterpreter: SingleFHIRResourceInterpreter
+    @ObservationIgnored @MainActor @Model private(set) var multipleResourceInterpreter: FHIRMultipleResourceInterpreter
     
     @ObservationIgnored @LocalPreference(.llmSource) private var llmSource
-    @ObservationIgnored @LocalPreference(.openAIModel) private var openAIModel
-    @ObservationIgnored @LocalPreference(.openAIModelTemperature) private var openAIModelTemperature
+    @ObservationIgnored @LocalPreference(.openAIModel) private(set) var openAIModel
+    @ObservationIgnored @LocalPreference(.openAIModelTemperature) private(set) var openAIModelTemperature
     @ObservationIgnored @LocalPreference(.fogModel) private var fogModel
     @ObservationIgnored @LocalPreference(.resourceLimit) private var resourceLimit
     
@@ -40,7 +40,7 @@ final class FHIRInterpretationModule: Module, EnvironmentAccessible, @unchecked 
     @ObservationIgnored private var updateModelsTask: Task<Void, any Error>?
     
     @MainActor var singleResourceLLMSchema: any LLMSchema {
-        switch self.llmSource {
+        switch llmSource {
         case .openai:
             LLMOpenAISchema(
                 parameters: .init(modelType: openAIModel.rawValue, systemPrompts: []),
@@ -64,7 +64,7 @@ final class FHIRInterpretationModule: Module, EnvironmentAccessible, @unchecked 
         ) {
             FHIRGetResourceLLMFunction(
                 fhirStore: self.fhirStore,
-                resourceSummary: self.resourceSummary,
+                resourceSummarizer: self.resourceSummarizer,
                 resourceCountLimit: resourceLimit
             )
         }
@@ -76,19 +76,17 @@ final class FHIRInterpretationModule: Module, EnvironmentAccessible, @unchecked 
     
     @MainActor
     func configure() {
-        self.resourceSummary = FHIRResourceSummary(
+        resourceSummarizer = FHIRResourceSummarizer(
             localStorage: localStorage,
             llmRunner: llmRunner,
             llmSchema: singleResourceLLMSchema
         )
-        
-        self.resourceInterpreter = FHIRResourceInterpreter(
+        singleResourceInterpreter = SingleFHIRResourceInterpreter(
             localStorage: localStorage,
             llmRunner: llmRunner,
             llmSchema: singleResourceLLMSchema
         )
-        
-        self.multipleResourceInterpreter = FHIRMultipleResourceInterpreter(
+        multipleResourceInterpreter = FHIRMultipleResourceInterpreter(
             localStorage: localStorage,
             llmRunner: llmRunner,
             llmSchema: multipleResourceInterpreterOpenAISchema,
@@ -112,9 +110,12 @@ final class FHIRInterpretationModule: Module, EnvironmentAccessible, @unchecked 
         updateModelsTask?.cancel()
         let imp = { [self] in
             let summarizePrompt = currentStudy?.study.summarizeSingleResourcePrompt ?? .summarizeSingleFHIRResourceDefaultPrompt
-            await resourceSummary.update(llmSchema: singleResourceLLMSchema, summarizationPrompt: summarizePrompt)
-            await resourceInterpreter.update(llmSchema: singleResourceLLMSchema, summarizationPrompt: summarizePrompt)
-            multipleResourceInterpreter.changeLLMSchema(to: multipleResourceInterpreterOpenAISchema, for: currentStudy?.study)
+            await resourceSummarizer.update(llmSchema: singleResourceLLMSchema, summarizationPrompt: summarizePrompt)
+            await singleResourceInterpreter.update(llmSchema: singleResourceLLMSchema, summarizationPrompt: summarizePrompt)
+            multipleResourceInterpreter.changeLLMSchema(
+                to: multipleResourceInterpreterOpenAISchema,
+                using: currentStudy?.study.interpretMultipleResourcesPrompt ?? .interpretMultipleResourcesDefaultPrompt
+            )
         }
         if forceImmediateUpdate {
             await imp()

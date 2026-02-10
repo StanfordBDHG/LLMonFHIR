@@ -107,7 +107,7 @@
          </CommandLineArgument>
          <CommandLineArgument
             argument = "--mode study:edu.stanford.LLMonFHIR.gynStudy"
-            isEnabled = "NO">
+            isEnabled = "YES">
          </CommandLineArgument>
       </CommandLineArguments>
    </LaunchAction>

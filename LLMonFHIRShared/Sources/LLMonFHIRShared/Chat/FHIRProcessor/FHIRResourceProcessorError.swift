@@ -12,7 +12,6 @@ import Foundation
 enum FHIRResourceProcessorError: LocalizedError {
     case notParsableAsAString
     
-    
     var errorDescription: String? {
         switch self {
         case .notParsableAsAString:

@@ -25,14 +25,24 @@ let package = Package(
     dependencies: [
         .package(url: "https://github.com/StanfordSpezi/SpeziFoundation.git", from: "2.7.2"),
         .package(url: "https://github.com/apple/FHIRModels.git", .upToNextMajor(from: "0.7.0")),
-        .package(url: "https://github.com/apple/swift-argument-parser.git", from: "1.7.0")
+        .package(url: "https://github.com/apple/swift-argument-parser.git", from: "1.7.0"),
+        .package(url: "https://github.com/StanfordSpezi/SpeziLLM.git", from: "0.13.3"),
+        .package(url: "https://github.com/StanfordSpezi/SpeziStorage.git", from: "2.1.3"),
+        .package(url: "https://github.com/StanfordSpezi/SpeziFHIR.git", from: "0.10.0")
     ],
     targets: [
         .target(
             name: "LLMonFHIRShared",
             dependencies: [
                 .product(name: "SpeziFoundation", package: "SpeziFoundation"),
-                .product(name: "ModelsR4", package: "FHIRModels")
+                .product(name: "ModelsR4", package: "FHIRModels"),
+                .product(name: "SpeziLLM", package: "SpeziLLM"),
+                .product(name: "SpeziLLMOpenAI", package: "SpeziLLM"),
+                .product(name: "SpeziLocalStorage", package: "SpeziStorage"),
+                .product(name: "SpeziFHIR", package: "SpeziFHIR")
+            ],
+            resources: [
+                .copy("Resources/Synthetic Patients")
             ],
             swiftSettings: [
                 .enableUpcomingFeature("ExistentialAny"),

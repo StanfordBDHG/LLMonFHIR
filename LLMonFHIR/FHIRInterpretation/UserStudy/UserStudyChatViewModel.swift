@@ -22,7 +22,7 @@ import SwiftUI
 /// LLM operations and persistence to the underlying interpreter.
 @MainActor
 @Observable
-final class UserStudyChatViewModel: MultipleResourcesChatViewModel, Sendable { // swiftlint:disable:this type_body_length
+final class UserStudyChatViewModel: Sendable {
     /// The current state of the survey navigation
     enum NavigationState: Equatable {
         case introduction
@@ -61,7 +61,7 @@ final class UserStudyChatViewModel: MultipleResourcesChatViewModel, Sendable { /
             case .default:
                 regularConfig
             case .studyTitle:
-                TitleConfig(title: study.title, subtitle: regularConfig.title)
+                TitleConfig(title: study.title, subtitle: nil)
             }
         }
     }
@@ -77,7 +77,18 @@ final class UserStudyChatViewModel: MultipleResourcesChatViewModel, Sendable { /
     }
     
     private let uploader: FirebaseUpload?
-
+    
+    private let interpretationModule: FHIRInterpretationModule
+    
+    private var interpreter: FHIRMultipleResourceInterpreter {
+        interpretationModule.multipleResourceInterpreter
+    }
+    private var resourceSummarizer: FHIRResourceSummarizer {
+        interpretationModule.resourceSummarizer
+    }
+    
+    var processingState: ProcessingState = .processingSystemPrompts
+    
     /// The current navigation state of the study
     private(set) var navigationState: NavigationState = .introduction
     
@@ -89,147 +100,78 @@ final class UserStudyChatViewModel: MultipleResourcesChatViewModel, Sendable { /
 
     /// Controls the visibility of the dismiss confirmation dialog
     var isDismissDialogPresented = false
-
-    var isTaskIntructionButtonDisabled: Bool {
-        study.tasks.first { $0.id == currentTaskId }?.instructions == nil
-    }
-
-    /// Returns the current task if one is active
-    var currentTask: Study.Task? {
-        study.tasks.first { $0.id == currentTaskId }
+    
+    /// Indicates if the LLM is currently processing or generating a response
+    /// This property directly reflects the LLM session's state
+    var isProcessing: Bool {
+        llmSession.state.representation == .processing
     }
     
-    var currentTaskIdx: Int? {
-        study.tasks.firstIndex { $0.id == currentTaskId }
-    }
-    
-    var userDisplayableCurrentTaskIdx: Int? {
-        currentTaskIdx.map { $0 + 1 }
-    }
-    
-    /// Whether the chat input should currently be enabled, i.e. whether the user should currently be able to write (and submit) chat messages
-    var shouldEnableChatInput: Bool {
-        // Always disable during processing
-        if isProcessing {
-            return false
-        }
-        // If no capacity range is configured for this task, enable chat input
-        if !hasConfiguredCapacityForCurrentTask {
-            return true
-        }
-        // Disable when the maximum number of messages is reached
-        return !isMaxAssistantMessagesReached
-    }
-
-    var shouldEnableContinueToNextTaskAction: Bool {
-        if isProcessing {
-            // Always disable during processing
-            return false
-        }
-        if !hasConfiguredCapacityForCurrentTask {
-            // If no capacity range is configured for this task, enable toolbar
-            return true
-        }
-        // Disable if the minimum number of messages is not met
-        return isMinAssistantMessagesReached
-    }
-    
-    private var currentTaskId: Study.Task.ID? {
-        switch navigationState {
-        case let .task(task, taskIdx: _, numTotalTasks: _, taskState: _):
-            task.id
-        case .introduction, .completed:
-            nil
-        }
-    }
-
     let inProgressStudy: InProgressStudy
     var study: Study {
         inProgressStudy.study
     }
     /// The response to the Study's initial questionnaire, if any.
     private let initialQuestionnaireResponse: ModelsR4.QuestionnaireResponse?
-    private let resourceSummary: FHIRResourceSummary
     private let studyStartTime = Date()
     private var taskStartTimes: [Study.Task.ID: Date] = [:]
     private var taskEndTimes: [Study.Task.ID: Date] = [:]
     private var assistantMessagesByTask = LimitedCollectionDictionary<Study.Task.ID, String>()
-
-    private var isMaxAssistantMessagesReached: Bool {
-        currentTaskId.map { assistantMessagesByTask.isMaxReached(forKey: $0) } ?? false
-    }
-
-    private var isMinAssistantMessagesReached: Bool {
-        currentTaskId.map { assistantMessagesByTask.isMinReached(forKey: $0) } ?? false
-    }
-
-    private var hasConfiguredCapacityForCurrentTask: Bool {
-        currentTaskId.map { assistantMessagesByTask.hasConfiguredCapacity(forKey: $0) } ?? false
-    }
-
-
+    
+    
     /// Creates a new view model for managing a user study chat session
     ///
     /// - Parameters:
     ///   - survey: The survey configuration to use for this study
     ///   - interpreter: The FHIR interpreter to use for chat functionality
-    ///   - resourceSummary: The FHIR resource summary provider for generating summaries of FHIR resources
+    ///   - resourceSummarizer: The FHIR resource summary provider for generating summaries of FHIR resources
     init(
         inProgressStudy: InProgressStudy,
         initialQuestionnaireResponse: ModelsR4.QuestionnaireResponse?,
-        interpreter: FHIRMultipleResourceInterpreter,
-        resourceSummary: FHIRResourceSummary,
+        interpretationModule: FHIRInterpretationModule,
+//        interpreter: FHIRMultipleResourceInterpreter,
+//        resourceSummarizer: FHIRResourceSummarizer,
         uploader: FirebaseUpload?
     ) {
         self.inProgressStudy = inProgressStudy
         self.initialQuestionnaireResponse = initialQuestionnaireResponse
-        self.resourceSummary = resourceSummary
+        self.interpretationModule = interpretationModule
+//        self.interpreter =  interpreter
+//        self.resourceSummarizer = resourceSummarizer
         self.uploader = uploader
-        super.init(interpreter: interpreter, navigationTitle: "")
         configureMessageLimits()
     }
-
     
-    private func updateProcessingState() async {
-        switch llmSession.state {
-        case .error(let error):
-            // Alerts and sheets can not be displayed at the same time.
-            if presentedSheet != nil {
-                // We have to first dismiss all sheets.
-                presentedSheet = nil
-                // Wait for animation to complete
-                try? await Task.sleep(for: .seconds(1))
-                // Re-set the error state.
-                llmSession.state = .generating
-                try? await Task.sleep(for: .seconds(0.5))
-                llmSession.state = .error(error: error)
-            }
-            processingState = .error
-        default:
-            processingState = await processingState.calculateNewProcessingState(basedOn: llmSession)
-        }
+    static func unguided(
+        title: String,
+        interpretationModule: FHIRInterpretationModule,
+//        interpreter: FHIRMultipleResourceInterpreter,
+//        resourceSummarizer: FHIRResourceSummarizer
+    ) -> Self {
+        let emptyStudy = Study(
+            id: Study.unguidedStudyId,
+            title: title,
+            explainer: "",
+            summarizeSingleResourcePrompt: nil,
+            interpretMultipleResourcesPrompt: nil,
+            chatTitleConfig: .studyTitle,
+            initialQuestionnaire: nil,
+            tasks: []
+        )
+        return Self(
+            inProgressStudy: InProgressStudy(
+                study: emptyStudy,
+                config: .init(openAIAPIKey: "", openAIEndpoint: .regular, reportEmail: "", encryptionKey: nil),
+                userInfo: [:]
+            ),
+            initialQuestionnaireResponse: nil,
+            interpretationModule: interpretationModule,
+//            interpreter: interpreter,
+//            resourceSummarizer: resourceSummarizer,
+            uploader: nil
+        )
     }
-
-    /// Generates an assistant response if appropriate for the current context
-    ///
-    /// This method checks if a response is needed and if so, delegates
-    /// to the interpreter to generate the actual response.
-    override func generateAssistantResponse(
-        preProcessingStateUpdate: @escaping () async -> Void = {}
-    ) async -> LLMContextEntity? {
-        let stateUpdate = {
-            await self.updateProcessingState()
-            await preProcessingStateUpdate()
-        }
-        guard let response = await super.generateAssistantResponse(preProcessingStateUpdate: stateUpdate) else {
-            return nil
-        }
-        if let currentTaskId {
-            try? assistantMessagesByTask.append(response.id.uuidString, forKey: currentTaskId)
-        }
-        return response
-    }
-
+    
     /// Cancels any ongoing operations and dismisses the current view
     ///
     /// - Parameter dismiss: The dismiss action from the environment to close the view
@@ -238,7 +180,7 @@ final class UserStudyChatViewModel: MultipleResourcesChatViewModel, Sendable { /
         resetStudy()
         dismiss()
     }
-
+    
     /// Handles the submission of survey answers for a task within the survey.
     ///
     /// This method processes the user's answers. If `task` is the current task, it also advances to the next task in the survey sequence.
@@ -258,7 +200,7 @@ final class UserStudyChatViewModel: MultipleResourcesChatViewModel, Sendable { /
             advanceToNextTask()
         }
     }
-
+    
     /// Resets the study to its initial state
     ///
     /// This method clears all survey answers and resets the navigation state,
@@ -269,7 +211,15 @@ final class UserStudyChatViewModel: MultipleResourcesChatViewModel, Sendable { /
         taskEndTimes.removeAll()
         navigationState = .introduction
     }
-
+    
+    /// Starts a new conversation by clearing all user and assistant messages
+    ///
+    /// This preserves system messages but removes all conversation history,
+    /// providing the user with a fresh chat while maintaining the interpreter context.
+    func startNewConversation() {
+        interpreter.startNewConversation(using: study.interpretMultipleResourcesPrompt)
+    }
+    
     /// Starts the survey portion of the study
     ///
     /// This method initializes the survey process if it hasn't already been started.
@@ -286,37 +236,7 @@ final class UserStudyChatViewModel: MultipleResourcesChatViewModel, Sendable { /
         taskStartTimes[task.id] = Date()
         presentedSheet = .instructions
     }
-
-    /// Generates a temporary file URL containing the study report
-    ///
-    /// - Returns: The URL of the generated report file, or nil if generation fails
-    func generateStudyReportFile(encryptIfPossible: Bool) async throws -> URL? {
-        guard var studyReport = await generateStudyReport() else {
-            return nil
-        }
-        if encryptIfPossible, let key = inProgressStudy.config.encryptionKey {
-            studyReport = try studyReport.encrypted(using: key)
-        }
-        let tempDir = FileManager.default.temporaryDirectory
-        let reportURL = tempDir.appendingPathComponent("survey_report_\(study.id.lowercased()).json")
-        try studyReport.write(to: reportURL)
-        return reportURL
-    }
-
-    private func configureMessageLimits() {
-        for task in study.tasks {
-            guard let limits = task.assistantMessagesLimit else {
-                assistantMessagesByTask.setUnlimitedCapacity(forKey: task.id)
-                continue
-            }
-            do {
-                try assistantMessagesByTask.setCapacityRange(minimum: limits.lowerBound, maximum: limits.upperBound, forKey: task.id)
-            } catch {
-                print("Error configuring message limit for task \(task.id): \(error)")
-            }
-        }
-    }
-
+    
     private func advanceToNextTask() {
         guard let currentTaskIdx = study.tasks.firstIndex(where: { $0.id == currentTaskId }) else {
             return
@@ -391,7 +311,188 @@ final class UserStudyChatViewModel: MultipleResourcesChatViewModel, Sendable { /
             return
         }
     }
+}
+
+
+extension UserStudyChatViewModel {
+    var isTaskIntructionButtonDisabled: Bool {
+        study.tasks.first { $0.id == currentTaskId }?.instructions == nil
+    }
     
+    /// Returns the current task if one is active
+    var currentTask: Study.Task? {
+        study.tasks.first { $0.id == currentTaskId }
+    }
+    
+    private var currentTaskId: Study.Task.ID? {
+        switch navigationState {
+        case let .task(task, taskIdx: _, numTotalTasks: _, taskState: _):
+            task.id
+        case .introduction, .completed:
+            nil
+        }
+    }
+    
+    var currentTaskIdx: Int? {
+        study.tasks.firstIndex { $0.id == currentTaskId }
+    }
+    
+    var userDisplayableCurrentTaskIdx: Int? {
+        currentTaskIdx.map { $0 + 1 }
+    }
+}
+
+
+extension UserStudyChatViewModel {
+    /// Determines whether to display a typing indicator in the chat interface.
+    var showTypingIndicator: Bool {
+        processingState.isProcessing
+    }
+    
+    // Whether the chat input should currently be enabled, i.e. whether the user should currently be able to write (and submit) chat messages
+    var shouldEnableChatInput: Bool {
+        // Always disable during processing
+        if isProcessing {
+            return false
+        }
+        // If no capacity range is configured for this task, enable chat input
+        if !hasConfiguredCapacityForCurrentTask {
+            return true
+        }
+        // Disable when the maximum number of messages is reached
+        return !isMaxAssistantMessagesReached
+    }
+    
+    var shouldEnableContinueToNextTaskAction: Bool {
+        if isProcessing {
+            // Always disable during processing
+            return false
+        }
+        if !hasConfiguredCapacityForCurrentTask {
+            // If no capacity range is configured for this task, enable toolbar
+            return true
+        }
+        // Disable if the minimum number of messages is not met
+        return isMinAssistantMessagesReached
+    }
+}
+
+
+extension UserStudyChatViewModel {
+    /// Direct access to the current LLM session for observing state changes
+    var llmSession: any LLMSession {
+        interpreter.llmSession
+    }
+    
+    /// Provides a binding to the chat messages for use in SwiftUI views
+    ///
+    /// This binding allows the ChatView component to both display messages
+    /// and add new user messages to the conversation.
+    var chatBinding: Binding<Chat> {
+        Binding { [weak self] in
+            self?.interpreter.llmSession.context.chat ?? []
+        } set: { [weak self] newChat in
+            self?.interpreter.llmSession.context.chat = newChat
+        }
+    }
+}
+
+
+extension UserStudyChatViewModel {
+    private var isMaxAssistantMessagesReached: Bool {
+        currentTaskId.map { assistantMessagesByTask.isMaxReached(forKey: $0) } ?? false
+    }
+
+    private var isMinAssistantMessagesReached: Bool {
+        currentTaskId.map { assistantMessagesByTask.isMinReached(forKey: $0) } ?? false
+    }
+
+    private var hasConfiguredCapacityForCurrentTask: Bool {
+        currentTaskId.map { assistantMessagesByTask.hasConfiguredCapacity(forKey: $0) } ?? false
+    }
+    
+    private func configureMessageLimits() {
+        for task in study.tasks {
+            guard let limits = task.assistantMessagesLimit else {
+                assistantMessagesByTask.setUnlimitedCapacity(forKey: task.id)
+                continue
+            }
+            do {
+                try assistantMessagesByTask.setCapacityRange(minimum: limits.lowerBound, maximum: limits.upperBound, forKey: task.id)
+            } catch {
+                print("Error configuring message limit for task \(task.id): \(error)")
+            }
+        }
+    }
+}
+
+
+extension UserStudyChatViewModel {
+    private var shouldGenerateResponse: Bool {
+        if llmSession.state == .generating || isProcessing {
+            return false
+        }
+        // Check if the last message is from a user (needs a response)
+        let lastMessageIsUser = interpreter.llmSession.context.last?.role == .user
+        // Check if there are no assistant messages yet (initial prompt needs a response)
+        let noAssistantMessages = !interpreter.llmSession.context.contains(where: { $0.role == .assistant() })
+        // Generate if last message is from user or if there are no assistant messages yet
+        return lastMessageIsUser || noAssistantMessages
+    }
+    
+    private func updateProcessingState() async {
+        switch llmSession.state {
+        case .error(let error):
+            // Alerts and sheets can not be displayed at the same time.
+            if presentedSheet != nil {
+                // We have to first dismiss all sheets.
+                presentedSheet = nil
+                // Wait for animation to complete
+                try? await Task.sleep(for: .seconds(1))
+                // Re-set the error state.
+                llmSession.state = .generating
+                try? await Task.sleep(for: .seconds(0.5))
+                llmSession.state = .error(error: error)
+            }
+            processingState = .error
+        default:
+            processingState = await processingState.calculateNewProcessingState(basedOn: llmSession)
+        }
+    }
+
+    /// Generates an assistant response if appropriate for the current context
+    ///
+    /// This method checks if a response is needed and if so, delegates
+    /// to the interpreter to generate the actual response.
+    func generateAssistantResponse() async -> LLMContextEntity? {
+        let imp = { [unowned self] () async -> LLMContextEntity? in // swiftlint:disable:this unowned_variable_capture
+            await updateProcessingState()
+            processingState = await processingState.calculateNewProcessingState(basedOn: llmSession)
+            guard shouldGenerateResponse else {
+                return nil
+            }
+            processingState = .processingSystemPrompts
+            guard let response = await interpreter.generateAssistantResponse() else {
+                return nil
+            }
+            await updateProcessingState()
+            processingState = await processingState.calculateNewProcessingState(basedOn: llmSession)
+            return response
+        }
+        guard let response = await imp() else {
+            return nil
+        }
+        if let currentTaskId {
+            try? assistantMessagesByTask.append(response.id.uuidString, forKey: currentTaskId)
+        }
+        return response
+    }
+}
+
+
+// MARK: Model + Report
+
+extension UserStudyChatViewModel {
     /// Uploads the report using the firebase backend, if available
     ///
     /// - returns: a flag indicating whether the upload was successful.
@@ -414,15 +515,35 @@ final class UserStudyChatViewModel: MultipleResourcesChatViewModel, Sendable { /
             return false
         }
     }
-
-
+    
+    /// Generates a temporary file URL containing the study report
+    ///
+    /// - Returns: The URL of the generated report file, or nil if generation fails
+    func generateStudyReportFile(encryptIfPossible: Bool) async throws -> URL? {
+        // IDEA: have a text-only version here (if unguided) to replicate the old MultipleResourcesChatView (ie, ChatView export) behaviour!!!
+        guard var studyReport = await generateStudyReport() else {
+            return nil
+        }
+        if encryptIfPossible, let key = inProgressStudy.config.encryptionKey {
+            studyReport = try studyReport.encrypted(using: key)
+        }
+        let tempDir = FileManager.default.temporaryDirectory
+        let reportURL = tempDir.appendingPathComponent("survey_report_\(study.id.lowercased()).json")
+        try studyReport.write(to: reportURL)
+        return reportURL
+    }
+    
     private func generateStudyReport() async -> Data? {
-        let report = UserStudyReport(
-            metadata: Metadata(
+        let report = StudyReport(
+            metadata: .init(
                 studyID: study.id,
                 startTime: studyStartTime,
                 endTime: Date(),
-                userInfo: inProgressStudy.userInfo
+                userInfo: inProgressStudy.userInfo,
+                llmConfig: .init(
+                    model: interpretationModule.openAIModel,
+                    temperature: interpretationModule.openAIModelTemperature
+                )
             ),
             initialQuestionnaireResponse: initialQuestionnaireResponse,
             fhirResources: await getFHIRResources(),
@@ -439,44 +560,43 @@ final class UserStudyChatViewModel: MultipleResourcesChatViewModel, Sendable { /
         }
     }
 
-    private func generateTimeline() -> [TimelineEvent] {
-        var timeline: [TimelineEvent] = interpreter.llmSession.context.chat.map { message in
-            TimelineEvent.chatMessage(TimelineEvent.ChatMessage(
+    private func generateTimeline() -> [StudyReport.TimelineEvent] {
+        var timeline: [StudyReport.TimelineEvent] = interpreter.llmSession.context.chat.map { message in
+            .chatMessage(.init(
                 timestamp: message.date,
                 role: message.role.rawValue,
                 content: message.content
             ))
         }
-        timeline.append(contentsOf: study.tasks.compactMap { task -> TimelineEvent? in
+        timeline.append(contentsOf: study.tasks.compactMap { task -> StudyReport.TimelineEvent? in
             guard let taskStartTime = taskStartTimes[task.id], let taskEndTime = taskEndTimes[task.id] else {
                 return nil
             }
-            let surveyTask = TimelineEvent.SurveyTask(
+            return .surveyTask(.init(
                 taskId: task.id,
                 startedAt: taskStartTime,
                 completedAt: taskEndTime,
                 duration: taskEndTime.timeIntervalSince(taskStartTime),
                 questions: task.questions.map { question in
-                    TimelineEvent.SurveyQuestion(
+                    StudyReport.TimelineEvent.SurveyQuestion(
                         questionText: question.text,
                         answer: question.answer.rawValue,
                         isOptional: question.isOptional
                     )
                 }
-            )
-            return TimelineEvent.surveyTask(surveyTask)
+            ))
         })
-        return timeline.sorted { $0.timestamp < $1.timestamp }
+        return timeline.sorted()
     }
 
-    private func getFHIRResources() async -> FHIRResources {
+    private func getFHIRResources() async -> StudyReport.FHIRResources {
         let llmRelevantResources = interpreter.fhirStore.llmRelevantResources
             .map { resource in
-                FullFHIRResource(resource.versionedResource)
+                StudyReport.FullFHIRResource(resource.versionedResource)
             }
         let allResources = await interpreter.fhirStore.allResources.mapAsync { resource in
-            let summary = await resourceSummary.cachedSummary(forResource: resource)
-            return PartialFHIRResource(
+            let summary = await resourceSummarizer.cachedSummary(forResource: resource)
+            return StudyReport.PartialFHIRResource(
                 id: resource.id,
                 resourceType: resource.resourceType,
                 displayName: resource.displayName,
@@ -484,33 +604,20 @@ final class UserStudyChatViewModel: MultipleResourcesChatViewModel, Sendable { /
                 summary: summary?.description
             )
         }
-        return FHIRResources(
+        return StudyReport.FHIRResources(
             llmRelevantResources: FeatureFlags.exportRawJSONFHIRResources ? llmRelevantResources : [],
             allResources: allResources
         )
     }
 }
 
-extension ChatEntity.Role {
-    var rawValue: String {
-        switch self {
-        case .user: "user"
-        case .assistant: "assistant"
-        case .assistantToolCall: "assistant_tool_call"
-        case .assistantToolResponse: "assistant_tool_response"
-        case .hidden(let type): "hidden_\(type.name)"
-        }
-    }
-}
 
+// MARK: Other
 
-extension Sequence {
-    func mapAsync<Result, E>(_ transform: (Element) async throws(E) -> Result) async throws(E) -> [Result] {
-        var results: [Result] = []
-        results.reserveCapacity(underestimatedCount)
-        for element in self {
-            results.append(try await transform(element))
-        }
-        return results
+extension Study {
+    static let unguidedStudyId = "edu.stanford.LLMonFHIR.unguidedStudy"
+    
+    var isUnguided: Bool {
+        id == Self.unguidedStudyId
     }
 }

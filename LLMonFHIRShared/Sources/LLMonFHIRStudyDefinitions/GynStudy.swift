@@ -21,11 +21,11 @@ extension Study {
         )
         return Study(
             id: "edu.stanford.LLMonFHIR.gynStudy",
-            title: "LLMonFHIR Gyn Study",
-            explainer: "GYN STUDY EXPLAINER",
+            title: "LLMonFHIR REI study",
+            explainer: "Welcome and thank you for participating in our study assessing the health literacy in REI patients",
             summarizeSingleResourcePrompt: nil,
             interpretMultipleResourcesPrompt: .gynStudySystemPrompt,
-            chatTitleConfig: .default,
+            chatTitleConfig: .studyTitle,
             initialQuestionnaire: nil,
             tasks: [
                 Task(

@@ -6,22 +6,20 @@
 // SPDX-License-Identifier: MIT
 //
 
+import LLMonFHIRShared
 import SpeziFHIR
-import SpeziLLM
 import SpeziViews
 import SwiftUI
 
+
 struct InspectResourceView: View {
-    @Environment(FHIRResourceInterpreter.self) var fhirResourceInterpreter
-    @Environment(FHIRResourceSummary.self) var fhirResourceSummary
+    @Environment(FHIRResourceSummarizer.self) private var summarizer
+    @Environment(SingleFHIRResourceInterpreter.self) private var interpreter
     
-    @State var interpreting: ViewState = .idle
-    @State var loadingSummary: ViewState = .idle
-    @State private var summary: FHIRResourceSummary.Summary?
+    private let resource: FHIRResource
+    @State private var summary: FHIRResourceSummarizer.Summary?
     @State private var interpretation: String?
-    
-    var resource: FHIRResource
-    
+    @State private var viewState: ViewState = .idle
     
     var body: some View {
         List {
@@ -29,47 +27,33 @@ struct InspectResourceView: View {
             interpretationSection
             resourceSection
         }
-            .navigationTitle(resource.displayName)
-            .viewStateAlert(state: $interpreting)
-            .viewStateAlert(state: $loadingSummary)
+        .navigationTitle(resource.displayName)
+        .viewStateAlert(state: $viewState)
+        .task {
+            summary = await summarizer.cachedSummary(forResource: resource)
+            interpretation = await interpreter.cachedInterpretation(forResource: resource)
+        }
+        .asyncButtonProcessingStyle(.listRow)
     }
     
     @ViewBuilder private var summarySection: some View {
         Section("FHIR_RESOURCES_SUMMARY_SECTION") {
-            if loadingSummary == .processing {
-                HStack {
-                    Spacer()
-                    ProgressView()
-                    Spacer()
-                }
-            } else if let summary {
-                VStack {
-                    HStack(spacing: 0) {
-                        Text(summary.title)
-                            .font(.title2)
-                            .multilineTextAlignment(.leading)
-                            .bold()
-                        Spacer()
-                    }
-                    HStack(spacing: 0) {
-                        Text(summary.summary)
-                            .multilineTextAlignment(.leading)
-                            .contextMenu {
-                                Button("FHIR_RESOURCES_SUMMARY_BUTTON") {
-                                    loadSummary(forceReload: true)
-                                }
-                            }
-                        Spacer()
-                    }
-                }
-            } else {
-                Button("FHIR_RESOURCES_SUMMARY_BUTTON") {
-                    loadSummary()
+            if let summary {
+                VStack(alignment: .leading) {
+                    Text(summary.title)
+                        .font(.headline)
+                        .multilineTextAlignment(.leading)
+                        .bold()
+                    Text(summary.summary)
+                        .multilineTextAlignment(.leading)
                 }
             }
-        }
-        .task {
-            summary = await fhirResourceSummary.cachedSummary(forResource: resource)
+            AsyncButton(summary == nil ? "Load Resource Summary" : "Reload Resource Summary", state: $viewState) {
+                summary = try await summarizer.summarize(
+                    resource: SendableFHIRResource(resource: resource),
+                    forceReload: summary != nil
+                )
+            }
         }
     }
     
@@ -78,28 +62,13 @@ struct InspectResourceView: View {
             if let interpretation, !interpretation.isEmpty {
                 Text(interpretation)
                     .multilineTextAlignment(.leading)
-                    .contextMenu {
-                        Button("FHIR_RESOURCES_INTERPRETATION_BUTTON") {
-                            interpret(forceReload: true)
-                        }
-                    }
-            } else if interpreting == .processing {
-                VStack(alignment: .center) {
-                    Text("FHIR_RESOURCES_INTERPRETATION_LOADING")
-                        .frame(maxWidth: .infinity)
-                    ProgressView()
-                        .progressViewStyle(.circular)
-                }
-            } else {
-                VStack(alignment: .center) {
-                    Button("FHIR_RESOURCES_INTERPRETATION_BUTTON") {
-                        interpret()
-                    }
-                }
             }
-        }
-        .task {
-            interpretation = await fhirResourceInterpreter.cachedInterpretation(forResource: resource)
+            AsyncButton(interpretation == nil ? "Load Resource Interpretation" : "Update Resource Interpretation", state: $viewState) {
+                interpretation = try await interpreter.interpret(
+                    resource: SendableFHIRResource(resource: resource),
+                    forceReload: interpretation != nil
+                )
+            }
         }
     }
     
@@ -112,33 +81,7 @@ struct InspectResourceView: View {
         }
     }
     
-    private func loadSummary(forceReload: Bool = false) {
-        loadingSummary = .processing
-            
-        Task {
-            do {
-                try await fhirResourceSummary.summarize(resource: SendableFHIRResource(resource: resource), forceReload: forceReload)
-                loadingSummary = .idle
-            } catch let error as any LLMError {
-                loadingSummary = .error(error)
-            } catch {
-                loadingSummary = .error(LLMDefaultError.unknown(error))
-            }
-        }
-    }
-    
-    private func interpret(forceReload: Bool = false) {
-        interpreting = .processing
-        
-        Task {
-            do {
-                try await fhirResourceInterpreter.interpret(resource: SendableFHIRResource(resource: resource), forceReload: forceReload)
-                interpreting = .idle
-            } catch let error as any LLMError {
-                interpreting = .error(error)
-            } catch {
-                interpreting = .error(LLMDefaultError.unknown(error))
-            }
-        }
+    init(resource: FHIRResource) {
+        self.resource = resource
     }
 }

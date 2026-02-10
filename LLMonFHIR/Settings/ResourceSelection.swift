@@ -7,6 +7,7 @@
 //
 
 import HealthKit
+import LLMonFHIRShared
 @preconcurrency import ModelsR4
 import SpeziFHIR
 import SpeziFHIRMockPatients
@@ -22,8 +23,7 @@ struct ResourceSelection: View {
     @State private var bundles: [ModelsR4.Bundle] = []
     @State private var showBundleSelection = false
     
-    
-    @MainActor private var useHealthKitResources: Binding<Bool> {
+    private var useHealthKitResources: Binding<Bool> {
         Binding {
             if !HKHealthStore.isHealthDataAvailable() {
                 showBundleSelection = true
@@ -98,18 +98,9 @@ struct ResourceSelection: View {
             .jacklyn830Veum823,
             .milton509Ortiz186
         ]
-        guard let synthPatientsUrl = Foundation.Bundle.main.url(forResource: "Synthetic Patients", withExtension: nil),
-              let bundleGroups = try? FileManager.default.contents(of: synthPatientsUrl) else {
-            return bundles
-        }
-        for url in bundleGroups {
-            for url in (try? FileManager.default.contents(of: url)) ?? [] {
-                do {
-                    let data = try Data(contentsOf: url)
-                    bundles.append(try JSONDecoder().decode(ModelsR4.Bundle.self, from: data))
-                } catch {
-                    print("FAILED TO READ BUNDLE AT \(url.lastPathComponent): \(error)")
-                }
+        for name in ModelsR4.Bundle.allSyntheticPatientNames {
+            if let bundle = ModelsR4.Bundle.forPatient(named: name) {
+                bundles.append(bundle)
             }
         }
         return bundles
