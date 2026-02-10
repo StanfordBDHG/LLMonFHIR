@@ -34,7 +34,11 @@ struct SimulateSession: AsyncParsableCommand {
     
     @MainActor
     func run() async throws {
-        let configs = try JSONDecoder().decode([SimulatedSessionConfig].self, from: Data(contentsOf: inputUrl))
+        let configs = try JSONDecoder().decode(
+            [SimulatedSessionConfig].self,
+            from: Data(contentsOf: inputUrl),
+            configuration: .init(configFileUrl: inputUrl)
+        )
         let reports = try await withThrowingTaskGroup(of: StudyReport.self, returning: [StudyReport].self) { taskGroup in
             for config in configs {
                 for runIdx in 0..<config.numberOfRuns {

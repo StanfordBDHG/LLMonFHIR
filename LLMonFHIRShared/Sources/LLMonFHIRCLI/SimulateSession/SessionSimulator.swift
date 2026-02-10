@@ -150,7 +150,7 @@ extension SessionSimulator {
 
 extension SessionSimulator {
     var sessionDesc: String {
-        "\(config.study.id) / \(config.bundleInputName) @ \(config.model)/\(config.temperature) (\(runIdx + 1)/\(config.numberOfRuns))"
+        "\(config.study.id) / \(config.bundle.singlePatient?.fullName ?? config.bundleInputName) @ \(config.model)/\(config.temperature) (\(runIdx + 1)/\(config.numberOfRuns))"
     }
 }
 

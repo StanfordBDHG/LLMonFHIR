@@ -25,7 +25,7 @@ struct SimulatedSessionConfig: Sendable {
     /// - Note: Isn't allowed to be mutated
     nonisolated(unsafe) let study: Study
     
-    /// The raw name of the `bundle`, as specified in the config file.
+    /// The raw input based on which the ``bundle`` was loaded, as specified in the config file.
     let bundleInputName: String
     
     /// The FHIR bundle providing the resources that will be made available to the LLM
@@ -41,7 +41,12 @@ struct SimulatedSessionConfig: Sendable {
 }
 
 
-extension SimulatedSessionConfig: Decodable {
+extension SimulatedSessionConfig: DecodableWithConfiguration {
+    struct DecodingConfiguration {
+        /// The URL of the config file being decoded, if applicable.
+        let configFileUrl: URL?
+    }
+    
     private enum CodingKeys: String, CodingKey {
         case numberOfRuns
         case studyId
@@ -52,7 +57,7 @@ extension SimulatedSessionConfig: Decodable {
         case temperature
     }
     
-    init(from decoder: any Decoder) throws {
+    init(from decoder: any Decoder, configuration: DecodingConfiguration) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         self.numberOfRuns = try container.decode(Int.self, forKey: .numberOfRuns)
         self.model = try container.decode(LLMOpenAIParameters.ModelType.self, forKey: .model)
@@ -64,10 +69,15 @@ extension SimulatedSessionConfig: Decodable {
         }
         self.study = study
         bundleInputName = try container.decode(String.self, forKey: .bundleName)
-        guard let bundle = ModelsR4.Bundle.forPatient(named: bundleInputName) else {
-            throw DecodingError.dataCorrupted(.init(codingPath: [], debugDescription: "Unable to find bundle named '\(bundleInputName)'"))
+        let url = URL(filePath: bundleInputName, relativeTo: configuration.configFileUrl?.deletingLastPathComponent())
+        if FileManager.default.itemExists(at: url) && !FileManager.default.isDirectory(at: url) {
+            bundle = try JSONDecoder().decode(ModelsR4.Bundle.self, from: Data(contentsOf: url))
+        } else {
+            guard let bundle = ModelsR4.Bundle.forPatient(named: bundleInputName) else {
+                throw DecodingError.dataCorrupted(.init(codingPath: [], debugDescription: "Unable to find bundle named '\(bundleInputName)'"))
+            }
+            self.bundle = bundle
         }
-        self.bundle = bundle
         self.userQuestions = try container.decode([String].self, forKey: .userQuestions)
     }
 }
