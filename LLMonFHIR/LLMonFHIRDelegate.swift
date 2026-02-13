@@ -29,7 +29,7 @@ import SpeziLLMOpenAI
 final class LLMonFHIRDelegate: SpeziAppDelegate {
     override var configuration: Configuration {
         Configuration(standard: LLMonFHIRStandard()) {
-            if let config = AppConfigFile.current().firebaseConfig {
+            if !FeatureFlags.disableFirebase, let config = AppConfigFile.current().firebaseConfig {
                 firebaseModules(using: config)
             }
             let openAIInterceptor = OpenAIRequestInterceptor()
