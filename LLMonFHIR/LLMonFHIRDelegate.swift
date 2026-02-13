@@ -29,7 +29,7 @@ import SpeziLLMOpenAI
 final class LLMonFHIRDelegate: SpeziAppDelegate {
     override var configuration: Configuration {
         Configuration(standard: LLMonFHIRStandard()) {
-            if let config = AppConfigFile.current().firebaseConfig {
+            if !FeatureFlags.disableFirebase, let config = AppConfigFile.current().firebaseConfig {
                 firebaseModules(using: config)
             }
             let openAIInterceptor = OpenAIRequestInterceptor()
@@ -51,8 +51,13 @@ final class LLMonFHIRDelegate: SpeziAppDelegate {
                     retryPolicy: .attempts(3),  // Automatically perform up to 3 retries on retryable OpenAI API status codes
                     middlewares: [openAIInterceptor]
                 ))
-                LLMFogPlatform(configuration: .init(host: "spezillmfog.local", connectionType: .http, authToken: .none))
-                LLMLocalPlatform()
+                switch AppConfigFile.current().appLaunchMode {
+                case .study:
+                    let _ = () // swiftlint:disable:this redundant_discardable_let
+                case .standalone, .test:
+                    LLMFogPlatform(configuration: .init(host: "spezillmfog.local", connectionType: .http, authToken: .none))
+                    LLMLocalPlatform()
+                }
             }
         }
     }

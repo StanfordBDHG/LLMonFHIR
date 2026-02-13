@@ -87,7 +87,7 @@ final class UserStudyChatViewModel: Sendable {
         interpretationModule.resourceSummarizer
     }
     
-    var processingState: ProcessingState = .processingSystemPrompts
+    private(set) var processingState: ProcessingState = .processingSystemPrompts
     
     /// The current navigation state of the study
     private(set) var navigationState: NavigationState = .introduction
@@ -129,15 +129,11 @@ final class UserStudyChatViewModel: Sendable {
         inProgressStudy: InProgressStudy,
         initialQuestionnaireResponse: ModelsR4.QuestionnaireResponse?,
         interpretationModule: FHIRInterpretationModule,
-//        interpreter: FHIRMultipleResourceInterpreter,
-//        resourceSummarizer: FHIRResourceSummarizer,
         uploader: FirebaseUpload?
     ) {
         self.inProgressStudy = inProgressStudy
         self.initialQuestionnaireResponse = initialQuestionnaireResponse
         self.interpretationModule = interpretationModule
-//        self.interpreter =  interpreter
-//        self.resourceSummarizer = resourceSummarizer
         self.uploader = uploader
         configureMessageLimits()
     }
@@ -145,8 +141,6 @@ final class UserStudyChatViewModel: Sendable {
     static func unguided(
         title: String,
         interpretationModule: FHIRInterpretationModule,
-//        interpreter: FHIRMultipleResourceInterpreter,
-//        resourceSummarizer: FHIRResourceSummarizer
     ) -> Self {
         let emptyStudy = Study(
             id: Study.unguidedStudyId,
@@ -166,8 +160,6 @@ final class UserStudyChatViewModel: Sendable {
             ),
             initialQuestionnaireResponse: nil,
             interpretationModule: interpretationModule,
-//            interpreter: interpreter,
-//            resourceSummarizer: resourceSummarizer,
             uploader: nil
         )
     }

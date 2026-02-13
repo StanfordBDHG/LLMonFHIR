@@ -23,4 +23,9 @@ enum FeatureFlags {
     
     /// Whether the app should use a local firebase emulator
     static let useFirebaseEmulator = CommandLine.arguments.contains("--useFirebaseEmulator")
+    
+    /// Whether the app disable its firebase integration.
+    ///
+    /// - Note: if present, this option will take precedence over ``useFirebaseEmulator``.
+    static let disableFirebase = CommandLine.arguments.contains("--disableFirebase")
 }
