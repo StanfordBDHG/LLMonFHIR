@@ -82,7 +82,7 @@ final class OpenAIRequestInterceptor: Module, EnvironmentAccessible, ClientMiddl
                 return "\(key)=\(value)"
             }
             .joined(separator: "&")
-        let callableName = "\(name)?\(queryString)"
+        let callableName = queryString.isEmpty ? name : "\(name)?\(queryString)"
         let callable = Functions.functions()
             .httpsCallable(callableName, requestAs: String.self, responseAs: StreamResponse<String, String>.self)
         return AsyncThrowingStream(HTTPBody.ByteChunk.self) { continuation in
