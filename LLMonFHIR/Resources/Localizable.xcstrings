@@ -1040,31 +1040,31 @@
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Zugriff gewähren"
+            "value" : "Weiter"
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Grant Access"
+            "value" : "Continue"
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Conceder Acceso"
+            "value" : "Continuar"
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Accorder l'Accès"
+            "value" : "Continuer"
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "授予访问权限"
+            "value" : "接续"
           }
         }
       }
