@@ -14,7 +14,7 @@ import SwiftUI
 
 struct HealthKitPermissions: View {
     @Environment(LLMonFHIRStandard.self) private var standard
-    @Environment(HealthKit.self) var healthKit
+    @Environment(HealthKit.self) var healthKit: HealthKit?
     @Environment(ManagedNavigationStack.Path.self) private var managedNavigationStackPath
     @State var healthKitProcessing = false
     
@@ -44,7 +44,7 @@ struct HealthKitPermissions: View {
                     if ProcessInfo.processInfo.environment["XCODE_RUNNING_FOR_PREVIEWS"] == "1" {
                         try await _Concurrency.Task.sleep(for: .seconds(5))
                     } else {
-                        try await healthKit.askForAuthorization()
+                        try await healthKit?.askForAuthorization()
                         Task {
                             await standard.fetchRecordsFromHealthKit()
                         }
