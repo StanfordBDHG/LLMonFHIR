@@ -951,8 +951,8 @@
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/StanfordSpezi/SpeziLLM.git";
 			requirement = {
-				kind = exactVersion;
-				version = 0.13.3;
+				kind = upToNextMinorVersion;
+				minimumVersion = 0.13.6;
 			};
 		};
 		806F40BC2F179FDB0001E988 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {

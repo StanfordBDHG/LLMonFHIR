@@ -43,7 +43,7 @@ final class FHIRInterpretationModule: Module, EnvironmentAccessible, @unchecked 
         switch llmSource {
         case .openai:
             LLMOpenAISchema(
-                parameters: .init(modelType: openAIModel.rawValue, systemPrompts: []),
+                parameters: .init(modelType: openAIModel, systemPrompts: []),
                 modelParameters: .init(temperature: openAIModelTemperature)
             )
         case .fog:
@@ -59,7 +59,7 @@ final class FHIRInterpretationModule: Module, EnvironmentAccessible, @unchecked 
     
     @MainActor var multipleResourceInterpreterOpenAISchema: LLMOpenAISchema {
         LLMOpenAISchema(
-            parameters: .init(modelType: openAIModel.rawValue, systemPrompts: []),
+            parameters: .init(modelType: openAIModel, systemPrompts: []),
             modelParameters: .init(temperature: openAIModelTemperature)
         ) {
             FHIRGetResourceLLMFunction(

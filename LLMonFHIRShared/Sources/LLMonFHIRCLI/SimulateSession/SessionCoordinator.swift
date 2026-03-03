@@ -80,14 +80,14 @@ final class SessionCoordinator: Module, @unchecked Sendable {
 extension SessionCoordinator {
     private var singleResourceLLMSchema: any LLMSchema {
         LLMOpenAISchema(
-            parameters: .init(modelType: config.model.rawValue, systemPrompts: []),
+            parameters: .init(modelType: config.model, systemPrompts: []),
             modelParameters: .init(temperature: config.temperature)
         )
     }
     
     @MainActor private var multipleResourceInterpreterOpenAISchema: LLMOpenAISchema {
         LLMOpenAISchema(
-            parameters: .init(modelType: config.model.rawValue, systemPrompts: []),
+            parameters: .init(modelType: config.model, systemPrompts: []),
             modelParameters: .init(temperature: config.temperature)
         ) {
             FHIRGetResourceLLMFunction(
