@@ -60,7 +60,7 @@ extension XCUIApplication {
     }
     
     private func navigateOnboardingFlowOpenAI() throws {
-        try textFields["OpenAI API Key"].enter(value: "sk-123456789")
+        try textFields["API Key…"].enter(value: "sk-123456789")
         
         XCTAssertTrue(buttons["Next"].waitForExistence(timeout: 2))
         buttons["Next"].tap()
