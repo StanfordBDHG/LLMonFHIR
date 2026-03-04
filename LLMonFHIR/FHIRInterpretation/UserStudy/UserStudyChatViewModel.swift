@@ -464,7 +464,7 @@ extension UserStudyChatViewModel {
                 return nil
             }
             processingState = .processingSystemPrompts
-            guard let response = await interpreter.generateAssistantResponse() else {
+            guard let response = try? await interpreter.generateAssistantResponse() else {
                 return nil
             }
             await updateProcessingState()

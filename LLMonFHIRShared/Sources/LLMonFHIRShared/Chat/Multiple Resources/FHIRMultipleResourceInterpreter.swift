@@ -33,7 +33,7 @@ public final class FHIRMultipleResourceInterpreter: Sendable {
     private var llmSchema: any LLMSchema
     public let fhirStore: FHIRStore
     
-    private var currentGenerationTask: Task<LLMContextEntity?, Never>?
+    private var currentGenerationTask: Task<LLMContextEntity?, any Error>?
     
     /// The current LLM session managing the conversation context with the language model.
     ///
@@ -91,7 +91,7 @@ public final class FHIRMultipleResourceInterpreter: Sendable {
     ///
     /// - Returns: The last `LLMContextEntity` representing the completed assistant response,
     ///   or `nil` if generation was cancelled or encountered an error.
-    public func generateAssistantResponse() async -> LLMContextEntity? {
+    public func generateAssistantResponse() async throws -> LLMContextEntity? {
         currentGenerationTask?.cancel()
         currentGenerationTask = Task { [weak self] in
             guard let self else {
@@ -117,11 +117,10 @@ public final class FHIRMultipleResourceInterpreter: Sendable {
                 Self.logger.error("Response generation was cancelled")
                 return nil
             } catch {
-                Self.logger.error("Error during response generation: \(error.localizedDescription)")
-                return nil
+                throw error
             }
         }
-        return await currentGenerationTask?.value
+        return try await currentGenerationTask?.value
     }
     
     /// Updates the LLM schema used by the interpreter.
