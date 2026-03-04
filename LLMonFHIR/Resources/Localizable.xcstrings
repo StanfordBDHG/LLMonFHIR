@@ -392,31 +392,31 @@
       "localizations" : {
         "de" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "Diese App dient nur zu Demonstrationszwecken und sollte nicht verwendet werden, um persönliche Gesundheitsinformationen zu verarbeiten."
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "This app is for demonstration only and should not be used to process any personal health information."
+            "value" : "This app is intended for supervised clinical trials and tech demos only, and should not be used for diagnosis or related activities. Do not hesitate to consult a doctor if you feel unwell or have questions."
           }
         },
         "es" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "Esta aplicación es solo para fines de demostración y no debe usarse para procesar ninguna información personal de salud."
           }
         },
         "fr" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "Cette application est destinée uniquement à des fins de démonstration et ne doit pas être utilisée pour traiter des informations personnelles de santé."
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "此应用程序仅供演示，不应用于处理任何个人健康信息。"
           }
         }
