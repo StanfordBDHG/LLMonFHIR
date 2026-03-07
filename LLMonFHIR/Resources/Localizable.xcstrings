@@ -392,8 +392,8 @@
       "localizations" : {
         "de" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Diese App dient nur zu Demonstrationszwecken und sollte nicht verwendet werden, um persönliche Gesundheitsinformationen zu verarbeiten."
+            "state" : "translated",
+            "value" : "Diese Anwendung ist ausschließlich für die Verwendung in überwachten klinischen Studien bestimmt. Sie ist kein Medizinprodukt und darf nicht für medizinische Diagnosen, Behandlungsentscheidungen oder andere klinische Zwecke verwendet werden. Die von der Anwendung bereitgestellten Informationen stellen keine medizinische Beratung dar. Bei gesundheitlichen Beschwerden oder Symptomen wenden Sie sich bitte an eine qualifizierte medizinische Fachkraft."
           }
         },
         "en" : {
@@ -404,20 +404,20 @@
         },
         "es" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Esta aplicación es solo para fines de demostración y no debe usarse para procesar ninguna información personal de salud."
+            "state" : "translated",
+            "value" : "Esta aplicación está diseñada exclusivamente para su uso en estudios clínicos supervisados. No es un dispositivo médico y no debe utilizarse para diagnósticos médicos, decisiones terapéuticas ni ningún otro propósito clínico. La información proporcionada por la aplicación no constituye asesoramiento médico. Si tiene alguna inquietud o experimenta síntomas, consulte con un profesional de la salud cualificado."
           }
         },
         "fr" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Cette application est destinée uniquement à des fins de démonstration et ne doit pas être utilisée pour traiter des informations personnelles de santé."
+            "state" : "translated",
+            "value" : "Cette application est exclusivement destinée aux études cliniques supervisées. Elle n'est pas un dispositif médical et ne doit en aucun cas être utilisée à des fins de diagnostic, de décision thérapeutique ou à toute autre fin clinique. Les informations fournies par l'application ne constituent pas un avis médical. En cas de problème de santé ou de symptômes, veuillez consulter un professionnel de santé qualifié."
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "此应用程序仅供演示，不应用于处理任何个人健康信息。"
+            "state" : "translated",
+            "value" : "本应用程序仅供受监督的临床研究使用。它并非医疗器械，不得用于医疗诊断、治疗决策或任何其他临床用途。本应用程序提供的信息不构成医疗建议。如果您有健康问题或出现相关症状，请咨询合格的医疗保健专业人员。"
           }
         }
       }
