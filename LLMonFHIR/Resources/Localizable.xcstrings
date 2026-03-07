@@ -399,7 +399,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "This app is intended for supervised clinical trials and tech demos only, and should not be used for diagnosis or related activities. Do not hesitate to consult a doctor if you feel unwell or have questions."
+            "value" : "This application is intended solely for use in supervised clinical research studies. It is not a medical device and must not be used for medical diagnosis, treatment decisions, or any other clinical purpose. The information provided by the application does not constitute medical advice. If you have health concerns or experience symptoms, consult a qualified healthcare professional."
           }
         },
         "es" : {
