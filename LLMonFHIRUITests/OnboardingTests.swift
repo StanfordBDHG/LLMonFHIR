@@ -62,8 +62,8 @@ extension XCUIApplication {
     private func navigateOnboardingFlowOpenAI() throws {
         try textFields["API Key…"].enter(value: "sk-123456789")
         
-        XCTAssertTrue(buttons["Next"].waitForExistence(timeout: 2))
-        buttons["Next"].tap()
+        XCTAssertTrue(buttons["Continue"].waitForExistence(timeout: 2))
+        buttons["Continue"].tap()
         
         XCTAssertTrue(buttons["Save Model Selection"].waitForExistence(timeout: 2))
         buttons["Save Model Selection"].tap()
