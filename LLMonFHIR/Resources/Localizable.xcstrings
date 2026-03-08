@@ -2,25 +2,25 @@
   "sourceLanguage" : "en",
   "strings" : {
     "" : {
-
+      "shouldTranslate" : false
     },
     "\n%@" : {
-
+      "shouldTranslate" : false
     },
     "–" : {
-
+      "shouldTranslate" : false
     },
     "%.2f" : {
-
+      "shouldTranslate" : false
     },
     "%@" : {
-
+      "shouldTranslate" : false
     },
     "%@ Text to Speech" : {
 
     },
     "%lld" : {
-
+      "shouldTranslate" : false
     },
     "A fog node must be configured in your local network. Please consult the LLMonFHIR docs for setup instructions." : {
 
@@ -76,76 +76,6 @@
     },
     "Correction Level" : {
 
-    },
-    "Could not create FHIR Summary" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "FHIR-Zusammenfassung konnte nicht erstellt werden"
-          }
-        },
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Could not create FHIR Summary"
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "No se ha podido crear el resumen FHIR"
-          }
-        },
-        "fr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Impossible de créer un résumé FHIR"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "无法创建 FHIR 摘要"
-          }
-        }
-      }
-    },
-    "Create Resource Summary" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Ressourcenzusammenfassung erstellen"
-          }
-        },
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Create Resource Summary"
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Crear resumen de recursos"
-          }
-        },
-        "fr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Créer un résumé des ressources"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "创建资源摘要"
-          }
-        }
-      }
     },
     "Create Study Enrollment QR Code" : {
 
@@ -393,31 +323,31 @@
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Diese App dient nur zu Demonstrationszwecken und sollte nicht verwendet werden, um persönliche Gesundheitsinformationen zu verarbeiten."
+            "value" : "Diese Anwendung ist ausschließlich für die Verwendung in überwachten klinischen Studien bestimmt. Sie ist kein Medizinprodukt und darf nicht für medizinische Diagnosen, Behandlungsentscheidungen oder andere klinische Zwecke verwendet werden. Die von der Anwendung bereitgestellten Informationen stellen keine medizinische Beratung dar. Bei gesundheitlichen Beschwerden oder Symptomen wenden Sie sich bitte an eine qualifizierte medizinische Fachkraft."
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "This app is for demonstration only and should not be used to process any personal health information."
+            "value" : "This application is intended solely for use in supervised clinical research studies. It is not a medical device and must not be used for medical diagnosis, treatment decisions, or any other clinical purpose. The information provided by the application does not constitute medical advice. If you have health concerns or experience symptoms, consult a qualified healthcare professional."
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Esta aplicación es solo para fines de demostración y no debe usarse para procesar ninguna información personal de salud."
+            "value" : "Esta aplicación está diseñada exclusivamente para su uso en estudios clínicos supervisados. No es un dispositivo médico y no debe utilizarse para diagnósticos médicos, decisiones terapéuticas ni ningún otro propósito clínico. La información proporcionada por la aplicación no constituye asesoramiento médico. Si tiene alguna inquietud o experimenta síntomas, consulte con un profesional de la salud cualificado."
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Cette application est destinée uniquement à des fins de démonstration et ne doit pas être utilisée pour traiter des informations personnelles de santé."
+            "value" : "Cette application est exclusivement destinée aux études cliniques supervisées. Elle n'est pas un dispositif médical et ne doit en aucun cas être utilisée à des fins de diagnostic, de décision thérapeutique ou à toute autre fin clinique. Les informations fournies par l'application ne constituent pas un avis médical. En cas de problème de santé ou de symptômes, veuillez consulter un professionnel de santé qualifié."
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "此应用程序仅供演示，不应用于处理任何个人健康信息。"
+            "value" : "本应用程序仅供受监督的临床研究使用。它并非医疗器械，不得用于医疗诊断、治疗决策或任何其他临床用途。本应用程序提供的信息不构成医疗建议。如果您有健康问题或出现相关症状，请咨询合格的医疗保健专业人员。"
           }
         }
       }
@@ -703,76 +633,6 @@
         }
       }
     },
-    "FHIR_RESOURCES_INTERPRETATION_BUTTON" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Lade Interpretation"
-          }
-        },
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Load Interpretation"
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Interpretación de la carga"
-          }
-        },
-        "fr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Interprétation de la charge"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "负载释义"
-          }
-        }
-      }
-    },
-    "FHIR_RESOURCES_INTERPRETATION_LOADING" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Ergebnis laden ..."
-          }
-        },
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Loading result ..."
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Cargando resultado ..."
-          }
-        },
-        "fr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Chargement du résultat ..."
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "加载结果..."
-          }
-        }
-      }
-    },
     "FHIR_RESOURCES_INTERPRETATION_RESOURCE" : {
       "localizations" : {
         "de" : {
@@ -837,41 +697,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "口译"
-          }
-        }
-      }
-    },
-    "FHIR_RESOURCES_SUMMARY_BUTTON" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Zusammenfassung der Ressourcen"
-          }
-        },
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Load Resource Summary"
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Resumen de recursos de carga"
-          }
-        },
-        "fr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Load Resource Summary"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "负荷资源汇总"
           }
         }
       }
@@ -1040,31 +865,31 @@
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Zugriff gewähren"
+            "value" : "Weiter"
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Grant Access"
+            "value" : "Continue"
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Conceder Acceso"
+            "value" : "Continuar"
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Accorder l'Accès"
+            "value" : "Continuer"
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "授予访问权限"
+            "value" : "继续"
           }
         }
       }
@@ -1073,7 +898,7 @@
       "localizations" : {
         "de" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Sie können die verschiedenen Arten von Gesundheitsdaten auswählen, die Sie in LLM on FHIR überprüfen möchten."
           }
         },
@@ -1085,19 +910,19 @@
         },
         "es" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Puede seleccionar los diferentes tipos de registros de salud que le gustaría inspeccionar en LLM en FHIR."
           }
         },
         "fr" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Vous pouvez sélectionner les différents types de dossiers de santé que vous souhaitez inspecter dans LLM sur FHIR."
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "您可以选择您希望在LLM on FHIR中检视的不同类型的健康记录。"
           }
         }
@@ -1224,17 +1049,6 @@
     "LLM summary and interpretation inference happens directly within your network - nothing is sent to remote servers." : {
 
     },
-    "LLM_ON_FHIR" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "LLM on FHIR"
-          }
-        }
-      }
-    },
     "LLM_SOURCE_PICKER_LABEL" : {
       "localizations" : {
         "en" : {
@@ -1358,9 +1172,6 @@
 
     },
     "No Resources Found" : {
-
-    },
-    "No Study Loaded" : {
 
     },
     "Observations" : {
@@ -2167,76 +1978,6 @@
     },
     "Temperature" : {
 
-    },
-    "The medical record does not include any FHIR resources for the search term %@." : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Die Krankenakte enthält keine FHIR-Ressourcen für den Suchbegriff %@."
-          }
-        },
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "The medical record does not include any FHIR resources for the search term %@."
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "La historia clínica no incluye ningún recurso FHIR para el término de búsqueda %@."
-          }
-        },
-        "fr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Le dossier médical ne contient aucune ressource FHIR pour le terme de recherche %@."
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "病历中不包含搜索词 %@ 的任何 FHIR 资源。"
-          }
-        }
-      }
-    },
-    "This is the summary of the requested %@:\n\n%@" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Dies ist die Zusammenfassung der angeforderten %1$@:\n\n%2$@"
-          }
-        },
-        "en" : {
-          "stringUnit" : {
-            "state" : "new",
-            "value" : "This is the summary of the requested %1$@:\n\n%2$@"
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Este es el resumen del %1$@ solicitado:\n\n%2$@"
-          }
-        },
-        "fr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Voici le résumé de la demande %1$@ :\n\n%2$@"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "这是请求 %1$@ 的摘要：\n\n%2$@"
-          }
-        }
-      }
     },
     "Total number of resources across all types: %lld" : {
 

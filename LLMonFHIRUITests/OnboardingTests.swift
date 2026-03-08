@@ -60,10 +60,10 @@ extension XCUIApplication {
     }
     
     private func navigateOnboardingFlowOpenAI() throws {
-        try textFields["OpenAI API Key"].enter(value: "sk-123456789")
+        try textFields["API Key…"].enter(value: "sk-123456789")
         
-        XCTAssertTrue(buttons["Next"].waitForExistence(timeout: 2))
-        buttons["Next"].tap()
+        XCTAssertTrue(buttons["Continue"].waitForExistence(timeout: 2))
+        buttons["Continue"].tap()
         
         XCTAssertTrue(buttons["Save Model Selection"].waitForExistence(timeout: 2))
         buttons["Save Model Selection"].tap()
@@ -75,7 +75,7 @@ extension XCUIApplication {
     private func navigateOnboardingFlowHealthKitAccess() throws {
         XCTAssertTrue(staticTexts["Health Access"].waitForExistence(timeout: 2))
         
-        XCTAssertTrue(buttons["Grant Access"].waitForExistence(timeout: 2))
-        buttons["Grant Access"].tap()
+        XCTAssertTrue(buttons["Continue"].waitForExistence(timeout: 2))
+        buttons["Continue"].tap()
     }
 }

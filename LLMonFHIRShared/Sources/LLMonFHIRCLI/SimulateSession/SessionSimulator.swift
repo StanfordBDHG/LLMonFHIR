@@ -57,7 +57,7 @@ struct SessionSimulator: ~Copyable {
             await MainActor.run {
                 interpreter.llmSession.context.append(userInput: question)
             }
-            _ = await interpreter.generateAssistantResponse()
+            _ = try await interpreter.generateAssistantResponse()
         }
         let endTime = Date()
         return StudyReport(

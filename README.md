@@ -39,9 +39,6 @@ This repository demonstrates how large language models can interpret and provide
 
 The study leverages the [Spezi](https://github.com/StanfordSpezi/Spezi) framework and connects to the OpenAI GPT API to interpret FHIR resources. Participants can engage with their health data through a conversational interface, ask follow-up questions, and receive AI-generated summaries and explanations tailored to their system language.
 
-> [!NOTE] 
-> Interested in participating? Download LLM on FHIR on your iOS device via [TestFlight](https://testflight.apple.com/join/HBFZ5WOn)!
-
 ## Disclaimer
 
 LLM on FHIR is an experimental iOS app. It is designed for general informational purposes, providing users a platform to interact with health records stored in Apple Health using OpenAI models.
@@ -65,7 +62,7 @@ LLM on FHIR requires access to the FHIR health records stored in the Apple Healt
 In case no health records are available, please follow the instructions to connect and retrieve your health records from your provider. If your health records are visible in the Apple Health app, please ensure that LLM on FHIR has access to your health records in the Apple Health App. You can find these settings in the privacy section of your profile in Apple Health.
 
 > [!TIP]
-> You can also use a set of [Synthea](https://doi.org/10.1093/jamia/ocx079)-based patients loaded from [SpeziFHIR](https://github.com/StanfordSpezi/SpeziFHIR) ([SpeziFHIRMockPatients](https://github.com/StanfordSpezi/SpeziFHIR/tree/main/Sources/SpeziFHIRMockPatients)) to test out the application without the need to connect it to HealthKit. You can select the synthetic patients in the account settings view of the application.
+> You can also use a set of [Synthea](https://pubmed.ncbi.nlm.nih.gov/29025144/)-based patients loaded from [SpeziFHIR](https://github.com/StanfordSpezi/SpeziFHIR) ([SpeziFHIRMockPatients](https://github.com/StanfordSpezi/SpeziFHIR/tree/main/Sources/SpeziFHIRMockPatients)) to test out the application without the need to connect it to HealthKit. You can select the synthetic patients in the account settings view of the application.
 
 ## Application Structure
 
