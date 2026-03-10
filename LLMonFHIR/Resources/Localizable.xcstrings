@@ -899,31 +899,31 @@
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Sie können die verschiedenen Arten von Gesundheitsdaten auswählen, die Sie in LLM on FHIR überprüfen möchten."
+            "value" : "LLMonFHIR nutzt Ihre auf Ihrem Gerät gespeicherten klinischen Gesundheitsdaten, um Ihnen im Chat Kontextinformationen bereitzustellen.\n\nWenn Sie an einer Studie teilnehmen, müssen Sie LLMonFHIR **vollständigen Zugriff** auf Ihre klinischen Daten gewähren. Andernfalls fehlen der Studie ausreichende Kontextinformationen, und Ihre Teilnahme kann nicht mit der anderer Teilnehmender verglichen werden, die ebenfalls vollständigen Zugriff gewährt haben.\n\nWenn Sie nicht an einer Studie teilnehmen, gewähren Sie einfach nur Zugriff auf die Ressourcen, mit denen Sie interagieren möchten.\n\nLLMonFHIR greift außerhalb des Chats auf keine Gesundheitsdaten zu."
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "You can select the different types of health records that you like to inspect in LLM on FHIR\n\nYou need to grant LLMonFHIR **full access** to your clinical records, in order to be able to participate in studies."
+            "value" : "LLMonFHIR uses clinical health records stored on your device to provide context during the chat.\n\nWhen participating in a study, you need to grant LLMonFHIR **full access** to your clinical records; otherwise the study won’t have sufficient context available and your participation cannot be evaluated against other participants which have granted full access.\n\nIf you are not participating in a study, simply grant access to only those resource types you wish to interact with.\n\nLLMonFHIR does not access any Health data outside of the chat."
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Puede seleccionar los diferentes tipos de registros de salud que le gustaría inspeccionar en LLM en FHIR."
+            "value" : "LLMonFHIR utiliza los historiales clínicos almacenados en su dispositivo para proporcionar contexto durante el chat.\n\nAl participar en un estudio, debe otorgar a LLMonFHIR **acceso completo** a sus historiales clínicos; de lo contrario, el estudio no dispondrá de suficiente contexto y su participación no podrá compararse con la de otros participantes que sí lo han hecho.\n\nSi no participa en un estudio, simplemente otorgue acceso solo a los recursos con los que desee interactuar.\n\nLLMonFHIR no accede a ningún dato de salud fuera del chat."
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Vous pouvez sélectionner les différents types de dossiers de santé que vous souhaitez inspecter dans LLM sur FHIR."
+            "value" : "LLMonFHIR utilise les données de santé enregistrées sur votre appareil pour contextualiser la conversation.\n\nLorsque vous participez à une étude, vous devez accorder à LLMonFHIR un accès complet à vos données médicales. Sans cela, l'étude ne disposera pas du contexte nécessaire et votre participation ne pourra pas être comparée à celle des autres participants ayant également accordé un accès complet.\n\nSi vous ne participez pas à une étude, autorisez uniquement l'accès aux types de ressources avec lesquels vous souhaitez interagir.\n\nLLMonFHIR n'accède à aucune donnée de santé en dehors de la conversation."
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "您可以选择您希望在LLM on FHIR中检视的不同类型的健康记录。"
+            "value" : "LLMonFHIR 使用存储在您设备上的临床健康记录，以便在聊天过程中提供上下文信息。\n\n参与研究时，您需要授予 LLMonFHIR 访问您临床记录的**完全访问权限**；否则，研究将无法获得足够的上下文信息，您的参与情况也无法与其他已授予完全访问权限的参与者进行比较。\n\n如果您未参与研究，只需授予您希望交互的资源类型的访问权限即可。\n\nLLMonFHIR 不会访问聊天之外的任何健康数据。"
           }
         }
       }
@@ -1172,6 +1172,9 @@
 
     },
     "No Resources Found" : {
+
+    },
+    "No Study Loaded" : {
 
     },
     "Observations" : {
