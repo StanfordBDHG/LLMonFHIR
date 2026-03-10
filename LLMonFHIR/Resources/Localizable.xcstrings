@@ -917,7 +917,7 @@
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "LLMonFHIR utilise les données de santé enregistrées sur votre appareil pour contextualiser la conversation.\n\nLorsque vous participez à une étude, vous devez accorder à LLMonFHIR un accès complet à vos données médicales. Sans cela, l'étude ne disposera pas du contexte nécessaire et votre participation ne pourra pas être comparée à celle des autres participants ayant également accordé un accès complet.\n\nSi vous ne participez pas à une étude, autorisez uniquement l'accès aux types de ressources avec lesquels vous souhaitez interagir.\n\nLLMonFHIR n'accède à aucune donnée de santé en dehors de la conversation."
+            "value" : "LLMonFHIR utilise les données de santé enregistrées sur votre appareil pour contextualiser la conversation.\n\nLorsque vous participez à une étude, vous devez accorder à LLMonFHIR un **accès complet** à vos données médicales. Sans cela, l'étude ne disposera pas du contexte nécessaire et votre participation ne pourra pas être comparée à celle des autres participants ayant également accordé un accès complet.\n\nSi vous ne participez pas à une étude, autorisez uniquement l'accès aux types de ressources avec lesquels vous souhaitez interagir.\n\nLLMonFHIR n'accède à aucune donnée de santé en dehors de la conversation."
           }
         },
         "zh-Hans" : {
