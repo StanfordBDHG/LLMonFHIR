@@ -1,5 +1,5 @@
 //
-// This source file is part of the Stanford LLM on FHIR project
+// This source file is part of the Stanford LLMonFHIR project
 //
 // SPDX-FileCopyrightText: 2023 Stanford University
 //
@@ -27,7 +27,7 @@ struct HomeView: View {
             }
             .sheet(isPresented: $showMultipleResourcesChat) {
                 UserStudyChatView(model: .unguided(
-                    title: "LLM on FHIR",
+                    title: "LLMonFHIR",
                     interpretationModule: interpretationModule
                 ))
             }

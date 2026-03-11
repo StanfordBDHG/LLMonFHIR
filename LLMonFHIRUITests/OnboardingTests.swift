@@ -1,5 +1,5 @@
 //
-// This source file is part of the Stanford LLM on FHIR project
+// This source file is part of the Stanford LLMonFHIR project
 //
 // SPDX-FileCopyrightText: 2023 Stanford University
 //
@@ -41,7 +41,7 @@ extension XCUIApplication {
     }
     
     private func navigateOnboardingFlowWelcome() throws {
-        XCTAssertTrue(staticTexts["LLM on FHIR"].waitForExistence(timeout: 2))
+        XCTAssertTrue(staticTexts["LLMonFHIR"].waitForExistence(timeout: 2))
         
         XCTAssertTrue(buttons["Learn More"].waitForExistence(timeout: 2))
         buttons["Learn More"].tap()

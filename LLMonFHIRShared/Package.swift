@@ -1,6 +1,6 @@
 // swift-tools-version: 6.2
 //
-// This source file is part of the Stanford LLM on FHIR project
+// This source file is part of the Stanford LLMonFHIR project
 //
 // SPDX-FileCopyrightText: 2026 Stanford University
 //

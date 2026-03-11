@@ -131,7 +131,7 @@ struct StudyHomeView: View {
 
     private var studyTitle: some View {
         VStack(spacing: 8) {
-            Text(inProgressStudy?.study.title ?? "LLM on FHIR")
+            Text(inProgressStudy?.study.title ?? "LLMonFHIR")
                 .font(.title)
                 .fontWeight(.bold)
                 .foregroundColor(.primary)
