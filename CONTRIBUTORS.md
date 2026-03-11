@@ -1,6 +1,6 @@
 <!--
 
-This source file is part of the Stanford LLM on FHIR project
+This source file is part of the Stanford LLMonFHIR project
 
 SPDX-FileCopyrightText: 2023 Stanford University
 
@@ -8,7 +8,7 @@ SPDX-License-Identifier: MIT
 
 -->
 
-LLM on FHIR Contributors
+LLMonFHIR Contributors
 =================================
 
 * [Paul Schmiedmayer](https://github.com/PSchmiedmayer)

@@ -4,13 +4,13 @@
     {
       "layers" : [
         {
-          "image-name" : "LLMonFHIR.png",
-          "name" : "LLMonFHIR",
+          "image-name" : "Flame.png",
+          "name" : "Flame",
           "position" : {
             "scale" : 1.2,
             "translation-in-points" : [
-              2,
-              17
+              -13,
+              38.25156249999998
             ]
           }
         }
