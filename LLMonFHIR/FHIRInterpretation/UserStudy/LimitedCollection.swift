@@ -14,7 +14,6 @@ enum LimitedCollectionError: Error {
     case capacityExceeded(maximum: Int)
 }
 
-// periphery:ignore - These are fundamental APIs for collection handling, even if not all are used in every context.
 
 /// A collection with a maximum capacity that throws an error when full
 struct LimitedCollection<Element> {
@@ -67,7 +66,7 @@ struct LimitedCollection<Element> {
     }
 
     /// Remove all elements
-    mutating func removeAll() {
+    mutating func removeAll() { // periphery:ignore - These are fundamental APIs for collection handling.
         elements.removeAll()
     }
 
@@ -75,7 +74,7 @@ struct LimitedCollection<Element> {
     /// - Parameter index: Position to remove from
     /// - Returns: The removed element
     @discardableResult
-    mutating func remove(at index: Int) -> Element {
+    mutating func remove(at index: Int) -> Element { // periphery:ignore - These are fundamental APIs for collection handling.
         elements.remove(at: index)
     }
 

@@ -1,5 +1,5 @@
 //
-// This source file is part of the Stanford LLM on FHIR project
+// This source file is part of the Stanford LLMonFHIR project
 //
 // SPDX-FileCopyrightText: 2023 Stanford University
 //
@@ -41,7 +41,7 @@ extension XCUIApplication {
     }
     
     private func navigateOnboardingFlowWelcome() throws {
-        XCTAssertTrue(staticTexts["LLM on FHIR"].waitForExistence(timeout: 2))
+        XCTAssertTrue(staticTexts["LLMonFHIR"].waitForExistence(timeout: 2))
         
         XCTAssertTrue(buttons["Learn More"].waitForExistence(timeout: 2))
         buttons["Learn More"].tap()
@@ -60,10 +60,10 @@ extension XCUIApplication {
     }
     
     private func navigateOnboardingFlowOpenAI() throws {
-        try textFields["OpenAI API Key"].enter(value: "sk-123456789")
+        try textFields["API Key…"].enter(value: "sk-123456789")
         
-        XCTAssertTrue(buttons["Next"].waitForExistence(timeout: 2))
-        buttons["Next"].tap()
+        XCTAssertTrue(buttons["Continue"].waitForExistence(timeout: 2))
+        buttons["Continue"].tap()
         
         XCTAssertTrue(buttons["Save Model Selection"].waitForExistence(timeout: 2))
         buttons["Save Model Selection"].tap()
@@ -73,9 +73,9 @@ extension XCUIApplication {
     }
     
     private func navigateOnboardingFlowHealthKitAccess() throws {
-        XCTAssertTrue(staticTexts["Health Access"].waitForExistence(timeout: 2))
+        XCTAssertTrue(staticTexts["Health Records Access"].waitForExistence(timeout: 2))
         
-        XCTAssertTrue(buttons["Grant Access"].waitForExistence(timeout: 2))
-        buttons["Grant Access"].tap()
+        XCTAssertTrue(buttons["Continue"].waitForExistence(timeout: 2))
+        buttons["Continue"].tap()
     }
 }

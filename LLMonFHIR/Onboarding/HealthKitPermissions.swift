@@ -1,5 +1,5 @@
 //
-// This source file is part of the Stanford LLM on FHIR project
+// This source file is part of the Stanford LLMonFHIR project
 //
 // SPDX-FileCopyrightText: 2023 Stanford University
 //
@@ -14,7 +14,7 @@ import SwiftUI
 
 struct HealthKitPermissions: View {
     @Environment(LLMonFHIRStandard.self) private var standard
-    @Environment(HealthKit.self) var healthKitDataSource: HealthKit?
+    @Environment(HealthKit.self) var healthKit: HealthKit?
     @Environment(ManagedNavigationStack.Path.self) private var managedNavigationStackPath
     @State var healthKitProcessing = false
     
@@ -44,7 +44,7 @@ struct HealthKitPermissions: View {
                     if ProcessInfo.processInfo.environment["XCODE_RUNNING_FOR_PREVIEWS"] == "1" {
                         try await _Concurrency.Task.sleep(for: .seconds(5))
                     } else {
-                        try await healthKitDataSource?.askForAuthorization()
+                        try await healthKit?.askForAuthorization()
                         Task {
                             await standard.fetchRecordsFromHealthKit()
                         }

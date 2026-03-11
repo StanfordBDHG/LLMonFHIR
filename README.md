@@ -1,6 +1,6 @@
 <!--
 
-This source file is part of the Stanford LLM on FHIR project
+This source file is part of the Stanford LLMonFHIR project
 
 SPDX-FileCopyrightText: 2023 Stanford University
 
@@ -8,7 +8,7 @@ SPDX-License-Identifier: MIT
 
 -->
 
-# LLM on FHIR - Demystifying Health Records
+# LLMonFHIR - Demystifying Health Records
 
 [![Deployment](https://github.com/StanfordBDHG/LLMonFHIR/actions/workflows/deployment.yml/badge.svg)](https://github.com/StanfordBDHG/LLMonFHIR/actions/workflows/deployment.yml)
 [![codecov](https://codecov.io/gh/StanfordBDHG/LLMonFHIR/branch/main/graph/badge.svg?token=9fvSAiFJUY)](https://codecov.io/gh/StanfordBDHG/LLMonFHIR)
@@ -35,22 +35,19 @@ SPDX-License-Identifier: MIT
 
 ## Study Overview
 
-This repository demonstrates how large language models can interpret and provide context around patient data in FHIR format. The LLM on FHIR application is designed as a research study to evaluate the effectiveness of conversational AI in helping users understand their health records.
+This repository demonstrates how large language models can interpret and provide context around patient data in FHIR format. The LLMonFHIR application is designed as a research study to evaluate the effectiveness of conversational AI in helping users understand their health records.
 
 The study leverages the [Spezi](https://github.com/StanfordSpezi/Spezi) framework and connects to the OpenAI GPT API to interpret FHIR resources. Participants can engage with their health data through a conversational interface, ask follow-up questions, and receive AI-generated summaries and explanations tailored to their system language.
 
-> [!NOTE] 
-> Interested in participating? Download LLM on FHIR on your iOS device via [TestFlight](https://testflight.apple.com/join/HBFZ5WOn)!
-
 ## Disclaimer
 
-LLM on FHIR is an experimental iOS app. It is designed for general informational purposes, providing users a platform to interact with health records stored in Apple Health using OpenAI models.
+LLMonFHIR is an experimental iOS app. It is designed for general informational purposes, providing users a platform to interact with health records stored in Apple Health using OpenAI models.
 
-- **Not a Substitute for Professional Advice:** LLM on FHIR is not intended as a substitute for professional medical advice, diagnosis, or treatment.
+- **Not a Substitute for Professional Advice:** LLMonFHIR is not intended as a substitute for professional medical advice, diagnosis, or treatment.
 
 - **Limitations of AI Models:** Remember, AI models can sometimes make mistakes or generate misleading information. Always cross-check and verify the information provided.
 
-- **Use at Your Own Risk:** Any use of LLM on FHIR is at the user's own risk. Always consult a qualified healthcare provider for personalized advice regarding your health and well-being.
+- **Use at Your Own Risk:** Any use of LLMonFHIR is at the user's own risk. Always consult a qualified healthcare provider for personalized advice regarding your health and well-being.
 
 - **Demonstration Only:** This app is intended for demonstration only and should not be used to process any personal health information.
 
@@ -60,12 +57,12 @@ Please inspect and carefully read the [OpenAI API data usage policies and settin
 
 ## HealthKit Access
 
-LLM on FHIR requires access to the FHIR health records stored in the Apple Health app. You have the control to select the different types of health records you wish to inspect in LLM on FHIR.
+LLMonFHIR requires access to the FHIR health records stored in the Apple Health app. You have the control to select the different types of health records you wish to inspect in LLMonFHIR.
 
-In case no health records are available, please follow the instructions to connect and retrieve your health records from your provider. If your health records are visible in the Apple Health app, please ensure that LLM on FHIR has access to your health records in the Apple Health App. You can find these settings in the privacy section of your profile in Apple Health.
+In case no health records are available, please follow the instructions to connect and retrieve your health records from your provider. If your health records are visible in the Apple Health app, please ensure that LLMonFHIR has access to your health records in the Apple Health App. You can find these settings in the privacy section of your profile in Apple Health.
 
 > [!TIP]
-> You can also use a set of [Synthea](https://doi.org/10.1093/jamia/ocx079)-based patients loaded from [SpeziFHIR](https://github.com/StanfordSpezi/SpeziFHIR) ([SpeziFHIRMockPatients](https://github.com/StanfordSpezi/SpeziFHIR/tree/main/Sources/SpeziFHIRMockPatients)) to test out the application without the need to connect it to HealthKit. You can select the synthetic patients in the account settings view of the application.
+> You can also use a set of [Synthea](https://pubmed.ncbi.nlm.nih.gov/29025144/)-based patients loaded from [SpeziFHIR](https://github.com/StanfordSpezi/SpeziFHIR) ([SpeziFHIRMockPatients](https://github.com/StanfordSpezi/SpeziFHIR/tree/main/Sources/SpeziFHIRMockPatients)) to test out the application without the need to connect it to HealthKit. You can select the synthetic patients in the account settings view of the application.
 
 ## Application Structure
 
@@ -191,4 +188,4 @@ The example config below performs 6 simulated runs of the `edu.stanford.LLMonFHI
 This project is based on [Spezi](https://github.com/StanfordSpezi/Spezi) framework and builds on top of the [Stanford Spezi Template Application](https://github.com/StanfordSpezi/SpeziTemplateApplication) provided using the MIT license.
 You can find a list of contributors in the `CONTRIBUTORS.md` file.
 
-The LLM on FHIR project, Spezi Template Application, and the Spezi framework are licensed under the MIT license.
+The LLMonFHIR project, Spezi Template Application, and the Spezi framework are licensed under the MIT license.

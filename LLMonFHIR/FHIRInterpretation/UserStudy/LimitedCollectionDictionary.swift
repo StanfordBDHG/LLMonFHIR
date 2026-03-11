@@ -15,7 +15,6 @@ enum LimitedCollectionDictionaryError: Sendable, Error {
     case capacityExceeded(key: any Hashable & Sendable, maximum: Int)
 }
 
-// periphery:ignore - These are fundamental APIs for collection handling, even if not all are used in every context.
 
 /// A dictionary where each key maps to a collection with a maximum capacity.
 ///
@@ -71,7 +70,7 @@ struct LimitedCollectionDictionary<Key: Hashable & Sendable, Value> {
 
     /// Removes all elements for a key
     /// - Parameter key: The key to clear
-    mutating func clearElements(forKey key: Key) {
+    mutating func clearElements(forKey key: Key) { // periphery:ignore - These are fundamental APIs for collection handling.
         collections.removeValue(forKey: key)
     }
 

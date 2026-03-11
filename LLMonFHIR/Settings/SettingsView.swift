@@ -1,5 +1,5 @@
 //
-// This source file is part of the Stanford LLM on FHIR project
+// This source file is part of the Stanford LLMonFHIR project
 //
 // SPDX-FileCopyrightText: 2023 Stanford University
 //
@@ -98,7 +98,7 @@ struct SettingsView: View {
             NavigationButton("SETTINGS_OPENAI_MODEL") {
                 path.append {
                     LLMOpenAIModelOnboardingStep(
-                        actionText: "OPEN_AI_MODEL_SAVE_ACTION",
+                        "OPEN_AI_MODEL_SAVE_ACTION",
                         models: OpenAIModelSelection.supportedModels,
                         initial: openAIModel
                     ) { chosenModelType in

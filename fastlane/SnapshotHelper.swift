@@ -1,5 +1,5 @@
 //
-// This source file is part of the Stanford LLM on FHIR project
+// This source file is part of the Stanford LLMonFHIR project
 // Generated from `fastlane snapshot init` and originally authored by Felix Krause on 10/8/15
 //
 // SPDX-FileCopyrightText: 2023 Stanford University

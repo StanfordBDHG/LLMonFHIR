@@ -1,5 +1,5 @@
 //
-// This source file is part of the Stanford LLM on FHIR project
+// This source file is part of the Stanford LLMonFHIR project
 //
 // SPDX-FileCopyrightText: 2023 Stanford University
 //
@@ -18,10 +18,10 @@ import Spezi
 
 @Observable
 final class OpenAIRequestInterceptor: Module, EnvironmentAccessible, ClientMiddleware, @unchecked Sendable {
-    private struct Error: Swift.Error {
-        let message: String // periphery:ignore - API
-        init(_ message: String) {
-            self.message = message
+    private struct Error: Swift.Error, CustomStringConvertible {
+        let description: String
+        init(_ description: String) {
+            self.description = description
         }
     }
     

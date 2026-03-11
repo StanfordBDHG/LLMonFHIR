@@ -29,7 +29,7 @@ struct OpenAIModelSelection: View {
     
     var body: some View {
         LLMOpenAIModelOnboardingStep(
-            actionText: "OPEN_AI_MODEL_SAVE_ACTION",
+            "OPEN_AI_MODEL_SAVE_ACTION",
             models: Self.supportedModels,
             initial: model
         ) { model in

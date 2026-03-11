@@ -18,7 +18,6 @@ import SpeziLocalStorage
 import SwiftUI
 
 
-// periphery:ignore - Properties are used through dependency injection and @Model configuration in `configure()`
 @Observable
 final class FHIRInterpretationModule: Module, EnvironmentAccessible, @unchecked Sendable { // maybe rename to smth Coordinator?
     @ObservationIgnored @MainActor @Dependency(LocalStorage.self) private var localStorage
@@ -43,7 +42,7 @@ final class FHIRInterpretationModule: Module, EnvironmentAccessible, @unchecked 
         switch llmSource {
         case .openai:
             LLMOpenAISchema(
-                parameters: .init(modelType: openAIModel.rawValue, systemPrompts: []),
+                parameters: .init(modelType: openAIModel, systemPrompts: []),
                 modelParameters: .init(temperature: openAIModelTemperature)
             )
         case .fog:
@@ -59,7 +58,7 @@ final class FHIRInterpretationModule: Module, EnvironmentAccessible, @unchecked 
     
     @MainActor var multipleResourceInterpreterOpenAISchema: LLMOpenAISchema {
         LLMOpenAISchema(
-            parameters: .init(modelType: openAIModel.rawValue, systemPrompts: []),
+            parameters: .init(modelType: openAIModel, systemPrompts: []),
             modelParameters: .init(temperature: openAIModelTemperature)
         ) {
             FHIRGetResourceLLMFunction(
