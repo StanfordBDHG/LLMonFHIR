@@ -1,25 +1,25 @@
 {
   "resourceType": "Questionnaire",
   "id": "lumbar-spine-module",
-  "url": "https://spineai.stanford.edu/fhir/Questionnaire/lumbar-spine-triage",
-  "version": "1.3",
   "name": "LumbarSpineTriageAndPhenotyping",
   "title": "SpineAI Questionnaire",
-  "status": "active",
-  "date": "2026-01-23",
-  "publisher": "Spine AI Research Team",
   "description": "Triage and phenotyping questionnaire for lumbar spine conditions including axial back pain and radiculopathy.",
+  "version": "1.3.1",
+  "status": "active",
+  "publisher": "Spine AI Research Team",
   "subjectType": [
     "Patient"
   ],
+  "date": "2026-03-05",
+  "url": "https://spineai.stanford.edu/fhir/Questionnaire/lumbar-spine-triage",
   "item": [
     {
-      "linkId": "Triage",
+      "linkId": "1",
       "text": "Triage Questions",
       "type": "group",
       "item": [
         {
-          "linkId": "T1",
+          "linkId": "1.1",
           "text": "Which option best describes your primary symptom?",
           "type": "choice",
           "answerOption": [
@@ -55,7 +55,7 @@
           "required": true
         },
         {
-          "linkId": "T2",
+          "linkId": "1.2",
           "text": "How long have these symptoms been present?",
           "type": "choice",
           "answerOption": [
@@ -98,8 +98,8 @@
           ]
         },
         {
-          "linkId": "T3",
-          "text": "Did your symptoms start following a fall or a significant trauma?",
+          "linkId": "1.3",
+          "text": "Did your symptoms start following a significant fall or trauma?",
           "type": "choice",
           "answerOption": [
             {
@@ -120,8 +120,8 @@
           "required": true
         },
         {
-          "linkId": "T4",
-          "text": "Have you ever been diagnosed with any form of cancer?",
+          "linkId": "1.4",
+          "text": "Have you ever been diagnosed with cancer?",
           "type": "choice",
           "answerOption": [
             {
@@ -137,12 +137,19 @@
                 "code": "373067005",
                 "display": "No"
               }
+            },
+            {
+              "valueCoding": {
+                "system": "http://snomed.info/sct",
+                "code": "261665006",
+                "display": "Not sure"
+              }
             }
           ],
           "required": true
         },
         {
-          "linkId": "T5",
+          "linkId": "1.5",
           "text": "Have you recently experienced fevers or chills, or have you been diagnosed with a spinal infection?",
           "type": "choice",
           "answerOption": [
@@ -164,7 +171,7 @@
           "required": true
         },
         {
-          "linkId": "T6",
+          "linkId": "1.6",
           "text": "Do you currently have any of the following symptoms?",
           "type": "choice",
           "answerOption": [
@@ -207,7 +214,7 @@
           "required": true
         },
         {
-          "linkId": "T7",
+          "linkId": "1.7",
           "text": "Have you ever been told you have any of the following conditions?",
           "type": "choice",
           "answerOption": [
@@ -256,7 +263,7 @@
           "repeats": true
         },
         {
-          "linkId": "T4a",
+          "linkId": "1.8",
           "text": "Do you currently have known metastatic disease involving your spine?",
           "type": "choice",
           "answerOption": [
@@ -284,7 +291,7 @@
           ],
           "enableWhen": [
             {
-              "question": "T4",
+              "question": "1.4",
               "operator": "=",
               "answerCoding": {
                 "system": "http://snomed.info/sct",
@@ -294,16 +301,44 @@
             }
           ],
           "enableBehavior": "all"
+        },
+        {
+          "linkId": "1.9",
+          "text": "Have you ever had spinal surgery? If so, when was the surgery and what type of surgery was it? If multiple surgeries, please list with dates and descriptions.",
+          "type": "open-choice",
+          "answerOption": [
+            {
+              "valueCoding": {
+                "system": "http://snomed.info/sct",
+                "code": "373066001",
+                "display": "Yes"
+              }
+            },
+            {
+              "valueCoding": {
+                "system": "http://snomed.info/sct",
+                "code": "373067005",
+                "display": "No"
+              }
+            },
+            {
+              "valueCoding": {
+                "system": "http://snomed.info/sct",
+                "code": "261665006",
+                "display": "Not sure"
+              }
+            }
+          ]
         }
       ]
     },
     {
-      "linkId": "fracture-pathway",
+      "linkId": "2",
       "type": "group",
       "text": "Lumbar Fracture Pathway",
       "enableWhen": [
         {
-          "question": "T3",
+          "question": "1.3",
           "operator": "=",
           "answerCoding": {
             "system": "http://snomed.info/sct",
@@ -315,19 +350,19 @@
       "enableBehavior": "all",
       "item": [
         {
-          "linkId": "fracture-display",
+          "linkId": "2.1",
           "type": "display",
           "text": "Please proceed to the Lumbar Fracture Pathway for urgent management."
         }
       ]
     },
     {
-      "linkId": "tumor-pathway",
+      "linkId": "3",
       "type": "group",
       "text": "Lumbar Tumor Pathway",
       "enableWhen": [
         {
-          "question": "T4a",
+          "question": "1.8",
           "operator": "=",
           "answerCoding": {
             "system": "http://snomed.info/sct",
@@ -336,7 +371,7 @@
           }
         },
         {
-          "question": "T4a",
+          "question": "1.8",
           "operator": "=",
           "answerCoding": {
             "system": "http://snomed.info/sct",
@@ -348,19 +383,19 @@
       "enableBehavior": "any",
       "item": [
         {
-          "linkId": "tumor-display",
+          "linkId": "3.1",
           "type": "display",
           "text": "Please proceed to the Lumbar Tumor Pathway for evaluation of possible metastasis."
         }
       ]
     },
     {
-      "linkId": "infection-pathway",
+      "linkId": "4",
       "type": "group",
       "text": "Lumbar Infection Pathway",
       "enableWhen": [
         {
-          "question": "T5",
+          "question": "1.5",
           "operator": "=",
           "answerCoding": {
             "system": "http://snomed.info/sct",
@@ -372,19 +407,19 @@
       "enableBehavior": "all",
       "item": [
         {
-          "linkId": "infection-display",
+          "linkId": "4.1",
           "type": "display",
           "text": "Please proceed to the Lumbar Infection Pathway for evaluation of possible infection."
         }
       ]
     },
     {
-      "linkId": "emergency-eval",
+      "linkId": "5",
       "type": "group",
       "text": "Immediate Emergency Evaluation (Possible Cauda Equina)",
       "enableWhen": [
         {
-          "question": "T6",
+          "question": "1.6",
           "operator": "=",
           "answerCoding": {
             "system": "https://spineai.stanford.edu/CodeSystem/neurologic-emergency",
@@ -392,7 +427,7 @@
           }
         },
         {
-          "question": "T6",
+          "question": "1.6",
           "operator": "=",
           "answerCoding": {
             "system": "https://spineai.stanford.edu/CodeSystem/neurologic-emergency",
@@ -400,7 +435,7 @@
           }
         },
         {
-          "question": "T6",
+          "question": "1.6",
           "operator": "=",
           "answerCoding": {
             "system": "https://spineai.stanford.edu/CodeSystem/neurologic-emergency",
@@ -411,19 +446,19 @@
       "enableBehavior": "any",
       "item": [
         {
-          "linkId": "emergency-display",
+          "linkId": "5.1",
           "type": "display",
           "text": "Immediate evaluation is recommended due to potential cauda equina syndrome."
         }
       ]
     },
     {
-      "linkId": "axial-module",
+      "linkId": "6",
       "text": "Axial Lumbar Back Pain Module",
       "type": "group",
       "enableWhen": [
         {
-          "question": "T1",
+          "question": "1.1",
           "operator": "=",
           "answerCoding": {
             "system": "https://spineai.stanford.edu/CodeSystem/primary-symptom",
@@ -431,7 +466,7 @@
           }
         },
         {
-          "question": "T1",
+          "question": "1.1",
           "operator": "=",
           "answerCoding": {
             "system": "https://spineai.stanford.edu/CodeSystem/primary-symptom",
@@ -442,7 +477,7 @@
       "enableBehavior": "any",
       "item": [
         {
-          "linkId": "A1",
+          "linkId": "6.1",
           "text": "Where do you feel your back pain?",
           "type": "choice",
           "repeats": true,
@@ -481,12 +516,20 @@
                 "code": "buttock",
                 "display": "Low back and upper buttock"
               }
+            },
+            {
+              "valueCoding": {
+                "id": "11f16a07-83a5-45a0-8e63-2114d3a85dbf",
+                "code": "buttock",
+                "system": "https://spineai.stanford.edu/CodeSystem/axial-pain-location",
+                "display": "upper buttock"
+              }
             }
           ],
           "required": true
         },
         {
-          "linkId": "A2",
+          "linkId": "6.2",
           "text": "Which activities make your back pain worse?",
           "type": "choice",
           "answerOption": [
@@ -536,7 +579,7 @@
           "repeats": true
         },
         {
-          "linkId": "A3",
+          "linkId": "6.3",
           "text": "Does lying down improve your pain?",
           "type": "choice",
           "answerOption": [
@@ -558,7 +601,7 @@
           "required": true
         },
         {
-          "linkId": "A4",
+          "linkId": "6.4",
           "text": "When you bend forward, does your pain improve, stay the same, or worsen?",
           "type": "choice",
           "answerOption": [
@@ -587,7 +630,7 @@
           "required": true
         },
         {
-          "linkId": "A5",
+          "linkId": "6.5",
           "text": "When you bend backward, does your pain improve, stay the same, or worsen?",
           "type": "choice",
           "answerOption": [
@@ -616,8 +659,8 @@
           "required": true
         },
         {
-          "linkId": "A6",
-          "text": "Is your pain generally worse when you are sitting, standing, or about the same?",
+          "linkId": "6.6",
+          "text": "Is your pain generally worse when you are sitting, standing, walking, or about the same?",
           "type": "choice",
           "answerOption": [
             {
@@ -640,13 +683,21 @@
                 "code": "same",
                 "display": "About the same"
               }
+            },
+            {
+              "valueCoding": {
+                "id": "67595eb7-2eb2-407c-ef11-d80784a14969",
+                "code": "walking",
+                "system": "https://spineai.stanford.edu/CodeSystem/axial-posture-worse",
+                "display": "walking"
+              }
             }
           ],
           "required": true
         },
         {
-          "linkId": "A7",
-          "text": "If sitting makes your pain worse, is it pain that builds while you are sitting or does it become severe when standing after sitting?",
+          "linkId": "6.7",
+          "text": "If sitting makes your pain worse, is it pain that builds while you are sitting or does it increase when moving to the standing position after sitting?",
           "type": "choice",
           "answerOption": [
             {
@@ -666,7 +717,7 @@
           ],
           "enableWhen": [
             {
-              "question": "A6",
+              "question": "6.6",
               "operator": "=",
               "answerCoding": {
                 "system": "https://spineai.stanford.edu/CodeSystem/axial-posture-worse",
@@ -677,7 +728,7 @@
           "enableBehavior": "any"
         },
         {
-          "linkId": "A8",
+          "linkId": "6.8",
           "text": "Have you ever been told you have scoliosis (a curvature of the spine)?",
           "type": "choice",
           "answerOption": [
@@ -706,7 +757,7 @@
           "required": true
         },
         {
-          "linkId": "A9",
+          "linkId": "6.9",
           "text": "If you have scoliosis, is your back pain worse on one side of your back?",
           "type": "choice",
           "answerOption": [
@@ -727,7 +778,7 @@
           ],
           "enableWhen": [
             {
-              "question": "A8",
+              "question": "6.8",
               "operator": "=",
               "answerCoding": {
                 "system": "http://snomed.info/sct",
@@ -739,7 +790,7 @@
           "enableBehavior": "any"
         },
         {
-          "linkId": "A10",
+          "linkId": "6.10",
           "text": "Which side has more severe back pain?",
           "type": "choice",
           "answerOption": [
@@ -760,7 +811,7 @@
           ],
           "enableWhen": [
             {
-              "question": "A9",
+              "question": "6.9",
               "operator": "=",
               "answerCoding": {
                 "system": "http://snomed.info/sct",
@@ -774,12 +825,12 @@
       ]
     },
     {
-      "linkId": "radic-module",
+      "linkId": "7",
       "text": "Lumbar Radiculopathy Module",
       "type": "group",
       "enableWhen": [
         {
-          "question": "T1",
+          "question": "1.1",
           "operator": "=",
           "answerCoding": {
             "system": "https://spineai.stanford.edu/CodeSystem/primary-symptom",
@@ -787,7 +838,7 @@
           }
         },
         {
-          "question": "T1",
+          "question": "1.1",
           "operator": "=",
           "answerCoding": {
             "system": "https://spineai.stanford.edu/CodeSystem/primary-symptom",
@@ -798,7 +849,7 @@
       "enableBehavior": "any",
       "item": [
         {
-          "linkId": "R2-left",
+          "linkId": "7.1",
           "text": "In your left leg, where do you feel pain?",
           "type": "choice",
           "answerOption": [
@@ -882,7 +933,7 @@
           "repeats": true
         },
         {
-          "linkId": "R2-right",
+          "linkId": "7.2",
           "text": "In your right leg, where do you feel pain?",
           "type": "choice",
           "answerOption": [
@@ -966,7 +1017,7 @@
           "repeats": true
         },
         {
-          "linkId": "R3",
+          "linkId": "7.3",
           "text": "Do you experience numbness or tingling?",
           "type": "choice",
           "answerOption": [
@@ -981,21 +1032,21 @@
               "valueCoding": {
                 "system": "https://spineai.stanford.edu/CodeSystem/radic-numbness",
                 "code": "yes-same",
-                "display": "Yes - same area as pain"
+                "display": "Yes \u2014 same area as pain"
               }
             },
             {
               "valueCoding": {
                 "system": "https://spineai.stanford.edu/CodeSystem/radic-numbness",
                 "code": "yes-diff",
-                "display": "Yes - different area"
+                "display": "Yes \u2014 different area"
               }
             }
           ],
           "required": true
         },
         {
-          "linkId": "R3-left",
+          "linkId": "7.4",
           "text": "In your left leg, where do you feel numbness or tingling?",
           "type": "choice",
           "answerOption": [
@@ -1066,7 +1117,7 @@
           "repeats": true,
           "enableWhen": [
             {
-              "question": "R3",
+              "question": "7.3",
               "operator": "=",
               "answerCoding": {
                 "system": "https://spineai.stanford.edu/CodeSystem/radic-numbness",
@@ -1077,7 +1128,7 @@
           "enableBehavior": "any"
         },
         {
-          "linkId": "R3-right",
+          "linkId": "7.5",
           "text": "In your right leg, where do you feel numbness or tingling?",
           "type": "choice",
           "answerOption": [
@@ -1148,7 +1199,7 @@
           "repeats": true,
           "enableWhen": [
             {
-              "question": "R3",
+              "question": "7.3",
               "operator": "=",
               "answerCoding": {
                 "system": "https://spineai.stanford.edu/CodeSystem/radic-numbness",
@@ -1159,7 +1210,7 @@
           "enableBehavior": "any"
         },
         {
-          "linkId": "R4",
+          "linkId": "7.6",
           "text": "Does coughing, sneezing, or straining make your leg pain worse?",
           "type": "choice",
           "answerOption": [
@@ -1188,7 +1239,7 @@
           "required": true
         },
         {
-          "linkId": "R5",
+          "linkId": "7.7",
           "text": "Have you noticed any weakness in your leg?",
           "type": "choice",
           "answerOption": [
@@ -1217,14 +1268,14 @@
               "valueCoding": {
                 "system": "https://spineai.stanford.edu/CodeSystem/radic-weakness",
                 "code": "severe",
-                "display": "Severe - I cannot lift my foot up or push off with my foot"
+                "display": "Severe \u2014 I cannot lift my foot up or push off with my foot"
               }
             }
           ],
           "required": true
         },
         {
-          "linkId": "R6",
+          "linkId": "7.8",
           "text": "Have you experienced any of the following motor difficulties?",
           "type": "choice",
           "answerOption": [
@@ -1273,7 +1324,7 @@
           "repeats": true
         },
         {
-          "linkId": "R7",
+          "linkId": "7.9",
           "text": "How did your leg pain start?",
           "type": "choice",
           "answerOption": [
@@ -1302,7 +1353,7 @@
           "required": true
         },
         {
-          "linkId": "R8",
+          "linkId": "7.10",
           "text": "How long have you had leg symptoms?",
           "type": "choice",
           "answerOption": [
@@ -1317,14 +1368,14 @@
               "valueCoding": {
                 "system": "https://spineai.stanford.edu/CodeSystem/radic-duration",
                 "code": "6w-3m",
-                "display": "6 weeks - 3 months"
+                "display": "6 weeks \u2013 3 months"
               }
             },
             {
               "valueCoding": {
                 "system": "https://spineai.stanford.edu/CodeSystem/radic-duration",
                 "code": "3m-12m",
-                "display": "3 - 12 months"
+                "display": "3 \u2013 12 months"
               }
             },
             {
@@ -1338,7 +1389,7 @@
           "required": true
         },
         {
-          "linkId": "R9",
+          "linkId": "7.11",
           "text": "Do your symptoms get worse when you stand or walk and improve when you sit?",
           "type": "choice",
           "answerOption": [
@@ -1360,7 +1411,7 @@
           "required": true
         },
         {
-          "linkId": "R10",
+          "linkId": "7.12",
           "text": "Does leaning forward while walking, such as in a shopping-cart position, relieve your symptoms?",
           "type": "choice",
           "answerOption": [
@@ -1382,7 +1433,7 @@
           "required": true
         },
         {
-          "linkId": "R11",
+          "linkId": "7.13",
           "text": "How much does pain limit your walking?",
           "type": "choice",
           "answerOption": [
@@ -1404,7 +1455,7 @@
               "valueCoding": {
                 "system": "https://spineai.stanford.edu/CodeSystem/walking-limitation",
                 "code": "half-mile",
-                "display": "Pain prevents me from walking more than 1/2 mile"
+                "display": "Pain prevents me from walking more than \u00bd mile"
               }
             },
             {
@@ -1432,7 +1483,7 @@
           "required": true
         },
         {
-          "linkId": "R12",
+          "linkId": "7.14",
           "text": "Have you ever been told you have any of these conditions?",
           "type": "choice",
           "answerOption": [

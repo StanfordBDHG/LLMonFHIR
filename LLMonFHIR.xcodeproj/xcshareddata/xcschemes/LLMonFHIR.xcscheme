@@ -79,7 +79,7 @@
       <CommandLineArguments>
          <CommandLineArgument
             argument = "--useFirebaseEmulator"
-            isEnabled = "NO">
+            isEnabled = "YES">
          </CommandLineArgument>
          <CommandLineArgument
             argument = "--disableFirebase"
@@ -110,7 +110,7 @@
             isEnabled = "NO">
          </CommandLineArgument>
          <CommandLineArgument
-            argument = "--mode study:edu.stanford.LLMonFHIR.gynStudy"
+            argument = "--mode study:edu.stanford.LLMonFHIR.spineAI"
             isEnabled = "YES">
          </CommandLineArgument>
       </CommandLineArguments>

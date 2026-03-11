@@ -131,6 +131,48 @@ final class UserStudyChatViewModel: Sendable {
         interpretationModule: FHIRInterpretationModule,
         uploader: FirebaseUpload?
     ) {
+        let ogPrompt = interpretationModule.currentStudy?.study.interpretMultipleResourcesPrompt ?? ""
+
+        print("CREATING \(#file)")
+        if let initialQuestionnaireResponse {
+            let encoder = JSONEncoder()
+            encoder.outputFormatting = .prettyPrinted
+            // swiftlint:disable:next force_try
+            let jsonData = try! encoder.encode(initialQuestionnaireResponse)
+            let jsonString = String(data: jsonData, encoding: .utf8) ?? "<couldn't serialize>"
+            print("Initial Questionnaire Response: \n\(jsonString)")
+            
+            var string = ""
+            for item in initialQuestionnaireResponse.item ?? [] {
+                switch item.answer?.first?.value {
+                case .coding(let coding):
+                    string += "\(item.linkId.value?.string ?? ""): \"\(item.text?.value?.string ?? "")\": \(coding.display?.value?.string ?? "")\n"
+                default:
+                    print("unexpected answer item: \(item.linkId)")
+                }
+            }
+            interpretationModule.currentStudy?.study.interpretMultipleResourcesPrompt = "\(ogPrompt.promptText)\n\n\(string)"
+
+            /*
+            if let firstItem = interpretationModule.multipleResourceInterpreter.llmSession.context.first {
+                // swiftlint:disable:next force_try
+                let entity = LLMContextEntity(
+                    role: firstItem.role,
+                    content: firstItem.content + "\n\n\(string)",
+                    complete: firstItem.complete,
+                    id: firstItem.id,
+                    date: firstItem.date
+                )
+                interpretationModule.multipleResourceInterpreter.llmSession.context[0] = entity
+                print(entity.content)
+            } else {
+                print("no first item available")
+            }
+             */
+        } else {
+            print("no response available")
+        }
+                
         self.inProgressStudy = inProgressStudy
         self.initialQuestionnaireResponse = initialQuestionnaireResponse
         self.interpretationModule = interpretationModule

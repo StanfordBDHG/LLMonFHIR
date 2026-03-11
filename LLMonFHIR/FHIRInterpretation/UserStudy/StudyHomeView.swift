@@ -7,11 +7,17 @@
 //
 
 import LLMonFHIRShared
+import class ModelsR4.Questionnaire
+import class ModelsR4.QuestionnaireItem
 import class ModelsR4.QuestionnaireResponse
 import SpeziFoundation
 import SpeziHealthKit
 import SwiftUI
 
+// swiftlint:disable file_length
+
+@MainActor
+private var viewModel: Any?
 
 struct StudyHomeView: View {
     @LocalPreference(.resourceLimit) private var resourceLimit
@@ -47,7 +53,7 @@ struct StudyHomeView: View {
                 .background(Color(.systemBackground))
                 .navigationTitle("USER_STUDY_WECOME")
                 .navigationBarTitleDisplayMode(.inline)
-                #if targetEnvironment(simulator)
+#if targetEnvironment(simulator)
                 .toolbar {
                     ToolbarItem(placement: .topBarTrailing) {
                         // Maybe instead show a button that directly brings up the ResourceSelection sheet?
@@ -55,7 +61,7 @@ struct StudyHomeView: View {
                         SettingsButton()
                     }
                 }
-                #endif
+#endif
                 .sheet(isPresented: $isPresentingEarliestHealthRecords) {
                     EarliestHealthRecordsView(dataSource: earliestDates)
                         .presentationDetents([.medium, .large])
@@ -86,16 +92,29 @@ struct StudyHomeView: View {
                     }
                 }
                 .fullScreenCover(item: $fhirInterpretationModule.currentStudy) { inProgressStudy in
-                    UserStudyChatView(model: .init(
+                    let model = (viewModel as? UserStudyChatViewModel) ?? UserStudyChatViewModel(
                         inProgressStudy: inProgressStudy,
                         initialQuestionnaireResponse: questionnaireResponse,
                         interpretationModule: fhirInterpretationModule,
-//                        interpreter: interpreter,
-//                        resourceSummarizer: resourceSummarizer,
+                        //                        interpreter: interpreter,
+                        //                        resourceSummarizer: resourceSummarizer,
                         uploader: uploader
-                    ))
+                    )
+                    viewModel = model
+                    return UserStudyChatView(model: model)
                 }
                 .task {
+                    let decoder = JSONDecoder()
+                    // swiftlint:disable:next force_try force_unwrapping
+                    let response = try! decoder.decode(QuestionnaireResponse.self, from: sampleQuestionnaireResponse.data(using: .utf8)!)
+                    if let questionnaire = try? inProgressStudy?.study.initialQuestionnaire(from: .main) {
+                        for item in response.item ?? [] {
+                            if let question = findQuestionWithLinkId(item.linkId.value?.string ?? "", items: questionnaire.item ?? []) {
+                                item.text = question.text
+                            }
+                        }
+                    }
+                    questionnaireResponse = response
                     await standard.fetchRecordsFromHealthKit()
                     await fhirInterpretationModule.updateSchemas()
                 }
@@ -186,7 +205,7 @@ struct StudyHomeView: View {
     private var primaryActionButton: some View {
         PrimaryActionButton {
             if let inProgressStudy {
-                if isMissingPreChatQuestionnaire {
+                if isMissingPreChatQuestionnaire, false {
                     isPresentingQuestionnaire = true
                     return
                 }
@@ -223,4 +242,304 @@ struct StudyHomeView: View {
     init() {
         _inProgressStudy = .init(initialValue: nil)
     }
+    
+    private func findQuestionWithLinkId(_ linkId: String, items: [QuestionnaireItem]) -> QuestionnaireItem? {
+        for item in items {
+            if item.linkId.value?.string == linkId {
+                return item
+            }
+            if let foundItem = findQuestionWithLinkId(linkId, items: item.item ?? []) {
+                return foundItem
+            }
+        }
+        return nil
+    }
 }
+
+let sampleQuestionnaireResponse = #"""
+{
+  "id" : "731DDBB8-FF50-4EAE-8924-20356A6C13B5",
+  "resourceType" : "QuestionnaireResponse",
+  "status" : "completed",
+  "authored" : "2026-03-11T19:14:26.510686039+01:00",
+  "item" : [
+    {
+      "linkId" : "1.1",
+      "answer" : [
+        {
+          "valueCoding" : {
+            "display" : "Leg pain or numbness",
+            "system" : "https:\/\/spineai.stanford.edu\/CodeSystem\/primary-symptom",
+            "code" : "leg-pain"
+          }
+        }
+      ]
+    },
+    {
+      "linkId" : "1.2",
+      "answer" : [
+        {
+          "valueCoding" : {
+            "display" : "3 to 12 months",
+            "code" : "3m-12m",
+            "system" : "https:\/\/spineai.stanford.edu\/CodeSystem\/symptom-duration"
+          }
+        }
+      ]
+    },
+    {
+      "linkId" : "1.3",
+      "answer" : [
+        {
+          "valueCoding" : {
+            "code" : "373067005",
+            "system" : "http:\/\/snomed.info\/sct",
+            "display" : "No"
+          }
+        }
+      ]
+    },
+    {
+      "linkId" : "1.4",
+      "answer" : [
+        {
+          "valueCoding" : {
+            "system" : "http:\/\/snomed.info\/sct",
+            "code" : "373067005",
+            "display" : "No"
+          }
+        }
+      ]
+    },
+    {
+      "linkId" : "1.5",
+      "answer" : [
+        {
+          "valueCoding" : {
+            "display" : "No",
+            "code" : "373067005",
+            "system" : "http:\/\/snomed.info\/sct"
+          }
+        }
+      ]
+    },
+    {
+      "linkId" : "1.6",
+      "answer" : [
+        {
+          "valueCoding" : {
+            "code" : "none",
+            "display" : "None of the above",
+            "system" : "https:\/\/spineai.stanford.edu\/CodeSystem\/neurologic-emergency"
+          }
+        }
+      ]
+    },
+    {
+      "linkId" : "1.7",
+      "answer" : [
+        {
+          "valueCoding" : {
+            "code" : "disc",
+            "system" : "https:\/\/spineai.stanford.edu\/CodeSystem\/structural-context",
+            "display" : "Lumbar disc herniation"
+          }
+        }
+      ]
+    },
+    {
+      "linkId" : "1.8",
+      "answer" : [
+        {
+          "valueCoding" : {
+            "display" : "No",
+            "code" : "373067005",
+            "system" : "http:\/\/snomed.info\/sct"
+          }
+        }
+      ]
+    },
+    {
+      "linkId" : "1.9",
+      "answer" : [
+        {
+          "valueCoding" : {
+            "display" : "No",
+            "system" : "http:\/\/snomed.info\/sct",
+            "code" : "373067005"
+          }
+        }
+      ]
+    },
+    {
+      "linkId" : "7.1",
+      "answer" : [
+        {
+          "valueCoding" : {
+            "code" : "none",
+            "display" : "No pain in this leg",
+            "system" : "https:\/\/spineai.stanford.edu\/CodeSystem\/radic-pain-loc"
+          }
+        }
+      ]
+    },
+    {
+      "linkId" : "7.2",
+      "answer" : [
+        {
+          "valueCoding" : {
+            "display" : "Buttock",
+            "system" : "https:\/\/spineai.stanford.edu\/CodeSystem\/radic-pain-loc",
+            "code" : "buttock"
+          }
+        }
+      ]
+    },
+    {
+      "linkId" : "7.3",
+      "answer" : [
+        {
+          "valueCoding" : {
+            "display" : "Yes — same area as pain",
+            "system" : "https:\/\/spineai.stanford.edu\/CodeSystem\/radic-numbness",
+            "code" : "yes-same"
+          }
+        }
+      ]
+    },
+    {
+      "linkId" : "7.4",
+      "answer" : [
+        {
+          "valueCoding" : {
+            "code" : "buttock",
+            "display" : "Buttock",
+            "system" : "https:\/\/spineai.stanford.edu\/CodeSystem\/radic-numbness-loc"
+          }
+        }
+      ]
+    },
+    {
+      "linkId" : "7.5",
+      "answer" : [
+        {
+          "valueCoding" : {
+            "display" : "Buttock",
+            "code" : "buttock",
+            "system" : "https:\/\/spineai.stanford.edu\/CodeSystem\/radic-numbness-loc"
+          }
+        }
+      ]
+    },
+    {
+      "linkId" : "7.6",
+      "answer" : [
+        {
+          "valueCoding" : {
+            "system" : "http:\/\/snomed.info\/sct",
+            "code" : "373066001",
+            "display" : "Yes"
+          }
+        }
+      ]
+    },
+    {
+      "linkId" : "7.7",
+      "answer" : [
+        {
+          "valueCoding" : {
+            "system" : "https:\/\/spineai.stanford.edu\/CodeSystem\/radic-weakness",
+            "code" : "none",
+            "display" : "No weakness"
+          }
+        }
+      ]
+    },
+    {
+      "linkId" : "7.8",
+      "answer" : [
+        {
+          "valueCoding" : {
+            "code" : "heel-walking",
+            "display" : "Trouble walking on heels",
+            "system" : "https:\/\/spineai.stanford.edu\/CodeSystem\/radic-functional-motor"
+          }
+        }
+      ]
+    },
+    {
+      "linkId" : "7.9",
+      "answer" : [
+        {
+          "valueCoding" : {
+            "code" : "sudden",
+            "display" : "Suddenly",
+            "system" : "https:\/\/spineai.stanford.edu\/CodeSystem\/radic-onset"
+          }
+        }
+      ]
+    },
+    {
+      "linkId" : "7.10",
+      "answer" : [
+        {
+          "valueCoding" : {
+            "display" : "6 weeks – 3 months",
+            "code" : "6w-3m",
+            "system" : "https:\/\/spineai.stanford.edu\/CodeSystem\/radic-duration"
+          }
+        }
+      ]
+    },
+    {
+      "linkId" : "7.11",
+      "answer" : [
+        {
+          "valueCoding" : {
+            "code" : "373067005",
+            "display" : "No",
+            "system" : "http:\/\/snomed.info\/sct"
+          }
+        }
+      ]
+    },
+    {
+      "linkId" : "7.12",
+      "answer" : [
+        {
+          "valueCoding" : {
+            "system" : "http:\/\/snomed.info\/sct",
+            "display" : "No",
+            "code" : "373067005"
+          }
+        }
+      ]
+    },
+    {
+      "linkId" : "7.13",
+      "answer" : [
+        {
+          "valueCoding" : {
+            "system" : "https:\/\/spineai.stanford.edu\/CodeSystem\/walking-limitation",
+            "code" : "one-mile",
+            "display" : "Pain prevents me from walking more than 1 mile"
+          }
+        }
+      ]
+    },
+    {
+      "linkId" : "7.14",
+      "answer" : [
+        {
+          "valueCoding" : {
+            "code" : "disc",
+            "display" : "Disc herniation",
+            "system" : "https:\/\/spineai.stanford.edu\/CodeSystem\/radic-structural-history"
+          }
+        }
+      ]
+    }
+  ],
+  "questionnaire" : "https:\/\/spineai.stanford.edu\/fhir\/Questionnaire\/lumbar-spine-triage"
+}
+"""#
