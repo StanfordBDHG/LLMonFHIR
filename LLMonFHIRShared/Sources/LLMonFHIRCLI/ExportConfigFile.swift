@@ -51,7 +51,8 @@ struct ExportConfigFile: ParsableCommand {
 
     @Option(
         name: [.customShort("b"), .customLong("firebase")],
-        help: "Per-study path to a GoogleService-Info.plist file. Sets the study endpoint to 'firebase-function:chat' and makes the OpenAI API key optional for this study.",
+        help: "Per-study path to a GoogleService-Info.plist file. " + 
+            "Sets the study endpoint to 'firebase-function:chat' and makes the OpenAI API key optional for this study.",
     )
     var firebaseStudyCredentials: [StudyIdIdentified<URL>] = []
     
@@ -79,7 +80,6 @@ struct ExportConfigFile: ParsableCommand {
     
     @Argument(help: "Output path where the resulting UserStudyConfig.plist file should be stored")
     var outputUrl: URL
-    
     
     func run() throws {
         try openAIKeys.validate(optionName: "OpenAI Key")

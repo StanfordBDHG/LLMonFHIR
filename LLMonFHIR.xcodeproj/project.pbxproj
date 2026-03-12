@@ -321,7 +321,6 @@
 				805C26302F25171E00769AC1 /* LLMonFHIRShared */,
 				65D03CDD2F25E55F00AA89DF /* SpeziQuestionnaire */,
 				803D16672F30DA3C0060B931 /* LLMonFHIRStudyDefinitions */,
-				B15E3A2C1F4D890A6723BCDF /* LLMonFHIROpenAI */,
 				9BB2A5352F6238EE0055A93B /* LLMonFHIRFirebase */,
 			);
 			productName = LLMonFHIR;
@@ -1248,10 +1247,6 @@
 		9BB2A5352F6238EE0055A93B /* LLMonFHIRFirebase */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = LLMonFHIRFirebase;
-		};
-		B15E3A2C1F4D890A6723BCDF /* LLMonFHIROpenAI */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = LLMonFHIROpenAI;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
