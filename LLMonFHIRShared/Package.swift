@@ -19,6 +19,7 @@ let package = Package(
     ],
     products: [
         .library(name: "LLMonFHIRShared", targets: ["LLMonFHIRShared"]),
+        .library(name: "LLMonFHIRFirebase", targets: ["LLMonFHIRFirebase"]),
         .library(name: "LLMonFHIRStudyDefinitions", targets: ["LLMonFHIRStudyDefinitions"]),
         .executable(name: "LLMonFHIRCLI", targets: ["LLMonFHIRCLI"])
     ],
@@ -28,7 +29,10 @@ let package = Package(
         .package(url: "https://github.com/apple/swift-argument-parser.git", from: "1.7.0"),
         .package(url: "https://github.com/StanfordSpezi/SpeziLLM.git", from: "0.13.6"),
         .package(url: "https://github.com/StanfordSpezi/SpeziStorage.git", from: "2.1.3"),
-        .package(url: "https://github.com/StanfordSpezi/SpeziFHIR.git", from: "0.10.0")
+        .package(url: "https://github.com/StanfordSpezi/SpeziFHIR.git", from: "0.10.0"),
+        .package(url: "https://github.com/firebase/firebase-ios-sdk.git", from: "12.8.0"),
+        .package(url: "https://github.com/apple/swift-openapi-runtime.git", from: "1.8.0"),
+        .package(url: "https://github.com/apple/swift-http-types.git", from: "1.0.0")
     ],
     targets: [
         .target(
@@ -50,6 +54,20 @@ let package = Package(
             ]
         ),
         .target(
+            name: "LLMonFHIRFirebase",
+            dependencies: [
+                "LLMonFHIRShared",
+                .product(name: "FirebaseCore", package: "firebase-ios-sdk"),
+                .product(name: "FirebaseFunctions", package: "firebase-ios-sdk"),
+                .product(name: "OpenAPIRuntime", package: "swift-openapi-runtime"),
+                .product(name: "HTTPTypes", package: "swift-http-types")
+            ],
+            swiftSettings: [
+                .enableUpcomingFeature("ExistentialAny"),
+                .enableUpcomingFeature("InternalImportsByDefault")
+            ]
+        ),
+        .target(
             name: "LLMonFHIRStudyDefinitions",
             dependencies: [
                 "LLMonFHIRShared",
@@ -64,6 +82,7 @@ let package = Package(
             name: "LLMonFHIRCLI",
             dependencies: [
                 "LLMonFHIRShared",
+                "LLMonFHIRFirebase",
                 "LLMonFHIRStudyDefinitions",
                 .product(name: "ArgumentParser", package: "swift-argument-parser")
             ],

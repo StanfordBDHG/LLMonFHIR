@@ -10,6 +10,7 @@
 
 import ArgumentParser
 import Foundation
+import LLMonFHIRFirebase
 import LLMonFHIRShared
 import LLMonFHIRStudyDefinitions
 @_spi(APISupport) import Spezi
@@ -39,6 +40,11 @@ struct SimulateSession: AsyncParsableCommand {
             from: Data(contentsOf: inputUrl),
             configuration: .init(configFileUrl: inputUrl)
         )
+
+        // Configure Firebase once if any session routes through it
+        if let firebasePlist = configs.compactMap(\.firebaseCredentialsPath).first {
+            try configureFirebaseApp(contentsOfFile: firebasePlist)
+        }
         let reports = try await withThrowingTaskGroup(of: StudyReport.self, returning: [StudyReport].self) { taskGroup in
             for config in configs {
                 for runIdx in 0..<config.numberOfRuns {

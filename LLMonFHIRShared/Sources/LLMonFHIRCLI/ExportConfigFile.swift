@@ -48,6 +48,12 @@ struct ExportConfigFile: ParsableCommand {
         help: "Per-study OpenAI API keys"
     )
     var openAIKeys: [StudyIdIdentified<String>] = []
+
+    @Option(
+        name: [.customShort("b"), .customLong("firebase")],
+        help: "Per-study path to a GoogleService-Info.plist file. Sets the study endpoint to 'firebase-function:chat' and makes the OpenAI API key optional for this study.",
+    )
+    var firebaseStudyCredentials: [StudyIdIdentified<URL>] = []
     
     @Option(
         name: [.customShort("k"), .customLong("encryptionKey")],
@@ -77,10 +83,20 @@ struct ExportConfigFile: ParsableCommand {
     
     func run() throws {
         try openAIKeys.validate(optionName: "OpenAI Key")
+        try firebaseStudyCredentials.validate(optionName: "Firebase Credentials")
         try encryptionKeys.validate(optionName: "Encryption Key")
         try reportEmails.validate(optionName: "Report Email")
         try studyEndpoints.validate(optionName: "Study Endpoint")
-        
+
+        for study in Study.allStudies where includedStudyIds.contains(study.id) {
+            if _studyValue(for: study.id, in: openAIKeys) != nil
+                && _studyValue(for: study.id, in: firebaseStudyCredentials) != nil {
+                throw NSError(domain: "edu.stanford.LLMonFHIR.CLI", code: 0, userInfo: [
+                    NSLocalizedDescriptionKey: "Study '\(study.id)' has both an OpenAI key (-o) and Firebase credentials (-b); specify only one."
+                ])
+            }
+        }
+
         let firebaseConfig: AppConfigFile.FirebaseConfigDictionary? = try {
             guard let firebaseConfigFilePath else {
                 return nil
@@ -94,15 +110,23 @@ struct ExportConfigFile: ParsableCommand {
         let config = AppConfigFile(
             launchMode: launchMode,
             studyConfigs: try Study.allStudies.reduce(into: [:]) { configs, study in
+                let usesFirebase = _studyValue(for: study.id, in: firebaseStudyCredentials) != nil
                 configs[study.id] = StudyConfig(
-                    openAIAPIKey: try studyValue(
-                        for: study.id,
-                        in: openAIKeys,
-                        what: "OpenAI API Key",
-                        isRequired: !allowEmptyAPIKeys,
-                        default: ""
-                    ),
-                    openAIEndpoint: studyValue(for: study.id, in: studyEndpoints, default: .regular),
+                    openAIAPIKey: try {
+                        if usesFirebase {
+                            return ""
+                        }
+                        return try studyValue(
+                            for: study.id,
+                            in: openAIKeys,
+                            what: "OpenAI API Key",
+                            isRequired: !allowEmptyAPIKeys,
+                            default: ""
+                        )
+                    }(),
+                    openAIEndpoint: usesFirebase
+                        ? .firebaseFunction(name: "chat")
+                        : studyValue(for: study.id, in: studyEndpoints, default: .regular),
                     reportEmail: studyValue( for: study.id, in: reportEmails, default: ""),
                     encryptionKey: try { () -> Curve25519.KeyAgreement.PublicKey? in
                         if let url = studyValue(for: study.id, in: encryptionKeys, default: nil) {

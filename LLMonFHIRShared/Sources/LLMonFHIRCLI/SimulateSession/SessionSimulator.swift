@@ -7,7 +7,9 @@
 //
 
 import Foundation
+import LLMonFHIRFirebase
 import LLMonFHIRShared
+import OpenAPIRuntime
 @_spi(APISupport) import Spezi
 import SpeziFHIR
 import SpeziHealthKit
@@ -126,8 +128,11 @@ extension SessionSimulator {
     }
     
     @MainActor
-    private static func speziConfig(for config: SimulatedSessionConfig) -> Configuration {
-        Configuration(standard: FakeStandard()) {
+    private static func speziConfig(for config: SimulatedSessionConfig) -> SpeziConfiguration {
+        let middlewares: [any ClientMiddleware] = config.firebaseCredentialsPath != nil
+            ? [OpenAIFirebaseFunctionMiddleware(endpointProvider: { .firebaseFunction(name: "chat") })]
+            : []
+        return SpeziConfiguration(standard: FakeStandard()) {
             FHIRStore()
             SessionCoordinator(config: .init(
                 model: config.model,
@@ -138,9 +143,10 @@ extension SessionSimulator {
             ))
             LLMRunner {
                 LLMOpenAIPlatform(configuration: .init(
-                    authToken: .constant(config.openAIKey),
+                    authToken: .constant(config.openAIKey ?? ""),
                     concurrentStreams: 100,
-                    retryPolicy: .attempts(3)
+                    retryPolicy: .attempts(3),
+                    middlewares: middlewares
                 ))
             }
         }

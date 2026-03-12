@@ -17,25 +17,32 @@ struct SimulatedSessionConfig: Sendable {
     let numberOfRuns: Int
     let model: LLMOpenAIParameters.ModelType
     let temperature: Double
-    
+
     /// The study that should be simulated.
     ///
     /// Only the study's prompts are actually used for the simulation; any additional components (eg an initial questionnaire, or instructions/tasks) are ignored.
     ///
     /// - Note: Isn't allowed to be mutated
     nonisolated(unsafe) let study: Study
-    
+
     /// The raw input based on which the ``bundle`` was loaded, as specified in the config file.
     let bundleInputName: String
-    
+
     /// The FHIR bundle providing the resources that will be made available to the LLM
     ///
     /// - Note: Isn't allowed to be mutated
     nonisolated(unsafe) let bundle: ModelsR4.Bundle
-    
-    /// The OpenAI API key used when simulating this session.
-    let openAIKey: String
-    
+
+    /// The OpenAI API key used when simulating this session directly against OpenAI.
+    ///
+    /// Exactly one of ``openAIKey`` and ``firebaseCredentialsPath`` must be non-nil.
+    let openAIKey: String?
+
+    /// Path to a `GoogleService-Info.plist` used to route requests through Firebase instead of OpenAI directly.
+    ///
+    /// Exactly one of ``openAIKey`` and ``firebaseCredentialsPath`` must be non-nil.
+    let firebaseCredentialsPath: String?
+
     /// The questions that should be asked by the simulated patient.
     let userQuestions: [String]
 }
@@ -46,23 +53,38 @@ extension SimulatedSessionConfig: DecodableWithConfiguration {
         /// The URL of the config file being decoded, if applicable.
         let configFileUrl: URL?
     }
-    
+
     private enum CodingKeys: String, CodingKey {
         case numberOfRuns
         case studyId
         case bundleName
         case openAIKey
+        case firebaseCredentials
         case userQuestions
         case model
         case temperature
     }
-    
+
     init(from decoder: any Decoder, configuration: DecodingConfiguration) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         self.numberOfRuns = try container.decode(Int.self, forKey: .numberOfRuns)
         self.model = try container.decode(LLMOpenAIParameters.ModelType.self, forKey: .model)
         self.temperature = try container.decode(Double.self, forKey: .temperature)
-        self.openAIKey = try container.decode(String.self, forKey: .openAIKey)
+
+        let openAIKey = try container.decodeIfPresent(String.self, forKey: .openAIKey)
+        let firebaseCredentials = try container.decodeIfPresent(String.self, forKey: .firebaseCredentials)
+
+        guard (openAIKey == nil) != (firebaseCredentials == nil) else {
+            throw DecodingError.dataCorrupted(.init(
+                codingPath: [],
+                debugDescription: "Exactly one of 'openAIKey' or 'firebaseCredentials' must be specified per session config"
+            ))
+        }
+        self.openAIKey = openAIKey
+        self.firebaseCredentialsPath = firebaseCredentials.map { path in
+            URL(filePath: path, relativeTo: configuration.configFileUrl?.deletingLastPathComponent()).path(percentEncoded: false)
+        }
+
         let studyId = try container.decode(Study.ID.self, forKey: .studyId)
         guard let study = Study.allStudies.first(where: { $0.id == studyId }) else {
             throw DecodingError.dataCorrupted(.init(codingPath: [], debugDescription: "Unable to find study with id '\(studyId)'"))

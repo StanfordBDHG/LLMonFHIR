@@ -60,6 +60,7 @@
 		97EAB5DE2B7A010A00A0B036 /* SpeziFHIR in Frameworks */ = {isa = PBXBuildFile; productRef = 97EAB5DD2B7A010A00A0B036 /* SpeziFHIR */; };
 		97EAB5E02B7A010A00A0B036 /* SpeziFHIRHealthKit in Frameworks */ = {isa = PBXBuildFile; productRef = 97EAB5DF2B7A010A00A0B036 /* SpeziFHIRHealthKit */; };
 		97EAB5E42B7A010A00A0B036 /* SpeziFHIRMockPatients in Frameworks */ = {isa = PBXBuildFile; productRef = 97EAB5E32B7A010A00A0B036 /* SpeziFHIRMockPatients */; };
+		9BB2A5362F6238EE0055A93B /* LLMonFHIRFirebase in Frameworks */ = {isa = PBXBuildFile; productRef = 9BB2A5352F6238EE0055A93B /* LLMonFHIRFirebase */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -151,6 +152,7 @@
 				8040C2A02F19396A00884AD3 /* SpeziLLM in Frameworks */,
 				80A9907B2F1699B500BDD5B7 /* SpeziFirebaseConfiguration in Frameworks */,
 				97EAB5E42B7A010A00A0B036 /* SpeziFHIRMockPatients in Frameworks */,
+				9BB2A5362F6238EE0055A93B /* LLMonFHIRFirebase in Frameworks */,
 				44E18E902CEBEC9500829A26 /* SpeziLLMOpenAI in Frameworks */,
 				9733FC5D2B60E5FB0024F12C /* SpeziFHIRMockPatients in Frameworks */,
 				97EAB5DE2B7A010A00A0B036 /* SpeziFHIR in Frameworks */,
@@ -319,6 +321,8 @@
 				805C26302F25171E00769AC1 /* LLMonFHIRShared */,
 				65D03CDD2F25E55F00AA89DF /* SpeziQuestionnaire */,
 				803D16672F30DA3C0060B931 /* LLMonFHIRStudyDefinitions */,
+				B15E3A2C1F4D890A6723BCDF /* LLMonFHIROpenAI */,
+				9BB2A5352F6238EE0055A93B /* LLMonFHIRFirebase */,
 			);
 			productName = LLMonFHIR;
 			productReference = 653A254D283387FE005D4D48 /* LLMonFHIR.app */;
@@ -1240,6 +1244,14 @@
 		97EAB5E32B7A010A00A0B036 /* SpeziFHIRMockPatients */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = SpeziFHIRMockPatients;
+		};
+		9BB2A5352F6238EE0055A93B /* LLMonFHIRFirebase */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = LLMonFHIRFirebase;
+		};
+		B15E3A2C1F4D890A6723BCDF /* LLMonFHIROpenAI */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = LLMonFHIROpenAI;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
