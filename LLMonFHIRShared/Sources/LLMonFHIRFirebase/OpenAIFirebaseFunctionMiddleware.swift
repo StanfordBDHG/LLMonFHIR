@@ -20,7 +20,7 @@ public import OpenAPIRuntime
 /// request body to the named Firebase callable function and streams the response back.
 /// When the endpoint is `.regular`, the request passes through unchanged.
 ///
-/// Used by both the iOS app (via ``OpenAIRequestInterceptor``) and the CLI (`simulate-session`).
+/// Used by both the iOS app and the CLI (`simulate-session`).
 public struct OpenAIFirebaseFunctionMiddleware: ClientMiddleware, Sendable {
     private struct MiddlewareError: Error, CustomStringConvertible {
         let description: String
