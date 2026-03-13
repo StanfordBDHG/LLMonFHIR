@@ -43,11 +43,18 @@ extension StudyReport {
     /// Metadata about the study session.
     public struct Metadata: Encodable, Sendable {
         public struct LLMConfig: Codable, Sendable {
+            public enum Backend: String, Codable, Sendable {
+                case openAI
+                case firebase
+            }
+
             public let model: LLMOpenAIParameters.ModelType
             public let temperature: Double
-            public init(model: LLMOpenAIParameters.ModelType, temperature: Double) {
+            public let backend: Backend
+            public init(model: LLMOpenAIParameters.ModelType, temperature: Double, backend: Backend) {
                 self.model = model
                 self.temperature = temperature
+                self.backend = backend
             }
         }
         
