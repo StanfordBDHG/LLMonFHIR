@@ -16,7 +16,6 @@ import SpeziHealthKit
 import SpeziLLM
 import SpeziLLMOpenAI
 
-
 struct SessionSimulator: ~Copyable {
     private let config: SimulatedSessionConfig
     private let runIdx: Int
@@ -25,18 +24,18 @@ struct SessionSimulator: ~Copyable {
     private let coordinator: SessionCoordinator
     private let interpreter: FHIRMultipleResourceInterpreter
     private let resourceSummarizer: FHIRResourceSummarizer
-    
+
     @MainActor
     init(config: SimulatedSessionConfig, runIdx: Int) {
         self.config = config
         self.runIdx = runIdx
         spezi = Spezi(from: Self.speziConfig(for: config))
-        coordinator = spezi.module(SessionCoordinator.self)! // swiftlint:disable:this force_unwrapping
+        coordinator = spezi.module(SessionCoordinator.self)!  // swiftlint:disable:this force_unwrapping
         fhirStore = coordinator.fhirStore
         interpreter = coordinator.multipleResourceInterpreter
         resourceSummarizer = coordinator.resourceSummarizer
     }
-    
+
     @concurrent
     consuming func run() async throws -> StudyReport {
         // start (& stop) service modules
@@ -48,13 +47,13 @@ struct SessionSimulator: ~Copyable {
         }
         return try await _run()
     }
-    
+
     private consuming func _run() async throws -> StudyReport {
         let startTime = Date()
         await fhirStore.removeAllResources()
         await fhirStore.load(bundle: config.bundle)
         await coordinator.prepareForUse()
-        await interpreter.startNewConversation(using: config.study.interpretMultipleResourcesPrompt)
+        await interpreter.startNewConversation(using: config.systemPrompt)
         for question in config.userQuestions {
             await MainActor.run {
                 interpreter.llmSession.context.append(userInput: question)
@@ -72,15 +71,16 @@ struct SessionSimulator: ~Copyable {
                 ],
                 llmConfig: .init(
                     model: config.model,
-                    temperature: config.temperature
+                    temperature: config.temperature,
+                    backend: config.firebaseCredentialsPath != nil ? .firebase : .openAI
                 )
             ),
-            initialQuestionnaireResponse: nil, // (obviously) not supported
+            initialQuestionnaireResponse: nil,  // (obviously) not supported
             fhirResources: await studyReportFHIRResources(),
             timeline: await studyReportTimeline()
         )
     }
-    
+
     @MainActor
     private func studyReportFHIRResources() async -> StudyReport.FHIRResources {
         let llmRelevantResources = fhirStore.llmRelevantResources
@@ -100,19 +100,19 @@ struct SessionSimulator: ~Copyable {
             allResources: allResources
         )
     }
-    
+
     @MainActor
     private func studyReportTimeline() -> [StudyReport.TimelineEvent] {
         interpreter.llmSession.context.chat.map { message in
-            .chatMessage(.init(
-                timestamp: message.date,
-                role: message.role.rawValue,
-                content: message.content
-            ))
+            .chatMessage(
+                .init(
+                    timestamp: message.date,
+                    role: message.role.rawValue,
+                    content: message.content
+                ))
         }
     }
 }
-
 
 extension SessionSimulator {
     private actor FakeStandard: Standard, HealthKitConstraint {
@@ -120,46 +120,51 @@ extension SessionSimulator {
             _ addedSamples: some Collection<Sample> & Sendable,
             ofType sampleType: SampleType<Sample>
         ) {}
-        
+
         func handleDeletedObjects<Sample>(
             _ deletedObjects: some Collection<HKDeletedObject> & Sendable,
             ofType sampleType: SampleType<Sample>
         ) {}
     }
-    
+
     @MainActor
     private static func speziConfig(for config: SimulatedSessionConfig) -> SpeziConfiguration {
-        let middlewares: [any ClientMiddleware] = config.firebaseCredentialsPath != nil
-            ? [OpenAIFirebaseFunctionMiddleware(endpointProvider: { .firebaseFunction(name: "chat") })]
+        let middlewares: [any ClientMiddleware] =
+            config.firebaseCredentialsPath != nil
+            ? [
+                OpenAIFirebaseFunctionMiddleware(endpointProvider: {
+                    .firebaseFunction(name: "chat")
+                })
+            ]
             : []
         return SpeziConfiguration(standard: FakeStandard()) {
             FHIRStore()
-            SessionCoordinator(config: .init(
-                model: config.model,
-                temperature: config.temperature,
-                resourceLimit: 1000,
-                summarizeSingleResourcePrompt: config.study.summarizeSingleResourcePrompt,
-                systemPrompt: config.study.interpretMultipleResourcesPrompt
-            ))
-            LLMRunner {
-                LLMOpenAIPlatform(configuration: .init(
-                    authToken: .constant(config.openAIKey ?? ""),
-                    concurrentStreams: 100,
-                    retryPolicy: .attempts(3),
-                    middlewares: middlewares
+            SessionCoordinator(
+                config: .init(
+                    model: config.model,
+                    temperature: config.temperature,
+                    resourceLimit: 1000,
+                    summarizeSingleResourcePrompt: config.study.summarizeSingleResourcePrompt,
+                    systemPrompt: config.systemPrompt
                 ))
+            LLMRunner {
+                LLMOpenAIPlatform(
+                    configuration: .init(
+                        authToken: .constant(config.openAIKey ?? ""),
+                        concurrentStreams: 100,
+                        retryPolicy: .attempts(3),
+                        middlewares: middlewares
+                    ))
             }
         }
     }
 }
-
 
 extension SessionSimulator {
     var sessionDesc: String {
         "\(config.study.id) / \(config.bundle.singlePatient?.fullName ?? config.bundleInputName) @ \(config.model)/\(config.temperature) (\(runIdx + 1)/\(config.numberOfRuns))"
     }
 }
-
 
 extension Spezi {
     @MainActor

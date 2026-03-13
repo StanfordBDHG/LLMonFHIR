@@ -20,19 +20,19 @@ import SpeziHealthKit
 import SpeziLLM
 import SpeziLLMOpenAI
 
-
 struct SimulateSession: AsyncParsableCommand {
     static let configuration = CommandConfiguration(
         commandName: "simulate-session",
-        abstract: "Runs a simulated session, using a synthetic patient's context and pre-defined user prompts.",
+        abstract:
+            "Runs a simulated session, using a synthetic patient's context and pre-defined user prompts.",
     )
-    
+
     @Argument(help: "Input file")
     var inputUrl: URL
-    
+
     @Argument(help: "Output directory")
     var outputUrl: URL
-    
+
     @MainActor
     func run() async throws {
         let configs = try JSONDecoder().decode(
@@ -45,7 +45,10 @@ struct SimulateSession: AsyncParsableCommand {
         if let firebasePlist = configs.compactMap(\.firebaseCredentialsPath).first {
             try configureFirebaseApp(contentsOfFile: firebasePlist)
         }
-        let reports = try await withThrowingTaskGroup(of: StudyReport.self, returning: [StudyReport].self) { taskGroup in
+        var failedSessionCount = 0
+        let reports = await withTaskGroup(
+            of: StudyReport?.self, returning: [StudyReport].self
+        ) { taskGroup in
             for config in configs {
                 for runIdx in 0..<config.numberOfRuns {
                     taskGroup.addTask {
@@ -57,25 +60,29 @@ struct SimulateSession: AsyncParsableCommand {
                             print("Ended \(sessionDesc)")
                             return result
                         } catch {
-                            print("\(sessionDesc) failed: \(error)")
-                            throw error
+                            print("\(sessionDesc) failed: \(error.localizedDescription) \(error)")
+                            return nil
                         }
                     }
                 }
             }
             var reports: [StudyReport] = []
-            while let report = try await taskGroup.next() {
-                reports.append(report)
+            for await report in taskGroup {
+                if let report {
+                    reports.append(report)
+                } else {
+                    failedSessionCount += 1
+                }
             }
             return reports
         }
-        
+
         let outputUrl = outputUrl.appending(
             path: Date.now.formatted(Date.ISO8601FormatStyle.suitableForFilenames),
             directoryHint: .isDirectory
         )
         try FileManager.default.createDirectory(at: outputUrl, withIntermediateDirectories: true)
-        
+
         let encoder = JSONEncoder()
         encoder.outputFormatting = [.prettyPrinted, .withoutEscapingSlashes]
         for report in reports {
@@ -84,9 +91,13 @@ struct SimulateSession: AsyncParsableCommand {
             print("Writing report file to \(dstUrl.path)")
             try reportData.write(to: dstUrl)
         }
+
+        print("\(reports.count) session(s) saved, \(failedSessionCount) failed.")
+        if failedSessionCount > 0 {
+            throw ExitCode.failure
+        }
     }
 }
-
 
 extension Date.ISO8601FormatStyle {
     /// An ISO-8601 format style suitable for use in filenames.

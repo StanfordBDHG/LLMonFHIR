@@ -43,8 +43,19 @@ struct SimulatedSessionConfig: Sendable {
     /// Exactly one of ``openAIKey`` and ``firebaseCredentialsPath`` must be non-nil.
     let firebaseCredentialsPath: String?
 
+    /// Optional text appended to the study's default system prompt.
+    let systemPromptSuffix: String?
+
     /// The questions that should be asked by the simulated patient.
     let userQuestions: [String]
+
+    /// The effective system prompt: the study's default prompt with any suffix appended.
+    var systemPrompt: FHIRPrompt {
+        guard let suffix = systemPromptSuffix, !suffix.isEmpty else {
+            return study.interpretMultipleResourcesPrompt
+        }
+        return FHIRPrompt(promptText: study.interpretMultipleResourcesPrompt.promptText + "\n\n" + suffix)
+    }
 }
 
 
@@ -60,6 +71,7 @@ extension SimulatedSessionConfig: DecodableWithConfiguration {
         case bundleName
         case openAIKey
         case firebaseCredentials
+        case systemPromptSuffix
         case userQuestions
         case model
         case temperature
@@ -100,6 +112,7 @@ extension SimulatedSessionConfig: DecodableWithConfiguration {
             }
             self.bundle = bundle
         }
+        self.systemPromptSuffix = try container.decodeIfPresent(String.self, forKey: .systemPromptSuffix)
         self.userQuestions = try container.decode([String].self, forKey: .userQuestions)
     }
 }

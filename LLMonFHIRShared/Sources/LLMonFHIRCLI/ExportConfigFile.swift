@@ -14,7 +14,6 @@ import Foundation
 import LLMonFHIRShared
 import LLMonFHIRStudyDefinitions
 
-
 struct ExportConfigFile: ParsableCommand {
     static let configuration = CommandConfiguration(
         commandName: "export-config",
@@ -24,25 +23,25 @@ struct ExportConfigFile: ParsableCommand {
                 swift run LLMonFHIRCLI export-config -f '<emulator>' --allow-empty-api-keys ../LLMonFHIR/Supporting\ Files/UserStudyConfig.plist
             """#
     )
-    
+
     @Option(
         name: [.customShort("l"), .customLong("launchMode")],
         help: "The app's launch mode. Defaults to study and should probably not be customized."
     )
     var launchMode: AppLaunchMode = .study(studyId: nil)
-    
+
     @Option(
         name: [.customShort("f"), .customLong("firebaseConfig")],
         help: "Firebase GoogleService-Info.plist file that should be embedded into the config file"
     )
     var firebaseConfigFilePath: URL?
-    
+
     @Option(
         name: .customLong("studies"),
         help: "The studies that should be included in the config file. Omit to include all studies."
     )
     var includedStudyIds: [String] = Study.allStudies.map(\.id)
-    
+
     @Option(
         name: [.customShort("o"), .customLong("openAIKey")],
         help: "Per-study OpenAI API keys"
@@ -51,36 +50,38 @@ struct ExportConfigFile: ParsableCommand {
 
     @Option(
         name: [.customShort("b"), .customLong("firebase")],
-        help: "Per-study path to a GoogleService-Info.plist file. " + 
-            "Sets the study endpoint to 'firebase-function:chat' and makes the OpenAI API key optional for this study.",
+        // swiftlint:disable:next line_length
+        help:
+            "Per-study path to a GoogleService-Info.plist file. Sets the study endpoint to 'firebase-function:chat' and makes the OpenAI API key optional for this study.",
     )
     var firebaseStudyCredentials: [StudyIdIdentified<URL>] = []
-    
+
     @Option(
         name: [.customShort("k"), .customLong("encryptionKey")],
         help: "Defines the public_key.pem that should be used to encrypt a study's report files",
     )
     var encryptionKeys: [StudyIdIdentified<URL>] = []
-    
+
     @Option(
         name: [.customShort("e"), .customLong("reportEmail")],
-        help: "Defines the email address to which a study's report files should be sent, if the firebase upload is not available.",
+        help:
+            "Defines the email address to which a study's report files should be sent, if the firebase upload is not available.",
     )
     var reportEmails: [StudyIdIdentified<String>] = []
-    
+
     @Option(
         name: [.customLong("studyEndpoint")],
         help: "Each study's OpenAI Endpoint. Defaults to 'regular' if omitted",
     )
     var studyEndpoints: [StudyIdIdentified<StudyConfig.OpenAIEndpointConfig>] = []
-    
+
     // used to generate the default UserStudyConfig.plist file that is commited to the repo.
     @Flag(help: .hidden)
     var allowEmptyAPIKeys = false
-    
+
     @Argument(help: "Output path where the resulting UserStudyConfig.plist file should be stored")
     var outputUrl: URL
-    
+
     func run() throws {
         try openAIKeys.validate(optionName: "OpenAI Key")
         try firebaseStudyCredentials.validate(optionName: "Firebase Credentials")
@@ -90,10 +91,14 @@ struct ExportConfigFile: ParsableCommand {
 
         for study in Study.allStudies where includedStudyIds.contains(study.id) {
             if _studyValue(for: study.id, in: openAIKeys) != nil
-                && _studyValue(for: study.id, in: firebaseStudyCredentials) != nil {
-                throw NSError(domain: "edu.stanford.LLMonFHIR.CLI", code: 0, userInfo: [
-                    NSLocalizedDescriptionKey: "Study '\(study.id)' has both an OpenAI key (-o) and Firebase credentials (-b); specify only one."
-                ])
+                && _studyValue(for: study.id, in: firebaseStudyCredentials) != nil
+            {
+                throw NSError(
+                    domain: "edu.stanford.LLMonFHIR.CLI", code: 0,
+                    userInfo: [
+                        NSLocalizedDescriptionKey:
+                            "Study '\(study.id)' has both an OpenAI key (-o) and Firebase credentials (-b); specify only one."
+                    ])
             }
         }
 
@@ -105,7 +110,8 @@ struct ExportConfigFile: ParsableCommand {
                 return .emulator
             }
             let data = try Data(contentsOf: firebaseConfigFilePath)
-            return try PropertyListDecoder().decode(AppConfigFile.FirebaseConfigDictionary.self, from: data)
+            return try PropertyListDecoder().decode(
+                AppConfigFile.FirebaseConfigDictionary.self, from: data)
         }()
         let config = AppConfigFile(
             launchMode: launchMode,
@@ -127,7 +133,7 @@ struct ExportConfigFile: ParsableCommand {
                     openAIEndpoint: usesFirebase
                         ? .firebaseFunction(name: "chat")
                         : studyValue(for: study.id, in: studyEndpoints, default: .regular),
-                    reportEmail: studyValue( for: study.id, in: reportEmails, default: ""),
+                    reportEmail: studyValue(for: study.id, in: reportEmails, default: ""),
                     encryptionKey: try { () -> Curve25519.KeyAgreement.PublicKey? in
                         if let url = studyValue(for: study.id, in: encryptionKeys, default: nil) {
                             try Curve25519.KeyAgreement.PublicKey(contentsOf: url)
@@ -144,8 +150,7 @@ struct ExportConfigFile: ParsableCommand {
         let data = try encoder.encode(config)
         try data.write(to: outputUrl)
     }
-    
-    
+
     private func studyValue<V>(
         for studyId: Study.ID,
         in values: [StudyIdIdentified<V>],
@@ -158,12 +163,14 @@ struct ExportConfigFile: ParsableCommand {
         } else if !isRequired {
             return defaultValue()
         } else {
-            throw NSError(domain: "edu.stanford.LLMonFHIR.CLI", code: 0, userInfo: [
-                NSLocalizedDescriptionKey: "Missing \(what) for study '\(studyId)'"
-            ])
+            throw NSError(
+                domain: "edu.stanford.LLMonFHIR.CLI", code: 0,
+                userInfo: [
+                    NSLocalizedDescriptionKey: "Missing \(what) for study '\(studyId)'"
+                ])
         }
     }
-    
+
     private func studyValue<V>(
         for studyId: Study.ID,
         in values: [StudyIdIdentified<V>],
@@ -171,7 +178,7 @@ struct ExportConfigFile: ParsableCommand {
     ) -> V {
         _studyValue(for: studyId, in: values) ?? defaultValue()
     }
-    
+
     private func studyValue<V>(
         for studyId: Study.ID,
         in values: [StudyIdIdentified<V>],
@@ -179,12 +186,11 @@ struct ExportConfigFile: ParsableCommand {
     ) -> V? {
         _studyValue(for: studyId, in: values) ?? defaultValue()
     }
-    
+
     private func _studyValue<V>(for studyId: Study.ID, in values: [StudyIdIdentified<V>]) -> V? {
         values.last { $0.studyId == studyId }?.value ?? values.last(where: \.isWildcard)?.value
     }
 }
-
 
 // MARK: Utils
 
@@ -192,17 +198,18 @@ extension ExportConfigFile {
     struct StudyIdIdentified<Value: ExpressibleByArgument>: ExpressibleByArgument {
         let studyId: String
         let value: Value
-        
+
         var isWildcard: Bool {
             studyId == "*"
         }
-        
+
         init?(argument: String) {
             guard let idx = argument.firstIndex(of: ":") else {
                 return nil
             }
             self.studyId = String(argument[..<idx])
-            guard let value = Value(argument: String(argument[argument.index(after: idx)...])) else {
+            guard let value = Value(argument: String(argument[argument.index(after: idx)...]))
+            else {
                 return nil
             }
             self.value = value
@@ -211,11 +218,15 @@ extension ExportConfigFile {
 }
 
 extension Array {
-    fileprivate func validate<V>(optionName: String) throws where Element == ExportConfigFile.StudyIdIdentified<V> {
+    fileprivate func validate<V>(optionName: String) throws
+    where Element == ExportConfigFile.StudyIdIdentified<V> {
         guard count(where: \.isWildcard) <= 1 else {
-            throw NSError(domain: "edu.stanford.LLMonFHIR.CLI", code: 0, userInfo: [
-                NSLocalizedDescriptionKey: "Multiple wildcard entries in \(optionName). At most one is allowed!"
-            ])
+            throw NSError(
+                domain: "edu.stanford.LLMonFHIR.CLI", code: 0,
+                userInfo: [
+                    NSLocalizedDescriptionKey:
+                        "Multiple wildcard entries in \(optionName). At most one is allowed!"
+                ])
         }
     }
 }
@@ -229,7 +240,6 @@ extension AppLaunchMode: ExpressibleByArgument {
         return allOptions.map(\.rawValue)
     }
 }
-
 
 extension URL: @retroactive ExpressibleByArgument {
     public init?(argument: String) {

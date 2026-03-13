@@ -70,8 +70,13 @@ public final class Study: Identifiable {
                 NSLocalizedDescriptionKey: "Unable to find resource '\(initialQuestionnaire).json'"
             ])
         }
-        let data = try Data(contentsOf: url)
-        return try JSONDecoder().decode(Questionnaire.self, from: data)
+        do {
+            let data = try Data(contentsOf: url)
+            return try JSONDecoder().decode(Questionnaire.self, from: data)
+        } catch {
+            print("Error occurred when reading questionnaire: \(error)")
+            throw error
+        }
     }
 }
 
