@@ -13,14 +13,14 @@ import XCTest
 final class FHIRDisplayTests: XCTestCase, Sendable {
     override func setUp() async throws {
         try await super.setUp()
-
         continueAfterFailure = false
-
         let app = XCUIApplication()
+        app.launchEnvironment["LLMONFHIR_IS_BEING_UI_TESTED"] = "1"
         app.launchArguments = ["--skipOnboarding", "--mode", "test", "--mockPatients"]
         app.launch()
     }
-
+    
+    
     func testFHIRResourcesView() throws {
         let app = XCUIApplication()
         

@@ -15,10 +15,9 @@ import XCTHealthKit
 class OnboardingTests: XCTestCase, Sendable {
     override func setUp() async throws {
         try await super.setUp()
-        
         continueAfterFailure = false
-        
         let app = XCUIApplication()
+        app.launchEnvironment["LLMONFHIR_IS_BEING_UI_TESTED"] = "1"
         app.launchArguments = ["--showOnboarding", "--mode", "test"]
         app.launch()
     }

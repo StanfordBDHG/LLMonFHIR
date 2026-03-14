@@ -20,9 +20,9 @@ import class ModelsR4.QuestionnaireResponse
 @main
 struct LLMonFHIR: App {
     nonisolated static let mode: AppLaunchMode = {
-        #if !TEST
-        return AppLaunchMode.study(studyId: Study.spineAI.id)
-        #endif
+        if ProcessInfo.processInfo.environment["LLMONFHIR_IS_BEING_UI_TESTED"] == nil {
+            return AppLaunchMode.study(studyId: Study.spineAI.id)
+        }
         let argv = CommandLine.arguments
         return argv.firstIndex(of: "--mode")
             .flatMap { argv[safe: $0 + 1] }
