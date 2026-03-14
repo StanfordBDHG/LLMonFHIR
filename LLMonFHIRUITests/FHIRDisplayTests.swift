@@ -18,8 +18,7 @@ final class FHIRDisplayTests: XCTestCase, Sendable {
 
         let app = XCUIApplication()
         app.launchArguments = ["--skipOnboarding", "--mode", "test", "--mockPatients"]
-        
-        app.deleteAndLaunch(withSpringboardAppName: "LLMonFHIR")
+        app.launch()
     }
 
     func testFHIRResourcesView() throws {
