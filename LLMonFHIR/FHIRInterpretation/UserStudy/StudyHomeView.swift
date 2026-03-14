@@ -11,8 +11,6 @@ import class ModelsR4.QuestionnaireResponse
 import SpeziFoundation
 import SpeziHealthKit
 import SwiftUI
-import SpeziLLM
-import SpeziLLMOpenAI
 
 
 struct StudyHomeView: View {
@@ -22,8 +20,6 @@ struct StudyHomeView: View {
     @Environment(FHIRInterpretationModule.self) private var fhirInterpretationModule
     @Environment(FirebaseUpload.self) private var uploader: FirebaseUpload?
     @WaitingState private var waitingState
-    
-    @Environment(LLMRunner.self) var runner
     
     @State private var inProgressStudy: InProgressStudy?
     
@@ -227,13 +223,5 @@ struct StudyHomeView: View {
     
     init() {
         _inProgressStudy = .init(initialValue: nil)
-    }
-}
-
-
-// TODO needed?
-extension _LLMSessionProvider {
-    init<P>(schema: LLMOpenAILikePlatform<P>.Schema) where Schema == LLMOpenAILikePlatform<P>.Schema {
-        self.init(schema: schema)
     }
 }
