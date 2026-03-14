@@ -1,5 +1,5 @@
 {
-  "originHash" : "b7653d199f86173a3133abc595cc835ec8f7f6452bab5a49e0ff39c231cef9b9",
+  "originHash" : "268ef13230957d95d620115ad418602a22b87a1d9445d5052c6de43b569be4fa",
   "pins" : [
     {
       "identity" : "abseil-cpp-binary",
@@ -312,7 +312,7 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/StanfordSpezi/SpeziQuestionnaire.git",
       "state" : {
-        "revision" : "843362627a80fa1077513caa8592c9fe1e0dc180"
+        "revision" : "f78dbb0d6d309a1316eda130d55e77c193c79601"
       }
     },
     {

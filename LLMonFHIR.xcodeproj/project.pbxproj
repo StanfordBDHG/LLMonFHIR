@@ -960,7 +960,7 @@
 			repositoryURL = "https://github.com/StanfordSpezi/SpeziQuestionnaire.git";
 			requirement = {
 				kind = revision;
-				revision = 843362627a80fa1077513caa8592c9fe1e0dc180;
+				revision = f78dbb0d6d309a1316eda130d55e77c193c79601;
 			};
 		};
 		806F40BC2F179FDB0001E988 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
