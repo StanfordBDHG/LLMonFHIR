@@ -9,7 +9,7 @@
 name: Build and Test
 
 on:
-  pull_request:
+  # pull_request:
   workflow_dispatch:
   workflow_call:
 
@@ -21,7 +21,6 @@ jobs:
   app_tests:
     name: Build and Test (App)
     uses: StanfordBDHG/.github/.github/workflows/xcodebuild-or-fastlane.yml@v2
-    if: ${{ false }}
     permissions:
       contents: read
     with:
@@ -31,7 +30,6 @@ jobs:
   shared_spm_pkg_tests:
     name: Build and Test (Shared)
     uses: StanfordBDHG/.github/.github/workflows/xcodebuild-or-fastlane.yml@v2
-    if: ${{ false }}
     with:
       path: LLMonFHIRShared
       runsonlabels: '["macOS", "self-hosted"]'
