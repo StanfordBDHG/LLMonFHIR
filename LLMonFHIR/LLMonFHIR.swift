@@ -11,7 +11,7 @@
 import LLMonFHIRShared
 import Spezi
 import SwiftUI
-@testable import SpeziQuestionnaire
+import SpeziQuestionnaire
 import SpeziQuestionnaireFHIR
 import PencilKit
 import class ModelsR4.QuestionnaireResponse
@@ -20,6 +20,7 @@ import class ModelsR4.QuestionnaireResponse
 @main
 struct LLMonFHIR: App {
     nonisolated static let mode: AppLaunchMode = {
+        return AppLaunchMode.study(studyId: Study.spineAI.id)
         let argv = CommandLine.arguments
         return argv.firstIndex(of: "--mode")
             .flatMap { argv[safe: $0 + 1] }

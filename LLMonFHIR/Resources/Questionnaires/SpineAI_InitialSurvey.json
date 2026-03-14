@@ -918,7 +918,7 @@
             },
             {
               "url": "http://spezi.stanford.edu/fhir/StructureDefinition/custom-task/annotate-image/inputImage",
-              "valueString": "legmap.png"
+              "valueString": "bodymap.png"
             },
             {
               "url": "http://spezi.stanford.edu/fhir/StructureDefinition/custom-task/annotate-image/region",
@@ -928,7 +928,7 @@
         },
         {
           "linkId": "7.2",
-          "text": "In your right leg, where do you feel painnn?",
+          "text": "In your right leg, where do you feel pain?",
           "type": "attachment",
           "extension": [
             {
@@ -944,7 +944,7 @@
             },
             {
               "url": "http://spezi.stanford.edu/fhir/StructureDefinition/custom-task/annotate-image/inputImage",
-              "valueString": "legmap.png"
+              "valueString": "bodymap.png"
             },
             {
               "url": "http://spezi.stanford.edu/fhir/StructureDefinition/custom-task/annotate-image/region",
@@ -999,7 +999,7 @@
             },
             {
               "url": "http://spezi.stanford.edu/fhir/StructureDefinition/custom-task/annotate-image/inputImage",
-              "valueString": "legmap.png"
+              "valueString": "bodymap.png"
             },
             {
               "url": "http://spezi.stanford.edu/fhir/StructureDefinition/custom-task/annotate-image/region",
@@ -1036,7 +1036,7 @@
             },
             {
               "url": "http://spezi.stanford.edu/fhir/StructureDefinition/custom-task/annotate-image/inputImage",
-              "valueString": "legmap.png"
+              "valueString": "bodymap.png"
             },
             {
               "url": "http://spezi.stanford.edu/fhir/StructureDefinition/custom-task/annotate-image/region",
