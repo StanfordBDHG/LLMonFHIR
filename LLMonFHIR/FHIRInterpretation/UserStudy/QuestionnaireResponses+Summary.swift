@@ -6,8 +6,6 @@
 // SPDX-License-Identifier: MIT
 //
 
-// swiftlint:disable all
-
 import Foundation
 import LLMonFHIRShared
 import SpeziLLM
@@ -36,7 +34,7 @@ extension QuestionnaireResponses {
             return try await taskGroup
                 .reduce(into: [(Int, Questionnaire.Task, String?)]()) { $0.append($1) }
                 .sorted { $0.0 < $1.0 }
-                .compactMap { (_, task, summary) in summary.map { (task, $0) } }
+                .compactMap { _, task, summary in summary.map { (task, $0) } }
         }
         var summary = "The following is a summary of the user's responses to the intake questionnaire:\n"
         for (task, taskSummary) in taskSummaries {
@@ -49,7 +47,7 @@ extension QuestionnaireResponses {
 
 
 extension QuestionnaireResponses.Response {
-    fileprivate func summarize(
+    fileprivate func summarize( // swiftlint:disable:this cyclomatic_complexity
         for task: Questionnaire.Task,
         in questionnaire: Questionnaire,
         using runner: LLMRunner
@@ -96,8 +94,8 @@ extension QuestionnaireResponses.Response {
                 .map { "'\($0)'" }
                 .joined(separator: ", ")
         case .attachments:
-            // currently not used by any LLMonFHIR intake questionnaires
-            fatalError("Not Yet Implemented")
+            // Not Yet Implemented
+            return nil
         case .custom(let value):
             return switch value {
             case let value as QuestionnaireResponses.AnnotatedImage:
@@ -111,7 +109,7 @@ extension QuestionnaireResponses.Response {
 
 
 extension QuestionnaireResponses.AnnotatedImage {
-    fileprivate func summarize(
+    fileprivate func summarize( // swiftlint:disable:this function_body_length
         for task: Questionnaire.Task,
         in questionnaire: Questionnaire,
         using runner: LLMRunner
@@ -189,6 +187,7 @@ extension QuestionnaireResponses.AnnotatedImage {
             let annotatedImageExplanation: String = try await runner.oneShot(with: schema, context: [
                 LLMContextEntity(
                     role: .system,
+                    // swiftlint:disable:next line_length
                     content: pipelineExplanation + "\n\nYour place in the pipeline is step 2, i.e. the analysis of the annotated image, taking into account the description of the unedited original image"
                 ),
                 LLMContextEntity(role: .system, content: "The description of the original input image is as follows: '\(baseImageExplanation)'"),
