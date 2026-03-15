@@ -339,7 +339,7 @@
       "location" : "https://github.com/StanfordSpezi/SpeziViews.git",
       "state" : {
         "branch" : "lukas/canvas-view-changes",
-        "revision" : "fb7c1beb3ee923e3c1a4369bf4500d76f622b548"
+        "revision" : "f486c3b0a7c700c8cf514d583a4cac13ddfc2da4"
       }
     },
     {
@@ -500,8 +500,7 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/StanfordBDHG/XCTestExtensions.git",
       "state" : {
-        "revision" : "1eb3b5d4b0c2449e52224b626a243aa608147a81",
-        "version" : "1.2.4"
+        "revision" : "495d66325ee2758fcdfdf84f72efae6f2f977642"
       }
     },
     {

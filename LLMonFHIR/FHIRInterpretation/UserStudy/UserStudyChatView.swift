@@ -58,6 +58,14 @@ struct UserStudyChatView: View {
                         uploadSheet()
                     }
                 }
+                .alert("End Chat?", isPresented: $model.isShowingConfirmEndChatAlert) {
+                    Button("Continue Chat", role: .cancel) {}
+                    Button("End Chat") {
+                        model.endStudy()
+                    }
+                } message: {
+                    Text("Do you want to end the chat and complete your participation in the study?")
+                }
                 .onChange(of: model.llmSession.state, initial: true) { _, newState in
                     switch newState {
                     case .error(let error):
@@ -76,7 +84,7 @@ struct UserStudyChatView: View {
                     model.didUploadHandler = {
                         dismiss()
                     }
-                    model.startSurvey()
+                    _ = model.startStudy()
                 }
                 .onChange(of: model.llmSession.context, initial: true) {
                     Task {
@@ -116,11 +124,16 @@ struct UserStudyChatView: View {
     @ViewBuilder
     private func uploadSheet() -> some View {
         BottomSheet {
-            ProgressView("Submitting Results...")
-                .progressViewStyle(.circular)
-                .padding()
-                .interactiveDismissDisabled()
+            VStack {
+                Spacer()
+                ProgressView("Submitting Results…")
+                    .progressViewStyle(.circular)
+                    .padding()
+                    .interactiveDismissDisabled()
+                Spacer()
+            }
         }
+        .scrollBounceBehavior(.basedOnSize)
     }
 }
 

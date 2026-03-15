@@ -12,7 +12,6 @@
 		2FD8E82C2A1AADDA00357F4E /* ModelsR4 in Frameworks */ = {isa = PBXBuildFile; productRef = 2FD8E82B2A1AADDA00357F4E /* ModelsR4 */; };
 		2FD8E8312A1AB00D00357F4E /* HealthKitOnFHIR in Frameworks */ = {isa = PBXBuildFile; productRef = 2FD8E8302A1AB00D00357F4E /* HealthKitOnFHIR */; };
 		2FE5DC7229EDD8D3004B9AB4 /* SpeziHealthKit in Frameworks */ = {isa = PBXBuildFile; productRef = 2FE5DC7129EDD8D3004B9AB4 /* SpeziHealthKit */; };
-		2FE5DC9929EDD9D9004B9AB4 /* XCTestExtensions in Frameworks */ = {isa = PBXBuildFile; productRef = 2FE5DC9829EDD9D9004B9AB4 /* XCTestExtensions */; };
 		2FE5DC9C29EDD9EF004B9AB4 /* XCTHealthKit in Frameworks */ = {isa = PBXBuildFile; productRef = 2FE5DC9B29EDD9EF004B9AB4 /* XCTHealthKit */; };
 		44E18E882CEBEC9500829A26 /* SpeziLLM in Frameworks */ = {isa = PBXBuildFile; productRef = 44E18E872CEBEC9500829A26 /* SpeziLLM */; };
 		44E18E8A2CEBEC9500829A26 /* SpeziLLMFog in Frameworks */ = {isa = PBXBuildFile; productRef = 44E18E892CEBEC9500829A26 /* SpeziLLMFog */; };
@@ -51,6 +50,7 @@
 		80A9907B2F1699B500BDD5B7 /* SpeziFirebaseConfiguration in Frameworks */ = {isa = PBXBuildFile; productRef = 80A9907A2F1699B500BDD5B7 /* SpeziFirebaseConfiguration */; };
 		80A9907D2F1699B500BDD5B7 /* SpeziFirebaseStorage in Frameworks */ = {isa = PBXBuildFile; productRef = 80A9907C2F1699B500BDD5B7 /* SpeziFirebaseStorage */; };
 		80A9907F2F1699B500BDD5B7 /* SpeziFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = 80A9907E2F1699B500BDD5B7 /* SpeziFirestore */; };
+		80C2187B2F66CD6500666C53 /* XCTestExtensions in Frameworks */ = {isa = PBXBuildFile; productRef = 80C2187A2F66CD6500666C53 /* XCTestExtensions */; };
 		9710D3562B84151F00E0A20F /* SpeziChat in Frameworks */ = {isa = PBXBuildFile; productRef = 9710D3552B84151F00E0A20F /* SpeziChat */; };
 		9733FC572B60E5FB0024F12C /* SpeziFHIR in Frameworks */ = {isa = PBXBuildFile; productRef = 9733FC562B60E5FB0024F12C /* SpeziFHIR */; };
 		9733FC592B60E5FB0024F12C /* SpeziFHIRHealthKit in Frameworks */ = {isa = PBXBuildFile; productRef = 9733FC582B60E5FB0024F12C /* SpeziFHIRHealthKit */; };
@@ -187,8 +187,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				802641E02F638893006A1D76 /* XCTSpeziQuestionnaire in Frameworks */,
-				2FE5DC9929EDD9D9004B9AB4 /* XCTestExtensions in Frameworks */,
 				2FE5DC9C29EDD9EF004B9AB4 /* XCTHealthKit in Frameworks */,
+				80C2187B2F66CD6500666C53 /* XCTestExtensions in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -374,9 +374,9 @@
 			);
 			name = LLMonFHIRUITests;
 			packageProductDependencies = (
-				2FE5DC9829EDD9D9004B9AB4 /* XCTestExtensions */,
 				2FE5DC9B29EDD9EF004B9AB4 /* XCTHealthKit */,
 				802641DF2F638893006A1D76 /* XCTSpeziQuestionnaire */,
+				80C2187A2F66CD6500666C53 /* XCTestExtensions */,
 			);
 			productName = LLMonFHIRUITests;
 			productReference = 653A256728338800005D4D48 /* LLMonFHIRUITests.xctest */;
@@ -417,7 +417,6 @@
 			packageReferences = (
 				2F49B7742980407B00BCB272 /* XCRemoteSwiftPackageReference "Spezi" */,
 				2FE5DC7029EDD8D3004B9AB4 /* XCRemoteSwiftPackageReference "SpeziHealthKit" */,
-				2FE5DC9729EDD9D9004B9AB4 /* XCRemoteSwiftPackageReference "XCTestExtensions" */,
 				2FE5DC9A29EDD9EF004B9AB4 /* XCRemoteSwiftPackageReference "XCTHealthKit" */,
 				2FD8E8282A1AADDA00357F4E /* XCRemoteSwiftPackageReference "FHIRModels" */,
 				2FD8E82F2A1AB00D00357F4E /* XCRemoteSwiftPackageReference "HealthKitOnFHIR" */,
@@ -434,6 +433,7 @@
 				806F40BC2F179FDB0001E988 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
 				8040C29E2F19396A00884AD3 /* XCRemoteSwiftPackageReference "SpeziLLM" */,
 				806B4EDB2F660DAA00C39684 /* XCRemoteSwiftPackageReference "SpeziQuestionnaire" */,
+				80C218792F66CD6500666C53 /* XCRemoteSwiftPackageReference "XCTestExtensions" */,
 			);
 			productRefGroup = 653A254E283387FE005D4D48 /* Products */;
 			projectDirPath = "";
@@ -883,14 +883,6 @@
 				minimumVersion = 1.3.2;
 			};
 		};
-		2FE5DC9729EDD9D9004B9AB4 /* XCRemoteSwiftPackageReference "XCTestExtensions" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/StanfordBDHG/XCTestExtensions.git";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 1.2.2;
-			};
-		};
 		2FE5DC9A29EDD9EF004B9AB4 /* XCRemoteSwiftPackageReference "XCTHealthKit" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/StanfordBDHG/XCTHealthKit.git";
@@ -943,8 +935,8 @@
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/StanfordSpezi/SpeziViews.git";
 			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 1.12.10;
+				branch = "lukas/canvas-view-changes";
+				kind = branch;
 			};
 		};
 		8040C29E2F19396A00884AD3 /* XCRemoteSwiftPackageReference "SpeziLLM" */ = {
@@ -1003,6 +995,14 @@
 				minimumVersion = 2.0.9;
 			};
 		};
+		80C218792F66CD6500666C53 /* XCRemoteSwiftPackageReference "XCTestExtensions" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/StanfordBDHG/XCTestExtensions.git";
+			requirement = {
+				branch = 495d66325ee2758fcdfdf84f72efae6f2f977642;
+				kind = branch;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -1030,11 +1030,6 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 2FE5DC7029EDD8D3004B9AB4 /* XCRemoteSwiftPackageReference "SpeziHealthKit" */;
 			productName = SpeziHealthKit;
-		};
-		2FE5DC9829EDD9D9004B9AB4 /* XCTestExtensions */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 2FE5DC9729EDD9D9004B9AB4 /* XCRemoteSwiftPackageReference "XCTestExtensions" */;
-			productName = XCTestExtensions;
 		};
 		2FE5DC9B29EDD9EF004B9AB4 /* XCTHealthKit */ = {
 			isa = XCSwiftPackageProductDependency;
@@ -1217,6 +1212,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 80A990752F1699B500BDD5B7 /* XCRemoteSwiftPackageReference "SpeziFirebase" */;
 			productName = SpeziFirestore;
+		};
+		80C2187A2F66CD6500666C53 /* XCTestExtensions */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 80C218792F66CD6500666C53 /* XCRemoteSwiftPackageReference "XCTestExtensions" */;
+			productName = XCTestExtensions;
 		};
 		9710D3552B84151F00E0A20F /* SpeziChat */ = {
 			isa = XCSwiftPackageProductDependency;
