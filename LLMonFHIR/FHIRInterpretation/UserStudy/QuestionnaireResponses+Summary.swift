@@ -118,16 +118,13 @@ extension QuestionnaireResponses.AnnotatedImage {
         let jpegCompression: Double = 1
         /// The LLMSchema used for the image summary queries
         let schema = LLMOpenAISchema(parameters: .init(modelType: .gpt4o))
-        
         guard case .annotateImage(let config) = task.kind else {
             return nil
         }
-        
         guard let baseImage = config.inputImage.image(),
               let annotatedImage = self.draw(onto: baseImage) else {
             return nil
         }
-        
         if questionnaire == (try? Study.spineAI.initialQuestionnaire(from: .main)).flatMap({ try? Questionnaire($0) }),
            config.inputImage == .namedInMainBundle(filename: "bodymap.png"),
            let labeledImageUrl = Bundle.main.url(forResource: "bodymap+labels", withExtension: "png"),
