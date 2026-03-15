@@ -14,6 +14,8 @@ import SwiftUI
 
 
 struct StudyHomeView: View {
+    private let preloadedStudy: InProgressStudy?
+    
     @LocalPreference(.resourceLimit) private var resourceLimit
     @Environment(LLMonFHIRStandard.self) private var standard
     @Environment(HealthKit.self) private var healthKit
@@ -21,13 +23,13 @@ struct StudyHomeView: View {
     @Environment(FirebaseUpload.self) private var uploader: FirebaseUpload?
     @WaitingState private var waitingState
     
-    @State private var inProgressStudy: InProgressStudy?
-    
     @State private var isPresentingQuestionnaire = false
     @State private var questionnaireResponse: QuestionnaireResponse?
     
     @State private var isPresentingEarliestHealthRecords = false
     @State private var isPresentingQRCodeScanner = false
+    
+    @State private var isPresentingUserStudyChatView = false
     
     private var earliestDates: [String: Date] {
         fhirInterpretationModule.multipleResourceInterpreter.fhirStore.earliestDates(limit: resourceLimit)
@@ -37,7 +39,7 @@ struct StudyHomeView: View {
     }
     /// Whether the currently enabled study has an initial questionnaire, and the user still needs to fill that out.
     private var isMissingPreChatQuestionnaire: Bool {
-        (try? inProgressStudy?.study.initialQuestionnaire(from: .main)) != nil && questionnaireResponse == nil
+        (try? fhirInterpretationModule.currentStudy?.study.initialQuestionnaire(from: .main)) != nil && questionnaireResponse == nil
     }
     
     var body: some View {
@@ -61,13 +63,13 @@ struct StudyHomeView: View {
                         .presentationDetents([.medium, .large])
                 }
                 .qrCodeScanningSheet(isPresented: $isPresentingQRCodeScanner) { payload in
-                    guard inProgressStudy == nil else {
+                    guard fhirInterpretationModule.currentStudy == nil else {
                         return .stopScanning
                     }
                     do {
                         let scanResult = try StudyQRCodeHandler.processQRCode(payload: payload)
                         isPresentingQRCodeScanner = false
-                        inProgressStudy = .init(
+                        fhirInterpretationModule.currentStudy = .init(
                             study: scanResult.study,
                             config: scanResult.studyConfig,
                             userInfo: scanResult.userInfo
@@ -79,24 +81,29 @@ struct StudyHomeView: View {
                     }
                 }
                 .fullScreenCover(isPresented: $isPresentingQuestionnaire) {
-                    if let inProgressStudy {
+                    if let currentStudy = fhirInterpretationModule.currentStudy {
                         IntakeQuestionnaireSheet(
-                            study: inProgressStudy.study,
+                            study: currentStudy.study,
                             response: $questionnaireResponse
                         )
                     } else {
                         ContentUnavailableView("Study not selected", systemImage: "document.badge.gearshape")
                     }
                 }
-                .fullScreenCover(item: $fhirInterpretationModule.currentStudy) { inProgressStudy in
-                    UserStudyChatView(model: .init(
-                        inProgressStudy: inProgressStudy,
-                        initialQuestionnaireResponse: questionnaireResponse,
-                        interpretationModule: fhirInterpretationModule,
-                        uploader: uploader
-                    ))
+                .fullScreenCover(isPresented: $isPresentingUserStudyChatView) {
+                    if let currentStudy = fhirInterpretationModule.currentStudy {
+                        UserStudyChatView(model: .init(
+                            inProgressStudy: currentStudy,
+                            initialQuestionnaireResponse: questionnaireResponse,
+                            interpretationModule: fhirInterpretationModule,
+                            uploader: uploader
+                        ))
+                    }
                 }
                 .task {
+                    if let preloadedStudy {
+                        fhirInterpretationModule.currentStudy = preloadedStudy
+                    }
                     await standard.fetchRecordsFromHealthKit()
                     await fhirInterpretationModule.updateSchemas()
                 }
@@ -132,7 +139,7 @@ struct StudyHomeView: View {
 
     private var studyTitle: some View {
         VStack(spacing: 8) {
-            Text(inProgressStudy?.study.title ?? "LLMonFHIR")
+            Text(fhirInterpretationModule.currentStudy?.study.title ?? "LLMonFHIR")
                 .font(.title)
                 .fontWeight(.bold)
                 .foregroundColor(.primary)
@@ -140,7 +147,8 @@ struct StudyHomeView: View {
     }
 
     private var studyDescription: some View {
-        let text: LocalizedStringResource = (inProgressStudy?.study.explainer).map { "\($0)" } ?? "Scan a QR Code to Participate in a Study"
+        let text: LocalizedStringResource = (fhirInterpretationModule.currentStudy?.study.explainer)
+            .map { "\($0)" } ?? "Scan a QR Code to Participate in a Study"
         return Text(text)
             .font(.body)
             .multilineTextAlignment(.center)
@@ -186,7 +194,7 @@ struct StudyHomeView: View {
     
     private var primaryActionButton: some View {
         PrimaryActionButton {
-            if let inProgressStudy {
+            if let currentStudy = fhirInterpretationModule.currentStudy {
                 if isMissingPreChatQuestionnaire {
                     isPresentingQuestionnaire = true
                     return
@@ -194,18 +202,18 @@ struct StudyHomeView: View {
                 // the HealthKit permissions should already have been granted via the onboarding, but we re-request them here, just in case,
                 // to make sure everything is in a proper state when the study gets launched.
                 try await healthKit.askForAuthorization()
-                fhirInterpretationModule.currentStudy = inProgressStudy
                 await fhirInterpretationModule.updateSchemas(forceImmediateUpdate: true)
                 fhirInterpretationModule.multipleResourceInterpreter.startNewConversation(
-                    using: inProgressStudy.study.interpretMultipleResourcesPrompt
+                    using: currentStudy.study.interpretMultipleResourcesPrompt
                 )
+                isPresentingUserStudyChatView = true
             } else {
                 isPresentingQRCodeScanner = true
             }
         } label: {
             if waitingState.isWaiting {
                 Text("LOADING_HEALTH_RECORDS")
-            } else if inProgressStudy != nil {
+            } else if fhirInterpretationModule.currentStudy != nil {
                 if isMissingPreChatQuestionnaire {
                     Text("Start Questionnaire")
                 } else {
@@ -218,10 +226,10 @@ struct StudyHomeView: View {
     }
     
     init(study: Study, config: StudyConfig, userInfo: [String: String]) {
-        _inProgressStudy = .init(initialValue: InProgressStudy(study: study, config: config, userInfo: userInfo))
+        preloadedStudy = InProgressStudy(study: study, config: config, userInfo: userInfo)
     }
     
     init() {
-        _inProgressStudy = .init(initialValue: nil)
+        preloadedStudy = nil
     }
 }

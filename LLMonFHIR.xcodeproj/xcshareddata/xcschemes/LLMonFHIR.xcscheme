@@ -83,7 +83,7 @@
          </CommandLineArgument>
          <CommandLineArgument
             argument = "--disableFirebase"
-            isEnabled = "YES">
+            isEnabled = "NO">
          </CommandLineArgument>
          <CommandLineArgument
             argument = "--showOnboarding"
@@ -111,7 +111,7 @@
          </CommandLineArgument>
          <CommandLineArgument
             argument = "--mode study:edu.stanford.LLMonFHIR.spineAI"
-            isEnabled = "YES">
+            isEnabled = "NO">
          </CommandLineArgument>
       </CommandLineArguments>
    </LaunchAction>
