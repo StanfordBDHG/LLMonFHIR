@@ -48,7 +48,7 @@ final class OpenAIRequestInterceptor: Module, EnvironmentAccessible, ClientMiddl
                 throw Error("Missing Body")
             }
             let callable = Functions.functions()
-                .httpsCallable(name, requestAs: String.self, responseAs: StreamResponse<String, String>.self)
+                .httpsCallable(name, requestAs: String.self, responseAs: StreamResponse<String, String?>.self)
             let res = HTTPResponse(
                 status: .ok,
                 headerFields: [
@@ -63,8 +63,10 @@ final class OpenAIRequestInterceptor: Module, EnvironmentAccessible, ClientMiddl
                         let stream = try callable.stream(input)
                         for try await event in stream {
                             let string = switch event {
-                            case .message(let chunk), .result(let chunk):
+                            case .message(let chunk):
                                 chunk
+                            case .result(let chunk):
+                                chunk ?? ""
                             }
                             continuation.yield(HTTPBody.ByteChunk(string.utf8))
                         }

@@ -12,16 +12,18 @@ on:
   push:
     branches:
       - main
+      - lukas/annotate-images
   workflow_dispatch:
     inputs:
       environment:
         description: |
           The GitHub deployment environment.
         required: true
-        default: 'staging'
+        default: 'spineai'
         type: choice
         options:
           - staging
+          - spineai
           - production
       version:
         description: |

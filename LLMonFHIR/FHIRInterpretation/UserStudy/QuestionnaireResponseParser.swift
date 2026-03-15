@@ -10,20 +10,18 @@ import Foundation
 import ModelsR4
 
 
-extension QuestionnaireResponse {
+extension ModelsR4.QuestionnaireResponse {
     func summary(basedOn questionnaire: Questionnaire) -> String {
         let indexedItems = questionnaire.indexedItemsByLinkId
         var lines: [String] = []
         lines.reserveCapacity((item?.count ?? 0) * 2)
-
         appendSummaryLines(from: item ?? [], indexedItems: indexedItems, into: &lines)
-
         return lines.joined(separator: "\n")
     }
 }
 
 
-extension Questionnaire {
+extension ModelsR4.Questionnaire {
     fileprivate var indexedItemsByLinkId: [FHIRPrimitive<FHIRString>: QuestionnaireItem] {
         Self.indexItemsByLinkId(item ?? [])
     }
@@ -32,10 +30,8 @@ extension Questionnaire {
         _ items: [QuestionnaireItem]
     ) -> [FHIRPrimitive<FHIRString>: QuestionnaireItem] {
         var indexed: [FHIRPrimitive<FHIRString>: QuestionnaireItem] = [:]
-
         for item in items {
             indexed[item.linkId] = item
-
             if let nestedItems = item.item, !nestedItems.isEmpty {
                 let nestedIndex = indexItemsByLinkId(nestedItems)
                 for (key, value) in nestedIndex {
@@ -43,13 +39,12 @@ extension Questionnaire {
                 }
             }
         }
-
         return indexed
     }
 }
 
 
-extension QuestionnaireResponse {
+extension ModelsR4.QuestionnaireResponse {
     fileprivate func appendSummaryLines(
         from responseItems: [QuestionnaireResponseItem],
         indexedItems: [FHIRPrimitive<FHIRString>: QuestionnaireItem],
@@ -58,16 +53,13 @@ extension QuestionnaireResponse {
         for responseItem in responseItems {
             let questionnaireItem = indexedItems[responseItem.linkId]
             let questionText = responseItem.questionText(fallbackItem: questionnaireItem)
-
             if let answers = responseItem.answer, !answers.isEmpty {
                 let formattedAnswers = answers.compactMap(\.formattedValue)
-
                 if formattedAnswers.isEmpty {
                     lines.append("\(questionText): (no readable answer)")
                 } else {
                     lines.append("\(questionText): \(formattedAnswers.joined(separator: "; "))")
                 }
-
                 for answer in answers {
                     if let nestedItems = answer.item, !nestedItems.isEmpty {
                         appendSummaryLines(from: nestedItems, indexedItems: indexedItems, into: &lines)
@@ -76,7 +68,6 @@ extension QuestionnaireResponse {
             } else {
                 lines.append("\(questionText): (no answer)")
             }
-
             if let nestedItems = responseItem.item, !nestedItems.isEmpty {
                 appendSummaryLines(from: nestedItems, indexedItems: indexedItems, into: &lines)
             }
@@ -85,7 +76,7 @@ extension QuestionnaireResponse {
 }
 
 
-extension QuestionnaireResponseItem {
+extension ModelsR4.QuestionnaireResponseItem {
     fileprivate func questionText(fallbackItem: QuestionnaireItem?) -> String {
         if let text = fallbackItem?.text?.stringValue?.trimmedNonEmpty {
             return text
@@ -100,7 +91,7 @@ extension QuestionnaireResponseItem {
 }
 
 
-extension QuestionnaireResponseItemAnswer {
+extension ModelsR4.QuestionnaireResponseItemAnswer {
     /// Human-readable answer value; intentionally avoids exposing `code` and `system`.
     fileprivate var formattedValue: String? {
         guard let value else {
@@ -158,7 +149,7 @@ extension QuestionnaireResponseItemAnswer {
 }
 
 
-extension Quantity {
+extension ModelsR4.Quantity {
     fileprivate var formattedValue: String? {
         let valueString = value?.value.map { String(describing: $0) }
         let unitString = unit?.stringValue?.trimmedNonEmpty
@@ -175,7 +166,7 @@ extension Quantity {
 }
 
 
-extension FHIRPrimitive where PrimitiveType == FHIRString {
+extension ModelsR4.FHIRPrimitive where PrimitiveType == ModelsR4.FHIRString {
     fileprivate var stringValue: String? {
         value?.string
     }

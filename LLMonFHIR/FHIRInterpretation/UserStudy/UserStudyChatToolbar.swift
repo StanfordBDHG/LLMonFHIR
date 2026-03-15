@@ -159,15 +159,15 @@ extension View {
         url urlBinding: Binding<URL?>,
         for studyConfig: StudyConfig
     ) -> some View {
-        if EmailSheet.isAvailable, !studyConfig.reportEmail.isEmpty {
+        if EmailSheet.isAvailable, let reportEmail = studyConfig.reportEmail, !reportEmail.isEmpty {
             self.sheet(item: urlBinding, id: \.self) { url in
                 EmailSheet(message: EmailSheet.Message(
-                    recipient: studyConfig.reportEmail,
+                    recipient: reportEmail,
                     subject: "LLMonFHIR usabiity study result",
                     body: """
                         The attached file contains your\(studyConfig.encryptionKey != nil ? " encrypyed" : "") results of the usability study.
                         
-                        Please send the email to our team at \(studyConfig.reportEmail).
+                        Please send the email to our team at \(reportEmail).
                         
                         Thank you for helping us improve the LLMonFHIR app!
                         """,

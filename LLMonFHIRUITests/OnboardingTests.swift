@@ -15,12 +15,10 @@ import XCTHealthKit
 class OnboardingTests: XCTestCase, Sendable {
     override func setUp() async throws {
         try await super.setUp()
-        
         continueAfterFailure = false
-        
         let app = XCUIApplication()
         app.launchArguments = ["--showOnboarding", "--mode", "test"]
-        app.deleteAndLaunch(withSpringboardAppName: "LLMonFHIR")
+        app.launch()
     }
     
     

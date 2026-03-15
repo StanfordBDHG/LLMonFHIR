@@ -7,7 +7,9 @@
   "version": "1.4.1",
   "status": "active",
   "publisher": "Spine AI Research Team",
-  "subjectType": ["Patient"],
+  "subjectType": [
+    "Patient"
+  ],
   "date": "2026-03-13",
   "url": "https://spineai.stanford.edu/fhir/Questionnaire/lumbar-spine-triage",
   "item": [
@@ -900,200 +902,32 @@
       "item": [
         {
           "linkId": "7.1",
-          "text": "In your left leg, where do you feel pain?",
-          "type": "choice",
-          "answerOption": [
-            {
-              "valueCoding": {
-                "system": "https://spineai.stanford.edu/CodeSystem/radic-pain-loc",
-                "code": "none",
-                "display": "No pain in this leg"
-              },
-              "extension": [
-                {
-                  "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-optionExclusive",
-                  "valueBoolean": true
-                }
-              ]
-            },
-            {
-              "valueCoding": {
-                "system": "https://spineai.stanford.edu/CodeSystem/radic-pain-loc",
-                "code": "buttock",
-                "display": "Buttock"
-              }
-            },
-            {
-              "valueCoding": {
-                "system": "https://spineai.stanford.edu/CodeSystem/radic-pain-loc",
-                "code": "front-thigh",
-                "display": "Front of thigh"
-              }
-            },
-            {
-              "valueCoding": {
-                "system": "https://spineai.stanford.edu/CodeSystem/radic-pain-loc",
-                "code": "back-thigh",
-                "display": "Back of thigh"
-              }
-            },
-            {
-              "valueCoding": {
-                "system": "https://spineai.stanford.edu/CodeSystem/radic-pain-loc",
-                "code": "medial-shin",
-                "display": "Front/inside of shin"
-              }
-            },
-            {
-              "valueCoding": {
-                "system": "https://spineai.stanford.edu/CodeSystem/radic-pain-loc",
-                "code": "lateral-shin",
-                "display": "Outside of shin"
-              }
-            },
-            {
-              "valueCoding": {
-                "system": "https://spineai.stanford.edu/CodeSystem/radic-pain-loc",
-                "code": "top-foot",
-                "display": "Top of foot"
-              }
-            },
-            {
-              "valueCoding": {
-                "system": "https://spineai.stanford.edu/CodeSystem/radic-pain-loc",
-                "code": "bottom-foot",
-                "display": "Bottom of foot"
-              }
-            },
-            {
-              "valueCoding": {
-                "system": "https://spineai.stanford.edu/CodeSystem/radic-pain-loc",
-                "code": "big-toe",
-                "display": "Big toe"
-              }
-            },
-            {
-              "valueCoding": {
-                "system": "https://spineai.stanford.edu/CodeSystem/radic-pain-loc",
-                "code": "small-toe",
-                "display": "Small toe"
-              }
-            }
-          ],
-          "repeats": true,
+          "text": "In each leg, where do you feel pain?",
+          "type": "attachment",
           "extension": [
             {
               "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
               "valueCodeableConcept": {
                 "coding": [
                   {
-                    "system": "http://hl7.org/fhir/ValueSet/questionnaire-item-control",
-                    "code": "check-box"
+                    "system": "http://spezi.stanford.edu/fhir/CodeSystem/custom-task/item-control",
+                    "code": "annotate-image"
                   }
                 ]
               }
+            },
+            {
+              "url": "http://spezi.stanford.edu/fhir/StructureDefinition/custom-task/annotate-image/inputImage",
+              "valueString": "bodymap.png"
+            },
+            {
+              "url": "http://spezi.stanford.edu/fhir/StructureDefinition/custom-task/annotate-image/region",
+              "valueString": "Pain:red"
             }
           ]
         },
         {
           "linkId": "7.2",
-          "text": "In your right leg, where do you feel pain?",
-          "type": "choice",
-          "answerOption": [
-            {
-              "valueCoding": {
-                "system": "https://spineai.stanford.edu/CodeSystem/radic-pain-loc",
-                "code": "none",
-                "display": "No pain in this leg"
-              },
-              "extension": [
-                {
-                  "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-optionExclusive",
-                  "valueBoolean": true
-                }
-              ]
-            },
-            {
-              "valueCoding": {
-                "system": "https://spineai.stanford.edu/CodeSystem/radic-pain-loc",
-                "code": "buttock",
-                "display": "Buttock"
-              }
-            },
-            {
-              "valueCoding": {
-                "system": "https://spineai.stanford.edu/CodeSystem/radic-pain-loc",
-                "code": "front-thigh",
-                "display": "Front of thigh"
-              }
-            },
-            {
-              "valueCoding": {
-                "system": "https://spineai.stanford.edu/CodeSystem/radic-pain-loc",
-                "code": "back-thigh",
-                "display": "Back of thigh"
-              }
-            },
-            {
-              "valueCoding": {
-                "system": "https://spineai.stanford.edu/CodeSystem/radic-pain-loc",
-                "code": "medial-shin",
-                "display": "Front/inside of shin"
-              }
-            },
-            {
-              "valueCoding": {
-                "system": "https://spineai.stanford.edu/CodeSystem/radic-pain-loc",
-                "code": "lateral-shin",
-                "display": "Outside of shin"
-              }
-            },
-            {
-              "valueCoding": {
-                "system": "https://spineai.stanford.edu/CodeSystem/radic-pain-loc",
-                "code": "top-foot",
-                "display": "Top of foot"
-              }
-            },
-            {
-              "valueCoding": {
-                "system": "https://spineai.stanford.edu/CodeSystem/radic-pain-loc",
-                "code": "bottom-foot",
-                "display": "Bottom of foot"
-              }
-            },
-            {
-              "valueCoding": {
-                "system": "https://spineai.stanford.edu/CodeSystem/radic-pain-loc",
-                "code": "big-toe",
-                "display": "Big toe"
-              }
-            },
-            {
-              "valueCoding": {
-                "system": "https://spineai.stanford.edu/CodeSystem/radic-pain-loc",
-                "code": "small-toe",
-                "display": "Small toe"
-              }
-            }
-          ],
-          "repeats": true,
-          "extension": [
-            {
-              "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
-              "valueCodeableConcept": {
-                "coding": [
-                  {
-                    "system": "http://hl7.org/fhir/ValueSet/questionnaire-item-control",
-                    "code": "check-box"
-                  }
-                ]
-              }
-            }
-          ]
-        },
-        {
-          "linkId": "7.3",
           "text": "Do you experience numbness or tingling?",
           "type": "choice",
           "answerOption": [
@@ -1122,197 +956,44 @@
           "required": true
         },
         {
+          "linkId": "7.3",
+          "text": "In each leg, where do you feel numbness or tingling?",
+          "type": "attachment",
+          "extension": [
+            {
+              "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
+              "valueCodeableConcept": {
+                "coding": [
+                  {
+                    "system": "http://spezi.stanford.edu/fhir/CodeSystem/custom-task/item-control",
+                    "code": "annotate-image"
+                  }
+                ]
+              }
+            },
+            {
+              "url": "http://spezi.stanford.edu/fhir/StructureDefinition/custom-task/annotate-image/inputImage",
+              "valueString": "bodymap.png"
+            },
+            {
+              "url": "http://spezi.stanford.edu/fhir/StructureDefinition/custom-task/annotate-image/region",
+              "valueString": "Numbness/Tingling:green"
+            }
+          ],
+          "enableWhen": [
+            {
+              "question": "7.2",
+              "operator": "=",
+              "answerCoding": {
+                "system": "https://spineai.stanford.edu/CodeSystem/radic-numbness",
+                "code": "yes-diff"
+              }
+            }
+          ],
+          "enableBehavior": "any"
+        },
+        {
           "linkId": "7.4",
-          "text": "In your left leg, where do you feel numbness or tingling?",
-          "type": "choice",
-          "answerOption": [
-            {
-              "valueCoding": {
-                "system": "https://spineai.stanford.edu/CodeSystem/radic-numbness-loc",
-                "code": "buttock",
-                "display": "Buttock"
-              }
-            },
-            {
-              "valueCoding": {
-                "system": "https://spineai.stanford.edu/CodeSystem/radic-numbness-loc",
-                "code": "front-thigh",
-                "display": "Front of thigh"
-              }
-            },
-            {
-              "valueCoding": {
-                "system": "https://spineai.stanford.edu/CodeSystem/radic-numbness-loc",
-                "code": "back-thigh",
-                "display": "Back of thigh"
-              }
-            },
-            {
-              "valueCoding": {
-                "system": "https://spineai.stanford.edu/CodeSystem/radic-numbness-loc",
-                "code": "medial-shin",
-                "display": "Front/inside of shin"
-              }
-            },
-            {
-              "valueCoding": {
-                "system": "https://spineai.stanford.edu/CodeSystem/radic-numbness-loc",
-                "code": "lateral-shin",
-                "display": "Outside of shin"
-              }
-            },
-            {
-              "valueCoding": {
-                "system": "https://spineai.stanford.edu/CodeSystem/radic-numbness-loc",
-                "code": "top-foot",
-                "display": "Top of foot"
-              }
-            },
-            {
-              "valueCoding": {
-                "system": "https://spineai.stanford.edu/CodeSystem/radic-numbness-loc",
-                "code": "bottom-foot",
-                "display": "Bottom of foot"
-              }
-            },
-            {
-              "valueCoding": {
-                "system": "https://spineai.stanford.edu/CodeSystem/radic-numbness-loc",
-                "code": "big-toe",
-                "display": "Big toe"
-              }
-            },
-            {
-              "valueCoding": {
-                "system": "https://spineai.stanford.edu/CodeSystem/radic-numbness-loc",
-                "code": "small-toe",
-                "display": "Small toe"
-              }
-            }
-          ],
-          "repeats": true,
-          "enableWhen": [
-            {
-              "question": "7.3",
-              "operator": "=",
-              "answerCoding": {
-                "system": "https://spineai.stanford.edu/CodeSystem/radic-numbness",
-                "code": "yes-diff"
-              }
-            }
-          ],
-          "enableBehavior": "any",
-          "extension": [
-            {
-              "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
-              "valueCodeableConcept": {
-                "coding": [
-                  {
-                    "system": "http://hl7.org/fhir/ValueSet/questionnaire-item-control",
-                    "code": "check-box"
-                  }
-                ]
-              }
-            }
-          ]
-        },
-        {
-          "linkId": "7.5",
-          "text": "In your right leg, where do you feel numbness or tingling?",
-          "type": "choice",
-          "answerOption": [
-            {
-              "valueCoding": {
-                "system": "https://spineai.stanford.edu/CodeSystem/radic-numbness-loc",
-                "code": "buttock",
-                "display": "Buttock"
-              }
-            },
-            {
-              "valueCoding": {
-                "system": "https://spineai.stanford.edu/CodeSystem/radic-numbness-loc",
-                "code": "front-thigh",
-                "display": "Front of thigh"
-              }
-            },
-            {
-              "valueCoding": {
-                "system": "https://spineai.stanford.edu/CodeSystem/radic-numbness-loc",
-                "code": "back-thigh",
-                "display": "Back of thigh"
-              }
-            },
-            {
-              "valueCoding": {
-                "system": "https://spineai.stanford.edu/CodeSystem/radic-numbness-loc",
-                "code": "medial-shin",
-                "display": "Front/inside of shin"
-              }
-            },
-            {
-              "valueCoding": {
-                "system": "https://spineai.stanford.edu/CodeSystem/radic-numbness-loc",
-                "code": "lateral-shin",
-                "display": "Outside of shin"
-              }
-            },
-            {
-              "valueCoding": {
-                "system": "https://spineai.stanford.edu/CodeSystem/radic-numbness-loc",
-                "code": "top-foot",
-                "display": "Top of foot"
-              }
-            },
-            {
-              "valueCoding": {
-                "system": "https://spineai.stanford.edu/CodeSystem/radic-numbness-loc",
-                "code": "bottom-foot",
-                "display": "Bottom of foot"
-              }
-            },
-            {
-              "valueCoding": {
-                "system": "https://spineai.stanford.edu/CodeSystem/radic-numbness-loc",
-                "code": "big-toe",
-                "display": "Big toe"
-              }
-            },
-            {
-              "valueCoding": {
-                "system": "https://spineai.stanford.edu/CodeSystem/radic-numbness-loc",
-                "code": "small-toe",
-                "display": "Small toe"
-              }
-            }
-          ],
-          "repeats": true,
-          "enableWhen": [
-            {
-              "question": "7.3",
-              "operator": "=",
-              "answerCoding": {
-                "system": "https://spineai.stanford.edu/CodeSystem/radic-numbness",
-                "code": "yes-diff"
-              }
-            }
-          ],
-          "enableBehavior": "any",
-          "extension": [
-            {
-              "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
-              "valueCodeableConcept": {
-                "coding": [
-                  {
-                    "system": "http://hl7.org/fhir/ValueSet/questionnaire-item-control",
-                    "code": "check-box"
-                  }
-                ]
-              }
-            }
-          ]
-        },
-        {
-          "linkId": "7.6",
           "text": "Does coughing, sneezing, or straining make your leg pain worse?",
           "type": "choice",
           "answerOption": [
@@ -1341,7 +1022,7 @@
           "required": true
         },
         {
-          "linkId": "7.7",
+          "linkId": "7.5",
           "text": "Have you noticed any weakness in your leg?",
           "type": "choice",
           "answerOption": [
@@ -1377,7 +1058,7 @@
           "required": true
         },
         {
-          "linkId": "7.8",
+          "linkId": "7.6",
           "text": "Have you experienced any of the following motor difficulties?",
           "type": "choice",
           "answerOption": [
@@ -1439,7 +1120,7 @@
           ]
         },
         {
-          "linkId": "7.9",
+          "linkId": "7.7",
           "text": "How did your leg pain start?",
           "type": "choice",
           "answerOption": [
@@ -1468,7 +1149,7 @@
           "required": true
         },
         {
-          "linkId": "7.10",
+          "linkId": "7.8",
           "text": "How long have you had leg symptoms?",
           "type": "choice",
           "answerOption": [
@@ -1504,7 +1185,7 @@
           "required": true
         },
         {
-          "linkId": "7.11",
+          "linkId": "7.9",
           "text": "Do your symptoms get worse when you stand or walk and improve when you sit?",
           "type": "choice",
           "answerOption": [
@@ -1526,7 +1207,7 @@
           "required": true
         },
         {
-          "linkId": "7.12",
+          "linkId": "7.10",
           "text": "Does leaning forward while walking, such as in a shopping-cart position, relieve your symptoms?",
           "type": "choice",
           "answerOption": [
@@ -1548,7 +1229,7 @@
           "required": true
         },
         {
-          "linkId": "7.13",
+          "linkId": "7.11",
           "text": "How much does pain limit your walking?",
           "type": "choice",
           "answerOption": [
@@ -1598,7 +1279,7 @@
           "required": true
         },
         {
-          "linkId": "7.14",
+          "linkId": "7.12",
           "text": "Have you ever been told you have any of these conditions?",
           "type": "choice",
           "answerOption": [

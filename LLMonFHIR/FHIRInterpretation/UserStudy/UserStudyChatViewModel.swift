@@ -155,7 +155,7 @@ final class UserStudyChatViewModel: Sendable {
         return Self(
             inProgressStudy: InProgressStudy(
                 study: emptyStudy,
-                config: .init(openAIAPIKey: "", openAIEndpoint: .regular, reportEmail: "", encryptionKey: nil),
+                config: .init(openAIAPIKey: "-", openAIEndpoint: .regular, reportEmail: "", encryptionKey: nil),
                 userInfo: [:]
             ),
             initialQuestionnaireResponse: nil,
