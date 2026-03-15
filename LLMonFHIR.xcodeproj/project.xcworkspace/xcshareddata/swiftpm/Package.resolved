@@ -312,7 +312,7 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/StanfordSpezi/SpeziQuestionnaire.git",
       "state" : {
-        "revision" : "f78dbb0d6d309a1316eda130d55e77c193c79601"
+        "revision" : "f7353f4f6baeaa288aba4fc1378e80bbea9f07ca"
       }
     },
     {

@@ -138,7 +138,7 @@ extension QuestionnaireResponses.AnnotatedImage {
                 LLMContextEntity(role: .system, content: """
                     Analyze the two images provided:
                     1. A dermatome reference map of the body
-                    2.A body diagram annotated by a patient indicating areas of pain.
+                    2. A body diagram annotated by a patient indicating areas of pain.
                     
                     Identify and describe the regions marked by the patient. Specify:
                     - body side (left/right), view (front/back), and anatomical region,

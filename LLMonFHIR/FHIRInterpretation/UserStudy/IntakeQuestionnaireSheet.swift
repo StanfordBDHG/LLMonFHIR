@@ -51,6 +51,9 @@ struct IntakeQuestionnaireSheet: View {
                 }
             } else {
                 ContentUnavailableView("Questionnaire not selected", systemImage: "document.badge.gearshape")
+                Button("Dismiss") {
+                    dismiss()
+                }
             }
         }
         .viewStateAlert(state: $viewState)
