@@ -98,7 +98,7 @@ extension QuestionnaireResponses.Response {
             return nil
         case .custom(let value):
             return switch value {
-            case let value as QuestionnaireResponses.AnnotatedImage:
+            case let value as QuestionnaireResponses.ImageAnnotation:
                 try await value.summarize(for: task, in: questionnaire, using: runner)
             default:
                 nil
@@ -108,7 +108,7 @@ extension QuestionnaireResponses.Response {
 }
 
 
-extension QuestionnaireResponses.AnnotatedImage {
+extension QuestionnaireResponses.ImageAnnotation {
     fileprivate func summarize( // swiftlint:disable:this function_body_length
         for task: Questionnaire.Task,
         in questionnaire: Questionnaire,
@@ -144,8 +144,8 @@ extension QuestionnaireResponses.AnnotatedImage {
                     
                     Output a concise clinical-style summary (3–6 sentences) describing the pain location and dermatomal correspondence. If the markings do not match a clear dermatome pattern, state that explicitly. Ignore markings outside of the body.
                     """),
-                LLMContextEntity(role: .system, image: labeledImage, jpegCompressionFactor: jpegCompression).unwrap(""),
-                LLMContextEntity(role: .user, image: annotatedImage, jpegCompressionFactor: jpegCompression).unwrap("")
+                LLMContextEntity(_role: .system, image: labeledImage, format: .jpeg(compressionFactor: jpegCompression)).unwrap(""),
+                LLMContextEntity(_role: .user, image: annotatedImage, format: .jpeg(compressionFactor: jpegCompression)).unwrap("")
             ])
         } else {
             let pipelineExplanation = """
@@ -179,7 +179,8 @@ extension QuestionnaireResponses.AnnotatedImage {
                     role: .system,
                     content: pipelineExplanation + "\n\nYour place in the pipeline is step 1, i.e. the analysis of the unannotated, original image"
                 ),
-                try LLMContextEntity(role: .user, image: baseImage, jpegCompressionFactor: jpegCompression).unwrap("Unable to build LLM context")
+                try LLMContextEntity(_role: .user, image: baseImage, format: .jpeg(compressionFactor: jpegCompression))
+                    .unwrap("Unable to build LLM context")
             ])
             let annotatedImageExplanation: String = try await runner.oneShot(with: schema, context: [
                 LLMContextEntity(
@@ -188,7 +189,8 @@ extension QuestionnaireResponses.AnnotatedImage {
                     content: pipelineExplanation + "\n\nYour place in the pipeline is step 2, i.e. the analysis of the annotated image, taking into account the description of the unedited original image"
                 ),
                 LLMContextEntity(role: .system, content: "The description of the original input image is as follows: '\(baseImageExplanation)'"),
-                try LLMContextEntity(role: .user, image: annotatedImage, jpegCompressionFactor: jpegCompression).unwrap("Unable to build LLM context")
+                try LLMContextEntity(_role: .user, image: annotatedImage, format: .jpeg(compressionFactor: jpegCompression))
+                    .unwrap("Unable to build LLM context")
             ])
             return annotatedImageExplanation
         }

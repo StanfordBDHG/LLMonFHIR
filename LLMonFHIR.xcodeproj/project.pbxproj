@@ -935,16 +935,16 @@
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/StanfordSpezi/SpeziViews.git";
 			requirement = {
-				branch = "lukas/canvas-view-changes";
-				kind = branch;
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.12.13;
 			};
 		};
 		8040C29E2F19396A00884AD3 /* XCRemoteSwiftPackageReference "SpeziLLM" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/StanfordSpezi/SpeziLLM.git";
 			requirement = {
-				branch = "lukas/image-input";
-				kind = branch;
+				kind = revision;
+				revision = 02c03d0bfbf64f4078aee3c842e28891352bf5ea;
 			};
 		};
 		806B4EDB2F660DAA00C39684 /* XCRemoteSwiftPackageReference "SpeziQuestionnaire" */ = {
@@ -952,7 +952,7 @@
 			repositoryURL = "https://github.com/StanfordSpezi/SpeziQuestionnaire.git";
 			requirement = {
 				kind = revision;
-				revision = f7353f4f6baeaa288aba4fc1378e80bbea9f07ca;
+				revision = 76dc1f472eb9a0405c72d950720f8bf6e031c2cb;
 			};
 		};
 		806F40BC2F179FDB0001E988 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
@@ -999,8 +999,8 @@
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/StanfordBDHG/XCTestExtensions.git";
 			requirement = {
-				branch = 495d66325ee2758fcdfdf84f72efae6f2f977642;
-				kind = branch;
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.2.5;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */

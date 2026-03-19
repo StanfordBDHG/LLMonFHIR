@@ -1,5 +1,5 @@
 {
-  "originHash" : "268ef13230957d95d620115ad418602a22b87a1d9445d5052c6de43b569be4fa",
+  "originHash" : "fb4e6e71baba1a83694d0937bfd7a24191eca0af7076a560a20a679c6303c1c9",
   "pins" : [
     {
       "identity" : "abseil-cpp-binary",
@@ -294,8 +294,7 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/StanfordSpezi/SpeziLLM.git",
       "state" : {
-        "branch" : "lukas/image-input",
-        "revision" : "7ffd14ec6cc0d4c212fe259fdc0e0e4971b97ec2"
+        "revision" : "02c03d0bfbf64f4078aee3c842e28891352bf5ea"
       }
     },
     {
@@ -312,7 +311,7 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/StanfordSpezi/SpeziQuestionnaire.git",
       "state" : {
-        "revision" : "f7353f4f6baeaa288aba4fc1378e80bbea9f07ca"
+        "revision" : "76dc1f472eb9a0405c72d950720f8bf6e031c2cb"
       }
     },
     {
@@ -500,7 +499,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/StanfordBDHG/XCTestExtensions.git",
       "state" : {
-        "revision" : "495d66325ee2758fcdfdf84f72efae6f2f977642"
+        "revision" : "4550188a017d316ab64ef0948fc40aff96611bbf",
+        "version" : "1.2.5"
       }
     },
     {
