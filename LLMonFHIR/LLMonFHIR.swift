@@ -6,15 +6,9 @@
 // SPDX-License-Identifier: MIT
 //
 
-// swiftlint:disable all
-
 import LLMonFHIRShared
 import Spezi
 import SwiftUI
-import SpeziQuestionnaire
-import SpeziQuestionnaireFHIR
-import PencilKit
-import class ModelsR4.QuestionnaireResponse
 
 
 @main
@@ -39,20 +33,5 @@ struct LLMonFHIR: App {
                     .spezi(appDelegate)
             }
         }
-    }
-    
-    init() {
-//        let annot = try! PKDrawing(data: Data(contentsOf: URL(filePath: "/Users/lukas/Desktop/annot2.data")))
-//        let Q1 = try! Study.spineAI.initialQuestionnaire(from: .main)!
-//        let Q2 = try! SpeziQuestionnaire.Questionnaire(Q1)
-//        let responses = QuestionnaireResponses(questionnaire: Q2)
-//        responses.responses["7.1"].value.annotatedImageValue = .init(annot)
-//        let fhir = try! ModelsR4.QuestionnaireResponse(responses)
-//        let encoder = JSONEncoder()
-//        encoder.outputFormatting = [.prettyPrinted, .withoutEscapingSlashes]
-//        let data = try! encoder.encode(fhir)
-//        let string = String(decoding: data, as: UTF8.self)
-//        print(string)
-//        fatalError()
     }
 }
