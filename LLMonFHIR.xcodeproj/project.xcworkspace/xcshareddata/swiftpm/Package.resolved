@@ -1,5 +1,5 @@
 {
-  "originHash" : "fb4e6e71baba1a83694d0937bfd7a24191eca0af7076a560a20a679c6303c1c9",
+  "originHash" : "d885987dce42f7c2f146561233f2158803281c1391d8e04ac3e225a355d34f1d",
   "pins" : [
     {
       "identity" : "abseil-cpp-binary",
@@ -294,7 +294,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/StanfordSpezi/SpeziLLM.git",
       "state" : {
-        "revision" : "02c03d0bfbf64f4078aee3c842e28891352bf5ea"
+        "revision" : "573c425adfa0d2b546ea6518692e6b41b2a7f7d4",
+        "version" : "0.13.7"
       }
     },
     {
@@ -311,7 +312,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/StanfordSpezi/SpeziQuestionnaire.git",
       "state" : {
-        "revision" : "76dc1f472eb9a0405c72d950720f8bf6e031c2cb"
+        "revision" : "624cc6da649690d8f9cd295ca23064c47a0ab856",
+        "version" : "2.0.0-beta.1"
       }
     },
     {
@@ -337,8 +339,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/StanfordSpezi/SpeziViews.git",
       "state" : {
-        "branch" : "lukas/canvas-view-changes",
-        "revision" : "f486c3b0a7c700c8cf514d583a4cac13ddfc2da4"
+        "revision" : "236fd063407aaba2a34f3f61b3034dd3a01f22c5",
+        "version" : "1.12.14"
       }
     },
     {

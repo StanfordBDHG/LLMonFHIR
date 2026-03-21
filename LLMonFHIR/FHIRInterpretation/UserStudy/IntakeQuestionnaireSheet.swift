@@ -37,7 +37,6 @@ struct IntakeQuestionnaireSheet: View {
     @State private var questionnaires: QuestionnaireReprs?
     @State private var viewState: ViewState = .idle
     
-    
     var body: some View {
         Group {
             if let questionnaires {

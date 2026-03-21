@@ -31,8 +31,6 @@
 		8040C2A62F19396A00884AD3 /* SpeziLLMLocalDownload in Frameworks */ = {isa = PBXBuildFile; productRef = 8040C2A52F19396A00884AD3 /* SpeziLLMLocalDownload */; };
 		8040C2A82F19396A00884AD3 /* SpeziLLMOpenAI in Frameworks */ = {isa = PBXBuildFile; productRef = 8040C2A72F19396A00884AD3 /* SpeziLLMOpenAI */; };
 		805C26312F25171E00769AC1 /* LLMonFHIRShared in Frameworks */ = {isa = PBXBuildFile; productRef = 805C26302F25171E00769AC1 /* LLMonFHIRShared */; };
-		806B4EDD2F660DAA00C39684 /* SpeziQuestionnaire in Frameworks */ = {isa = PBXBuildFile; productRef = 806B4EDC2F660DAA00C39684 /* SpeziQuestionnaire */; };
-		806B4EDF2F660DAA00C39684 /* SpeziQuestionnaireFHIR in Frameworks */ = {isa = PBXBuildFile; productRef = 806B4EDE2F660DAA00C39684 /* SpeziQuestionnaireFHIR */; };
 		806DF5BA2EC234AD00A8243C /* SpeziFHIR in Frameworks */ = {isa = PBXBuildFile; productRef = 806DF5B92EC234AD00A8243C /* SpeziFHIR */; };
 		806DF5BC2EC234AD00A8243C /* SpeziFHIRHealthKit in Frameworks */ = {isa = PBXBuildFile; productRef = 806DF5BB2EC234AD00A8243C /* SpeziFHIRHealthKit */; };
 		806DF5BE2EC234AD00A8243C /* SpeziFHIRMockPatients in Frameworks */ = {isa = PBXBuildFile; productRef = 806DF5BD2EC234AD00A8243C /* SpeziFHIRMockPatients */; };
@@ -41,6 +39,12 @@
 		806F40C22F179FDB0001E988 /* FirebaseStorage in Frameworks */ = {isa = PBXBuildFile; productRef = 806F40C12F179FDB0001E988 /* FirebaseStorage */; };
 		806F40C42F17A02B0001E988 /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = 806F40C32F17A02B0001E988 /* FirebaseFirestore */; };
 		808EBE722F0976710032D087 /* SpeziFoundation in Frameworks */ = {isa = PBXBuildFile; productRef = 808EBE712F0976710032D087 /* SpeziFoundation */; };
+		8098C14E2F6EE891007FC944 /* SpeziQuestionnaire in Frameworks */ = {isa = PBXBuildFile; productRef = 8098C14D2F6EE891007FC944 /* SpeziQuestionnaire */; };
+		8098C1502F6EE891007FC944 /* SpeziQuestionnaireFHIR in Frameworks */ = {isa = PBXBuildFile; productRef = 8098C14F2F6EE891007FC944 /* SpeziQuestionnaireFHIR */; };
+		8098C1522F6EE891007FC944 /* XCTSpeziQuestionnaire in Frameworks */ = {isa = PBXBuildFile; productRef = 8098C1512F6EE891007FC944 /* XCTSpeziQuestionnaire */; };
+		8098C1552F6EFA08007FC944 /* SpeziQuestionnaire in Frameworks */ = {isa = PBXBuildFile; productRef = 8098C1542F6EFA08007FC944 /* SpeziQuestionnaire */; };
+		8098C1572F6EFA08007FC944 /* SpeziQuestionnaireFHIR in Frameworks */ = {isa = PBXBuildFile; productRef = 8098C1562F6EFA08007FC944 /* SpeziQuestionnaireFHIR */; };
+		8098C1592F6EFA08007FC944 /* XCTSpeziQuestionnaire in Frameworks */ = {isa = PBXBuildFile; productRef = 8098C1582F6EFA08007FC944 /* XCTSpeziQuestionnaire */; };
 		80A98FA62F13DA5C00BDD5B7 /* SpeziFHIR in Frameworks */ = {isa = PBXBuildFile; productRef = 80A98FA52F13DA5C00BDD5B7 /* SpeziFHIR */; };
 		80A98FA82F13DA5C00BDD5B7 /* SpeziFHIRHealthKit in Frameworks */ = {isa = PBXBuildFile; productRef = 80A98FA72F13DA5C00BDD5B7 /* SpeziFHIRHealthKit */; };
 		80A98FAA2F13DA5C00BDD5B7 /* SpeziFHIRMockPatients in Frameworks */ = {isa = PBXBuildFile; productRef = 80A98FA92F13DA5C00BDD5B7 /* SpeziFHIRMockPatients */; };
@@ -121,7 +125,7 @@
 				44E18E932CEBF29200829A26 /* SpeziLocalStorage in Frameworks */,
 				801761AC2EE5CC2400383DB3 /* SpeziViews in Frameworks */,
 				806F40C22F179FDB0001E988 /* FirebaseStorage in Frameworks */,
-				806B4EDF2F660DAA00C39684 /* SpeziQuestionnaireFHIR in Frameworks */,
+				8098C1502F6EE891007FC944 /* SpeziQuestionnaireFHIR in Frameworks */,
 				44E18E882CEBEC9500829A26 /* SpeziLLM in Frameworks */,
 				8040C2A82F19396A00884AD3 /* SpeziLLMOpenAI in Frameworks */,
 				803D16682F30DA3C0060B931 /* LLMonFHIRStudyDefinitions in Frameworks */,
@@ -142,6 +146,7 @@
 				97BECCD42B8C68C10017E47D /* SpeziFHIRHealthKit in Frameworks */,
 				80A990772F1699B500BDD5B7 /* SpeziFirebaseAccount in Frameworks */,
 				80A98FA82F13DA5C00BDD5B7 /* SpeziFHIRHealthKit in Frameworks */,
+				8098C1552F6EFA08007FC944 /* SpeziQuestionnaire in Frameworks */,
 				805C26312F25171E00769AC1 /* LLMonFHIRShared in Frameworks */,
 				9710D3562B84151F00E0A20F /* SpeziChat in Frameworks */,
 				97BC1F272B7F390100438263 /* SpeziFHIR in Frameworks */,
@@ -153,7 +158,7 @@
 				44E18E8C2CEBEC9500829A26 /* SpeziLLMLocal in Frameworks */,
 				2FD8E8312A1AB00D00357F4E /* HealthKitOnFHIR in Frameworks */,
 				802641DE2F638893006A1D76 /* SpeziQuestionnaireFHIR in Frameworks */,
-				806B4EDD2F660DAA00C39684 /* SpeziQuestionnaire in Frameworks */,
+				8098C14E2F6EE891007FC944 /* SpeziQuestionnaire in Frameworks */,
 				8040C2A42F19396A00884AD3 /* SpeziLLMLocal in Frameworks */,
 				8040C2A02F19396A00884AD3 /* SpeziLLM in Frameworks */,
 				80A9907B2F1699B500BDD5B7 /* SpeziFirebaseConfiguration in Frameworks */,
@@ -166,6 +171,7 @@
 				802641DC2F638893006A1D76 /* SpeziQuestionnaire in Frameworks */,
 				8040C2A62F19396A00884AD3 /* SpeziLLMLocalDownload in Frameworks */,
 				80A98FA62F13DA5C00BDD5B7 /* SpeziFHIR in Frameworks */,
+				8098C1572F6EFA08007FC944 /* SpeziQuestionnaireFHIR in Frameworks */,
 				80A98FAA2F13DA5C00BDD5B7 /* SpeziFHIRMockPatients in Frameworks */,
 				97BC1F2F2B7F390100438263 /* SpeziFHIRMockPatients in Frameworks */,
 				808EBE722F0976710032D087 /* SpeziFoundation in Frameworks */,
@@ -188,6 +194,8 @@
 			files = (
 				802641E02F638893006A1D76 /* XCTSpeziQuestionnaire in Frameworks */,
 				2FE5DC9C29EDD9EF004B9AB4 /* XCTHealthKit in Frameworks */,
+				8098C1522F6EE891007FC944 /* XCTSpeziQuestionnaire in Frameworks */,
+				8098C1592F6EFA08007FC944 /* XCTSpeziQuestionnaire in Frameworks */,
 				80C2187B2F66CD6500666C53 /* XCTestExtensions in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -328,8 +336,10 @@
 				803D16672F30DA3C0060B931 /* LLMonFHIRStudyDefinitions */,
 				802641DB2F638893006A1D76 /* SpeziQuestionnaire */,
 				802641DD2F638893006A1D76 /* SpeziQuestionnaireFHIR */,
-				806B4EDC2F660DAA00C39684 /* SpeziQuestionnaire */,
-				806B4EDE2F660DAA00C39684 /* SpeziQuestionnaireFHIR */,
+				8098C14D2F6EE891007FC944 /* SpeziQuestionnaire */,
+				8098C14F2F6EE891007FC944 /* SpeziQuestionnaireFHIR */,
+				8098C1542F6EFA08007FC944 /* SpeziQuestionnaire */,
+				8098C1562F6EFA08007FC944 /* SpeziQuestionnaireFHIR */,
 			);
 			productName = LLMonFHIR;
 			productReference = 653A254D283387FE005D4D48 /* LLMonFHIR.app */;
@@ -377,6 +387,8 @@
 				2FE5DC9B29EDD9EF004B9AB4 /* XCTHealthKit */,
 				802641DF2F638893006A1D76 /* XCTSpeziQuestionnaire */,
 				80C2187A2F66CD6500666C53 /* XCTestExtensions */,
+				8098C1512F6EE891007FC944 /* XCTSpeziQuestionnaire */,
+				8098C1582F6EFA08007FC944 /* XCTSpeziQuestionnaire */,
 			);
 			productName = LLMonFHIRUITests;
 			productReference = 653A256728338800005D4D48 /* LLMonFHIRUITests.xctest */;
@@ -432,8 +444,8 @@
 				80A990752F1699B500BDD5B7 /* XCRemoteSwiftPackageReference "SpeziFirebase" */,
 				806F40BC2F179FDB0001E988 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
 				8040C29E2F19396A00884AD3 /* XCRemoteSwiftPackageReference "SpeziLLM" */,
-				806B4EDB2F660DAA00C39684 /* XCRemoteSwiftPackageReference "SpeziQuestionnaire" */,
 				80C218792F66CD6500666C53 /* XCRemoteSwiftPackageReference "XCTestExtensions" */,
+				8098C1532F6EFA08007FC944 /* XCRemoteSwiftPackageReference "SpeziQuestionnaire" */,
 			);
 			productRefGroup = 653A254E283387FE005D4D48 /* Products */;
 			projectDirPath = "";
@@ -943,16 +955,8 @@
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/StanfordSpezi/SpeziLLM.git";
 			requirement = {
-				kind = revision;
-				revision = 02c03d0bfbf64f4078aee3c842e28891352bf5ea;
-			};
-		};
-		806B4EDB2F660DAA00C39684 /* XCRemoteSwiftPackageReference "SpeziQuestionnaire" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/StanfordSpezi/SpeziQuestionnaire.git";
-			requirement = {
-				kind = revision;
-				revision = 76dc1f472eb9a0405c72d950720f8bf6e031c2cb;
+				kind = upToNextMinorVersion;
+				minimumVersion = 0.13.7;
 			};
 		};
 		806F40BC2F179FDB0001E988 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
@@ -969,6 +973,14 @@
 			requirement = {
 				kind = upToNextMajorVersion;
 				minimumVersion = 2.7.2;
+			};
+		};
+		8098C1532F6EFA08007FC944 /* XCRemoteSwiftPackageReference "SpeziQuestionnaire" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/StanfordSpezi/SpeziQuestionnaire.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = "2.0.0-beta.1";
 			};
 		};
 		80A98FA42F13DA5C00BDD5B7 /* XCRemoteSwiftPackageReference "SpeziFHIR" */ = {
@@ -1121,16 +1133,6 @@
 			isa = XCSwiftPackageProductDependency;
 			productName = LLMonFHIRShared;
 		};
-		806B4EDC2F660DAA00C39684 /* SpeziQuestionnaire */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 806B4EDB2F660DAA00C39684 /* XCRemoteSwiftPackageReference "SpeziQuestionnaire" */;
-			productName = SpeziQuestionnaire;
-		};
-		806B4EDE2F660DAA00C39684 /* SpeziQuestionnaireFHIR */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 806B4EDB2F660DAA00C39684 /* XCRemoteSwiftPackageReference "SpeziQuestionnaire" */;
-			productName = SpeziQuestionnaireFHIR;
-		};
 		806DF5B92EC234AD00A8243C /* SpeziFHIR */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = SpeziFHIR;
@@ -1167,6 +1169,33 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 808EBE702F0976710032D087 /* XCRemoteSwiftPackageReference "SpeziFoundation" */;
 			productName = SpeziFoundation;
+		};
+		8098C14D2F6EE891007FC944 /* SpeziQuestionnaire */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = SpeziQuestionnaire;
+		};
+		8098C14F2F6EE891007FC944 /* SpeziQuestionnaireFHIR */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = SpeziQuestionnaireFHIR;
+		};
+		8098C1512F6EE891007FC944 /* XCTSpeziQuestionnaire */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = XCTSpeziQuestionnaire;
+		};
+		8098C1542F6EFA08007FC944 /* SpeziQuestionnaire */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 8098C1532F6EFA08007FC944 /* XCRemoteSwiftPackageReference "SpeziQuestionnaire" */;
+			productName = SpeziQuestionnaire;
+		};
+		8098C1562F6EFA08007FC944 /* SpeziQuestionnaireFHIR */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 8098C1532F6EFA08007FC944 /* XCRemoteSwiftPackageReference "SpeziQuestionnaire" */;
+			productName = SpeziQuestionnaireFHIR;
+		};
+		8098C1582F6EFA08007FC944 /* XCTSpeziQuestionnaire */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 8098C1532F6EFA08007FC944 /* XCRemoteSwiftPackageReference "SpeziQuestionnaire" */;
+			productName = XCTSpeziQuestionnaire;
 		};
 		80A98FA52F13DA5C00BDD5B7 /* SpeziFHIR */ = {
 			isa = XCSwiftPackageProductDependency;
