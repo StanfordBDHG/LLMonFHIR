@@ -57,6 +57,7 @@ struct UserStudyChatToolbar: ToolbarContent {
             Image(systemName: "xmark")
                 .accessibilityLabel("Dismiss")
         }
+        .disabled(model.isProcessing)
         .confirmationDialog(
             "Going back will reset your chat history.",
             isPresented: $model.isDismissDialogPresented,
