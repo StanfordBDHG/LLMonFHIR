@@ -19,23 +19,30 @@ public struct StudyConfig: Hashable, Codable, Sendable {
     }
     
     /// The OpenAI API key that should be used when answering this survey.
-    public let openAIAPIKey: String
+    public let openAIAPIKey: String?
     public let openAIEndpoint: OpenAIEndpointConfig
     
     /// The email address to which the report file should be sent.
-    public let reportEmail: String
+    public let reportEmail: String?
     
     /// The public key to use when encrypting a report file.
     ///
     /// `nil` if the files should never be encrypted.
     public let encryptionKey: Curve25519.KeyAgreement.PublicKey?
     
+    
     public init(
-        openAIAPIKey: String,
+        openAIAPIKey: String?,
         openAIEndpoint: OpenAIEndpointConfig,
         reportEmail: String,
         encryptionKey: Curve25519.KeyAgreement.PublicKey?
     ) {
+        if case .regular = openAIEndpoint {
+            precondition(
+                openAIAPIKey != nil && !(openAIAPIKey?.isEmpty ?? true),
+                "When configuring a study with an OpenAI endpoint it must have an accompanying OpenAI key."
+            )
+        }
         self.openAIAPIKey = openAIAPIKey
         self.openAIEndpoint = openAIEndpoint
         self.reportEmail = reportEmail

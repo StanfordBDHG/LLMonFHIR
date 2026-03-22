@@ -37,11 +37,11 @@ extension UserStudyChatViewModel {
         var statusDescription: String {
             switch self {
             case .processingSystemPrompts:
-                "Interpreting message..."
+                "Interpreting message…"
             case let .processingFunctionCalls(current, total):
-                "Processing data (\(current)/\(total))..."
+                "Processing data (\(current)/\(total))…"
             case .generatingResponse:
-                "Generating response..."
+                "Generating response…"
             case .completed:
                 "Processing completed"
             case .error:
