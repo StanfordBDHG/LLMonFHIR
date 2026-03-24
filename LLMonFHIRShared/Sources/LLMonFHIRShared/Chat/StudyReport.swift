@@ -9,10 +9,10 @@
 // periphery:ignore - These objects are used to create a JSON resprestation of the User Study Survey Report
 
 public import Foundation
-public import SpeziFHIR
-public import SpeziLLMOpenAI  // for LLMOpenAIParameters.ModelType
-
 public import class ModelsR4.QuestionnaireResponse
+public import SpeziFHIR
+public import SpeziLLMOpenAI // for LLMOpenAIParameters.ModelType
+
 
 /// A report summarizing a user study session, including metadata, FHIR resources, and timeline events.
 public struct StudyReport: Encodable, Sendable {
@@ -20,11 +20,11 @@ public struct StudyReport: Encodable, Sendable {
     ///
     /// Not used anywhere in the code, but included when the type is encoded, so that any downstream processing code can decode it in a resilient way, if we make changes down the road.
     private let version = 1
-    let metadata: Metadata
+    private let metadata: Metadata
     nonisolated(unsafe) private let initialQuestionnaireResponse: ModelsR4.QuestionnaireResponse?
     private let fhirResources: FHIRResources
     private let timeline: [TimelineEvent]
-
+    
     public init(
         metadata: Metadata,
         initialQuestionnaireResponse: ModelsR4.QuestionnaireResponse?,
@@ -38,36 +38,26 @@ public struct StudyReport: Encodable, Sendable {
     }
 }
 
+
 extension StudyReport {
     /// Metadata about the study session.
     public struct Metadata: Encodable, Sendable {
         public struct LLMConfig: Codable, Sendable {
-            public enum Service: String, Codable, Sendable {
-                case openAI
-                case firebase
-                case firebaseEmulator
-            }
-
             public let model: LLMOpenAIParameters.ModelType
             public let temperature: Double
-            public let service: Service
-            public init(model: LLMOpenAIParameters.ModelType, temperature: Double, service: Service) {
+            public init(model: LLMOpenAIParameters.ModelType, temperature: Double) {
                 self.model = model
                 self.temperature = temperature
-                self.service = service
             }
         }
-
+        
         private let studyID: String
         private let startTime: Date
         private let endTime: Date
         private let userInfo: [String: String]
         private let llmConfig: LLMConfig
-
-        public init(
-            studyID: String, startTime: Date, endTime: Date, userInfo: [String: String],
-            llmConfig: LLMConfig
-        ) {
+        
+        public init(studyID: String, startTime: Date, endTime: Date, userInfo: [String: String], llmConfig: LLMConfig) {
             self.studyID = studyID
             self.startTime = startTime
             self.endTime = endTime
@@ -80,7 +70,7 @@ extension StudyReport {
     public struct FHIRResources: Encodable, Sendable {
         private let llmRelevantResources: [FullFHIRResource]
         private let allResources: [PartialFHIRResource]
-
+        
         public init(llmRelevantResources: [FullFHIRResource], allResources: [PartialFHIRResource]) {
             self.llmRelevantResources = llmRelevantResources
             self.allResources = allResources
@@ -89,13 +79,12 @@ extension StudyReport {
 
     /// A wrapper for a full FHIR resource, delegating encoding to the underlying resource.
     public struct FullFHIRResource: Encodable, Sendable {
-        nonisolated(unsafe) private let versionedResource:
-            SpeziFHIR.FHIRResource.VersionedFHIRResource
-
+        nonisolated(unsafe) private let versionedResource: SpeziFHIR.FHIRResource.VersionedFHIRResource
+        
         public init(_ versionedResource: SpeziFHIR.FHIRResource.VersionedFHIRResource) {
             self.versionedResource = versionedResource
         }
-
+        
         public func encode(to encoder: any Encoder) throws {
             switch versionedResource {
             case .r4(let resource):
@@ -113,11 +102,8 @@ extension StudyReport {
         private let displayName: String
         private let dateDescription: String?
         private let summary: String?
-
-        public init(
-            id: FHIRResource.ID, resourceType: String, displayName: String,
-            dateDescription: String?, summary: String?
-        ) {
+        
+        public init(id: FHIRResource.ID, resourceType: String, displayName: String, dateDescription: String?, summary: String?) {
             self.id = id
             self.resourceType = resourceType
             self.displayName = displayName
@@ -145,7 +131,7 @@ extension StudyReport {
             fileprivate let timestamp: Date
             private let role: String
             private let content: String
-
+            
             public init(timestamp: Date, role: String, content: String) {
                 self.timestamp = timestamp
                 self.role = role
@@ -159,11 +145,8 @@ extension StudyReport {
             fileprivate let completedAt: Date
             private let duration: TimeInterval
             private let questions: [SurveyQuestion]
-
-            public init(
-                taskId: String, startedAt: Date, completedAt: Date, duration: TimeInterval,
-                questions: [SurveyQuestion]
-            ) {
+            
+            public init(taskId: String, startedAt: Date, completedAt: Date, duration: TimeInterval, questions: [SurveyQuestion]) {
                 self.taskId = taskId
                 self.startedAt = startedAt
                 self.completedAt = completedAt
@@ -176,7 +159,7 @@ extension StudyReport {
             private let questionText: String
             private let answer: String
             private let isOptional: Bool
-
+            
             public init(questionText: String, answer: String, isOptional: Bool) {
                 self.questionText = questionText
                 self.answer = answer
@@ -206,6 +189,7 @@ extension StudyReport {
         }
     }
 }
+
 
 extension StudyReport.TimelineEvent: Comparable {
     public static func < (lhs: Self, rhs: Self) -> Bool {

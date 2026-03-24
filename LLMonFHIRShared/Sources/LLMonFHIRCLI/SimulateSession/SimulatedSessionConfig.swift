@@ -35,6 +35,9 @@ struct SimulatedSessionConfig: Sendable {
 
     let service: Service
 
+    /// Optional human-readable name for this config, used as the output filename prefix.
+    let name: String?
+
     /// Optional text appended to the study's default system prompt.
     let systemPromptSuffix: String?
 
@@ -65,6 +68,7 @@ extension SimulatedSessionConfig: DecodableWithConfiguration {
 
     private enum CodingKeys: String, CodingKey {
         case numberOfRuns
+        case name
         case studyId
         case bundleName
         case service
@@ -77,6 +81,7 @@ extension SimulatedSessionConfig: DecodableWithConfiguration {
     init(from decoder: any Decoder, configuration: DecodingConfiguration) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         self.numberOfRuns = try container.decode(Int.self, forKey: .numberOfRuns)
+        self.name = try container.decodeIfPresent(String.self, forKey: .name)
         self.model = try container.decode(LLMOpenAIParameters.ModelType.self, forKey: .model)
         self.temperature = try container.decode(Double.self, forKey: .temperature)
 
@@ -129,12 +134,3 @@ extension SimulatedSessionConfig: DecodableWithConfiguration {
     }
 }
 
-extension SimulatedSessionConfig.Service {
-    var reportService: StudyReport.Metadata.LLMConfig.Service {
-        switch self {
-        case .openAI: .openAI
-        case .firebase: .firebase
-        case .firebaseEmulator: .firebaseEmulator
-        }
-    }
-}

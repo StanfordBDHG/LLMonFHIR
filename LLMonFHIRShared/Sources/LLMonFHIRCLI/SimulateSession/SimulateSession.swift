@@ -41,8 +41,9 @@ struct SimulateSession: AsyncParsableCommand {
             )
         }
         var failedSessionCount = 0
+        typealias ReportEntry = (report: StudyReport, name: String, runIdx: Int)
         let reports = await withTaskGroup(
-            of: StudyReport?.self, returning: [StudyReport].self
+            of: ReportEntry?.self, returning: [ReportEntry].self
         ) { taskGroup in
             for config in configs {
                 for runIdx in 0..<config.numberOfRuns {
@@ -53,7 +54,7 @@ struct SimulateSession: AsyncParsableCommand {
                         do {
                             let result = try await simulator.run()
                             print("Ended \(sessionDesc)")
-                            return result
+                            return (result, config.name ?? config.study.id, runIdx)
                         } catch {
                             print("\(sessionDesc) failed: \(error.localizedDescription) \(error)")
                             return nil
@@ -61,10 +62,10 @@ struct SimulateSession: AsyncParsableCommand {
                     }
                 }
             }
-            var reports: [StudyReport] = []
-            for await report in taskGroup {
-                if let report {
-                    reports.append(report)
+            var reports: [ReportEntry] = []
+            for await entry in taskGroup {
+                if let entry {
+                    reports.append(entry)
                 } else {
                     failedSessionCount += 1
                 }
@@ -80,10 +81,11 @@ struct SimulateSession: AsyncParsableCommand {
 
         let encoder = JSONEncoder()
         encoder.outputFormatting = [.prettyPrinted, .withoutEscapingSlashes, .sortedKeys]
-        for report in reports {
-            let dstUrl = outputUrl.appendingPathComponent(UUID().uuidString, conformingTo: .json)
+        for (report, name, runIdx) in reports {
+            let filename = "\(name)-\(runIdx + 1)"
+            let dstUrl = outputUrl.appendingPathComponent(filename, conformingTo: .json)
             let reportData = try encoder.encode(report)
-            print("Writing report file to \(dstUrl.path)")
+            print("Writing report to \(dstUrl.lastPathComponent)")
             try reportData.write(to: dstUrl)
         }
 

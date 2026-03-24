@@ -77,8 +77,7 @@ struct SessionSimulator: ~Copyable {
                 ],
                 llmConfig: .init(
                     model: config.model,
-                    temperature: config.temperature,
-                    service: config.service.reportService
+                    temperature: config.temperature
                 )
             ),
             initialQuestionnaireResponse: nil,  // (obviously) not supported
