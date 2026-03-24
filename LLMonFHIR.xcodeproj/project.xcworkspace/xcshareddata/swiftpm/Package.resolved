@@ -1,5 +1,5 @@
 {
-  "originHash" : "06b89d670f39c6c049cee16b1fe31595925b60c0c8bd655462281ef840ce676c",
+  "originHash" : "d885987dce42f7c2f146561233f2158803281c1391d8e04ac3e225a355d34f1d",
   "pins" : [
     {
       "identity" : "abseil-cpp-binary",
@@ -35,6 +35,15 @@
       "state" : {
         "revision" : "a05392269b630a8d661bda720d149fee2f0257e2",
         "version" : "0.8.0"
+      }
+    },
+    {
+      "identity" : "fhirmodelsextensions",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/StanfordBDHG/FHIRModelsExtensions.git",
+      "state" : {
+        "revision" : "44c8f1f6a5d0262ae7bc2761c2b1e6c9bf4938be",
+        "version" : "0.1.0"
       }
     },
     {
@@ -213,8 +222,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/StanfordBDHG/ResearchKitOnFHIR.git",
       "state" : {
-        "revision" : "dc3e35d55e5c0acc0059c5f939535de230fdbd99",
-        "version" : "2.0.7"
+        "revision" : "627d2c7df7c4a2a691c996cb4b183e2cf28648c6",
+        "version" : "3.0.0-beta.1"
       }
     },
     {
@@ -285,8 +294,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/StanfordSpezi/SpeziLLM.git",
       "state" : {
-        "revision" : "5ff3cd688c839f244cf5e654235a7c40ab301950",
-        "version" : "0.13.6"
+        "revision" : "573c425adfa0d2b546ea6518692e6b41b2a7f7d4",
+        "version" : "0.13.7"
       }
     },
     {
@@ -303,8 +312,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/StanfordSpezi/SpeziQuestionnaire.git",
       "state" : {
-        "revision" : "5b0c768b20969b670127104930995db8325b52dc",
-        "version" : "1.3.0"
+        "revision" : "624cc6da649690d8f9cd295ca23064c47a0ab856",
+        "version" : "2.0.0-beta.1"
       }
     },
     {
@@ -330,8 +339,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/StanfordSpezi/SpeziViews.git",
       "state" : {
-        "revision" : "ddf43847a434b122fd97582b5182bb88f858c01b",
-        "version" : "1.12.11"
+        "revision" : "236fd063407aaba2a34f3f61b3034dd3a01f22c5",
+        "version" : "1.12.14"
       }
     },
     {
@@ -393,8 +402,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/huggingface/swift-jinja.git",
       "state" : {
-        "revision" : "d81197f35f41445bc10e94600795e68c6f5e94b0",
-        "version" : "2.3.1"
+        "revision" : "f731f03bf746481d4fda07f817c3774390c4d5b9",
+        "version" : "2.3.2"
       }
     },
     {
@@ -438,8 +447,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/apple/swift-openapi-runtime",
       "state" : {
-        "revision" : "7cdf33371bf89b23b9cf4fd3ce8d3c825c28fbe8",
-        "version" : "1.9.0"
+        "revision" : "f039fa6d6338aab5164f3d1be16281524c9a8f89",
+        "version" : "1.11.0"
       }
     },
     {
@@ -492,8 +501,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/StanfordBDHG/XCTestExtensions.git",
       "state" : {
-        "revision" : "5f4b9670acfac68ed55a2d6462d716a2bcdc2261",
-        "version" : "1.2.2"
+        "revision" : "4550188a017d316ab64ef0948fc40aff96611bbf",
+        "version" : "1.2.5"
       }
     },
     {

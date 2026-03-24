@@ -30,7 +30,7 @@ platform :ios do
       skip_build: true,
       derived_data_path: ".derivedData",
       code_coverage: true,
-      devices: ["iPhone 17"],
+      devices: ["iPhone 17 Pro Max"],
       disable_slide_to_type: false,
       concurrent_workers: 1,
       max_concurrent_simulators: 1,
@@ -205,6 +205,18 @@ platform :ios do
         reject_if_possible: true,
         automatic_release: true,
         precheck_include_in_app_purchases: false,
+      )
+    elsif environment == "spineai"
+      upload_to_testflight(
+        app_identifier: appidentifier,
+        distribute_external: true,
+        reject_build_waiting_for_review: true,
+        groups: [
+          "SpineAI"
+        ],
+        submit_beta_review: true,
+        notify_external_testers: true,
+        changelog: commit[:message]
       )
     else
       upload_to_testflight(

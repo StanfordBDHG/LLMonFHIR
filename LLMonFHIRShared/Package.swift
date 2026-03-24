@@ -26,7 +26,7 @@ let package = Package(
         .package(url: "https://github.com/StanfordSpezi/SpeziFoundation.git", from: "2.7.2"),
         .package(url: "https://github.com/apple/FHIRModels.git", .upToNextMajor(from: "0.7.0")),
         .package(url: "https://github.com/apple/swift-argument-parser.git", from: "1.7.0"),
-        .package(url: "https://github.com/StanfordSpezi/SpeziLLM.git", from: "0.13.6"),
+        .package(url: "https://github.com/StanfordSpezi/SpeziLLM.git", from: "0.13.7"),
         .package(url: "https://github.com/StanfordSpezi/SpeziStorage.git", from: "2.1.3"),
         .package(url: "https://github.com/StanfordSpezi/SpeziFHIR.git", from: "0.10.0"),
         .package(url: "https://github.com/firebase/firebase-ios-sdk.git", from: "12.8.0"),
