@@ -17,7 +17,8 @@ import Spezi
 
 @Observable
 final class OpenAIRequestInterceptor: Module, EnvironmentAccessible, ClientMiddleware,
-    @unchecked Sendable {
+    @unchecked Sendable
+{
     private struct Error: Swift.Error, CustomStringConvertible {
         let description: String
         init(_ description: String) {
@@ -56,7 +57,7 @@ final class OpenAIRequestInterceptor: Module, EnvironmentAccessible, ClientMiddl
                 name: name,
                 queryItems: [
                     "ragEnabled": "true",
-                    "studyId": studyId
+                    "studyId": studyId,
                 ].compactMapValues { $0 },
                 body: input
             )
@@ -65,7 +66,7 @@ final class OpenAIRequestInterceptor: Module, EnvironmentAccessible, ClientMiddl
                 headerFields: [
                     .contentType: "text/event-stream",
                     .cacheControl: "no-cache",
-                    .connection: "keep-alive"
+                    .connection: "keep-alive",
                 ]
             )
             let body = HTTPBody(stream, length: .unknown)
@@ -107,8 +108,6 @@ final class OpenAIRequestInterceptor: Module, EnvironmentAccessible, ClientMiddl
                             switch event {
                             case .message(let chunk), .result(let chunk):
                                 chunk
-                            case .result(let chunk):
-                                chunk ?? ""
                             }
                         if let string {
                             continuation.yield(HTTPBody.ByteChunk(string.utf8))
