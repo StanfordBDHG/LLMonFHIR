@@ -14,12 +14,12 @@ let package = Package(
     defaultLocalization: "en",
     platforms: [
         .iOS(.v18),
-        .macOS(.v15),
+        .macOS(.v15)
     ],
     products: [
         .library(name: "LLMonFHIRShared", targets: ["LLMonFHIRShared"]),
         .library(name: "LLMonFHIRStudyDefinitions", targets: ["LLMonFHIRStudyDefinitions"]),
-        .executable(name: "LLMonFHIRCLI", targets: ["LLMonFHIRCLI"]),
+        .executable(name: "LLMonFHIRCLI", targets: ["LLMonFHIRCLI"])
     ],
     dependencies: [
         .package(url: "https://github.com/StanfordSpezi/SpeziFoundation.git", from: "2.7.2"),
@@ -27,7 +27,7 @@ let package = Package(
         .package(url: "https://github.com/apple/swift-argument-parser.git", from: "1.7.0"),
         .package(url: "https://github.com/StanfordSpezi/SpeziLLM.git", from: "0.13.7"),
         .package(url: "https://github.com/StanfordSpezi/SpeziStorage.git", from: "2.1.3"),
-        .package(url: "https://github.com/StanfordSpezi/SpeziFHIR.git", from: "0.10.0"),
+        .package(url: "https://github.com/StanfordSpezi/SpeziFHIR.git", from: "0.10.0")
     ],
     targets: [
         .target(
@@ -38,14 +38,14 @@ let package = Package(
                 .product(name: "SpeziLLM", package: "SpeziLLM"),
                 .product(name: "SpeziLLMOpenAI", package: "SpeziLLM"),
                 .product(name: "SpeziLocalStorage", package: "SpeziStorage"),
-                .product(name: "SpeziFHIR", package: "SpeziFHIR"),
+                .product(name: "SpeziFHIR", package: "SpeziFHIR")
             ],
             resources: [
                 .copy("Resources/Synthetic Patients")
             ],
             swiftSettings: [
                 .enableUpcomingFeature("ExistentialAny"),
-                .enableUpcomingFeature("InternalImportsByDefault"),
+                .enableUpcomingFeature("InternalImportsByDefault")
             ]
         ),
         .target(
@@ -56,7 +56,7 @@ let package = Package(
             ],
             swiftSettings: [
                 .enableUpcomingFeature("ExistentialAny"),
-                .enableUpcomingFeature("InternalImportsByDefault"),
+                .enableUpcomingFeature("InternalImportsByDefault")
             ]
         ),
         .executableTarget(
@@ -64,7 +64,7 @@ let package = Package(
             dependencies: [
                 "LLMonFHIRShared",
                 "LLMonFHIRStudyDefinitions",
-                .product(name: "ArgumentParser", package: "swift-argument-parser"),
+                .product(name: "ArgumentParser", package: "swift-argument-parser")
             ],
             swiftSettings: [
                 .enableUpcomingFeature("ExistentialAny")
@@ -74,6 +74,6 @@ let package = Package(
             name: "LLMonFHIRSharedTests",
             dependencies: ["LLMonFHIRShared", "LLMonFHIRStudyDefinitions"],
             resources: [.process("Resources")]
-        ),
+        )
     ]
 )
