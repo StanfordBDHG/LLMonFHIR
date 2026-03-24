@@ -9,9 +9,9 @@
 import Foundation
 import LLMonFHIRShared
 import LLMonFHIRStudyDefinitions
-import class ModelsR4.Bundle
 import SpeziLLMOpenAI
 
+import class ModelsR4.Bundle
 
 struct SimulatedSessionConfig: Sendable {
     let numberOfRuns: Int
@@ -33,15 +33,7 @@ struct SimulatedSessionConfig: Sendable {
     /// - Note: Isn't allowed to be mutated
     nonisolated(unsafe) let bundle: ModelsR4.Bundle
 
-    /// The OpenAI API key used when simulating this session directly against OpenAI.
-    ///
-    /// Exactly one of ``openAIKey`` and ``firebaseCredentialsPath`` must be non-nil.
-    let openAIKey: String?
-
-    /// Path to a `GoogleService-Info.plist` used to route requests through Firebase instead of OpenAI directly.
-    ///
-    /// Exactly one of ``openAIKey`` and ``firebaseCredentialsPath`` must be non-nil.
-    let firebaseCredentialsPath: String?
+    let service: Service
 
     /// Optional text appended to the study's default system prompt.
     let systemPromptSuffix: String?
@@ -54,12 +46,18 @@ struct SimulatedSessionConfig: Sendable {
         guard let suffix = systemPromptSuffix, !suffix.isEmpty else {
             return study.interpretMultipleResourcesPrompt
         }
-        return FHIRPrompt(promptText: study.interpretMultipleResourcesPrompt.promptText + "\n\n" + suffix)
+        return FHIRPrompt(
+            promptText: study.interpretMultipleResourcesPrompt.promptText + "\n\n" + suffix)
     }
 }
 
-
 extension SimulatedSessionConfig: DecodableWithConfiguration {
+    enum Service: String, Codable {
+        case openAI = "OpenAI"
+        case firebase = "Firebase"
+        case firebaseEmulator = "Firebase-Emulator"
+    }
+
     struct DecodingConfiguration {
         /// The URL of the config file being decoded, if applicable.
         let configFileUrl: URL?
@@ -69,8 +67,7 @@ extension SimulatedSessionConfig: DecodableWithConfiguration {
         case numberOfRuns
         case studyId
         case bundleName
-        case openAIKey
-        case firebaseCredentials
+        case service
         case systemPromptSuffix
         case userQuestions
         case model
@@ -83,36 +80,61 @@ extension SimulatedSessionConfig: DecodableWithConfiguration {
         self.model = try container.decode(LLMOpenAIParameters.ModelType.self, forKey: .model)
         self.temperature = try container.decode(Double.self, forKey: .temperature)
 
-        let openAIKey = try container.decodeIfPresent(String.self, forKey: .openAIKey)
-        let firebaseCredentials = try container.decodeIfPresent(String.self, forKey: .firebaseCredentials)
-
-        guard (openAIKey == nil) != (firebaseCredentials == nil) else {
-            throw DecodingError.dataCorrupted(.init(
-                codingPath: [],
-                debugDescription: "Exactly one of 'openAIKey' or 'firebaseCredentials' must be specified per session config"
-            ))
-        }
-        self.openAIKey = openAIKey
-        self.firebaseCredentialsPath = firebaseCredentials.map { path in
-            URL(filePath: path, relativeTo: configuration.configFileUrl?.deletingLastPathComponent()).path(percentEncoded: false)
+        if let decodedService = try container.decodeIfPresent(Service.self, forKey: .service) {
+            self.service = decodedService
+        } else {
+            let env = ProcessInfo.processInfo.environment
+            if env["OPENAI_API_KEY"] != nil {
+                print("No 'service' specified — inferring 'OpenAI' from OPENAI_API_KEY environment variable.")
+                self.service = .openAI
+            } else if env["GOOGLE_CREDENTIALS_PLIST"] != nil {
+                print("No 'service' specified — inferring 'Firebase' from GOOGLE_CREDENTIALS_PLIST environment variable.")
+                self.service = .firebase
+            } else {
+                print("No 'service' specified and no credentials found in environment — defaulting to 'Firebase-Emulator'.")
+                self.service = .firebaseEmulator
+            }
         }
 
         let studyId = try container.decode(Study.ID.self, forKey: .studyId)
         guard let study = Study.allStudies.first(where: { $0.id == studyId }) else {
-            throw DecodingError.dataCorrupted(.init(codingPath: [], debugDescription: "Unable to find study with id '\(studyId)'"))
+            throw DecodingError.dataCorrupted(
+                .init(codingPath: [], debugDescription: "Unable to find study with id '\(studyId)'")
+            )
         }
         self.study = study
         bundleInputName = try container.decode(String.self, forKey: .bundleName)
-        let url = URL(filePath: bundleInputName, relativeTo: configuration.configFileUrl?.deletingLastPathComponent())
+        let url = URL(
+            filePath: bundleInputName,
+            relativeTo: configuration.configFileUrl?.deletingLastPathComponent())
         if FileManager.default.itemExists(at: url) && !FileManager.default.isDirectory(at: url) {
-            bundle = try JSONDecoder().decode(ModelsR4.Bundle.self, from: Data(contentsOf: url))
+            do {
+                bundle = try JSONDecoder().decode(ModelsR4.Bundle.self, from: Data(contentsOf: url))
+            } catch {
+                print("Bundle decoding failed for file: \(url): \(error)")
+                throw error
+            }
         } else {
             guard let bundle = ModelsR4.Bundle.forPatient(named: bundleInputName) else {
-                throw DecodingError.dataCorrupted(.init(codingPath: [], debugDescription: "Unable to find bundle named '\(bundleInputName)'"))
+                throw DecodingError.dataCorrupted(
+                    .init(
+                        codingPath: [],
+                        debugDescription: "Unable to find bundle named '\(bundleInputName)'"))
             }
             self.bundle = bundle
         }
-        self.systemPromptSuffix = try container.decodeIfPresent(String.self, forKey: .systemPromptSuffix)
+        self.systemPromptSuffix = try container.decodeIfPresent(
+            String.self, forKey: .systemPromptSuffix)
         self.userQuestions = try container.decode([String].self, forKey: .userQuestions)
+    }
+}
+
+extension SimulatedSessionConfig.Service {
+    var reportService: StudyReport.Metadata.LLMConfig.Service {
+        switch self {
+        case .openAI: .openAI
+        case .firebase: .firebase
+        case .firebaseEmulator: .firebaseEmulator
+        }
     }
 }

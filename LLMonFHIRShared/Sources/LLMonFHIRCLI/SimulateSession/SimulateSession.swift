@@ -42,8 +42,26 @@ struct SimulateSession: AsyncParsableCommand {
         )
 
         // Configure Firebase once if any session routes through it
-        if let firebasePlist = configs.compactMap(\.firebaseCredentialsPath).first {
+        let usesFirebase = configs.contains(where: { $0.service == .firebase })
+        let usesEmulator = configs.contains(where: { $0.service == .firebaseEmulator })
+        if usesFirebase {
+            guard
+                let firebasePlist = ProcessInfo.processInfo.environment["GOOGLE_CREDENTIALS_PLIST"],
+                !firebasePlist.isEmpty
+            else {
+                throw ValidationError(
+                    "GOOGLE_CREDENTIALS_PLIST environment variable is required when using the 'Firebase' service."
+                )
+            }
             try configureFirebaseApp(contentsOfFile: firebasePlist)
+        } else if usesEmulator {
+            if let firebasePlist = ProcessInfo.processInfo.environment["GOOGLE_CREDENTIALS_PLIST"],
+                !firebasePlist.isEmpty
+            {
+                try configureFirebaseApp(contentsOfFile: firebasePlist)
+            } else {
+                configureFirebaseAppForEmulator()
+            }
         }
         var failedSessionCount = 0
         let reports = await withTaskGroup(
@@ -84,7 +102,7 @@ struct SimulateSession: AsyncParsableCommand {
         try FileManager.default.createDirectory(at: outputUrl, withIntermediateDirectories: true)
 
         let encoder = JSONEncoder()
-        encoder.outputFormatting = [.prettyPrinted, .withoutEscapingSlashes]
+        encoder.outputFormatting = [.prettyPrinted, .withoutEscapingSlashes, .sortedKeys]
         for report in reports {
             let dstUrl = outputUrl.appendingPathComponent(UUID().uuidString, conformingTo: .json)
             let reportData = try encoder.encode(report)

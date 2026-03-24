@@ -7,7 +7,6 @@
 //
 
 import Foundation
-import LLMonFHIRFirebase
 import LLMonFHIRShared
 import OpenAPIRuntime
 @_spi(APISupport) import Spezi
@@ -45,12 +44,19 @@ struct SessionSimulator: ~Copyable {
         defer {
             speziService.cancel()
         }
-        return try await _run()
+        let sessionDesc = self.sessionDesc
+        do {
+            return try await _run()
+        } catch {
+            print("Error running session \(sessionDesc): \(error)")
+            throw error
+        }
     }
 
     private consuming func _run() async throws -> StudyReport {
         let startTime = Date()
         await fhirStore.removeAllResources()
+        print("Simulating session: \(sessionDesc)")
         await fhirStore.load(bundle: config.bundle)
         await coordinator.prepareForUse()
         await interpreter.startNewConversation(using: config.systemPrompt)
@@ -72,7 +78,7 @@ struct SessionSimulator: ~Copyable {
                 llmConfig: .init(
                     model: config.model,
                     temperature: config.temperature,
-                    backend: config.firebaseCredentialsPath != nil ? .firebase : .openAI
+                    service: config.service.reportService
                 )
             ),
             initialQuestionnaireResponse: nil,  // (obviously) not supported
@@ -129,14 +135,29 @@ extension SessionSimulator {
 
     @MainActor
     private static func speziConfig(for config: SimulatedSessionConfig) -> SpeziConfiguration {
-        let middlewares: [any ClientMiddleware] =
-            config.firebaseCredentialsPath != nil
-            ? [
-                OpenAIFirebaseFunctionMiddleware(endpointProvider: {
-                    .firebaseFunction(name: "chat")
-                })
-            ]
-            : []
+        let openAIKey = ProcessInfo.processInfo.environment["OPENAI_API_KEY"] ?? ""
+        let middlewares: [any ClientMiddleware]
+        switch config.service {
+        case .openAI:
+            middlewares = []
+        case .firebase:
+            if let firebaseConfig = firebaseConfigFromEnvironment(useEmulator: false) {
+                middlewares = [OpenAIFirebaseInterceptor(firebaseConfig: firebaseConfig, endpointProvider: { .firebaseFunction(name: "chat") })]
+            } else {
+                print("Warning: GOOGLE_CREDENTIALS_PLIST not set or unreadable; Firebase requests will fail.")
+                middlewares = []
+            }
+        case .firebaseEmulator:
+            middlewares = [OpenAIFirebaseInterceptor(
+                firebaseConfig: firebaseConfigFromEnvironment(useEmulator: true) ?? FirebaseConfig(
+                    apiKey: "demo-key",
+                    projectID: "demo-project",
+                    authEmulatorAddress: ProcessInfo.processInfo.environment["FIREBASE_AUTH_EMULATOR_HOST"] ?? "localhost:9099",
+                    functionsEmulatorAddress: ProcessInfo.processInfo.environment["FIREBASE_FUNCTIONS_EMULATOR_HOST"] ?? "localhost:5001"
+                ),
+                endpointProvider: { .firebaseFunction(name: "chat") }
+            )]
+        }
         return SpeziConfiguration(standard: FakeStandard()) {
             FHIRStore()
             SessionCoordinator(
@@ -150,13 +171,32 @@ extension SessionSimulator {
             LLMRunner {
                 LLMOpenAIPlatform(
                     configuration: .init(
-                        authToken: .constant(config.openAIKey ?? ""),
+                        authToken: .constant(openAIKey),
                         concurrentStreams: 100,
                         retryPolicy: .attempts(3),
                         middlewares: middlewares
                     ))
             }
         }
+    }
+}
+
+extension SessionSimulator {
+    private static func firebaseConfigFromEnvironment(useEmulator: Bool) -> FirebaseConfig? {
+        let env = ProcessInfo.processInfo.environment
+        guard let plistPath = env["GOOGLE_CREDENTIALS_PLIST"],
+              let base = try? FirebaseConfig(contentsOfFile: plistPath) else {
+            return nil
+        }
+        guard useEmulator else {
+            return base
+        }
+        return FirebaseConfig(
+            apiKey: base.apiKey,
+            projectID: base.projectID,
+            authEmulatorAddress: env["FIREBASE_AUTH_EMULATOR_HOST"] ?? "localhost:9099",
+            functionsEmulatorAddress: env["FIREBASE_FUNCTIONS_EMULATOR_HOST"] ?? "localhost:5001"
+        )
     }
 }
 

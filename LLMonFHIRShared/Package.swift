@@ -82,20 +82,11 @@ let package = Package(
             name: "LLMonFHIRCLI",
             dependencies: [
                 "LLMonFHIRShared",
-                "LLMonFHIRFirebase",
                 "LLMonFHIRStudyDefinitions",
                 .product(name: "ArgumentParser", package: "swift-argument-parser"),
             ],
             swiftSettings: [
                 .enableUpcomingFeature("ExistentialAny")
-            ],
-            linkerSettings: [
-                .unsafeFlags([
-                    "-Xlinker", "-sectcreate",
-                    "-Xlinker", "__TEXT",
-                    "-Xlinker", "__info_plist",
-                    "-Xlinker", "Sources/LLMonFHIRCLI/Info.plist",
-                ])
             ]
         ),
         .testTarget(
