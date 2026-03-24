@@ -9,6 +9,7 @@
 
 import PackageDescription
 
+
 let package = Package(
     name: "LLMonFHIRShared",
     defaultLocalization: "en",
@@ -52,7 +53,7 @@ let package = Package(
             name: "LLMonFHIRStudyDefinitions",
             dependencies: [
                 "LLMonFHIRShared",
-                .product(name: "ModelsR4", package: "FHIRModels"),
+                .product(name: "ModelsR4", package: "FHIRModels")
             ],
             swiftSettings: [
                 .enableUpcomingFeature("ExistentialAny"),
