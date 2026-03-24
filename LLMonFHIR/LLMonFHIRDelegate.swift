@@ -10,7 +10,6 @@
 
 import FirebaseCore
 import GeneratedOpenAIClient // periphery:ignore - false positive
-import LLMonFHIRFirebase
 import LLMonFHIRShared
 @_spi(APISupport) import Spezi
 import SpeziAccount
@@ -33,6 +32,8 @@ final class LLMonFHIRDelegate: SpeziAppDelegate {
             if !FeatureFlags.disableFirebase, let config = AppConfigFile.current().firebaseConfig {
                 firebaseModules(using: config)
             }
+            let openAIInterceptor = OpenAIRequestInterceptor()
+            openAIInterceptor
             let fhirInterpretationModule = FHIRInterpretationModule()
             fhirInterpretationModule
             HealthKit {
@@ -48,13 +49,7 @@ final class LLMonFHIRDelegate: SpeziAppDelegate {
                     authToken: self.openAITokenConfig,
                     concurrentStreams: 100,
                     retryPolicy: .attempts(3),  // Automatically perform up to 3 retries on retryable OpenAI API status codes
-                    middlewares: [
-                        OpenAIFirebaseFunctionMiddleware(
-                            endpointProvider: { @MainActor in
-                                fhirInterpretationModule.currentStudy?.config.openAIEndpoint ?? .regular
-                            }
-                        )
-                    ]
+                    middlewares: [openAIInterceptor]
                 ))
                 switch LLMonFHIR.mode {
                 case .study:
