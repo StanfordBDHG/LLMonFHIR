@@ -10,15 +10,7 @@
 
 import ArgumentParser
 import Foundation
-import LLMonFHIRFirebase
 import LLMonFHIRShared
-import LLMonFHIRStudyDefinitions
-@_spi(APISupport) import Spezi
-import SpeziChat
-import SpeziFHIR
-import SpeziHealthKit
-import SpeziLLM
-import SpeziLLMOpenAI
 
 struct SimulateSession: AsyncParsableCommand {
     static let configuration = CommandConfiguration(
@@ -41,27 +33,12 @@ struct SimulateSession: AsyncParsableCommand {
             configuration: .init(configFileUrl: inputUrl)
         )
 
-        // Configure Firebase once if any session routes through it
-        let usesFirebase = configs.contains(where: { $0.service == .firebase })
-        let usesEmulator = configs.contains(where: { $0.service == .firebaseEmulator })
-        if usesFirebase {
-            guard
-                let firebasePlist = ProcessInfo.processInfo.environment["GOOGLE_CREDENTIALS_PLIST"],
-                !firebasePlist.isEmpty
-            else {
-                throw ValidationError(
-                    "GOOGLE_CREDENTIALS_PLIST environment variable is required when using the 'Firebase' service."
-                )
-            }
-            try configureFirebaseApp(contentsOfFile: firebasePlist)
-        } else if usesEmulator {
-            if let firebasePlist = ProcessInfo.processInfo.environment["GOOGLE_CREDENTIALS_PLIST"],
-                !firebasePlist.isEmpty
-            {
-                try configureFirebaseApp(contentsOfFile: firebasePlist)
-            } else {
-                configureFirebaseAppForEmulator()
-            }
+        // Fail early if Firebase credentials are required but not provided
+        if configs.contains(where: { $0.service == .firebase }),
+           ProcessInfo.processInfo.environment["GOOGLE_CREDENTIALS_PLIST"]?.isEmpty ?? true {
+            throw ValidationError(
+                "GOOGLE_CREDENTIALS_PLIST environment variable is required when using the 'Firebase' service."
+            )
         }
         var failedSessionCount = 0
         let reports = await withTaskGroup(

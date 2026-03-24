@@ -118,7 +118,14 @@ struct SessionSimulator: ~Copyable {
                 ))
         }
     }
+
+    var sessionDesc: String {
+        "\(config.study.id) / \(config.bundle.singlePatient?.fullName ?? config.bundleInputName) @ \(config.model)/\(config.temperature) (\(runIdx + 1)/\(config.numberOfRuns))"
+    }
 }
+
+
+// MARK: - Spezi configuration
 
 extension SessionSimulator {
     private actor FakeStandard: Standard, HealthKitConstraint {
@@ -141,20 +148,12 @@ extension SessionSimulator {
         case .openAI:
             middlewares = []
         case .firebase:
-            if let firebaseConfig = firebaseConfigFromEnvironment(useEmulator: false) {
-                middlewares = [OpenAIFirebaseInterceptor(firebaseConfig: firebaseConfig, endpointProvider: { .firebaseFunction(name: "chat") })]
-            } else {
-                print("Warning: GOOGLE_CREDENTIALS_PLIST not set or unreadable; Firebase requests will fail.")
-                middlewares = []
-            }
+            middlewares = firebaseConfigFromEnvironment().map {
+                [OpenAIFirebaseInterceptor(firebaseConfig: $0, endpointProvider: { .firebaseFunction(name: "chat") })]
+            } ?? []
         case .firebaseEmulator:
             middlewares = [OpenAIFirebaseInterceptor(
-                firebaseConfig: firebaseConfigFromEnvironment(useEmulator: true) ?? FirebaseConfig(
-                    apiKey: "demo-key",
-                    projectID: "demo-project",
-                    authEmulatorAddress: ProcessInfo.processInfo.environment["FIREBASE_AUTH_EMULATOR_HOST"] ?? "localhost:9099",
-                    functionsEmulatorAddress: ProcessInfo.processInfo.environment["FIREBASE_FUNCTIONS_EMULATOR_HOST"] ?? "localhost:5001"
-                ),
+                firebaseConfig: emulatorConfigFromEnvironment(),
                 endpointProvider: { .firebaseFunction(name: "chat") }
             )]
         }
@@ -179,36 +178,30 @@ extension SessionSimulator {
             }
         }
     }
-}
 
-extension SessionSimulator {
-    private static func firebaseConfigFromEnvironment(useEmulator: Bool) -> FirebaseConfig? {
-        let env = ProcessInfo.processInfo.environment
-        guard let plistPath = env["GOOGLE_CREDENTIALS_PLIST"],
-              let base = try? FirebaseConfig(contentsOfFile: plistPath) else {
+    /// Loads a `FirebaseConfig` from the `GOOGLE_CREDENTIALS_PLIST` environment variable.
+    /// Returns `nil` when the variable is unset or the file cannot be parsed.
+    private static func firebaseConfigFromEnvironment() -> FirebaseConfig? {
+        guard let plistPath = ProcessInfo.processInfo.environment["GOOGLE_CREDENTIALS_PLIST"] else {
             return nil
         }
-        guard useEmulator else {
-            return base
-        }
+        return try? FirebaseConfig(contentsOfFile: plistPath)
+    }
+
+    /// Builds a `FirebaseConfig` that routes all traffic to the local Firebase emulator suite.
+    ///
+    /// Reads `FIREBASE_AUTH_EMULATOR_HOST` and `FIREBASE_FUNCTIONS_EMULATOR_HOST` for the emulator
+    /// addresses (defaulting to `localhost:9099` and `localhost:5001` respectively). If
+    /// `GOOGLE_CREDENTIALS_PLIST` is set, the real project credentials are used; otherwise
+    /// placeholder values are substituted so the emulator can be used without any credentials file.
+    private static func emulatorConfigFromEnvironment() -> FirebaseConfig {
+        let env = ProcessInfo.processInfo.environment
+        let base = firebaseConfigFromEnvironment()
         return FirebaseConfig(
-            apiKey: base.apiKey,
-            projectID: base.projectID,
+            apiKey: base?.apiKey ?? "demo-key",
+            projectID: base?.projectID ?? "demo-project",
             authEmulatorAddress: env["FIREBASE_AUTH_EMULATOR_HOST"] ?? "localhost:9099",
             functionsEmulatorAddress: env["FIREBASE_FUNCTIONS_EMULATOR_HOST"] ?? "localhost:5001"
         )
-    }
-}
-
-extension SessionSimulator {
-    var sessionDesc: String {
-        "\(config.study.id) / \(config.bundle.singlePatient?.fullName ?? config.bundleInputName) @ \(config.model)/\(config.temperature) (\(runIdx + 1)/\(config.numberOfRuns))"
-    }
-}
-
-extension Spezi {
-    @MainActor
-    subscript<M: Module>(_ moduleType: M.Type) -> M? {
-        module(moduleType)
     }
 }
