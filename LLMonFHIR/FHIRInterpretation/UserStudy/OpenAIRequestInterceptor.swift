@@ -17,7 +17,8 @@ import Spezi
 
 @Observable
 final class OpenAIRequestInterceptor: Module, EnvironmentAccessible, ClientMiddleware,
-    @unchecked Sendable {
+    @unchecked Sendable
+{
     private struct Error: Swift.Error, CustomStringConvertible {
         let description: String
         init(_ description: String) {
@@ -56,7 +57,7 @@ final class OpenAIRequestInterceptor: Module, EnvironmentAccessible, ClientMiddl
                 name: name,
                 queryItems: [
                     "ragEnabled": "true",
-                    "studyId": studyId
+                    "studyId": studyId,
                 ].compactMapValues { $0 },
                 body: input
             )
@@ -65,7 +66,7 @@ final class OpenAIRequestInterceptor: Module, EnvironmentAccessible, ClientMiddl
                 headerFields: [
                     .contentType: "text/event-stream",
                     .cacheControl: "no-cache",
-                    .connection: "keep-alive"
+                    .connection: "keep-alive",
                 ]
             )
             let body = HTTPBody(stream, length: .unknown)
@@ -78,17 +79,24 @@ final class OpenAIRequestInterceptor: Module, EnvironmentAccessible, ClientMiddl
         queryItems: [String: String],
         body: String,
     ) -> AsyncThrowingStream<HTTPBody.ByteChunk, any Swift.Error> {
-        var components = URLComponents()
-        components.queryItems = queryItems
+        var components =
+            URLComponents(string: name, encodingInvalidCharacters: false) ?? URLComponents()
+        let nameItems = components.queryItems ?? []
+        let nameKeys = Set(nameItems.map(\.name))
+        let additionalItems =
+            queryItems
+            .filter { !nameKeys.contains($0.key) }
             .sorted { $0.key < $1.key }
             .map { URLQueryItem(name: $0.key, value: $0.value) }
+        components.queryItems = nameItems + additionalItems
         let queryString = components.percentEncodedQuery ?? ""
-        let callableName = queryString.isEmpty ? name : "\(name)?\(queryString)"
+        let callableName =
+            queryString.isEmpty ? name : "\(components.percentEncodedPath)?\(queryString)"
         let callable = Functions.functions()
             .httpsCallable(
                 callableName,
                 requestAs: String.self,
-                responseAs: StreamResponse<String, String>.self
+                responseAs: StreamResponse<String?, String?>.self
             )
         return AsyncThrowingStream(HTTPBody.ByteChunk.self) { continuation in
             let task = Task {
@@ -103,7 +111,9 @@ final class OpenAIRequestInterceptor: Module, EnvironmentAccessible, ClientMiddl
                             case .result(let chunk):
                                 chunk ?? ""
                             }
-                        continuation.yield(HTTPBody.ByteChunk(string.utf8))
+                        if let string {
+                            continuation.yield(HTTPBody.ByteChunk(string.utf8))
+                        }
                     }
                     continuation.finish()
                 } catch is CancellationError {
