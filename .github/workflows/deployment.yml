@@ -22,6 +22,7 @@ on:
         type: choice
         options:
           - staging
+          - spineai
           - production
       version:
         description: |
@@ -81,8 +82,8 @@ jobs:
         id: determineenvironment
         run: |
           if [[ -z "${{ inputs.environment }}" ]]; then
-            echo "environment=staging" >> $GITHUB_OUTPUT
-            echo "environment: staging"
+            echo "environment=spineai" >> $GITHUB_OUTPUT
+            echo "environment: spineai"
           else
             echo "environment=${{ inputs.environment }}" >> $GITHUB_OUTPUT
             echo "environment: ${{ inputs.environment }}"

@@ -44,10 +44,8 @@
 		</dict>
 		<key>edu.stanford.LLMonFHIR.spineAI</key>
 		<dict>
-			<key>openAIAPIKey</key>
-			<string></string>
 			<key>openAIEndpoint</key>
-			<string>regular</string>
+			<string>firebase-function:chat</string>
 			<key>reportEmail</key>
 			<string></string>
 		</dict>

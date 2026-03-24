@@ -6,7 +6,7 @@
 // SPDX-License-Identifier: MIT
 //
 
-// swiftlint:disable type_contents_order
+// swiftlint:disable type_contents_order all
 
 import FirebaseCore
 import GeneratedOpenAIClient // periphery:ignore - false positive
@@ -51,7 +51,7 @@ final class LLMonFHIRDelegate: SpeziAppDelegate {
                     retryPolicy: .attempts(3),  // Automatically perform up to 3 retries on retryable OpenAI API status codes
                     middlewares: [openAIInterceptor]
                 ))
-                switch AppConfigFile.current().appLaunchMode {
+                switch LLMonFHIR.mode {
                 case .study:
                     let _ = () // swiftlint:disable:this redundant_discardable_let
                 case .standalone, .test:

@@ -100,6 +100,8 @@ final class OpenAIRequestInterceptor: Module, EnvironmentAccessible, ClientMiddl
                             switch event {
                             case .message(let chunk), .result(let chunk):
                                 chunk
+                            case .result(let chunk):
+                                chunk ?? ""
                             }
                         continuation.yield(HTTPBody.ByteChunk(string.utf8))
                     }

@@ -19,7 +19,7 @@ struct BottomSheet<Content: View>: View {
             ScrollView {
                 content
                     .onHeightChange {
-                        height = $0 + 100
+                        height = $0 + 50
                     }
             }
         }

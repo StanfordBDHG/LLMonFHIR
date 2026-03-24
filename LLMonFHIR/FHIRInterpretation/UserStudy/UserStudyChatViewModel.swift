@@ -95,6 +95,11 @@ final class UserStudyChatViewModel: Sendable {
     /// The currently-presented sheet
     var presentedSheet: PresentedSheet?
     
+    /// Whether the chat view is currently displaying the "End Chat?" alert.
+    ///
+    /// This alert is presented when the user taps the continue button while in a study that contains no tasks.
+    var isShowingConfirmEndChatAlert = false
+    
     /// Called when the firebase upload completed successfully.
     var didUploadHandler: (@MainActor () -> Void)?
 
@@ -155,7 +160,7 @@ final class UserStudyChatViewModel: Sendable {
         return Self(
             inProgressStudy: InProgressStudy(
                 study: emptyStudy,
-                config: .init(openAIAPIKey: "", openAIEndpoint: .regular, reportEmail: "", encryptionKey: nil),
+                config: .init(openAIAPIKey: "-", openAIEndpoint: .regular, reportEmail: "", encryptionKey: nil),
                 userInfo: [:]
             ),
             initialQuestionnaireResponse: nil,
@@ -215,9 +220,11 @@ final class UserStudyChatViewModel: Sendable {
     /// Starts the survey portion of the study
     ///
     /// This method initializes the survey process if it hasn't already been started.
-    func startSurvey() {
+    ///
+    /// - returns: `true` if the survey was successfully started, `false` if not (because the study contains no tasks)
+    func startStudy() -> Bool {
         guard let task = study.tasks.first else {
-            return
+            return false
         }
         navigationState = .task(
             task: task,
@@ -227,6 +234,20 @@ final class UserStudyChatViewModel: Sendable {
         )
         taskStartTimes[task.id] = Date()
         presentedSheet = .instructions
+        return true
+    }
+    
+    
+    func endStudy() {
+        navigationState = .completed
+        Task {
+            presentedSheet = .uploadingReport
+            let didUpload = await uploadReport()
+            presentedSheet = nil
+            if didUpload {
+                didUploadHandler?()
+            }
+        }
     }
     
     private func advanceToNextTask() {
@@ -261,15 +282,7 @@ final class UserStudyChatViewModel: Sendable {
             }
         } else {
             // no next task.
-            navigationState = .completed
-            Task {
-                presentedSheet = .uploadingReport
-                let didUpload = await uploadReport()
-                presentedSheet = nil
-                if didUpload {
-                    didUploadHandler?()
-                }
-            }
+            endStudy()
         }
     }
     
@@ -282,7 +295,12 @@ final class UserStudyChatViewModel: Sendable {
     func advance() {
         switch navigationState {
         case .introduction:
-            startSurvey()
+            if !startStudy() {
+                // the survey was not started, because the study contained no tasks.
+                // in this case, the attempt to advance will be interpreted as the user attempting to complete the study,
+                // so we ask if they really want to do that.
+                isShowingConfirmEndChatAlert = true
+            }
         case let .task(task, taskIdx, numTotalTasks, taskState):
             switch taskState {
             case .chatting:
