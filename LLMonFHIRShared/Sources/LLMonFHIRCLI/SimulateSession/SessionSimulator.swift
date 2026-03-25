@@ -15,6 +15,7 @@ import SpeziHealthKit
 import SpeziLLM
 import SpeziLLMOpenAI
 
+
 struct SessionSimulator: ~Copyable {
     private let config: SimulatedSessionConfig
     private let runIdx: Int
