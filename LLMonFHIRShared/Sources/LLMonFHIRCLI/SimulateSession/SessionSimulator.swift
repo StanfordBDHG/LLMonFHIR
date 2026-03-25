@@ -60,7 +60,6 @@ struct SessionSimulator: ~Copyable {
     private consuming func _run() async throws -> StudyReport {
         let startTime = Date()
         await fhirStore.removeAllResources()
-        print("Simulating session: \(sessionDesc)")
         await fhirStore.load(bundle: config.bundle)
         await coordinator.prepareForUse()
         await interpreter.startNewConversation(using: config.systemPrompt)
@@ -113,19 +112,15 @@ struct SessionSimulator: ~Copyable {
     @MainActor
     private func studyReportTimeline() -> [StudyReport.TimelineEvent] {
         interpreter.llmSession.context.chat.map { message in
-            .chatMessage(
-                .init(
-                    timestamp: message.date,
-                    role: message.role.rawValue,
-                    content: message.content
-                )
-            )
+            .chatMessage(.init(
+                timestamp: message.date,
+                role: message.role.rawValue,
+                content: message.content
+            ))
         }
     }
 }
 
-
-// MARK: - Spezi configuration
 
 extension SessionSimulator {
     private actor FakeStandard: Standard, HealthKitConstraint {
@@ -133,13 +128,13 @@ extension SessionSimulator {
             _ addedSamples: some Collection<Sample> & Sendable,
             ofType sampleType: SampleType<Sample>
         ) {}
-
+        
         func handleDeletedObjects<Sample>(
             _ deletedObjects: some Collection<HKDeletedObject> & Sendable,
             ofType sampleType: SampleType<Sample>
         ) {}
     }
-
+    
     @MainActor
     private static func speziConfig(for config: SimulatedSessionConfig) -> SpeziConfiguration {
         let openAIKey = ProcessInfo.processInfo.environment["OPENAI_API_KEY"] ?? ""
@@ -161,24 +156,20 @@ extension SessionSimulator {
         }
         return SpeziConfiguration(standard: FakeStandard()) {
             FHIRStore()
-            SessionCoordinator(
-                config: .init(
-                    model: config.model,
-                    temperature: config.temperature,
-                    resourceLimit: 1000,
-                    summarizeSingleResourcePrompt: config.study.summarizeSingleResourcePrompt,
-                    systemPrompt: config.systemPrompt
-                )
-            )
+            SessionCoordinator(config: .init(
+                model: config.model,
+                temperature: config.temperature,
+                resourceLimit: 1000,
+                summarizeSingleResourcePrompt: config.study.summarizeSingleResourcePrompt,
+                systemPrompt: config.systemPrompt
+            ))
             LLMRunner {
-                LLMOpenAIPlatform(
-                    configuration: .init(
-                        authToken: .constant(openAIKey),
-                        concurrentStreams: 100,
-                        retryPolicy: .attempts(3),
-                        middlewares: middlewares
-                    )
-                )
+                LLMOpenAIPlatform(configuration: .init(
+                    authToken: .constant(openAIKey),
+                    concurrentStreams: 100,
+                    retryPolicy: .attempts(3),
+                    middlewares: middlewares
+                ))
             }
         }
     }
