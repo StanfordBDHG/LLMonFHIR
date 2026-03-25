@@ -115,19 +115,12 @@ extension SimulatedSessionConfig: DecodableWithConfiguration {
             return service
         }
         let env = ProcessInfo.processInfo.environment
-<<<<<<< Updated upstream
         if let apiKey = env["OPENAI_API_KEY"]?.trimmingCharacters(in: .whitespacesAndNewlines),
            !apiKey.isEmpty {
             print("No 'service' specified — inferring 'OpenAI' from OPENAI_API_KEY environment variable.")
             return .openAI
         } else if let plist = env["GOOGLE_CREDENTIALS_PLIST"]?.trimmingCharacters(in: .whitespacesAndNewlines),
                   !plist.isEmpty {
-=======
-        if !(env["OPENAI_API_KEY"] ?? "").isEmpty {
-            print("No 'service' specified — inferring 'OpenAI' from OPENAI_API_KEY environment variable.")
-            return .openAI
-        } else if !(env["GOOGLE_CREDENTIALS_PLIST"] ?? "").isEmpty {
->>>>>>> Stashed changes
             print("No 'service' specified — inferring 'Firebase' from GOOGLE_CREDENTIALS_PLIST environment variable.")
             return .firebase
         } else {
