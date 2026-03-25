@@ -43,13 +43,19 @@ actor FirebaseAuth {
         let (data, response) = try await URLSession.shared.data(for: request)
         guard let httpResponse = response as? HTTPURLResponse, httpResponse.statusCode == 200 else {
             let errorMessage = String(data: data, encoding: .utf8) ?? "Unknown error"
-            throw NSError(domain: "AuthError", code: 1,
-                userInfo: [NSLocalizedDescriptionKey: "Anonymous login failed: \(errorMessage)"])
+            throw NSError(
+                domain: "AuthError", 
+                code: 1,
+                userInfo: [NSLocalizedDescriptionKey: "Anonymous login failed: \(errorMessage)"]
+            )
         }
         guard let json = try JSONSerialization.jsonObject(with: data) as? [String: Any],
               let idToken = json["idToken"] as? String else {
-            throw NSError(domain: "AuthError", code: 2,
-                userInfo: [NSLocalizedDescriptionKey: "No idToken in response"])
+            throw NSError(
+                domain: "AuthError", 
+                code: 2,
+                userInfo: [NSLocalizedDescriptionKey: "No idToken in response"]
+            )
         }
         let expiresIn = (json["expiresIn"] as? String).flatMap(Int.init) ?? 3600
         return (idToken, expiresIn)

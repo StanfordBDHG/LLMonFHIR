@@ -35,9 +35,7 @@ struct SimulateSession: AsyncParsableCommand {
         // Fail early if Firebase credentials are required but not provided
         if configs.contains(where: { $0.service == .firebase }),
            ProcessInfo.processInfo.environment["GOOGLE_CREDENTIALS_PLIST"]?.isEmpty ?? true {
-            throw ValidationError(
-                "GOOGLE_CREDENTIALS_PLIST environment variable is required when using the 'Firebase' service."
-            )
+            throw ValidationError("GOOGLE_CREDENTIALS_PLIST environment variable is required when using the 'Firebase' service.")
         }
         let outputUrl = outputUrl.appending(
             path: Date.now.formatted(Date.ISO8601FormatStyle.suitableForFilenames),
