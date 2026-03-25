@@ -44,7 +44,7 @@ actor FirebaseAuth {
         guard let httpResponse = response as? HTTPURLResponse, httpResponse.statusCode == 200 else {
             let errorMessage = String(data: data, encoding: .utf8) ?? "Unknown error"
             throw NSError(
-                domain: "AuthError", 
+                domain: "AuthError",
                 code: 1,
                 userInfo: [NSLocalizedDescriptionKey: "Anonymous login failed: \(errorMessage)"]
             )
@@ -52,7 +52,7 @@ actor FirebaseAuth {
         guard let json = try JSONSerialization.jsonObject(with: data) as? [String: Any],
               let idToken = json["idToken"] as? String else {
             throw NSError(
-                domain: "AuthError", 
+                domain: "AuthError",
                 code: 2,
                 userInfo: [NSLocalizedDescriptionKey: "No idToken in response"]
             )
