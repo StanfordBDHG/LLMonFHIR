@@ -32,11 +32,6 @@ struct SimulateSession: AsyncParsableCommand {
             configuration: .init(configFileUrl: inputUrl)
         )
 
-        // Fail early if Firebase credentials are required but not provided
-        if configs.contains(where: { $0.service == .firebase }),
-           ProcessInfo.processInfo.environment["GOOGLE_CREDENTIALS_PLIST"]?.isEmpty ?? true {
-            throw ValidationError("GOOGLE_CREDENTIALS_PLIST environment variable is required when using the 'Firebase' service.")
-        }
         let outputUrl = outputUrl.appending(
             path: Date.now.formatted(Date.ISO8601FormatStyle.suitableForFilenames),
             directoryHint: .isDirectory
@@ -56,7 +51,12 @@ struct SimulateSession: AsyncParsableCommand {
                         let sessionDesc = simulator.sessionDesc
                         do {
                             let report = try await simulator.run()
-                            let name = config.name ?? "session\(configIdx)"
+                            let sanitized = (config.name ?? "session")
+                                .components(separatedBy: CharacterSet(charactersIn: "/\\"))
+                                .joined()
+                                .replacingOccurrences(of: "..", with: "")
+                                .trimmingCharacters(in: .whitespacesAndNewlines)
+                            let name = String(format: "%02d", configIdx) + "-" + (sanitized.isEmpty ? "session" : sanitized)
                             let dstUrl = outputUrl.appendingPathComponent("\(name)-\(runIdx + 1)", conformingTo: .json)
                             let reportData = try encoder.encode(report)
                             try reportData.write(to: dstUrl)

@@ -49,7 +49,6 @@ struct SessionSimulator: ~Copyable {
         defer {
             speziService.cancel()
         }
-        let sessionDesc = self.sessionDesc
         return try await _run()
     }
     
