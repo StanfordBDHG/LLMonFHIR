@@ -15,8 +15,7 @@ import LLMonFHIRShared
 struct SimulateSession: AsyncParsableCommand {
     static let configuration = CommandConfiguration(
         commandName: "simulate-session",
-        abstract:
-            "Runs a simulated session, using a synthetic patient's context and pre-defined user prompts.",
+        abstract: "Runs a simulated session, using a synthetic patient's context and pre-defined user prompts.",
     )
     
     @Argument(help: "Input file")
@@ -57,14 +56,12 @@ struct SimulateSession: AsyncParsableCommand {
                     taskGroup.addTask {
                         let simulator = await SessionSimulator(config: config, runIdx: runIdx)
                         let sessionDesc = simulator.sessionDesc
-                        print("Starting \(sessionDesc)")
                         do {
                             let report = try await simulator.run()
                             let name = config.name ?? "session\(configIdx)"
                             let dstUrl = outputUrl.appendingPathComponent("\(name)-\(runIdx + 1)", conformingTo: .json)
                             let reportData = try encoder.encode(report)
                             try reportData.write(to: dstUrl)
-                            print("Ended \(sessionDesc) → \(dstUrl.lastPathComponent)")
                             return true
                         } catch {
                             print("\(sessionDesc) failed: \(error.localizedDescription) \(error)")
@@ -82,7 +79,6 @@ struct SimulateSession: AsyncParsableCommand {
             }
         }
 
-        print("\(savedCount) session(s) saved, \(failedSessionCount) failed.")
         if failedSessionCount > 0 {
             throw ExitCode.failure
         }
