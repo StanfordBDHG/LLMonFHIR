@@ -40,39 +40,6 @@ struct SimulateSession: AsyncParsableCommand {
                 "GOOGLE_CREDENTIALS_PLIST environment variable is required when using the 'Firebase' service."
             )
         }
-        var failedSessionCount = 0
-        typealias ReportEntry = (report: StudyReport, name: String, runIdx: Int)
-        let reports = await withTaskGroup(
-            of: ReportEntry?.self, returning: [ReportEntry].self
-        ) { taskGroup in
-            for config in configs {
-                for runIdx in 0..<config.numberOfRuns {
-                    taskGroup.addTask {
-                        let simulator = await SessionSimulator(config: config, runIdx: runIdx)
-                        let sessionDesc = simulator.sessionDesc
-                        print("Starting \(sessionDesc)")
-                        do {
-                            let result = try await simulator.run()
-                            print("Ended \(sessionDesc)")
-                            return (result, config.name ?? config.study.id, runIdx)
-                        } catch {
-                            print("\(sessionDesc) failed: \(error.localizedDescription) \(error)")
-                            return nil
-                        }
-                    }
-                }
-            }
-            var reports: [ReportEntry] = []
-            for await entry in taskGroup {
-                if let entry {
-                    reports.append(entry)
-                } else {
-                    failedSessionCount += 1
-                }
-            }
-            return reports
-        }
-
         let outputUrl = outputUrl.appending(
             path: Date.now.formatted(Date.ISO8601FormatStyle.suitableForFilenames),
             directoryHint: .isDirectory
@@ -81,15 +48,41 @@ struct SimulateSession: AsyncParsableCommand {
 
         let encoder = JSONEncoder()
         encoder.outputFormatting = [.prettyPrinted, .withoutEscapingSlashes, .sortedKeys]
-        for (report, name, runIdx) in reports {
-            let filename = "\(name)-\(runIdx + 1)"
-            let dstUrl = outputUrl.appendingPathComponent(filename, conformingTo: .json)
-            let reportData = try encoder.encode(report)
-            print("Writing report to \(dstUrl.lastPathComponent)")
-            try reportData.write(to: dstUrl)
+
+        var savedCount = 0
+        var failedSessionCount = 0
+        await withTaskGroup(of: Bool.self) { taskGroup in
+            for (configIdx, config) in configs.enumerated() {
+                for runIdx in 0..<config.numberOfRuns {
+                    taskGroup.addTask {
+                        let simulator = await SessionSimulator(config: config, runIdx: runIdx)
+                        let sessionDesc = simulator.sessionDesc
+                        print("Starting \(sessionDesc)")
+                        do {
+                            let report = try await simulator.run()
+                            let name = config.name ?? "session\(configIdx)"
+                            let dstUrl = outputUrl.appendingPathComponent("\(name)-\(runIdx + 1)", conformingTo: .json)
+                            let reportData = try encoder.encode(report)
+                            try reportData.write(to: dstUrl)
+                            print("Ended \(sessionDesc) → \(dstUrl.lastPathComponent)")
+                            return true
+                        } catch {
+                            print("\(sessionDesc) failed: \(error.localizedDescription) \(error)")
+                            return false
+                        }
+                    }
+                }
+            }
+            for await success in taskGroup {
+                if success {
+                    savedCount += 1
+                } else {
+                    failedSessionCount += 1
+                }
+            }
         }
 
-        print("\(reports.count) session(s) saved, \(failedSessionCount) failed.")
+        print("\(savedCount) session(s) saved, \(failedSessionCount) failed.")
         if failedSessionCount > 0 {
             throw ExitCode.failure
         }
