@@ -50,7 +50,8 @@ struct SimulatedSessionConfig: Sendable {
             return study.interpretMultipleResourcesPrompt
         }
         return FHIRPrompt(
-            promptText: study.interpretMultipleResourcesPrompt.promptText + "\n\n" + suffix)
+            promptText: study.interpretMultipleResourcesPrompt.promptText + "\n\n" + suffix
+        )
     }
 }
 
@@ -85,21 +86,7 @@ extension SimulatedSessionConfig: DecodableWithConfiguration {
         self.model = try container.decode(LLMOpenAIParameters.ModelType.self, forKey: .model)
         self.temperature = try container.decode(Double.self, forKey: .temperature)
 
-        if let decodedService = try container.decodeIfPresent(Service.self, forKey: .service) {
-            self.service = decodedService
-        } else {
-            let env = ProcessInfo.processInfo.environment
-            if env["OPENAI_API_KEY"] != nil {
-                print("No 'service' specified — inferring 'OpenAI' from OPENAI_API_KEY environment variable.")
-                self.service = .openAI
-            } else if env["GOOGLE_CREDENTIALS_PLIST"] != nil {
-                print("No 'service' specified — inferring 'Firebase' from GOOGLE_CREDENTIALS_PLIST environment variable.")
-                self.service = .firebase
-            } else {
-                print("No 'service' specified and no credentials found in environment — defaulting to 'Firebase-Emulator'.")
-                self.service = .firebaseEmulator
-            }
-        }
+        self.service = try Self.inferService(from: container)
 
         let studyId = try container.decode(Study.ID.self, forKey: .studyId)
         guard let study = Study.allStudies.first(where: { $0.id == studyId }) else {
@@ -111,7 +98,8 @@ extension SimulatedSessionConfig: DecodableWithConfiguration {
         bundleInputName = try container.decode(String.self, forKey: .bundleName)
         let url = URL(
             filePath: bundleInputName,
-            relativeTo: configuration.configFileUrl?.deletingLastPathComponent())
+            relativeTo: configuration.configFileUrl?.deletingLastPathComponent()
+        )
         if FileManager.default.itemExists(at: url) && !FileManager.default.isDirectory(at: url) {
             do {
                 bundle = try JSONDecoder().decode(ModelsR4.Bundle.self, from: Data(contentsOf: url))
@@ -124,13 +112,33 @@ extension SimulatedSessionConfig: DecodableWithConfiguration {
                 throw DecodingError.dataCorrupted(
                     .init(
                         codingPath: [],
-                        debugDescription: "Unable to find bundle named '\(bundleInputName)'"))
+                        debugDescription: "Unable to find bundle named '\(bundleInputName)'"
+                    )
+                )
             }
             self.bundle = bundle
         }
         self.systemPromptSuffix = try container.decodeIfPresent(
-            String.self, forKey: .systemPromptSuffix)
+            String.self,
+            forKey: .systemPromptSuffix
+        )
         self.userQuestions = try container.decode([String].self, forKey: .userQuestions)
     }
-}
 
+    private static func inferService(from container: KeyedDecodingContainer<CodingKeys>) throws -> Service {
+        if let service = try container.decodeIfPresent(Service.self, forKey: .service) {
+            return service
+        }
+        let env = ProcessInfo.processInfo.environment
+        if env["OPENAI_API_KEY"] != nil {
+            print("No 'service' specified — inferring 'OpenAI' from OPENAI_API_KEY environment variable.")
+            return .openAI
+        } else if env["GOOGLE_CREDENTIALS_PLIST"] != nil {
+            print("No 'service' specified — inferring 'Firebase' from GOOGLE_CREDENTIALS_PLIST environment variable.")
+            return .firebase
+        } else {
+            print("No 'service' specified and no credentials found in environment — defaulting to 'Firebase-Emulator'.")
+            return .firebaseEmulator
+        }
+    }
+}

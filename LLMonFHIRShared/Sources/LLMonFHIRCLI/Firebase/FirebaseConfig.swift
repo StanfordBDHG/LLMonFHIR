@@ -8,6 +8,11 @@
 
 import Foundation
 
+struct FirebaseConfigError: Error, CustomStringConvertible {
+    let description: String
+    init(_ description: String) { self.description = description }
+}
+
 struct FirebaseConfig {
     let apiKey: String
     let projectID: String
@@ -33,16 +38,11 @@ struct FirebaseConfig {
     }
 
     init(contentsOfFile path: String) throws {
-        guard let plist = NSDictionary(contentsOfFile: path),
+        guard let plist = Dictionary(contentsOfFile: path),
               let apiKey = plist["API_KEY"] as? String,
               let projectID = plist["PROJECT_ID"] as? String else {
             throw FirebaseConfigError("Could not parse Firebase configuration at '\(path)'")
         }
         self.init(apiKey: apiKey, projectID: projectID)
     }
-}
-
-struct FirebaseConfigError: Error, CustomStringConvertible {
-    let description: String
-    init(_ description: String) { self.description = description }
 }

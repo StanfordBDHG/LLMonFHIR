@@ -24,6 +24,10 @@ struct SessionSimulator: ~Copyable {
     private let interpreter: FHIRMultipleResourceInterpreter
     private let resourceSummarizer: FHIRResourceSummarizer
 
+    var sessionDesc: String {
+        "\(config.study.id) / \(config.bundle.singlePatient?.fullName ?? config.bundleInputName) @ \(config.model)/\(config.temperature) (\(runIdx + 1)/\(config.numberOfRuns))"
+    }
+
     @MainActor
     init(config: SimulatedSessionConfig, runIdx: Int) {
         self.config = config
@@ -114,12 +118,9 @@ struct SessionSimulator: ~Copyable {
                     timestamp: message.date,
                     role: message.role.rawValue,
                     content: message.content
-                ))
+                )
+            )
         }
-    }
-
-    var sessionDesc: String {
-        "\(config.study.id) / \(config.bundle.singlePatient?.fullName ?? config.bundleInputName) @ \(config.model)/\(config.temperature) (\(runIdx + 1)/\(config.numberOfRuns))"
     }
 }
 
@@ -151,10 +152,12 @@ extension SessionSimulator {
                 [OpenAIFirebaseInterceptor(firebaseConfig: $0, endpointProvider: { .firebaseFunction(name: "chat") })]
             } ?? []
         case .firebaseEmulator:
-            middlewares = [OpenAIFirebaseInterceptor(
-                firebaseConfig: emulatorConfigFromEnvironment(),
-                endpointProvider: { .firebaseFunction(name: "chat") }
-            )]
+            middlewares = [
+                OpenAIFirebaseInterceptor(
+                    firebaseConfig: emulatorConfigFromEnvironment(),
+                    endpointProvider: { .firebaseFunction(name: "chat") }
+                )
+            ]
         }
         return SpeziConfiguration(standard: FakeStandard()) {
             FHIRStore()
@@ -165,7 +168,8 @@ extension SessionSimulator {
                     resourceLimit: 1000,
                     summarizeSingleResourcePrompt: config.study.summarizeSingleResourcePrompt,
                     systemPrompt: config.systemPrompt
-                ))
+                )
+            )
             LLMRunner {
                 LLMOpenAIPlatform(
                     configuration: .init(
@@ -173,7 +177,8 @@ extension SessionSimulator {
                         concurrentStreams: 100,
                         retryPolicy: .attempts(3),
                         middlewares: middlewares
-                    ))
+                    )
+                )
             }
         }
     }

@@ -53,7 +53,7 @@ struct OpenAIFirebaseInterceptor: ClientMiddleware, Sendable {
                     headerFields: [
                         .contentType: "text/event-stream",
                         .cacheControl: "no-cache",
-                        .connection: "keep-alive",
+                        .connection: "keep-alive"
                     ]
                 )
                 let functionURL = try self.functionURL(for: name)
@@ -64,38 +64,7 @@ struct OpenAIFirebaseInterceptor: ClientMiddleware, Sendable {
                 urlRequest.setValue("Bearer \(idToken)", forHTTPHeaderField: "Authorization")
                 urlRequest.setValue("text/event-stream", forHTTPHeaderField: "Accept")
                 urlRequest.httpBody = try JSONSerialization.data(withJSONObject: ["data": input])
-                let responseBody = HTTPBody(
-                    AsyncThrowingStream(HTTPBody.ByteChunk.self) { continuation in
-                        Task { [urlRequest] in
-                            do {
-                                let (bytes, httpResponse) = try await URLSession.shared.bytes(
-                                    for: urlRequest)
-                                guard let resp = httpResponse as? HTTPURLResponse,
-                                    resp.statusCode == 200
-                                else {
-                                    print(
-                                        "Function call failed with status code: \((httpResponse as? HTTPURLResponse)?.statusCode ?? -1)"
-                                    )
-                                    throw MiddlewareError(description: "Function call failed")
-                                }
-                                for try await line in bytes.lines {
-                                    guard line.hasPrefix("data: "),
-                                        let jsonData = String(line.dropFirst(6)).data(using: .utf8),
-                                        let json = try? JSONSerialization.jsonObject(with: jsonData)
-                                            as? [String: Any],
-                                        let chunk = (json["message"] ?? json["result"]) as? String
-                                    else { continue }
-                                    continuation.yield(HTTPBody.ByteChunk(chunk.utf8))
-                                }
-                                continuation.finish()
-                            } catch {
-                                continuation.finish(throwing: error)
-                            }
-                        }
-                    },
-                    length: .unknown
-                )
-                return (response, responseBody)
+                return (response, makeResponseBody(for: urlRequest))
             } catch {
                 print("Error in OpenAIFirebaseInterceptor: \(error)")
                 throw error
@@ -119,6 +88,43 @@ struct OpenAIFirebaseInterceptor: ClientMiddleware, Sendable {
 
 
 // MARK: - Helpers
+
+extension OpenAIFirebaseInterceptor {
+    private func makeResponseBody(for urlRequest: URLRequest) -> HTTPBody {
+        HTTPBody(
+            AsyncThrowingStream(HTTPBody.ByteChunk.self) { continuation in
+                Task { [urlRequest] in
+                    do {
+                        let (bytes, httpResponse) = try await URLSession.shared.bytes(
+                            for: urlRequest
+                        )
+                        guard let resp = httpResponse as? HTTPURLResponse,
+                            resp.statusCode == 200
+                        else {
+                            print(
+                                "Function call failed with status code: \((httpResponse as? HTTPURLResponse)?.statusCode ?? -1)"
+                            )
+                            throw MiddlewareError(description: "Function call failed")
+                        }
+                        for try await line in bytes.lines {
+                            guard line.hasPrefix("data: "),
+                                let jsonData = String(line.dropFirst(6)).data(using: .utf8),
+                                let json = try? JSONSerialization.jsonObject(with: jsonData)
+                                    as? [String: Any],
+                                let chunk = (json["message"] ?? json["result"]) as? String
+                            else { continue }
+                            continuation.yield(HTTPBody.ByteChunk(chunk.utf8))
+                        }
+                        continuation.finish()
+                    } catch {
+                        continuation.finish(throwing: error)
+                    }
+                }
+            },
+            length: .unknown
+        )
+    }
+}
 
 extension HTTPBody {
     fileprivate func data(upTo maxSize: Int) async throws -> some Collection<UInt8> {
