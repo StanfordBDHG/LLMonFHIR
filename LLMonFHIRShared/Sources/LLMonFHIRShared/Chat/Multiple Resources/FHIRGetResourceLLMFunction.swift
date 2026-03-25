@@ -34,10 +34,8 @@ public struct FHIRGetResourceLLMFunction: LLMFunction {
             description: """
                 Pass in one or more identifiers that you want to access.
                 It is possible that multiple titles apply to the users's question (e.g for multiple medications).
-                You can also request a larger set of FHIR resources by, e.g., just stating the resource type
-                but this might not include all relevant resources to avoid exceeding the token limit.
-                Ensure that you request the most recent information to get a good overview of the user's
-                current health status.
+                You can also request a larger set of FHIR resources by, e.g., just stating the resource type but this might not include all relevant resources to avoid exceeding the token limit.
+                Ensure that you request the most recent information to get a good overview of the user's current health status.
                 Today’s date is \(FHIRResource.functionCallIdentifierDateFormatter.string(from: .now)).
                 """,
             enum: fhirStore.allResourcesFunctionCallIdentifier.suffix(resourceCountLimit)
@@ -112,8 +110,7 @@ public struct FHIRGetResourceLLMFunction: LLMFunction {
 extension FHIRGetResourceLLMFunction {
     // swiftlint:disable:next missing_docs
     public static let description = """
-        Call this function to request the relevant FHIR health records based on the user's question and conversation context
-        using their FHIR resource identifiers.
+        Call this function to request the relevant FHIR health records based on the user's question and conversation context using their FHIR resource identifiers.
 
         The FHIR resource identifiers are composed of three elements:
         1. The FHIR resource type, e.g., DocumentReference, DiagnosticReport, MedicationRequest, Encounter, Observation, Procedure, Condition, ...
