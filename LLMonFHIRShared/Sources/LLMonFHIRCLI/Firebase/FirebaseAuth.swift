@@ -9,20 +9,26 @@
 import Foundation
 
 actor FirebaseAuth {
+    let config: FirebaseConfig
+    
     private var cachedToken: String?
     private var tokenExpiry: Date = .distantPast
+    
+    init(config: FirebaseConfig) {
+        self.config = config
+    }
 
-    func token(config: FirebaseConfig) async throws -> String {
+    func anonymouslySignIn() async throws -> String {
         if let token = cachedToken, tokenExpiry > Date.now.addingTimeInterval(300) {
             return token
         }
-        let (token, expiresIn) = try await fetchAnonymousToken(config: config)
+        let (token, expiresIn) = try await fetchAnonymousToken()
         cachedToken = token
         tokenExpiry = Date.now.addingTimeInterval(TimeInterval(expiresIn))
         return token
     }
 
-    private func fetchAnonymousToken(config: FirebaseConfig) async throws -> (token: String, expiresIn: Int) {
+    private func fetchAnonymousToken() async throws -> (token: String, expiresIn: Int) {
         let urlString: String
         if let address = config.authEmulatorAddress {
             urlString = "http://\(address)/identitytoolkit.googleapis.com/v1/accounts:signUp?key=\(config.apiKey)"

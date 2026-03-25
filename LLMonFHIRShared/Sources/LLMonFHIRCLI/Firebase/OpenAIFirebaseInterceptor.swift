@@ -16,15 +16,15 @@ struct OpenAIFirebaseInterceptor: ClientMiddleware, Sendable {
         let description: String
     }
 
+    private let auth: FirebaseAuth
     private let firebaseConfig: FirebaseConfig
     private let endpointProvider: @Sendable () async -> StudyConfig.OpenAIEndpointConfig
-
-    private static let tokenCache = FirebaseAuth()
 
     init(
         firebaseConfig: FirebaseConfig,
         endpointProvider: @escaping @Sendable () async -> StudyConfig.OpenAIEndpointConfig
     ) {
+        self.auth = FirebaseAuth(config: firebaseConfig)
         self.firebaseConfig = firebaseConfig
         self.endpointProvider = endpointProvider
     }
@@ -57,7 +57,7 @@ struct OpenAIFirebaseInterceptor: ClientMiddleware, Sendable {
                     ]
                 )
                 let functionURL = try self.functionURL(for: name)
-                let idToken = try await Self.tokenCache.token(config: firebaseConfig)
+                let idToken = try await auth.anonymouslySignIn()
                 var urlRequest = URLRequest(url: functionURL)
                 urlRequest.httpMethod = "POST"
                 urlRequest.setValue("application/json", forHTTPHeaderField: "Content-Type")
