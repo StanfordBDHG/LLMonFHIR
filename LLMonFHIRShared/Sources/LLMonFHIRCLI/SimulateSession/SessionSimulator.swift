@@ -33,12 +33,12 @@ struct SessionSimulator: ~Copyable {
         self.config = config
         self.runIdx = runIdx
         spezi = Spezi(from: Self.speziConfig(for: config))
-        coordinator = spezi.module(SessionCoordinator.self)!  // swiftlint:disable:this force_unwrapping
+        coordinator = spezi.module(SessionCoordinator.self)! // swiftlint:disable:this force_unwrapping
         fhirStore = coordinator.fhirStore
         interpreter = coordinator.multipleResourceInterpreter
         resourceSummarizer = coordinator.resourceSummarizer
     }
-
+    
     @concurrent
     consuming func run() async throws -> StudyReport {
         // start (& stop) service modules
@@ -49,14 +49,9 @@ struct SessionSimulator: ~Copyable {
             speziService.cancel()
         }
         let sessionDesc = self.sessionDesc
-        do {
-            return try await _run()
-        } catch {
-            print("Error running session \(sessionDesc): \(error)")
-            throw error
-        }
+        return try await _run()
     }
-
+    
     private consuming func _run() async throws -> StudyReport {
         let startTime = Date()
         await fhirStore.removeAllResources()
@@ -83,7 +78,7 @@ struct SessionSimulator: ~Copyable {
                     temperature: config.temperature
                 )
             ),
-            initialQuestionnaireResponse: nil,  // (obviously) not supported
+            initialQuestionnaireResponse: nil, // (obviously) not supported
             fhirResources: await studyReportFHIRResources(),
             timeline: await studyReportTimeline()
         )
@@ -108,7 +103,7 @@ struct SessionSimulator: ~Copyable {
             allResources: allResources
         )
     }
-
+    
     @MainActor
     private func studyReportTimeline() -> [StudyReport.TimelineEvent] {
         interpreter.llmSession.context.chat.map { message in
