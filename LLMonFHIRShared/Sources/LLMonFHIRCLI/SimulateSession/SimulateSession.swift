@@ -18,13 +18,13 @@ struct SimulateSession: AsyncParsableCommand {
         abstract:
             "Runs a simulated session, using a synthetic patient's context and pre-defined user prompts.",
     )
-
+    
     @Argument(help: "Input file")
     var inputUrl: URL
-
+    
     @Argument(help: "Output directory")
     var outputUrl: URL
-
+    
     @MainActor
     func run() async throws {
         let configs = try JSONDecoder().decode(
@@ -88,6 +88,7 @@ struct SimulateSession: AsyncParsableCommand {
         }
     }
 }
+
 
 extension Date.ISO8601FormatStyle {
     /// An ISO-8601 format style suitable for use in filenames.
