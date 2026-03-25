@@ -38,7 +38,9 @@ struct FirebaseConfig {
     }
 
     init(contentsOfFile path: String) throws {
-        guard let plist = Dictionary(contentsOfFile: path),
+        let url = URL(fileURLWithPath: path)
+        let data = try Data(contentsOf: url)
+        guard let plist = try PropertyListSerialization.propertyList(from: data, format: nil) as? [String: Any],
               let apiKey = plist["API_KEY"] as? String,
               let projectID = plist["PROJECT_ID"] as? String else {
             throw FirebaseConfigError("Could not parse Firebase configuration at '\(path)'")
