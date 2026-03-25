@@ -15,29 +15,26 @@ import LLMonFHIRShared
 import OpenAPIRuntime
 import Spezi
 
+
 @Observable
-final class OpenAIRequestInterceptor: Module, EnvironmentAccessible, ClientMiddleware,
-    @unchecked Sendable {
+final class OpenAIRequestInterceptor: Module, EnvironmentAccessible, ClientMiddleware, @unchecked Sendable {
     private struct Error: Swift.Error, CustomStringConvertible {
         let description: String
         init(_ description: String) {
             self.description = description
         }
     }
-
+    
     @ObservationIgnored @Dependency(FHIRInterpretationModule.self) private var interpretationModule
-
+    
     func intercept(
         _ request: HTTPRequest,
         body: HTTPBody?,
         baseURL: URL,
         operationID: String,
-        next:
-            @Sendable @concurrent (HTTPRequest, HTTPBody?, URL) async throws -> (
-                HTTPResponse, HTTPBody?
-            )
+        next: @Sendable @concurrent (HTTPRequest, HTTPBody?, URL) async throws -> (HTTPResponse, HTTPBody?)
     ) async throws -> (HTTPResponse, HTTPBody?) {
-        let maxBodySize = 7 * 1024 * 1024  // 7 MB
+        let maxBodySize = 7 * 1024 * 1024 // 7 MB
         let (endpoint, studyId) = await MainActor.run {
             let study = interpretationModule.currentStudy
             return (study?.config.openAIEndpoint ?? .regular, study?.study.id)
@@ -48,8 +45,7 @@ final class OpenAIRequestInterceptor: Module, EnvironmentAccessible, ClientMiddl
             return try await next(request, body, baseURL)
         case .firebaseFunction(let name):
             guard let data = try await body?.data(upTo: maxBodySize),
-                let input = String(bytes: data, encoding: .utf8)
-            else {
+                  let input = String(bytes: data, encoding: .utf8) else {
                 throw Error("Missing Body")
             }
             let stream = streamFirebaseFunctionCall(
@@ -89,8 +85,11 @@ final class OpenAIRequestInterceptor: Module, EnvironmentAccessible, ClientMiddl
             .map { URLQueryItem(name: $0.key, value: $0.value) }
         components.queryItems = nameItems + additionalItems
         let queryString = components.percentEncodedQuery ?? ""
-        let callableName =
-            queryString.isEmpty ? name : "\(components.percentEncodedPath)?\(queryString)"
+        let callableName = if queryString.isEmpty {
+            name
+        } else {
+            "\(components.percentEncodedPath)?\(queryString)"
+        }
         let callable = Functions.functions()
             .httpsCallable(
                 callableName,
@@ -125,6 +124,7 @@ final class OpenAIRequestInterceptor: Module, EnvironmentAccessible, ClientMiddl
         }
     }
 }
+
 
 extension HTTPBody {
     fileprivate func data(upTo maxSize: Int) async throws -> some Collection<UInt8> {
