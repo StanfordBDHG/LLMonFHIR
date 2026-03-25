@@ -27,7 +27,7 @@ struct SimulatedSessionConfig: Sendable {
     
     /// The raw input based on which the ``bundle`` was loaded, as specified in the config file.
     let bundleInputName: String
-
+    
     /// The FHIR bundle providing the resources that will be made available to the LLM
     ///
     /// - Note: Isn't allowed to be mutated

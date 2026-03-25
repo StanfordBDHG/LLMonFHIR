@@ -84,7 +84,7 @@ struct SessionSimulator: ~Copyable {
             timeline: await studyReportTimeline()
         )
     }
-
+    
     @MainActor
     private func studyReportFHIRResources() async -> StudyReport.FHIRResources {
         let llmRelevantResources = fhirStore.llmRelevantResources
