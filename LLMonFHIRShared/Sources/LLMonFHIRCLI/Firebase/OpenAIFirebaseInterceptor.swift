@@ -109,7 +109,7 @@ struct OpenAIFirebaseInterceptor: ClientMiddleware, Sendable {
     
     private func makeResponseStream(for urlRequest: URLRequest) -> AsyncThrowingStream<HTTPBody.ByteChunk, any Swift.Error> {
         AsyncThrowingStream(HTTPBody.ByteChunk.self) { continuation in
-            Task { [urlRequest] in
+            let task = Task { [urlRequest] in
                 do {
                     let (bytes, httpResponse) = try await URLSession.shared.bytes(
                         for: urlRequest
@@ -135,6 +135,9 @@ struct OpenAIFirebaseInterceptor: ClientMiddleware, Sendable {
                 } catch {
                     continuation.finish(throwing: error)
                 }
+            }
+            continuation.onTermination = { _ in
+                task.cancel()
             }
         }
     }
