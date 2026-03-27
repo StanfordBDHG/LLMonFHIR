@@ -35,8 +35,9 @@ final class OpenAIRequestInterceptor: Module, EnvironmentAccessible, ClientMiddl
         next: @Sendable @concurrent (HTTPRequest, HTTPBody?, URL) async throws -> (HTTPResponse, HTTPBody?)
     ) async throws -> (HTTPResponse, HTTPBody?) {
         let maxBodySize = 7 * 1024 * 1024 // 7 MB
-        let endpoint = await MainActor.run {
-            interpretationModule.currentStudy?.config.openAIEndpoint ?? .regular
+        let (endpoint, studyId) = await MainActor.run {
+            let study = interpretationModule.currentStudy
+            return (study?.config.openAIEndpoint ?? .regular, study?.study.id)
         }
         dispatchPrecondition(condition: .notOnQueue(.main))
         switch endpoint {
@@ -47,8 +48,14 @@ final class OpenAIRequestInterceptor: Module, EnvironmentAccessible, ClientMiddl
                   let input = String(bytes: data, encoding: .utf8) else {
                 throw Error("Missing Body")
             }
-            let callable = Functions.functions()
-                .httpsCallable(name, requestAs: String.self, responseAs: StreamResponse<String, String?>.self)
+            let stream = streamFirebaseFunctionCall(
+                name: name,
+                queryItems: [
+                    "ragEnabled": "true",
+                    "studyId": studyId
+                ].compactMapValues { $0 },
+                body: input
+            )
             let res = HTTPResponse(
                 status: .ok,
                 headerFields: [
@@ -57,27 +64,63 @@ final class OpenAIRequestInterceptor: Module, EnvironmentAccessible, ClientMiddl
                     .connection: "keep-alive"
                 ]
             )
-            let stream = AsyncThrowingStream(HTTPBody.ByteChunk.self) { continuation in
-                Task {
-                    do {
-                        let stream = try callable.stream(input)
-                        for try await event in stream {
-                            let string = switch event {
-                            case .message(let chunk):
-                                chunk
-                            case .result(let chunk):
-                                chunk ?? ""
-                            }
-                            continuation.yield(HTTPBody.ByteChunk(string.utf8))
-                        }
-                        continuation.finish()
-                    } catch {
-                        continuation.finish(throwing: error)
-                    }
-                }
-            }
             let body = HTTPBody(stream, length: .unknown)
             return (res, body)
+        }
+    }
+
+    private func streamFirebaseFunctionCall(
+        name: String,
+        queryItems: [String: String],
+        body: String,
+    ) -> AsyncThrowingStream<HTTPBody.ByteChunk, any Swift.Error> {
+        var components =
+            URLComponents(string: name, encodingInvalidCharacters: false) ?? URLComponents()
+        let nameItems = components.queryItems ?? []
+        let nameKeys = Set(nameItems.map(\.name))
+        let additionalItems =
+            queryItems
+            .filter { !nameKeys.contains($0.key) }
+            .sorted { $0.key < $1.key }
+            .map { URLQueryItem(name: $0.key, value: $0.value) }
+        components.queryItems = nameItems + additionalItems
+        let queryString = components.percentEncodedQuery ?? ""
+        let callableName = if queryString.isEmpty {
+            name
+        } else {
+            "\(components.percentEncodedPath)?\(queryString)"
+        }
+        let callable = Functions.functions()
+            .httpsCallable(
+                callableName,
+                requestAs: String.self,
+                responseAs: StreamResponse<String?, String?>.self
+            )
+        return AsyncThrowingStream(HTTPBody.ByteChunk.self) { continuation in
+            let task = Task {
+                do {
+                    let stream = try callable.stream(body)
+                    for try await event in stream {
+                        try Task.checkCancellation()
+                        let string =
+                            switch event {
+                            case .message(let chunk), .result(let chunk):
+                                chunk
+                            }
+                        if let string {
+                            continuation.yield(HTTPBody.ByteChunk(string.utf8))
+                        }
+                    }
+                    continuation.finish()
+                } catch is CancellationError {
+                    continuation.finish()
+                } catch {
+                    continuation.finish(throwing: error)
+                }
+            }
+            continuation.onTermination = { @Sendable _ in
+                task.cancel()
+            }
         }
     }
 }
