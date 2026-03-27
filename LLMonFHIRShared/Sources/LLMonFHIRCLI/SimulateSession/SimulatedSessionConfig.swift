@@ -39,20 +39,18 @@ struct SimulatedSessionConfig: Sendable {
     /// Optional human-readable name for this config, used as the output filename prefix.
     let name: String?
 
-    /// Optional text appended to the study's default system prompt.
-    let systemPromptSuffix: String?
+    /// Optional custom system prompt text.
+    let customSystemPrompt: String?
 
     /// The questions that should be asked by the simulated patient.
     let userQuestions: [String]
 
     /// The effective system prompt: the study's default prompt with any suffix appended.
     var systemPrompt: FHIRPrompt {
-        guard let suffix = systemPromptSuffix, !suffix.isEmpty else {
+        guard let prompt = customSystemPrompt, !prompt.isEmpty else {
             return study.interpretMultipleResourcesPrompt
         }
-        return FHIRPrompt(
-            promptText: study.interpretMultipleResourcesPrompt.promptText + "\n\n" + suffix
-        )
+        return FHIRPrompt(promptText: prompt)
     }
 }
 
@@ -74,7 +72,7 @@ extension SimulatedSessionConfig: DecodableWithConfiguration {
         case studyId
         case bundleName
         case service
-        case systemPromptSuffix
+        case customSystemPrompt
         case userQuestions
         case model
         case temperature
@@ -103,9 +101,9 @@ extension SimulatedSessionConfig: DecodableWithConfiguration {
             }
             self.bundle = bundle
         }
-        self.systemPromptSuffix = try container.decodeIfPresent(
+        self.customSystemPrompt = try container.decodeIfPresent(
             String.self,
-            forKey: .systemPromptSuffix
+            forKey: .customSystemPrompt
         )
         self.userQuestions = try container.decode([String].self, forKey: .userQuestions)
     }

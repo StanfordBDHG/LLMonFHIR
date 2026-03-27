@@ -29,7 +29,7 @@ struct SimulateSession: AsyncParsableCommand {
               service             (optional) Backend: "OpenAI", "Firebase", or "Firebase-Emulator".
                                              Inferred from the environment when omitted (see below).
               name                (optional) Human-readable label used as the output filename prefix.
-              systemPromptSuffix  (optional) Text appended to the study's default system prompt.
+              customSystemPrompt  (optional) Custom system prompt text.
 
             API credentials are never stored in the config file. They are read from the environment:
 
