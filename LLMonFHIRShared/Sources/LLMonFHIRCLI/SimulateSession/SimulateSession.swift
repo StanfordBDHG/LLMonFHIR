@@ -16,12 +16,50 @@ struct SimulateSession: AsyncParsableCommand {
     static let configuration = CommandConfiguration(
         commandName: "simulate-session",
         abstract: "Runs a simulated session, using a synthetic patient's context and pre-defined user prompts.",
+        discussion: #"""
+            Each entry in the JSON config file defines one simulation scenario. Supported fields:
+
+              numberOfRuns        (required) Number of times to repeat this scenario.
+              studyId             (required) Study identifier.
+              bundleName          (required) Embedded patient name, or path to a FHIR bundle JSON
+                                             file (resolved relative to the config file).
+              model               (required) OpenAI model name (e.g. "gpt-4o").
+              temperature         (required) Sampling temperature.
+              userQuestions       (required) List of questions the simulated patient asks.
+              service             (optional) Backend: "OpenAI", "Firebase", or "Firebase-Emulator".
+                                             Inferred from the environment when omitted (see below).
+              name                (optional) Human-readable label used as the output filename prefix.
+              systemPromptSuffix  (optional) Text appended to the study's default system prompt.
+
+            API credentials are never stored in the config file. They are read from the environment:
+
+              OPENAI_API_KEY              Required for the "OpenAI" service.
+              GOOGLE_CREDENTIALS_PLIST    Path to GoogleService-Info.plist; required for "Firebase",
+                                          optional for "Firebase-Emulator" (uses placeholder
+                                          credentials when unset).
+
+            Service inference (when "service" is omitted from a config entry):
+              1. OPENAI_API_KEY is set and non-empty        → "OpenAI"
+              2. GOOGLE_CREDENTIALS_PLIST is set and valid  → "Firebase"
+              3. Neither is available                       → "Firebase-Emulator"
+
+            Optional Firebase environment variables:
+
+              FIREBASE_REGION                  Firebase region (default: us-central1).
+              FIREBASE_AUTH_EMULATOR_HOST      Auth emulator address host:port
+                                               (default: localhost:9099; emulator mode only).
+              FIREBASE_FUNCTIONS_EMULATOR_HOST Functions emulator address host:port
+                                               (default: localhost:5001; emulator mode only).
+
+            Output reports are written to a timestamped subdirectory of the output directory,
+            named <index>-<name>-<run>.json (e.g. 00-my-scenario-1.json).
+            """#
     )
-    
-    @Argument(help: "Input file")
+
+    @Argument(help: "Path to the JSON config file describing the sessions to simulate.")
     var inputUrl: URL
-    
-    @Argument(help: "Output directory")
+
+    @Argument(help: "Directory where output report files will be written.")
     var outputUrl: URL
     
     @MainActor
@@ -43,7 +81,7 @@ struct SimulateSession: AsyncParsableCommand {
 
         var savedCount = 0
         var failedSessionCount = 0
-            for (configIdx, config) in configs.enumerated() where config.service == .firebaseEmulator {
+            for (configIdx, config) in configs.enumerated() {
                 for runIdx in 0..<config.numberOfRuns {
                         let simulator = SessionSimulator(config: config, runIdx: runIdx)
                         let sessionDesc = simulator.sessionDesc
