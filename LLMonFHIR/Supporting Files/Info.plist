@@ -2,11 +2,51 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>CFBundleDevelopmentRegion</key>
+	<string>$(DEVELOPMENT_LANGUAGE)</string>
+	<key>CFBundleExecutable</key>
+	<string>$(EXECUTABLE_NAME)</string>
+	<key>CFBundleIdentifier</key>
+	<string>$(PRODUCT_BUNDLE_IDENTIFIER)</string>
+	<key>CFBundleInfoDictionaryVersion</key>
+	<string>6.0</string>
+	<key>CFBundleName</key>
+	<string>$(PRODUCT_NAME)</string>
+	<key>CFBundlePackageType</key>
+	<string>APPL</string>
+	<key>CFBundleShortVersionString</key>
+	<string>$(MARKETING_VERSION)</string>
+	<key>CFBundleVersion</key>
+	<string>$(CURRENT_PROJECT_VERSION)</string>
+	<key>ITSAppUsesNonExemptEncryption</key>
+	<false/>
+	<key>LSRequiresIPhoneOS</key>
+	<true/>
+	<key>NSCameraUsageDescription</key>
+	<string>LLMonFHIR uses the camera to scan study enrollment QR codes.</string>
 	<key>NSBonjourServices</key>
 	<array>
 		<string>_https._tcp</string>
 		<string>_http._tcp</string>
 	</array>
+	<key>NSHealthClinicalHealthRecordsShareUsageDescription</key>
+	<string>LLMonFHIR uses the health data to demonstrate the capabilities of LLMs to explain medical concepts based on patient data provided by FHIR APIs.</string>
+	<key>NSHealthShareUsageDescription</key>
+	<string>LLMonFHIR uses the health data to demonstrate the capabilities of LLMs to explain medical concepts based on patient data provided by FHIR APIs.</string>
+	<key>NSHealthUpdateUsageDescription</key>
+	<string>LLMonFHIR uses the step count to demonstrate Spezi's integration with HealthKit.</string>
+	<key>NSLocalNetworkUsageDescription</key>
+	<string>LLMonFHIR uses local network access to discover nearby fog nodes.</string>
+	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+	<string>This message should never appear. Please adjust this when you start using location information. We have to put this in here as ResearchKit has the possibility to use it and not putting it here returns an error on AppStore Connect.</string>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>This message should never appear. Please adjust this when you start using location information. We have to put this in here as ResearchKit has the possibility to use it and not putting it here returns an error on AppStore Connect.</string>
+	<key>NSMicrophoneUsageDescription</key>
+	<string>This message should never appear. Please adjust this when you start using microphone information. We have to put this in here as ResearchKit has the possibility to use it and not putting it here returns an error on AppStore Connect.</string>
+	<key>NSMotionUsageDescription</key>
+	<string>This message should never appear. Please adjust this when you start using motion information. We have to put this in here as ResearchKit has the possibility to use it and not putting it here returns an error on AppStore Connect.</string>
+	<key>NSSpeechRecognitionUsageDescription</key>
+	<string>This message should never appear. Please adjust this when you start using speech information. We have to put this in here as ResearchKit has the possibility to use it and not putting it here returns an error on AppStore Connect.</string>
 	<key>UIApplicationSceneManifest</key>
 	<dict>
 		<key>UIApplicationSupportsMultipleScenes</key>
@@ -14,5 +54,20 @@
 		<key>UISceneConfigurations</key>
 		<dict/>
 	</dict>
+	<key>UIApplicationSupportsIndirectInputEvents</key>
+	<true/>
+	<key>UILaunchScreen</key>
+	<dict/>
+	<key>UISupportedInterfaceOrientations</key>
+	<array>
+		<string>UIInterfaceOrientationPortrait</string>
+	</array>
+	<key>UISupportedInterfaceOrientations~ipad</key>
+	<array>
+		<string>UIInterfaceOrientationLandscapeLeft</string>
+		<string>UIInterfaceOrientationLandscapeRight</string>
+		<string>UIInterfaceOrientationPortrait</string>
+		<string>UIInterfaceOrientationPortraitUpsideDown</string>
+	</array>
 </dict>
 </plist>

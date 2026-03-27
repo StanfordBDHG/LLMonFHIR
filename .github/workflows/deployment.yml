@@ -82,8 +82,8 @@ jobs:
         id: determineenvironment
         run: |
           if [[ -z "${{ inputs.environment }}" ]]; then
-            echo "environment=spineai" >> $GITHUB_OUTPUT
-            echo "environment: spineai"
+            echo "environment=staging" >> $GITHUB_OUTPUT
+            echo "environment: staging"
           else
             echo "environment=${{ inputs.environment }}" >> $GITHUB_OUTPUT
             echo "environment: ${{ inputs.environment }}"
@@ -102,15 +102,14 @@ jobs:
         id: get-latest-tag
         with:
           semver_only: true
-          initial_version: "2.0.0"
+          initial_version: "1.0.0"
       - id: script
         run: |
           echo "Injecting Environment Variables In Deployment Workflow ..."
           if [[ -z "${{ inputs.version }}" ]]; then
-            LATEST_VERSION="${{ steps.get-latest-tag.outputs.tag }}"
-            LATEST_VERSION="${LATEST_VERSION#v}"
-
-            IFS='.' read -r MAJOR MINOR PATCH <<< "$LATEST_VERSION"
+            TAG="${{ steps.get-latest-tag.outputs.tag }}"
+            TAG="${TAG#v}"
+            IFS='.' read -r MAJOR MINOR PATCH <<< "$TAG"
 
             PATCH=$((PATCH + 1))
             NEW_VERSION="${MAJOR}.${MINOR}.${PATCH}"
@@ -121,6 +120,7 @@ jobs:
             echo "version=${{ inputs.version }}" >> $GITHUB_OUTPUT
             echo "version: ${{ inputs.version }}"
           fi
+          echo "buildnumber: ${{ inputs.buildnumber }}"
           echo "releasenotes: ${{ inputs.releasenotes }}"
   buildandtest:
     name: Build and Test

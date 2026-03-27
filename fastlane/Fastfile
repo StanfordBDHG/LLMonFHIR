@@ -73,7 +73,7 @@ platform :ios do
       skip_open_summary: true
     )
     
-    # Workaround for https://github.com/fastlane/fastlane/issues/21759 and 
+    # Workaround for https://github.com/fastlane/fastlane/issues/21759 
     Dir.glob("./screenshots/**/iPhone 17 Pro Max-*.png").each do |file|
       sh("sips --resampleHeightWidth 2796 1290 '#{file}'")
     end
@@ -121,6 +121,7 @@ platform :ios do
     build_app(
       scheme: APP_CONFIG[:scheme],
       derived_data_path: ".derivedData",
+      skip_profile_detection: true,
       xcargs: [
         "-skipPackagePluginValidation",
         "-skipMacroValidation"
@@ -166,7 +167,7 @@ platform :ios do
       increment_version_number(
         version_number: versionname
       )
-      UI.message("Version bumped to #{versionname}")
+      UI.message("Version bumped to #{versionname}.")
     else
       UI.message("No version bump needed. Current version (#{currentversion}) is greater than or equal to desired version (#{versionname}).")
     end
