@@ -139,13 +139,13 @@ extension SessionSimulator {
             middlewares = []
         case .firebase:
             middlewares = firebaseConfigFromEnvironment().map {
-                [OpenAIFirebaseInterceptor(firebaseConfig: $0, endpointProvider: { .firebaseFunction(name: "chat") })]
+                [OpenAIFirebaseInterceptor(firebaseConfig: $0, studyId: config.study.id)]
             } ?? []
         case .firebaseEmulator:
             middlewares = [
                 OpenAIFirebaseInterceptor(
                     firebaseConfig: emulatorConfigFromEnvironment(),
-                    endpointProvider: { .firebaseFunction(name: "chat") }
+                    studyId: config.study.id
                 )
             ]
         }
@@ -175,7 +175,8 @@ extension SessionSimulator {
         guard let plistPath = ProcessInfo.processInfo.environment["GOOGLE_CREDENTIALS_PLIST"] else {
             return nil
         }
-        return try? FirebaseConfig(contentsOfFile: plistPath)
+        let region = ProcessInfo.processInfo.environment["FIREBASE_REGION"]
+        return try? FirebaseConfig(contentsOfFile: plistPath, region: region)
     }
 
     /// Builds a `FirebaseConfig` that routes all traffic to the local Firebase emulator suite.
@@ -190,6 +191,7 @@ extension SessionSimulator {
         return FirebaseConfig(
             apiKey: base?.apiKey ?? "demo-key",
             projectID: base?.projectID ?? "demo-project",
+            region: env["FIREBASE_REGION"],
             authEmulatorAddress: env["FIREBASE_AUTH_EMULATOR_HOST"] ?? "localhost:9099",
             functionsEmulatorAddress: env["FIREBASE_FUNCTIONS_EMULATOR_HOST"] ?? "localhost:5001"
         )

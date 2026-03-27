@@ -43,11 +43,9 @@ struct SimulateSession: AsyncParsableCommand {
 
         var savedCount = 0
         var failedSessionCount = 0
-        await withTaskGroup(of: Bool.self) { taskGroup in
-            for (configIdx, config) in configs.enumerated() {
+            for (configIdx, config) in configs.enumerated() where config.service == .firebaseEmulator {
                 for runIdx in 0..<config.numberOfRuns {
-                    taskGroup.addTask {
-                        let simulator = await SessionSimulator(config: config, runIdx: runIdx)
+                        let simulator = SessionSimulator(config: config, runIdx: runIdx)
                         let sessionDesc = simulator.sessionDesc
                         do {
                             let report = try await simulator.run()
@@ -60,22 +58,13 @@ struct SimulateSession: AsyncParsableCommand {
                             let dstUrl = outputUrl.appendingPathComponent("\(name)-\(runIdx + 1)", conformingTo: .json)
                             let reportData = try encoder.encode(report)
                             try reportData.write(to: dstUrl)
-                            return true
+                    savedCount += 1
                         } catch {
                             print("\(sessionDesc) failed: \(error.localizedDescription) \(error)")
-                            return false
-                        }
-                    }
-                }
-            }
-            for await success in taskGroup {
-                if success {
-                    savedCount += 1
-                } else {
                     failedSessionCount += 1
+                        }
                 }
             }
-        }
 
         if failedSessionCount > 0 {
             throw ExitCode.failure
