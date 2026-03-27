@@ -215,7 +215,7 @@ OPENAI_API_KEY=sk-proj-... swift run LLMonFHIRCLI simulate-session config.json o
 GOOGLE_CREDENTIALS_PLIST=~/GoogleService-Info.plist swift run LLMonFHIRCLI simulate-session config.json output/
 
 # Firebase emulator (no credentials needed)
-swift run LLMonFHIRCLI simulate-session config.json output/
+FIREBASE_PROJECT_ID=... swift run LLMonFHIRCLI simulate-session config.json output/
 ```
 
 Reports are saved to a timestamped subdirectory inside the output directory, named `<index>-<name>-<run>.json` (e.g. `00-gyn-gpt4o-openai-1.json`).
