@@ -6,6 +6,7 @@
 // SPDX-License-Identifier: MIT
 //
 
+import ArgumentParser
 import Foundation
 import LLMonFHIRShared
 import OpenAPIRuntime
@@ -30,10 +31,10 @@ struct SessionSimulator: ~Copyable {
     }
 
     @MainActor
-    init(config: SimulatedSessionConfig, runIdx: Int) {
+    init(config: SimulatedSessionConfig, runIdx: Int) throws {
         self.config = config
         self.runIdx = runIdx
-        spezi = Spezi(from: Self.speziConfig(for: config))
+        spezi = try Spezi(from: Self.speziConfig(for: config))
         coordinator = spezi.module(SessionCoordinator.self)! // swiftlint:disable:this force_unwrapping
         fhirStore = coordinator.fhirStore
         interpreter = coordinator.multipleResourceInterpreter
@@ -131,16 +132,22 @@ extension SessionSimulator {
     }
     
     @MainActor
-    private static func speziConfig(for config: SimulatedSessionConfig) -> SpeziConfiguration {
+    private static func speziConfig(for config: SimulatedSessionConfig) throws -> SpeziConfiguration {
         let openAIKey = ProcessInfo.processInfo.environment["OPENAI_API_KEY"] ?? ""
         let middlewares: [any ClientMiddleware]
         switch config.service {
         case .openAI:
+            guard !openAIKey.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty else {
+                throw ValidationError("OPENAI_API_KEY environment variable must be set when using the 'OpenAI' service.")
+            }
             middlewares = []
         case .firebase:
-            middlewares = firebaseConfigFromEnvironment().map {
-                [OpenAIFirebaseInterceptor(firebaseConfig: $0, studyId: config.study.id)]
-            } ?? []
+            guard let firebaseConfig = firebaseConfigFromEnvironment() else {
+                throw ValidationError("GOOGLE_CREDENTIALS_PLIST environment variable must be set when using the 'Firebase' service.")
+            }
+            middlewares = [
+                OpenAIFirebaseInterceptor(firebaseConfig: firebaseConfig, studyId: config.study.id)
+            ]
         case .firebaseEmulator:
             middlewares = [
                 OpenAIFirebaseInterceptor(
@@ -181,16 +188,23 @@ extension SessionSimulator {
 
     /// Builds a `FirebaseConfig` that routes all traffic to the local Firebase emulator suite.
     ///
-    /// Reads `FIREBASE_AUTH_EMULATOR_HOST` and `FIREBASE_FUNCTIONS_EMULATOR_HOST` for the emulator
-    /// addresses (defaulting to `localhost:9099` and `localhost:5001` respectively). If
-    /// `GOOGLE_CREDENTIALS_PLIST` is set, the real project credentials are used; otherwise
-    /// placeholder values are substituted so the emulator can be used without any credentials file.
+    /// Reads the following environment variables:
+    /// - `FIREBASE_AUTH_EMULATOR_HOST` — auth emulator address (default: `localhost:9099`)
+    /// - `FIREBASE_FUNCTIONS_EMULATOR_HOST` — functions emulator address (default: `localhost:5001`)
+    /// - `FIREBASE_REGION` — Firebase region (default: `us-central1`)
+    /// - `FIREBASE_PROJECT_ID` — project ID override used when `GOOGLE_CREDENTIALS_PLIST` is not
+    ///   set (default: `demo-project`)
+    ///
+    /// If `GOOGLE_CREDENTIALS_PLIST` is set, the real project credentials (API key and project ID)
+    /// are used; otherwise placeholder values are substituted so the emulator can be used without
+    /// any credentials file.
     private static func emulatorConfigFromEnvironment() -> FirebaseConfig {
         let env = ProcessInfo.processInfo.environment
         let base = firebaseConfigFromEnvironment()
+        let projectID = base?.projectID ?? env["FIREBASE_PROJECT_ID"] ?? "demo-project"
         return FirebaseConfig(
-            apiKey: base?.apiKey ?? "demo-key",
-            projectID: base?.projectID ?? "demo-project",
+            apiKey: base?.apiKey ?? "A00000000000000000000000000000000000000",
+            projectID: projectID,
             region: env["FIREBASE_REGION"],
             authEmulatorAddress: env["FIREBASE_AUTH_EMULATOR_HOST"] ?? "localhost:9099",
             functionsEmulatorAddress: env["FIREBASE_FUNCTIONS_EMULATOR_HOST"] ?? "localhost:5001"

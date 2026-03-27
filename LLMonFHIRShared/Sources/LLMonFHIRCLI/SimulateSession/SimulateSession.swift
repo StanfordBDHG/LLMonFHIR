@@ -46,6 +46,9 @@ struct SimulateSession: AsyncParsableCommand {
             Optional Firebase environment variables:
 
               FIREBASE_REGION                  Firebase region (default: us-central1).
+              FIREBASE_PROJECT_ID              Project ID override for the emulator when
+                                               GOOGLE_CREDENTIALS_PLIST is not set
+                                               (default: demo-project; emulator mode only).
               FIREBASE_AUTH_EMULATOR_HOST      Auth emulator address host:port
                                                (default: localhost:9099; emulator mode only).
               FIREBASE_FUNCTIONS_EMULATOR_HOST Functions emulator address host:port
@@ -70,14 +73,13 @@ struct SimulateSession: AsyncParsableCommand {
             configuration: .init(configFileUrl: inputUrl)
         )
 
+        try validateConfigurations(configs)
+
         let outputUrl = outputUrl.appending(
             path: Date.now.formatted(Date.ISO8601FormatStyle.suitableForFilenames),
             directoryHint: .isDirectory
         )
         try FileManager.default.createDirectory(at: outputUrl, withIntermediateDirectories: true)
-
-        let encoder = JSONEncoder()
-        encoder.outputFormatting = [.prettyPrinted, .withoutEscapingSlashes, .sortedKeys]
 
         var savedCount = 0
         var failedSessionCount = 0
@@ -85,24 +87,7 @@ struct SimulateSession: AsyncParsableCommand {
             for (configIdx, config) in configs.enumerated() {
                 for runIdx in 0..<config.numberOfRuns {
                     taskGroup.addTask {
-                        let simulator = await SessionSimulator(config: config, runIdx: runIdx)
-                        let sessionDesc = simulator.sessionDesc
-                        do {
-                            let report = try await simulator.run()
-                            let sanitized = (config.name ?? "session")
-                                .components(separatedBy: CharacterSet(charactersIn: "/\\"))
-                                .joined()
-                                .replacingOccurrences(of: "..", with: "")
-                                .trimmingCharacters(in: .whitespacesAndNewlines)
-                            let name = String(format: "%02d", configIdx) + "-" + (sanitized.isEmpty ? "session" : sanitized)
-                            let dstUrl = outputUrl.appendingPathComponent("\(name)-\(runIdx + 1)", conformingTo: .json)
-                            let reportData = try encoder.encode(report)
-                            try reportData.write(to: dstUrl)
-                            return true
-                        } catch {
-                            print("\(sessionDesc) failed: \(error.localizedDescription) \(error)")
-                            return false
-                        }
+                        await self.runConfiguration(config, configIdx: configIdx, runIdx: runIdx)
                     }
                 }
             }
@@ -118,6 +103,44 @@ struct SimulateSession: AsyncParsableCommand {
 
         if failedSessionCount > 0 {
             throw ExitCode.failure
+        }
+    }
+
+    private func runConfiguration(_ config: SimulatedSessionConfig, configIdx: Int, runIdx: Int) async -> Bool {
+        var sessionDesc = "Session \(configIdx) - Run \(runIdx + 1)"
+        do {
+            let simulator = try await SessionSimulator(config: config, runIdx: runIdx)
+            sessionDesc = simulator.sessionDesc
+            let report = try await simulator.run()
+            let sanitized = (config.name ?? "session")
+                .components(separatedBy: CharacterSet(charactersIn: "/\\"))
+                .joined()
+                .replacingOccurrences(of: "..", with: "")
+                .trimmingCharacters(in: .whitespacesAndNewlines)
+            let name = String(format: "%02d", configIdx) + "-" + (sanitized.isEmpty ? "session" : sanitized)
+            let dstUrl = outputUrl.appendingPathComponent("\(name)-\(runIdx + 1)", conformingTo: .json)
+            let encoder = JSONEncoder()
+            encoder.outputFormatting = [.prettyPrinted, .withoutEscapingSlashes, .sortedKeys]
+            let reportData = try encoder.encode(report)
+            try reportData.write(to: dstUrl)
+            return true
+        } catch {
+            print("\(sessionDesc) failed: \(error.localizedDescription) \(error)")
+            return false
+        }
+    }
+
+    private func validateConfigurations(_ configs: [SimulatedSessionConfig]) throws {
+        if configs.contains(where: { $0.service == .openAI }),
+           ProcessInfo.processInfo.environment["OPENAI_API_KEY"]?
+               .trimmingCharacters(in: .whitespacesAndNewlines)
+               .isEmpty ?? true {
+            throw ValidationError("OPENAI_API_KEY environment variable is required when using the 'OpenAI' service.")
+        }
+
+        if configs.contains(where: { $0.service == .firebase }),
+           ProcessInfo.processInfo.environment["GOOGLE_CREDENTIALS_PLIST"]?.isEmpty ?? true {
+            throw ValidationError("GOOGLE_CREDENTIALS_PLIST environment variable is required when using the 'Firebase' service.")
         }
     }
 }

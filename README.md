@@ -162,6 +162,7 @@ Additional optional environment variables:
 | Env var | Default | Effect |
 |---------|---------|--------|
 | `FIREBASE_REGION` | `us-central1` | Firebase Functions/Auth region |
+| `FIREBASE_PROJECT_ID` | `demo-project` | Project ID override for the emulator when `GOOGLE_CREDENTIALS_PLIST` is not set (emulator mode only) |
 | `FIREBASE_AUTH_EMULATOR_HOST` | `localhost:9099` | Auth emulator address (`host:port`) |
 | `FIREBASE_FUNCTIONS_EMULATOR_HOST` | `localhost:5001` | Functions emulator address (`host:port`) |
 
@@ -173,7 +174,7 @@ Each entry in the JSON config defines the parameters of one simulation:
 - `userQuestions` — the questions the simulated patient asks
 - `service` *(optional)* — `"OpenAI"`, `"Firebase"`, or `"Firebase-Emulator"`; if omitted, inferred from the environment (`OPENAI_API_KEY` → OpenAI, `GOOGLE_CREDENTIALS_PLIST` → Firebase, otherwise Firebase-Emulator)
 - `name` *(optional)* — human-readable label used as the output filename prefix
-- `systemPromptSuffix` *(optional)* — text appended to the study's default system prompt
+- `customSystemPrompt` *(optional)* — custom system prompt, replaces the study's default system prompt
 
 The example config below performs 6 simulated runs of the `edu.stanford.LLMonFHIR.gynStudy` study, 3 each using GPT-4o and GPT-4o-mini, against two different backends:
 ```json
