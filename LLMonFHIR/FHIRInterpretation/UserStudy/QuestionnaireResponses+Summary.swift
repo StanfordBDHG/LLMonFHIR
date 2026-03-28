@@ -47,7 +47,7 @@ extension QuestionnaireResponses {
 
 
 extension QuestionnaireResponses.Response {
-    fileprivate func summarize( // swiftlint:disable:this cyclomatic_complexity
+    fileprivate func summarize( // swiftlint:disable:this cyclomatic_complexity function_body_length
         for task: Questionnaire.Task,
         in questionnaire: Questionnaire,
         using runner: LLMRunner
@@ -63,7 +63,8 @@ extension QuestionnaireResponses.Response {
         case .bool(let value):
             return value ? "Yes" : "No"
         case .date(let components):
-            guard case .dateTime(let config) = task.kind, let date = Calendar.current.date(from: components) else {
+            guard let config = task.kind.config(as: Questionnaire.Task.Kind.DateTimeConfig.self),
+                  let date = Calendar.current.date(from: components) else {
                 return nil
             }
             return switch config.style {
@@ -80,7 +81,7 @@ extension QuestionnaireResponses.Response {
             guard !response.selectedOptions.isEmpty || response.freeTextOtherResponse != nil else {
                 return nil
             }
-            guard case .choice(let config) = task.kind else {
+            guard let config = task.kind.config(as: Questionnaire.Task.Kind.ChoiceConfig.self) else {
                 return nil
             }
             var options = response.selectedOptions.compactMap { id in
@@ -118,7 +119,7 @@ extension QuestionnaireResponses.ImageAnnotation {
         let jpegCompression: Double = 1
         /// The LLMSchema used for the image summary queries
         let schema = LLMOpenAISchema(parameters: .init(modelType: .gpt4o))
-        guard case .annotateImage(let config) = task.kind else {
+        guard let config = task.kind.config(for: AnnotateImageQuestionKind.self) else {
             return nil
         }
         guard let baseImage = config.inputImage.image(),

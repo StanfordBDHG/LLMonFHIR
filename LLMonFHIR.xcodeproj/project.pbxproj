@@ -15,39 +15,18 @@
 		2FE5DC9C29EDD9EF004B9AB4 /* XCTHealthKit in Frameworks */ = {isa = PBXBuildFile; productRef = 2FE5DC9B29EDD9EF004B9AB4 /* XCTHealthKit */; };
 		44E18E882CEBEC9500829A26 /* SpeziLLM in Frameworks */ = {isa = PBXBuildFile; productRef = 44E18E872CEBEC9500829A26 /* SpeziLLM */; };
 		44E18E8A2CEBEC9500829A26 /* SpeziLLMFog in Frameworks */ = {isa = PBXBuildFile; productRef = 44E18E892CEBEC9500829A26 /* SpeziLLMFog */; };
-		44E18E8C2CEBEC9500829A26 /* SpeziLLMLocal in Frameworks */ = {isa = PBXBuildFile; productRef = 44E18E8B2CEBEC9500829A26 /* SpeziLLMLocal */; };
 		44E18E8E2CEBEC9500829A26 /* SpeziLLMLocalDownload in Frameworks */ = {isa = PBXBuildFile; productRef = 44E18E8D2CEBEC9500829A26 /* SpeziLLMLocalDownload */; };
 		44E18E902CEBEC9500829A26 /* SpeziLLMOpenAI in Frameworks */ = {isa = PBXBuildFile; productRef = 44E18E8F2CEBEC9500829A26 /* SpeziLLMOpenAI */; };
 		44E18E932CEBF29200829A26 /* SpeziLocalStorage in Frameworks */ = {isa = PBXBuildFile; productRef = 44E18E922CEBF29200829A26 /* SpeziLocalStorage */; };
 		8004693A2EEF472400585753 /* SpeziOnboarding in Frameworks */ = {isa = PBXBuildFile; productRef = 800469392EEF472400585753 /* SpeziOnboarding */; };
 		801761AC2EE5CC2400383DB3 /* SpeziViews in Frameworks */ = {isa = PBXBuildFile; productRef = 801761AB2EE5CC2400383DB3 /* SpeziViews */; };
-		802641DC2F638893006A1D76 /* SpeziQuestionnaire in Frameworks */ = {isa = PBXBuildFile; productRef = 802641DB2F638893006A1D76 /* SpeziQuestionnaire */; };
-		802641DE2F638893006A1D76 /* SpeziQuestionnaireFHIR in Frameworks */ = {isa = PBXBuildFile; productRef = 802641DD2F638893006A1D76 /* SpeziQuestionnaireFHIR */; };
 		802641E02F638893006A1D76 /* XCTSpeziQuestionnaire in Frameworks */ = {isa = PBXBuildFile; productRef = 802641DF2F638893006A1D76 /* XCTSpeziQuestionnaire */; };
 		803D16682F30DA3C0060B931 /* LLMonFHIRStudyDefinitions in Frameworks */ = {isa = PBXBuildFile; productRef = 803D16672F30DA3C0060B931 /* LLMonFHIRStudyDefinitions */; };
-		8040C2A02F19396A00884AD3 /* SpeziLLM in Frameworks */ = {isa = PBXBuildFile; productRef = 8040C29F2F19396A00884AD3 /* SpeziLLM */; };
-		8040C2A22F19396A00884AD3 /* SpeziLLMFog in Frameworks */ = {isa = PBXBuildFile; productRef = 8040C2A12F19396A00884AD3 /* SpeziLLMFog */; };
-		8040C2A42F19396A00884AD3 /* SpeziLLMLocal in Frameworks */ = {isa = PBXBuildFile; productRef = 8040C2A32F19396A00884AD3 /* SpeziLLMLocal */; };
-		8040C2A62F19396A00884AD3 /* SpeziLLMLocalDownload in Frameworks */ = {isa = PBXBuildFile; productRef = 8040C2A52F19396A00884AD3 /* SpeziLLMLocalDownload */; };
-		8040C2A82F19396A00884AD3 /* SpeziLLMOpenAI in Frameworks */ = {isa = PBXBuildFile; productRef = 8040C2A72F19396A00884AD3 /* SpeziLLMOpenAI */; };
 		805C26312F25171E00769AC1 /* LLMonFHIRShared in Frameworks */ = {isa = PBXBuildFile; productRef = 805C26302F25171E00769AC1 /* LLMonFHIRShared */; };
-		806DF5BA2EC234AD00A8243C /* SpeziFHIR in Frameworks */ = {isa = PBXBuildFile; productRef = 806DF5B92EC234AD00A8243C /* SpeziFHIR */; };
-		806DF5BC2EC234AD00A8243C /* SpeziFHIRHealthKit in Frameworks */ = {isa = PBXBuildFile; productRef = 806DF5BB2EC234AD00A8243C /* SpeziFHIRHealthKit */; };
-		806DF5BE2EC234AD00A8243C /* SpeziFHIRMockPatients in Frameworks */ = {isa = PBXBuildFile; productRef = 806DF5BD2EC234AD00A8243C /* SpeziFHIRMockPatients */; };
-		806F40BE2F179FDB0001E988 /* FirebaseCore in Frameworks */ = {isa = PBXBuildFile; productRef = 806F40BD2F179FDB0001E988 /* FirebaseCore */; };
-		806F40C02F179FDB0001E988 /* FirebaseFunctions in Frameworks */ = {isa = PBXBuildFile; productRef = 806F40BF2F179FDB0001E988 /* FirebaseFunctions */; };
-		806F40C22F179FDB0001E988 /* FirebaseStorage in Frameworks */ = {isa = PBXBuildFile; productRef = 806F40C12F179FDB0001E988 /* FirebaseStorage */; };
-		806F40C42F17A02B0001E988 /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = 806F40C32F17A02B0001E988 /* FirebaseFirestore */; };
 		808EBE722F0976710032D087 /* SpeziFoundation in Frameworks */ = {isa = PBXBuildFile; productRef = 808EBE712F0976710032D087 /* SpeziFoundation */; };
-		8098C14E2F6EE891007FC944 /* SpeziQuestionnaire in Frameworks */ = {isa = PBXBuildFile; productRef = 8098C14D2F6EE891007FC944 /* SpeziQuestionnaire */; };
 		8098C1502F6EE891007FC944 /* SpeziQuestionnaireFHIR in Frameworks */ = {isa = PBXBuildFile; productRef = 8098C14F2F6EE891007FC944 /* SpeziQuestionnaireFHIR */; };
 		8098C1522F6EE891007FC944 /* XCTSpeziQuestionnaire in Frameworks */ = {isa = PBXBuildFile; productRef = 8098C1512F6EE891007FC944 /* XCTSpeziQuestionnaire */; };
-		8098C1552F6EFA08007FC944 /* SpeziQuestionnaire in Frameworks */ = {isa = PBXBuildFile; productRef = 8098C1542F6EFA08007FC944 /* SpeziQuestionnaire */; };
-		8098C1572F6EFA08007FC944 /* SpeziQuestionnaireFHIR in Frameworks */ = {isa = PBXBuildFile; productRef = 8098C1562F6EFA08007FC944 /* SpeziQuestionnaireFHIR */; };
-		8098C1592F6EFA08007FC944 /* XCTSpeziQuestionnaire in Frameworks */ = {isa = PBXBuildFile; productRef = 8098C1582F6EFA08007FC944 /* XCTSpeziQuestionnaire */; };
-		80A98FA62F13DA5C00BDD5B7 /* SpeziFHIR in Frameworks */ = {isa = PBXBuildFile; productRef = 80A98FA52F13DA5C00BDD5B7 /* SpeziFHIR */; };
 		80A98FA82F13DA5C00BDD5B7 /* SpeziFHIRHealthKit in Frameworks */ = {isa = PBXBuildFile; productRef = 80A98FA72F13DA5C00BDD5B7 /* SpeziFHIRHealthKit */; };
-		80A98FAA2F13DA5C00BDD5B7 /* SpeziFHIRMockPatients in Frameworks */ = {isa = PBXBuildFile; productRef = 80A98FA92F13DA5C00BDD5B7 /* SpeziFHIRMockPatients */; };
 		80A990742F16996400BDD5B7 /* SpeziAccount in Frameworks */ = {isa = PBXBuildFile; productRef = 80A990732F16996400BDD5B7 /* SpeziAccount */; };
 		80A990772F1699B500BDD5B7 /* SpeziFirebaseAccount in Frameworks */ = {isa = PBXBuildFile; productRef = 80A990762F1699B500BDD5B7 /* SpeziFirebaseAccount */; };
 		80A990792F1699B500BDD5B7 /* SpeziFirebaseAccountStorage in Frameworks */ = {isa = PBXBuildFile; productRef = 80A990782F1699B500BDD5B7 /* SpeziFirebaseAccountStorage */; };
@@ -55,19 +34,20 @@
 		80A9907D2F1699B500BDD5B7 /* SpeziFirebaseStorage in Frameworks */ = {isa = PBXBuildFile; productRef = 80A9907C2F1699B500BDD5B7 /* SpeziFirebaseStorage */; };
 		80A9907F2F1699B500BDD5B7 /* SpeziFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = 80A9907E2F1699B500BDD5B7 /* SpeziFirestore */; };
 		80C2187B2F66CD6500666C53 /* XCTestExtensions in Frameworks */ = {isa = PBXBuildFile; productRef = 80C2187A2F66CD6500666C53 /* XCTestExtensions */; };
+		80C7595B2F78076C00DE9DEA /* FirebaseFunctions in Frameworks */ = {isa = PBXBuildFile; productRef = 80C7595A2F78076C00DE9DEA /* FirebaseFunctions */; };
+		80C7595D2F78076C00DE9DEA /* FirebaseStorage in Frameworks */ = {isa = PBXBuildFile; productRef = 80C7595C2F78076C00DE9DEA /* FirebaseStorage */; };
+		80C759622F78189400DE9DEA /* SpeziLLMAnthropic in Frameworks */ = {isa = PBXBuildFile; productRef = 80C759612F78189400DE9DEA /* SpeziLLMAnthropic */; };
+		80C759662F78189400DE9DEA /* SpeziLLMGemini in Frameworks */ = {isa = PBXBuildFile; productRef = 80C759652F78189400DE9DEA /* SpeziLLMGemini */; };
+		80C759682F78189400DE9DEA /* SpeziLLMLocal in Frameworks */ = {isa = PBXBuildFile; productRef = 80C759672F78189400DE9DEA /* SpeziLLMLocal */; };
+		80C7596C2F78189400DE9DEA /* SpeziLLMOpenAI in Frameworks */ = {isa = PBXBuildFile; productRef = 80C7596B2F78189400DE9DEA /* SpeziLLMOpenAI */; };
+		80C7596E2F78189400DE9DEA /* SpeziLLMOpenAIRealtime in Frameworks */ = {isa = PBXBuildFile; productRef = 80C7596D2F78189400DE9DEA /* SpeziLLMOpenAIRealtime */; };
+		80D371B12F7819080081BBA1 /* FirebaseCore in Frameworks */ = {isa = PBXBuildFile; productRef = 80D371B02F7819080081BBA1 /* FirebaseCore */; };
+		80D371B32F7819080081BBA1 /* FirebaseFunctions in Frameworks */ = {isa = PBXBuildFile; productRef = 80D371B22F7819080081BBA1 /* FirebaseFunctions */; };
+		80D371B82F781AD20081BBA1 /* SpeziQuestionnaire in Frameworks */ = {isa = PBXBuildFile; productRef = 80D371B72F781AD20081BBA1 /* SpeziQuestionnaire */; };
+		80D371BC2F781AD20081BBA1 /* XCTSpeziQuestionnaire in Frameworks */ = {isa = PBXBuildFile; productRef = 80D371BB2F781AD20081BBA1 /* XCTSpeziQuestionnaire */; };
 		9710D3562B84151F00E0A20F /* SpeziChat in Frameworks */ = {isa = PBXBuildFile; productRef = 9710D3552B84151F00E0A20F /* SpeziChat */; };
-		9733FC572B60E5FB0024F12C /* SpeziFHIR in Frameworks */ = {isa = PBXBuildFile; productRef = 9733FC562B60E5FB0024F12C /* SpeziFHIR */; };
-		9733FC592B60E5FB0024F12C /* SpeziFHIRHealthKit in Frameworks */ = {isa = PBXBuildFile; productRef = 9733FC582B60E5FB0024F12C /* SpeziFHIRHealthKit */; };
-		9733FC5D2B60E5FB0024F12C /* SpeziFHIRMockPatients in Frameworks */ = {isa = PBXBuildFile; productRef = 9733FC5C2B60E5FB0024F12C /* SpeziFHIRMockPatients */; };
 		97BC1F272B7F390100438263 /* SpeziFHIR in Frameworks */ = {isa = PBXBuildFile; productRef = 97BC1F262B7F390100438263 /* SpeziFHIR */; };
-		97BC1F2B2B7F390100438263 /* SpeziFHIRHealthKit in Frameworks */ = {isa = PBXBuildFile; productRef = 97BC1F2A2B7F390100438263 /* SpeziFHIRHealthKit */; };
-		97BC1F2F2B7F390100438263 /* SpeziFHIRMockPatients in Frameworks */ = {isa = PBXBuildFile; productRef = 97BC1F2E2B7F390100438263 /* SpeziFHIRMockPatients */; };
-		97BECCD22B8C68C10017E47D /* SpeziFHIR in Frameworks */ = {isa = PBXBuildFile; productRef = 97BECCD12B8C68C10017E47D /* SpeziFHIR */; };
-		97BECCD42B8C68C10017E47D /* SpeziFHIRHealthKit in Frameworks */ = {isa = PBXBuildFile; productRef = 97BECCD32B8C68C10017E47D /* SpeziFHIRHealthKit */; };
 		97BECCD82B8C68C10017E47D /* SpeziFHIRMockPatients in Frameworks */ = {isa = PBXBuildFile; productRef = 97BECCD72B8C68C10017E47D /* SpeziFHIRMockPatients */; };
-		97EAB5DE2B7A010A00A0B036 /* SpeziFHIR in Frameworks */ = {isa = PBXBuildFile; productRef = 97EAB5DD2B7A010A00A0B036 /* SpeziFHIR */; };
-		97EAB5E02B7A010A00A0B036 /* SpeziFHIRHealthKit in Frameworks */ = {isa = PBXBuildFile; productRef = 97EAB5DF2B7A010A00A0B036 /* SpeziFHIRHealthKit */; };
-		97EAB5E42B7A010A00A0B036 /* SpeziFHIRMockPatients in Frameworks */ = {isa = PBXBuildFile; productRef = 97EAB5E32B7A010A00A0B036 /* SpeziFHIRMockPatients */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -124,60 +104,40 @@
 			files = (
 				44E18E932CEBF29200829A26 /* SpeziLocalStorage in Frameworks */,
 				801761AC2EE5CC2400383DB3 /* SpeziViews in Frameworks */,
-				806F40C22F179FDB0001E988 /* FirebaseStorage in Frameworks */,
+				80D371B82F781AD20081BBA1 /* SpeziQuestionnaire in Frameworks */,
+				80C7596E2F78189400DE9DEA /* SpeziLLMOpenAIRealtime in Frameworks */,
 				8098C1502F6EE891007FC944 /* SpeziQuestionnaireFHIR in Frameworks */,
 				44E18E882CEBEC9500829A26 /* SpeziLLM in Frameworks */,
-				8040C2A82F19396A00884AD3 /* SpeziLLMOpenAI in Frameworks */,
 				803D16682F30DA3C0060B931 /* LLMonFHIRStudyDefinitions in Frameworks */,
-				806DF5BC2EC234AD00A8243C /* SpeziFHIRHealthKit in Frameworks */,
 				44E18E8E2CEBEC9500829A26 /* SpeziLLMLocalDownload in Frameworks */,
-				97EAB5E02B7A010A00A0B036 /* SpeziFHIRHealthKit in Frameworks */,
-				9733FC592B60E5FB0024F12C /* SpeziFHIRHealthKit in Frameworks */,
-				97BC1F2B2B7F390100438263 /* SpeziFHIRHealthKit in Frameworks */,
-				806F40C42F17A02B0001E988 /* FirebaseFirestore in Frameworks */,
+				80D371B12F7819080081BBA1 /* FirebaseCore in Frameworks */,
 				2FD8E82C2A1AADDA00357F4E /* ModelsR4 in Frameworks */,
 				80A990742F16996400BDD5B7 /* SpeziAccount in Frameworks */,
 				2FD8E82A2A1AADDA00357F4E /* ModelsDSTU2 in Frameworks */,
 				2FE5DC7229EDD8D3004B9AB4 /* SpeziHealthKit in Frameworks */,
-				806DF5BA2EC234AD00A8243C /* SpeziFHIR in Frameworks */,
 				44E18E8A2CEBEC9500829A26 /* SpeziLLMFog in Frameworks */,
 				97BECCD82B8C68C10017E47D /* SpeziFHIRMockPatients in Frameworks */,
-				806F40C02F179FDB0001E988 /* FirebaseFunctions in Frameworks */,
-				97BECCD42B8C68C10017E47D /* SpeziFHIRHealthKit in Frameworks */,
+				80C7596C2F78189400DE9DEA /* SpeziLLMOpenAI in Frameworks */,
+				80C759682F78189400DE9DEA /* SpeziLLMLocal in Frameworks */,
 				80A990772F1699B500BDD5B7 /* SpeziFirebaseAccount in Frameworks */,
 				80A98FA82F13DA5C00BDD5B7 /* SpeziFHIRHealthKit in Frameworks */,
-				8098C1552F6EFA08007FC944 /* SpeziQuestionnaire in Frameworks */,
 				805C26312F25171E00769AC1 /* LLMonFHIRShared in Frameworks */,
+				80D371B32F7819080081BBA1 /* FirebaseFunctions in Frameworks */,
 				9710D3562B84151F00E0A20F /* SpeziChat in Frameworks */,
 				97BC1F272B7F390100438263 /* SpeziFHIR in Frameworks */,
-				8040C2A22F19396A00884AD3 /* SpeziLLMFog in Frameworks */,
 				8004693A2EEF472400585753 /* SpeziOnboarding in Frameworks */,
 				2F49B7762980407C00BCB272 /* Spezi in Frameworks */,
 				80A9907D2F1699B500BDD5B7 /* SpeziFirebaseStorage in Frameworks */,
-				97BECCD22B8C68C10017E47D /* SpeziFHIR in Frameworks */,
-				44E18E8C2CEBEC9500829A26 /* SpeziLLMLocal in Frameworks */,
+				80C7595B2F78076C00DE9DEA /* FirebaseFunctions in Frameworks */,
+				80C759622F78189400DE9DEA /* SpeziLLMAnthropic in Frameworks */,
 				2FD8E8312A1AB00D00357F4E /* HealthKitOnFHIR in Frameworks */,
-				802641DE2F638893006A1D76 /* SpeziQuestionnaireFHIR in Frameworks */,
-				8098C14E2F6EE891007FC944 /* SpeziQuestionnaire in Frameworks */,
-				8040C2A42F19396A00884AD3 /* SpeziLLMLocal in Frameworks */,
-				8040C2A02F19396A00884AD3 /* SpeziLLM in Frameworks */,
 				80A9907B2F1699B500BDD5B7 /* SpeziFirebaseConfiguration in Frameworks */,
-				97EAB5E42B7A010A00A0B036 /* SpeziFHIRMockPatients in Frameworks */,
 				44E18E902CEBEC9500829A26 /* SpeziLLMOpenAI in Frameworks */,
-				9733FC5D2B60E5FB0024F12C /* SpeziFHIRMockPatients in Frameworks */,
-				97EAB5DE2B7A010A00A0B036 /* SpeziFHIR in Frameworks */,
-				806F40BE2F179FDB0001E988 /* FirebaseCore in Frameworks */,
-				806DF5BE2EC234AD00A8243C /* SpeziFHIRMockPatients in Frameworks */,
-				802641DC2F638893006A1D76 /* SpeziQuestionnaire in Frameworks */,
-				8040C2A62F19396A00884AD3 /* SpeziLLMLocalDownload in Frameworks */,
-				80A98FA62F13DA5C00BDD5B7 /* SpeziFHIR in Frameworks */,
-				8098C1572F6EFA08007FC944 /* SpeziQuestionnaireFHIR in Frameworks */,
-				80A98FAA2F13DA5C00BDD5B7 /* SpeziFHIRMockPatients in Frameworks */,
-				97BC1F2F2B7F390100438263 /* SpeziFHIRMockPatients in Frameworks */,
 				808EBE722F0976710032D087 /* SpeziFoundation in Frameworks */,
 				80A990792F1699B500BDD5B7 /* SpeziFirebaseAccountStorage in Frameworks */,
+				80C7595D2F78076C00DE9DEA /* FirebaseStorage in Frameworks */,
+				80C759662F78189400DE9DEA /* SpeziLLMGemini in Frameworks */,
 				80A9907F2F1699B500BDD5B7 /* SpeziFirestore in Frameworks */,
-				9733FC572B60E5FB0024F12C /* SpeziFHIR in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -195,7 +155,7 @@
 				802641E02F638893006A1D76 /* XCTSpeziQuestionnaire in Frameworks */,
 				2FE5DC9C29EDD9EF004B9AB4 /* XCTHealthKit in Frameworks */,
 				8098C1522F6EE891007FC944 /* XCTSpeziQuestionnaire in Frameworks */,
-				8098C1592F6EFA08007FC944 /* XCTSpeziQuestionnaire in Frameworks */,
+				80D371BC2F781AD20081BBA1 /* XCTSpeziQuestionnaire in Frameworks */,
 				80C2187B2F66CD6500666C53 /* XCTestExtensions in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -323,23 +283,27 @@
 				80A9907A2F1699B500BDD5B7 /* SpeziFirebaseConfiguration */,
 				80A9907C2F1699B500BDD5B7 /* SpeziFirebaseStorage */,
 				80A9907E2F1699B500BDD5B7 /* SpeziFirestore */,
-				806F40BD2F179FDB0001E988 /* FirebaseCore */,
-				806F40BF2F179FDB0001E988 /* FirebaseFunctions */,
-				806F40C12F179FDB0001E988 /* FirebaseStorage */,
-				806F40C32F17A02B0001E988 /* FirebaseFirestore */,
-				8040C29F2F19396A00884AD3 /* SpeziLLM */,
-				8040C2A12F19396A00884AD3 /* SpeziLLMFog */,
-				8040C2A32F19396A00884AD3 /* SpeziLLMLocal */,
-				8040C2A52F19396A00884AD3 /* SpeziLLMLocalDownload */,
-				8040C2A72F19396A00884AD3 /* SpeziLLMOpenAI */,
 				805C26302F25171E00769AC1 /* LLMonFHIRShared */,
 				803D16672F30DA3C0060B931 /* LLMonFHIRStudyDefinitions */,
 				802641DB2F638893006A1D76 /* SpeziQuestionnaire */,
 				802641DD2F638893006A1D76 /* SpeziQuestionnaireFHIR */,
 				8098C14D2F6EE891007FC944 /* SpeziQuestionnaire */,
 				8098C14F2F6EE891007FC944 /* SpeziQuestionnaireFHIR */,
-				8098C1542F6EFA08007FC944 /* SpeziQuestionnaire */,
-				8098C1562F6EFA08007FC944 /* SpeziQuestionnaireFHIR */,
+				80C759562F78076C00DE9DEA /* FirebaseCore */,
+				80C759582F78076C00DE9DEA /* FirebaseFirestore */,
+				80C7595A2F78076C00DE9DEA /* FirebaseFunctions */,
+				80C7595C2F78076C00DE9DEA /* FirebaseStorage */,
+				80C7595F2F78189400DE9DEA /* SpeziLLM */,
+				80C759612F78189400DE9DEA /* SpeziLLMAnthropic */,
+				80C759632F78189400DE9DEA /* SpeziLLMFog */,
+				80C759652F78189400DE9DEA /* SpeziLLMGemini */,
+				80C759672F78189400DE9DEA /* SpeziLLMLocal */,
+				80C759692F78189400DE9DEA /* SpeziLLMLocalDownload */,
+				80C7596B2F78189400DE9DEA /* SpeziLLMOpenAI */,
+				80C7596D2F78189400DE9DEA /* SpeziLLMOpenAIRealtime */,
+				80D371B02F7819080081BBA1 /* FirebaseCore */,
+				80D371B22F7819080081BBA1 /* FirebaseFunctions */,
+				80D371B72F781AD20081BBA1 /* SpeziQuestionnaire */,
 			);
 			productName = LLMonFHIR;
 			productReference = 653A254D283387FE005D4D48 /* LLMonFHIR.app */;
@@ -388,7 +352,7 @@
 				802641DF2F638893006A1D76 /* XCTSpeziQuestionnaire */,
 				80C2187A2F66CD6500666C53 /* XCTestExtensions */,
 				8098C1512F6EE891007FC944 /* XCTSpeziQuestionnaire */,
-				8098C1582F6EFA08007FC944 /* XCTSpeziQuestionnaire */,
+				80D371BB2F781AD20081BBA1 /* XCTSpeziQuestionnaire */,
 			);
 			productName = LLMonFHIRUITests;
 			productReference = 653A256728338800005D4D48 /* LLMonFHIRUITests.xctest */;
@@ -442,10 +406,10 @@
 				80A98FA42F13DA5C00BDD5B7 /* XCRemoteSwiftPackageReference "SpeziFHIR" */,
 				80A990722F16996400BDD5B7 /* XCRemoteSwiftPackageReference "SpeziAccount" */,
 				80A990752F1699B500BDD5B7 /* XCRemoteSwiftPackageReference "SpeziFirebase" */,
-				806F40BC2F179FDB0001E988 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
-				8040C29E2F19396A00884AD3 /* XCRemoteSwiftPackageReference "SpeziLLM" */,
 				80C218792F66CD6500666C53 /* XCRemoteSwiftPackageReference "XCTestExtensions" */,
-				8098C1532F6EFA08007FC944 /* XCRemoteSwiftPackageReference "SpeziQuestionnaire" */,
+				80C7595E2F78189400DE9DEA /* XCRemoteSwiftPackageReference "SpeziLLM" */,
+				80D371AF2F7819080081BBA1 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
+				80D371B62F781AD20081BBA1 /* XCRemoteSwiftPackageReference "SpeziQuestionnaire" */,
 			);
 			productRefGroup = 653A254E283387FE005D4D48 /* Products */;
 			projectDirPath = "";
@@ -919,36 +883,12 @@
 				minimumVersion = 1.12.13;
 			};
 		};
-		8040C29E2F19396A00884AD3 /* XCRemoteSwiftPackageReference "SpeziLLM" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/StanfordSpezi/SpeziLLM.git";
-			requirement = {
-				kind = upToNextMinorVersion;
-				minimumVersion = 0.13.7;
-			};
-		};
-		806F40BC2F179FDB0001E988 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/firebase/firebase-ios-sdk.git";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 12.8.0;
-			};
-		};
 		808EBE702F0976710032D087 /* XCRemoteSwiftPackageReference "SpeziFoundation" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/StanfordSpezi/SpeziFoundation.git";
 			requirement = {
 				kind = upToNextMajorVersion;
 				minimumVersion = 2.7.2;
-			};
-		};
-		8098C1532F6EFA08007FC944 /* XCRemoteSwiftPackageReference "SpeziQuestionnaire" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/StanfordSpezi/SpeziQuestionnaire.git";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = "2.0.0-beta.1";
 			};
 		};
 		80A98FA42F13DA5C00BDD5B7 /* XCRemoteSwiftPackageReference "SpeziFHIR" */ = {
@@ -981,6 +921,30 @@
 			requirement = {
 				kind = upToNextMajorVersion;
 				minimumVersion = 1.2.5;
+			};
+		};
+		80C7595E2F78189400DE9DEA /* XCRemoteSwiftPackageReference "SpeziLLM" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/StanfordSpezi/SpeziLLM.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.13.7;
+			};
+		};
+		80D371AF2F7819080081BBA1 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/firebase/firebase-ios-sdk.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 12.11.0;
+			};
+		};
+		80D371B62F781AD20081BBA1 /* XCRemoteSwiftPackageReference "SpeziQuestionnaire" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/StanfordSpezi/SpeziQuestionnaire.git";
+			requirement = {
+				kind = revision;
+				revision = 91d2e731c5e67a895f917fa40c1c884e0368a1cf;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */
@@ -1072,31 +1036,6 @@
 			isa = XCSwiftPackageProductDependency;
 			productName = LLMonFHIRStudyDefinitions;
 		};
-		8040C29F2F19396A00884AD3 /* SpeziLLM */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 8040C29E2F19396A00884AD3 /* XCRemoteSwiftPackageReference "SpeziLLM" */;
-			productName = SpeziLLM;
-		};
-		8040C2A12F19396A00884AD3 /* SpeziLLMFog */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 8040C29E2F19396A00884AD3 /* XCRemoteSwiftPackageReference "SpeziLLM" */;
-			productName = SpeziLLMFog;
-		};
-		8040C2A32F19396A00884AD3 /* SpeziLLMLocal */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 8040C29E2F19396A00884AD3 /* XCRemoteSwiftPackageReference "SpeziLLM" */;
-			productName = SpeziLLMLocal;
-		};
-		8040C2A52F19396A00884AD3 /* SpeziLLMLocalDownload */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 8040C29E2F19396A00884AD3 /* XCRemoteSwiftPackageReference "SpeziLLM" */;
-			productName = SpeziLLMLocalDownload;
-		};
-		8040C2A72F19396A00884AD3 /* SpeziLLMOpenAI */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 8040C29E2F19396A00884AD3 /* XCRemoteSwiftPackageReference "SpeziLLM" */;
-			productName = SpeziLLMOpenAI;
-		};
 		805C26302F25171E00769AC1 /* LLMonFHIRShared */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = LLMonFHIRShared;
@@ -1113,26 +1052,6 @@
 			isa = XCSwiftPackageProductDependency;
 			productName = SpeziFHIRMockPatients;
 		};
-		806F40BD2F179FDB0001E988 /* FirebaseCore */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 806F40BC2F179FDB0001E988 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
-			productName = FirebaseCore;
-		};
-		806F40BF2F179FDB0001E988 /* FirebaseFunctions */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 806F40BC2F179FDB0001E988 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
-			productName = FirebaseFunctions;
-		};
-		806F40C12F179FDB0001E988 /* FirebaseStorage */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 806F40BC2F179FDB0001E988 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
-			productName = FirebaseStorage;
-		};
-		806F40C32F17A02B0001E988 /* FirebaseFirestore */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 806F40BC2F179FDB0001E988 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
-			productName = FirebaseFirestore;
-		};
 		808EBE712F0976710032D087 /* SpeziFoundation */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 808EBE702F0976710032D087 /* XCRemoteSwiftPackageReference "SpeziFoundation" */;
@@ -1148,21 +1067,6 @@
 		};
 		8098C1512F6EE891007FC944 /* XCTSpeziQuestionnaire */ = {
 			isa = XCSwiftPackageProductDependency;
-			productName = XCTSpeziQuestionnaire;
-		};
-		8098C1542F6EFA08007FC944 /* SpeziQuestionnaire */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 8098C1532F6EFA08007FC944 /* XCRemoteSwiftPackageReference "SpeziQuestionnaire" */;
-			productName = SpeziQuestionnaire;
-		};
-		8098C1562F6EFA08007FC944 /* SpeziQuestionnaireFHIR */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 8098C1532F6EFA08007FC944 /* XCRemoteSwiftPackageReference "SpeziQuestionnaire" */;
-			productName = SpeziQuestionnaireFHIR;
-		};
-		8098C1582F6EFA08007FC944 /* XCTSpeziQuestionnaire */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 8098C1532F6EFA08007FC944 /* XCRemoteSwiftPackageReference "SpeziQuestionnaire" */;
 			productName = XCTSpeziQuestionnaire;
 		};
 		80A98FA52F13DA5C00BDD5B7 /* SpeziFHIR */ = {
@@ -1214,6 +1118,82 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 80C218792F66CD6500666C53 /* XCRemoteSwiftPackageReference "XCTestExtensions" */;
 			productName = XCTestExtensions;
+		};
+		80C759562F78076C00DE9DEA /* FirebaseCore */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = FirebaseCore;
+		};
+		80C759582F78076C00DE9DEA /* FirebaseFirestore */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = FirebaseFirestore;
+		};
+		80C7595A2F78076C00DE9DEA /* FirebaseFunctions */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = FirebaseFunctions;
+		};
+		80C7595C2F78076C00DE9DEA /* FirebaseStorage */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = FirebaseStorage;
+		};
+		80C7595F2F78189400DE9DEA /* SpeziLLM */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 80C7595E2F78189400DE9DEA /* XCRemoteSwiftPackageReference "SpeziLLM" */;
+			productName = SpeziLLM;
+		};
+		80C759612F78189400DE9DEA /* SpeziLLMAnthropic */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 80C7595E2F78189400DE9DEA /* XCRemoteSwiftPackageReference "SpeziLLM" */;
+			productName = SpeziLLMAnthropic;
+		};
+		80C759632F78189400DE9DEA /* SpeziLLMFog */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 80C7595E2F78189400DE9DEA /* XCRemoteSwiftPackageReference "SpeziLLM" */;
+			productName = SpeziLLMFog;
+		};
+		80C759652F78189400DE9DEA /* SpeziLLMGemini */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 80C7595E2F78189400DE9DEA /* XCRemoteSwiftPackageReference "SpeziLLM" */;
+			productName = SpeziLLMGemini;
+		};
+		80C759672F78189400DE9DEA /* SpeziLLMLocal */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 80C7595E2F78189400DE9DEA /* XCRemoteSwiftPackageReference "SpeziLLM" */;
+			productName = SpeziLLMLocal;
+		};
+		80C759692F78189400DE9DEA /* SpeziLLMLocalDownload */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 80C7595E2F78189400DE9DEA /* XCRemoteSwiftPackageReference "SpeziLLM" */;
+			productName = SpeziLLMLocalDownload;
+		};
+		80C7596B2F78189400DE9DEA /* SpeziLLMOpenAI */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 80C7595E2F78189400DE9DEA /* XCRemoteSwiftPackageReference "SpeziLLM" */;
+			productName = SpeziLLMOpenAI;
+		};
+		80C7596D2F78189400DE9DEA /* SpeziLLMOpenAIRealtime */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 80C7595E2F78189400DE9DEA /* XCRemoteSwiftPackageReference "SpeziLLM" */;
+			productName = SpeziLLMOpenAIRealtime;
+		};
+		80D371B02F7819080081BBA1 /* FirebaseCore */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 80D371AF2F7819080081BBA1 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseCore;
+		};
+		80D371B22F7819080081BBA1 /* FirebaseFunctions */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 80D371AF2F7819080081BBA1 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseFunctions;
+		};
+		80D371B72F781AD20081BBA1 /* SpeziQuestionnaire */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 80D371B62F781AD20081BBA1 /* XCRemoteSwiftPackageReference "SpeziQuestionnaire" */;
+			productName = SpeziQuestionnaire;
+		};
+		80D371BB2F781AD20081BBA1 /* XCTSpeziQuestionnaire */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 80D371B62F781AD20081BBA1 /* XCRemoteSwiftPackageReference "SpeziQuestionnaire" */;
+			productName = XCTSpeziQuestionnaire;
 		};
 		9710D3552B84151F00E0A20F /* SpeziChat */ = {
 			isa = XCSwiftPackageProductDependency;
