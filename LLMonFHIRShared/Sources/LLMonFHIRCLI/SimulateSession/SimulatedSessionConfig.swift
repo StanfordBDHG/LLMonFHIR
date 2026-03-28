@@ -33,15 +33,34 @@ struct SimulatedSessionConfig: Sendable {
     /// - Note: Isn't allowed to be mutated
     nonisolated(unsafe) let bundle: ModelsR4.Bundle
     
-    /// The OpenAI API key used when simulating this session.
-    let openAIKey: String
-    
+    /// The service that should be used for the simulation.
+    let service: Service
+
+    /// Optional human-readable name for this config, used as the output filename prefix.
+    let name: String?
+
+    /// Optional custom system prompt text.
+    let customSystemPrompt: String?
+
     /// The questions that should be asked by the simulated patient.
     let userQuestions: [String]
+
+    /// The effective system prompt: the study's default prompt with any suffix appended.
+    var systemPrompt: FHIRPrompt {
+        guard let prompt = customSystemPrompt, !prompt.isEmpty else {
+            return study.interpretMultipleResourcesPrompt
+        }
+        return FHIRPrompt(promptText: prompt)
+    }
 }
 
-
 extension SimulatedSessionConfig: DecodableWithConfiguration {
+    enum Service: String, Codable {
+        case openAI = "OpenAI"
+        case firebase = "Firebase"
+        case firebaseEmulator = "Firebase-Emulator"
+    }
+
     struct DecodingConfiguration {
         /// The URL of the config file being decoded, if applicable.
         let configFileUrl: URL?
@@ -49,9 +68,11 @@ extension SimulatedSessionConfig: DecodableWithConfiguration {
     
     private enum CodingKeys: String, CodingKey {
         case numberOfRuns
+        case name
         case studyId
         case bundleName
-        case openAIKey
+        case service
+        case customSystemPrompt
         case userQuestions
         case model
         case temperature
@@ -60,9 +81,11 @@ extension SimulatedSessionConfig: DecodableWithConfiguration {
     init(from decoder: any Decoder, configuration: DecodingConfiguration) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         self.numberOfRuns = try container.decode(Int.self, forKey: .numberOfRuns)
+        self.name = try container.decodeIfPresent(String.self, forKey: .name)
         self.model = try container.decode(LLMOpenAIParameters.ModelType.self, forKey: .model)
         self.temperature = try container.decode(Double.self, forKey: .temperature)
-        self.openAIKey = try container.decode(String.self, forKey: .openAIKey)
+        self.service = try Self.inferService(from: container)
+
         let studyId = try container.decode(Study.ID.self, forKey: .studyId)
         guard let study = Study.allStudies.first(where: { $0.id == studyId }) else {
             throw DecodingError.dataCorrupted(.init(codingPath: [], debugDescription: "Unable to find study with id '\(studyId)'"))
@@ -78,6 +101,29 @@ extension SimulatedSessionConfig: DecodableWithConfiguration {
             }
             self.bundle = bundle
         }
+        self.customSystemPrompt = try container.decodeIfPresent(
+            String.self,
+            forKey: .customSystemPrompt
+        )
         self.userQuestions = try container.decode([String].self, forKey: .userQuestions)
+    }
+
+    private static func inferService(from container: KeyedDecodingContainer<CodingKeys>) throws -> Service {
+        if let service = try container.decodeIfPresent(Service.self, forKey: .service) {
+            return service
+        }
+        let env = ProcessInfo.processInfo.environment
+        if let apiKey = env["OPENAI_API_KEY"]?.trimmingCharacters(in: .whitespacesAndNewlines),
+           !apiKey.isEmpty {
+            print("No 'service' specified — inferring 'OpenAI' from OPENAI_API_KEY environment variable.")
+            return .openAI
+        } else if let plist = env["GOOGLE_CREDENTIALS_PLIST"]?.trimmingCharacters(in: .whitespacesAndNewlines),
+                  !plist.isEmpty {
+            print("No 'service' specified — inferring 'Firebase' from GOOGLE_CREDENTIALS_PLIST environment variable.")
+            return .firebase
+        } else {
+            print("No 'service' specified and no credentials found in environment — defaulting to 'Firebase-Emulator'.")
+            return .firebaseEmulator
+        }
     }
 }
