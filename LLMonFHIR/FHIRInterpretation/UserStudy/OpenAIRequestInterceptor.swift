@@ -6,8 +6,6 @@
 // SPDX-License-Identifier: MIT
 //
 
-import FirebaseAuth
-import FirebaseCore
 import FirebaseFunctions
 import Foundation
 import HTTPTypes
