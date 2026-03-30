@@ -11,25 +11,58 @@
 import ArgumentParser
 import Foundation
 import LLMonFHIRShared
-import LLMonFHIRStudyDefinitions
-@_spi(APISupport) import Spezi
-import SpeziChat
-import SpeziFHIR
-import SpeziHealthKit
-import SpeziLLM
-import SpeziLLMOpenAI
-
 
 struct SimulateSession: AsyncParsableCommand {
     static let configuration = CommandConfiguration(
         commandName: "simulate-session",
         abstract: "Runs a simulated session, using a synthetic patient's context and pre-defined user prompts.",
+        discussion: #"""
+            Each entry in the JSON config file defines one simulation scenario. Supported fields:
+
+              numberOfRuns        (required) Number of times to repeat this scenario.
+              studyId             (required) Study identifier.
+              bundleName          (required) Embedded patient name, or path to a FHIR bundle JSON
+                                             file (resolved relative to the config file).
+              model               (required) OpenAI model name (e.g. "gpt-4o").
+              temperature         (required) Sampling temperature.
+              userQuestions       (required) List of questions the simulated patient asks.
+              service             (optional) Backend: "OpenAI", "Firebase", or "Firebase-Emulator".
+                                             Inferred from the environment when omitted (see below).
+              name                (optional) Human-readable label used as the output filename prefix.
+              customSystemPrompt  (optional) Custom system prompt text.
+
+            API credentials are never stored in the config file. They are read from the environment:
+
+              OPENAI_API_KEY              Required for the "OpenAI" service.
+              GOOGLE_CREDENTIALS_PLIST    Path to GoogleService-Info.plist; required for "Firebase",
+                                          optional for "Firebase-Emulator" (uses placeholder
+                                          credentials when unset).
+
+            Service inference (when "service" is omitted from a config entry):
+              1. OPENAI_API_KEY is set and non-empty        → "OpenAI"
+              2. GOOGLE_CREDENTIALS_PLIST is set and valid  → "Firebase"
+              3. Neither is available                       → "Firebase-Emulator"
+
+            Optional Firebase environment variables:
+
+              FIREBASE_REGION                  Firebase region (default: us-central1).
+              FIREBASE_PROJECT_ID              Project ID override for the emulator when
+                                               GOOGLE_CREDENTIALS_PLIST is not set
+                                               (default: demo-project; emulator mode only).
+              FIREBASE_AUTH_EMULATOR_HOST      Auth emulator address host:port
+                                               (default: localhost:9099; emulator mode only).
+              FIREBASE_FUNCTIONS_EMULATOR_HOST Functions emulator address host:port
+                                               (default: localhost:5001; emulator mode only).
+
+            Output reports are written to a timestamped subdirectory of the output directory,
+            named <index>-<name>-<run>.json (e.g. 00-my-scenario-1.json).
+            """#
     )
-    
-    @Argument(help: "Input file")
+
+    @Argument(help: "Path to the JSON config file describing the sessions to simulate.")
     var inputUrl: URL
-    
-    @Argument(help: "Output directory")
+
+    @Argument(help: "Directory where output report files will be written.")
     var outputUrl: URL
     
     @MainActor
@@ -39,44 +72,75 @@ struct SimulateSession: AsyncParsableCommand {
             from: Data(contentsOf: inputUrl),
             configuration: .init(configFileUrl: inputUrl)
         )
-        let reports = try await withThrowingTaskGroup(of: StudyReport.self, returning: [StudyReport].self) { taskGroup in
-            for config in configs {
-                for runIdx in 0..<config.numberOfRuns {
-                    taskGroup.addTask {
-                        let simulator = await SessionSimulator(config: config, runIdx: runIdx)
-                        let sessionDesc = simulator.sessionDesc
-                        print("Starting \(sessionDesc)")
-                        do {
-                            let result = try await simulator.run()
-                            print("Ended \(sessionDesc)")
-                            return result
-                        } catch {
-                            print("\(sessionDesc) failed: \(error)")
-                            throw error
-                        }
-                    }
-                }
-            }
-            var reports: [StudyReport] = []
-            while let report = try await taskGroup.next() {
-                reports.append(report)
-            }
-            return reports
-        }
-        
+
+        try validateConfigurations(configs)
+
         let outputUrl = outputUrl.appending(
             path: Date.now.formatted(Date.ISO8601FormatStyle.suitableForFilenames),
             directoryHint: .isDirectory
         )
         try FileManager.default.createDirectory(at: outputUrl, withIntermediateDirectories: true)
-        
-        let encoder = JSONEncoder()
-        encoder.outputFormatting = [.prettyPrinted, .withoutEscapingSlashes]
-        for report in reports {
-            let dstUrl = outputUrl.appendingPathComponent(UUID().uuidString, conformingTo: .json)
+
+        var savedCount = 0
+        var failedSessionCount = 0
+        await withTaskGroup(of: Bool.self) { taskGroup in
+            for (configIdx, config) in configs.enumerated() {
+                for runIdx in 0..<config.numberOfRuns {
+                    taskGroup.addTask {
+                        await self.runConfiguration(config, configIdx: configIdx, runIdx: runIdx)
+                    }
+                }
+            }
+
+            for await success in taskGroup {
+                if success {
+                    savedCount += 1
+                } else {
+                    failedSessionCount += 1
+                }
+            }
+        }
+
+        if failedSessionCount > 0 {
+            throw ExitCode.failure
+        }
+    }
+
+    private func runConfiguration(_ config: SimulatedSessionConfig, configIdx: Int, runIdx: Int) async -> Bool {
+        var sessionDesc = "Session \(configIdx) - Run \(runIdx + 1)"
+        do {
+            let simulator = try await SessionSimulator(config: config, runIdx: runIdx)
+            sessionDesc = simulator.sessionDesc
+            let report = try await simulator.run()
+            let sanitized = (config.name ?? "session")
+                .components(separatedBy: CharacterSet(charactersIn: "/\\"))
+                .joined()
+                .replacingOccurrences(of: "..", with: "")
+                .trimmingCharacters(in: .whitespacesAndNewlines)
+            let name = String(format: "%02d", configIdx) + "-" + (sanitized.isEmpty ? "session" : sanitized)
+            let dstUrl = outputUrl.appendingPathComponent("\(name)-\(runIdx + 1)", conformingTo: .json)
+            let encoder = JSONEncoder()
+            encoder.outputFormatting = [.prettyPrinted, .withoutEscapingSlashes, .sortedKeys]
             let reportData = try encoder.encode(report)
-            print("Writing report file to \(dstUrl.path)")
             try reportData.write(to: dstUrl)
+            return true
+        } catch {
+            print("\(sessionDesc) failed: \(error.localizedDescription) \(error)")
+            return false
+        }
+    }
+
+    private func validateConfigurations(_ configs: [SimulatedSessionConfig]) throws {
+        if configs.contains(where: { $0.service == .openAI }),
+           ProcessInfo.processInfo.environment["OPENAI_API_KEY"]?
+               .trimmingCharacters(in: .whitespacesAndNewlines)
+               .isEmpty ?? true {
+            throw ValidationError("OPENAI_API_KEY environment variable is required when using the 'OpenAI' service.")
+        }
+
+        if configs.contains(where: { $0.service == .firebase }),
+           ProcessInfo.processInfo.environment["GOOGLE_CREDENTIALS_PLIST"]?.isEmpty ?? true {
+            throw ValidationError("GOOGLE_CREDENTIALS_PLIST environment variable is required when using the 'Firebase' service.")
         }
     }
 }
