@@ -6,8 +6,10 @@
 // SPDX-License-Identifier: MIT
 //
 
+import ArgumentParser
 import Foundation
 import LLMonFHIRShared
+import OpenAPIRuntime
 @_spi(APISupport) import Spezi
 import SpeziFHIR
 import SpeziHealthKit
@@ -23,12 +25,16 @@ struct SessionSimulator: ~Copyable {
     private let coordinator: SessionCoordinator
     private let interpreter: FHIRMultipleResourceInterpreter
     private let resourceSummarizer: FHIRResourceSummarizer
-    
+
+    var sessionDesc: String {
+        "\(config.study.id) / \(config.bundle.singlePatient?.fullName ?? config.bundleInputName) @ \(config.model)/\(config.temperature) (\(runIdx + 1)/\(config.numberOfRuns))"
+    }
+
     @MainActor
-    init(config: SimulatedSessionConfig, runIdx: Int) {
+    init(config: SimulatedSessionConfig, runIdx: Int) throws {
         self.config = config
         self.runIdx = runIdx
-        spezi = Spezi(from: Self.speziConfig(for: config))
+        spezi = try Spezi(from: Self.speziConfig(for: config))
         coordinator = spezi.module(SessionCoordinator.self)! // swiftlint:disable:this force_unwrapping
         fhirStore = coordinator.fhirStore
         interpreter = coordinator.multipleResourceInterpreter
@@ -52,7 +58,7 @@ struct SessionSimulator: ~Copyable {
         await fhirStore.removeAllResources()
         await fhirStore.load(bundle: config.bundle)
         await coordinator.prepareForUse()
-        await interpreter.startNewConversation(using: config.study.interpretMultipleResourcesPrompt)
+        await interpreter.startNewConversation(using: config.systemPrompt)
         for question in config.userQuestions {
             await MainActor.run {
                 interpreter.llmSession.context.append(userInput: question)
@@ -126,38 +132,82 @@ extension SessionSimulator {
     }
     
     @MainActor
-    private static func speziConfig(for config: SimulatedSessionConfig) -> Configuration {
-        Configuration(standard: FakeStandard()) {
+    private static func speziConfig(for config: SimulatedSessionConfig) throws -> SpeziConfiguration {
+        let openAIKey = ProcessInfo.processInfo.environment["OPENAI_API_KEY"] ?? ""
+        let middlewares: [any ClientMiddleware]
+        switch config.service {
+        case .openAI:
+            guard !openAIKey.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty else {
+                throw ValidationError("OPENAI_API_KEY environment variable must be set when using the 'OpenAI' service.")
+            }
+            middlewares = []
+        case .firebase:
+            guard let firebaseConfig = firebaseConfigFromEnvironment() else {
+                throw ValidationError("GOOGLE_CREDENTIALS_PLIST environment variable must be set when using the 'Firebase' service.")
+            }
+            middlewares = [
+                OpenAIFirebaseInterceptor(firebaseConfig: firebaseConfig, studyId: config.study.id)
+            ]
+        case .firebaseEmulator:
+            middlewares = [
+                OpenAIFirebaseInterceptor(
+                    firebaseConfig: emulatorConfigFromEnvironment(),
+                    studyId: config.study.id
+                )
+            ]
+        }
+        return SpeziConfiguration(standard: FakeStandard()) {
             FHIRStore()
             SessionCoordinator(config: .init(
                 model: config.model,
                 temperature: config.temperature,
                 resourceLimit: 1000,
                 summarizeSingleResourcePrompt: config.study.summarizeSingleResourcePrompt,
-                systemPrompt: config.study.interpretMultipleResourcesPrompt
+                systemPrompt: config.systemPrompt
             ))
             LLMRunner {
                 LLMOpenAIPlatform(configuration: .init(
-                    authToken: .constant(config.openAIKey),
+                    authToken: .constant(openAIKey),
                     concurrentStreams: 100,
-                    retryPolicy: .attempts(3)
+                    retryPolicy: .attempts(3),
+                    middlewares: middlewares
                 ))
             }
         }
     }
-}
 
-
-extension SessionSimulator {
-    var sessionDesc: String {
-        "\(config.study.id) / \(config.bundle.singlePatient?.fullName ?? config.bundleInputName) @ \(config.model)/\(config.temperature) (\(runIdx + 1)/\(config.numberOfRuns))"
+    /// Loads a `FirebaseConfig` from the `GOOGLE_CREDENTIALS_PLIST` environment variable.
+    /// Returns `nil` when the variable is unset or the file cannot be parsed.
+    private static func firebaseConfigFromEnvironment() -> FirebaseConfig? {
+        guard let plistPath = ProcessInfo.processInfo.environment["GOOGLE_CREDENTIALS_PLIST"] else {
+            return nil
+        }
+        let region = ProcessInfo.processInfo.environment["FIREBASE_REGION"]
+        return try? FirebaseConfig(contentsOfFile: plistPath, region: region)
     }
-}
 
-
-extension Spezi {
-    @MainActor
-    subscript<M: Module>(_ moduleType: M.Type) -> M? {
-        module(moduleType)
+    /// Builds a `FirebaseConfig` that routes all traffic to the local Firebase emulator suite.
+    ///
+    /// Reads the following environment variables:
+    /// - `FIREBASE_AUTH_EMULATOR_HOST` — auth emulator address (default: `localhost:9099`)
+    /// - `FIREBASE_FUNCTIONS_EMULATOR_HOST` — functions emulator address (default: `localhost:5001`)
+    /// - `FIREBASE_REGION` — Firebase region (default: `us-central1`)
+    /// - `FIREBASE_PROJECT_ID` — project ID override used when `GOOGLE_CREDENTIALS_PLIST` is not
+    ///   set (default: `demo-project`)
+    ///
+    /// If `GOOGLE_CREDENTIALS_PLIST` is set, the real project credentials (API key and project ID)
+    /// are used; otherwise placeholder values are substituted so the emulator can be used without
+    /// any credentials file.
+    private static func emulatorConfigFromEnvironment() -> FirebaseConfig {
+        let env = ProcessInfo.processInfo.environment
+        let base = firebaseConfigFromEnvironment()
+        let projectID = base?.projectID ?? env["FIREBASE_PROJECT_ID"] ?? "demo-project"
+        return FirebaseConfig(
+            apiKey: base?.apiKey ?? "A00000000000000000000000000000000000000",
+            projectID: projectID,
+            region: env["FIREBASE_REGION"],
+            authEmulatorAddress: env["FIREBASE_AUTH_EMULATOR_HOST"] ?? "localhost:9099",
+            functionsEmulatorAddress: env["FIREBASE_FUNCTIONS_EMULATOR_HOST"] ?? "localhost:5001"
+        )
     }
 }
