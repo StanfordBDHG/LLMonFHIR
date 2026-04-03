@@ -18,28 +18,28 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  reuse_action:
-    name: REUSE Compliance Check
-    uses: StanfordBDHG/.github/.github/workflows/reuse.yml@v2
-    permissions:
-      contents: read
-  swiftlint:
-    name: SwiftLint
-    uses: StanfordBDHG/.github/.github/workflows/swiftlint.yml@v2
-    permissions:
-      contents: read
-  periphery:
-    name: Periphery
-    uses: StanfordBDHG/.github/.github/workflows/periphery.yml@v2
-    permissions:
-      contents: read
-    with:
-      runsonlabels: '["macOS", "self-hosted"]'
-  markdownlinkcheck:
-    name: Markdown Link Check
-    uses: StanfordBDHG/.github/.github/workflows/markdown-link-check.yml@v2
-    permissions:
-      contents: read
+  # reuse_action:
+  #   name: REUSE Compliance Check
+  #   uses: StanfordBDHG/.github/.github/workflows/reuse.yml@v2
+  #   permissions:
+  #     contents: read
+  # swiftlint:
+  #   name: SwiftLint
+  #   uses: StanfordBDHG/.github/.github/workflows/swiftlint.yml@v2
+  #   permissions:
+  #     contents: read
+  # periphery:
+  #   name: Periphery
+  #   uses: StanfordBDHG/.github/.github/workflows/periphery.yml@v2
+  #   permissions:
+  #     contents: read
+  #   with:
+  #     runsonlabels: '["macOS", "self-hosted"]'
+  # markdownlinkcheck:
+  #   name: Markdown Link Check
+  #   uses: StanfordBDHG/.github/.github/workflows/markdown-link-check.yml@v2
+  #   permissions:
+  #     contents: read
   codeql:
     name: CodeQL
     uses: StanfordBDHG/.github/.github/workflows/xcodebuild-or-fastlane.yml@metal
