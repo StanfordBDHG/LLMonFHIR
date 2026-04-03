@@ -42,7 +42,7 @@ jobs:
       contents: read
   codeql:
     name: CodeQL
-    uses: StanfordBDHG/.github/.github/workflows/xcodebuild-or-fastlane.yml@e3845ce7fc93a7d153084f7f072b7ae49a308211
+    uses: StanfordBDHG/.github/.github/workflows/xcodebuild-or-fastlane.yml@metal
     permissions:
       security-events: write
       actions: read
