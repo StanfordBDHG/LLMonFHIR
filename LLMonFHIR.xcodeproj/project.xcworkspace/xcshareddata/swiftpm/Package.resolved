@@ -294,8 +294,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/StanfordSpezi/SpeziLLM.git",
       "state" : {
-        "branch" : "fixSwift63",
-        "revision" : "662560c65f207152b7cd01fccd805300dfe4c4f2"
+        "revision" : "9271a640ed62aad216914793c62d66e4382bc52f",
+        "version" : "0.13.8"
       }
     },
     {
