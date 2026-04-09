@@ -87,7 +87,12 @@ struct SimulateSession: AsyncParsableCommand {
             for (configIdx, config) in configs.enumerated() {
                 for runIdx in 0..<config.numberOfRuns {
                     taskGroup.addTask {
-                        await self.runConfiguration(config, configIdx: configIdx, runIdx: runIdx)
+                        await self.runConfiguration(
+                            config,
+                            configIdx: configIdx,
+                            runIdx: runIdx,
+                            outputUrl: outputUrl
+                        )
                     }
                 }
             }
@@ -106,7 +111,12 @@ struct SimulateSession: AsyncParsableCommand {
         }
     }
 
-    private func runConfiguration(_ config: SimulatedSessionConfig, configIdx: Int, runIdx: Int) async -> Bool {
+    private func runConfiguration(
+        _ config: SimulatedSessionConfig,
+        configIdx: Int,
+        runIdx: Int,
+        outputUrl: URL
+    ) async -> Bool {
         var sessionDesc = "Session \(configIdx) - Run \(runIdx + 1)"
         do {
             let simulator = try await SessionSimulator(config: config, runIdx: runIdx)
