@@ -30,6 +30,7 @@ struct SimulateSession: AsyncParsableCommand {
                                              Inferred from the environment when omitted (see below).
               name                (optional) Human-readable label used as the output filename prefix.
               customSystemPrompt  (optional) Custom system prompt text.
+              customResourcePrompt (optional) Custom prompt for summarizing individual FHIR resources.
 
             API credentials are never stored in the config file. They are read from the environment:
 

@@ -42,6 +42,9 @@ struct SimulatedSessionConfig: Sendable {
     /// Optional custom system prompt text.
     let customSystemPrompt: String?
 
+    /// Optional custom resource prompt text, used to control how individual FHIR resources are summarized.
+    let customResourcePrompt: String?
+
     /// The questions that should be asked by the simulated patient.
     let userQuestions: [String]
 
@@ -49,6 +52,14 @@ struct SimulatedSessionConfig: Sendable {
     var systemPrompt: FHIRPrompt {
         guard let prompt = customSystemPrompt, !prompt.isEmpty else {
             return study.interpretMultipleResourcesPrompt
+        }
+        return FHIRPrompt(promptText: prompt)
+    }
+
+    /// The effective resource summarization prompt: custom if provided, otherwise the study's default.
+    var summarizeSingleResourcePrompt: FHIRPrompt {
+        guard let prompt = customResourcePrompt, !prompt.isEmpty else {
+            return study.summarizeSingleResourcePrompt
         }
         return FHIRPrompt(promptText: prompt)
     }
@@ -73,6 +84,7 @@ extension SimulatedSessionConfig: DecodableWithConfiguration {
         case bundleName
         case service
         case customSystemPrompt
+        case customResourcePrompt
         case userQuestions
         case model
         case temperature
@@ -104,6 +116,10 @@ extension SimulatedSessionConfig: DecodableWithConfiguration {
         self.customSystemPrompt = try container.decodeIfPresent(
             String.self,
             forKey: .customSystemPrompt
+        )
+        self.customResourcePrompt = try container.decodeIfPresent(
+            String.self,
+            forKey: .customResourcePrompt
         )
         self.userQuestions = try container.decode([String].self, forKey: .userQuestions)
     }

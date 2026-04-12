@@ -162,7 +162,7 @@ extension SessionSimulator {
                 model: config.model,
                 temperature: config.temperature,
                 resourceLimit: 1000,
-                summarizeSingleResourcePrompt: config.study.summarizeSingleResourcePrompt,
+                summarizeSingleResourcePrompt: config.summarizeSingleResourcePrompt,
                 systemPrompt: config.systemPrompt
             ))
             LLMRunner {
