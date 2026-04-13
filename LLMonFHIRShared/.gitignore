@@ -6,6 +6,11 @@
 # SPDX-License-Identifier: MIT
 #
 
+# Project-specific
+/.run
+
+# Others
+
 .DS_Store
 /.build
 /Packages

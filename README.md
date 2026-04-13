@@ -143,44 +143,89 @@ The LLMonFHIRShared sub-package contains a tool that allows simulating user chat
 During a simulated chat session, the LLM is provided the same context and data it would be during normal usage of the app, except that the inputs (both the patient's health records, as well as the questions being asked by the user) are pre-defined.
 This allows evaluating how different models (or even the same model, across multiple conversations) will handle various scenarios and situations.
 
-For each simulated session, a report file is generated, with the same structure as the report files generated for regular usage sessions in the app.
+For each simulated session, a report file is generated with the same structure as the report files generated for regular usage sessions in the app.
 
-Session simulation is controled via a JSON config file, which defines the parameters of each session, i.e.:
-- the FHIR bundle containing a synthetic patient
-    - this can be either the name of a patient in one of the bundles embedded in the LLMonFHIRShared/Resources folder, or a filepath, which will be resolved relative to the location of the config JSON file
-- the session's OpenAI model and temperature
-- the session's API key
-- the study, in whose context the session should take place 
-- the specific questions the simulated patient should ask the LLM.
+```bash
+swift run LLMonFHIRCLI simulate-session config.json output/
+```
 
-The example config below performs 6 simulated runs of the `edu.stanford.LLMonFHIR.gynStudy` study, 3 each using GPT-4o and GPT-5.2, with each session providing the LLM the exact same data and asking the exact same questions.
+Session simulation is controlled via a JSON config file. **API credentials are never stored in the config file** — they are read from environment variables at runtime:
+
+| Service | Required env var |
+|---------|-----------------|
+| `OpenAI` | `OPENAI_API_KEY` |
+| `Firebase` | `GOOGLE_CREDENTIALS_PLIST` (path to `GoogleService-Info.plist`) |
+| `Firebase-Emulator` | *(none — connects to the local emulator suite)* |
+
+Additional optional environment variables:
+
+| Env var | Default | Effect |
+|---------|---------|--------|
+| `FIREBASE_REGION` | `us-central1` | Firebase Functions/Auth region |
+| `FIREBASE_PROJECT_ID` | `demo-project` | Project ID override for the emulator when `GOOGLE_CREDENTIALS_PLIST` is not set (emulator mode only) |
+| `FIREBASE_AUTH_EMULATOR_HOST` | `localhost:9099` | Auth emulator address (`host:port`) |
+| `FIREBASE_FUNCTIONS_EMULATOR_HOST` | `localhost:5001` | Functions emulator address (`host:port`) |
+
+Each entry in the JSON config defines the parameters of one simulation:
+- `numberOfRuns` — how many times to repeat this session
+- `studyId` — the study whose prompts and context to use
+- `bundleName` — name of an embedded synthetic patient, or a path to a FHIR bundle JSON file (resolved relative to the config file)
+- `model` / `temperature` — OpenAI model and sampling temperature
+- `userQuestions` — the questions the simulated patient asks
+- `service` *(optional)* — `"OpenAI"`, `"Firebase"`, or `"Firebase-Emulator"`; if omitted, inferred from the environment (`OPENAI_API_KEY` → OpenAI, `GOOGLE_CREDENTIALS_PLIST` → Firebase, otherwise Firebase-Emulator)
+- `name` *(optional)* — human-readable label used as the output filename prefix
+- `customSystemPrompt` *(optional)* — custom system prompt, replaces the study's default system prompt
+
+The example config below performs 6 simulated runs of the `edu.stanford.LLMonFHIR.gynStudy` study, 3 each using GPT-4o and GPT-4o-mini, against two different backends:
 ```json
 [{
     "numberOfRuns": 3,
+    "name": "gyn-gpt4o-openai",
     "studyId": "edu.stanford.LLMonFHIR.gynStudy",
     "bundleName": "Elena Kim",
     "model": "gpt-4o",
     "temperature": 1,
-    "openAIKey": "sk-proj-...",
+    "service": "OpenAI",
     "userQuestions": [
         "Tell me about my recent diagnoses and how they affect my fertility.",
-        "How are my hormonal levels?",
-        "So long and thanls for all the fish!!"
+        "How are my hormonal levels?"
     ]
 }, {
     "numberOfRuns": 3,
+    "name": "gyn-gpt4o-firebase",
     "studyId": "edu.stanford.LLMonFHIR.gynStudy",
     "bundleName": "Elena Kim",
-    "model": "gpt-5.2",
+    "model": "gpt-4o",
     "temperature": 1,
-    "openAIKey": "sk-proj-...",
+    "service": "Firebase",
     "userQuestions": [
         "Tell me about my recent diagnoses and how they affect my fertility.",
-        "How are my hormonal levels?",
-        "So long and thanls for all the fish!!"
+        "How are my hormonal levels?"
     ]
 }]
 ```
+
+Run with the appropriate credentials:
+
+```bash
+# OpenAI
+OPENAI_API_KEY=sk-proj-...
+swift run LLMonFHIRCLI simulate-session config.json output/
+```
+
+```bash
+# Firebase (production)
+GOOGLE_CREDENTIALS_PLIST=~/GoogleService-Info.plist
+swift run LLMonFHIRCLI simulate-session config.json output/
+```
+
+```bash
+# Firebase emulator (no credentials needed)
+FIREBASE_PROJECT_ID=...
+swift run LLMonFHIRCLI simulate-session config.json output/
+```
+
+Reports are saved to a timestamped subdirectory inside the output directory, named `<index>-<name>-<run>.json` (e.g. `00-gyn-gpt4o-openai-1.json`).
 
 
 ## Contributors & License
