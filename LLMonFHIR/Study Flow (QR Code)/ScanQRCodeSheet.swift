@@ -60,7 +60,7 @@ private struct ScanQRCodeSheet: View {
     private var scanner: some View {
         #if targetEnvironment(simulator)
         ContentUnavailableView(
-            "No Study Loaded",
+            "No Study Loaded" as String,
             systemImage: "document.badge.gearshape",
             description: Text(verbatim: "Launch into study mode by enabling the `--mode study:ID` flag in Xcode (via the `⌘ ⇧ ,` shortcut)")
         )

@@ -1,5 +1,5 @@
 {
-  "originHash" : "d885987dce42f7c2f146561233f2158803281c1391d8e04ac3e225a355d34f1d",
+  "originHash" : "8167700b9f32d9b418194bc2998dc160560906010d96b13b32b5c016b93698eb",
   "pins" : [
     {
       "identity" : "abseil-cpp-binary",
@@ -312,8 +312,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/StanfordSpezi/SpeziQuestionnaire.git",
       "state" : {
-        "revision" : "624cc6da649690d8f9cd295ca23064c47a0ab856",
-        "version" : "2.0.0-beta.1"
+        "revision" : "400150239ceac1131696d3623801fc23ad64ae7b",
+        "version" : "2.0.0-beta.2"
       }
     },
     {
@@ -359,15 +359,6 @@
       "state" : {
         "revision" : "626b5b7b2f45e1b0b1c6f4a309296d1d21d7311b",
         "version" : "1.7.1"
-      }
-    },
-    {
-      "identity" : "swift-async-algorithms",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/apple/swift-async-algorithms.git",
-      "state" : {
-        "revision" : "9d349bcc328ac3c31ce40e746b5882742a0d1272",
-        "version" : "1.1.3"
       }
     },
     {
@@ -510,8 +501,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/StanfordBDHG/XCTestExtensions.git",
       "state" : {
-        "revision" : "4550188a017d316ab64ef0948fc40aff96611bbf",
-        "version" : "1.2.5"
+        "revision" : "d860cb6fde3ff5a0fb65f06575f1f8cd7f8a5fb5",
+        "version" : "1.2.6"
       }
     },
     {

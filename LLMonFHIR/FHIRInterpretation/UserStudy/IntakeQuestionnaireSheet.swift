@@ -23,6 +23,7 @@ struct IntakeQuestionnaireSheet: View {
     private let study: Study
     @Binding private var fhirResponse: ModelsR4.QuestionnaireResponse?
     
+    @State private var isLoadingQuestionnaire = true
     @State private var questionnaire: SpeziQuestionnaire.Questionnaire?
     @State private var viewState: ViewState = .idle
     
@@ -37,8 +38,10 @@ struct IntakeQuestionnaireSheet: View {
                         dismiss()
                     }
                 }
+            } else if isLoadingQuestionnaire {
+                ProgressView("Loading Questionnaire…")
             } else {
-                ContentUnavailableView("Questionnaire not selected", systemImage: "document.badge.gearshape")
+                ContentUnavailableView("Unable to load questionnaire", systemImage: "document.badge.gearshape")
                 Button("Dismiss") {
                     dismiss()
                 }
@@ -53,11 +56,21 @@ struct IntakeQuestionnaireSheet: View {
             }
         }
         .task {
-            guard let fhir = try? study.initialQuestionnaire(from: .main) else {
-                questionnaire = nil
-                return
+            isLoadingQuestionnaire = true
+            defer {
+                isLoadingQuestionnaire = false
             }
-            questionnaire = try? SpeziQuestionnaire.Questionnaire(fhir)
+            do {
+                guard let fhir = try study.initialQuestionnaire(from: .main) else {
+                    return
+                }
+                questionnaire = try SpeziQuestionnaire.Questionnaire(fhir)
+            } catch {
+                questionnaire = nil
+                #if DEBUG
+                viewState = .error(AnyLocalizedError(error: error))
+                #endif
+            }
         }
     }
     

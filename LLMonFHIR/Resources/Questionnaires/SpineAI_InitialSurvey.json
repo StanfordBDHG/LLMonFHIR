@@ -910,19 +910,28 @@
               "valueCodeableConcept": {
                 "coding": [
                   {
-                    "system": "http://spezi.stanford.edu/fhir/CodeSystem/custom-task/item-control",
+                    "system": "http://spezi.stanford.edu/fhir/CodeSystem/questionnaire-item-control",
                     "code": "annotate-image"
                   }
                 ]
               }
             },
             {
-              "url": "http://spezi.stanford.edu/fhir/StructureDefinition/custom-task/annotate-image/inputImage",
+              "url": "http://spezi.stanford.edu/fhir/CodeSystem/questionnaire-item-control/annotate-image/input-image",
               "valueString": "bodymap.png"
             },
             {
-              "url": "http://spezi.stanford.edu/fhir/StructureDefinition/custom-task/annotate-image/region",
-              "valueString": "Pain:red"
+              "url": "http://spezi.stanford.edu/fhir/CodeSystem/questionnaire-item-control/annotate-image/region",
+              "extension": [
+                {
+                  "url": "label",
+                  "valueString": "Pain"
+                },
+                {
+                  "url": "color",
+                  "valueString": "red"
+                }
+              ]
             }
           ]
         },
@@ -965,19 +974,28 @@
               "valueCodeableConcept": {
                 "coding": [
                   {
-                    "system": "http://spezi.stanford.edu/fhir/CodeSystem/custom-task/item-control",
+                    "system": "http://spezi.stanford.edu/fhir/CodeSystem/questionnaire-item-control",
                     "code": "annotate-image"
                   }
                 ]
               }
             },
             {
-              "url": "http://spezi.stanford.edu/fhir/StructureDefinition/custom-task/annotate-image/inputImage",
+              "url": "http://spezi.stanford.edu/fhir/CodeSystem/questionnaire-item-control/annotate-image/input-image",
               "valueString": "bodymap.png"
             },
             {
-              "url": "http://spezi.stanford.edu/fhir/StructureDefinition/custom-task/annotate-image/region",
-              "valueString": "Numbness/Tingling:green"
+              "url": "http://spezi.stanford.edu/fhir/CodeSystem/questionnaire-item-control/annotate-image/region",
+              "extension": [
+                {
+                  "url": "label",
+                  "valueString": "Numbness/Tingling"
+                },
+                {
+                  "url": "color",
+                  "valueString": "green"
+                }
+              ]
             }
           ],
           "enableWhen": [
