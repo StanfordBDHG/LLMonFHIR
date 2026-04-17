@@ -22,7 +22,7 @@ extension Study {
         return Study(
             id: "edu.stanford.LLMonFHIR.pedCardioStudy",
             title: "LLMonFHIR PedCardio",
-            explainer: "During this study, you’ll complete a survey about your experiences navigating the healthcare system and have the opportunity to ask the chat questions about your health.",
+            explainer: "",
             summarizeSingleResourcePrompt: nil,
             interpretMultipleResourcesPrompt: .pedCardioStudySystemPrompt,
             chatTitleConfig: .default,
