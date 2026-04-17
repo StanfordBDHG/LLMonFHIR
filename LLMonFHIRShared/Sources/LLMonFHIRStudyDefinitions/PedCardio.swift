@@ -28,66 +28,66 @@ extension Study {
             chatTitleConfig: .default,
             initialQuestionnaire: nil,
             tasks: [
-//                Task(
-//                    id: "t1",
-//                    instructions: """
-//                        Ask a clarifying question about the most recent diagnosis from your last medical visit or any other questions you might have regarding your health?
-//                        """,
-//                    assistantMessagesLimit: 2...5, // starting at 2 bc we need to factor in the initial msg
-//                    questions: [
-//                        effectivenessQuestion
-//                    ]
-//                ),
-//                Task(
-//                    id: "t2",
-//                    instructions: """
-//                        Ask if the patient is allowed to play competitive sports or participate in gym class.
-//                        """,
-//                    assistantMessagesLimit: 1...5,
-//                    questions: [effectivenessQuestion]
-//                ),
-//                Task(
-//                    id: "t3",
-//                    instructions: """
-//                        Ask the app for a personalized health recommendation.
-//                        """,
-//                    assistantMessagesLimit: 1...5,
-//                    questions: [effectivenessQuestion]
-//                ),
-//                Task(
-//                    id: "t4",
-//                    instructions: """
-//                        Before we end our session, feel free to ask the app any medical questions you might have related to your health.
-//                        """,
-//                    assistantMessagesLimit: 1...5,
-//                    questions: [
-//                        effectivenessQuestion,
-//                        .init(
-//                            text: "What surprised you about the LLM’s answer, either positively or negatively?",
-//                            type: .freeText,
-//                            isOptional: true
-//                        ),
-//                        .init(
-//                            text: "Compared to other sources of health information (e.g. websites, doctors), how do you rate the LLM’s responses?",
-//                            type: .scale(responseOptions: .comparisonScale),
-//                            isOptional: false
-//                        ),
-//                        .init(
-//                            text: "What were the most and least useful features of the LLM? Do you have any suggestions to share",
-//                            type: .freeText, isOptional: true
-//                        ),
-//                        .init(
-//                            text: "How has the LLM impacted your ability to manage your child’s health?",
-//                            type: .freeText,
-//                            isOptional: false
-//                        ),
-//                        .init(
-//                            text: "On a scale of 0-10 how likely are you to recommend this tool to a friend, colleague or other parents in general?",
-//                            type: .netPromoterScore(range: 0...10),
-//                            isOptional: false
-//                        )
-//                    ]
-//                ),
+                Task(
+                    id: "t1",
+                    instructions: """
+                        Ask a clarifying question about the most recent diagnosis from your last medical visit or any other questions you might have regarding your health?
+                        """,
+                    assistantMessagesLimit: 2...5, // starting at 2 bc we need to factor in the initial msg
+                    questions: [
+                        effectivenessQuestion
+                    ]
+                ),
+                Task(
+                    id: "t2",
+                    instructions: """
+                        Ask if the patient is allowed to play competitive sports or participate in gym class.
+                        """,
+                    assistantMessagesLimit: 1...5,
+                    questions: [effectivenessQuestion]
+                ),
+                Task(
+                    id: "t3",
+                    instructions: """
+                        Ask the app for a personalized health recommendation.
+                        """,
+                    assistantMessagesLimit: 1...5,
+                    questions: [effectivenessQuestion]
+                ),
+                Task(
+                    id: "t4",
+                    instructions: """
+                        Before we end our session, feel free to ask the app any medical questions you might have related to your health.
+                        """,
+                    assistantMessagesLimit: 1...5,
+                    questions: [
+                        effectivenessQuestion,
+                        .init(
+                            text: "What surprised you about the LLM’s answer, either positively or negatively?",
+                            type: .freeText,
+                            isOptional: true
+                        ),
+                        .init(
+                            text: "Compared to other sources of health information (e.g. websites, doctors), how do you rate the LLM’s responses?",
+                            type: .scale(responseOptions: .comparisonScale),
+                            isOptional: false
+                        ),
+                        .init(
+                            text: "What were the most and least useful features of the LLM? Do you have any suggestions to share",
+                            type: .freeText, isOptional: true
+                        ),
+                        .init(
+                            text: "How has the LLM impacted your ability to manage your child’s health?",
+                            type: .freeText,
+                            isOptional: false
+                        ),
+                        .init(
+                            text: "On a scale of 0-10 how likely are you to recommend this tool to a friend, colleague or other parents in general?",
+                            type: .netPromoterScore(range: 0...10),
+                            isOptional: false
+                        )
+                    ]
+                ),
                 Task(
                     id: "t5",
                     instructions: "Please hit the arrow at the top of your screen to complete the final task",
