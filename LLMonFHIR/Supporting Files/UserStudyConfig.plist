@@ -58,6 +58,15 @@
 			<key>reportEmail</key>
 			<string></string>
 		</dict>
+		<key>edu.stanford.LLMonFHIR.pedCardioStudy</key>
+		<dict>
+			<key>openAIAPIKey</key>
+			<string></string>
+			<key>openAIEndpoint</key>
+			<string>firebase-function:chat</string>
+			<key>reportEmail</key>
+			<string></string>
+		</dict>
 	</dict>
 </dict>
 </plist>

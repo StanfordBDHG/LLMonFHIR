@@ -67,7 +67,7 @@ struct UserStudyChatToolbar: ToolbarContent {
                 Button("No", role: .cancel) {}
             },
             message: {
-                Text("Do you want to continue?")
+                Text("Do you want to leave the chat?")
             }
         )
     }

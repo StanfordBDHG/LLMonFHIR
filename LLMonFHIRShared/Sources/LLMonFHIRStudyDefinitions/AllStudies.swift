@@ -12,7 +12,7 @@ public import LLMonFHIRShared
 extension Study {
     /// All studies currently available.
     public static var allStudies: [Study] {
-        [.usabilityStudy, .gynStudy, .spineAI, .languageStudy]
+        [.usabilityStudy, .gynStudy, .spineAI, .languageStudy, .pedCardioStudy]
     }
 }
 
