@@ -1,0 +1,680 @@
+{
+  "resourceType": "Bundle",
+  "type": "collection",
+  "entry": [
+    {
+      "fullUrl": "urn:uuid:b9732ad9-300e-4c9c-b0d2-f064367acf65",
+      "resource": {
+        "resourceType": "Patient",
+        "id": "b9732ad9-300e-4c9c-b0d2-f064367acf65",
+        "name": [
+          {
+            "family": "Chen",
+            "given": [
+              "Chloe"
+            ],
+            "text": "Chloe Chen"
+          }
+        ],
+        "gender": "female",
+        "birthDate": "2025-08-28",
+        "address": [
+          {
+            "line": [
+              "123 El Camino Real"
+            ],
+            "city": "Menlo Park",
+            "state": "CA",
+            "postalCode": "94025"
+          }
+        ],
+        "managingOrganization": {
+          "reference": "urn:uuid:112a3394-4b02-4288-8f8b-b9479be212dc"
+        },
+        "contact": [
+          {
+            "relationship": [
+              {
+                "coding": [
+                  {
+                    "system": "http://terminology.hl7.org/CodeSystem/v2-0131",
+                    "code": "N",
+                    "display": "Next of kin"
+                  }
+                ],
+                "text": "Parents"
+              }
+            ],
+            "name": {
+              "text": "David and Emily Chen"
+            }
+          }
+        ],
+        "extension": [
+          {
+            "url": "http://hl7.org/fhir/us/core/StructureDefinition/us-core-race",
+            "extension": [
+              {
+                "url": "ombCategory",
+                "valueCoding": {
+                  "system": "urn:oid:2.16.840.1.113883.6.238",
+                  "code": "2028-9",
+                  "display": "Asian"
+                }
+              },
+              {
+                "url": "text",
+                "valueString": "Asian"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "fullUrl": "urn:uuid:112a3394-4b02-4288-8f8b-b9479be212dc",
+      "resource": {
+        "resourceType": "Organization",
+        "id": "112a3394-4b02-4288-8f8b-b9479be212dc",
+        "name": "Menlo Park Cardiology Clinic",
+        "address": [
+          {
+            "line": [
+              "123 El Camino Real"
+            ],
+            "city": "Menlo Park",
+            "state": "CA",
+            "postalCode": "94025"
+          }
+        ]
+      }
+    },
+    {
+      "fullUrl": "urn:uuid:efd40f94-f37a-48d0-85e9-f016cc655e6d",
+      "resource": {
+        "resourceType": "Organization",
+        "id": "efd40f94-f37a-48d0-85e9-f016cc655e6d",
+        "name": "Blue Shield of California PPO"
+      }
+    },
+    {
+      "fullUrl": "urn:uuid:e657f464-f2c4-4f1d-9e56-2969e7b01795",
+      "resource": {
+        "resourceType": "Condition",
+        "id": "e657f464-f2c4-4f1d-9e56-2969e7b01795",
+        "clinicalStatus": {
+          "coding": [
+            {
+              "system": "http://terminology.hl7.org/CodeSystem/condition-clinical",
+              "code": "active"
+            }
+          ]
+        },
+        "verificationStatus": {
+          "coding": [
+            {
+              "system": "http://terminology.hl7.org/CodeSystem/condition-ver-status",
+              "code": "confirmed"
+            }
+          ]
+        },
+        "code": {
+          "text": "Supraventricular Tachycardia (AVRT)"
+        },
+        "subject": {
+          "reference": "urn:uuid:b9732ad9-300e-4c9c-b0d2-f064367acf65"
+        },
+        "onsetDateTime": "2025-09-12",
+        "note": [
+          {
+            "text": "Presented at 2 weeks of life with HR > 280 bpm"
+          }
+        ]
+      }
+    },
+    {
+      "fullUrl": "urn:uuid:5e8bfe99-a946-489e-872c-157a142ddc5b",
+      "resource": {
+        "resourceType": "MedicationRequest",
+        "id": "5e8bfe99-a946-489e-872c-157a142ddc5b",
+        "status": "active",
+        "intent": "order",
+        "medicationCodeableConcept": {
+          "text": "Amiodarone 25 mg tablet"
+        },
+        "subject": {
+          "reference": "urn:uuid:b9732ad9-300e-4c9c-b0d2-f064367acf65"
+        },
+        "dosageInstruction": [
+          {
+            "text": "Take 25 mg by mouth daily"
+          }
+        ],
+        "note": [
+          {
+            "text": "Class III antiarrhythmic; indicated for sinus rhythm maintenance after beta-blocker failure. Monitoring: Thyroid Function Tests (TSH, Free T4), Liver Function Tests (AST, ALT). Strategy: Passive weaning (allowing patient to outgrow fixed dose via weight gain)."
+          }
+        ]
+      }
+    },
+    {
+      "fullUrl": "urn:uuid:227a50ed-fcf7-431c-a95a-353c03ed4c1b",
+      "resource": {
+        "resourceType": "MedicationRequest",
+        "id": "227a50ed-fcf7-431c-a95a-353c03ed4c1b",
+        "status": "active",
+        "intent": "order",
+        "medicationCodeableConcept": {
+          "text": "Flecainide 15 mg tablet"
+        },
+        "subject": {
+          "reference": "urn:uuid:b9732ad9-300e-4c9c-b0d2-f064367acf65"
+        },
+        "dosageInstruction": [
+          {
+            "text": "Take 15 mg by mouth twice daily"
+          }
+        ],
+        "note": [
+          {
+            "text": "Class Ic antiarrhythmic; indicated for dual therapy for refractory infant SVT. Monitoring: QRS widening, QTc prolongation, ZioPatch for breakthrough arrhythmia. Strategy: Passive weaning (allowing patient to outgrow fixed dose via weight gain)."
+          }
+        ]
+      }
+    },
+    {
+      "fullUrl": "urn:uuid:337c4d64-39cc-44fb-8a96-6f52c2764d6d",
+      "resource": {
+        "resourceType": "Observation",
+        "id": "337c4d64-39cc-44fb-8a96-6f52c2764d6d",
+        "status": "final",
+        "category": [
+          {
+            "coding": [
+              {
+                "system": "http://terminology.hl7.org/CodeSystem/observation-category",
+                "code": "vital-signs",
+                "display": "Vital Signs"
+              }
+            ]
+          }
+        ],
+        "code": {
+          "coding": [
+            {
+              "system": "http://loinc.org",
+              "code": "8867-4",
+              "display": "Heart rate"
+            }
+          ],
+          "text": "Heart rate"
+        },
+        "subject": {
+          "reference": "urn:uuid:b9732ad9-300e-4c9c-b0d2-f064367acf65"
+        },
+        "effectiveDateTime": "2026-02-28",
+        "valueQuantity": {
+          "value": 132,
+          "unit": "beats/minute",
+          "system": "http://unitsofmeasure.org",
+          "code": "/min"
+        },
+        "note": [
+          {
+            "text": "Rhythm: Normal sinus"
+          }
+        ]
+      }
+    },
+    {
+      "fullUrl": "urn:uuid:f4ecab27-acd3-4fd6-809c-12a5ae79e180",
+      "resource": {
+        "resourceType": "Observation",
+        "id": "f4ecab27-acd3-4fd6-809c-12a5ae79e180",
+        "status": "final",
+        "category": [
+          {
+            "coding": [
+              {
+                "system": "http://terminology.hl7.org/CodeSystem/observation-category",
+                "code": "vital-signs",
+                "display": "Vital Signs"
+              }
+            ]
+          }
+        ],
+        "code": {
+          "coding": [
+            {
+              "system": "http://loinc.org",
+              "code": "85354-9",
+              "display": "Blood pressure panel with all children optional"
+            }
+          ],
+          "text": "Blood pressure"
+        },
+        "subject": {
+          "reference": "urn:uuid:b9732ad9-300e-4c9c-b0d2-f064367acf65"
+        },
+        "effectiveDateTime": "2026-02-28",
+        "component": [
+          {
+            "code": {
+              "coding": [
+                {
+                  "system": "http://loinc.org",
+                  "code": "8480-6",
+                  "display": "Systolic blood pressure"
+                }
+              ],
+              "text": "Systolic blood pressure"
+            },
+            "valueQuantity": {
+              "value": 92,
+              "unit": "mmHg",
+              "system": "http://unitsofmeasure.org",
+              "code": "mm[Hg]"
+            }
+          },
+          {
+            "code": {
+              "coding": [
+                {
+                  "system": "http://loinc.org",
+                  "code": "8462-4",
+                  "display": "Diastolic blood pressure"
+                }
+              ],
+              "text": "Diastolic blood pressure"
+            },
+            "valueQuantity": {
+              "value": 54,
+              "unit": "mmHg",
+              "system": "http://unitsofmeasure.org",
+              "code": "mm[Hg]"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "fullUrl": "urn:uuid:32785efe-70df-4ef3-a825-df9896d00eb9",
+      "resource": {
+        "resourceType": "Observation",
+        "id": "32785efe-70df-4ef3-a825-df9896d00eb9",
+        "status": "final",
+        "category": [
+          {
+            "coding": [
+              {
+                "system": "http://terminology.hl7.org/CodeSystem/observation-category",
+                "code": "vital-signs",
+                "display": "Vital Signs"
+              }
+            ]
+          }
+        ],
+        "code": {
+          "coding": [
+            {
+              "system": "http://loinc.org",
+              "code": "29463-7",
+              "display": "Body weight"
+            }
+          ],
+          "text": "Body weight"
+        },
+        "subject": {
+          "reference": "urn:uuid:b9732ad9-300e-4c9c-b0d2-f064367acf65"
+        },
+        "effectiveDateTime": "2026-02-28",
+        "valueQuantity": {
+          "value": 7.5,
+          "unit": "kg",
+          "system": "http://unitsofmeasure.org",
+          "code": "kg"
+        },
+        "note": [
+          {
+            "text": "50th percentile"
+          }
+        ]
+      }
+    },
+    {
+      "fullUrl": "urn:uuid:a8de0a5a-2d4f-41c3-a472-6552a52a3c50",
+      "resource": {
+        "resourceType": "Observation",
+        "id": "a8de0a5a-2d4f-41c3-a472-6552a52a3c50",
+        "status": "final",
+        "category": [
+          {
+            "coding": [
+              {
+                "system": "http://terminology.hl7.org/CodeSystem/observation-category",
+                "code": "vital-signs",
+                "display": "Vital Signs"
+              }
+            ]
+          }
+        ],
+        "code": {
+          "coding": [
+            {
+              "system": "http://loinc.org",
+              "code": "8302-2",
+              "display": "Body height"
+            }
+          ],
+          "text": "Body height"
+        },
+        "subject": {
+          "reference": "urn:uuid:b9732ad9-300e-4c9c-b0d2-f064367acf65"
+        },
+        "effectiveDateTime": "2026-02-28",
+        "valueQuantity": {
+          "value": 66,
+          "unit": "cm",
+          "system": "http://unitsofmeasure.org",
+          "code": "cm"
+        }
+      }
+    },
+    {
+      "fullUrl": "urn:uuid:ab1ddb44-6a75-4d18-ab5e-e1e23a652c91",
+      "resource": {
+        "resourceType": "Observation",
+        "id": "ab1ddb44-6a75-4d18-ab5e-e1e23a652c91",
+        "status": "final",
+        "category": [
+          {
+            "coding": [
+              {
+                "system": "http://terminology.hl7.org/CodeSystem/observation-category",
+                "code": "social-history",
+                "display": "Social History"
+              }
+            ]
+          }
+        ],
+        "code": {
+          "text": "Living arrangement"
+        },
+        "subject": {
+          "reference": "urn:uuid:b9732ad9-300e-4c9c-b0d2-f064367acf65"
+        },
+        "effectiveDateTime": "2026-02-28",
+        "valueString": "Lives with parents and one healthy 3-year-old sibling."
+      }
+    },
+    {
+      "fullUrl": "urn:uuid:693b0fe4-3f80-4061-9003-d8faa6783ae5",
+      "resource": {
+        "resourceType": "Coverage",
+        "id": "693b0fe4-3f80-4061-9003-d8faa6783ae5",
+        "status": "active",
+        "beneficiary": {
+          "reference": "urn:uuid:b9732ad9-300e-4c9c-b0d2-f064367acf65"
+        },
+        "payor": [
+          {
+            "reference": "urn:uuid:efd40f94-f37a-48d0-85e9-f016cc655e6d"
+          }
+        ],
+        "type": {
+          "text": "Health insurance"
+        }
+      }
+    },
+    {
+      "fullUrl": "urn:uuid:da4fb5df-d17b-417e-b00c-911cfe5e7cbc",
+      "resource": {
+        "resourceType": "Immunization",
+        "id": "da4fb5df-d17b-417e-b00c-911cfe5e7cbc",
+        "status": "completed",
+        "vaccineCode": {
+          "text": "DTaP"
+        },
+        "patient": {
+          "reference": "urn:uuid:b9732ad9-300e-4c9c-b0d2-f064367acf65"
+        },
+        "occurrenceDateTime": "2026-02-25"
+      }
+    },
+    {
+      "fullUrl": "urn:uuid:668ed190-bc6c-4794-83ab-59c454a01d08",
+      "resource": {
+        "resourceType": "Immunization",
+        "id": "668ed190-bc6c-4794-83ab-59c454a01d08",
+        "status": "completed",
+        "vaccineCode": {
+          "text": "IPV"
+        },
+        "patient": {
+          "reference": "urn:uuid:b9732ad9-300e-4c9c-b0d2-f064367acf65"
+        },
+        "occurrenceDateTime": "2026-02-25"
+      }
+    },
+    {
+      "fullUrl": "urn:uuid:f6c3fdfd-012d-4195-8d3b-9c6068cf37da",
+      "resource": {
+        "resourceType": "Immunization",
+        "id": "f6c3fdfd-012d-4195-8d3b-9c6068cf37da",
+        "status": "completed",
+        "vaccineCode": {
+          "text": "HepB"
+        },
+        "patient": {
+          "reference": "urn:uuid:b9732ad9-300e-4c9c-b0d2-f064367acf65"
+        },
+        "occurrenceDateTime": "2026-02-25"
+      }
+    },
+    {
+      "fullUrl": "urn:uuid:0a55979a-7df9-4f56-aaea-ae8165592b0e",
+      "resource": {
+        "resourceType": "Immunization",
+        "id": "0a55979a-7df9-4f56-aaea-ae8165592b0e",
+        "status": "completed",
+        "vaccineCode": {
+          "text": "Hib"
+        },
+        "patient": {
+          "reference": "urn:uuid:b9732ad9-300e-4c9c-b0d2-f064367acf65"
+        },
+        "occurrenceDateTime": "2026-02-25"
+      }
+    },
+    {
+      "fullUrl": "urn:uuid:e73b8ea8-2545-4634-a87b-ec46b95d29ad",
+      "resource": {
+        "resourceType": "Immunization",
+        "id": "e73b8ea8-2545-4634-a87b-ec46b95d29ad",
+        "status": "completed",
+        "vaccineCode": {
+          "text": "PCV15"
+        },
+        "patient": {
+          "reference": "urn:uuid:b9732ad9-300e-4c9c-b0d2-f064367acf65"
+        },
+        "occurrenceDateTime": "2026-02-25"
+      }
+    },
+    {
+      "fullUrl": "urn:uuid:430c8102-a1b2-4476-9f89-f0f6fee625c3",
+      "resource": {
+        "resourceType": "Immunization",
+        "id": "430c8102-a1b2-4476-9f89-f0f6fee625c3",
+        "status": "completed",
+        "vaccineCode": {
+          "text": "Rotavirus"
+        },
+        "patient": {
+          "reference": "urn:uuid:b9732ad9-300e-4c9c-b0d2-f064367acf65"
+        },
+        "occurrenceDateTime": "2026-02-25"
+      }
+    },
+    {
+      "fullUrl": "urn:uuid:c32cf302-c91e-4d71-bb57-bf1037d41d5b",
+      "resource": {
+        "resourceType": "Encounter",
+        "id": "c32cf302-c91e-4d71-bb57-bf1037d41d5b",
+        "status": "finished",
+        "class": {
+          "system": "http://terminology.hl7.org/CodeSystem/v3-ActCode",
+          "code": "EMER",
+          "display": "emergency"
+        },
+        "type": [
+          {
+            "text": "ED Admission"
+          }
+        ],
+        "subject": {
+          "reference": "urn:uuid:b9732ad9-300e-4c9c-b0d2-f064367acf65"
+        },
+        "serviceProvider": {
+          "reference": "urn:uuid:112a3394-4b02-4288-8f8b-b9479be212dc"
+        },
+        "period": {
+          "start": "2025-09-12"
+        },
+        "note": [
+          {
+            "text": "SVT with poor perfusion; converted with IV Adenosine."
+          }
+        ]
+      }
+    },
+    {
+      "fullUrl": "urn:uuid:2f947e04-22c7-4c2f-ab0c-11707808bf72",
+      "resource": {
+        "resourceType": "Encounter",
+        "id": "2f947e04-22c7-4c2f-ab0c-11707808bf72",
+        "status": "finished",
+        "class": {
+          "system": "http://terminology.hl7.org/CodeSystem/v3-ActCode",
+          "code": "IMP",
+          "display": "inpatient"
+        },
+        "type": [
+          {
+            "text": "CVICU discharge"
+          }
+        ],
+        "subject": {
+          "reference": "urn:uuid:b9732ad9-300e-4c9c-b0d2-f064367acf65"
+        },
+        "serviceProvider": {
+          "reference": "urn:uuid:112a3394-4b02-4288-8f8b-b9479be212dc"
+        },
+        "period": {
+          "start": "2025-09-29"
+        },
+        "note": [
+          {
+            "text": "Discharged on oral Amiodarone and Flecainide."
+          }
+        ]
+      }
+    },
+    {
+      "fullUrl": "urn:uuid:43f42793-b62d-48a6-9735-27ce49e7ebe2",
+      "resource": {
+        "resourceType": "Encounter",
+        "id": "43f42793-b62d-48a6-9735-27ce49e7ebe2",
+        "status": "finished",
+        "class": {
+          "system": "http://terminology.hl7.org/CodeSystem/v3-ActCode",
+          "code": "AMB",
+          "display": "ambulatory"
+        },
+        "type": [
+          {
+            "text": "EP Clinic follow-up"
+          }
+        ],
+        "subject": {
+          "reference": "urn:uuid:b9732ad9-300e-4c9c-b0d2-f064367acf65"
+        },
+        "serviceProvider": {
+          "reference": "urn:uuid:112a3394-4b02-4288-8f8b-b9479be212dc"
+        },
+        "period": {
+          "start": "2025-10-15"
+        },
+        "note": [
+          {
+            "text": "Post-discharge follow-up; normal sinus rhythm confirmed."
+          }
+        ]
+      }
+    },
+    {
+      "fullUrl": "urn:uuid:e5fec410-28eb-4732-b081-447458cbf007",
+      "resource": {
+        "resourceType": "Encounter",
+        "id": "e5fec410-28eb-4732-b081-447458cbf007",
+        "status": "finished",
+        "class": {
+          "system": "http://terminology.hl7.org/CodeSystem/v3-ActCode",
+          "code": "AMB",
+          "display": "ambulatory"
+        },
+        "type": [
+          {
+            "text": "EP Clinic follow-up"
+          }
+        ],
+        "subject": {
+          "reference": "urn:uuid:b9732ad9-300e-4c9c-b0d2-f064367acf65"
+        },
+        "serviceProvider": {
+          "reference": "urn:uuid:112a3394-4b02-4288-8f8b-b9479be212dc"
+        },
+        "period": {
+          "start": "2025-12-10"
+        },
+        "note": [
+          {
+            "text": "Dosing held steady despite weight gain."
+          }
+        ]
+      }
+    },
+    {
+      "fullUrl": "urn:uuid:d78e3e00-7d6f-47b9-8cfe-51395eed53ed",
+      "resource": {
+        "resourceType": "Encounter",
+        "id": "d78e3e00-7d6f-47b9-8cfe-51395eed53ed",
+        "status": "finished",
+        "class": {
+          "system": "http://terminology.hl7.org/CodeSystem/v3-ActCode",
+          "code": "AMB",
+          "display": "ambulatory"
+        },
+        "type": [
+          {
+            "text": "EP Clinic follow-up"
+          }
+        ],
+        "subject": {
+          "reference": "urn:uuid:b9732ad9-300e-4c9c-b0d2-f064367acf65"
+        },
+        "serviceProvider": {
+          "reference": "urn:uuid:112a3394-4b02-4288-8f8b-b9479be212dc"
+        },
+        "period": {
+          "start": "2026-02-28"
+        },
+        "note": [
+          {
+            "text": "Patient thriving; initiated 6-month passive weaning strategy."
+          }
+        ]
+      }
+    }
+  ]
+}

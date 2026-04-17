@@ -69,7 +69,7 @@ extension ModelsR4.Bundle {
                 do {
                     bundle = try JSONDecoder().decode(ModelsR4.Bundle.self, from: Data(contentsOf: url))
                 } catch {
-                    Self.logger.warning("Skipping FHIR bundle at \(url.path) (unable to decode): \(error)")
+                    print("Skipping FHIR bundle at \(url.path) (unable to decode): \(error)")
                     continue
                 }
                 if let patientName = bundle.singlePatient?.fullName {
@@ -87,7 +87,7 @@ extension ModelsR4.Bundle {
                 }
             }
             for (name, urls) in allBundlesByPatientName where urls.count > 1 {
-                Self.logger.warning("Found multiple FHIR bundles with same patient name '\(name)':\n\(urls.map { "- \($0.path)" }.joined(separator: "\n"))")
+                print("Found multiple FHIR bundles with same patient name '\(name)':\n\(urls.map { "- \($0.path)" }.joined(separator: "\n"))")
             }
         }
     }
