@@ -26,6 +26,7 @@ let package = Package(
         .package(url: "https://github.com/StanfordSpezi/SpeziFoundation.git", from: "2.7.2"),
         .package(url: "https://github.com/apple/FHIRModels.git", .upToNextMajor(from: "0.7.0")),
         .package(url: "https://github.com/apple/swift-argument-parser.git", from: "1.7.0"),
+        .package(url: "https://github.com/apple/swift-algorithms.git", from: "1.2.1"),
         .package(url: "https://github.com/StanfordSpezi/SpeziLLM.git", from: "0.13.8"),
         .package(url: "https://github.com/StanfordSpezi/SpeziStorage.git", from: "2.1.4"),
         .package(url: "https://github.com/StanfordSpezi/SpeziFHIR.git", from: "0.10.0")
@@ -39,7 +40,8 @@ let package = Package(
                 .product(name: "SpeziLLM", package: "SpeziLLM"),
                 .product(name: "SpeziLLMOpenAI", package: "SpeziLLM"),
                 .product(name: "SpeziLocalStorage", package: "SpeziStorage"),
-                .product(name: "SpeziFHIR", package: "SpeziFHIR")
+                .product(name: "SpeziFHIR", package: "SpeziFHIR"),
+                .product(name: "Algorithms", package: "swift-algorithms")
             ],
             resources: [
                 .copy("Resources/Synthetic Patients")

@@ -139,137 +139,59 @@ private let finalTaskQuestions = [
 ]
 
 
-private let postInterventionQuestions = [
-    Study.Task.Question(
-        text: """
-            Please complete the survey below.
-            
-            Thank you!
-            Below are some statements that people sometimes make when they talk about their health.
-            Please indicate how much you agree or disagree with each statement as it applies to you personally by circling your answer.
-            Your answers should be what is true for you and not just what you think others want you to say.
-            
-            If the statement does not apply to you, select N/A.
-            (All questions are assessed with Always, Often, Sometimes, Never)
-            
-            Please answer these questions based on how you feel with access to an application like LLMonFHIR.
-            """,
-        type: .instructional,
-        isOptional: true
-    ),
-    Study.Task.Question(
-        text: "When all is said and done, I am the person who is responsible for taking care of my / my child's health",
-        type: .scale(responseOptions: .frequencyOptions)
-    ),
-    Study.Task.Question(
-        text: "Taking an active role in my / my child's health care is the most important thing that affects my health and ability to function",
-        type: .scale(responseOptions: .frequencyOptions)
-    ),
-    Study.Task.Question(
-        text: "I know what each of my / my child's prescribed medications do and what the major or common side effects are",
-        type: .scale(responseOptions: .frequencyOptions)
-    ),
-    Study.Task.Question(
-        text: "I am confident that I can tell my / my child's health care provider/ doctor concerns I have even when he or she does not ask",
-        type: .scale(responseOptions: .frequencyOptions)
-    ),
-    Study.Task.Question(
-        text: "I am confident that I can tell whether I / my child need to go get medical care to go to the doctor or whether I can take care of a health problem",
-        type: .scale(responseOptions: .frequencyOptions)
-    ),
-    Study.Task.Question(
-        text: "I am confident I can help prevent or reduce problems associated with my / my child's health",
-        type: .scale(responseOptions: .frequencyOptions)
-    ),
-    Study.Task.Question(
-        text: "I know the lifestyle changes like diet and exercise that are recommended for my own / my child's health condition",
-        type: .scale(responseOptions: .frequencyOptions)
-    ),
-    Study.Task.Question(
-        text: "I am confident that I / my child can follow through on medical treatments I / my child may need to do at home",
-        type: .scale(responseOptions: .frequencyOptions)
-    ),
-    Study.Task.Question(
-        text: "I am confident that I can take actions that will help prevent or minimize some symptoms or problems associated with my / my child's health condition",
-        type: .scale(responseOptions: .frequencyOptions)
-    ),
-    Study.Task.Question(
-        text: "I am confident that I/ my child can follow through on medical recommendations my / my child's health care provider makes, such as changing my diet or doing regular exercise",
-        type: .scale(responseOptions: .frequencyOptions)
-    ),
-    Study.Task.Question(
-        text: "I understand the nature and causes of my / my child's health condition",
-        type: .scale(responseOptions: .frequencyOptions)
-    ),
-    Study.Task.Question(
-        text: "I know the different medical treatment options available for my / my child's health condition",
-        type: .scale(responseOptions: .frequencyOptions)
-    ),
-    Study.Task.Question(
-        text: "I have / My child has been able to maintain (keep up with) lifestyle changes that I have / my child has made for my / my child's health, like eating right or exercising",
-        type: .scale(responseOptions: .frequencyOptions)
-    ),
-    Study.Task.Question(
-        text: "I know how to prevent further problems with my / my child's health",
-        type: .scale(responseOptions: .frequencyOptions)
-    ),
-    Study.Task.Question(
-        text: "I know about the self-treatments for my / my child's health condition",
-        type: .scale(responseOptions: .frequencyOptions)
-    ),
-    Study.Task.Question(
-        text: "I have made the changes in my / my child's lifestyle like diet and exercise that are recommended for my / my child's health condition",
-        type: .scale(responseOptions: .frequencyOptions)
-    ),
-    Study.Task.Question(
-        text: "I am confident I can figure out solutions when new problems arise with my / my child's health",
-        type: .scale(responseOptions: .frequencyOptions)
-    ),
-    Study.Task.Question(
-        text: "I am able to handle symptoms of my / my child's health condition on my own at home",
-        type: .scale(responseOptions: .frequencyOptions)
-    ),
-    Study.Task.Question(
-        text: "I am confident that I / my child can maintain lifestyle changes, like eating right and exercising, even during times of stress",
-        type: .scale(responseOptions: .frequencyOptions)
-    ),
-    Study.Task.Question(
-        text: "I am able to handle problems of my / my child's health condition on my own at home",
-        type: .scale(responseOptions: .frequencyOptions)
-    ),
-    Study.Task.Question(
-        text: "I am confident I can keep my / my child's health problems from interfering with the things I / my child want(s) to do",
-        type: .scale(responseOptions: .frequencyOptions)
-    ),
-    Study.Task.Question(
-        text: "Maintaining the lifestyle changes that are recommended for my / my child's health condition is too hard on a daily basis",
-        type: .scale(responseOptions: .frequencyOptions)
-    ),
-    Study.Task.Question(
-        text: "I understand the trajectory of my child's condition and why they need lifelong cardiology care",
-        type: .scale(responseOptions: .frequencyOptions)
-    ),
-    Study.Task.Question(
-        text: "I know what symptoms for which I should call my child's cardiologist immediately",
-        type: .scale(responseOptions: .frequencyOptions)
-    ),
-    Study.Task.Question(
-        text: "I understand why my child needs or needed surgery to correct their heart lesion",
-        type: .scale(responseOptions: .frequencyOptions)
-    ),
-    Study.Task.Question(
-        text: "I understand what future surgeries/interventions, if any, may be required",
-        type: .scale(responseOptions: .frequencyOptions)
-    ),
-    Study.Task.Question(
-        text: #"I now find the language and abbreviations (e.g., "VSD," "echo," "cath") used in my child's medical chart easier to navigate"#,
-        type: .scale(responseOptions: .frequencyOptions)
-    ),
-    Study.Task.Question(
-        text: "I can confidently describe my child's heart lesion",
-        type: .scale(responseOptions: .frequencyOptions)
-    )
-]
+private let postInterventionQuestions: [Study.Task.Question] = {
+    let questions = [
+        "When all is said and done, I am the person who is responsible for taking care of my / my child's health",
+        "Taking an active role in my / my child's health care is the most important thing that affects my health and ability to function",
+        "I know what each of my / my child's prescribed medications do and what the major or common side effects are",
+        "I am confident that I can tell my / my child's health care provider/ doctor concerns I have even when he or she does not ask",
+        "I am confident that I can tell whether I / my child need to go get medical care to go to the doctor or whether I can take care of a health problem",
+        "I am confident I can help prevent or reduce problems associated with my / my child's health",
+        "I know the lifestyle changes like diet and exercise that are recommended for my own / my child's health condition",
+        "I am confident that I / my child can follow through on medical treatments I / my child may need to do at home",
+        "I am confident that I can take actions that will help prevent or minimize some symptoms or problems associated with my / my child's health condition",
+        "I am confident that I/ my child can follow through on medical recommendations my / my child's health care provider makes, such as changing my diet or doing regular exercise",
+        "I understand the nature and causes of my / my child's health condition",
+        "I know the different medical treatment options available for my / my child's health condition",
+        "I have / My child has been able to maintain (keep up with) lifestyle changes that I have / my child has made for my / my child's health, like eating right or exercising",
+        "I know how to prevent further problems with my / my child's health",
+        "I know about the self-treatments for my / my child's health condition",
+        "I have made the changes in my / my child's lifestyle like diet and exercise that are recommended for my / my child's health condition",
+        "I am confident I can figure out solutions when new problems arise with my / my child's health",
+        "I am able to handle symptoms of my / my child's health condition on my own at home",
+        "I am confident that I / my child can maintain lifestyle changes, like eating right and exercising, even during times of stress",
+        "I am able to handle problems of my / my child's health condition on my own at home",
+        "I am confident I can keep my / my child's health problems from interfering with the things I / my child want(s) to do",
+        "Maintaining the lifestyle changes that are recommended for my / my child's health condition is too hard on a daily basis",
+        "I understand the trajectory of my child's condition and why they need lifelong cardiology care",
+        "I know what symptoms for which I should call my child's cardiologist immediately",
+        "I understand why my child needs or needed surgery to correct their heart lesion",
+        "I understand what future surgeries/interventions, if any, may be required",
+        #"I now find the language and abbreviations (e.g., "VSD," "echo," "cath") used in my child's medical chart easier to navigate"#,
+        "I can confidently describe my child's heart lesion"
+    ]
+    return [
+        Study.Task.Question(
+            text: """
+                Please complete the survey below.
+                
+                Thank you!
+                Below are some statements that people sometimes make when they talk about their health.
+                Please indicate how much you agree or disagree with each statement as it applies to you personally by circling your answer.
+                Your answers should be what is true for you and not just what you think others want you to say.
+                
+                If the statement does not apply to you, select N/A.
+                (All questions are assessed with Always, Often, Sometimes, Rarely, Never)
+                
+                Please answer these questions based on how you feel with access to an application like LLMonFHIR.
+                """,
+            type: .instructional,
+            isOptional: true
+        )
+    ] + questions.map {
+        Study.Task.Question(text: $0, type: .scale(responseOptions: .frequencyOptions.withNA))
+    }
+}()
 
 
 extension FHIRPrompt {
