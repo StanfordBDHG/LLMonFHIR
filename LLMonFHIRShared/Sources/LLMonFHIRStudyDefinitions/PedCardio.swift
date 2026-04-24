@@ -15,7 +15,7 @@ extension Study {
     /// LLMonFHIR's usability study
     public static var pedCardioStudy: Study {
         let effectivenessQuestion = Study.Task.Question(
-            text: "How effective was the LLM in helping to answer your questions concerning your child’s health?",
+            text: "How effective was the LLM in helping to answer your questions concerning your child's health?",
             type: .scale(responseOptions: .effectivenessScale),
             isOptional: false
         )
@@ -31,7 +31,7 @@ extension Study {
                 Task(
                     id: "t1",
                     instructions: """
-                        Ask a clarifying question about the most recent diagnosis from your last medical visit or any other questions you might have regarding your health?
+                        Ask a clarifying question about the most recent diagnosis from your child's last medical visit or any other questions you might have regarding your child's health?
                         """,
                     assistantMessagesLimit: 2...5, // starting at 2 bc we need to factor in the initial msg
                     questions: [
@@ -41,7 +41,7 @@ extension Study {
                 Task(
                     id: "t2",
                     instructions: """
-                        Ask if the patient is allowed to play competitive sports or participate in gym class.
+                        Ask if the child is allowed to play competitive sports or participate in gym class.
                         """,
                     assistantMessagesLimit: 1...5,
                     questions: [effectivenessQuestion]
@@ -49,7 +49,7 @@ extension Study {
                 Task(
                     id: "t3",
                     instructions: """
-                        Ask the app for a personalized health recommendation.
+                        Ask the app for a personalized health recommendation for your child.
                         """,
                     assistantMessagesLimit: 1...5,
                     questions: [effectivenessQuestion]
@@ -57,32 +57,33 @@ extension Study {
                 Task(
                     id: "t4",
                     instructions: """
-                        Before we end our session, feel free to ask the app any medical questions you might have related to your health.
+                        Before we end our session, feel free to ask the app any medical questions you might have related to your child's health.
                         """,
                     assistantMessagesLimit: 1...5,
                     questions: [
                         effectivenessQuestion,
                         .init(
-                            text: "What surprised you about the LLM’s answer, either positively or negatively?",
+                            text: "What surprised you about the LLM's answer, either positively or negatively?",
                             type: .freeText,
                             isOptional: true
                         ),
                         .init(
-                            text: "Compared to other sources of health information (e.g. websites, doctors), how do you rate the LLM’s responses?",
+                            text: "Compared to other sources of health information (e.g. websites, doctors), how do you rate the LLM's responses?",
                             type: .scale(responseOptions: .comparisonScale),
                             isOptional: false
                         ),
                         .init(
-                            text: "What were the most and least useful features of the LLM? Do you have any suggestions to share",
-                            type: .freeText, isOptional: true
+                            text: "What were the most and least useful features of the LLM? Do you have any suggestions to share?",
+                            type: .freeText,
+                            isOptional: true
                         ),
                         .init(
-                            text: "How has the LLM impacted your ability to manage your child’s health?",
+                            text: "How has the LLM impacted your ability to manage your child's health?",
                             type: .freeText,
                             isOptional: false
                         ),
                         .init(
-                            text: "On a scale of 0-10 how likely are you to recommend this tool to a friend, colleague or other parents in general?",
+                            text: "On a scale of 0—10 how likely are you to recommend this tool to a friend, colleague or other parents in general?",
                             type: .netPromoterScore(range: 0...10),
                             isOptional: false
                         )
@@ -90,7 +91,7 @@ extension Study {
                 ),
                 Task(
                     id: "t5",
-                    instructions: "Please hit the arrow at the top of your screen to complete the final task",
+                    instructions: "Please hit the arrow at the top of your screen to complete the final task.",
                     questions: finalTaskQuestions
                 ),
                 Task(
@@ -111,12 +112,12 @@ private let finalTaskQuestions = [
         isOptional: false
     ),
     Study.Task.Question(
-        text: "How easy would it be to access or obtain information about your child’s medical condition?",
+        text: "How easy would it be to access or obtain information about your child's medical condition?",
         type: .scale(responseOptions: .balancedEaseScale),
         isOptional: false
     ),
     Study.Task.Question(
-        text: "How frequently do you anticipate having problems learning about your child’s medical condition because of difficulty understanding written information?",
+        text: "How frequently do you anticipate having problems learning about your child's medical condition because of difficulty understanding written information?",
         type: .scale(responseOptions: .frequencyOptions),
         isOptional: false
     ),
@@ -157,99 +158,99 @@ private let postInterventionQuestions = [
         isOptional: true
     ),
     Study.Task.Question(
-        text: "When all is said and done, I am the person who is responsible for taking care of my / my child’s health",
+        text: "When all is said and done, I am the person who is responsible for taking care of my / my child's health",
         type: .scale(responseOptions: .frequencyOptions)
     ),
     Study.Task.Question(
-        text: "Taking an active role in my/ my child’s health care is the most important thing that affects my health and ability to function",
+        text: "Taking an active role in my / my child's health care is the most important thing that affects my health and ability to function",
         type: .scale(responseOptions: .frequencyOptions)
     ),
     Study.Task.Question(
-        text: "I know what each of my/ my child’s prescribed medications do and what the major or common side effects are",
+        text: "I know what each of my / my child's prescribed medications do and what the major or common side effects are",
         type: .scale(responseOptions: .frequencyOptions)
     ),
     Study.Task.Question(
-        text: "I am confident that I can tell my/ my child’s health care provider/ doctor concerns I have even when he or she does not ask",
+        text: "I am confident that I can tell my / my child's health care provider/ doctor concerns I have even when he or she does not ask",
         type: .scale(responseOptions: .frequencyOptions)
     ),
     Study.Task.Question(
-        text: "I am confident that I can tell whether I/ my child need to go get medical care to go to the doctor or whether I  can take care of a health problem",
+        text: "I am confident that I can tell whether I / my child need to go get medical care to go to the doctor or whether I can take care of a health problem",
         type: .scale(responseOptions: .frequencyOptions)
     ),
     Study.Task.Question(
-        text: "I am confident I can help prevent or reduce problems associated with my/ my child’s health",
+        text: "I am confident I can help prevent or reduce problems associated with my / my child's health",
         type: .scale(responseOptions: .frequencyOptions)
     ),
     Study.Task.Question(
-        text: "I know the lifestyle changes like diet and exercise that are recommended for my/ my child’s health condition",
+        text: "I know the lifestyle changes like diet and exercise that are recommended for my own / my child's health condition",
         type: .scale(responseOptions: .frequencyOptions)
     ),
     Study.Task.Question(
-        text: "I am confident that I/ my child can follow through on medical treatments I/ my child may need to do at home",
+        text: "I am confident that I / my child can follow through on medical treatments I / my child may need to do at home",
         type: .scale(responseOptions: .frequencyOptions)
     ),
     Study.Task.Question(
-        text: "I am confident that I can take actions that will help prevent or minimize some symptoms or problems associated with my/ my child’s health condition",
+        text: "I am confident that I can take actions that will help prevent or minimize some symptoms or problems associated with my / my child's health condition",
         type: .scale(responseOptions: .frequencyOptions)
     ),
     Study.Task.Question(
-        text: "I am confident that I/ my child can follow through on medical recommendations my/ my child’s health care provider makes, such as changing my diet or doing regular exercise",
+        text: "I am confident that I/ my child can follow through on medical recommendations my / my child's health care provider makes, such as changing my diet or doing regular exercise",
         type: .scale(responseOptions: .frequencyOptions)
     ),
     Study.Task.Question(
-        text: "I understand the nature and causes of my/ my child’s health condition(s)",
+        text: "I understand the nature and causes of my / my child's health condition",
         type: .scale(responseOptions: .frequencyOptions)
     ),
     Study.Task.Question(
-        text: "I know the different medical treatment options available for my/ my child’s health condition",
+        text: "I know the different medical treatment options available for my / my child's health condition",
         type: .scale(responseOptions: .frequencyOptions)
     ),
     Study.Task.Question(
-        text: "I have / My child has been able to maintain (keep up with) lifestyle changes that I have/ my child has made for my/ my child’s health, like eating right or exercising",
+        text: "I have / My child has been able to maintain (keep up with) lifestyle changes that I have / my child has made for my / my child's health, like eating right or exercising",
         type: .scale(responseOptions: .frequencyOptions)
     ),
     Study.Task.Question(
-        text: "I know how to prevent further problems with my/ my child’s health",
+        text: "I know how to prevent further problems with my / my child's health",
         type: .scale(responseOptions: .frequencyOptions)
     ),
     Study.Task.Question(
-        text: "I know about the self-treatments for my/ my child’s health condition",
+        text: "I know about the self-treatments for my / my child's health condition",
         type: .scale(responseOptions: .frequencyOptions)
     ),
     Study.Task.Question(
-        text: "I have made the changes in my/ my child’s lifestyle like diet and exercise that are recommended for my/ my child’s health condition",
+        text: "I have made the changes in my / my child's lifestyle like diet and exercise that are recommended for my / my child's health condition",
         type: .scale(responseOptions: .frequencyOptions)
     ),
     Study.Task.Question(
-        text: "I am confident I can figure out solutions when new problems arise with my/ my child’s health",
+        text: "I am confident I can figure out solutions when new problems arise with my / my child's health",
         type: .scale(responseOptions: .frequencyOptions)
     ),
     Study.Task.Question(
-        text: "I am able to handle symptoms of my/ my child’s health condition on my own at home",
+        text: "I am able to handle symptoms of my / my child's health condition on my own at home",
         type: .scale(responseOptions: .frequencyOptions)
     ),
     Study.Task.Question(
-        text: "I am confident that I/ my child can maintain lifestyle changes, like eating right and exercising, even during times of stress",
+        text: "I am confident that I / my child can maintain lifestyle changes, like eating right and exercising, even during times of stress",
         type: .scale(responseOptions: .frequencyOptions)
     ),
     Study.Task.Question(
-        text: "I am able to handle problems of my/ my child’s health condition on my own at home",
+        text: "I am able to handle problems of my / my child's health condition on my own at home",
         type: .scale(responseOptions: .frequencyOptions)
     ),
     Study.Task.Question(
-        text: "I am confident I can keep my/ my child’s health problems from interfering with the things I/ my child want(s) to do",
+        text: "I am confident I can keep my / my child's health problems from interfering with the things I / my child want(s) to do",
         type: .scale(responseOptions: .frequencyOptions)
     ),
     Study.Task.Question(
-        text: "Maintaining the lifestyle changes that are recommended for my/ my child’s health condition is too hard on a daily basis",
+        text: "Maintaining the lifestyle changes that are recommended for my / my child's health condition is too hard on a daily basis",
         type: .scale(responseOptions: .frequencyOptions)
     ),
     Study.Task.Question(
-        text: "I understand the trajectory of my child’s condition and why they need lifelong cardiology care",
+        text: "I understand the trajectory of my child's condition and why they need lifelong cardiology care",
         type: .scale(responseOptions: .frequencyOptions)
     ),
     Study.Task.Question(
-        text: "I know what symptoms for which I should call my child’s cardiologist immediately.",
+        text: "I know what symptoms for which I should call my child's cardiologist immediately",
         type: .scale(responseOptions: .frequencyOptions)
     ),
     Study.Task.Question(
@@ -257,7 +258,7 @@ private let postInterventionQuestions = [
         type: .scale(responseOptions: .frequencyOptions)
     ),
     Study.Task.Question(
-        text: "I understand what future surgeries/interventions, if any, may be required.",
+        text: "I understand what future surgeries/interventions, if any, may be required",
         type: .scale(responseOptions: .frequencyOptions)
     ),
     Study.Task.Question(
@@ -265,7 +266,7 @@ private let postInterventionQuestions = [
         type: .scale(responseOptions: .frequencyOptions)
     ),
     Study.Task.Question(
-        text: "I can confidently describe my child’s heart lesion",
+        text: "I can confidently describe my child's heart lesion",
         type: .scale(responseOptions: .frequencyOptions)
     )
 ]
@@ -277,7 +278,7 @@ extension FHIRPrompt {
         
         You should directly communicate with the caregiver and use the information from the health records to add context to their questions and conversation.
         
-        Prioritize retrieval of historical and current EHR resources directly related to the child’s cardiac care, including encounters, surgeries, catheterizations, echocardiograms, ECGs, medications, and laboratory results from the Cardiology clinic and inpatient encounters and those that involve all cardiology related departments, including and not limited to Cardiothoracic Surgery and Cardiac anesthesia departments.
+        Prioritize retrieval of historical and current EHR resources directly related to the child's cardiac care, including encounters, surgeries, catheterizations, echocardiograms, ECGs, medications, and laboratory results from the Cardiology clinic and inpatient encounters and those that involve all cardiology related departments, including and not limited to Cardiothoracic Surgery and Cardiac anesthesia departments.
         
         Additionally, retrieve relevant records from other clinical contexts only if they are known to influence heart health or surgical outcomes, such as: respiratory conditions (e.g., asthma or anatomic airway workups), genetic consultations, growth and nutrition records (e.g., failure to thrive), or renal function.
         
