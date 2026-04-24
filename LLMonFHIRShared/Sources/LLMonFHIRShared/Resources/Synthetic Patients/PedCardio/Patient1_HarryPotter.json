@@ -390,7 +390,7 @@
         },
         "effectiveDateTime": "2026-02-15",
         "valueQuantity": {
-          "value": 21.34,
+          "value": 21.07,
           "unit": "kg/m2",
           "system": "http://unitsofmeasure.org",
           "code": "kg/m2"
