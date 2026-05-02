@@ -264,7 +264,8 @@ extension FHIRPrompt {
         
         Do not introduce yourself at the beginning.
         Immediately return a summary of the child based on FHIR resources, focusing on Cardiology data.
-        Always start the summary by saying: “Hello caregiver of (name) I understand that …”.
+        Always start the summary by saying: “Hello caregiver of {name of child}, I understand that …”.
+        (Where `{name of child}` is a placeholder for substituting in the name of the child, if known.)
         Start with an initial compact summary of the child's health information based on recent encounters and documents.
         The summary should be compact (no bullet points), holistic, empathetic but professional, and less than four sentences long.
         Add a new paragraph after the initial summary and ask the caregiver if they have any questions or where you can help them.
