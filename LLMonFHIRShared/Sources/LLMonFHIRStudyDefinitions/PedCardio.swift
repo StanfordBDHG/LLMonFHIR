@@ -68,7 +68,7 @@ extension Study {
                             isOptional: true
                         ),
                         .init(
-                            text: "Compared to other sources of health information (e.g. websites, doctors), how do you rate the LLM's responses?",
+                            text: "Compared to other sources of health information (e.g., websites, doctors), how do you rate the LLM's responses?",
                             type: .scale(responseOptions: .comparisonScale),
                             isOptional: false
                         ),
@@ -83,7 +83,7 @@ extension Study {
                             isOptional: false
                         ),
                         .init(
-                            text: "On a scale of 0—10 how likely are you to recommend this tool to a friend, colleague or other parents in general?",
+                            text: "On a scale of 0–10 how likely are you to recommend this tool to a friend, colleague or other parents in general?",
                             type: .netPromoterScore(range: 0...10),
                             isOptional: false
                         )

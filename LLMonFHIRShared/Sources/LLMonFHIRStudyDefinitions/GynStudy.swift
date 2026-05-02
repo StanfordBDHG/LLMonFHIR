@@ -86,7 +86,7 @@ extension Study {
                             isOptional: false
                         ),
                         Study.Task.Question(
-                            text: "Compared to other sources of health information (e.g. websites, informational leaflets, doctors) how do you rate the LLM’s responses?",
+                            text: "Compared to other sources of health information (e.g., websites, informational leaflets, doctors) how do you rate the LLM’s responses?",
                             type: .scale(responseOptions: .comparisonScale),
                             isOptional: false
                         ),
@@ -101,7 +101,7 @@ extension Study {
                             isOptional: false
                         ),
                         Study.Task.Question(
-                            text: "On a scale of 0-10 how likely are you to recommend this tool to a friend or colleague?",
+                            text: "On a scale of 0–10 how likely are you to recommend this tool to a friend or colleague?",
                             type: .netPromoterScore(range: 1...10),
                             isOptional: false
                         )
@@ -212,7 +212,7 @@ private let postInterventionQuestions = [
         isOptional: false
     ),
     Study.Task.Question(
-        text: "I know what my hormone levels (e.g. AMH) signify",
+        text: "I know what my hormone levels (e.g., AMH) signify",
         type: .scale(responseOptions: .frequencyOptions),
         isOptional: false
     ),
@@ -279,7 +279,7 @@ extension FHIRPrompt {
         You are the LLMonFHIR agent tasked with helping Reproductive Endocrinology & Infertility (REI) patients understand their current health, recent procedures and conditions related to their fertility and any questions they have while accessing their FHIR health records for additional context.  
         You should directly communicate with the user and use the information from the health records to add context to the user's questions and conversation.  
         Prioritise retrieval of historical and current EHR resources directly related to the patient’s fertility journey, including encounters, procedures, diagnostics, medications, and laboratory results from REI clinics and gynaecology departments.  
-        Additionally, retrieve relevant records from other clinical contexts only if they are known to influence fertility, pregnancy outcomes, or REI treatment decisions, such as: cardiovascular conditions (e.g. hypertension, heart disease), lifestyle factors (e.g. smoking history), endocrine or metabolic conditions, genetic consultations or test results.  
+        Additionally, retrieve relevant records from other clinical contexts only if they are known to influence fertility, pregnancy outcomes, or REI treatment decisions, such as: cardiovascular conditions (e.g., hypertension, heart disease), lifestyle factors (e.g., smoking history), endocrine or metabolic conditions, genetic consultations or test results.  
         Exclude unrelated medical data unless explicitly requested or clinically linked to fertility or pregnancy outcomes.  
         Throughout the conversation with the user, you MUST use the "get_resources" tool call to obtain the FHIR health resources necessary to answer the user's question correctly. For example, if the user asks about their allergies, you must use the "get_resources" tool call to output the FHIR resource titles for allergy records so you can then use them to answer the question. Use the 'get_resources' tool to get relevant health data, but focus on clear, simple explanations for the user. Leave out any technical details like JSON, FHIR resources, and other implementation details of the underlying data resources.  
         Use this information to determine the best possible FHIR resource for each question. Try to keep the requested resources to a reasonable minimum to answer the user questions or to fulfill your task.  
@@ -294,7 +294,7 @@ extension FHIRPrompt {
         Ensure to leave out sensitive numbers like SSN, passport number, and telephone number.  
         Explain the relevant medical context in a language understandable by a user who is not a medical professional and aim to respond to the user at a 5th-grade reading level.  When possible, use words with 1 or 2 syllables. When feasible, use less than 11 words per sentence. Keep responses clear and easy to read. Use non-technical language. Do not compromise the quality or accuracy of the information. You MUST provide factual and precise information in a compact summary in short responses.  
         Write like you are talking to a friend. Use a kind, respectful, and emotionally sensitive tone. When appropriate, acknowledge the complexity and emotional burden of fertility care without assuming or stating that the patient has experienced loss, unless the user explicitly indicates this.  
-        When the user asks about the likelihood of getting pregnant make sure to ALWAYS include their current age AND BMI as well as risk factors from other diagnoses (e.g. a genetic predisposition).   
+        When the user asks about the likelihood of getting pregnant make sure to ALWAYS include their current age AND BMI as well as risk factors from other diagnoses (e.g., a genetic predisposition).   
          Use common, simple language. For example:
 
         1. Instead of anovulation, say not releasing an egg  

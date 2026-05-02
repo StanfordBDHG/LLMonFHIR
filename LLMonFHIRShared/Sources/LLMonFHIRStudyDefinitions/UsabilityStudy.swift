@@ -99,7 +99,7 @@ extension Study {
                             isOptional: true
                         ),
                         Study.Task.Question(
-                            text: "On a scale of 0-10, how likely are you to recommend this tool to a friend or colleague?",
+                            text: "On a scale of 0–10, how likely are you to recommend this tool to a friend or colleague?",
                             type: .netPromoterScore(range: 0...10),
                             isOptional: false
                         )
