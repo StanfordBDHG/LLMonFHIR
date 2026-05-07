@@ -6,8 +6,9 @@
 // SPDX-License-Identifier: MIT
 //
 
-import Foundation
-import SpeziFoundation
+private import Algorithms
+private import Foundation
+private import SpeziFoundation
 
 
 extension Study.Task.Question.Kind {
@@ -63,6 +64,14 @@ extension Study.Task.Question.Kind.AnswerOptions: Codable {
     public func encode(to encoder: any Encoder) throws {
         var container = encoder.singleValueContainer()
         try container.encode(stringValue)
+    }
+}
+
+
+extension Study.Task.Question.Kind.AnswerOptions {
+    /// Creates a new `AnswerOptions`, by unconditionally appending a `N/A` option at the end.
+    public var withNA: Self {
+        Self(chain(self, CollectionOfOne("N/A")))
     }
 }
 
