@@ -470,6 +470,17 @@ extension UserStudyChatViewModel {
         }
     }
 
+    /// Retries the last failed prompt by stripping any incomplete assistant output and re-triggering generation.
+    func retryLastPrompt() {
+        if llmSession.context.last?.complete == false {
+            llmSession.context.removeLast()
+        }
+        llmSession.state = .ready
+        Task {
+            _ = await generateAssistantResponse()
+        }
+    }
+
     /// Generates an assistant response if appropriate for the current context
     ///
     /// This method checks if a response is needed and if so, delegates

@@ -79,7 +79,7 @@ struct UserStudyChatView: View {
                         viewState = .idle
                     }
                 }
-                .viewStateAlert(state: $viewState)
+                .viewStateAlert(state: $viewState, onRetry: model.retryLastPrompt)
                 .onAppear {
                     model.didUploadHandler = {
                         dismiss()
@@ -134,6 +134,31 @@ struct UserStudyChatView: View {
             }
         }
         .scrollBounceBehavior(.basedOnSize)
+    }
+}
+
+
+extension View {
+    func viewStateAlert(state: Binding<ViewState>, onRetry: @escaping () -> Void) -> some View {
+        alert(state.wrappedValue.errorTitle, isPresented: Binding(
+            get: {
+                if case .error = state.wrappedValue {
+                    return true
+                };
+                return false
+            },
+            set: { if !$0 { state.wrappedValue = .idle } }
+        )) {
+            Button("Retry") {
+                state.wrappedValue = .idle
+                onRetry()
+            }
+            Button("Dismiss", role: .cancel) {
+                state.wrappedValue = .idle
+            }
+        } message: {
+            Text(state.wrappedValue.errorDescription)
+        }
     }
 }
 
